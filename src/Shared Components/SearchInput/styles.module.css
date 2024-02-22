@@ -1,0 +1,11 @@
+.styledSearch {
+  border: 1px solid #c5cfde;
+  padding: 4px;
+  border-radius: 8px;
+}
+.styledInput:focus-visible {
+  outline: none;
+}
+.styleColor {
+  color: #c5cfde;
+}
