@@ -1,25 +1,49 @@
-import React from "react";
-import styles from "./styles.module.css";
+import { useState } from "react";
 
-function SigninPage() {
+const tabs = [
+  {
+    id: "jwt",
+    title: "JWT",
+    logo: "assets/images/logo/jwt.svg",
+    logoClass: "h-40 p-4 bg-black rounded-12",
+  },
+  {
+    id: "firebase",
+    title: "Firebase",
+    logo: "assets/images/logo/firebase.svg",
+    logoClass: "h-40",
+  },
+];
+
+/**
+ * The sign in page.
+ */
+function SignInPage() {
+  const [selectedTabId, setSelectedTabId] = useState(tabs[0].id);
+
+  function handleSelectTab(id) {
+    setSelectedTabId(id);
+  }
+
   return (
-    <div class="flex">
-      <div class="w-1/2">pic</div>
-      <div className={styles.signIN}>
-        <div>
-          <div className={styles.welcomeStyle}>Welcome to</div>
-          <div className={styles.userManagementText}>
-            User Management Portal
-          </div>
-        </div>
-        <div>
-          <div>Please login to your account.</div>
-          <form></form>
-        </div>
-        <div>New User? Sign Up</div>
-      </div>
-    </div>
+    <div className="flex min-w-0 flex-1 flex-col items-center sm:flex-row sm:justify-center md:items-start md:justify-start" />
+    //     <div class="flex">
+    //     <div class="w-1/2">pic</div>
+    //     <div className={styles.signIN}>
+    //       <div>
+    //         <div className={styles.welcomeStyle}>Welcome to</div>
+    //         <div className={styles.userManagementText}>
+    //           User Management Portal
+    //         </div>
+    //       </div>
+    //       <div>
+    //         <div>Please login to your account.</div>
+    //         <form></form>
+    //       </div>
+    //       <div>New User? Sign Up</div>
+    //     </div>
+    //   </div>
   );
 }
 
-export default SigninPage;
+export default SignInPage;
