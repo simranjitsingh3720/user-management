@@ -1,0 +1,22 @@
+.signIN {
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 100vh;
+  width: 100vh;
+}
+
+.welcomeStyle {
+  text-align: center;
+  color: #175ec4;
+  size: 24px;
+  font-family: sans-serif;
+}
+
+.userManagementText {
+  color: #18478b;
+  size: 30px;
+  font-weight: 600;
+}

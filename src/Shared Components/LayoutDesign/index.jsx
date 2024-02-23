@@ -4,8 +4,8 @@ import CssBaseline from "@mui/material/CssBaseline";
 import NavbarDrawer from "../NavbarDrawer";
 import Header from "../Header";
 import Body from "../Body";
-
-const drawerWidth = 240;
+import Styles from "./styles.module.css";
+import { drawerWidth } from "../../globalization/globalConstants";
 
 function ResponsiveDrawer() {
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -17,7 +17,7 @@ function ResponsiveDrawer() {
   };
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box className={Styles.mainContainer}>
       <CssBaseline />
       <Header handleDrawerToggle={handleDrawerToggle} />
       <Box
@@ -31,16 +31,7 @@ function ResponsiveDrawer() {
           setMobileOpen={setMobileOpen}
         />
       </Box>
-      <Box
-        component="main"
-        sx={{
-          flexGrow: 1,
-          p: 3,
-          width: { sm: `calc(100% - ${drawerWidth}px)` },
-          backgroundColor: "#F7FAFF",
-          height: "100vh",
-        }}
-      >
+      <Box component="main" className={Styles.main}>
         <Body />
       </Box>
     </Box>

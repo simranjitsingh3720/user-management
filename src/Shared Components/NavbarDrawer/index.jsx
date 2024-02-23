@@ -8,14 +8,14 @@ import {
   ListItem,
   ListItemButton,
   ListItemIcon,
-  ListItemText,
 } from "@mui/material";
-import { ExpandLess, ExpandMore, StarBorder } from "@mui/icons-material";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
+import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import Styles from "./styles.module.css";
+import { SideNavData } from "../../data/navbar";
+import { drawerWidth } from "../../globalization/globalConstants";
 
-const drawerWidth = 240;
+console.log("SideNavData", SideNavData);
+
 function NavbarDrawer({ setIsClosing, mobileOpen, setMobileOpen }) {
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   const [selectedParentIndex, setSelectedParentIndex] = React.useState(null);
@@ -61,71 +61,87 @@ function NavbarDrawer({ setIsClosing, mobileOpen, setMobileOpen }) {
         </div>
       </div>
       <List sx={{ marginRight: "12px" }}>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton
-              selected={selectedIndex === index}
-              onClick={(event) => handleListItemClick(event, index)}
-              sx={{
-                "&.Mui-selected": {
-                  color: "#185EC4",
-                  backgroundColor: "#F2F7FF",
-                  borderLeft: "4px solid #185EC4",
-                },
-              }}
-            >
-              <ListItemIcon
+        {SideNavData.map((obj, index) =>
+          !obj.child ? (
+            <ListItem key={index} disablePadding>
+              <ListItemButton
+                selected={selectedIndex === index}
+                onClick={(event) => handleListItemClick(event, index)}
                 sx={{
-                  color: selectedIndex === index ? "#185EC4" : "inherit", // Change color when selected
+                  "&.Mui-selected": {
+                    color: "#185EC4",
+                    backgroundColor: "#F2F7FF",
+                    borderLeft: "4px solid #185EC4",
+                  },
                 }}
               >
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-        <ListItemButton
-          onClick={handleClick}
-          sx={{
-            backgroundColor: selectedParentIndex !== null ? "#F2F7FF" : "",
-          }}
-        >
-          <ListItemIcon>
-            <InboxIcon />
-          </ListItemIcon>
-          <ListItemText primary="Inbox" />
-          {open ? <ExpandLess /> : <ExpandMore />}
-        </ListItemButton>
-        <Collapse in={open} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            {["Starred", "Send email"].map((text, index) => (
-              <ListItem key={text} disablePadding>
-                <ListItemButton
-                  selected={selectedParentIndex === index} // Apply selectedIndex
-                  onClick={(event) => handleCollpaseListItemClick(event, index)}
+                <ListItemIcon
                   sx={{
-                    "&.Mui-selected": {
-                      color: "#185EC4",
-                      backgroundColor: "#F2F7FF",
-                      borderLeft: "4px solid #185EC4",
-                    },
+                    color: selectedIndex === index ? "#185EC4" : "inherit", // Change color when selected
                   }}
                 >
-                  <ListItemIcon
-                    sx={{
-                      color:
-                        selectedParentIndex === index ? "#185EC4" : "inherit", // Change color when selected
-                    }}
-                  >
-                    <StarBorder />
-                  </ListItemIcon>
-                  <ListItemText primary={text} />
-                </ListItemButton>
-              </ListItem>
-            ))}
-          </List>
-        </Collapse>
+                  <obj.icon className={Styles.navbarIcon} />
+                </ListItemIcon>
+                <div className={Styles.navbarText}>{obj?.label}</div>
+              </ListItemButton>
+            </ListItem>
+          ) : (
+            <>
+              <ListItemButton
+                onClick={handleClick}
+                sx={{
+                  backgroundColor:
+                    selectedParentIndex !== null ? "#F2F7FF" : "",
+                }}
+              >
+                <ListItemIcon>
+                  <obj.icon />
+                </ListItemIcon>
+                <div className={Styles.navbarText}>{obj.label}</div>
+                {open ? (
+                  <ExpandLess className="ml-4" />
+                ) : (
+                  <ExpandMore className="ml-4" />
+                )}
+              </ListItemButton>
+              <Collapse in={open} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                  {obj.child.map((childObj, index) => (
+                    <ListItem key={childObj.label} disablePadding>
+                      <ListItemButton
+                        selected={selectedParentIndex === index} // Apply selectedIndex
+                        onClick={(event) =>
+                          handleCollpaseListItemClick(event, index)
+                        }
+                        sx={{
+                          "&.Mui-selected": {
+                            color: "#185EC4",
+                            backgroundColor: "#F2F7FF",
+                            borderLeft: "4px solid #185EC4",
+                          },
+                        }}
+                      >
+                        <ListItemIcon
+                          sx={{
+                            color:
+                              selectedParentIndex === index
+                                ? "#185EC4"
+                                : "inherit", // Change color when selected
+                          }}
+                        >
+                          <childObj.icon />
+                        </ListItemIcon>
+                        <div className={Styles.navbarText}>
+                          {childObj?.label}
+                        </div>
+                      </ListItemButton>
+                    </ListItem>
+                  ))}
+                </List>
+              </Collapse>
+            </>
+          )
+        )}
       </List>
     </div>
   );

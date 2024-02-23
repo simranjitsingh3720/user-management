@@ -1,7 +1,6 @@
 .styledText {
   color: #18478b;
   size: 18px;
-  /* font: normal normal 600 18px/24px Poppins; */
   margin-bottom: 16px;
 }
 
@@ -16,4 +15,19 @@
 }
 .StyledSearch {
   margin: 12px 8px;
+}
+
+.navbarIcon {
+  font-size: 20px;
+}
+
+.navbarText {
+  font-family: "Poppins";
+  size: 12px !important;
+}
+
+.selectedButton {
+  color: #185ec4;
+  background-color: #f2f7ff;
+  border-left: 4px solid #185ec4;
 }
