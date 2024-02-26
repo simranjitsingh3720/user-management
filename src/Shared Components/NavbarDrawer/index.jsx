@@ -77,7 +77,7 @@ function NavbarDrawer({ setIsClosing, mobileOpen, setMobileOpen }) {
               >
                 <ListItemIcon
                   sx={{
-                    color: selectedIndex === index ? "#185EC4" : "inherit", // Change color when selected
+                    color: selectedIndex === index ? "#185EC4" : "#7E84A3", // Change color when selected
                   }}
                 >
                   <obj.icon className={Styles.navbarIcon} />
@@ -94,7 +94,12 @@ function NavbarDrawer({ setIsClosing, mobileOpen, setMobileOpen }) {
                     selectedParentIndex !== null ? "#F2F7FF" : "",
                 }}
               >
-                <ListItemIcon>
+                <ListItemIcon
+                  sx={{
+                    color:
+                      selectedParentIndex === index ? "#185EC4" : "#7E84A3", // Change color when selected
+                  }}
+                >
                   <obj.icon />
                 </ListItemIcon>
                 <div className={Styles.navbarText}>{obj.label}</div>
@@ -126,7 +131,7 @@ function NavbarDrawer({ setIsClosing, mobileOpen, setMobileOpen }) {
                             color:
                               selectedParentIndex === index
                                 ? "#185EC4"
-                                : "inherit", // Change color when selected
+                                : "#7E84A3", // Change color when selected
                           }}
                         >
                           <childObj.icon />

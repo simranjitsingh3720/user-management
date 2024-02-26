@@ -1,6 +1,7 @@
 .styledText {
   color: #18478b;
-  size: 18px;
+  font-size: 18px;
+  font-weight: 600;
   margin-bottom: 16px;
 }
 
@@ -22,8 +23,8 @@
 }
 
 .navbarText {
-  font-family: "Poppins";
-  size: 12px !important;
+  font-family: sans-serif;
+  font-size: 14px !important;
 }
 
 .selectedButton {

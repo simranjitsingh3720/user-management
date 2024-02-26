@@ -5,18 +5,86 @@
   align-items: center;
   justify-content: space-evenly;
   height: 100vh;
-  width: 100vh;
+  width: 100%;
 }
 
 .welcomeStyle {
   text-align: center;
   color: #175ec4;
-  size: 24px;
+  font-size: 24px;
   font-family: sans-serif;
 }
 
 .userManagementText {
   color: #18478b;
-  size: 30px;
+  font-size: 30px;
   font-weight: 600;
+}
+
+.inputStyle {
+  border: 1px solid #c5cfde;
+  padding: 8px;
+  border-radius: 8px;
+  width: 300px;
+}
+
+.inputStyle:focus-visible {
+  outline: none;
+  border: 1px solid #185ec4;
+}
+.inputStyle::placeholder {
+  font-size: 14px;
+}
+
+.styledText {
+  font-size: 12px;
+  color: #566475;
+  margin-bottom: 4px;
+}
+
+.styledLoginText {
+  color: #465465;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.fieldStyle {
+  margin-bottom: 8px;
+}
+
+.styledError {
+  color: #fd6262;
+  font-size: 12px;
+}
+
+.styledButton {
+  width: 100%;
+  background-color: #185ec4;
+  color: #ffffff;
+  padding: 4px 0px;
+  border-radius: 6px;
+}
+.styledButton:hover {
+  background-color: #1c74e4;
+}
+
+.imageStyle {
+  background-color: #185ec4;
+  width: 100%;
+}
+
+@media (max-width: 600px) {
+  .imageStyle {
+    display: none;
+  }
+}
+
+.signupText {
+  font-size: 16px;
+}
+
+.signupLink {
+  color: #185ec4;
+  text-decoration: underline;
+  cursor: pointer;
 }
