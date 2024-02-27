@@ -8,9 +8,13 @@
 }
 
 .CustomizeSelect {
-  background-color: aqua;
+  background-color: #ffffff;
+  width: 200px;
 }
 
-.CustomizeSelect:focus {
-  background-color: #566475;
+.styledClearIcon {
+  margin-right: 32px;
+}
+.styledOptionText {
+  font-size: 12px;
 }

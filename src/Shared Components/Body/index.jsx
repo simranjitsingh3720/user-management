@@ -34,21 +34,24 @@ function Body() {
                     <div className={styles.placeholderStyle}>Placeholder</div>
                   )
             }
-            endAdornment={
-              age !== "" && (
-                <IconButton
-                  aria-label="clear selection"
-                  onClick={handleClear}
-                  edge="end"
-                >
-                  <ClearIcon />
-                </IconButton>
-              )
-            }
+            // endAdornment={
+            //   age !== "" && (
+            //     <IconButton aria-label="clear selection" edge="end">
+            //       <ClearIcon
+            //         className={styles.styledClearIcon}
+            //         onClick={handleClear}
+            //       />
+            //     </IconButton>
+            //   )
+            // }
           >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
+            <MenuItem value="userId" className={styles.styledOptionText}>
+              User ID
+            </MenuItem>
+            <MenuItem value="ntLogin">NT Login</MenuItem>
+            <MenuItem value="emailId">Email ID</MenuItem>
+            <MenuItem value="role">Role</MenuItem>
+            <MenuItem value="dateCreation">Date of Creation</MenuItem>
           </Select>
         </div>
         <div>table</div>
