@@ -3,33 +3,19 @@ import styles from "./styles.module.css";
 import { useForm } from "react-hook-form";
 import React from "react";
 import { Box } from "@mui/material";
-
-const tabs = [
-  {
-    id: "jwt",
-    title: "JWT",
-    logo: "assets/images/logo/jwt.svg",
-    logoClass: "h-40 p-4 bg-black rounded-12",
-  },
-  {
-    id: "firebase",
-    title: "Firebase",
-    logo: "assets/images/logo/firebase.svg",
-    logoClass: "h-40",
-  },
-];
+import {useNavigate} from "react-router-dom";
 
 /**
  * The sign in page.
  */
 function SignInPage() {
-  const [selectedTabId, setSelectedTabId] = useState(tabs[0].id);
+  // Initialize useHistory
+  const navigate = useNavigate();
 
-  function handleSelectTab(id) {
-    setSelectedTabId(id);
-  }
   const onSubmit = (data) => {
     console.log(data);
+    navigate('/home');
+
   };
   const {
     register,
@@ -81,7 +67,7 @@ function SignInPage() {
                 type="submit"
                 variant="contained"
                 className={styles.styledButton}
-              >
+                >
                 Submit
               </button>
             </div>
