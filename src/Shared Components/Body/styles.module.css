@@ -2,3 +2,15 @@
   color: #566475;
   font-size: 14px;
 }
+
+.placeholderStyle {
+  color: #566475;
+}
+
+.CustomizeSelect {
+  background-color: aqua;
+}
+
+.CustomizeSelect:focus {
+  background-color: #566475;
+}
