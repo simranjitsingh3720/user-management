@@ -1,0 +1,49 @@
+.headerContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logoutContainer {
+  display: flex;
+  align-items: center;
+  margin-right: 12px;
+}
+
+.logoutButton {
+  color: #465465 !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+}
+.iconContainer {
+  display: flex;
+  align-items: center;
+}
+
+.styledName {
+  color: #465465;
+  font-weight: 600;
+  font-size: 12px;
+}
+.styledRole {
+  color: #607083;
+  font-size: 10px;
+}
+
+.loginText {
+  display: flex;
+  flex-direction: column;
+}
+
+.lineStyle {
+  height: 36px;
+  margin: 0 12px;
+  border-right: 2px solid #607083;
+  opacity: 0.1;
+}
+
+.userManagementText {
+  color: #465465;
+  font-size: 22px;
+  font-weight: 600;
+}

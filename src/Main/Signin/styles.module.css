@@ -21,21 +21,6 @@
   font-weight: 600;
 }
 
-.inputStyle {
-  border: 1px solid #c5cfde;
-  padding: 8px;
-  border-radius: 8px;
-  width: 300px;
-}
-
-.inputStyle:focus-visible {
-  outline: none;
-  border: 1px solid #185ec4;
-}
-.inputStyle::placeholder {
-  font-size: 14px;
-}
-
 .styledText {
   font-size: 12px;
   color: #566475;
@@ -59,13 +44,6 @@
 
 .styledButton {
   width: 100%;
-  background-color: #185ec4;
-  color: #ffffff;
-  padding: 4px 0px;
-  border-radius: 6px;
-}
-.styledButton:hover {
-  background-color: #1c74e4;
 }
 
 .imageStyle {
@@ -87,4 +65,15 @@
   color: #185ec4;
   text-decoration: underline;
   cursor: pointer;
+}
+
+.boxStyle {
+  display: flex;
+}
+.loginTextContainer {
+  text-align: center;
+}
+
+.textFieldStyle {
+  width: 300px;
 }

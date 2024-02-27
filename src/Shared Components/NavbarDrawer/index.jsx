@@ -104,9 +104,9 @@ function NavbarDrawer({ setIsClosing, mobileOpen, setMobileOpen }) {
                 </ListItemIcon>
                 <div className={Styles.navbarText}>{obj.label}</div>
                 {open ? (
-                  <ExpandLess className="ml-4" />
+                  <ExpandLess className={Styles.expandIconStyle} />
                 ) : (
-                  <ExpandMore className="ml-4" />
+                  <ExpandMore className={Styles.expandIconStyle} />
                 )}
               </ListItemButton>
               <Collapse in={open} timeout="auto" unmountOnExit>

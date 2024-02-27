@@ -7,7 +7,7 @@ import {
   defaultThemeOptions,
   extendThemeWithMixins,
 } from "./core/UserMDefaultSettings/UserMDefaultSettings";
-import {BrowserRouter, Route, Routes} from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import SignInPage from "./Main/Signin/SigninPage";
 
 // Assuming generateMuiTheme is a function to generate the main theme
@@ -33,21 +33,21 @@ function App() {
 
   return (
     <div>
-      <UserMTheme theme={mainTheme}>
-        <BrowserRouter>
-          <Routes>
-            {/*<Route path="/" element={<LayoutDesign />}>*/}
-              <Route index element={<LayoutDesign />} />
-              <Route path="sign-in" element={<SignInPage />} />
-              <Route path="home" element={<LayoutDesign />} />
-            {/*</Route>*/}
-          </Routes>
-        </BrowserRouter>
-        {/*<BrowserRouter>*/}
-        {/*  <LayoutDesign />*/}
-        {/*  /!* <SignInPage /> *!/*/}
-        {/*</BrowserRouter>*/}
-      </UserMTheme>
+      {/* <UserMTheme theme={mainTheme}> */}
+      <BrowserRouter>
+        <Routes>
+          {/*<Route path="/" element={<LayoutDesign />}>*/}
+          <Route index element={<LayoutDesign />} />
+          <Route path="sign-in" element={<SignInPage />} />
+          <Route path="home" element={<LayoutDesign />} />
+          {/*</Route>*/}
+        </Routes>
+      </BrowserRouter>
+      {/*<BrowserRouter>*/}
+      {/*  <LayoutDesign />*/}
+      {/*  /!* <SignInPage /> *!/*/}
+      {/*</BrowserRouter>*/}
+      {/* </UserMTheme> */}
     </div>
   );
 }

@@ -1,9 +1,8 @@
-import { useState } from "react";
 import styles from "./styles.module.css";
 import { useForm } from "react-hook-form";
 import React from "react";
-import { Box } from "@mui/material";
-import {useNavigate} from "react-router-dom";
+import { Box, Button, TextField } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 /**
  * The sign in page.
@@ -14,8 +13,7 @@ function SignInPage() {
 
   const onSubmit = (data) => {
     console.log(data);
-    navigate('/home');
-
+    navigate("/home");
   };
   const {
     register,
@@ -25,10 +23,10 @@ function SignInPage() {
 
   return (
     // <div className="flex min-w-0 flex-1 flex-col items-center sm:flex-row sm:justify-center md:items-start md:justify-start" />
-    <Box class="flex">
+    <Box className={styles.boxStyle}>
       <div className={styles.imageStyle}></div>
       <div className={styles.signIN}>
-        <div className="text-center mb-6">
+        <div className={styles.loginTextContainer}>
           <div className={styles.welcomeStyle}>Welcome to</div>
           <div className={styles.userManagementText}>
             User Management Portal
@@ -41,35 +39,39 @@ function SignInPage() {
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className={styles.fieldStyle}>
               <div className={styles.styledText}>Username</div>
-              <input
-                type="text"
+              <TextField
+                id="userName"
+                variant="outlined"
                 {...register("userName", { required: true })}
                 placeholder="Enter Username"
-                className={styles.inputStyle}
+                size="small"
+                className={styles.textFieldStyle}
               />
               <div className={styles.styledError}>
                 {errors.userName && <span>This field is required</span>}
               </div>
             </div>
             <div className={styles.styledText}>Password</div>
-            <input
-              type="text"
+            <TextField
+              id="password"
+              variant="outlined"
               {...register("password", { required: true })}
               placeholder="Enter Password"
-              className={styles.inputStyle}
+              size="small"
+              className={styles.textFieldStyle}
             />
             <div className={styles.styledError}>
               {errors.password && <span>This field is required</span>}
             </div>
             <br />
-            <div class="flex justify-center">
-              <button
+            <div>
+              <Button
                 type="submit"
                 variant="contained"
                 className={styles.styledButton}
-                >
+              >
                 Submit
-              </button>
+              </Button>
             </div>
           </form>
         </div>

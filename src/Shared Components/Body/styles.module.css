@@ -7,14 +7,27 @@
   color: #566475;
 }
 
-.CustomizeSelect {
+.customizeSelect {
   background-color: #ffffff;
   width: 200px;
+  font-size: 14px !important;
 }
 
 .styledClearIcon {
   margin-right: 32px;
 }
 .styledOptionText {
-  font-size: 12px;
+  font-size: 14px !important;
+}
+.textFieldStyle {
+  background-color: #ffffff;
+  margin: 0px 12px !important;
+}
+.selectContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.exportButtonStyle {
+  margin-right: 12px !important;
 }
