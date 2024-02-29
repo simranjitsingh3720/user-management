@@ -9,6 +9,7 @@ import {
 } from "./core/UserMDefaultSettings/UserMDefaultSettings";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import SignInPage from "./Main/Signin/SigninPage";
+import CreateUserMangementForm from "./Main/User Management/Components/CreateForm";
 
 // Assuming generateMuiTheme is a function to generate the main theme
 const generateMuiTheme = () => {
@@ -40,6 +41,11 @@ function App() {
           <Route index element={<LayoutDesign />} />
           <Route path="sign-in" element={<SignInPage />} />
           <Route path="home" element={<LayoutDesign />} />
+          <Route
+            path="user-management-form"
+            element={<CreateUserMangementForm />}
+          />
+
           {/*</Route>*/}
         </Routes>
       </BrowserRouter>

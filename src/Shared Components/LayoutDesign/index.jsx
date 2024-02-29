@@ -6,6 +6,7 @@ import Header from "../Header";
 import Body from "../Body";
 import Styles from "./styles.module.css";
 import { drawerWidth } from "../../globalization/globalConstants";
+import UserManagement from "../../Main/User Management";
 
 function ResponsiveDrawer() {
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -32,7 +33,7 @@ function ResponsiveDrawer() {
         />
       </Box>
       <Box component="main" className={Styles.main}>
-        <Body />
+        <UserManagement />
       </Box>
     </Box>
   );

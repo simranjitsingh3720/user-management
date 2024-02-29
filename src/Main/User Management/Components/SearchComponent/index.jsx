@@ -1,0 +1,102 @@
+import { Button, MenuItem, Select, TextField } from "@mui/material";
+import React from "react";
+import DownloadIcon from "../../../../Assets/DownloadLogo";
+import styles from "./styles.module.css";
+import { selectData } from "../../constants";
+import { DatePicker } from "@mui/x-date-pickers";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { useNavigate } from "react-router-dom";
+
+function SearchComponent() {
+  const [searched, setSearched] = React.useState("");
+  const [fromDate, setFromDate] = React.useState();
+  const [toDate, setToDate] = React.useState();
+
+  const handleChange = (event) => {
+    setSearched(event.target.value);
+  };
+
+  const navigate = useNavigate();
+
+  const handleCreateNewForm = () => {
+    navigate("/user-management-form");
+  };
+
+  return (
+    <div>
+      <div className={styles.searchText}>Search By</div>
+      <div className={styles.selectContainer}>
+        <div className={styles.flexSearchContainer}>
+          <Select
+            labelId="search-select"
+            id="search-select"
+            value={searched}
+            onChange={handleChange}
+            size="small"
+            displayEmpty
+            className={styles.customizeSelect}
+            renderValue={
+              searched !== ""
+                ? undefined
+                : () => <div className={styles.placeholderStyle}>Select</div>
+            }
+          >
+            {selectData.map((item) => (
+              <MenuItem value={item.value} className={styles.styledOptionText}>
+                {item.label}
+              </MenuItem>
+            ))}
+          </Select>
+
+          {searched === "dateCreation" ? (
+            <div className={styles.dateContainer}>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                  label="From Date"
+                  value={fromDate}
+                  onChange={(newValue) => setFromDate(newValue)}
+                  className={styles.dateStyle}
+                  slotProps={{ textField: { size: "small" } }}
+                />
+              </LocalizationProvider>
+
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                  label="To Date"
+                  value={toDate}
+                  onChange={(newValue) => setToDate(newValue)}
+                  className={styles.dateStyle}
+                  slotProps={{ textField: { size: "small" } }}
+                />
+              </LocalizationProvider>
+            </div>
+          ) : (
+            <TextField
+              id="search"
+              variant="outlined"
+              placeholder="Search"
+              size="small"
+              className={styles.textFieldStyle}
+            />
+          )}
+          <Button variant="outlined">Go</Button>
+        </div>
+        <div>
+          <Button
+            variant="outlined"
+            startIcon={<DownloadIcon />}
+            className={styles.exportButtonStyle}
+          >
+            Export Data
+          </Button>
+          <Button variant="contained" onClick={handleCreateNewForm}>
+            Create New User
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default SearchComponent;

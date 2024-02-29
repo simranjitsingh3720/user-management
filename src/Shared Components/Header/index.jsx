@@ -1,11 +1,4 @@
-import {
-  AppBar,
-  Avatar,
-  Button,
-  IconButton,
-  Toolbar,
-  Typography,
-} from "@mui/material";
+import { AppBar, Avatar, Button, IconButton, Toolbar } from "@mui/material";
 import React from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import styles from "./styles.module.css";
