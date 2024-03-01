@@ -7,6 +7,7 @@ import Body from "../Body";
 import Styles from "./styles.module.css";
 import { drawerWidth } from "../../globalization/globalConstants";
 import UserManagement from "../../Main/User Management";
+import CreateUserMangementForm from "../../Main/User Management/Components/CreateForm";
 
 function ResponsiveDrawer() {
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -33,7 +34,8 @@ function ResponsiveDrawer() {
         />
       </Box>
       <Box component="main" className={Styles.main}>
-        <UserManagement />
+        {/* <UserManagement /> */}
+        <CreateUserMangementForm />
       </Box>
     </Box>
   );

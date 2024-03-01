@@ -7,6 +7,7 @@
   padding: 20px;
   background-color: #f7faff;
   height: 100vh;
+  margin-top: 60px;
 }
 
 @media (min-width: 600px) {

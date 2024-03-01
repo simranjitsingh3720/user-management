@@ -115,7 +115,7 @@ function UserManagement() {
 
   return (
     <Box>
-      <Toolbar />
+      {/* <Toolbar /> */}
       <div>
         <SearchComponent />
         <div className={styles.tableStyled}>
