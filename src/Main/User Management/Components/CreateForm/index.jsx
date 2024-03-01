@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./styles.module.css";
 import LeftArrow from "../../../../Assets/LeftArrow";
-import { MenuItem, Select } from "@mui/material";
+import { Autocomplete, MenuItem, Select, TextField } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { selectData } from "../../constants";
 
@@ -12,12 +12,8 @@ function CreateUserMangementForm() {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm();
-  const searched = watch("roleSelect");
-
-  console.log("searched", searched);
 
   return (
     <div className={styles.createNewUserContainer}>
@@ -29,33 +25,79 @@ function CreateUserMangementForm() {
       </div>
       <div>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className={styles.fieldContainerStyle}>
-            <text className={styles.labelText}>
-              Role <span className={styles.styledRequired}>*</span>
-            </text>
-            <Select
-              labelId="role-select"
-              id="role-select"
-              size="small"
-              displayEmpty
-              className={styles.customizeSelect}
-              renderValue={
-                searched !== ""
-                  ? undefined
-                  : () => <div className={styles.placeholderStyle}>Select</div>
-              }
-              {...register("roleSelect", { required: true })}
-              placeholder="Enter Username"
-            >
-              {selectData.map((item) => (
-                <MenuItem
-                  value={item.value}
-                  className={styles.styledOptionText}
-                >
-                  {item.label}
-                </MenuItem>
-              ))}
-            </Select>
+          <div className={styles.formContainer}>
+            <div className={styles.fieldContainerStyle}>
+              <text className={styles.labelText}>
+                Role <span className={styles.styledRequired}>*</span>
+              </text>
+              <Autocomplete
+                disablePortal
+                id="role-select"
+                options={selectData}
+                className={styles.customizeSelect}
+                size="small"
+                renderInput={(params) => (
+                  <TextField {...params} placeholder="Select" />
+                )}
+                ListboxProps={{
+                  style: {
+                    maxHeight: "200px",
+                  },
+                }}
+                {...register("roleSelect", { required: true })}
+              />
+              <div className={styles.styledError}>
+                {errors.roleSelect && <span>This field is required</span>}
+              </div>
+            </div>
+            <div className={styles.fieldContainerStyle}>
+              <text className={styles.labelText}>
+                User Id <span className={styles.styledRequired}>*</span>
+              </text>
+              <TextField
+                id="userId"
+                variant="outlined"
+                {...register("userId", { required: true })}
+                placeholder="Enter User Id"
+                size="small"
+                className={styles.customizeSelect}
+              />
+              <div className={styles.styledError}>
+                {errors.userId && <span>This field is required</span>}
+              </div>
+            </div>
+            <div className={styles.fieldContainerStyle}>
+              <text className={styles.labelText}>
+                First Name <span className={styles.styledRequired}>*</span>
+              </text>
+              <TextField
+                id="firstName"
+                variant="outlined"
+                {...register("firstName", { required: true })}
+                placeholder="Enter First Name"
+                size="small"
+                className={styles.customizeSelect}
+              />
+              <div className={styles.styledError}>
+                {errors.firstName && <span>This field is required</span>}
+              </div>
+            </div>
+            <div className={styles.fieldContainerStyle}>
+              <text className={styles.labelText}>
+                Last Name <span className={styles.styledRequired}>*</span>
+              </text>
+              <TextField
+                id="lastName"
+                variant="outlined"
+                {...register("lastName", { required: true })}
+                placeholder="Enter Last Name"
+                size="small"
+                className={styles.customizeSelect}
+              />
+              <div className={styles.styledError}>
+                {errors.lastName && <span>This field is required</span>}
+              </div>
+            </div>
           </div>
         </form>
       </div>
