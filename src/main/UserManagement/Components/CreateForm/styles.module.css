@@ -2,7 +2,8 @@
   background-color: #ffffff;
   box-shadow: 0px 6px 12px #185ec414;
   border-radius: 12px;
-  height: 100vh;
+  height: 100%;
+  margin-bottom: 20px;
 }
 
 .headerTextStyle {
@@ -55,4 +56,18 @@
 
 .textFieldStyle {
   width: 300px;
+}
+
+.dateContainer {
+  display: flex;
+  align-items: center;
+}
+
+.dateStyle {
+  width: 250px;
+  background-color: #ffffff;
+}
+
+.styledButton {
+  width: 15%;
 }

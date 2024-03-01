@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import styles from "./styles.module.css";
-import DownloadIcon from "../../Assets/DownloadLogo";
+import DownloadIcon from "../../assets/DownloadLogo";
 import { DataGrid } from "@mui/x-data-grid";
 
 function Body() {

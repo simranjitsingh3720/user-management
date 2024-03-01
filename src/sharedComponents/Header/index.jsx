@@ -2,7 +2,7 @@ import { AppBar, Avatar, Button, IconButton, Toolbar } from "@mui/material";
 import React from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import styles from "./styles.module.css";
-import LogoutIcon from "../../Assets/LogoutIcon";
+import LogoutIcon from "../../assets/LogoutIcon";
 import { useNavigate } from "react-router-dom";
 
 const drawerWidth = 240;
