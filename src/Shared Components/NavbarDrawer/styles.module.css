@@ -36,3 +36,9 @@
 .expandIconStyle {
   margin-left: 12px;
 }
+
+.selected {
+  color: #185EC4;
+  background-color: #F2F7FF;
+  border-left: 4px solid #185EC4;
+}
