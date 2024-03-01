@@ -1,10 +1,10 @@
 import "./App.css";
 import React from "react";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import SignInPage from "./Main/Signin/SigninPage";
-import CreateUserMangementForm from "./Main/User Management/Components/CreateForm";
-import UserManagement from "./Main/User Management";
-import ResponsiveDrawer from "./Shared Components/LayoutDesign";
+import SignInPage from "./main/Signin/SigninPage";
+import CreateUserMangementForm from "./main/UserManagement/Components/CreateForm";
+import UserManagement from "./main/UserManagement";
+import ResponsiveDrawer from "./sharedComponents/LayoutDesign";
 
 function App() {
 

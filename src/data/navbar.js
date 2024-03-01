@@ -8,7 +8,7 @@ export const SideNavData = [
     icon: GridViewIcon,
   },
   {
-    label: "User Management",
+    label: "UserManagement",
     icon: ManageAccountsIcon,
   },
   {
@@ -30,7 +30,7 @@ export const SideNavData = [
     ],
   },
   {
-    label: "Client User Management",
+    label: "Client UserManagement",
     icon: GridViewIcon,
   },
   {

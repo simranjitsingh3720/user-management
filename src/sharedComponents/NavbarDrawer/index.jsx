@@ -1,6 +1,6 @@
 import * as React from "react";
 import Drawer from "@mui/material/Drawer";
-import TataNormalLogo from "../../Assets/TataNormalLogo";
+import TataNormalLogo from "../../assets/TataNormalLogo";
 import SearchInput from "../SearchInput";
 import {
   Collapse,

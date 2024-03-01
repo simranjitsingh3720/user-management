@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./styles.module.css";
-import EditLogo from "../../../../../Assets/EditLogo";
+import EditLogo from "../../../../../assets/EditLogo";
 import RenderStatus from "./RenderStatus";
 
 function List({ item }) {
