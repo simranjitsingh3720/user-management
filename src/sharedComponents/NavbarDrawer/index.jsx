@@ -14,8 +14,6 @@ import Styles from "./styles.module.css";
 import { SideNavData } from "../../data/navbar";
 import { drawerWidth } from "../../globalization/globalConstants";
 
-console.log("SideNavData", SideNavData);
-
 function NavbarDrawer({ setIsClosing, mobileOpen, setMobileOpen }) {
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   const [selectedParentIndex, setSelectedParentIndex] = React.useState(null);

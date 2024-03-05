@@ -49,7 +49,7 @@
 }
 
 .formContainer {
-  padding: 20px;
+  padding-top: 12px;
   display: flex;
   flex-wrap: wrap;
 }
@@ -70,4 +70,8 @@
 
 .styledButton {
   width: 15%;
+}
+
+.formMainContainer {
+  margin-bottom: 12px;
 }

@@ -4,11 +4,12 @@ import {
   Autocomplete,
   Checkbox,
   FormControlLabel,
+  IconButton,
   Radio,
   RadioGroup,
   TextField,
 } from "@mui/material";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { selectData } from "../../constants";
 import LeftArrow from "../../../../assets/LeftArrow";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
@@ -17,6 +18,7 @@ import { Button } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { useNavigate } from "react-router-dom";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -82,22 +84,28 @@ function CreateUserMangementForm() {
     handleSubmit,
     watch,
     setValue,
+    control,
     formState: { errors },
   } = useForm();
 
-  console.log();
-
-  console.log("errors", errors);
-
-  const roleSelect = watch("roleSelect");
-  console.log("roleSelect", roleSelect);
+  const navigate = useNavigate();
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className={styles.formMainContainer}
+    >
       <div className={styles.createNewUserContainer}>
         <div className={styles.formHeaderStyle}>
           <div className={styles.subHeader}>
-            <LeftArrow />
+            <IconButton
+              aria-label="back"
+              onClick={() => {
+                navigate("/home");
+              }}
+            >
+              <LeftArrow />
+            </IconButton>
             <span className={styles.headerTextStyle}>Create New User</span>
           </div>
         </div>
@@ -144,7 +152,7 @@ function CreateUserMangementForm() {
                   className={styles.customizeSelect}
                 />
                 <div className={styles.styledError}>
-                  {errors.userId && <span>This field is required</span>}
+                  {errors[item.value] && <span>This field is required</span>}
                 </div>
               </div>
             ))}
@@ -170,7 +178,6 @@ function CreateUserMangementForm() {
                     maxHeight: "200px",
                   },
                 }}
-                {...register("location", { required: true })}
               />
               <div className={styles.styledError}>
                 {errors.location && <span>This field is required</span>}
@@ -189,7 +196,7 @@ function CreateUserMangementForm() {
                 className={styles.customizeSelect}
               />
               <div className={styles.styledError}>
-                {errors.lastName && <span>This field is required</span>}
+                {errors.mobileNumber && <span>This field is required</span>}
               </div>
             </div>
             {formField2.map(({ label, value }) => (
@@ -197,32 +204,43 @@ function CreateUserMangementForm() {
                 <text className={styles.labelText}>
                   {label} <span className={styles.styledRequired}>*</span>
                 </text>
-                <Autocomplete
-                  multiple
-                  id={value}
-                  options={selectData}
-                  disableCloseOnSelect
-                  getOptionLabel={(option) => option.label}
-                  renderOption={(props, option, { selected }) => (
-                    <li {...props}>
-                      <Checkbox
-                        icon={icon}
-                        checkedIcon={checkedIcon}
-                        style={{ marginRight: 8 }}
-                        checked={selected}
-                      />
-                      {option.label}
-                    </li>
+                <Controller
+                  name={value} // Name of the field in the form data
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <Autocomplete
+                      {...field}
+                      multiple
+                      id={value}
+                      options={selectData}
+                      disableCloseOnSelect
+                      getOptionLabel={(option) => option.label}
+                      onChange={(event, newValue) => {
+                        field.onChange(newValue);
+                      }}
+                      renderOption={(props, option, { selected }) => (
+                        <li {...props}>
+                          <Checkbox
+                            icon={icon}
+                            checkedIcon={checkedIcon}
+                            style={{ marginRight: 8 }}
+                            checked={selected}
+                          />
+                          {option.label}
+                        </li>
+                      )}
+                      size="small"
+                      className={styles.customizeSelect}
+                      renderInput={(params) => (
+                        <TextField {...params} placeholder="Select" />
+                      )}
+                    />
                   )}
-                  size="small"
-                  className={styles.customizeSelect}
-                  renderInput={(params) => (
-                    <TextField {...params} placeholder="Select" />
-                  )}
-                  {...register(value, { required: true })}
                 />
+
                 <div className={styles.styledError}>
-                  {errors.value && <span>This field is required</span>}
+                  {errors[value] && <span>This field is required</span>}
                 </div>
               </div>
             ))}
@@ -240,7 +258,7 @@ function CreateUserMangementForm() {
                   className={styles.customizeSelect}
                 />
                 <div className={styles.styledError}>
-                  {errors.lastName && <span>This field is required</span>}
+                  {errors[item.value] && <span>This field is required</span>}
                 </div>
               </div>
             ))}
@@ -299,7 +317,7 @@ function CreateUserMangementForm() {
                 />
               </RadioGroup>
               <div className={styles.styledError}>
-                {errors.lastName && <span>This field is required</span>}
+                {errors.insillionStatus && <span>This field is required</span>}
               </div>
             </div>
           </div>
