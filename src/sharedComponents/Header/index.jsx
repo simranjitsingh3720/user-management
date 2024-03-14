@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 const drawerWidth = 240;
 
-function Header({ handleDrawerToggle }) {
+function Header({ handleDrawerToggle, selectedNavbar, selectedParentIndex }) {
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -35,7 +35,8 @@ function Header({ handleDrawerToggle }) {
               <MenuIcon />
             </IconButton>
             <div noWrap className={styles.userManagementText}>
-              User Management Portal
+              {selectedNavbar}
+              {selectedParentIndex}
             </div>
           </Toolbar>
           <div className={styles.logoutContainer}>

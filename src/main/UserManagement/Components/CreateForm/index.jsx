@@ -101,7 +101,7 @@ function CreateUserMangementForm() {
             <IconButton
               aria-label="back"
               onClick={() => {
-                navigate("/home");
+                navigate("/user-management");
               }}
             >
               <LeftArrow />
@@ -109,216 +109,213 @@ function CreateUserMangementForm() {
             <span className={styles.headerTextStyle}>Create New User</span>
           </div>
         </div>
-        <div>
-          <div className={styles.formContainer}>
-            <div className={styles.fieldContainerStyle}>
-              <text className={styles.labelText}>
-                Role <span className={styles.styledRequired}>*</span>
-              </text>
-              <Autocomplete
-                disablePortal
-                id="roleSelect"
-                options={selectData}
-                className={styles.customizeSelect}
-                size="small"
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    placeholder="Select"
-                    {...register("roleSelect", { required: true })}
-                  />
-                )}
-                ListboxProps={{
-                  style: {
-                    maxHeight: "200px",
-                  },
-                }}
-              />
-              <div className={styles.styledError}>
-                {errors.roleSelect && <span>This field is required</span>}
-              </div>
-            </div>
-            {formField1.map((item) => (
-              <div className={styles.fieldContainerStyle}>
-                <text className={styles.labelText}>
-                  {item.label} <span className={styles.styledRequired}>*</span>
-                </text>
+        <div className={styles.formContainer}>
+          <div className={styles.fieldContainerStyle}>
+            <text className={styles.labelText}>
+              Role <span className={styles.styledRequired}>*</span>
+            </text>
+            <Autocomplete
+              disablePortal
+              id="roleSelect"
+              options={selectData}
+              className={styles.customizeSelect}
+              size="small"
+              renderInput={(params) => (
                 <TextField
-                  id={item.value}
-                  variant="outlined"
-                  {...register(item.value, { required: true })}
-                  placeholder={item.placeholder}
-                  size="small"
-                  className={styles.customizeSelect}
+                  {...params}
+                  placeholder="Select"
+                  {...register("roleSelect", { required: true })}
                 />
-                <div className={styles.styledError}>
-                  {errors[item.value] && <span>This field is required</span>}
-                </div>
-              </div>
-            ))}
-            <div className={styles.fieldContainerStyle}>
-              <text className={styles.labelText}>
-                Location <span className={styles.styledRequired}>*</span>
-              </text>
-              <Autocomplete
-                disablePortal
-                id="location"
-                options={selectData}
-                className={styles.customizeSelect}
-                size="small"
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    placeholder="Select"
-                    {...register("location", { required: true })}
-                  />
-                )}
-                ListboxProps={{
-                  style: {
-                    maxHeight: "200px",
-                  },
-                }}
-              />
-              <div className={styles.styledError}>
-                {errors.location && <span>This field is required</span>}
-              </div>
+              )}
+              ListboxProps={{
+                style: {
+                  maxHeight: "200px",
+                },
+              }}
+            />
+            <div className={styles.styledError}>
+              {errors.roleSelect && <span>This field is required</span>}
             </div>
+          </div>
+          {formField1.map((item) => (
             <div className={styles.fieldContainerStyle}>
               <text className={styles.labelText}>
-                Mobile Number <span className={styles.styledRequired}>*</span>
+                {item.label} <span className={styles.styledRequired}>*</span>
               </text>
               <TextField
-                id="mobileNumber"
+                id={item.value}
                 variant="outlined"
-                {...register("mobileNumber", { required: true })}
-                placeholder="Enter Mobile Number"
+                {...register(item.value, { required: true })}
+                placeholder={item.placeholder}
                 size="small"
                 className={styles.customizeSelect}
               />
               <div className={styles.styledError}>
-                {errors.mobileNumber && <span>This field is required</span>}
+                {errors[item.value] && <span>This field is required</span>}
               </div>
             </div>
-            {formField2.map(({ label, value }) => (
-              <div className={styles.fieldContainerStyle}>
-                <text className={styles.labelText}>
-                  {label} <span className={styles.styledRequired}>*</span>
-                </text>
-                <Controller
-                  name={value} // Name of the field in the form data
-                  control={control}
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <Autocomplete
-                      {...field}
-                      multiple
-                      id={value}
-                      options={selectData}
-                      disableCloseOnSelect
-                      getOptionLabel={(option) => option.label}
-                      onChange={(event, newValue) => {
-                        field.onChange(newValue);
-                      }}
-                      renderOption={(props, option, { selected }) => (
-                        <li {...props}>
-                          <Checkbox
-                            icon={icon}
-                            checkedIcon={checkedIcon}
-                            style={{ marginRight: 8 }}
-                            checked={selected}
-                          />
-                          {option.label}
-                        </li>
-                      )}
-                      size="small"
-                      className={styles.customizeSelect}
-                      renderInput={(params) => (
-                        <TextField {...params} placeholder="Select" />
-                      )}
-                    />
-                  )}
-                />
-
-                <div className={styles.styledError}>
-                  {errors[value] && <span>This field is required</span>}
-                </div>
-              </div>
-            ))}
-            {formField.map((item) => (
-              <div className={styles.fieldContainerStyle}>
-                <text className={styles.labelText}>
-                  {item.label} <span className={styles.styledRequired}>*</span>
-                </text>
+          ))}
+          <div className={styles.fieldContainerStyle}>
+            <text className={styles.labelText}>
+              Location <span className={styles.styledRequired}>*</span>
+            </text>
+            <Autocomplete
+              disablePortal
+              id="location"
+              options={selectData}
+              className={styles.customizeSelect}
+              size="small"
+              renderInput={(params) => (
                 <TextField
-                  id={item.value}
-                  variant="outlined"
-                  {...register(item.value, { required: true })}
-                  placeholder="Enter Last Name"
-                  size="small"
-                  className={styles.customizeSelect}
+                  {...params}
+                  placeholder="Select"
+                  {...register("location", { required: true })}
                 />
-                <div className={styles.styledError}>
-                  {errors[item.value] && <span>This field is required</span>}
-                </div>
-              </div>
-            ))}
+              )}
+              ListboxProps={{
+                style: {
+                  maxHeight: "200px",
+                },
+              }}
+            />
+            <div className={styles.styledError}>
+              {errors.location && <span>This field is required</span>}
+            </div>
+          </div>
+          <div className={styles.fieldContainerStyle}>
+            <text className={styles.labelText}>
+              Mobile Number <span className={styles.styledRequired}>*</span>
+            </text>
+            <TextField
+              id="mobileNumber"
+              variant="outlined"
+              {...register("mobileNumber", { required: true })}
+              placeholder="Enter Mobile Number"
+              size="small"
+              className={styles.customizeSelect}
+            />
+            <div className={styles.styledError}>
+              {errors.mobileNumber && <span>This field is required</span>}
+            </div>
+          </div>
+          {formField2.map(({ label, value }) => (
             <div className={styles.fieldContainerStyle}>
               <text className={styles.labelText}>
-                Active Period <span className={styles.styledRequired}>*</span>
+                {label} <span className={styles.styledRequired}>*</span>
               </text>
-              <div className={styles.dateContainer}>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DatePicker
-                    label="Select Start Date"
-                    className={styles.dateStyle}
-                    {...register("startDate", { required: true })}
-                    slotProps={{ textField: { size: "small" } }}
-                    value={watch("startDate")}
-                    onChange={(date) => setValue("startDate", date)}
+              <Controller
+                name={value} // Name of the field in the form data
+                control={control}
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <Autocomplete
+                    {...field}
+                    multiple
+                    id={value}
+                    options={selectData}
+                    disableCloseOnSelect
+                    getOptionLabel={(option) => option.label}
+                    onChange={(event, newValue) => {
+                      field.onChange(newValue);
+                    }}
+                    renderOption={(props, option, { selected }) => (
+                      <li {...props}>
+                        <Checkbox
+                          icon={icon}
+                          checkedIcon={checkedIcon}
+                          style={{ marginRight: 8 }}
+                          checked={selected}
+                        />
+                        {option.label}
+                      </li>
+                    )}
+                    size="small"
+                    className={styles.customizeSelect}
+                    renderInput={(params) => (
+                      <TextField {...params} placeholder="Select" />
+                    )}
                   />
-                </LocalizationProvider>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DatePicker
-                    label="Select Expiry Date"
-                    className={styles.dateStyle}
-                    {...register("expiryDate", { required: true })}
-                    value={watch("expiryDate")}
-                    onChange={(date) => setValue("expiryDate", date)}
-                    slotProps={{ textField: { size: "small" } }}
-                  />
-                </LocalizationProvider>
-              </div>
+                )}
+              />
+
               <div className={styles.styledError}>
-                {errors.lastName && <span>This field is required</span>}
+                {errors[value] && <span>This field is required</span>}
               </div>
             </div>
+          ))}
+          {formField.map((item) => (
             <div className={styles.fieldContainerStyle}>
               <text className={styles.labelText}>
-                Insillion Status{" "}
-                <span className={styles.styledRequired}>*</span>
+                {item.label} <span className={styles.styledRequired}>*</span>
               </text>
-              <RadioGroup
-                row
-                aria-labelledby="insillion-status-row-radio-buttons-group-label"
-                name="insillionStatus"
-              >
-                <FormControlLabel
-                  value="active"
-                  control={<Radio />}
-                  label="Active"
-                  className={styles.radioStyle}
-                  {...register("insillionStatus", { required: true })}
-                />
-                <FormControlLabel
-                  value="inactive"
-                  control={<Radio />}
-                  label="Inactive"
-                  {...register("insillionStatus", { required: true })}
-                />
-              </RadioGroup>
+              <TextField
+                id={item.value}
+                variant="outlined"
+                {...register(item.value, { required: true })}
+                placeholder="Enter Last Name"
+                size="small"
+                className={styles.customizeSelect}
+              />
               <div className={styles.styledError}>
-                {errors.insillionStatus && <span>This field is required</span>}
+                {errors[item.value] && <span>This field is required</span>}
               </div>
+            </div>
+          ))}
+          <div className={styles.fieldContainerStyle}>
+            <text className={styles.labelText}>
+              Active Period <span className={styles.styledRequired}>*</span>
+            </text>
+            <div className={styles.dateContainer}>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                  label="Select Start Date"
+                  className={styles.dateStyle}
+                  {...register("startDate", { required: true })}
+                  slotProps={{ textField: { size: "small" } }}
+                  value={watch("startDate")}
+                  onChange={(date) => setValue("startDate", date)}
+                />
+              </LocalizationProvider>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                  label="Select Expiry Date"
+                  className={styles.dateStyle}
+                  {...register("expiryDate", { required: true })}
+                  value={watch("expiryDate")}
+                  onChange={(date) => setValue("expiryDate", date)}
+                  slotProps={{ textField: { size: "small" } }}
+                />
+              </LocalizationProvider>
+            </div>
+            <div className={styles.styledError}>
+              {errors.lastName && <span>This field is required</span>}
+            </div>
+          </div>
+          <div className={styles.fieldContainerStyle}>
+            <text className={styles.labelText}>
+              Insillion Status <span className={styles.styledRequired}>*</span>
+            </text>
+            <RadioGroup
+              row
+              aria-labelledby="insillion-status-row-radio-buttons-group-label"
+              name="insillionStatus"
+            >
+              <FormControlLabel
+                value="active"
+                control={<Radio />}
+                label="Active"
+                className={styles.radioStyle}
+                {...register("insillionStatus", { required: true })}
+              />
+              <FormControlLabel
+                value="inactive"
+                control={<Radio />}
+                label="Inactive"
+                {...register("insillionStatus", { required: true })}
+              />
+            </RadioGroup>
+            <div className={styles.styledError}>
+              {errors.insillionStatus && <span>This field is required</span>}
             </div>
           </div>
         </div>

@@ -8,8 +8,14 @@ export const SideNavData = [
     icon: GridViewIcon,
   },
   {
-    label: "UserManagement",
+    label: "User Management",
     icon: ManageAccountsIcon,
+    navigateRoute: "user-management",
+  },
+  {
+    label: "Permission",
+    icon: ManageAccountsIcon,
+    navigateRoute: "permission",
   },
   {
     label: "Producer Management",
@@ -20,11 +26,11 @@ export const SideNavData = [
     icon: DataArrayIcon,
     child: [
       {
-        label: "BANCA Login",
+        label: "BANCA Login-1",
         icon: DataArrayIcon,
       },
       {
-        label: "BANCA Login",
+        label: "BANCA Login-2",
         icon: DataArrayIcon,
       },
     ],

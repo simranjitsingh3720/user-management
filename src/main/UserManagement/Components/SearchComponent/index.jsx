@@ -20,7 +20,7 @@ function SearchComponent() {
   const navigate = useNavigate();
 
   const handleCreateNewForm = () => {
-    navigate("/user-management-form");
+    navigate("/user-management/user-management-form");
   };
 
   return (

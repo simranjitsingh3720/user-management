@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import Drawer from "@mui/material/Drawer";
 import TataNormalLogo from "../../assets/TataNormalLogo";
 import SearchInput from "../SearchInput";
@@ -13,25 +13,39 @@ import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import Styles from "./styles.module.css";
 import { SideNavData } from "../../data/navbar";
 import { drawerWidth } from "../../globalization/globalConstants";
+import { useNavigate } from "react-router-dom";
 
-function NavbarDrawer({ setIsClosing, mobileOpen, setMobileOpen }) {
-  const [selectedIndex, setSelectedIndex] = React.useState(0);
-  const [selectedParentIndex, setSelectedParentIndex] = React.useState(null);
-  const [open, setOpen] = React.useState(false);
+function NavbarDrawer({
+  setIsClosing,
+  mobileOpen,
+  setMobileOpen,
+  selectedNavbar,
+  setSelectedNavbar,
+  selectedParentIndex,
+  setSelectedParentIndex,
+}) {
+  const [open, setOpen] = useState(false);
+  const [filteredNavData, setFilteredNavData] = useState(SideNavData);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  console.log("selectedNavbar", selectedNavbar);
 
   const handleClick = () => {
     setOpen(!open);
   };
 
-  const handleListItemClick = (event, index) => {
+  const navigate = useNavigate();
+
+  const handleListItemClick = (event, index, navigateRoute, label) => {
+    navigate(`/${navigateRoute}`);
     setSelectedParentIndex(null);
-    setSelectedIndex(index);
+    setSelectedNavbar(label);
     setOpen(false);
   };
 
-  const handleCollpaseListItemClick = (event, index) => {
-    setSelectedParentIndex(index);
-    setSelectedIndex(null);
+  const handleCollpaseListItemClick = (event, index, label, childLabel) => {
+    setSelectedParentIndex(`${label}/${childLabel}`);
+    setSelectedNavbar(null);
   };
 
   const handleDrawerClose = () => {
@@ -43,10 +57,18 @@ function NavbarDrawer({ setIsClosing, mobileOpen, setMobileOpen }) {
     setIsClosing(false);
   };
 
-  const handleSearch = (query) => {
-    console.log(query);
-  };
+  // const handleSearch = (query) => {
+  //   console.log(query);
+  // };
 
+  console.log("filteredNavData", filteredNavData);
+
+  useEffect(() => {
+    const filteredData = SideNavData.filter((item) =>
+      item.label.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    setFilteredNavData(filteredData);
+  }, [searchQuery]);
   const drawer = (
     <div>
       <div className={Styles.IconContainer}>
@@ -55,16 +77,23 @@ function NavbarDrawer({ setIsClosing, mobileOpen, setMobileOpen }) {
         </div>
         <div className={Styles.styledText}>User Management Portal</div>
         <div className={Styles.StyledSearch}>
-          <SearchInput onSearch={handleSearch} />
+          <SearchInput onSearch={(query) => setSearchQuery(query)} />
         </div>
       </div>
       <List sx={{ marginRight: "12px" }}>
-        {SideNavData.map((obj, index) =>
+        {filteredNavData.map((obj, index) =>
           !obj.child ? (
             <ListItem key={index} disablePadding>
               <ListItemButton
-                selected={selectedIndex === index}
-                onClick={(event) => handleListItemClick(event, index)}
+                selected={selectedNavbar === obj.label}
+                onClick={(event) =>
+                  handleListItemClick(
+                    event,
+                    index,
+                    obj.navigateRoute,
+                    obj.label
+                  )
+                }
                 sx={{
                   "&.Mui-selected": {
                     color: "#185EC4",
@@ -75,7 +104,7 @@ function NavbarDrawer({ setIsClosing, mobileOpen, setMobileOpen }) {
               >
                 <ListItemIcon
                   sx={{
-                    color: selectedIndex === index ? "#185EC4" : "#7E84A3", // Change color when selected
+                    color: selectedNavbar === obj.label ? "#185EC4" : "#7E84A3", // Change color when selected
                   }}
                 >
                   <obj.icon className={Styles.navbarIcon} />
@@ -95,7 +124,7 @@ function NavbarDrawer({ setIsClosing, mobileOpen, setMobileOpen }) {
                 <ListItemIcon
                   sx={{
                     color:
-                      selectedParentIndex === index ? "#185EC4" : "#7E84A3", // Change color when selected
+                      selectedParentIndex === obj.label ? "#185EC4" : "#7E84A3", // Change color when selected
                   }}
                 >
                   <obj.icon />
@@ -112,9 +141,17 @@ function NavbarDrawer({ setIsClosing, mobileOpen, setMobileOpen }) {
                   {obj.child.map((childObj, index) => (
                     <ListItem key={childObj.label} disablePadding>
                       <ListItemButton
-                        selected={selectedParentIndex === index} // Apply selectedIndex
+                        selected={
+                          selectedParentIndex ===
+                          `${obj.label}/${childObj.label}`
+                        } // Apply selectedNavbar
                         onClick={(event) =>
-                          handleCollpaseListItemClick(event, index)
+                          handleCollpaseListItemClick(
+                            event,
+                            index,
+                            obj.label,
+                            childObj.label
+                          )
                         }
                         sx={{
                           "&.Mui-selected": {
@@ -127,7 +164,8 @@ function NavbarDrawer({ setIsClosing, mobileOpen, setMobileOpen }) {
                         <ListItemIcon
                           sx={{
                             color:
-                              selectedParentIndex === index
+                              selectedParentIndex ===
+                              `${obj.label}/${childObj.label}`
                                 ? "#185EC4"
                                 : "#7E84A3", // Change color when selected
                           }}
