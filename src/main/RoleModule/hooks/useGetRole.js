@@ -2,14 +2,13 @@ import axiosInstance from "../../../core/axiosInstance"; // Import the instance
 
 import { useEffect, useState } from "react";
 
-function useGetPrivilege(pageChange = 1) {
+function useGetRole(pageChange = 1) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [toast, setToast] = useState({ open: false, error: "" });
 
   const fetchData = async (key, value) => {
     try {
-      let url = `/api/permission?pageNo=${pageChange - 1}`;
+      let url = `/api/role?pageNo=${pageChange - 1}`;
       if (key && value) {
         url += `&${key}=${value}`;
       }
@@ -18,12 +17,6 @@ function useGetPrivilege(pageChange = 1) {
       setData(response.data);
     } catch (error) {
       console.log(error);
-      setToast({
-        open: true,
-        error:
-          error?.response?.data?.error?.message ||
-          "An error occurred. Please try again.",
-      });
       setData([]);
     } finally {
       setLoading(false);
@@ -33,7 +26,7 @@ function useGetPrivilege(pageChange = 1) {
     fetchData();
   }, [pageChange]);
 
-  return { data, loading, fetchData, setLoading, toast, setToast };
+  return { data, loading, fetchData, setLoading };
 }
 
-export default useGetPrivilege;
+export default useGetRole;

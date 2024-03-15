@@ -1,28 +1,34 @@
 import React, { useState } from "react";
 import SearchComponent from "./SearchComponent";
-import Table from "./Table";
-import { Pagination, Snackbar } from "@mui/material";
+import { Pagination } from "@mui/material";
+import NoDataFound from "../PermissionModule/NoDataCard";
 import styles from "./styles.module.css";
-import useGetPrivilege from "./hooks/useGetPrivilege";
-import ListLoader from "./ListLoader";
+import ListLoader from "../PermissionModule/ListLoader";
+import useGetRole from "./hooks/useGetRole";
+import Table from "./Table";
 import TableHeader from "./Table/TableHeader";
-import NoDataFound from "./NoDataCard";
 
-function PermissionModule() {
+function Roles() {
   const [searched, setSearched] = useState("");
   const [query, setQuery] = useState("");
   const [pageChange, setPageChange] = useState(1);
 
-  const { data, loading, fetchData, setLoading, toast, setToast } =
-    useGetPrivilege(pageChange);
+  const { data, loading, fetchData, setLoading } = useGetRole(pageChange);
 
   const handlePaginationChange = (event, page) => {
     setLoading(true);
     setPageChange(page);
   };
 
-  console.log("loading", loading);
-
+  const newData = {
+    data: [
+      {
+        roleName: "New Role",
+        permissions: ["write", "read", "update"],
+        status: "active",
+      },
+    ],
+  };
   return (
     <div>
       <SearchComponent
@@ -38,9 +44,9 @@ function PermissionModule() {
             <TableHeader />
             <ListLoader />
           </>
-        ) : data?.data && data?.data.length ? (
+        ) : newData?.data && newData?.data.length ? (
           <>
-            <Table ListData={data?.data} loading={loading} />
+            <Table ListData={newData?.data} loading={loading} />
             <div className={styles.pageFooter}>
               {/* <div className={styles.rowsPerPage}>
             <p className={styles.totalRecordStyle}>Showing Results:</p>
@@ -73,19 +79,8 @@ function PermissionModule() {
           <NoDataFound />
         )}
       </div>
-      <Snackbar
-        open={toast.open}
-        autoHideDuration={6000}
-        onClose={() => setToast({ ...toast, open: toast.false })}
-        message={toast.error}
-        TransitionComponent="SlideTransition"
-        anchorOrigin={{
-          vertical: "top",
-          horizontal: "center",
-        }}
-      />
     </div>
   );
 }
 
-export default PermissionModule;
+export default Roles;

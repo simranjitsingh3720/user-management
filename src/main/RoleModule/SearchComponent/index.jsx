@@ -2,7 +2,8 @@ import { Button, MenuItem, Select, TextField, Typography } from "@mui/material";
 import React from "react";
 import styles from "./styles.module.css";
 import { useNavigate } from "react-router-dom";
-import { PrivilegeSearch } from "../constants";
+import { PrivilegeSearch } from "../../PermissionModule/constants";
+import { RoleSearch } from "../constants";
 
 function SearchComponent({
   searched,
@@ -18,7 +19,7 @@ function SearchComponent({
   const navigate = useNavigate();
 
   const handleCreateNewForm = () => {
-    navigate(`/permission/privilege-form`);
+    navigate("/roles/role-form");
   };
 
   const handleGo = () => {
@@ -44,7 +45,7 @@ function SearchComponent({
                 : () => <div className={styles.placeholderStyle}>Select</div>
             }
           >
-            {PrivilegeSearch.map((item) => (
+            {RoleSearch.map((item) => (
               <MenuItem value={item.value} className={styles.styledOptionText}>
                 {item.label}
               </MenuItem>
@@ -75,7 +76,7 @@ function SearchComponent({
             sx={{ textTransform: "none" }}
           >
             <Typography noWrap className={styles.buttonTextStyle}>
-              Create New privilege
+              Create New Role
             </Typography>
           </Button>
         </div>

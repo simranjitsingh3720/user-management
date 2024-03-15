@@ -18,6 +18,11 @@ export const SideNavData = [
     navigateRoute: "permission",
   },
   {
+    label: "Roles",
+    icon: ManageAccountsIcon,
+    navigateRoute: "roles",
+  },
+  {
     label: "Producer Management",
     icon: ManageAccountsIcon,
   },

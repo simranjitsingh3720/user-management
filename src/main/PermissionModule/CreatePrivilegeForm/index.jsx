@@ -7,6 +7,7 @@ import {
   MenuItem,
   OutlinedInput,
   Select,
+  Snackbar,
   TextField,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
@@ -40,9 +41,7 @@ const PrivilegeForm = () => {
 
   const [selectedTags, setSelectedTags] = useState([]);
 
-  const { postData, loading } = useCreatePrivilege();
-
-  console.log("loading", loading);
+  const { postData, loading, toast, setToast } = useCreatePrivilege();
 
   const onSubmit = (data) => {
     postData(data);
@@ -515,6 +514,17 @@ const PrivilegeForm = () => {
           Submit
         </Button>
       </form>
+      <Snackbar
+        open={toast}
+        autoHideDuration={6000}
+        onClose={() => setToast(false)}
+        message="An error occurred. Please try again."
+        TransitionComponent="SlideTransition"
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "center",
+        }}
+      />
     </div>
   );
 };
