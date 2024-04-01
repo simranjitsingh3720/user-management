@@ -5,11 +5,45 @@ import NavbarDrawer from "../NavbarDrawer";
 import Header from "../Header";
 import Styles from "./styles.module.css";
 import { drawerWidth } from "../../globalization/globalConstants";
+import { useLocation } from "react-router-dom";
+import { SideNavData } from "../../data/navbar";
+
+export const getLabelFromPath = (pathData) => {
+  // Iterate through the SideNavData array
+  for (const item of SideNavData) {
+    // Check if navigateRoute property is present and matches pathData
+    if (item.navigateRoute && item.navigateRoute === pathData) {
+      return item.label; // Return the label if match found
+    }
+    // If child items are present, check them recursively
+    if (item.child) {
+      for (const childItem of item.child) {
+        if (childItem.navigateRoute && childItem.navigateRoute === pathData) {
+          return childItem.label; // Return the child label if match found
+        }
+      }
+    }
+  }
+  return null; // Return null if no match found
+};
 
 function ResponsiveDrawer({ showSidebarAndHeader, children }) {
+  const location = useLocation();
+  const path = location.pathname; // Get the pathname from the location
+
+  // Split the pathname by '/' and get the last part
+  const parts = path.split("/");
+  const defaultRoute = parts[parts.length - 1];
+
+  console.log("defaultRoute", defaultRoute);
+
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
-  const [selectedNavbar, setSelectedNavbar] = useState("Permission");
+  const [selectedNavbar, setSelectedNavbar] = useState(
+    getLabelFromPath(defaultRoute) || "Permission"
+  );
+
+  console.log("selectedNavbar", selectedNavbar);
   const [selectedParentIndex, setSelectedParentIndex] = useState(null);
 
   const handleDrawerToggle = () => {

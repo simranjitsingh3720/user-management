@@ -12,7 +12,7 @@ function SignInPage() {
   const navigate = useNavigate();
 
   const onSubmit = (data) => {
-    navigate("/user-management");
+    navigate("/permission");
   };
   const {
     register,

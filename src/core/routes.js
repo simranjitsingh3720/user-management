@@ -16,7 +16,7 @@ const AppRoutes = () => {
         path="/"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
-            <UserManagement />
+            <PermissionModule />
           </ResponsiveDrawer>
         }
       />

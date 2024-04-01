@@ -1,3 +1,3 @@
 export const drawerWidth = 240;
 
-export const URL = "https://dev-usermgmt.tataaig.com";
+export const BASE_URL = "https://dev-usermgmt.tataaig.com";

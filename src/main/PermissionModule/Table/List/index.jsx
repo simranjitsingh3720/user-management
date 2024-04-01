@@ -56,20 +56,6 @@ function List({ item, fetchData, setLoading }) {
         <div className={styles.privilegeTypeCell}>
           {capitalizeFirstLetter(item?.permissionType)}
         </div>
-        {/* <div className={styles.moduleCell}>
-        <text>
-          Module:<span className={styles.styleSpan}>{item.module || "-"}</span>
-        </text>
-        <text>
-          Sub-Module:
-          <span className={styles.styleSpan}>{item.subModule || "-"}</span>
-        </text>
-      </div> */}
-        {/* <div className={styles.apiCell}>{item.api || "-"}</div> */}
-        {/* <div className={styles.crudCell}>
-        {item?.crud?.join(", ").toUpperCase()}
-      </div> */}
-
         <div className={styles.createdAt}> {item.createdAt}</div>
         <div className={styles.privilegeStatusCell}>
           <div

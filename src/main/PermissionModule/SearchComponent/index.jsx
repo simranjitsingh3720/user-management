@@ -47,7 +47,7 @@ function SearchComponent({ setQuery, setLoading, setPageChange }) {
           <TextField
             id="search"
             variant="outlined"
-            placeholder="Search by permission name..."
+            placeholder="Search by Name/Type..."
             size="small"
             className={styles.textFieldStyle}
             onChange={(e) => {
