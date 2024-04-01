@@ -3,7 +3,6 @@ import React from "react";
 import styles from "./styles.module.css";
 
 function RenderStatus({ status }) {
-  console.log("status", status);
   const [insillionStatus, setInsillionStatus] = React.useState(status);
 
   const handleChange = (event) => {

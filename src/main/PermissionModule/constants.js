@@ -56,10 +56,6 @@ export const CrudSelect = [
     label: "Read",
     value: "read",
   },
-  {
-    label: "All",
-    value: "all",
-  },
 ];
 
 export const item = [

@@ -19,7 +19,6 @@ function List({ item }) {
   const navigate = useNavigate();
 
   const handleEditClick = (roleName) => {
-    console.log("roleName", roleName);
     navigate(`/roles/role-form/${roleName}`);
     // navigate("/permission/privilege-form", { state: { item } }); // Pass item data as state
   };

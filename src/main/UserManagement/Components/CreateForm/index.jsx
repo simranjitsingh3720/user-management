@@ -76,9 +76,7 @@ const formField = [
 ];
 
 function CreateUserMangementForm() {
-  const onSubmit = (data) => {
-    console.log(data);
-  };
+  const onSubmit = (data) => {};
   const {
     register,
     handleSubmit,

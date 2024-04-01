@@ -2,17 +2,13 @@ import axiosInstance from "../../../core/axiosInstance"; // Import the instance
 
 import { useEffect, useState } from "react";
 
-function useGetRole(pageChange = 1) {
+function useGetAllModule() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const fetchData = async (key, value) => {
     try {
-      let url = `/api/role?pageNo=${pageChange - 1}`;
-      if (key && value) {
-        url += `&${key}=${value}`;
-      }
-      const response = await axiosInstance.get(url);
+      const response = await axiosInstance.get("api/module/all");
       setData(response.data);
     } catch (error) {
       setData([]);
@@ -22,9 +18,14 @@ function useGetRole(pageChange = 1) {
   };
   useEffect(() => {
     fetchData();
-  }, [pageChange]);
+  }, []);
 
-  return { data, loading, fetchData, setLoading };
+  return {
+    AllModuleData: data,
+    AllModuleLoading: loading,
+    AllModuleFetchData: fetchData,
+    setAllModuleLoading: setLoading,
+  };
 }
 
-export default useGetRole;
+export default useGetAllModule;

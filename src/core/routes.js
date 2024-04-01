@@ -5,9 +5,9 @@ import UserManagement from "../main/UserManagement";
 import SignInPage from "../main/Signin/SigninPage";
 import CreateUserManagementForm from "../main/UserManagement/Components/CreateForm";
 import PermissionModule from "../main/PermissionModule";
-import PrivilegeForm from "../main/PermissionModule/CreatePrivilegeForm";
 import RoleModule from "../main/RoleModule";
 import CreateRoleForm from "../main/RoleModule/CreateRoleForm";
+import CreateNewUserContainer from "../main/PermissionModule/CreateNewPrivilegeForm";
 
 const AppRoutes = () => {
   return (
@@ -54,10 +54,10 @@ const AppRoutes = () => {
         }
       />
       <Route
-        path="/permission/privilege-form/:name?"
+        path="/permission/permission-form"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PrivilegeForm />
+            <CreateNewUserContainer />
           </ResponsiveDrawer>
         }
       />

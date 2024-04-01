@@ -10,11 +10,11 @@ import {
   Snackbar,
   TextField,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import LeftArrow from "../../../assets/LeftArrow";
 import styles from "./styles.module.css";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { selectData } from "../../UserManagement/constants";
 import {
   CrudSelect,
@@ -23,25 +23,13 @@ import {
 } from "../constants";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
-import CheckBoxIcon from "@mui/icons-material/CheckBox";
 
 import useCreatePrivilege from "../hooks/useCreatePrivilege";
 
-const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
-const checkedIcon = <CheckBoxIcon fontSize="small" />;
-
 const PrivilegeForm = () => {
-  const { name } = useParams();
-
-  const location = useLocation();
-  //   const { state: { item } = {} } = location;
-
-  //   console.log("item", item);
-
   const [selectedTags, setSelectedTags] = useState([]);
 
-  const { postData, loading, toast, setToast } = useCreatePrivilege();
+  const { postData, toast, setToast } = useCreatePrivilege();
 
   const onSubmit = (data) => {
     postData(data);
@@ -68,31 +56,6 @@ const PrivilegeForm = () => {
     },
   });
 
-  //   useEffect(() => {
-  //     if (item) {
-  //       // If item data is provided, set default form values
-  //       setValue("items", item);
-  //     }
-  //   }, [item, setValue]);
-
-  //   useEffect(() => {
-  //     if (name) {
-  //       // If an ID is provided (i.e., editing mode), fetch privilege data by ID
-  //       const fetchPrivilegeData = async () => {
-  //         try {
-  //           const privilegeData = await getPrivilegeById(id); // Call your API function to get privilege data by ID
-  //           if (privilegeData) {
-  //             // If privilege data is retrieved successfully, set the default form values
-  //             setValue("items", privilegeData.items);
-  //           }
-  //         } catch (error) {
-  //           console.error("Error fetching privilege data:", error);
-  //         }
-  //       };
-  //       fetchPrivilegeData();
-  //     }
-  //   }, [id, setValue]);
-
   const handleRemoveRow = (index) => {
     // Remove the row from the fields array
     remove(index);
@@ -112,8 +75,6 @@ const PrivilegeForm = () => {
     setSelectedTags(updatedSelectedTags);
     setValue(`items[${index}].permissionType`, selectedValues);
   };
-
-  console.log("selectedTags", selectedTags[0]);
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -476,19 +437,6 @@ const PrivilegeForm = () => {
               ))}
             </ul>
             <div className={styles.buttonContainer}>
-              {/* <Button
-                type="button"
-                variant="contained"
-                onClick={() =>
-                  append({
-                    name: "",
-                    privilegeType: "api",
-                    privilegeStatus: "active",
-                  })
-                }
-              >
-                Add More
-              </Button> */}
               <IconButton
                 aria-label="back"
                 type="button"

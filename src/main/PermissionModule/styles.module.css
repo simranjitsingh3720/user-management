@@ -5,5 +5,17 @@
 .pageFooter {
   display: flex;
   justify-content: flex-end;
-  margin: 20px 0px;
+  /* margin: 20px 0px; */
+}
+
+.marginFotter {
+  margin-bottom: 20px !important;
+}
+
+.tableContainerStyle {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+  background-color: #f7faff;
 }

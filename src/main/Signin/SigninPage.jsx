@@ -12,7 +12,6 @@ function SignInPage() {
   const navigate = useNavigate();
 
   const onSubmit = (data) => {
-    console.log(data);
     navigate("/user-management");
   };
   const {

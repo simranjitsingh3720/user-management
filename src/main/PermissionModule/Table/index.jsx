@@ -2,16 +2,13 @@ import React from "react";
 import TableHeader from "./TableHeader";
 import List from "./List";
 import styles from "./styles.module.css";
-import ListLoader from "../ListLoader";
 
-function Table({ ListData, loading }) {
-  console.log("ListData", ListData);
+function Table({ ListData, fetchData, setLoading }) {
   return (
     <div className={styles.tableContainer}>
       <TableHeader />
-      {loading && <ListLoader />}
       {(ListData || []).map((item) => (
-        <List item={item} />
+        <List item={item} fetchData={fetchData} setLoading={setLoading} />
       ))}
     </div>
   );

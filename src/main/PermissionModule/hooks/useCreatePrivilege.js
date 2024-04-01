@@ -1,27 +1,33 @@
 import { useState } from "react";
 import axiosInstance from "../../../core/axiosInstance"; // Import the instance
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function useCreatePrivilege() {
-  const [toast, setToast] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  const navigate = useNavigate();
+
   async function postData(data) {
-    console.log("data-->", data);
     setLoading(true);
     try {
-      const response = await axiosInstance.post("/api/permission", data?.items);
-      console.log("response", response);
-      console.log("Response:", response.data);
-      // Handle the response as needed
+      const response = await axiosInstance.post("/api/permission", data);
+      toast.success(
+        response?.data?.message || "Permission created successfully"
+      );
+      navigate("/permission");
     } catch (error) {
-      console.error("Error:", error);
-      setToast(true);
+      toast.error(
+        error?.response?.data?.error?.message ||
+          "An error occurred. Please try again."
+      );
+
       // Handle errors
     } finally {
       setLoading(false); // Set loading to false when request finishes (whether success or failure)
     }
   }
-  return { postData, loading, toast, setToast };
+  return { postData, loading };
 }
 
 export default useCreatePrivilege;

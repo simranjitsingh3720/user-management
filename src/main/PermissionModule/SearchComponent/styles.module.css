@@ -26,7 +26,8 @@
 
 .textFieldStyle {
   background-color: #ffffff;
-  margin: 0px 12px !important;
+  margin: 0px 12px 0px 0px !important;
+  width: 300px;
 }
 
 .flexSearchContainer {

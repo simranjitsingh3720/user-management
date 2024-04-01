@@ -1,36 +1,29 @@
-import { Button, MenuItem, Select, TextField, Typography } from "@mui/material";
+import { Button, TextField, Typography } from "@mui/material";
 import React from "react";
 import styles from "./styles.module.css";
 import { useNavigate } from "react-router-dom";
-import { PrivilegeSearch } from "../constants";
 
-function SearchComponent({
-  searched,
-  setSearched,
-  query,
-  setQuery,
-  fetchData,
-}) {
-  const handleChange = (event) => {
-    setSearched(event.target.value);
-  };
+function SearchComponent({ setQuery, setLoading }) {
+  // const handleChange = (event) => {
+  //   setSearched(event.target.value);
+  // };
 
   const navigate = useNavigate();
 
   const handleCreateNewForm = () => {
-    navigate(`/permission/privilege-form`);
+    navigate("/permission/permission-form");
   };
 
-  const handleGo = () => {
-    fetchData(searched, query);
-  };
+  // const handleGo = () => {
+  //   fetchData(query);
+  // };
 
   return (
     <div>
-      <div className={styles.searchText}>Search By</div>
+      {/* <div className={styles.searchText}>Search By</div> */}
       <div className={styles.selectContainer}>
         <div className={styles.flexSearchContainer}>
-          <Select
+          {/* <Select
             labelId="search-select"
             id="search-select"
             value={searched}
@@ -49,24 +42,23 @@ function SearchComponent({
                 {item.label}
               </MenuItem>
             ))}
-          </Select>
+          </Select> */}
 
           <TextField
             id="search"
             variant="outlined"
-            placeholder="Search"
+            placeholder="Search by permission name..."
             size="small"
             className={styles.textFieldStyle}
-            onChange={(e) => setQuery(e.target.value)}
+            onChange={(e) => {
+              setLoading(true);
+              setQuery(e.target.value);
+            }}
           />
 
-          <Button
-            variant="outlined"
-            onClick={handleGo}
-            disabled={!(searched && query)}
-          >
+          {/* <Button variant="outlined" onClick={handleGo}>
             Go
-          </Button>
+          </Button> */}
         </div>
         <div>
           <Button
@@ -75,7 +67,7 @@ function SearchComponent({
             sx={{ textTransform: "none" }}
           >
             <Typography noWrap className={styles.buttonTextStyle}>
-              Create New privilege
+              Create New permission
             </Typography>
           </Button>
         </div>

@@ -6,8 +6,8 @@
   flex-grow: 1;
   padding: 20px;
   background-color: #f7faff;
-  height: 100vh;
   margin-top: 60px;
+  height: 100vh;
 }
 
 @media (min-width: 600px) {

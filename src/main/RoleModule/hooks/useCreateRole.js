@@ -5,12 +5,10 @@ function useCreateRole() {
   const [loading, setLoading] = useState(false);
 
   async function postData(data) {
-    console.log("data-->", data);
     setLoading(true);
     try {
-      const response = await axiosInstance.post("/api/role", data);
-      console.log("response", response);
-      console.log("Response:", response.data);
+      await axiosInstance.post("/api/role", data);
+
       // Handle the response as needed
     } catch (error) {
       console.error("Error:", error);

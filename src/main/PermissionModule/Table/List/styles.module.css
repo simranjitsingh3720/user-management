@@ -1,7 +1,7 @@
 .listHeader {
   display: flex;
   background-color: #ffffff;
-  height: 60px;
+  height: 8vh;
   box-shadow: 0px 6px 12px #185ec414;
   justify-content: space-between;
   align-items: center;
@@ -28,10 +28,18 @@
   width: 15%;
 }
 
+@media (max-width: 600px) {
+  .nameCell {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}
+
 .privilegeTypeCell {
   font-size: 14px;
   color: #465465;
-  width: 6%;
+  width: 15%;
 }
 
 .apiCell {
@@ -45,13 +53,78 @@
   width: 10%;
 }
 .privilegeStatusCell {
-  width: 10%;
+  font-size: 14px;
+  color: #465465;
+  width: 15%;
 }
 
 .actionCell {
-  width: 4%;
+  width: 6%;
 }
 
 .styleSpan {
   margin-left: 12px;
+}
+
+.styledActiveSelect {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #c7f6c7;
+  border-radius: 8px;
+  height: 20px;
+  width: 90px;
+  font-size: 13px;
+}
+
+.styledInactiveSelect {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #d3d3d3;
+  border-radius: 8px;
+  height: 20px;
+  width: 90px;
+  font-size: 13px;
+  text-align: center;
+}
+
+.styledError {
+  color: #fd6262;
+  font-size: 12px;
+}
+
+.SubmitContainer {
+  display: flex;
+  justify-content: flex-end;
+}
+.styledButton {
+  margin-left: 12px !important;
+}
+
+.styledText {
+  font-size: 16px;
+  color: #465465;
+}
+
+.radioGroup {
+  font-size: 12px !important;
+}
+
+.radioStyle {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0px;
+}
+
+.infoIconStyle {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 12px;
+  font-size: x-large;
+}
+
+.iconStyle {
+  font-size: 40px;
+  color: #fd6262;
 }

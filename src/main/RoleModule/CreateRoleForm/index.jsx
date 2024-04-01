@@ -31,19 +31,15 @@ function CreateRoleForm() {
     formState: { errors },
   } = useForm();
 
-  const { postData, loading } = useCreateRole();
+  const { postData } = useCreateRole();
 
   const onSubmit = (data) => {
-    console.log("data", data);
-
     const newPermissions = data?.permissions.map((item) => item.value);
     const newData = {
       // Creating a new object to store modified data
       roleName: data.roleName,
       permissions: newPermissions, // Assigning the extracted permissions
     };
-
-    console.log("newData", newData);
 
     postData(newData);
   };
@@ -149,7 +145,6 @@ function CreateRoleForm() {
                   disableCloseOnSelect
                   getOptionLabel={(option) => option.label}
                   onChange={(event, newValue) => {
-                    console.log("newValue", newValue);
                     field.onChange(newValue);
                   }}
                   renderOption={(props, option, { selected }) => (

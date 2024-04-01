@@ -28,8 +28,6 @@ function NavbarDrawer({
   const [filteredNavData, setFilteredNavData] = useState(SideNavData);
   const [searchQuery, setSearchQuery] = useState("");
 
-  console.log("selectedNavbar", selectedNavbar);
-
   const handleClick = () => {
     setOpen(!open);
   };
@@ -56,12 +54,6 @@ function NavbarDrawer({
   const handleDrawerTransitionEnd = () => {
     setIsClosing(false);
   };
-
-  // const handleSearch = (query) => {
-  //   console.log(query);
-  // };
-
-  console.log("filteredNavData", filteredNavData);
 
   useEffect(() => {
     const filteredData = SideNavData.filter((item) =>
