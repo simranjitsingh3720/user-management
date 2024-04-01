@@ -21,37 +21,21 @@
   color: #465465;
   font-weight: 600;
   width: 15%;
+  cursor: pointer;
 }
 
 .privilegeTypeCell {
   font-size: 14px;
   color: #465465;
   font-weight: 600;
-  width: 15%;
+  width: 8%;
 }
-.moduleCell {
-  font-size: 14px;
-  color: #465465;
-  font-weight: 600;
-  width: 15%;
-}
-.apiCell {
-  font-size: 14px;
-  color: #465465;
-  font-weight: 600;
-  width: 10%;
-}
-.crudCell {
-  font-size: 14px;
-  color: #465465;
-  font-weight: 600;
-  width: 10%;
-}
+
 .privilegeStatusCell {
   font-size: 14px;
   color: #465465;
   font-weight: 600;
-  width: 15%;
+  width: 10%;
 }
 
 .actionCell {
@@ -59,4 +43,12 @@
   color: #465465;
   font-weight: 600;
   width: 6%;
+}
+
+.createdAt {
+  font-size: 14px;
+  color: #465465;
+  font-weight: 600;
+  width: 15%;
+  cursor: pointer;
 }

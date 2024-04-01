@@ -39,7 +39,7 @@
 .privilegeTypeCell {
   font-size: 14px;
   color: #465465;
-  width: 15%;
+  width: 8%;
 }
 
 .apiCell {
@@ -55,7 +55,7 @@
 .privilegeStatusCell {
   font-size: 14px;
   color: #465465;
-  width: 15%;
+  width: 10%;
 }
 
 .actionCell {
@@ -127,4 +127,10 @@
 .iconStyle {
   font-size: 40px;
   color: #fd6262;
+}
+
+.createdAt {
+  font-size: 14px;
+  color: #465465;
+  width: 15%;
 }

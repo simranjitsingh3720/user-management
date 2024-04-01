@@ -12,10 +12,8 @@ function PermissionModule() {
   const [query, setQuery] = useState("");
   const [pageChange, setPageChange] = useState(1);
 
-  const { fetchData, data, loading, setLoading } = useGetPrivilege(
-    pageChange,
-    query
-  );
+  const { fetchData, data, loading, setLoading, sort, setSort } =
+    useGetPrivilege(pageChange, query);
 
   const handlePaginationChange = (event, page) => {
     setLoading(true);
@@ -24,7 +22,11 @@ function PermissionModule() {
 
   return (
     <div>
-      <SearchComponent setQuery={setQuery} setLoading={setLoading} />
+      <SearchComponent
+        setQuery={setQuery}
+        setLoading={setLoading}
+        setPageChange={setPageChange}
+      />
       <div className={styles.tableContainerStyle}>
         <div className={styles.tableStyled}>
           {loading ? (
@@ -37,6 +39,8 @@ function PermissionModule() {
               ListData={data?.data}
               fetchData={fetchData}
               setLoading={setLoading}
+              sort={sort}
+              setSort={setSort}
             />
           ) : (
             <NoDataFound />

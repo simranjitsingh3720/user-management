@@ -1,14 +1,30 @@
 import React from "react";
 import styles from "./styles.module.css";
 
-function TableHeader() {
+function TableHeader({ sort, setSort }) {
+  console.log("sort", sort);
+  const handleSort = (sortKey) => {
+    const newSortOrder = sort.sortOrder === "asc" ? "desc" : "asc";
+    setSort({ sortKey, sortOrder: newSortOrder });
+  };
   return (
     <div className={styles.tableHeader}>
-      <div className={styles.nameCell}>Name</div>
+      <div
+        className={styles.nameCell}
+        onClick={() => handleSort("permissionName")}
+      >
+        Name{" "}
+        {sort?.sortKey === "permissionName" && (
+          <span>{sort.sortOrder === "asc" ? " ▲" : " ▼"}</span>
+        )}
+      </div>
       <div className={styles.privilegeTypeCell}>Permission Type</div>
-      {/* <div className={styles.moduleCell}>Module/Sub-Module</div> */}
-      {/* <div className={styles.apiCell}>API</div>
-      <div className={styles.crudCell}>Crud</div> */}
+      <div className={styles.createdAt} onClick={() => handleSort("createdAt")}>
+        Created At
+        {sort?.sortKey === "createdAt" && (
+          <span>{sort.sortOrder === "asc" ? " ▲" : " ▼"}</span>
+        )}
+      </div>{" "}
       <div className={styles.privilegeStatusCell}>Privilege Status</div>
       <div className={styles.actionCell}>Action</div>
     </div>

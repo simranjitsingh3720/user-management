@@ -3,7 +3,7 @@ import React from "react";
 import styles from "./styles.module.css";
 import { useNavigate } from "react-router-dom";
 
-function SearchComponent({ setQuery, setLoading }) {
+function SearchComponent({ setQuery, setLoading, setPageChange }) {
   // const handleChange = (event) => {
   //   setSearched(event.target.value);
   // };
@@ -51,6 +51,7 @@ function SearchComponent({ setQuery, setLoading }) {
             size="small"
             className={styles.textFieldStyle}
             onChange={(e) => {
+              setPageChange(1);
               setLoading(true);
               setQuery(e.target.value);
             }}

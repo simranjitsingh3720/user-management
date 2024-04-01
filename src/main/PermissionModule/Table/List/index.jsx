@@ -44,11 +44,13 @@ function List({ item, fetchData, setLoading }) {
         <div className={styles.nameCell}>
           {" "}
           {item.permissionName.length > 30 ? (
-            <Tooltip title={item.permissionName}>
-              <span>{`${item.permissionName.substring(0, 30)}...`}</span>
+            <Tooltip title={item.permissionName.toUpperCase()}>
+              <span>{`${item.permissionName
+                .substring(0, 30)
+                .toUpperCase()}...`}</span>
             </Tooltip>
           ) : (
-            <span>{item.permissionName}</span>
+            <span>{item.permissionName.toUpperCase()}</span>
           )}
         </div>
         <div className={styles.privilegeTypeCell}>
@@ -67,6 +69,8 @@ function List({ item, fetchData, setLoading }) {
         {/* <div className={styles.crudCell}>
         {item?.crud?.join(", ").toUpperCase()}
       </div> */}
+
+        <div className={styles.createdAt}> {item.createdAt}</div>
         <div className={styles.privilegeStatusCell}>
           <div
             className={
