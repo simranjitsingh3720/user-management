@@ -1,0 +1,9 @@
+.tableStyled {
+  margin-top: 20px;
+}
+
+.pageFooter {
+  display: flex;
+  justify-content: flex-end;
+  margin: 20px 0px;
+}

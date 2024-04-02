@@ -28,6 +28,8 @@ function CreateNewUserContainer() {
   const [module, setModule] = useState();
   const [selectedSubmodules, setSelectedSubmodules] = useState([]);
 
+  const [permissionType, setPermissionType] = useState([]);
+
   const navigate = useNavigate();
 
   const { postData, loading } = useCreatePrivilege();
@@ -38,6 +40,7 @@ function CreateNewUserContainer() {
     handleSubmit,
     watch,
     control,
+    setValue,
     formState: { errors },
   } = useForm();
 
@@ -87,6 +90,14 @@ function CreateNewUserContainer() {
       clearModulesFromIndex(index + 1);
     }
   };
+  useEffect(() => {
+    // Reset permissionType when module changes
+    setPermissionType([]);
+    setValue("permissionType", []);
+  }, [module]);
+
+  console.log("permissionType", permissionType);
+
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -212,7 +223,9 @@ function CreateNewUserContainer() {
                       options={CrudSelect}
                       disableCloseOnSelect
                       getOptionLabel={(option) => option.label}
+                      value={permissionType}
                       onChange={(event, newValue) => {
+                        setPermissionType(newValue);
                         field.onChange(newValue);
                       }}
                       renderOption={(props, option, { selected }) => (

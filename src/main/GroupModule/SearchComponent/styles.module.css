@@ -1,0 +1,47 @@
+.searchText {
+  color: #566475;
+  font-size: 14px;
+}
+
+.selectContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.customizeSelect {
+  background-color: #ffffff;
+  width: 200px;
+  font-size: 14px !important;
+  height: 40px;
+}
+
+.customizeGroupSelect {
+  background-color: #ffffff;
+  width: 500px;
+  font-size: 14px !important;
+  min-height: 40px;
+  margin: 0px 12px !important;
+}
+
+.placeholderStyle {
+  color: #566475;
+}
+
+.styledOptionText {
+  font-size: 14px !important;
+}
+
+.textFieldStyle {
+  background-color: #ffffff;
+  margin: 0px 12px !important;
+}
+
+.flexSearchContainer {
+  display: flex;
+  align-items: center;
+}
+
+.buttonTextStyle {
+  font-size: 14px !important;
+}
