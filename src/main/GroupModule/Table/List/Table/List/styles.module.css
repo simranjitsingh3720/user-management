@@ -8,15 +8,10 @@
   border-bottom: 1px solid #c5cfde;
 }
 
-.listCell {
-  font-size: 13px;
-  color: #465465;
-}
-
 .nameCell {
   font-size: 14px;
   color: #465465;
-  width: 15%;
+  width: 30%;
 }
 
 @media (max-width: 600px) {
@@ -30,21 +25,13 @@
 .privilegeTypeCell {
   font-size: 14px;
   color: #465465;
-  width: 8%;
+  width: 20%;
 }
 
 .privilegeStatusCell {
   font-size: 14px;
   color: #465465;
-  width: 10%;
-}
-
-.actionCell {
-  width: 6%;
-}
-
-.styleSpan {
-  margin-left: 12px;
+  width: 20%;
 }
 
 .styledActiveSelect {
@@ -68,50 +55,4 @@
   width: 90px;
   font-size: 13px;
   text-align: center;
-}
-
-.styledError {
-  color: #fd6262;
-  font-size: 12px;
-}
-
-.SubmitContainer {
-  display: flex;
-  justify-content: flex-end;
-}
-.styledButton {
-  margin-left: 12px !important;
-}
-
-.styledText {
-  font-size: 16px;
-  color: #465465;
-}
-
-.radioGroup {
-  font-size: 12px !important;
-}
-
-.radioStyle {
-  display: flex;
-  justify-content: center;
-  margin: 20px 0px;
-}
-
-.infoIconStyle {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 12px;
-  font-size: x-large;
-}
-
-.iconStyle {
-  font-size: 40px;
-  color: #fd6262;
-}
-
-.createdAt {
-  font-size: 14px;
-  color: #465465;
-  width: 15%;
 }

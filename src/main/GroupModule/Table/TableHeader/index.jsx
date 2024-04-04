@@ -8,23 +8,14 @@ function TableHeader({ sort, setSort }) {
   };
   return (
     <div className={styles.tableHeader}>
-      <div
-        className={styles.nameCell}
-        onClick={() => handleSort("permissionName")}
-      >
-        Name{" "}
-        {sort?.sortKey === "permissionName" && (
-          <span>{sort.sortOrder === "asc" ? " ▲" : " ▼"}</span>
-        )}
-      </div>
-      <div className={styles.privilegeTypeCell}>Permission Type</div>
+      <div className={styles.nameCell}>Group Name</div>
       <div className={styles.createdAt} onClick={() => handleSort("createdAt")}>
         Created At
         {sort?.sortKey === "createdAt" && (
           <span>{sort.sortOrder === "asc" ? " ▲" : " ▼"}</span>
         )}
       </div>{" "}
-      <div className={styles.privilegeStatusCell}>Privilege Status</div>
+      <div className={styles.groupStatusCell}>Group Status</div>
       <div className={styles.actionCell}>Action</div>
     </div>
   );

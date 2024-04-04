@@ -9,6 +9,7 @@ import RoleModule from "../main/RoleModule";
 import CreateRoleForm from "../main/RoleModule/CreateRoleForm";
 import CreateNewUserContainer from "../main/PermissionModule/CreateNewPrivilegeForm";
 import GroupModule from "../main/GroupModule";
+import CreateGroupForm from "../main/GroupModule/CreateGroupForm";
 
 const AppRoutes = () => {
   return (
@@ -75,6 +76,14 @@ const AppRoutes = () => {
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
             <GroupModule />
+          </ResponsiveDrawer>
+        }
+      />
+      <Route
+        path="/group/group-form/:id?"
+        element={
+          <ResponsiveDrawer showSidebarAndHeader={true}>
+            <CreateGroupForm />
           </ResponsiveDrawer>
         }
       />

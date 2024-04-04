@@ -1,0 +1,60 @@
+.listHeader {
+  display: flex;
+  background-color: #ffffff;
+  height: 60px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 12px;
+  border-bottom: 1px solid #c5cfde;
+}
+
+.nameCell {
+  font-size: 14px;
+  color: #465465;
+  width: 10%;
+}
+
+.roleStatusCell {
+  width: 15%;
+}
+
+.actionCell {
+  display: flex;
+  align-items: center;
+  width: 10%;
+}
+
+.createdAt {
+  font-size: 14px;
+  color: #465465;
+  width: 15%;
+}
+
+.groupStatusCell {
+  font-size: 14px;
+  color: #465465;
+  width: 10%;
+}
+
+.styledActiveSelect {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #c7f6c7;
+  border-radius: 8px;
+  height: 20px;
+  width: 90px;
+  font-size: 13px;
+}
+
+.styledInactiveSelect {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #d3d3d3;
+  border-radius: 8px;
+  height: 20px;
+  width: 90px;
+  font-size: 13px;
+  text-align: center;
+}

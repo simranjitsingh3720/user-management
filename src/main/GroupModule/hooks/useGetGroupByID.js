@@ -1,14 +1,14 @@
 import axiosInstance from "../../../core/axiosInstance"; // Import the instance
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-function useGetPermission() {
+function useGetGroupById() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const fetchData = async () => {
+  const fetchData = async (groupId) => {
     try {
-      let url = `/api/permission?isAll=${true}`;
+      let url = `/api/group/${groupId}`;
 
       const response = await axiosInstance.get(url);
       setData(response.data);
@@ -18,15 +18,8 @@ function useGetPermission() {
       setLoading(false);
     }
   };
-  useEffect(() => {
-    fetchData();
-  }, []);
 
-  return {
-    permissionData: data,
-    permissionLoading: loading,
-    permissionFetchDatat: fetchData,
-  };
+  return { data, loading, fetchData, setLoading };
 }
 
-export default useGetPermission;
+export default useGetGroupById;

@@ -11,14 +11,17 @@ import styles from "./styles.module.css";
 import { useNavigate } from "react-router-dom";
 import { GroupSearchBy } from "../constants";
 
+const fetchIdsAndConvert = (inputData) => {
+  const ids = inputData.map((permission) => permission.id);
+  return ids.join();
+};
+
 function SearchComponent({
   searched,
   setSearched,
   query,
   setQuery,
   fetchData,
-  inputValue,
-  setInputValue,
   permissionData,
   value,
   setValue,
@@ -30,11 +33,13 @@ function SearchComponent({
   const navigate = useNavigate();
 
   const handleCreateNewForm = () => {
-    navigate("/roles/role-form");
+    navigate("/group/group-form");
   };
 
   const handleGo = () => {
-    fetchData(searched, query);
+    const resultPermissionString = fetchIdsAndConvert(value);
+
+    fetchData(searched, query, resultPermissionString);
   };
 
   console.log("searched", searched);
@@ -80,16 +85,13 @@ function SearchComponent({
             <Autocomplete
               multiple
               id="groupMultiSelect"
-              options={permissionData?.data || []}
+              options={permissionData || []}
               getOptionLabel={(option) => option.permissionName.toUpperCase()}
               className={styles.customizeGroupSelect}
               size="small"
               renderInput={(params) => (
                 <TextField {...params} placeholder="Select" />
               )}
-              onInputChange={(event, newInputValue) => {
-                setInputValue(newInputValue);
-              }}
               onChange={(event, newValue) => {
                 setValue(newValue);
               }}
@@ -104,7 +106,7 @@ function SearchComponent({
           <Button
             variant="outlined"
             onClick={handleGo}
-            disabled={!((searched && query) || (searched && inputValue))}
+            disabled={!((searched && query) || (searched && value.length))}
           >
             Go
           </Button>
@@ -116,7 +118,7 @@ function SearchComponent({
             sx={{ textTransform: "none" }}
           >
             <Typography noWrap className={styles.buttonTextStyle}>
-              Create New Role
+              Create New Group
             </Typography>
           </Button>
         </div>

@@ -1,13 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import SearchComponenet from "./SearchComponent";
 import useGetGroup from "./hooks/useGetGroup";
 import useGetPermission from "./hooks/useGetPermission";
+import Table from "./Table";
+import styles from "./styles.module.css";
+import { Pagination } from "@mui/material";
+import TableHeader from "./Table/TableHeader";
+import NoDataFound from "../../sharedComponents/NoDataCard";
+import ListLoader from "../../sharedComponents/ListLoader";
 
 function GroupModule() {
   const [searched, setSearched] = useState("groupName");
   const [query, setQuery] = useState("");
-  const [inputValue, setInputValue] = useState("");
   const [pageChange, setPageChange] = useState(1);
   const [value, setValue] = useState([]);
 
@@ -18,10 +23,14 @@ function GroupModule() {
     setPageChange(page);
   };
 
-  const { permissionData, permissionLoading, permissionFetchDatat } =
-    useGetPermission(inputValue);
+  const { permissionData } = useGetPermission();
 
   console.log("permissionData", permissionData);
+
+  useEffect(() => {
+    if (query) setQuery("");
+    else setValue([]);
+  }, [searched]);
 
   return (
     <div>
@@ -31,23 +40,22 @@ function GroupModule() {
         query={query}
         setQuery={setQuery}
         fetchData={fetchData}
-        inputValue={inputValue}
-        setInputValue={setInputValue}
-        permissionData={permissionData}
+        permissionData={permissionData?.data || []}
         value={value}
         setValue={setValue}
       />
-      {/* <div className={styles.tableStyled}>
-        {loading ? (
-          <>
-            <TableHeader />
-            <ListLoader />
-          </>
-        ) : data?.data && data?.data.length ? (
-          <>
-            <Table ListData={data?.data} loading={loading} />
-            <div className={styles.pageFooter}>
-              <div className={styles.rowsPerPage}>
+      <div className={styles.tableContainerStyle}>
+        <div className={styles.tableStyled}>
+          {loading ? (
+            <>
+              <TableHeader />
+              <ListLoader />
+            </>
+          ) : data?.data && data?.data.length ? (
+            <>
+              <Table ListData={data?.data} loading={loading} />
+
+              {/* <div className={styles.rowsPerPage}>
                 <p className={styles.totalRecordStyle}>Showing Results:</p>
                 <Select
                   labelId="rows-per-page"
@@ -64,20 +72,23 @@ function GroupModule() {
                   ))}
                 </Select>
                 <p className={styles.totalRecordStyle}>of 141</p>
-              </div>
-              <Pagination
-                count={10}
-                color="primary"
-                size="small"
-                onChange={handlePaginationChange}
-                page={pageChange}
-              />
-            </div>
-          </>
-        ) : (
-          <NoDataFound />
-        )}
-      </div> */}
+              </div> */}
+            </>
+          ) : (
+            <NoDataFound />
+          )}
+        </div>
+        <div className={styles.pageFooter}>
+          <Pagination
+            count={10}
+            color="primary"
+            size="small"
+            onChange={handlePaginationChange}
+            page={pageChange}
+            className={styles.marginFotter}
+          />
+        </div>
+      </div>
     </div>
   );
 }

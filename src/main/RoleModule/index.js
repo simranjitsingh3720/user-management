@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import SearchComponent from "./SearchComponent";
 import { Pagination } from "@mui/material";
-import NoDataFound from "../PermissionModule/NoDataCard";
+import NoDataFound from "../../sharedComponents/NoDataCard";
 import styles from "./styles.module.css";
-import ListLoader from "../PermissionModule/ListLoader";
+import ListLoader from "../../sharedComponents/ListLoader";
 import useGetRole from "./hooks/useGetRole";
 import Table from "./Table";
 import TableHeader from "./Table/TableHeader";
