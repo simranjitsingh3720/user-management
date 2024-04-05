@@ -25,7 +25,7 @@ function TableHeader({ sort, setSort }) {
         )}
       </div>{" "}
       <div className={styles.privilegeStatusCell}>Privilege Status</div>
-      <div className={styles.actionCell}>Action</div>
+      {/* <div className={styles.actionCell}>Action</div> */}
     </div>
   );
 }

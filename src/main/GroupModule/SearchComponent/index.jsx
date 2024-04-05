@@ -25,6 +25,7 @@ function SearchComponent({
   permissionData,
   value,
   setValue,
+  setLoading,
 }) {
   const handleChange = (event) => {
     setSearched(event.target.value);
@@ -38,13 +39,9 @@ function SearchComponent({
 
   const handleGo = () => {
     const resultPermissionString = fetchIdsAndConvert(value);
-
+    setLoading(true);
     fetchData(searched, query, resultPermissionString);
   };
-
-  console.log("searched", searched);
-
-  console.log("value", value);
 
   return (
     <div>
@@ -88,6 +85,7 @@ function SearchComponent({
               options={permissionData || []}
               getOptionLabel={(option) => option.permissionName.toUpperCase()}
               className={styles.customizeGroupSelect}
+              limitTags={2}
               size="small"
               renderInput={(params) => (
                 <TextField {...params} placeholder="Select" />
@@ -103,11 +101,7 @@ function SearchComponent({
             />
           )}
 
-          <Button
-            variant="outlined"
-            onClick={handleGo}
-            disabled={!((searched && query) || (searched && value.length))}
-          >
+          <Button variant="outlined" onClick={handleGo}>
             Go
           </Button>
         </div>

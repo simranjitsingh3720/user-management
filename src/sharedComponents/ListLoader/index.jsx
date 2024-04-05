@@ -8,7 +8,7 @@ function ListLoader() {
       {Array.from(Array(10).keys()).map(() => {
         return (
           <div className={styles.listHeader}>
-            {Array.from(Array(6).keys()).map(() => (
+            {Array.from(Array(4).keys()).map(() => (
               <Skeleton variant="rounded" width={100} height={15} />
             ))}
           </div>

@@ -16,7 +16,8 @@ function GroupModule() {
   const [pageChange, setPageChange] = useState(1);
   const [value, setValue] = useState([]);
 
-  const { data, loading, fetchData, setLoading } = useGetGroup(pageChange);
+  const { data, loading, fetchData, setLoading, setSort, sort } =
+    useGetGroup(pageChange);
 
   const handlePaginationChange = (event, page) => {
     setLoading(true);
@@ -24,8 +25,6 @@ function GroupModule() {
   };
 
   const { permissionData } = useGetPermission();
-
-  console.log("permissionData", permissionData);
 
   useEffect(() => {
     if (query) setQuery("");
@@ -43,6 +42,7 @@ function GroupModule() {
         permissionData={permissionData?.data || []}
         value={value}
         setValue={setValue}
+        setLoading={setLoading}
       />
       <div className={styles.tableContainerStyle}>
         <div className={styles.tableStyled}>
@@ -53,7 +53,14 @@ function GroupModule() {
             </>
           ) : data?.data && data?.data.length ? (
             <>
-              <Table ListData={data?.data} loading={loading} />
+              <Table
+                ListData={data?.data}
+                loading={loading}
+                fetchData={fetchData}
+                setLoading={setLoading}
+                sort={sort}
+                setSort={setSort}
+              />
 
               {/* <div className={styles.rowsPerPage}>
                 <p className={styles.totalRecordStyle}>Showing Results:</p>
@@ -80,7 +87,7 @@ function GroupModule() {
         </div>
         <div className={styles.pageFooter}>
           <Pagination
-            count={10}
+            count={data?.totalPageSize}
             color="primary"
             size="small"
             onChange={handlePaginationChange}

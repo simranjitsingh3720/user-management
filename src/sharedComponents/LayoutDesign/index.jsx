@@ -35,15 +35,12 @@ function ResponsiveDrawer({ showSidebarAndHeader, children }) {
   const parts = path.split("/");
   const defaultRoute = parts[parts.length - 1];
 
-  console.log("defaultRoute", defaultRoute);
-
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const [selectedNavbar, setSelectedNavbar] = useState(
     getLabelFromPath(defaultRoute) || "Permission"
   );
 
-  console.log("selectedNavbar", selectedNavbar);
   const [selectedParentIndex, setSelectedParentIndex] = useState(null);
 
   const handleDrawerToggle = () => {

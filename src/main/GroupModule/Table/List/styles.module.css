@@ -1,7 +1,7 @@
 .listHeader {
   display: flex;
   background-color: #ffffff;
-  height: 60px;
+  height: 8vh;
   justify-content: space-between;
   align-items: center;
   padding: 0px 12px;
@@ -21,7 +21,7 @@
 .actionCell {
   display: flex;
   align-items: center;
-  width: 10%;
+  width: 15%;
 }
 
 .createdAt {
@@ -31,30 +31,38 @@
 }
 
 .groupStatusCell {
+  display: flex;
+  align-items: center;
   font-size: 14px;
   color: #465465;
-  width: 10%;
+  width: 15%;
 }
 
 .styledActiveSelect {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #c7f6c7;
-  border-radius: 8px;
-  height: 20px;
-  width: 90px;
-  font-size: 13px;
+  font-size: 14px;
 }
 
-.styledInactiveSelect {
+.infoIconStyle {
   display: flex;
-  align-items: center;
   justify-content: center;
-  background-color: #d3d3d3;
-  border-radius: 8px;
-  height: 20px;
-  width: 90px;
-  font-size: 13px;
-  text-align: center;
+  margin-bottom: 12px;
+  font-size: x-large;
+}
+
+.iconStyle {
+  font-size: 40px;
+  color: #fd6262;
+}
+
+.styledText {
+  font-size: 16px;
+  color: #465465;
+}
+.SubmitContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+.styledButton {
+  margin-left: 12px !important;
 }

@@ -48,7 +48,7 @@ function PermissionModule() {
         </div>
         <div className={styles.pageFooter}>
           <Pagination
-            count={10}
+            count={data?.totalPageSize}
             color="primary"
             size="small"
             onChange={handlePaginationChange}

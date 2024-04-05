@@ -6,20 +6,18 @@ import {
   Dialog,
   DialogContent,
   DialogTitle,
-  FormControlLabel,
   IconButton,
-  Radio,
-  RadioGroup,
+  Switch,
   Tooltip,
 } from "@mui/material";
 import capitalizeFirstLetter from "../../../../globalization/globalizationFunction";
 import CloseIcon from "@mui/icons-material/Close";
-import { useForm } from "react-hook-form";
 import InfoIcon from "@mui/icons-material/Info";
 import useUpdatePrivilege from "../../hooks/useUpdatePrivilege";
 
 function List({ item, fetchData, setLoading }) {
   const [open, setOpen] = useState(false);
+  const [checked, setChecked] = useState(item?.status);
 
   const handleClose = () => {
     setOpen(false);
@@ -27,16 +25,16 @@ function List({ item, fetchData, setLoading }) {
 
   const { updateData } = useUpdatePrivilege(setOpen, fetchData);
 
-  const onSubmit = (data) => {
-    const privilegeStatus = data?.privilegeStatus === "true";
-    updateData(item?.id, privilegeStatus);
+  const handleChange = () => {
+    setOpen(true);
+  };
+
+  const handleClickYes = () => {
+    updateData(item?.id, !item.status);
+    setChecked((prev) => !prev);
+    setOpen(false);
     setLoading(true);
   };
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
 
   return (
     <>
@@ -58,17 +56,18 @@ function List({ item, fetchData, setLoading }) {
         </div>
         <div className={styles.createdAt}> {item.createdAt}</div>
         <div className={styles.privilegeStatusCell}>
-          <div
-            className={
-              item?.status
-                ? styles.styledActiveSelect
-                : styles.styledInactiveSelect
-            }
-          >
+          <div>
+            <Switch
+              checked={checked}
+              onChange={handleChange}
+              inputProps={{ "aria-label": "toggle button" }}
+            />
+          </div>
+          <div className={styles.styledActiveSelect}>
             {item?.status ? "Active" : "Inactive"}
           </div>
         </div>
-        <div className={styles.actionCell}>
+        {/* <div className={styles.actionCell}>
           <Tooltip title="Change status">
             <IconButton
               aria-label="back"
@@ -78,7 +77,7 @@ function List({ item, fetchData, setLoading }) {
               <EditLogo color="primary" />
             </IconButton>
           </Tooltip>
-        </div>
+        </div> */}
       </div>
       <Dialog
         onClose={handleClose}
@@ -101,58 +100,30 @@ function List({ item, fetchData, setLoading }) {
           <CloseIcon />
         </IconButton>
         <DialogContent dividers>
-          <form
-            onSubmit={handleSubmit(onSubmit)}
-            className={styles.formMainContainer}
-          >
-            <div className={styles.infoIconStyle}>
-              <InfoIcon fontSize="x-large" className={styles.iconStyle} />
-            </div>
-            <text className={styles.styledText}>
-              Are you sure you want to change the privilege status?
-            </text>
-            <div className={styles.radioStyle}>
-              <RadioGroup
-                row
-                aria-labelledby="privilege-status-row-radio-buttons-group-label"
-                name="privilegeStatus"
-                defaultValue={item?.status ? true : false}
-              >
-                <FormControlLabel
-                  value={true}
-                  control={<Radio size="small" />}
-                  label="Active"
-                  {...register("privilegeStatus", { required: true })}
-                />
-                <FormControlLabel
-                  value={false}
-                  control={<Radio size="small" />}
-                  label="Inactive"
-                  {...register("privilegeStatus", { required: true })}
-                />
-              </RadioGroup>
-              <div className={styles.styledError}>
-                {errors.privilegeStatus && <span>This field is required</span>}
-              </div>
-            </div>
-            <div className={styles.SubmitContainer}>
-              <Button
-                variant="outlined"
-                onClick={() => setOpen(false)}
-                size="small"
-              >
-                Cancel
-              </Button>
-              <Button
-                type="submit"
-                variant="contained"
-                className={styles.styledButton}
-                size="small"
-              >
-                Submit
-              </Button>
-            </div>
-          </form>
+          <div className={styles.infoIconStyle}>
+            <InfoIcon fontSize="x-large" className={styles.iconStyle} />
+          </div>
+          <text className={styles.styledText}>
+            Are you sure you want to change the Group status?
+          </text>
+
+          <div className={styles.SubmitContainer}>
+            <Button
+              variant="outlined"
+              onClick={() => setOpen(false)}
+              size="small"
+            >
+              No
+            </Button>
+            <Button
+              variant="contained"
+              className={styles.styledButton}
+              size="small"
+              onClick={() => handleClickYes()}
+            >
+              yes
+            </Button>
+          </div>
         </DialogContent>
       </Dialog>
     </>

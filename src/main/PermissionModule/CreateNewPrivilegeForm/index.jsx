@@ -96,8 +96,6 @@ function CreateNewUserContainer() {
     setValue("permissionType", []);
   }, [module]);
 
-  console.log("permissionType", permissionType);
-
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>

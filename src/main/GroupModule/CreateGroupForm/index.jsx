@@ -39,15 +39,11 @@ const convertUpdateFormat = (data, groupData) => {
 function CreateGroupForm() {
   const { id } = useParams();
 
-  console.log("id", id);
-
   const {
     loading: GroupUpdateLoading,
     data: groupData,
     fetchData,
   } = useGetGroupById();
-
-  console.log("Editdata", groupData);
 
   const navigate = useNavigate();
 
@@ -82,7 +78,6 @@ function CreateGroupForm() {
     });
 
   const { errors } = formState;
-  console.log(watch("permissions"));
 
   useEffect(() => {
     if (id) {
@@ -94,7 +89,6 @@ function CreateGroupForm() {
       setValue("groupName", groupData?.data?.groupName);
       setValue("permissions", groupData?.data?.permissions || []);
     }
-    console.log("data anshul", groupData, formState, getValues("permissions"));
   }, [groupData]);
 
   return (
@@ -112,9 +106,7 @@ function CreateGroupForm() {
               >
                 <LeftArrow />
               </IconButton>
-              <span className={styles.headerTextStyle}>
-                Create new permission
-              </span>
+              <span className={styles.headerTextStyle}>Create new group</span>
             </div>
           </div>{" "}
           <div className={styles.containerStyle}>
@@ -162,6 +154,7 @@ function CreateGroupForm() {
                     getOptionLabel={(option) =>
                       option.permissionName.toUpperCase()
                     }
+                    limitTags={2}
                     className={styles.customizePrivilegeSelect}
                     size="small"
                     isOptionEqualToValue={(option, value) =>
@@ -191,7 +184,7 @@ function CreateGroupForm() {
           type="submit"
           variant="contained"
           className={styles.styledButton}
-          disabled={loading || GroupUpdateLoading || updateLoading}
+          disabled={loading || (id && GroupUpdateLoading) || updateLoading}
         >
           {id ? "Update" : "Submit"}
         </Button>

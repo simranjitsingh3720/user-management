@@ -3,7 +3,7 @@ import axiosInstance from "../../../core/axiosInstance"; // Import the instance
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-function useUpdateGroup() {
+function useUpdateGroup(setChangeStatusOpen, fetchGroupList) {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
@@ -14,6 +14,8 @@ function useUpdateGroup() {
       const response = await axiosInstance.put("/api/group", data);
       toast.success(response?.data?.message || "Group updated successfully");
       navigate("/group");
+      if (setChangeStatusOpen) setChangeStatusOpen(false);
+      if (fetchGroupList) fetchGroupList();
     } catch (error) {
       toast.error(
         error?.response?.data?.error?.message ||
