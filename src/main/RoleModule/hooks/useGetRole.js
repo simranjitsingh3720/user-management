@@ -5,12 +5,20 @@ import { useEffect, useState } from "react";
 function useGetRole(pageChange = 1) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [sort, setSort] = useState({
+    sortKey: "createdAt",
+    sortOrder: "asc",
+  });
 
-  const fetchData = async (key, value) => {
+  const fetchData = async (key, query, resultGroupId) => {
     try {
-      let url = `/api/role?pageNo=${pageChange - 1}`;
-      if (key && value) {
-        url += `&${key}=${value}`;
+      let url = `/api/role?pageNo=${pageChange - 1}&sortKey=${
+        sort.sortKey
+      }&sortOrder=${sort.sortOrder}`;
+      if (key === "roleName" && query) {
+        url += `&searchKey=${key}&searchString=${query}`;
+      } else if (key === "groupName" && resultGroupId) {
+        url += `&searchKey=${key}&groupName=${resultGroupId}`;
       }
       const response = await axiosInstance.get(url);
       setData(response.data);
@@ -22,9 +30,9 @@ function useGetRole(pageChange = 1) {
   };
   useEffect(() => {
     fetchData();
-  }, [pageChange]);
+  }, [pageChange, sort]);
 
-  return { data, loading, fetchData, setLoading };
+  return { data, loading, fetchData, setLoading, setSort, sort };
 }
 
 export default useGetRole;

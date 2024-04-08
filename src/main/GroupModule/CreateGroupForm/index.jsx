@@ -1,17 +1,10 @@
-import {
-  Autocomplete,
-  Button,
-  Checkbox,
-  IconButton,
-  TextField,
-} from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { Autocomplete, Button, IconButton, TextField } from "@mui/material";
+import React, { useEffect } from "react";
 import LeftArrow from "../../../assets/LeftArrow";
 import styles from "./styles.module.css";
 import { Controller, useForm } from "react-hook-form";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
-import CheckBoxIcon from "@mui/icons-material/CheckBox";
+import { useNavigate, useParams } from "react-router-dom";
+
 import useGetPermission from "../hooks/useGetPermission";
 import useCreateGroup from "../hooks/useCreateGroup";
 import useGetGroupById from "../hooks/useGetGroupByID";

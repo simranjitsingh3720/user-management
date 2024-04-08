@@ -1,51 +1,70 @@
-import {
-  Autocomplete,
-  Button,
-  Checkbox,
-  IconButton,
-  MenuItem,
-  Select,
-  TextField,
-} from "@mui/material";
-import React from "react";
-import { Controller, useForm } from "react-hook-form";
-import styles from "./styles.module.css";
-import { RoleStatusSelect } from "../constants";
-import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
-import CheckBoxIcon from "@mui/icons-material/CheckBox";
-import { selectData } from "../../UserManagement/constants";
-import { useNavigate } from "react-router-dom";
+import { Autocomplete, Button, IconButton, TextField } from "@mui/material";
+import React, { useEffect } from "react";
 import LeftArrow from "../../../assets/LeftArrow";
+import styles from "./styles.module.css";
+import { Controller, useForm } from "react-hook-form";
+import { useNavigate, useParams } from "react-router-dom";
+import useGetGroup from "../hooks/useGetGroup";
 import useCreateRole from "../hooks/useCreateRole";
+import useGetRoleById from "../hooks/useGetRoleByID";
+import useUpdateRole from "../hooks/useUpdateRole";
 
-const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
-const checkedIcon = <CheckBoxIcon fontSize="small" />;
+const convertToDesiredFormat = (data, roleName) => {
+  const groupId = data.id;
+  return { groupId, roleName };
+};
+
+const convertUpdateFormat = (data) => {
+  return { roleName: data.roleName, groupId: data.groups.id };
+};
 
 function CreateRoleForm() {
-  const navigate = useNavigate();
+  const { id } = useParams();
 
   const {
-    handleSubmit,
-    control,
-    setValue,
-    formState: { errors },
-  } = useForm();
+    loading: roleUpdateLoading,
+    data: roleData,
+    fetchData,
+  } = useGetRoleById();
 
-  const { postData } = useCreateRole();
+  const navigate = useNavigate();
+
+  const { data: allGroupData } = useGetGroup();
+
+  const { UpdateDataFun, updateLoading } = useUpdateRole(id);
+
+  const { postData, loading } = useCreateRole();
 
   const onSubmit = (data) => {
-    const newPermissions = data?.permissions.map((item) => item.value);
-    const newData = {
-      // Creating a new object to store modified data
-      roleName: data.roleName,
-      permissions: newPermissions, // Assigning the extracted permissions
-    };
-
-    postData(newData);
+    if (id) {
+      const result = convertUpdateFormat(data);
+      UpdateDataFun(result);
+    } else {
+      const result = convertToDesiredFormat(data.groups, data.roleName);
+      postData(result);
+    }
   };
+  const { handleSubmit, control, setValue, formState, getValues } = useForm({
+    defaultValues: { roleName: "", groups: {} },
+  });
+
+  const { errors } = formState;
+
+  useEffect(() => {
+    if (id) {
+      fetchData(id);
+    }
+  }, [id]);
+  useEffect(() => {
+    if (roleData) {
+      setValue("roleName", roleData?.data?.roleName);
+      setValue("groups", roleData?.data?.group || {});
+    }
+  }, [roleData]);
 
   return (
     <div>
+      {" "}
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.createNewUserContainer}>
           <div className={styles.formHeaderStyle}>
@@ -58,11 +77,10 @@ function CreateRoleForm() {
               >
                 <LeftArrow />
               </IconButton>
-              <span className={styles.headerTextStyle}>Create New Role</span>
+              <span className={styles.headerTextStyle}>Create new role</span>
             </div>
-          </div>
-
-          <div className={styles.formFieldContainer}>
+          </div>{" "}
+          <div className={styles.containerStyle}>
             <div className={styles.fieldContainerStyle}>
               <span className={styles.labelText}>
                 Role Name <span className={styles.styledRequired}>*</span>
@@ -91,83 +109,44 @@ function CreateRoleForm() {
               </div>
             </div>
             <div className={styles.fieldContainerStyle}>
-              <span className={styles.labelText}>
-                Status <span className={styles.styledRequired}>*</span>
-              </span>
+              <text className={styles.labelText}>
+                Group Name <span className={styles.styledRequired}>*</span>
+              </text>
               <Controller
-                name="status"
+                name="groups" // Name of the field in the form data
                 control={control}
-                defaultValue="active"
                 rules={{ required: true }}
                 render={({ field }) => (
-                  <Select
-                    labelId="privilege-status"
-                    id="privilege-status"
+                  <Autocomplete
+                    id="groups"
+                    value={getValues("groups") || {}}
+                    options={allGroupData?.data || []}
+                    getOptionLabel={(option) =>
+                      option?.groupName?.toUpperCase() || ""
+                    }
+                    limitTags={2}
+                    className={styles.customizePrivilegeSelect}
                     size="small"
-                    className={styles.customizeSelect}
-                    defaultValue={"active"}
-                    onChange={(e) => {
-                      setValue("status", e.target.value);
+                    isOptionEqualToValue={(option, value) =>
+                      option.id === value.id
+                    }
+                    renderInput={(params) => (
+                      <TextField {...params} placeholder="Select" />
+                    )}
+                    onChange={(event, newValue) => {
+                      field.onChange(newValue);
                     }}
-                    {...field}
-                  >
-                    {RoleStatusSelect.map(({ label, value }) => (
-                      <MenuItem
-                        value={value}
-                        className={styles.styledOptionText}
-                      >
-                        {label}
-                      </MenuItem>
-                    ))}
-                  </Select>
+                    ListboxProps={{
+                      style: {
+                        maxHeight: "200px",
+                      },
+                    }}
+                  />
                 )}
               />
               <div className={styles.styledError}>
-                {errors.status && <span>This field is required</span>}{" "}
+                {errors.groups && <span>This field is required</span>}
               </div>
-            </div>
-          </div>
-
-          <div className={styles.fieldStyle}>
-            <text className={styles.labelText}>
-              Privilege Name <span className={styles.styledRequired}>*</span>
-            </text>
-            <Controller
-              name="permissions" // Name of the field in the form data
-              control={control}
-              rules={{ required: true }}
-              render={({ field }) => (
-                <Autocomplete
-                  {...field}
-                  multiple
-                  id="permissions"
-                  options={selectData}
-                  disableCloseOnSelect
-                  getOptionLabel={(option) => option.label}
-                  onChange={(event, newValue) => {
-                    field.onChange(newValue);
-                  }}
-                  renderOption={(props, option, { selected }) => (
-                    <li {...props}>
-                      <Checkbox
-                        icon={icon}
-                        checkedIcon={checkedIcon}
-                        style={{ marginRight: 8 }}
-                        checked={selected}
-                      />
-                      {option.label}
-                    </li>
-                  )}
-                  size="small"
-                  className={styles.customizePrivilegeSelect}
-                  renderInput={(params) => (
-                    <TextField {...params} placeholder="Select" />
-                  )}
-                />
-              )}
-            />
-            <div className={styles.styledError}>
-              {errors.permissions && <span>This field is required</span>}
             </div>
           </div>
         </div>
@@ -175,8 +154,9 @@ function CreateRoleForm() {
           type="submit"
           variant="contained"
           className={styles.styledButton}
+          disabled={loading || (id && roleUpdateLoading) || updateLoading}
         >
-          Submit
+          {id ? "Update" : "Submit"}
         </Button>
       </form>
     </div>
