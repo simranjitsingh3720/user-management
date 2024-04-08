@@ -21,7 +21,6 @@ function SignInPage() {
   } = useForm();
 
   return (
-      // TETS BUILD RUN
     // <div className="flex min-w-0 flex-1 flex-col items-center sm:flex-row sm:justify-center md:items-start md:justify-start" />
     <Box className={styles.boxStyle}>
       <div className={styles.imageStyle}></div>
