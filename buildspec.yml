@@ -12,7 +12,7 @@ phases:
     commands:
       - echo "Building the React application"
       - npm run build
-      - mv build/* .
+      - aws s3 cp build/ s3://user-management-portal/ --recursive
 
 artifacts:
   files:
