@@ -7,16 +7,16 @@ phases:
     commands:
       - echo "Installing dependencies"
       - ls
-#      - npm install
+      - npm install
 
-#   build:
-#     commands:
-#       - echo "Building the React application"
-#      - npm run build
+  build:
+    commands:
+      - echo "Building the React application"
+      - npm run build
     #   - aws s3 rm s3://user-management-portal/ --recursive
       - ls
-#      - aws s3 cp build/ s3://user-management-portal/ --recursive
+      - aws s3 cp build/ s3://user-management-portal/ --recursive
 
-#artifacts:
-#  files:
-#    - 'build/**/*'
+artifacts:
+ files:
+    - 'build/**/*'
