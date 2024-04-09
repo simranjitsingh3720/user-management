@@ -1,10 +1,11 @@
 import React from "react";
 import styles from "./styles.module.css";
 
-function TableHeader({ sort, setSort }) {
+function TableHeader({ sort, setSort, setLoading }) {
   const handleSort = (sortKey) => {
     const newSortOrder = sort.sortOrder === "asc" ? "desc" : "asc";
     setSort({ sortKey, sortOrder: newSortOrder });
+    setLoading(true);
   };
   return (
     <div className={styles.tableHeader}>

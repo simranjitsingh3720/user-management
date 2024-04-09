@@ -5,10 +5,10 @@ import styles from "./styles.module.css";
 function ListLoader() {
   return (
     <div>
-      {Array.from(Array(10).keys()).map(() => {
+      {Array.from(Array(3).keys()).map(() => {
         return (
           <div className={styles.listHeader}>
-            {Array.from(Array(5).keys()).map(() => (
+            {Array.from(Array(3).keys()).map(() => (
               <Skeleton variant="rounded" width={100} height={15} />
             ))}
           </div>

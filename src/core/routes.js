@@ -6,10 +6,10 @@ import SignInPage from "../main/Signin/SigninPage";
 import CreateUserManagementForm from "../main/UserManagement/Components/CreateForm";
 import PermissionModule from "../main/PermissionModule";
 import RoleModule from "../main/RoleModule";
-import CreateRoleForm from "../main/RoleModule/CreateRoleForm";
 import CreateNewUserContainer from "../main/PermissionModule/CreateNewPrivilegeForm";
 import GroupModule from "../main/GroupModule";
 import CreateGroupForm from "../main/GroupModule/CreateGroupForm";
+import CreateRoleForm from "../main/RoleModule/CreateRoleForm";
 
 const AppRoutes = () => {
   return (
@@ -47,14 +47,7 @@ const AppRoutes = () => {
           </ResponsiveDrawer>
         }
       />
-      <Route
-        path="/roles"
-        element={
-          <ResponsiveDrawer showSidebarAndHeader={true}>
-            <RoleModule />
-          </ResponsiveDrawer>
-        }
-      />
+
       <Route
         path="/permission/permission-form"
         element={
@@ -64,7 +57,15 @@ const AppRoutes = () => {
         }
       />
       <Route
-        path="/roles/role-form/:name?"
+        path="/roles"
+        element={
+          <ResponsiveDrawer showSidebarAndHeader={true}>
+            <RoleModule />
+          </ResponsiveDrawer>
+        }
+      />
+      <Route
+        path="/roles/role-form/:id?"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
             <CreateRoleForm />

@@ -1,9 +1,15 @@
-import { Button, MenuItem, Select, TextField, Typography } from "@mui/material";
+import {
+  Autocomplete,
+  Button,
+  MenuItem,
+  Select,
+  TextField,
+  Typography,
+} from "@mui/material";
 import React from "react";
 import styles from "./styles.module.css";
 import { useNavigate } from "react-router-dom";
-import { PrivilegeSearch } from "../../PermissionModule/constants";
-import { RoleSearch } from "../constants";
+import { GroupSearchBy } from "../constants";
 
 function SearchComponent({
   searched,
@@ -11,6 +17,10 @@ function SearchComponent({
   query,
   setQuery,
   fetchData,
+  groupData,
+  value,
+  setValue,
+  setLoading,
 }) {
   const handleChange = (event) => {
     setSearched(event.target.value);
@@ -23,7 +33,9 @@ function SearchComponent({
   };
 
   const handleGo = () => {
-    fetchData(searched, query);
+    const resultGroupId = value.id;
+    setLoading(true);
+    fetchData(searched, query, resultGroupId);
   };
 
   return (
@@ -45,27 +57,45 @@ function SearchComponent({
                 : () => <div className={styles.placeholderStyle}>Select</div>
             }
           >
-            {RoleSearch.map((item) => (
+            {GroupSearchBy.map((item) => (
               <MenuItem value={item.value} className={styles.styledOptionText}>
                 {item.label}
               </MenuItem>
             ))}
           </Select>
 
-          <TextField
-            id="search"
-            variant="outlined"
-            placeholder="Search"
-            size="small"
-            className={styles.textFieldStyle}
-            onChange={(e) => setQuery(e.target.value)}
-          />
+          {searched === "roleName" ? (
+            <TextField
+              id="search"
+              variant="outlined"
+              placeholder="Search"
+              size="small"
+              className={styles.textFieldStyle}
+              onChange={(e) => setQuery(e.target.value)}
+            />
+          ) : (
+            <Autocomplete
+              id="groupSelect"
+              options={groupData || []}
+              getOptionLabel={(option) => option?.groupName?.toUpperCase()}
+              className={styles.customizeGroupSelect}
+              limitTags={2}
+              size="small"
+              renderInput={(params) => (
+                <TextField {...params} placeholder="Select" />
+              )}
+              onChange={(event, newValue) => {
+                setValue(newValue);
+              }}
+              ListboxProps={{
+                style: {
+                  maxHeight: "200px",
+                },
+              }}
+            />
+          )}
 
-          <Button
-            variant="outlined"
-            onClick={handleGo}
-            disabled={!(searched && query)}
-          >
+          <Button variant="outlined" onClick={handleGo}>
             Go
           </Button>
         </div>

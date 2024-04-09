@@ -17,7 +17,7 @@ function useGetGroup(pageChange = 1) {
       }&sortOrder=${sort.sortOrder}`;
       if (key === "groupName" && query) {
         url += `&searchKey=${key}&searchString=${query}`;
-      } else if (key === "permissionName" && query) {
+      } else if (key === "permissionName" && resultPermissionString) {
         url += `&searchKey=${key}&permissions=${resultPermissionString}`;
       }
       const response = await axiosInstance.get(url);

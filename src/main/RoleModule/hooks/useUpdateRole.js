@@ -3,17 +3,19 @@ import axiosInstance from "../../../core/axiosInstance"; // Import the instance
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-function useCreateRole() {
+function useUpdateRole(id, setChangeStatusOpen, fetchGroupList) {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
-  async function postData(data) {
+  async function UpdateDataFun(data) {
     setLoading(true);
     try {
-      const response = await axiosInstance.post("/api/role", data);
-      toast.success(response?.data?.message || "Role created successfully");
+      const response = await axiosInstance.put(`/api/role/${id}`, data);
+      toast.success(response?.data?.message || "Role updated successfully");
       navigate("/roles");
+      if (setChangeStatusOpen) setChangeStatusOpen(false);
+      if (fetchGroupList) fetchGroupList();
     } catch (error) {
       toast.error(
         error?.response?.data?.error?.message ||
@@ -25,7 +27,7 @@ function useCreateRole() {
       setLoading(false); // Set loading to false when request finishes (whether success or failure)
     }
   }
-  return { postData, loading };
+  return { UpdateDataFun, updateLoading: loading };
 }
 
-export default useCreateRole;
+export default useUpdateRole;
