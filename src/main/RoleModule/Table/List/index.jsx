@@ -105,7 +105,7 @@ function List({
           </div>
         </div>
         <div className={styles.actionCell}>
-          <Tooltip title="Edit Group">
+          <Tooltip title="Edit Role">
             <IconButton
               aria-label="back"
               type="button"
