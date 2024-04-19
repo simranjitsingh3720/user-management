@@ -1,3 +1,7 @@
 .cardStyle {
   height: 70vh;
 }
+
+.cardContainerWidth {
+  width: 100%;
+}

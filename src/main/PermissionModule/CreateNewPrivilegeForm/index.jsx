@@ -90,8 +90,8 @@ function CreateNewUserContainer() {
       clearModulesFromIndex(index + 1);
     }
   };
+
   useEffect(() => {
-    // Reset permissionType when module changes
     setPermissionType([]);
     setValue("permissionType", []);
   }, [module]);

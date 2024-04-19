@@ -1,0 +1,108 @@
+.createNewUserContainer {
+  background-color: #ffffff;
+  box-shadow: 0px 6px 12px #185ec414;
+  border-radius: 12px;
+  height: 100%;
+  min-height: 80vh;
+  margin-bottom: 20px;
+}
+
+.headerTextStyle {
+  margin-left: 12px;
+  font-size: 18px;
+  color: #465465;
+  font-weight: 600;
+}
+
+.formHeaderStyle {
+  padding: 16px 0px 0px 8px;
+  display: flex;
+  align-items: baseline;
+  border-bottom: 1px solid #c5cfde;
+  height: 80px;
+}
+
+.subHeader {
+  display: flex;
+  align-items: center;
+}
+
+.formContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.moduleWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.fieldContainerStyle {
+  margin: 10px 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.labelText {
+  color: #566475;
+  font-size: 14px;
+}
+
+.styledRequired {
+  color: #ff6262;
+}
+
+.customizeSelect {
+  background-color: #ffffff;
+  width: 180px;
+  font-size: 14px !important;
+  height: 40px;
+}
+
+.customizeCrudSelect {
+  background-color: #ffffff;
+  min-width: 150px;
+  font-size: 14px !important;
+  height: 40px;
+}
+
+.styledError {
+  color: #fd6262;
+  font-size: 12px;
+}
+
+.styledButton {
+  margin-right: 12px !important;
+}
+
+.listStyle {
+  display: flex;
+}
+
+.deleteIconStyle {
+  margin-top: 40px;
+}
+
+.buttonContainer {
+  padding-left: 48px;
+}
+
+.placeholderStyle {
+  color: #2f3741;
+  opacity: 40%;
+}
+
+.buttonWrapper {
+  display: flex;
+  align-items: center;
+  margin-top: 28px;
+}
+
+.formWrapper {
+  padding: 20px 20px 0px 20px;
+}
+
+.skeletonStyle {
+  margin-top: 20px !important;
+}

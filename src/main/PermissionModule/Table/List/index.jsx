@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import styles from "./styles.module.css";
-import EditLogo from "../../../../assets/EditLogo";
 import {
   Button,
   Dialog,

@@ -77,7 +77,10 @@ function CreateRoleForm() {
               >
                 <LeftArrow />
               </IconButton>
-              <span className={styles.headerTextStyle}>Create new role</span>
+              <span className={styles.headerTextStyle}>
+                {" "}
+                {id ? "Edit role" : "Create new role"}
+              </span>
             </div>
           </div>{" "}
           <div className={styles.containerStyle}>

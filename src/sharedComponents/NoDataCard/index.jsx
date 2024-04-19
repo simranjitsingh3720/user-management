@@ -4,7 +4,7 @@ import styles from "./styles.module.css";
 
 function NoDataFound() {
   return (
-    <div>
+    <div className={styles.cardContainerWidth}>
       <Card className={styles.cardStyle}>
         <CardContent>
           <Typography variant="h6" color="textSecondary" textAlign="center">

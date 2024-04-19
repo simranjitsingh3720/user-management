@@ -8,3 +8,7 @@
   padding: 0px 12px;
   border-bottom: 1px solid #c5cfde;
 }
+
+.loaderContainer {
+  width: 100%;
+}

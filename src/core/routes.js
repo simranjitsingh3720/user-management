@@ -6,10 +6,10 @@ import SignInPage from "../main/Signin/SigninPage";
 import CreateUserManagementForm from "../main/UserManagement/Components/CreateForm";
 import PermissionModule from "../main/PermissionModule";
 import RoleModule from "../main/RoleModule";
-import CreateNewUserContainer from "../main/PermissionModule/CreateNewPrivilegeForm";
 import GroupModule from "../main/GroupModule";
-import CreateGroupForm from "../main/GroupModule/CreateGroupForm";
+import CreateGroupForm from "../main/GroupModule/CreateGroupForm copy";
 import CreateRoleForm from "../main/RoleModule/CreateRoleForm";
+import Form from "../main/PermissionModule/Form";
 
 const AppRoutes = () => {
   return (
@@ -52,7 +52,7 @@ const AppRoutes = () => {
         path="/permission/permission-form"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
-            <CreateNewUserContainer />
+            <Form />
           </ResponsiveDrawer>
         }
       />

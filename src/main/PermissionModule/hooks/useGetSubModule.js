@@ -4,10 +4,11 @@ import { useState } from "react";
 
 function useGetSubModule() {
   const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const fetchData = async (id) => {
     try {
+      setLoading(true);
       const response = await axiosInstance.get(`api/module/submodule?id=${id}`);
       setData(response.data);
     } catch (error) {

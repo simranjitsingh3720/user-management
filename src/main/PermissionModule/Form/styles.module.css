@@ -1,0 +1,36 @@
+.createNewUserContainer {
+  background-color: #ffffff;
+  box-shadow: 0px 6px 12px #185ec414;
+  border-radius: 12px;
+  height: 100%;
+  min-height: 80vh;
+  margin-bottom: 20px;
+}
+
+.formHeaderStyle {
+  padding: 16px 0px 0px 8px;
+  display: flex;
+  align-items: baseline;
+  border-bottom: 1px solid #c5cfde;
+  height: 80px;
+}
+
+.subHeader {
+  display: flex;
+  align-items: center;
+}
+
+.headerTextStyle {
+  margin-left: 12px;
+  font-size: 18px;
+  color: #465465;
+  font-weight: 600;
+}
+
+.styledAppendButton {
+  padding: 12px 0px 0px 20px !important;
+}
+
+.styledButton {
+  width: 15%;
+}
