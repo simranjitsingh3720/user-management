@@ -139,20 +139,22 @@ function CreateGroupForm() {
       setValue("groupName", groupData?.data?.groupName);
       setValue("groupUser", groupData?.data?.users || []);
       setValue("groupStatus", groupData?.data?.status ? "active" : "inactive");
-      setCheckedPermission((prev) => {
-        const newCheckedPermission = [...prev];
-        newCheckedPermission.forEach((permissionElement) =>
-          (groupData?.data?.permissions || []).forEach((groupEle) => {
-            if (groupEle.id === permissionElement.id) {
-              permissionElement.checked = true;
-              return;
-            }
-          })
-        );
-        return newCheckedPermission;
-      });
+      if (permissionData && permissionData?.data) {
+        setCheckedPermission((prev) => {
+          const newCheckedPermission = [...prev];
+          newCheckedPermission.forEach((permissionElement) =>
+            (groupData?.data?.permissions || []).forEach((groupEle) => {
+              if (groupEle.id === permissionElement.id) {
+                permissionElement.checked = true;
+                return;
+              }
+            })
+          );
+          return newCheckedPermission;
+        });
+      }
     }
-  }, [groupData]);
+  }, [groupData, permissionData]);
 
   const handleChange = (item) => {
     const newPermissions = checkedPermission.map((permission) => {
