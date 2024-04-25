@@ -1,127 +1,74 @@
 import { Box, MenuItem, Pagination, Select } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./styles.module.css";
 import Table from "./Components/Table";
 import SearchComponent from "./Components/SearchComponent";
+import useGetUser from "./Components/hooks/useGetUser";
+import NoDataFound from "../../sharedComponents/NoDataCard";
+import TableHeader from "./Components/Table/TableHeader";
+import ListLoader from "../../sharedComponents/ListLoader";
 
 function UserManagement() {
-  const [pageChange, setPageChange] = React.useState(1);
+  const [searched, setSearched] = useState("");
+  const [query, setQuery] = useState("");
+  const [fromDate, setFromDate] = useState();
+  const [toDate, setToDate] = useState();
+  const [pageChange, setPageChange] = useState(1);
 
-  const [rowsPage, setRowsPage] = React.useState(10);
+  // const [rowsPage, setRowsPage] = React.useState(10);
 
-  const handleRowsChange = (event) => {
-    setRowsPage(event.target.value);
-  };
+  // const handleRowsChange = (event) => {
+  //   setRowsPage(event.target.value);
+  // };
 
   const handlePaginationChange = (event, page) => {
     setPageChange(page);
   };
 
+  const { data, loading, fetchData, setLoading, setSort, sort } = useGetUser();
+
   const selectRowsData = [5, 10];
 
-  const rows = [
-    {
-      id: 1,
-      userId: 123523,
-      lastName: "Snow",
-      firstName: "Jon",
-      age: 35,
-      status: "active",
-      ntLogin: "test04@tataaig.local",
-      role: "Underwriter",
-      emailId: "test04@uatipds1.cloware.in",
-      mobile: "1234567890",
-      dateOfCreation: "09/02/2024",
-    },
-    {
-      id: 2,
-      userId: 1235231273192,
-      lastName: "Snow",
-      firstName: "Jon",
-      age: 35,
-      status: "inactive",
-      ntLogin: "test04@tataaig.local",
-      role: "Ops Helpdesk",
-      emailId: "test04@uatipds1.cloware.in",
-      mobile: "1234567890",
-      dateOfCreation: "09/02/2024",
-    },
-    {
-      id: 3,
-      userId: 12352379708,
-      lastName: "Snow",
-      firstName: "Jon",
-      age: 35,
-      status: "active",
-      ntLogin: "test04@tataaig.local",
-      emailId: "test04@uatipds1.cloware.in",
-      role: "Marinehub",
-      mobile: "1234567890",
-      dateOfCreation: "09/02/2024",
-    },
-    {
-      id: 3,
-      userId: 123523,
-      lastName: "Snow",
-      firstName: "Jon",
-      age: 35,
-      status: "active",
-      ntLogin: "test04@tataaig.local",
-      emailId: "test04@uatipds1.cloware.in",
-      role: "CSM",
-      mobile: "1234567890",
-      dateOfCreation: "09/02/2024",
-    },
-    {
-      id: 4,
-      userId: 123523,
-      lastName: "Snow",
-      firstName: "Jon",
-      age: 35,
-      status: "active",
-      ntLogin: "test04@tataaig.local",
-      emailId: "test04@uatipds1.cloware.in",
-      role: "Underwriter",
-      mobile: "1234567890",
-      dateOfCreation: "09/02/2024",
-    },
-    {
-      id: 5,
-      userId: 123523,
-      lastName: "Snow",
-      firstName: "Jon",
-      age: 35,
-      status: "active",
-      ntLogin: "test04@tataaig.local",
-      emailId: "test04@uatipds1.cloware.in",
-      role: "Underwriter",
-      mobile: "1234567890",
-      dateOfCreation: "09/02/2024",
-    },
-    {
-      id: 6,
-      userId: 123523,
-      lastName: "Snow",
-      firstName: "Jon",
-      age: 35,
-      status: "active",
-      ntLogin: "test04@tataaig.local",
-      emailId: "test04@uatipds1.cloware.in",
-      role: "Underwriter",
-      mobile: "1234567890",
-      dateOfCreation: "09/02/2024",
-    },
-  ];
+  useEffect(() => {
+    setQuery("");
+  }, [searched]);
 
   return (
     <Box>
       {/* <Toolbar /> */}
       <div>
-        <SearchComponent />
+        <SearchComponent
+          searched={searched}
+          setSearched={setSearched}
+          fromDate={fromDate}
+          setFromDate={setFromDate}
+          toDate={toDate}
+          setToDate={setToDate}
+          query={query}
+          setQuery={setQuery}
+          fetchData={fetchData}
+        />
         <div className={styles.tableStyled}>
-          <Table ListData={rows} />
+          {loading ? (
+            <>
+              <TableHeader />
+              <ListLoader />
+            </>
+          ) : data?.data && data?.data.length ? (
+            <Table
+              ListData={data?.data}
+              loading={loading}
+              fetchData={fetchData}
+              setLoading={setLoading}
+              sort={sort}
+              setSort={setSort}
+            />
+          ) : (
+            <NoDataFound />
+          )}
+
           <div className={styles.pageFooter}>
-            <div className={styles.rowsPerPage}>
+            {/* <div className={styles.rowsPerPage}>
               <p className={styles.totalRecordStyle}>Showing Results:</p>
               <Select
                 labelId="rows-per-page"
@@ -138,7 +85,7 @@ function UserManagement() {
                 ))}
               </Select>
               <p className={styles.totalRecordStyle}>of 141</p>
-            </div>
+            </div> */}
             <Pagination
               count={10}
               color="primary"

@@ -8,11 +8,17 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useNavigate } from "react-router-dom";
 
-function SearchComponent() {
-  const [searched, setSearched] = React.useState("");
-  const [fromDate, setFromDate] = React.useState();
-  const [toDate, setToDate] = React.useState();
-
+function SearchComponent({
+  searched = "",
+  setSearched = () => {},
+  fromDate,
+  setFromDate,
+  toDate,
+  setToDate,
+  query,
+  setQuery,
+  fetchData,
+}) {
   const handleChange = (event) => {
     setSearched(event.target.value);
   };
@@ -21,6 +27,10 @@ function SearchComponent() {
 
   const handleCreateNewForm = () => {
     navigate("/user-management/user-management-form");
+  };
+
+  const handleGo = () => {
+    fetchData(searched, query);
   };
 
   return (
@@ -32,7 +42,7 @@ function SearchComponent() {
             labelId="search-select"
             id="search-select"
             value={searched}
-            onChange={handleChange}
+            onChange={(event) => handleChange(event)}
             size="small"
             displayEmpty
             className={styles.customizeSelect}
@@ -77,10 +87,16 @@ function SearchComponent() {
               variant="outlined"
               placeholder="Search"
               size="small"
+              value={query}
+              onChange={(e) => {
+                setQuery(e.target.value);
+              }}
               className={styles.textFieldStyle}
             />
           )}
-          <Button variant="outlined">Go</Button>
+          <Button variant="outlined" onClick={() => handleGo()}>
+            Go
+          </Button>
         </div>
         <div>
           <Button

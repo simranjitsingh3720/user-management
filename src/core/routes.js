@@ -32,7 +32,7 @@ const AppRoutes = () => {
       />
       <Route path="/sign-in" element={<SignInPage />} />
       <Route
-        path="/user-management/user-management-form"
+        path="/user-management/user-management-form/:id?"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
             <CreateUserManagementForm />

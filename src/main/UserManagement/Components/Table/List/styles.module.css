@@ -14,14 +14,23 @@
   color: #465465;
 }
 
+.name {
+  font-size: 13px;
+  color: #465465;
+  width: 6%;
+}
+
 .loginCell {
   display: flex;
   flex-direction: column;
   font-size: 13px;
   color: #465465;
-  width: 22%;
+  width: 20%;
 }
 
+.styledActiveSelect {
+  font-size: 14px;
+}
 .userIdCell {
   font-size: 13px;
   color: #465465;
@@ -38,6 +47,8 @@
   width: 10%; /* Adjust width as needed */
 }
 .statusCell {
+  display: flex;
+  align-items: center;
   width: 10%; /* Adjust width as needed */
 }
 .actionCell {
@@ -48,4 +59,30 @@
   font-size: 13px;
   color: #465465;
   width: 10%; /* Adjust width as needed */
+}
+
+.infoIconStyle {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 12px;
+  font-size: x-large;
+}
+.styledText {
+  font-size: 16px;
+  color: #465465;
+}
+
+.SubmitContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.styledButton {
+  margin-left: 12px !important;
+}
+
+.iconStyle {
+  font-size: 40px;
+  color: #fd6262;
 }

@@ -16,6 +16,13 @@
   font-weight: 600;
 }
 
+.name {
+  font-size: 14px;
+  color: #465465;
+  font-weight: 600;
+  width: 6%;
+}
+
 .userIdCell {
   font-size: 14px;
   color: #465465;
@@ -27,7 +34,7 @@
   font-size: 14px;
   color: #465465;
   font-weight: 600;
-  width: 22%;
+  width: 20%;
 }
 .mobileCell {
   font-size: 14px;
