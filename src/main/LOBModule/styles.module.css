@@ -1,0 +1,19 @@
+.tableContainerStyle {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+  background-color: #f7faff;
+}
+.tableStyled {
+  margin: 20px 0px;
+}
+
+.pageFooter {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.marginFotter {
+  margin-bottom: 20px !important;
+}

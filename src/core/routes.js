@@ -10,6 +10,8 @@ import GroupModule from "../main/GroupModule";
 import CreateGroupForm from "../main/GroupModule/CreateGroupForm copy";
 import CreateRoleForm from "../main/RoleModule/CreateRoleForm";
 import Form from "../main/PermissionModule/Form";
+import LOBModule from "../main/LOBModule";
+import LobForm from "../main/LOBModule/LobForm";
 
 const AppRoutes = () => {
   return (
@@ -85,6 +87,22 @@ const AppRoutes = () => {
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
             <CreateGroupForm />
+          </ResponsiveDrawer>
+        }
+      />
+      <Route
+        path="/lob"
+        element={
+          <ResponsiveDrawer showSidebarAndHeader={true}>
+            <LOBModule />
+          </ResponsiveDrawer>
+        }
+      />
+      <Route
+        path="/lob/lob-form"
+        element={
+          <ResponsiveDrawer showSidebarAndHeader={true}>
+            <LobForm />
           </ResponsiveDrawer>
         }
       />
