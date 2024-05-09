@@ -65,10 +65,9 @@ function CreateGroupForm() {
       postData(result);
     }
   };
-  const { handleSubmit, control, setValue, watch, formState, getValues } =
-    useForm({
-      defaultValues: { groupName: "", permissions: [] },
-    });
+  const { handleSubmit, control, setValue, formState, getValues } = useForm({
+    defaultValues: { groupName: "", permissions: [] },
+  });
 
   const { errors } = formState;
 

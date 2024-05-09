@@ -86,6 +86,7 @@ function SearchComponent({
               getOptionLabel={(option) => option.permissionName.toUpperCase()}
               className={styles.customizeGroupSelect}
               limitTags={2}
+              disableCloseOnSelect
               size="small"
               renderInput={(params) => (
                 <TextField {...params} placeholder="Select" />

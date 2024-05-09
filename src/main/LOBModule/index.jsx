@@ -18,7 +18,6 @@ function LOBModule() {
   const { data, loading, fetchData, setLoading, setSort, sort } =
     useGetLob(pageChange);
 
-  console.log("data", data);
   return (
     <div>
       <CreateLob />

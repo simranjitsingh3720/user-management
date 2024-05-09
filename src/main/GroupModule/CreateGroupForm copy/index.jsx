@@ -285,6 +285,7 @@ function CreateGroupForm() {
                   //     setOpen(false);
                   //   }
                   // }}
+                  disableCloseOnSelect
                   getOptionLabel={(option) => {
                     return `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`;
                   }}

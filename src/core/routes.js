@@ -12,18 +12,13 @@ import CreateRoleForm from "../main/RoleModule/CreateRoleForm";
 import Form from "../main/PermissionModule/Form";
 import LOBModule from "../main/LOBModule";
 import LobForm from "../main/LOBModule/LobForm";
+import Product from "../main/ProductModule";
+import ProductForm from "../main/ProductModule/ProductForm";
 
 const AppRoutes = () => {
   return (
     <Routes>
-      <Route
-        path="/"
-        element={
-          <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PermissionModule />
-          </ResponsiveDrawer>
-        }
-      />
+      <Route path="/" element={<SignInPage />} />
       <Route
         path="/user-management"
         element={
@@ -103,6 +98,22 @@ const AppRoutes = () => {
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
             <LobForm />
+          </ResponsiveDrawer>
+        }
+      />
+      <Route
+        path="/product"
+        element={
+          <ResponsiveDrawer showSidebarAndHeader={true}>
+            <Product />
+          </ResponsiveDrawer>
+        }
+      />
+      <Route
+        path="/product/product-form"
+        element={
+          <ResponsiveDrawer showSidebarAndHeader={true}>
+            <ProductForm />
           </ResponsiveDrawer>
         }
       />

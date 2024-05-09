@@ -1,4 +1,5 @@
 import {
+  Autocomplete,
   Button,
   FormControlLabel,
   IconButton,
@@ -11,37 +12,42 @@ import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import styles from "./styles.module.css";
 import LeftArrow from "../../../assets/LeftArrow";
-import useCreateLob from "../hooks/useCreateLob";
+import useGetLobListData from "../hooks/useGetLobListData";
+import useCreateProduct from "../hooks/useCreateProduct";
 
-function LobForm() {
+function ProductForm() {
   const navigate = useNavigate();
 
   const { handleSubmit, control, setValue, formState } = useForm();
   const { errors } = formState;
 
-  const { postData, loading } = useCreateLob();
+  const { data } = useGetLobListData();
+
+  const { postData, loading } = useCreateProduct();
 
   const onSubmit = (data) => {
-    data.status === "active" ? (data.status = true) : (data.status = false);
-    postData(data);
+    const payload = {
+      product: data.product,
+      product_code: data.product_code,
+      product_value: data.product_value,
+      lob_id: data.lob.id,
+      status: data.status === "active" ? true : false,
+    };
+    postData(payload);
   };
 
-  const formField = [
+  const formField1 = [
     {
-      label: "LOB Name",
-      value: "lob",
+      label: "Product",
+      value: "product",
     },
     {
-      label: "LOB Value",
-      value: "lob_value",
+      label: "Product Code",
+      value: "product_code",
     },
     {
-      label: "LOB Level",
-      value: "lob_level",
-    },
-    {
-      label: "LOB Code",
-      value: "lob_code",
+      label: "Product Value",
+      value: "product_value",
     },
   ];
 
@@ -55,16 +61,16 @@ function LobForm() {
               <IconButton
                 aria-label="back"
                 onClick={() => {
-                  navigate("/lob");
+                  navigate("/product");
                 }}
               >
                 <LeftArrow />
               </IconButton>
-              <span className={styles.headerTextStyle}>Create new lob</span>
+              <span className={styles.headerTextStyle}>Create new product</span>
             </div>
           </div>{" "}
           <div className={styles.containerStyle}>
-            {formField.map((item) => (
+            {formField1.map((item) => (
               <div className={styles.fieldContainerStyle}>
                 <span className={styles.labelText}>
                   {item.label} <span className={styles.styledRequired}>*</span>
@@ -93,9 +99,45 @@ function LobForm() {
                 </div>
               </div>
             ))}
+
             <div className={styles.fieldContainerStyle}>
               <text className={styles.labelText}>
-                LOB Status <span className={styles.styledRequired}>*</span>
+                Lob Name <span className={styles.styledRequired}>*</span>
+              </text>
+              <Controller
+                name="lob" // Name of the field in the form data
+                control={control}
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <Autocomplete
+                    id="groups"
+                    options={data?.data || []}
+                    getOptionLabel={(option) =>
+                      option?.lob?.toUpperCase() || ""
+                    }
+                    className={styles.customizeSelect}
+                    size="small"
+                    renderInput={(params) => (
+                      <TextField {...params} placeholder="Select" />
+                    )}
+                    onChange={(event, newValue) => {
+                      field.onChange(newValue);
+                    }}
+                    ListboxProps={{
+                      style: {
+                        maxHeight: "200px",
+                      },
+                    }}
+                  />
+                )}
+              />
+              <div className={styles.styledError}>
+                {errors.lob && <span>This field is required</span>}
+              </div>
+            </div>
+            <div className={styles.fieldContainerStyle}>
+              <text className={styles.labelText}>
+                Status <span className={styles.styledRequired}>*</span>
               </text>
               <Controller
                 name="status" // Name of the field in the form data
@@ -135,11 +177,11 @@ function LobForm() {
           className={styles.styledButton}
           disabled={loading}
         >
-          {loading ? "Submiting..." : "Submit"}
+          Submit
         </Button>
       </form>
     </div>
   );
 }
 
-export default LobForm;
+export default ProductForm;

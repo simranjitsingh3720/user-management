@@ -10,7 +10,7 @@ import {
   Switch,
 } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
-import useUpdateLob from "../../hooks/useUpdateLob";
+import useUpdateProduct from "../../hooks/useUpdateProduct";
 
 function List({ item, fetchData: fetchGroupList }) {
   const [changeStatusOpen, setChangeStatusOpen] = useState(false);
@@ -25,7 +25,7 @@ function List({ item, fetchData: fetchGroupList }) {
     setChangeStatusOpen(false);
   };
 
-  const { UpdateDataFun, updateLoading } = useUpdateLob(
+  const { UpdateDataFun, updateLoading } = useUpdateProduct(
     setChangeStatusOpen,
     fetchGroupList
   );
@@ -43,12 +43,12 @@ function List({ item, fetchData: fetchGroupList }) {
   return (
     <div>
       <div className={styles.listHeader}>
-        <div className={styles.nameCell}>{item?.lob || "-"}</div>
-        <div className={styles.lobValue}>{item?.lob_value || "-"}</div>
-        <div className={styles.lobLevel}>{item?.lob_level || "-"}</div>
-        <div className={styles.lobCode}>{item?.lob_code || "-"}</div>
+        <div className={styles.nameCell}>{item?.product || "-"}</div>
+        <div className={styles.productValue}>{item?.product_value || "-"}</div>
+        <div className={styles.lobName}>{item?.lob?.lob || "-"}</div>
+        <div className={styles.productCode}>{item?.product_code || "-"}</div>
         <div className={styles.createdAt}> {item?.createdAt || "-"}</div>
-        <div className={styles.lobStatus}>
+        <div className={styles.productStatus}>
           <div>
             <Switch
               checked={checked}

@@ -33,6 +33,11 @@ export const SideNavData = [
     navigateRoute: "lob",
   },
   {
+    label: "Product",
+    icon: ManageAccountsIcon,
+    navigateRoute: "product",
+  },
+  {
     label: "Producer Management",
     icon: ManageAccountsIcon,
   },
