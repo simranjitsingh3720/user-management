@@ -37,6 +37,9 @@ function SearchComponent({ lobListData, value, setValue, fetchData }) {
               <TextField {...params} placeholder="Search by LOB Name" />
             )}
             onChange={(event, newValue) => {
+              if (!newValue.length) {
+                fetchData();
+              }
               setValue(newValue);
             }}
             ListboxProps={{

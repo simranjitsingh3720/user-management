@@ -86,7 +86,7 @@ function List({ item, fetchData: fetchGroupList }) {
             <InfoIcon fontSize="x-large" className={styles.iconStyle} />
           </div>
           <text className={styles.styledText}>
-            Are you sure you want to change the Group status?
+            Are you sure you want to change the product status?
           </text>
 
           <div className={styles.SubmitContainer}>

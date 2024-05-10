@@ -103,7 +103,7 @@ function List({ item, fetchData, setLoading }) {
             <InfoIcon fontSize="x-large" className={styles.iconStyle} />
           </div>
           <text className={styles.styledText}>
-            Are you sure you want to change the Group status?
+            Are you sure you want to change the permission status?
           </text>
 
           <div className={styles.SubmitContainer}>

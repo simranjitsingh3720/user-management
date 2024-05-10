@@ -106,7 +106,11 @@ function SearchComponent({
           >
             Export Data
           </Button>
-          <Button variant="contained" onClick={handleCreateNewForm}>
+          <Button
+            variant="contained"
+            onClick={handleCreateNewForm}
+            sx={{ textTransform: "none" }}
+          >
             Create New User
           </Button>
         </div>
