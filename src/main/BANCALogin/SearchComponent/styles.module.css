@@ -1,0 +1,55 @@
+.searchText {
+  color: #566475;
+  font-size: 14px;
+}
+
+.selectContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.customizeSelect {
+  background-color: #ffffff;
+  width: 150px;
+  font-size: 14px !important;
+  height: 40px;
+}
+
+.customizeGroupSelect {
+  background-color: #ffffff;
+  width: 100%;
+  max-width: 200px;
+  font-size: 14px !important;
+  min-height: 40px;
+  margin: 0px 12px !important;
+}
+
+@media (min-width: 768px) {
+  .customizeGroupSelect {
+    max-width: 600px; /* Adjust maximum width for larger screens */
+    min-width: 400px;
+  }
+}
+
+.placeholderStyle {
+  color: #566475;
+}
+
+.styledOptionText {
+  font-size: 14px !important;
+}
+
+.textFieldStyle {
+  background-color: #ffffff;
+  margin: 0px 12px !important;
+}
+
+.flexSearchContainer {
+  display: flex;
+  align-items: center;
+}
+
+.buttonTextStyle {
+  font-size: 14px !important;
+}

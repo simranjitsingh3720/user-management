@@ -16,7 +16,7 @@
 .nameCell {
   font-size: 14px;
   color: #465465;
-  width: 15%;
+  width: 20%;
 }
 
 @media (max-width: 600px) {
@@ -95,6 +95,12 @@
 }
 
 .createdAt {
+  font-size: 14px;
+  color: #465465;
+  width: 15%;
+}
+
+.updatedAt {
   font-size: 14px;
   color: #465465;
   width: 15%;

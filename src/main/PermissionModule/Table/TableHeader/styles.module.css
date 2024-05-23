@@ -20,7 +20,7 @@
   font-size: 14px;
   color: #465465;
   font-weight: 600;
-  width: 15%;
+  width: 20%;
   cursor: pointer;
 }
 
@@ -46,6 +46,14 @@
 }
 
 .createdAt {
+  font-size: 14px;
+  color: #465465;
+  font-weight: 600;
+  width: 15%;
+  cursor: pointer;
+}
+
+.updatedAt {
   font-size: 14px;
   color: #465465;
   font-weight: 600;

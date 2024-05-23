@@ -47,6 +47,8 @@ const convertUpdateFormat = (newData, oldData) => {
 
 function CreateGroupForm() {
   const [input, setInput] = useState("");
+  const [query, setQuery] = useState("");
+  const [filteredPermission, setFilteredPermission] = useState([]);
 
   const { permissionData, permissionLoading } = useGetPermission();
   // const userVariable = useContext(GetUserContext);
@@ -58,6 +60,7 @@ function CreateGroupForm() {
   useEffect(() => {
     if (permissionData && permissionData?.data) {
       setCheckedPermission(permissionData?.data || []);
+      setFilteredPermission(permissionData?.data || []);
     }
   }, [permissionData]);
 
@@ -152,6 +155,18 @@ function CreateGroupForm() {
           );
           return newCheckedPermission;
         });
+        setFilteredPermission((prev) => {
+          const newFilteredPermission = [...prev];
+          newFilteredPermission.forEach((permissionElement) =>
+            (groupData?.data?.permissions || []).forEach((groupEle) => {
+              if (groupEle.id === permissionElement.id) {
+                permissionElement.checked = true;
+                return;
+              }
+            })
+          );
+          return newFilteredPermission;
+        });
       }
     }
   }, [groupData, permissionData]);
@@ -167,11 +182,23 @@ function CreateGroupForm() {
     });
 
     setCheckedPermission(newPermissions);
+    setFilteredPermission(newPermissions);
   };
 
-  const handlePageChange = () => {
-    // setPage(page + 1);
-  };
+  console.log("query", query);
+
+  console.log("checkedPermission", checkedPermission);
+
+  useEffect(() => {
+    if (query === "") {
+      setFilteredPermission(checkedPermission);
+    } else {
+      const filteredData = checkedPermission.filter((item) =>
+        item.permissionName.toLowerCase().includes(query.toLowerCase())
+      );
+      setFilteredPermission(filteredData);
+    }
+  }, [query, checkedPermission]);
 
   return (
     <div>
@@ -189,7 +216,7 @@ function CreateGroupForm() {
                 <LeftArrow />
               </IconButton>
               <span className={styles.headerTextStyle}>
-                {id ? "Edit group" : "Create new group"}
+                {id ? "Edit Group" : "Create New Group"}
               </span>
             </div>
           </div>{" "}
@@ -263,13 +290,10 @@ function CreateGroupForm() {
             </div>
           </div>
           <div className={styles.fieldContainerStyle}>
-            <text className={styles.labelText}>
-              Group User <span className={styles.styledRequired}>*</span>
-            </text>
+            <text className={styles.labelText}>Group User</text>
             <Controller
               name="groupUser" // Name of the field in the form data
               control={control}
-              rules={{ required: true }}
               render={({ field }) => (
                 <Autocomplete
                   multiple
@@ -339,9 +363,6 @@ function CreateGroupForm() {
                 />
               )}
             />
-            <div className={styles.styledError}>
-              {errors.groupUser && <span>This field is required</span>}
-            </div>
           </div>
           <div className={styles.fieldContainerStyle}>
             <text className={styles.labelText}>
@@ -387,33 +408,48 @@ function CreateGroupForm() {
                 </div>
               </div>
               <div className={styles.permissionCheckbox}>
-                {permissionLoading ? (
-                  <ListLoader rows={5} column={3} />
-                ) : checkedPermission.length ? (
-                  (checkedPermission || []).map((item) => (
-                    <div className={styles.checkboxStyle} key={item.id}>
-                      {" "}
-                      <Checkbox
-                        checked={!!item.checked}
-                        onChange={() => handleChange(item)}
-                        inputProps={{ "aria-label": "controlled" }}
-                      />
-                      {item.permissionName.length > 25 ? (
-                        <Tooltip title={item.permissionName}>
-                          <span
-                            className={styles.checkBoxlabel}
-                          >{`${item.permissionName.substring(0, 25)}...`}</span>
-                        </Tooltip>
-                      ) : (
-                        <span className={styles.checkBoxlabel}>
-                          {item.permissionName || ""}
-                        </span>
-                      )}
-                    </div>
-                  ))
-                ) : (
-                  <NoDataFound />
-                )}
+                <TextField
+                  id="search"
+                  variant="outlined"
+                  placeholder="Search by permission name"
+                  size="small"
+                  className={styles.textFieldStyle}
+                  onChange={(e) => {
+                    setQuery(e.target.value);
+                  }}
+                />
+                <div className={styles.permissionCheckbox}>
+                  {permissionLoading ? (
+                    <ListLoader rows={5} column={3} />
+                  ) : filteredPermission.length ? (
+                    (filteredPermission || []).map((item) => (
+                      <div className={styles.checkboxStyle} key={item.id}>
+                        {" "}
+                        <Checkbox
+                          checked={!!item.checked}
+                          onChange={() => handleChange(item)}
+                          inputProps={{ "aria-label": "controlled" }}
+                        />
+                        {item.permissionName.length > 25 ? (
+                          <Tooltip title={item.permissionName}>
+                            <span
+                              className={styles.checkBoxlabel}
+                            >{`${item.permissionName.substring(
+                              0,
+                              25
+                            )}...`}</span>
+                          </Tooltip>
+                        ) : (
+                          <span className={styles.checkBoxlabel}>
+                            {item.permissionName || ""}
+                          </span>
+                        )}
+                      </div>
+                    ))
+                  ) : (
+                    <NoDataFound />
+                  )}
+                </div>
               </div>
             </div>
           </div>

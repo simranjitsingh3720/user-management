@@ -128,3 +128,8 @@
 .crossIconStyle {
   margin-left: 4px;
 }
+
+.textFieldStyle {
+  width: 100%;
+  margin-bottom: 12px !important;
+}

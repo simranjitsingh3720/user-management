@@ -1,0 +1,171 @@
+import React, { useState } from "react";
+import styles from "./styles.module.css";
+import {
+  Autocomplete,
+  Button,
+  FormControlLabel,
+  Radio,
+  RadioGroup,
+  TextField,
+} from "@mui/material";
+import { Controller, useForm } from "react-hook-form";
+
+function SetOTPException() {
+  const [OTPValue, setOTPValue] = useState("byChannnel");
+
+  const handleChange = (event) => {
+    setOTPValue(event.target.value);
+  };
+
+  const { handleSubmit, control, setValue, formState, getValues } = useForm();
+
+  const { errors } = formState;
+
+  const onSubmit = (data) => {
+    console.log("data", data);
+  };
+
+  return (
+    <div className={styles.otpException}>
+      <div className={styles.headerTextStyle}>
+        <div className={styles.setOTPHeader}>Set OTP Exception By</div>
+        <div className={styles.headerText}>
+          Please select a channel or producer code from below and add it to the
+          given list for OTP Exception.
+        </div>
+      </div>
+      <div className={styles.OTPSelectStyle}>
+        <text className={styles.labelText}>
+          Select <span className={styles.styledRequired}>*</span>
+        </text>
+        <div className={styles.radioContainer}>
+          <RadioGroup
+            row
+            aria-labelledby="insillion-status-row-radio-buttons-group-label"
+            name="groupStatus"
+            defaultValue="byChannnel"
+            value={OTPValue}
+            onChange={handleChange}
+          >
+            <FormControlLabel
+              value="byChannnel"
+              control={<Radio />}
+              label="By Channel"
+              className={
+                OTPValue === "byChannnel"
+                  ? styles.radioSelectStyle
+                  : styles.radioNotSelectStyle
+              }
+            />
+            <FormControlLabel
+              value="byProducerCode"
+              control={<Radio />}
+              label="By Producer Code"
+              className={
+                OTPValue === "byProducerCode"
+                  ? styles.radioSelectStyle
+                  : styles.radioNotSelectStyle
+              }
+            />
+          </RadioGroup>
+        </div>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          {OTPValue === "byChannnel" ? (
+            <div className={styles.fieldContainerStyle}>
+              <text className={styles.labelText}>
+                Channel <span className={styles.styledRequired}>*</span>
+              </text>
+              <Controller
+                name="channel" // Name of the field in the form data
+                control={control}
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <Autocomplete
+                    id="channel"
+                    options={[]}
+                    getOptionLabel={(option) => {
+                      return `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`;
+                    }}
+                    className={styles.customizeSelect}
+                    size="small"
+                    isOptionEqualToValue={(option, value) =>
+                      option.id === value.id
+                    }
+                    renderInput={(params) => (
+                      <TextField {...params} placeholder="Select" />
+                    )}
+                    onChange={(event, newValue) => {
+                      field.onChange(newValue);
+                    }}
+                    ListboxProps={{
+                      style: {
+                        maxHeight: "200px",
+                      },
+                    }}
+                    // onInputChange={(event, val, reason) => {
+                    //   if (reason === "input") setInput(val);
+                    // }}
+                  />
+                )}
+              />
+              <div className={styles.styledError}>
+                {errors.channel && <span>This field is required</span>}{" "}
+              </div>
+            </div>
+          ) : (
+            <div className={styles.fieldContainerStyle}>
+              <text className={styles.labelText}>
+                Producer Code <span className={styles.styledRequired}>*</span>
+              </text>
+              <Controller
+                name="producerCode" // Name of the field in the form data
+                control={control}
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <Autocomplete
+                    id="producerCode"
+                    options={[]}
+                    getOptionLabel={(option) => {
+                      return `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`;
+                    }}
+                    className={styles.customizeSelect}
+                    size="small"
+                    isOptionEqualToValue={(option, value) =>
+                      option.id === value.id
+                    }
+                    renderInput={(params) => (
+                      <TextField {...params} placeholder="Select" />
+                    )}
+                    onChange={(event, newValue) => {
+                      field.onChange(newValue);
+                    }}
+                    ListboxProps={{
+                      style: {
+                        maxHeight: "200px",
+                      },
+                    }}
+                    // onInputChange={(event, val, reason) => {
+                    //   if (reason === "input") setInput(val);
+                    // }}
+                  />
+                )}
+              />
+              <div className={styles.styledError}>
+                {errors.producerCode && <span>This field is required</span>}{" "}
+              </div>
+            </div>
+          )}
+          <Button
+            type="submit"
+            variant="contained"
+            className={styles.styledButton}
+          >
+            Add
+          </Button>
+        </form>
+      </div>
+    </div>
+  );
+}
+
+export default SetOTPException;

@@ -68,7 +68,7 @@ function SearchComponent({ setQuery, setLoading, setPageChange }) {
             sx={{ textTransform: "none" }}
           >
             <Typography noWrap className={styles.buttonTextStyle}>
-              Create New permission
+              Create New Permission
             </Typography>
           </Button>
         </div>

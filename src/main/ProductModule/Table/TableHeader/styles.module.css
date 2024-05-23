@@ -11,6 +11,8 @@
 }
 
 .name {
+  cursor: pointer;
+
   font-size: 14px;
   color: #465465;
   font-weight: 600;
@@ -18,24 +20,31 @@
 }
 
 .productValue {
+  cursor: pointer;
+
   font-size: 14px;
   color: #465465;
   font-weight: 600;
   width: 10%;
 }
 .lobName {
+  cursor: pointer;
+
   font-size: 14px;
   color: #465465;
   font-weight: 600;
   width: 10%;
 }
 .lobLevel {
+  cursor: pointer;
+
   font-size: 14px;
   color: #465465;
   font-weight: 600;
   width: 10%;
 }
 .productCode {
+  cursor: pointer;
   font-size: 14px;
   color: #465465;
   font-weight: 600;

@@ -11,6 +11,7 @@
 }
 
 .name {
+  cursor: pointer;
   font-size: 14px;
   color: #465465;
   font-weight: 600;
@@ -18,29 +19,27 @@
 }
 
 .lobValue {
+  cursor: pointer;
   font-size: 14px;
   color: #465465;
   font-weight: 600;
   width: 10%;
 }
 .lobLevel {
+  cursor: pointer;
   font-size: 14px;
   color: #465465;
   font-weight: 600;
   width: 10%;
 }
 .lobCode {
+  cursor: pointer;
   font-size: 14px;
   color: #465465;
   font-weight: 600;
   width: 10%;
 }
-.lobCreated {
-  font-size: 14px;
-  color: #465465;
-  font-weight: 600;
-  width: 10%;
-}
+
 .lobStatus {
   font-size: 14px;
   color: #465465;

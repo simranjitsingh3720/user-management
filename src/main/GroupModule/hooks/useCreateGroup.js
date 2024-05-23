@@ -20,8 +20,9 @@ function useCreateGroup() {
         removeUsers: [],
         id: response?.data?.data[0]?.id,
       };
-
-      await axiosInstance.put("api/group/update-users", payload);
+      if (addUsers && addUsers.length) {
+        await axiosInstance.put("api/group/update-users", payload);
+      }
 
       toast.success(response?.data?.message || "Group created successfully");
       navigate("/group");

@@ -79,7 +79,7 @@ function CreateRoleForm() {
               </IconButton>
               <span className={styles.headerTextStyle}>
                 {" "}
-                {id ? "Edit role" : "Create new role"}
+                {id ? "Edit Role" : "Create New Role"}
               </span>
             </div>
           </div>{" "}

@@ -38,6 +38,26 @@ export const SideNavData = [
     navigateRoute: "product",
   },
   {
+    label: "BANCA Login",
+    icon: GridViewIcon,
+    navigateRoute: "banca",
+  },
+  {
+    label: "Proposal Bitly Link Configuration",
+    icon: GridViewIcon,
+    navigateRoute: "proposal-bitly-config",
+  },
+  {
+    label: "Set OTP Exception",
+    icon: GridViewIcon,
+    navigateRoute: "otpException",
+  },
+  {
+    label: "Proposal OTP Exception",
+    icon: GridViewIcon,
+    navigateRoute: "proposalOtpException",
+  },
+  {
     label: "Producer Management",
     icon: ManageAccountsIcon,
   },
@@ -59,10 +79,7 @@ export const SideNavData = [
     label: "Client UserManagement",
     icon: GridViewIcon,
   },
-  {
-    label: "BANCA Login",
-    icon: GridViewIcon,
-  },
+
   {
     label: "Masters",
     icon: GridViewIcon,

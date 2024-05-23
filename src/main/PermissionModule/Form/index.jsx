@@ -77,7 +77,7 @@ function Form() {
                 <LeftArrow />
               </IconButton>
               <span className={styles.headerTextStyle}>
-                Create new permission
+                Create New Permission
               </span>
             </div>
           </div>

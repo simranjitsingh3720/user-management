@@ -15,11 +15,11 @@ function UserManagement() {
   const [toDate, setToDate] = useState();
   const [pageChange, setPageChange] = useState(1);
 
-  // const [rowsPage, setRowsPage] = React.useState(10);
+  const [rowsPage, setRowsPage] = useState(10);
 
-  // const handleRowsChange = (event) => {
-  //   setRowsPage(event.target.value);
-  // };
+  const handleRowsChange = (event) => {
+    setRowsPage(event.target.value);
+  };
 
   const handlePaginationChange = (event, page) => {
     setPageChange(page);
@@ -27,7 +27,9 @@ function UserManagement() {
 
   const { data, loading, fetchData, setLoading, setSort, sort } = useGetUser();
 
-  const selectRowsData = [5, 10];
+  console.log("data", data);
+
+  const selectRowsData = [5, 10, 15, 20];
 
   useEffect(() => {
     setQuery("");
@@ -68,7 +70,7 @@ function UserManagement() {
           )}
 
           <div className={styles.pageFooter}>
-            {/* <div className={styles.rowsPerPage}>
+            <div className={styles.rowsPerPage}>
               <p className={styles.totalRecordStyle}>Showing Results:</p>
               <Select
                 labelId="rows-per-page"
@@ -85,7 +87,7 @@ function UserManagement() {
                 ))}
               </Select>
               <p className={styles.totalRecordStyle}>of 141</p>
-            </div> */}
+            </div>
             <Pagination
               count={10}
               color="primary"

@@ -1,0 +1,53 @@
+.tableHeader {
+  display: flex;
+  background-color: #ffffff;
+  justify-content: space-between;
+  height: 60px;
+  border-radius: 12px 12px 0px 0px;
+  align-items: center;
+  padding: 0px 12px;
+  border-bottom: 2px solid #c5cfde;
+}
+
+.nameCell {
+  font-size: 14px;
+  color: #465465;
+  font-weight: 600;
+  width: 50%;
+}
+
+.listHeader {
+  display: flex;
+  background-color: #ffffff;
+  height: 8vh;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 12px;
+  border-bottom: 1px solid #c5cfde;
+}
+
+.namelistCell {
+  font-size: 14px;
+  color: #465465;
+  width: 50%;
+}
+
+.tableContainer {
+  box-shadow: 0px 6px 12px #185ec414;
+  height: 55vh;
+  background-color: #ffffff;
+  border-radius: 12px 12px 0px 0px;
+  border: 1px solid #c5cfde;
+}
+
+.customizeSelect {
+  background-color: #ffffff;
+  width: 50%; /* Set the width to 100% initially */
+  font-size: 14px !important;
+  height: 40px;
+}
+
+/* .borderStyle {
+  height: 160px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+} */

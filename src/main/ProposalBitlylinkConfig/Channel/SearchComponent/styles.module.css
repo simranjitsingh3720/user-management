@@ -1,0 +1,40 @@
+.searchText {
+  color: #566475;
+  font-size: 14px;
+}
+
+.selectContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.customizeSelect {
+  background-color: #ffffff;
+  width: 200px;
+  font-size: 14px !important;
+  height: 40px;
+}
+
+.placeholderStyle {
+  color: #566475;
+}
+
+.styledOptionText {
+  font-size: 14px !important;
+}
+
+.textFieldStyle {
+  background-color: #ffffff;
+  margin: 0px 12px 0px 0px !important;
+  width: 300px;
+}
+
+.flexSearchContainer {
+  display: flex;
+  align-items: center;
+}
+
+.buttonTextStyle {
+  font-size: 14px !important;
+}

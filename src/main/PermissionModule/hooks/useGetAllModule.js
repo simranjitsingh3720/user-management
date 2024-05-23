@@ -8,7 +8,7 @@ function useGetAllModule() {
 
   const fetchData = async (key, value) => {
     try {
-      const response = await axiosInstance.get("api/module/all");
+      const response = await axiosInstance.get(`api/module/all?status=${true}`);
       setData(response.data);
     } catch (error) {
       setData([]);

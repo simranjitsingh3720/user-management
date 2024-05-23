@@ -54,6 +54,7 @@ function List({ item, fetchData, setLoading }) {
           {capitalizeFirstLetter(item?.permissionType)}
         </div>
         <div className={styles.createdAt}> {item.createdAt}</div>
+        <div className={styles.updatedAt}> {item.updatedAt}</div>
         <div className={styles.privilegeStatusCell}>
           <div>
             <Switch

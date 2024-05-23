@@ -187,7 +187,7 @@ function CreateNewUserContainer({
 
           <div className={styles.fieldContainerStyle}>
             <span className={styles.labelText}>
-              Permission types <span className={styles.styledRequired}>*</span>
+              Permission Types <span className={styles.styledRequired}>*</span>
             </span>
             <Controller
               name={`permissionType-${index}`}

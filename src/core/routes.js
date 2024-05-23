@@ -14,6 +14,12 @@ import LOBModule from "../main/LOBModule";
 import LobForm from "../main/LOBModule/LobForm";
 import Product from "../main/ProductModule";
 import ProductForm from "../main/ProductModule/ProductForm";
+import BANCALogin from "../main/BANCALogin";
+import BANCAForm from "../main/BANCALogin/BANCAForm";
+import ProposalBitlyLinkConfig from "../main/ProposalBitlylinkConfig";
+import ChannelForm from "../main/ProposalBitlylinkConfig/Channel/ChannelForm";
+import OTPException from "../main/OTPException";
+import ProposalOTPException from "../main/ProposalOTPException";
 
 const AppRoutes = () => {
   return (
@@ -114,6 +120,54 @@ const AppRoutes = () => {
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
             <ProductForm />
+          </ResponsiveDrawer>
+        }
+      />
+      <Route
+        path="/banca"
+        element={
+          <ResponsiveDrawer showSidebarAndHeader={true}>
+            <BANCALogin />
+          </ResponsiveDrawer>
+        }
+      />
+      <Route
+        path="/banca/banca-form"
+        element={
+          <ResponsiveDrawer showSidebarAndHeader={true}>
+            <BANCAForm />
+          </ResponsiveDrawer>
+        }
+      />
+      <Route
+        path="/proposal-bitly-config"
+        element={
+          <ResponsiveDrawer showSidebarAndHeader={true}>
+            <ProposalBitlyLinkConfig />
+          </ResponsiveDrawer>
+        }
+      />
+      <Route
+        path="/proposal-bitly-config/channel-form"
+        element={
+          <ResponsiveDrawer showSidebarAndHeader={true}>
+            <ChannelForm />
+          </ResponsiveDrawer>
+        }
+      />
+      <Route
+        path="/otpException"
+        element={
+          <ResponsiveDrawer showSidebarAndHeader={true}>
+            <OTPException />
+          </ResponsiveDrawer>
+        }
+      />
+      <Route
+        path="/proposalOtpException"
+        element={
+          <ResponsiveDrawer showSidebarAndHeader={true}>
+            <ProposalOTPException />
           </ResponsiveDrawer>
         }
       />

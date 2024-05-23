@@ -79,6 +79,7 @@ function List({
       <div className={styles.listHeader}>
         <div className={styles.nameCell}>{item?.groupName || "-"}</div>
         <div className={styles.createdAt}> {item?.createdAt || "-"}</div>
+        <div className={styles.createdAt}> {item?.updatedAt || "-"}</div>
 
         <div className={styles.groupStatusCell}>
           <div>
@@ -179,7 +180,7 @@ function List({
             <InfoIcon fontSize="x-large" className={styles.iconStyle} />
           </div>
           <text className={styles.styledText}>
-            Are you sure you want to change the Group status?
+            Are you sure you want to change the group status?
           </text>
 
           <div className={styles.SubmitContainer}>

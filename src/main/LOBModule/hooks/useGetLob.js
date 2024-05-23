@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../../../core/axiosInstance";
-function useGetLob(pageChange) {
+function useGetLob(pageChange, rowsPage) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [sort, setSort] = useState({
@@ -13,7 +13,7 @@ function useGetLob(pageChange) {
       setLoading(true);
       let url = `/api/lob?pageNo=${pageChange - 1}&sortKey=${
         sort.sortKey
-      }&sortOrder=${sort.sortOrder}`;
+      }&sortOrder=${sort.sortOrder}&pageSize=${rowsPage}`;
       const response = await axiosInstance.get(url);
       setData(response.data);
     } catch (error) {
@@ -24,7 +24,7 @@ function useGetLob(pageChange) {
   };
   useEffect(() => {
     fetchData();
-  }, [pageChange, sort]);
+  }, [pageChange, sort, rowsPage]);
 
   return { data, loading, fetchData, setLoading, setSort, sort };
 }

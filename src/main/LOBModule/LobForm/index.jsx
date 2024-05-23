@@ -35,14 +35,14 @@ function LobForm() {
       label: "LOB Value",
       value: "lob_value",
     },
-    {
-      label: "LOB Level",
-      value: "lob_level",
-    },
-    {
-      label: "LOB Code",
-      value: "lob_code",
-    },
+    // {
+    //   label: "LOB Level",
+    //   value: "lob_level",
+    // },
+    // {
+    //   label: "LOB Code",
+    //   value: "lob_code",
+    // },
   ];
 
   return (
@@ -60,7 +60,7 @@ function LobForm() {
               >
                 <LeftArrow />
               </IconButton>
-              <span className={styles.headerTextStyle}>Create new lob</span>
+              <span className={styles.headerTextStyle}>Create New Lob</span>
             </div>
           </div>{" "}
           <div className={styles.containerStyle}>

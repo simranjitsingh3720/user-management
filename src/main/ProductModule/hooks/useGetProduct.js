@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../../../core/axiosInstance";
 
-function useGetProduct(pageChange) {
+function useGetProduct(pageChange, rowsPage) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [sort, setSort] = useState({
@@ -14,7 +14,7 @@ function useGetProduct(pageChange) {
       setLoading(true);
       let url = `/api/product?pageNo=${pageChange - 1}&sortKey=${
         sort.sortKey
-      }&sortOrder=${sort.sortOrder}`;
+      }&sortOrder=${sort.sortOrder}&pageSize=${rowsPage}`;
       if (resultIds) {
         url += `&lobs=${resultIds}`;
       }
@@ -28,7 +28,7 @@ function useGetProduct(pageChange) {
   };
   useEffect(() => {
     fetchData();
-  }, [pageChange, sort]);
+  }, [pageChange, sort, rowsPage]);
 
   return { data, loading, sort, setSort, fetchData };
 }

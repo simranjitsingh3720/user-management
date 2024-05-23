@@ -1,0 +1,148 @@
+.createNewUserContainer {
+  background-color: #ffffff;
+  box-shadow: 0px 6px 12px #185ec414;
+  border-radius: 12px;
+  height: 100%;
+  min-height: 80vh;
+  margin-bottom: 20px;
+}
+
+.formHeaderStyle {
+  padding: 16px 0px 0px 8px;
+  display: flex;
+  align-items: baseline;
+  border-bottom: 1px solid #c5cfde;
+  height: 80px;
+}
+
+.subHeader {
+  display: flex;
+  align-items: center;
+}
+
+.headerTextStyle {
+  margin-left: 12px;
+  font-size: 18px;
+  color: #465465;
+  font-weight: 600;
+}
+
+.containerStyle {
+  display: flex;
+  flex-direction: column;
+}
+
+.styledButton {
+  width: 15%;
+}
+
+.fieldContainerStyle {
+  margin: 10px 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.labelText {
+  color: #566475;
+  font-size: 14px;
+}
+
+.styledRequired {
+  color: #ff6262;
+}
+
+.customizeSelect {
+  background-color: #ffffff;
+  width: 100%; /* Set the width to 100% initially */
+  min-width: 330px;
+  font-size: 14px !important;
+  height: 40px;
+}
+
+.styledError {
+  color: #fd6262;
+  font-size: 12px;
+}
+
+.customizePrivilegeSelect {
+  background-color: #ffffff;
+  width: 100%; /* Set the width to 100% initially */
+  max-width: 500px; /* Set the maximum width to 600px */
+  min-width: 150px;
+  font-size: 14px !important;
+  height: 40px;
+}
+
+.dateContainer {
+  display: flex;
+  align-items: center;
+}
+
+.dateStyle {
+  width: 210px;
+  background-color: #ffffff;
+}
+
+.upperContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.startDateStyle {
+  margin-right: 4px;
+}
+
+.fieldStyle {
+  display: flex;
+  justify-content: space-between;
+  width: 50%;
+  padding: 12px 16px;
+  align-items: center;
+}
+
+.fieldContainer {
+  display: flex;
+  padding: 8px;
+  flex-wrap: wrap;
+}
+
+.tableHeader {
+  display: flex;
+}
+
+.enableStyle {
+  font-size: 14px;
+}
+
+.labelStyle {
+  color: #185ec4;
+  font-size: 14px;
+  width: 40%;
+}
+
+.labelStylePointer {
+  color: #185ec4;
+  font-size: 14px;
+  width: 40%;
+  cursor: pointer;
+}
+
+.enableSwitchStyle {
+  width: 35%;
+}
+
+.mandatorySwitchStyle {
+  width: 35%;
+}
+
+.uploadContainer {
+  display: flex;
+  align-items: center;
+  width: 65%;
+}
+
+.fileNameStyle {
+  margin-left: 8px;
+  font-size: 14px;
+}

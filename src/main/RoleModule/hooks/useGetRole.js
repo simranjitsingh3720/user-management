@@ -2,7 +2,7 @@ import axiosInstance from "../../../core/axiosInstance"; // Import the instance
 
 import { useEffect, useState } from "react";
 
-function useGetRole(pageChange = 1) {
+function useGetRole(pageChange = 1, rowsPage) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [sort, setSort] = useState({
@@ -12,9 +12,10 @@ function useGetRole(pageChange = 1) {
 
   const fetchData = async (key, query, resultGroupId) => {
     try {
+      setLoading(true);
       let url = `/api/role?pageNo=${pageChange - 1}&sortKey=${
         sort.sortKey
-      }&sortOrder=${sort.sortOrder}`;
+      }&sortOrder=${sort.sortOrder}&pageSize=${rowsPage}`;
       if (key === "roleName" && query) {
         url += `&searchKey=${key}&searchString=${query}`;
       } else if (key === "groupName" && resultGroupId) {
@@ -30,7 +31,7 @@ function useGetRole(pageChange = 1) {
   };
   useEffect(() => {
     fetchData();
-  }, [pageChange, sort]);
+  }, [pageChange, sort, rowsPage]);
 
   return { data, loading, fetchData, setLoading, setSort, sort };
 }
