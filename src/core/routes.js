@@ -132,14 +132,6 @@ const AppRoutes = () => {
         }
       />
       <Route
-        path="/banca/banca-form"
-        element={
-          <ResponsiveDrawer showSidebarAndHeader={true}>
-            <BANCAForm />
-          </ResponsiveDrawer>
-        }
-      />
-      <Route
         path="/proposal-bitly-config"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>

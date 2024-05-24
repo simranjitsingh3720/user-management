@@ -4,3 +4,36 @@
   border-radius: 12px;
   background-color: #ffffff;
 }
+
+.fieldStyle {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #60708333;
+}
+
+.fieldDiv {
+  margin: 16px;
+  width: 30%;
+}
+
+.enableStyle {
+  font-size: 14px;
+}
+
+.switchContainer {
+  display: flex;
+}
+
+.lableStyle {
+  color: #607083;
+  font-size: 14px;
+}
+
+.styledButton {
+  margin-top: 12px !important;
+  width: 15%;
+}
+
+.uploadContainer {
+  margin: 16px;
+}

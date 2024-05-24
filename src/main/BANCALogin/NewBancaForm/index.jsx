@@ -6,11 +6,16 @@ import { Controller, useForm } from "react-hook-form";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
+import useGetUserData from "../hooks/useGetUserData";
 
 function NewBancaForm() {
   const [input, setInput] = useState("");
 
   const { handleSubmit, control, setValue, formState, getValues } = useForm();
+
+  const { userData, userLoading, userFetchData } = useGetUserData();
+
+  console.log("userData", userData);
 
   const { errors } = formState;
   return (
@@ -47,7 +52,7 @@ function NewBancaForm() {
               render={({ field }) => (
                 <Autocomplete
                   id="producerCode"
-                  options={[]}
+                  options={userData || []}
                   getOptionLabel={(option) => {
                     return `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`;
                   }}
