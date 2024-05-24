@@ -21,7 +21,12 @@ function TableHeader({ sort, setSort }) {
       >
         Name {renderSortIcon("permissionName")}
       </div>
-      <div className={styles.privilegeTypeCell}>Permission Type</div>
+      <div
+        className={styles.privilegeTypeCell}
+        onClick={() => handleSort("permissionType")}
+      >
+        Permission Type {renderSortIcon("permissionType")}
+      </div>
       <div className={styles.createdAt} onClick={() => handleSort("createdAt")}>
         Created At {renderSortIcon("createdAt")}
       </div>

@@ -1,0 +1,68 @@
+.bancaForm {
+  box-shadow: 0px 6px 12px #185ec414;
+  border-radius: 12px;
+  background-color: #ffffff;
+}
+
+.headerTextStyle {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  border-bottom: 1px solid #60708333;
+}
+
+.setOTPHeader {
+  color: #465465;
+  font-size: 18px;
+}
+
+.headerText {
+  color: #465465;
+  opacity: 70%;
+  font-size: 14px;
+}
+
+.fieldStyle {
+  padding: 20px;
+}
+
+.fieldContainerStyle {
+  margin: 10px 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.labelText {
+  color: #566475;
+  font-size: 14px;
+}
+.styledRequired {
+  color: #ff6262;
+}
+
+.customizeSelect {
+  background-color: #ffffff;
+  width: 100%; /* Set the width to 100% initially */
+  min-width: 520px;
+  font-size: 14px !important;
+  height: 40px;
+}
+
+.styledError {
+  color: #fd6262;
+  font-size: 12px;
+}
+
+.mainContainerField {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.startDateStyle {
+  margin-right: 4px;
+}
+
+.dateStyle {
+  width: 520px;
+  background-color: #ffffff;
+}

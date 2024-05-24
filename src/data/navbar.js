@@ -38,7 +38,7 @@ export const SideNavData = [
     navigateRoute: "product",
   },
   {
-    label: "BANCA Login",
+    label: "Banca Login",
     icon: GridViewIcon,
     navigateRoute: "banca",
   },
