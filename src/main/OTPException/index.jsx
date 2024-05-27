@@ -6,8 +6,10 @@ import useGetOTPException from "./hooks/useGetOTPException";
 function OTPException() {
   const [rowsPage, setRowsPage] = useState(10);
   const [pageChange, setPageChange] = useState(1);
+  const [query, setQuery] = useState("");
+  const [searched, setSearched] = useState("type");
   const { data, loading, fetchData, setLoading, setSort, sort } =
-    useGetOTPException(rowsPage, pageChange);
+    useGetOTPException(pageChange, rowsPage, query, searched);
   return (
     <div>
       <SetOTPException fetchData={fetchData} />
@@ -22,6 +24,9 @@ function OTPException() {
         setLoading={setLoading}
         setSort={setSort}
         sort={sort}
+        setQuery={setQuery}
+        searched={searched}
+        setSearched={setSearched}
       />
     </div>
   );

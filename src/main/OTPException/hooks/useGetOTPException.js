@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../../../core/axiosInstance";
 
-function useGetOTPException(pageChange, rowsPage) {
+function useGetOTPException(pageChange, rowsPage, query, searched) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [sort, setSort] = useState({
@@ -15,6 +15,9 @@ function useGetOTPException(pageChange, rowsPage) {
       let url = `/api/otp-exception?pageNo=${pageChange - 1}&sortKey=${
         sort.sortKey
       }&sortOrder=${sort.sortOrder}&pageSize=${rowsPage}`;
+      if (query && searched) {
+        url += `&searchKey=${searched}&searchString=${query}`;
+      }
       const response = await axiosInstance.get(url);
       setData(response.data);
     } catch (error) {
@@ -25,7 +28,7 @@ function useGetOTPException(pageChange, rowsPage) {
   };
   useEffect(() => {
     fetchData();
-  }, [pageChange, sort, rowsPage]);
+  }, [pageChange, sort, rowsPage, query]);
 
   return { data, loading, fetchData, setLoading, setSort, sort };
 }
