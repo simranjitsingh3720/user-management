@@ -4,6 +4,7 @@
 
 .Container {
   display: flex;
+  align-items: center;
   justify-content: space-between;
 }
 
@@ -28,4 +29,44 @@
 .dateStyle {
   width: 210px;
   background-color: #ffffff;
+}
+
+.styledError {
+  color: #fd6262;
+  font-size: 12px;
+}
+
+.stylesButton {
+  margin-left: 30px !important;
+}
+
+.textFieldStyle {
+  background-color: #ffffff;
+  margin: 12px 0px !important;
+  width: 300px;
+}
+
+.upperContainerStyle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flexSearchContainer {
+  display: flex;
+  align-items: center;
+  margin: 16px 0px 0px 0px;
+}
+
+.customizeSelect {
+  background-color: #ffffff;
+  width: 150px;
+  font-size: 14px !important;
+  height: 40px;
+}
+
+.textFieldSearch {
+  background-color: #ffffff;
+  width: 300px;
+  margin: 0px 8px !important;
 }

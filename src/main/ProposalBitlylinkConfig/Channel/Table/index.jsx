@@ -6,7 +6,7 @@ import styles from "./styles.module.css";
 function Table({ ListData, fetchData, setLoading, sort, setSort }) {
   return (
     <div className={styles.tableContainer}>
-      <TableHeader />
+      <TableHeader sort={sort} setSort={setSort} />
       {(ListData || []).map((item) => (
         <List item={item} fetchData={fetchData} setLoading={setLoading} />
       ))}

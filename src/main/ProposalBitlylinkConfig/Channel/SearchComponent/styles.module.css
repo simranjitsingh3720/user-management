@@ -9,13 +9,6 @@
   align-items: center;
 }
 
-.customizeSelect {
-  background-color: #ffffff;
-  width: 200px;
-  font-size: 14px !important;
-  height: 40px;
-}
-
 .placeholderStyle {
   color: #566475;
 }
@@ -37,4 +30,17 @@
 
 .buttonTextStyle {
   font-size: 14px !important;
+}
+
+.customizeSelect {
+  background-color: #ffffff;
+  width: 150px;
+  font-size: 14px !important;
+  height: 40px;
+}
+
+.textFieldSearch {
+  background-color: #ffffff;
+  width: 300px;
+  margin: 0px 8px !important;
 }

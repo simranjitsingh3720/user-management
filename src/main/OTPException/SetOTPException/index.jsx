@@ -9,20 +9,31 @@ import {
   TextField,
 } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
+import useGetUserData from "../../BANCALogin/hooks/useGetUserData";
+import useCreateOTPException from "../hooks/useCreateOTPException";
 
-function SetOTPException() {
+function SetOTPException({ fetchData }) {
   const [OTPValue, setOTPValue] = useState("byChannnel");
 
   const handleChange = (event) => {
     setOTPValue(event.target.value);
   };
 
-  const { handleSubmit, control, setValue, formState, getValues } = useForm();
+  const { userData } = useGetUserData();
+
+  const { handleSubmit, control, formState } = useForm();
 
   const { errors } = formState;
 
+  const { postData, loading } = useCreateOTPException();
+
   const onSubmit = (data) => {
     console.log("data", data);
+    const payload = {
+      producerId: data.producerCode.id,
+    };
+    postData(payload);
+    fetchData();
   };
 
   return (
@@ -124,7 +135,7 @@ function SetOTPException() {
                 render={({ field }) => (
                   <Autocomplete
                     id="producerCode"
-                    options={[]}
+                    options={userData || []}
                     getOptionLabel={(option) => {
                       return `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`;
                     }}
@@ -159,6 +170,7 @@ function SetOTPException() {
             type="submit"
             variant="contained"
             className={styles.styledButton}
+            loading={loading}
           >
             Add
           </Button>

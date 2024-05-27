@@ -27,15 +27,6 @@
   font-weight: 600;
 }
 
-.containerStyle {
-  display: flex;
-  flex-direction: column;
-}
-
-.styledButton {
-  width: 15%;
-}
-
 .fieldContainerStyle {
   margin: 10px 10px;
   display: flex;
@@ -53,15 +44,9 @@
 
 .customizeSelect {
   background-color: #ffffff;
-  width: 100%; /* Set the width to 100% initially */
-  min-width: 330px;
+  min-width: 520px; /* Set the maximum width to 300px */
   font-size: 14px !important;
   height: 40px;
-}
-
-.styledError {
-  color: #fd6262;
-  font-size: 12px;
 }
 
 .customizePrivilegeSelect {
@@ -73,76 +58,54 @@
   height: 40px;
 }
 
-.dateContainer {
+@media (min-width: 768px) {
+  /* Adjust width for larger screens */
+  .customizeSelect {
+    max-width: 400px; /* Adjust maximum width for larger screens */
+  }
+
+  .customizePrivilegeSelect {
+    max-width: 900px; /* Adjust maximum width for larger screens */
+    min-width: 400px;
+  }
+}
+
+.styledError {
+  color: #fd6262;
+  font-size: 12px;
+}
+
+.containerStyle {
+  padding: 20px;
   display: flex;
-  align-items: center;
+  flex-direction: column;
 }
 
-.dateStyle {
-  width: 210px;
-  background-color: #ffffff;
+.styledButton {
+  width: 15%;
 }
 
-.upperContainer {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
+.headerTextStyleOTP {
+  padding: 20px;
+  border-bottom: 1px solid #60708333;
 }
 
-.startDateStyle {
-  margin-right: 4px;
+.headerTextOTP {
+  color: #465465;
+  opacity: 70%;
+  font-size: 14px;
+}
+.setOTPHeader {
+  color: #465465;
+  font-size: 18px;
 }
 
 .fieldStyle {
   display: flex;
-  justify-content: space-between;
-  width: 50%;
-  padding: 12px 16px;
-  align-items: center;
-}
-
-.fieldContainer {
-  display: flex;
-  padding: 8px;
   flex-wrap: wrap;
 }
 
-.tableHeader {
-  display: flex;
-}
-
-.enableStyle {
-  font-size: 14px;
-}
-
-.labelStyle {
-  color: #185ec4;
-  font-size: 14px;
-  width: 40%;
-}
-
-.labelStylePointer {
-  color: #185ec4;
-  font-size: 14px;
-  width: 40%;
-  cursor: pointer;
-}
-
-.enableSwitchStyle {
-  width: 35%;
-}
-
-.mandatorySwitchStyle {
-  width: 35%;
-}
-
-.uploadContainer {
-  display: flex;
-  align-items: center;
-  width: 65%;
-}
-
-.fileNameStyle {
-  margin-left: 8px;
-  font-size: 14px;
+.dateStyle {
+  width: 520px;
+  background-color: #ffffff;
 }

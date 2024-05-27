@@ -1,43 +1,69 @@
 import React from "react";
 import styles from "./styles.module.css";
-import { MenuItem, Select } from "@mui/material";
+import { Card, CardContent, MenuItem, Select, Typography } from "@mui/material";
 import { BitlyLinkMandatory } from "../../constants";
 
-function TableList() {
+function TableList({ dataList, setDataList }) {
   return (
     <div className={styles.tableContainer}>
       <div className={styles.tableHeader}>
-        <div className={styles.nameCell}>Type</div>
-        <div className={styles.nameCell}>Value</div>
+        <div className={styles.nameCell}>Products</div>
+        <div className={styles.nameCell}>Bitly Link Mandatory</div>
       </div>
-      <div className={styles.listHeader}>
-        <div className={styles.namelistCell}>Value</div>
-        <Select
-          labelId="search-select"
-          id="bitlyLinkMandatory"
-          //   onChange={(event, newValue) => {
-          //     field.onChange(newValue);
-          //   }}
-          size="small"
-          displayEmpty
-          className={styles.customizeSelect}
-          //   renderValue={(selected) => {
-          //     if (selected === undefined) {
-          //       return <div className={styles.placeholderStyle}>Select</div>;
-          //     }
-          //     const selectedItem = BitlyLinkMandatory.find(
-          //       (item) => item.value === selected
-          //     );
-          //     return selectedItem ? selectedItem.label : "";
-          //   }}
-        >
-          {BitlyLinkMandatory.map((item) => (
-            <MenuItem value={item.value} className={styles.styledOptionText}>
-              {item.label}
-            </MenuItem>
-          ))}
-        </Select>
-      </div>
+      {dataList.length ? (
+        (dataList || []).map((item) => (
+          <div className={styles.listHeader}>
+            <div className={styles.namelistCell}>{item?.name || "-"}</div>
+            <Select
+              labelId="search-select"
+              id="bitlyLinkMandatory"
+              onChange={(event, newValue) => {
+                console.log("event", event);
+                const newDataList = [...dataList];
+                console.log("newDataList", newDataList);
+                newDataList.forEach((obj) => {
+                  if (obj.productId === item.productId) {
+                    obj.isMandatory = !obj.isMandatory;
+                  }
+                });
+                setDataList(newDataList);
+              }}
+              size="small"
+              displayEmpty
+              defaultValue="yes"
+              className={styles.customizeSelect}
+              renderValue={(selected) => {
+                if (selected === undefined) {
+                  return <div className={styles.placeholderStyle}>Select</div>;
+                }
+                const selectedItem = BitlyLinkMandatory.find(
+                  (item) => item.value === selected
+                );
+                return selectedItem ? selectedItem.label : "";
+              }}
+            >
+              {BitlyLinkMandatory.map((item) => (
+                <MenuItem
+                  value={item.value}
+                  className={styles.styledOptionText}
+                >
+                  {item.label}
+                </MenuItem>
+              ))}
+            </Select>
+          </div>
+        ))
+      ) : (
+        <div className={styles.cardContainerWidth}>
+          <Card className={styles.cardStyle}>
+            <CardContent>
+              <Typography variant="h6" color="textSecondary" textAlign="center">
+                No data found
+              </Typography>
+            </CardContent>
+          </Card>
+        </div>
+      )}
     </div>
   );
 }

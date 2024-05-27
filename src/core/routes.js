@@ -14,12 +14,12 @@ import LOBModule from "../main/LOBModule";
 import LobForm from "../main/LOBModule/LobForm";
 import Product from "../main/ProductModule";
 import ProductForm from "../main/ProductModule/ProductForm";
-import BANCALogin from "../main/BANCALogin";
-import BANCAForm from "../main/BANCALogin/BANCAForm";
 import ProposalBitlyLinkConfig from "../main/ProposalBitlylinkConfig";
 import ChannelForm from "../main/ProposalBitlylinkConfig/Channel/ChannelForm";
 import OTPException from "../main/OTPException";
 import ProposalOTPException from "../main/ProposalOTPException";
+import BANCALogin from "../main/BANCALogin";
+import ProposalForm from "../main/ProposalOTPException/ProposalForm";
 
 const AppRoutes = () => {
   return (
@@ -160,6 +160,14 @@ const AppRoutes = () => {
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
             <ProposalOTPException />
+          </ResponsiveDrawer>
+        }
+      />
+      <Route
+        path="/proposalOtpException/form"
+        element={
+          <ResponsiveDrawer showSidebarAndHeader={true}>
+            <ProposalForm />
           </ResponsiveDrawer>
         }
       />

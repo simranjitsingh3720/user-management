@@ -7,16 +7,13 @@ import {
   DialogTitle,
   IconButton,
   Switch,
-  Tooltip,
 } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
 import CloseIcon from "@mui/icons-material/Close";
 import InfoIcon from "@mui/icons-material/Info";
-import useUpdateBitlyLink from "../../../hooks/useUpdateBitlyLink";
+import useUpdateProposal from "../../hooks/useUpdateProposal";
 
 function List({ item, fetchData: fetchGroupList }) {
   const [changeStatusOpen, setChangeStatusOpen] = useState(false);
-
   const [checked] = useState(item?.status);
 
   const handleChange = () => {
@@ -27,7 +24,7 @@ function List({ item, fetchData: fetchGroupList }) {
     setChangeStatusOpen(false);
   };
 
-  const { UpdateDataFun, updateLoading } = useUpdateBitlyLink(
+  const { UpdateDataFun, updateLoading } = useUpdateProposal(
     setChangeStatusOpen,
     fetchGroupList
   );
@@ -44,11 +41,16 @@ function List({ item, fetchData: fetchGroupList }) {
   return (
     <div>
       <div className={styles.listHeader}>
-        <div className={styles.nameCell}>{item?.groupName || "-"}</div>
-        <div className={styles.nameCell}>{item?.groupName || "-"}</div>
-        <div className={styles.nameCell}>{item?.groupName || "-"}</div>
+        <div className={styles.type}>
+          {item?.producer ? "Producer" : "Channel"}
+        </div>
+        <div className={styles.value}>{"-"}</div>
+        <div className={styles.lobName}>{item?.lob?.lob || "-"}</div>
+        <div className={styles.product}>{item?.product?.product || "-"}</div>
+        <div className={styles.startDate}> {item?.startDate || "-"}</div>
+        <div className={styles.endDate}> {item?.endDate || "-"}</div>
         <div className={styles.createdAt}> {item?.createdAt || "-"}</div>
-        <div className={styles.actionCell}>
+        <div className={styles.productStatus}>
           <div>
             <Switch
               checked={checked}
@@ -67,7 +69,7 @@ function List({ item, fetchData: fetchGroupList }) {
         open={changeStatusOpen}
       >
         <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-          Change Status
+          Change status
         </DialogTitle>
         <IconButton
           aria-label="close"

@@ -8,34 +8,66 @@
   border-bottom: 1px solid #c5cfde;
 }
 
-.nameCell {
+.type {
+  cursor: pointer;
   font-size: 14px;
   color: #465465;
   width: 10%;
 }
 
-.roleStatusCell {
-  width: 15%;
+.value {
+  cursor: pointer;
+  font-size: 14px;
+  color: #465465;
+  width: 10%;
+}
+.lobName {
+  cursor: pointer;
+  font-size: 14px;
+  color: #465465;
+  width: 10%;
+}
+.lobLevel {
+  cursor: pointer;
+  font-size: 14px;
+  color: #465465;
+  width: 10%;
+}
+.product {
+  cursor: pointer;
+  font-size: 14px;
+  color: #465465;
+  width: 10%;
 }
 
-.actionCell {
-  display: flex;
-  align-items: center;
-  width: 15%;
+.startDate {
+  cursor: pointer;
+  font-size: 14px;
+  color: #465465;
+  width: 10%;
+}
+
+.endDate {
+  cursor: pointer;
+  font-size: 14px;
+  color: #465465;
+  width: 10%;
 }
 
 .createdAt {
   font-size: 14px;
   color: #465465;
-  width: 15%;
+  width: 10%;
+  cursor: pointer;
 }
 
-.groupStatusCell {
+.productStatus {
   display: flex;
   align-items: center;
   font-size: 14px;
   color: #465465;
-  width: 15%;
+  width: 10%;
+  cursor: pointer;
 }
 
 .styledActiveSelect {

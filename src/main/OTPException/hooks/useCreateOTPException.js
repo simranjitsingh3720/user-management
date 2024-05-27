@@ -2,15 +2,15 @@ import { useState } from "react";
 import axiosInstance from "../../../core/axiosInstance";
 import { toast } from "react-toastify";
 
-function useCreateBancaField() {
+function useCreateOTPException() {
   const [loading, setLoading] = useState(false);
 
   async function postData(data) {
     setLoading(true);
     try {
-      const response = await axiosInstance.post("/api/banca", data);
+      const response = await axiosInstance.post("/api/otp-exception", data);
       toast.success(
-        response?.data?.message || "Banca Field created successfully"
+        response?.data?.message || "OTP Exception created successfully"
       );
     } catch (error) {
       toast.error(
@@ -25,4 +25,4 @@ function useCreateBancaField() {
   return { postData, loading };
 }
 
-export default useCreateBancaField;
+export default useCreateOTPException;

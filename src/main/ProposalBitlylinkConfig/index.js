@@ -12,10 +12,10 @@ function ProposalBitlyLinkConfig() {
   const handleChange = (event) => {
     setValue(event.target.value);
   };
+
   return (
     <div>
       <div>
-        {" "}
         <RadioGroup
           row
           aria-labelledby="status-row-radio-buttons-group-label"

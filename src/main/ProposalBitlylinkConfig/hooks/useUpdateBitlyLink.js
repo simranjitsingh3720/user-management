@@ -2,16 +2,21 @@ import { useState } from "react";
 import axiosInstance from "../../../core/axiosInstance";
 import { toast } from "react-toastify";
 
-function useCreateBancaField() {
+function useUpdateBitlyLink(setChangeStatusOpen, fetchGroupList) {
   const [loading, setLoading] = useState(false);
 
-  async function postData(data) {
+  async function UpdateDataFun(data) {
     setLoading(true);
     try {
-      const response = await axiosInstance.post("/api/banca", data);
-      toast.success(
-        response?.data?.message || "Banca Field created successfully"
+      const response = await axiosInstance.put(
+        "/api/proposal-bitly-config",
+        data
       );
+      toast.success(
+        response?.data?.message || "Proposal bitly config successfully"
+      );
+      setChangeStatusOpen(false);
+      fetchGroupList();
     } catch (error) {
       toast.error(
         error?.response?.data?.error?.message ||
@@ -22,7 +27,7 @@ function useCreateBancaField() {
       setLoading(false); // Set loading to false when request finishes (whether success or failure)
     }
   }
-  return { postData, loading };
+  return { UpdateDataFun, updateLoading: loading };
 }
 
-export default useCreateBancaField;
+export default useUpdateBitlyLink;

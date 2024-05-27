@@ -128,3 +128,25 @@ export const FieldDataList = {
     },
   ],
 };
+
+export const labels = {
+  SOLID: "SOL ID",
+  branch: "Branch (Tagic)",
+  partnerBranchLocation: "Partner Branch Location",
+  partnerEmployeeCode: "Partner Employee Code",
+  partnerEmployeeName: "Partner Employee Name",
+  tagicEmployeeCode: "Tagic Employee Code",
+  partnerApplicationNumber: "Partner Application Number",
+  loanAccountNumber: "Loan Account Number",
+  customerAccountNumber: "Customer Account Number",
+  partnerCustID: "Partner Cust Id",
+  branchSOLIDLinkedToRAC: "Branch SOL ID linked to RAC",
+  additionalDetail1: "Additional Detail 1",
+  additionalDetail2: "Additional Detail 2",
+  sPCertificateNumber: "SP Certificate No",
+  specifiedPersonName: "Specified Person Name",
+  specifiedPersonPlace: "Specified Person Place",
+  crmLink: "CRM Link",
+  approval: "Approval",
+  SOP: "SOP",
+};

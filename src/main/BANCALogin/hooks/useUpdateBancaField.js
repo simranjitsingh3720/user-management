@@ -2,15 +2,15 @@ import { useState } from "react";
 import axiosInstance from "../../../core/axiosInstance";
 import { toast } from "react-toastify";
 
-function useCreateBancaField() {
+function useUpdateBancaField() {
   const [loading, setLoading] = useState(false);
 
-  async function postData(data) {
+  async function updateData(data) {
     setLoading(true);
     try {
-      const response = await axiosInstance.post("/api/banca", data);
+      const response = await axiosInstance.put("/api/banca", data);
       toast.success(
-        response?.data?.message || "Banca Field created successfully"
+        response?.data?.message || "Banca Field updated successfully"
       );
     } catch (error) {
       toast.error(
@@ -22,7 +22,7 @@ function useCreateBancaField() {
       setLoading(false); // Set loading to false when request finishes (whether success or failure)
     }
   }
-  return { postData, loading };
+  return { updateData, loading };
 }
 
-export default useCreateBancaField;
+export default useUpdateBancaField;

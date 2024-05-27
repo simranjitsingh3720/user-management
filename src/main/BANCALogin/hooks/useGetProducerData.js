@@ -1,14 +1,14 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axiosInstance from "../../../core/axiosInstance";
 
 function useGetProducerData() {
   const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
-  const fetchData = async () => {
+  const fetchData = async (id) => {
     try {
       setLoading(true);
-      let url = `/api/product?isAll=${true}`;
+      let url = `/api/user/${id}/products`;
 
       const response = await axiosInstance.get(url);
       setData(response.data);
@@ -18,11 +18,8 @@ function useGetProducerData() {
       setLoading(false);
     }
   };
-  useEffect(() => {
-    fetchData();
-  }, []);
 
-  return { producerList: data };
+  return { producerList: data, fetchData, loading };
 }
 
 export default useGetProducerData;
