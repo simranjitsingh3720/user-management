@@ -58,6 +58,11 @@ export const SideNavData = [
     navigateRoute: "proposalOtpException",
   },
   {
+    label: "Producer EOD Lock ByPass list",
+    icon: GridViewIcon,
+    navigateRoute: "producer-eod-bypass-list",
+  },
+  {
     label: "Producer Management",
     icon: ManageAccountsIcon,
   },

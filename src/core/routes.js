@@ -20,6 +20,8 @@ import OTPException from "../main/OTPException";
 import ProposalOTPException from "../main/ProposalOTPException";
 import BANCALogin from "../main/BANCALogin";
 import ProposalForm from "../main/ProposalOTPException/ProposalForm";
+import ProducerEODBypass from "../main/ProducerEODBypass";
+import ProducerEODFrom from "../main/ProducerEODBypass/ProducerEODForm";
 
 const AppRoutes = () => {
   return (
@@ -168,6 +170,22 @@ const AppRoutes = () => {
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
             <ProposalForm />
+          </ResponsiveDrawer>
+        }
+      />
+      <Route
+        path="/producer-eod-bypass-list"
+        element={
+          <ResponsiveDrawer showSidebarAndHeader={true}>
+            <ProducerEODBypass />
+          </ResponsiveDrawer>
+        }
+      />
+      <Route
+        path="/producer-eod-bypass-list/form/:id?"
+        element={
+          <ResponsiveDrawer showSidebarAndHeader={true}>
+            <ProducerEODFrom />
           </ResponsiveDrawer>
         }
       />

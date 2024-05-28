@@ -290,7 +290,11 @@ function BANCALogin() {
                           className={styles.dateStyle}
                           // {...register("startDate", { required: true })}
                           slotProps={{ textField: { size: "small" } }}
-                          value={dayjs(field.value)}
+                          value={
+                            field.value
+                              ? dayjs(field.value, "DD/MM/YYYY")
+                              : null
+                          }
                           onChange={(date) => {
                             const formattedDate =
                               dayjs(date).format("DD/MM/YYYY");
@@ -321,7 +325,11 @@ function BANCALogin() {
                           disabled={bancaData?.data?.endDate}
                           // {...register("expiryDate", { required: true })}
                           // value={watch("expiryDate")}
-                          value={dayjs(field.value)}
+                          value={
+                            field.value
+                              ? dayjs(field.value, "DD/MM/YYYY")
+                              : null
+                          }
                           onChange={(date) => {
                             const formattedDate =
                               dayjs(date).format("DD/MM/YYYY");

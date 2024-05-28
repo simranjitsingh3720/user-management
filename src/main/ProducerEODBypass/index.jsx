@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import SearchComponenet from "./SearchComponenet";
+import useGetEODBypass from "./hooks/useGetEODBypass";
 import styles from "./styles.module.css";
 import TableHeader from "./Table/TableHeader";
 import ListLoader from "../../sharedComponents/ListLoader";
@@ -7,7 +8,6 @@ import Table from "./Table";
 import NoDataFound from "../../sharedComponents/NoDataCard";
 import { MenuItem, Pagination, Select } from "@mui/material";
 import { selectRowsData } from "../../globalization/globalConstants";
-import useGetProposalOTPList from "./hooks/useGetProposalOTPList";
 
 function getSelectedRowData(count) {
   // Initialize the selected row data array
@@ -23,15 +23,17 @@ function getSelectedRowData(count) {
   return selectedRowData;
 }
 
-function ProposalOTPException() {
+function ProducerEODBypass() {
   const [query, setQuery] = useState("");
-  const [searched, setSearched] = useState("type");
+  const [searched, setSearched] = useState("producers");
+
+  const [producers, setProducers] = useState("");
 
   const [rowsPage, setRowsPage] = useState(10);
 
   const [pageChange, setPageChange] = useState(1);
 
-  const { data, loading, fetchData, setSort, sort } = useGetProposalOTPList(
+  const { data, loading, fetchData, setSort, sort } = useGetEODBypass(
     pageChange,
     rowsPage,
     query,
@@ -46,6 +48,9 @@ function ProposalOTPException() {
     setPageChange(1);
     setRowsPage(event.target.value);
   };
+
+  console.log("producers", producers);
+
   return (
     <div>
       <SearchComponenet
@@ -54,7 +59,10 @@ function ProposalOTPException() {
         setQuery={setQuery}
         searched={searched}
         setSearched={setSearched}
+        producers={producers}
+        setProducers={setProducers}
       />
+
       <div className={styles.tableContainerStyle}>
         <div className={styles.tableStyled}>
           {loading ? (
@@ -107,4 +115,4 @@ function ProposalOTPException() {
   );
 }
 
-export default ProposalOTPException;
+export default ProducerEODBypass;
