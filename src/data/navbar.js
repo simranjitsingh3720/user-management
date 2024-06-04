@@ -83,6 +83,11 @@ export const SideNavData = [
     navigateRoute: "employee-flag-config",
   },
   {
+    label: "Revalidation List",
+    icon: GridViewIcon,
+    navigateRoute: "revalidation-list",
+  },
+  {
     label: "Producer Management",
     icon: ManageAccountsIcon,
   },

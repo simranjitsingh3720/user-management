@@ -30,6 +30,7 @@ import HealthConfiguration from "../main/HealthConfiguration";
 import HealthConfigurationForm from "../main/HealthConfiguration/HealthConfigurationForm";
 import EmployeeFlagConfig from "../main/EmployeeFlagConfig";
 import EmployeeConfigurationForm from "../main/EmployeeFlagConfig/EmployeeConfigurationForm";
+import RevalidationList from "../main/RevalidationList";
 
 const AppRoutes = () => {
   return (
@@ -250,6 +251,14 @@ const AppRoutes = () => {
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
             <EmployeeFlagConfig />
+          </ResponsiveDrawer>
+        }
+      />
+       <Route
+        path="/revalidation-list"
+        element={
+          <ResponsiveDrawer showSidebarAndHeader={true}>
+            <RevalidationList />
           </ResponsiveDrawer>
         }
       />
