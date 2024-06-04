@@ -1,0 +1,15 @@
+.fieldContainer {
+  display: flex;
+  flex-direction: column;
+  margin-right: 0.5rem;
+}
+
+.buttonContainer {
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.primaryBtn {
+  height: 40px;
+}

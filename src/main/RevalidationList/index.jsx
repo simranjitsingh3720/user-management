@@ -1,8 +1,11 @@
 import React from 'react'
+import FormWithSelect from "./FormWithSelect/index"
 
 const RevalidationList = () => {
   return (
-    <div>RevalidationList</div>
+    <div className='conatiner'>
+      <FormWithSelect />
+    </div>
   )
 }
 
