@@ -1,0 +1,30 @@
+.customizeSelect {
+  background-color: #ffffff;
+  width: 150px;
+  font-size: 14px !important;
+  height: 40px;
+}
+.textFieldSearch {
+  background-color: #ffffff;
+  width: 300px;
+  margin: 0px 8px !important;
+}
+.buttonTextStyle {
+  font-size: 14px !important;
+}
+
+.flexSearchContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.customizeGroupSelect {
+  background-color: #ffffff;
+  width: 100%;
+  min-width: 240px;
+  max-width: 300px;
+  font-size: 14px !important;
+  min-height: 40px;
+  margin: 0px 12px !important;
+}

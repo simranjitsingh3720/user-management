@@ -1,0 +1,67 @@
+.tableHeader {
+  display: flex;
+  background-color: #ffffff;
+  justify-content: space-between;
+  height: 60px;
+  box-shadow: 0px 6px 12px #185ec414;
+  border-radius: 12px 12px 0px 0px;
+  align-items: center;
+  padding: 0px 12px;
+  border-bottom: 2px solid #60708333;
+}
+
+.houseBankCode {
+  cursor: pointer;
+  font-size: 14px;
+  color: #465465;
+  font-weight: 600;
+  width: 10%;
+}
+
+.bankCode {
+  cursor: pointer;
+  font-size: 14px;
+  color: #465465;
+  font-weight: 600;
+  width: 10%;
+}
+
+.branchName {
+  cursor: pointer;
+  font-size: 14px;
+  color: #465465;
+  font-weight: 600;
+  width: 10%;
+}
+
+.accountNumber {
+  cursor: pointer;
+  font-size: 14px;
+  color: #465465;
+  font-weight: 600;
+  width: 10%;
+}
+
+.actionCell {
+  font-size: 14px;
+  color: #465465;
+  font-weight: 600;
+  width: 10%;
+}
+
+.createdAt {
+  cursor: pointer;
+  font-size: 14px;
+  color: #465465;
+  font-weight: 600;
+  width: 15%;
+}
+
+.StatusCell {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #465465;
+  font-weight: 600;
+  width: 10%;
+}

@@ -63,6 +63,26 @@ export const SideNavData = [
     navigateRoute: "producer-eod-bypass-list",
   },
   {
+    label: "Product Wise Payment Configuration",
+    icon: GridViewIcon,
+    navigateRoute: "product-payment-config",
+  },
+  {
+    label: "House Bank Master",
+    icon: GridViewIcon,
+    navigateRoute: "house-bank-master",
+  },
+  {
+    label: "Health Configuration",
+    icon: GridViewIcon,
+    navigateRoute: "health-config",
+  },
+  {
+    label: "Employee Flag Configuration",
+    icon: GridViewIcon,
+    navigateRoute: "employee-flag-config",
+  },
+  {
     label: "Producer Management",
     icon: ManageAccountsIcon,
   },

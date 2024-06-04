@@ -22,6 +22,14 @@ import BANCALogin from "../main/BANCALogin";
 import ProposalForm from "../main/ProposalOTPException/ProposalForm";
 import ProducerEODBypass from "../main/ProducerEODBypass";
 import ProducerEODFrom from "../main/ProducerEODBypass/ProducerEODForm";
+import ProductPaymentConfig from "../main/ProductPaymentConfig";
+import ProductPaymentConfigForm from "../main/ProductPaymentConfig/ProductPaymentConfigForm";
+import HouseBankMaster from "../main/HouseBankMaster";
+import HouseBankMasterForm from "../main/HouseBankMaster/HouseBankMasterForm";
+import HealthConfiguration from "../main/HealthConfiguration";
+import HealthConfigurationForm from "../main/HealthConfiguration/HealthConfigurationForm";
+import EmployeeFlagConfig from "../main/EmployeeFlagConfig";
+import EmployeeConfigurationForm from "../main/EmployeeFlagConfig/EmployeeConfigurationForm";
 
 const AppRoutes = () => {
   return (
@@ -186,6 +194,70 @@ const AppRoutes = () => {
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
             <ProducerEODFrom />
+          </ResponsiveDrawer>
+        }
+      />
+      <Route
+        path="/product-payment-config"
+        element={
+          <ResponsiveDrawer showSidebarAndHeader={true}>
+            <ProductPaymentConfig />
+          </ResponsiveDrawer>
+        }
+      />
+      <Route
+        path="/product-payment-config/form/:id?"
+        element={
+          <ResponsiveDrawer showSidebarAndHeader={true}>
+            <ProductPaymentConfigForm />
+          </ResponsiveDrawer>
+        }
+      />
+      <Route
+        path="/house-bank-master"
+        element={
+          <ResponsiveDrawer showSidebarAndHeader={true}>
+            <HouseBankMaster />
+          </ResponsiveDrawer>
+        }
+      />
+      <Route
+        path="/house-bank-master/form/:id?"
+        element={
+          <ResponsiveDrawer showSidebarAndHeader={true}>
+            <HouseBankMasterForm />
+          </ResponsiveDrawer>
+        }
+      />
+      <Route
+        path="/health-config"
+        element={
+          <ResponsiveDrawer showSidebarAndHeader={true}>
+            <HealthConfiguration />
+          </ResponsiveDrawer>
+        }
+      />
+      <Route
+        path="/health-config/form/:id?"
+        element={
+          <ResponsiveDrawer showSidebarAndHeader={true}>
+            <HealthConfigurationForm />
+          </ResponsiveDrawer>
+        }
+      />
+      <Route
+        path="/employee-flag-config"
+        element={
+          <ResponsiveDrawer showSidebarAndHeader={true}>
+            <EmployeeFlagConfig />
+          </ResponsiveDrawer>
+        }
+      />
+      <Route
+        path="/employee-flag-config/form"
+        element={
+          <ResponsiveDrawer showSidebarAndHeader={true}>
+            <EmployeeConfigurationForm />
           </ResponsiveDrawer>
         }
       />

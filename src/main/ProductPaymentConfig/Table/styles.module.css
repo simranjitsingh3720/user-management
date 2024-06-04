@@ -1,0 +1,120 @@
+.tableContainer {
+  display: flex;
+  justify-content: space-between;
+  box-shadow: 0px 6px 12px #185ec414;
+  min-height: 85vh;
+  border-radius: 12px 12px 0px 0px;
+  background-color: #ffffff;
+}
+
+.tableHeader {
+  display: flex;
+  background-color: #ffffff;
+  justify-content: space-between;
+  height: 15vh;
+  box-shadow: 0px 6px 12px #185ec414;
+  border-radius: 12px 12px 0px 0px;
+  align-items: baseline;
+  padding: 0px 12px;
+  border-bottom: 2px solid #60708333;
+}
+
+.firstHeaderStyle {
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  border-radius: 12px 0px 0px 12px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  width: 30%;
+}
+
+.middleHeader {
+  width: 100%;
+  overflow-x: scroll;
+}
+
+.subMiddleHeader {
+  width: 200%;
+}
+
+.lastHeaderStyle {
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  border-radius: 0px 12px 12px 0px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  width: 10%;
+}
+
+.headerStyle {
+  display: flex;
+  justify-content: space-between;
+  height: 15vh;
+  align-items: baseline;
+  padding: 0px 12px;
+  border-bottom: 2px solid #60708333;
+}
+
+.paymentModeHeader {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 15vh;
+  padding: 0px 12px;
+  border-bottom: 2px solid #60708333;
+}
+
+.product {
+  font-size: 14px;
+  color: #465465;
+  font-weight: 600;
+  width: 50%;
+}
+
+.paymentModeText {
+  text-align: center;
+  font-size: 14px;
+  color: #465465;
+  font-weight: 600;
+}
+
+.paymentObj {
+  display: flex;
+  justify-content: space-between;
+}
+
+.subPayment {
+  font-size: 14px;
+  color: #465465;
+  font-weight: 600;
+  width: 5%;
+}
+
+.listHeader {
+  display: flex;
+  height: 8vh;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 12px;
+  border-bottom: 1px solid #c5cfde;
+}
+
+.productList {
+  font-size: 14px;
+  color: #465465;
+  width: 50%;
+}
+
+.lobList {
+  font-size: 14px;
+  color: #465465;
+  width: 50%;
+}
+
+.subPaymentList {
+  font-size: 14px;
+  color: #465465;
+  width: 5%;
+}
+
+.action {
+  font-size: 14px;
+  color: #465465;
+  font-weight: 600;
+}

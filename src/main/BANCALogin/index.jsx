@@ -27,7 +27,6 @@ function BANCALogin() {
     data: bancaData,
     loading: bancaLoading,
     fetchData: bancaFetchData,
-    setLoading: bancaSetLoading,
   } = useGetBancaLoginData();
 
   const [fieldData, setFieldData] = useState(
