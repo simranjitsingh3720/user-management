@@ -30,6 +30,7 @@ import HealthConfiguration from "../main/HealthConfiguration";
 import HealthConfigurationForm from "../main/HealthConfiguration/HealthConfigurationForm";
 import EmployeeFlagConfig from "../main/EmployeeFlagConfig";
 import EmployeeConfigurationForm from "../main/EmployeeFlagConfig/EmployeeConfigurationForm";
+import SyncedProducer from "../main/SyncedProducer";
 
 const AppRoutes = () => {
   return (
@@ -258,6 +259,14 @@ const AppRoutes = () => {
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
             <EmployeeConfigurationForm />
+          </ResponsiveDrawer>
+        }
+      />
+      <Route
+        path="/gc-sync-updation"
+        element={
+          <ResponsiveDrawer showSidebarAndHeader={true}>
+            <SyncedProducer />
           </ResponsiveDrawer>
         }
       />

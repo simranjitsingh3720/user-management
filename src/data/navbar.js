@@ -83,6 +83,11 @@ export const SideNavData = [
     navigateRoute: "employee-flag-config",
   },
   {
+    label: "Synced Producers",
+    icon: GridViewIcon,
+    navigateRoute: "gc-sync-updation",
+  },
+  {
     label: "Producer Management",
     icon: ManageAccountsIcon,
   },
