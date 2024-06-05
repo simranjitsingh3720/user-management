@@ -71,8 +71,10 @@ const DynamicTable = ({ columns, data, switchType, onDataUpdate }) => {
   const handleSwitchChange = (event, rowId) => {
     const newSwitchState = { ...switchState, [rowId]: event.target.checked };
     setSwitchState(newSwitchState);
-    
-    const updatedData = data.map(row => row.id === rowId ? { ...row, active: event.target.checked } : row);
+
+    const updatedData = data.map(row =>
+      row.id === rowId ? { ...row, active: event.target.checked, status: event.target.checked } : row
+    );
     onDataUpdate(updatedData);
 
     const allActive = Object.values(newSwitchState).every(state => state);
@@ -87,7 +89,7 @@ const DynamicTable = ({ columns, data, switchType, onDataUpdate }) => {
     setSwitchState(newState);
     setSelectAll(event.target.checked);
 
-    const updatedData = data.map(row => ({ ...row, active: event.target.checked }));
+    const updatedData = data.map(row => ({ ...row, active: event.target.checked, status: event.target.checked }));
     onDataUpdate(updatedData);
   };
 
@@ -105,7 +107,7 @@ const DynamicTable = ({ columns, data, switchType, onDataUpdate }) => {
             ))}
             {switchType && (
               <TableCell>
-                <label>Action</label>
+                 <label>Action</label>
                 <Switch
                   checked={selectAll}
                   onChange={handleSelectAllChange}

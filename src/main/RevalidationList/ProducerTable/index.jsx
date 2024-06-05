@@ -4,7 +4,7 @@ import styles from "./styles.module.css";
 import { PRODUCERTABLEHEADER } from "../constants";
 import useProducerData from "../hooks/useProducerData";
 
-const ProducerTable = ({revalidationList}) => {
+const ProducerTable = ({ revalidationList }) => {
   const { updateData } = useProducerData();
 
   return (
