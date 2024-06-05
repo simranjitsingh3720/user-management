@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const useGetProducerData = () => {
+const useGetProducers = () => {
   const [producerData, setProducerData] = useState(null);
 
   const getProducerData = async () => {
@@ -25,4 +25,4 @@ const useGetProducerData = () => {
   return { producerData };
 };
 
-export default useGetProducerData;
+export default useGetProducers;

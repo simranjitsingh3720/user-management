@@ -2,7 +2,7 @@ import { Autocomplete, Button, TextField, Box } from "@mui/material";
 import React from "react";
 import styles from "./styles.module.css";
 import { Controller, useForm } from "react-hook-form";
-import useGetProducerData from "../hooks/useGetProducerData";
+import useGetProducers from "../hooks/useGetProducers";
 
 function ProducerForm() {
   const {
@@ -20,7 +20,7 @@ function ProducerForm() {
     console.log(data);
   };
 
-  const { producerData } = useGetProducerData();
+  const { producerData } = useGetProducers();
 
   return (
     <>
