@@ -88,8 +88,14 @@ function BANCALogin() {
         Mandatory: bancaData?.data?.fields[key].mandatory,
       }));
       setFieldData(result);
-      setValue("startDate", dayjs(bancaData?.data?.startDate, "DD-MM-YYYY"));
-      setValue("endDate", dayjs(bancaData?.data?.endDate, "DD-MM-YYYY"));
+      setValue(
+        "startDate",
+        dayjs(bancaData?.data?.startDate, "DD/MM/YYYY").format("DD/MM/YYYY")
+      );
+      setValue(
+        "endDate",
+        dayjs(bancaData?.data?.endDate, "DD/MM/YYYY").format("DD/MM/YYYY")
+      );
     }
   }, [bancaData]);
 
@@ -113,6 +119,7 @@ function BANCALogin() {
 
   const onSubmit = (data) => {
     if (bancaData && bancaData?.data) {
+      console.log("data", data);
       const result = {};
       fieldData.forEach(({ value, Enable, Mandatory }) => {
         result[value] = {
@@ -124,6 +131,8 @@ function BANCALogin() {
         id: bancaData.data.id,
         properties: {
           fields: result,
+          startDate: data.startDate,
+          endDate: data.endDate,
           status: true,
         },
       };
@@ -285,7 +294,6 @@ function BANCALogin() {
                     render={({ field }) => (
                       <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DatePicker
-                          disabled={bancaData?.data?.startDate}
                           className={styles.dateStyle}
                           // {...register("startDate", { required: true })}
                           slotProps={{ textField: { size: "small" } }}
@@ -294,6 +302,7 @@ function BANCALogin() {
                               ? dayjs(field.value, "DD/MM/YYYY")
                               : null
                           }
+                          minDate={dayjs()}
                           onChange={(date) => {
                             const formattedDate =
                               dayjs(date).format("DD/MM/YYYY");
@@ -321,7 +330,6 @@ function BANCALogin() {
                       <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DatePicker
                           className={styles.dateStyle}
-                          disabled={bancaData?.data?.endDate}
                           // {...register("expiryDate", { required: true })}
                           // value={watch("expiryDate")}
                           value={
@@ -329,6 +337,7 @@ function BANCALogin() {
                               ? dayjs(field.value, "DD/MM/YYYY")
                               : null
                           }
+                          minDate={dayjs()}
                           onChange={(date) => {
                             const formattedDate =
                               dayjs(date).format("DD/MM/YYYY");
@@ -415,16 +424,9 @@ function BANCALogin() {
               >
                 Upload file
               </Button>
-              {fileName &&
-                (fileName.length > 20 ? (
-                  <Tooltip title={fileName}>
-                    <div
-                      className={styles.fileNameStyle}
-                    >{`${fileName.substring(0, 20)}...`}</div>
-                  </Tooltip>
-                ) : (
-                  <div className={styles.fileNameStyle}>{fileName}</div>
-                ))}
+              {fileName && (
+                <div className={styles.fileNameStyle}>{fileName}</div>
+              )}
             </div>
           </div>
         </div>

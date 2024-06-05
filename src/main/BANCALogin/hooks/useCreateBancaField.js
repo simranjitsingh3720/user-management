@@ -14,8 +14,7 @@ function useCreateBancaField() {
       );
     } catch (error) {
       toast.error(
-        error?.response?.data?.error?.message ||
-          "An error occurred. Please try again."
+        error?.response?.data?.details || "An error occurred. Please try again."
       );
       // Handle errors
     } finally {
