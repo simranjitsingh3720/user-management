@@ -32,6 +32,7 @@ const HealthConfiguration = lazy(() => import("../main/HealthConfiguration"));
 const HealthConfigurationForm = lazy(() => import("../main/HealthConfiguration/HealthConfigurationForm"));
 const EmployeeFlagConfig = lazy(() => import("../main/EmployeeFlagConfig"));
 const EmployeeConfigurationForm = lazy(() => import("../main/EmployeeFlagConfig/EmployeeConfigurationForm"));
+const RevalidationList = lazy(() => import("../main/RevalidationList"));
 
 const AppRoutes = () => {
   return (
@@ -240,6 +241,14 @@ const AppRoutes = () => {
             </ResponsiveDrawer>
           }
         />
+        <Route
+        path="/revalidation-list"
+        element={
+          <ResponsiveDrawer showSidebarAndHeader={true}>
+            <RevalidationList />
+          </ResponsiveDrawer>
+        }
+      />
         <Route
           path="/health-config/form/:id?"
           element={
