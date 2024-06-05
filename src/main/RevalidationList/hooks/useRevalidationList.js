@@ -1,6 +1,7 @@
 import { useState, useCallback } from "react";
 import axiosInstance from "../../../core/axiosInstance";
 import { API_END_POINTS } from "../constants";
+import { toast } from "react-toastify";
 
 
 const useRevalidationList = () => {
@@ -15,7 +16,8 @@ const useRevalidationList = () => {
       );
       setData(response?.data?.data || []);
     } catch (error) {
-      console.error("Failed to fetch revalidation list:", error);
+      console.log(error)
+      toast.error(error.message || "Failed to fetch revalidation list")
       setData([]);
     } finally {
       setLoading(false);

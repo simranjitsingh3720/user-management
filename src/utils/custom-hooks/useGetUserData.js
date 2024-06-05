@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import axiosInstance from "./../../core/axiosInstance";
 import { API_END_POINTS } from "../constants";
+import { toast } from "react-toastify";
 
 function useGetUserData() {
   const [data, setData] = useState([]);
@@ -12,7 +13,7 @@ function useGetUserData() {
       const response = await axiosInstance.get(API_END_POINTS.USERAPI + 'Producer');
       setData(response?.data?.data || []);
     } catch (error) {
-      console.error("Failed to fetch user data:", error);
+      toast.error(error.message || "Failed to fetch user data");
       setData([]);
     } finally {
       setLoading(false);
