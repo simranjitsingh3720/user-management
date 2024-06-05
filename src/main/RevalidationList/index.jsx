@@ -1,12 +1,12 @@
 import React from "react";
-import FormWithSelect from "./FormWithSelect/index";
+import ProducerForm from "./ProducerForm/index";
 // import { Button } from "@mui/material";
 // import DownloadIcon from "./../../assets/DownloadLogo";
 
 const RevalidationList = () => {
   return (
     <div className="conatiner">
-      <FormWithSelect />
+      <ProducerForm />
 
       {/* <Button
         variant="outlined"

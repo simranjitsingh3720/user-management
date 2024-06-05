@@ -4,7 +4,7 @@ import styles from "./styles.module.css";
 import { Controller, useForm } from "react-hook-form";
 import useGetProducerData from "../hooks/useGetProducerData";
 
-function FormWithSelect() {
+function ProducerForm() {
   const {
     handleSubmit,
     control,
@@ -77,4 +77,4 @@ function FormWithSelect() {
   );
 }
 
-export default FormWithSelect;
+export default ProducerForm;
