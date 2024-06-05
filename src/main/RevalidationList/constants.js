@@ -1,7 +1,7 @@
 export const PRODUCERTABLEHEADER = [
     {field: 'id', headerName: 'ID'},
   {
-    field: "username",
+    field: "userName",
     headerName: "User Name",
   },
   { field: "emailId", headerName: "Email ID" },
