@@ -4,7 +4,7 @@ import styles from "./styles.module.css";
 import { Controller, useForm } from "react-hook-form";
 import useGetUserData from "../../../utils/custom-hooks/useGetUserData";
 
-function ProducerForm() {
+const ProducerForm = () => {
   const {
     handleSubmit,
     control,
