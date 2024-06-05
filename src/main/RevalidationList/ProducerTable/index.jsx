@@ -1,5 +1,5 @@
 import React from "react";
-import DynamicTable from "../../../sharedComponents/Table";
+import DynamicTable from "../../../sharedComponents/DynamicTable";
 import styles from "./styles.module.css";
 import { PRODUCERTABLEHEADER } from "../constants";
 import useRevalidationList from "../hooks/useRevalidationList";
