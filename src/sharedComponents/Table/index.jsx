@@ -42,7 +42,7 @@ function TablePaginationActions(props) {
   );
 }
 
-const DynamicTable = ({ columns, data, switchType }) => {
+const DynamicTable = ({ columns, data, switchType, onDataUpdate }) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [switchState, setSwitchState] = useState({});
@@ -55,7 +55,6 @@ const DynamicTable = ({ columns, data, switchType }) => {
     });
     setSwitchState(initialSwitchState);
 
-    // Check if all rows are active to set the selectAll state
     const allActive = data.every(row => row.active);
     setSelectAll(allActive);
   }, [data]);
@@ -74,9 +73,8 @@ const DynamicTable = ({ columns, data, switchType }) => {
     setSwitchState(newSwitchState);
     
     const updatedData = data.map(row => row.id === rowId ? { ...row, active: event.target.checked } : row);
-    console.log('Updated data:', updatedData); // For demonstration purposes, log the updated data
+    onDataUpdate(updatedData);
 
-    // Update selectAll state based on the new switch states
     const allActive = Object.values(newSwitchState).every(state => state);
     setSelectAll(allActive);
   };
@@ -90,7 +88,7 @@ const DynamicTable = ({ columns, data, switchType }) => {
     setSelectAll(event.target.checked);
 
     const updatedData = data.map(row => ({ ...row, active: event.target.checked }));
-    console.log('Updated data:', updatedData); // For demonstration purposes, log the updated data
+    onDataUpdate(updatedData);
   };
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
