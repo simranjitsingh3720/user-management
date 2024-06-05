@@ -20,7 +20,8 @@ const useRevalidationList = () => {
         })) || [];
       setData(transformedData);
     } catch (error) {
-      toast.error(error.message || "Failed to fetch revalidation list");
+      debugger
+      toast.error(error.response?.data?.error?.message || "Failed to fetch revalidation list");
       setData([]);
     } finally {
       setLoading(false);
@@ -50,7 +51,7 @@ const useRevalidationList = () => {
           toast.success("Data updated successfully");
         })
         .catch((error) => {
-          toast.error(error.message || "Failed to update data");
+          toast.error(error.response?.data?.error?.message || "Failed to update data");
         });
     } else {
       toast.error("Something went Worng")

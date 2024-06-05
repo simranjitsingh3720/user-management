@@ -13,7 +13,7 @@ function useGetUserData() {
       const response = await axiosInstance.get(API_END_POINTS.USERAPI + 'Producer');
       setData(response?.data?.data || []);
     } catch (error) {
-      toast.error(error.message || "Failed to fetch user data");
+      toast.error(error.response?.data?.error?.message || "Failed to fetch user data");
       setData([]);
     } finally {
       setLoading(false);
