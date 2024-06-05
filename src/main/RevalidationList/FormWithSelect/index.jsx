@@ -1,10 +1,10 @@
 import { Autocomplete, Button, TextField, Box } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styles from "./styles.module.css";
 import { Controller, useForm } from "react-hook-form";
+import useGetProducerData from "../hooks/useGetProducerData";
 
 function FormWithSelect() {
-  const [producerData, setProducerData] = useState([]);
   const {
     handleSubmit,
     control,
@@ -20,19 +20,7 @@ function FormWithSelect() {
     console.log(data);
   };
 
-  useEffect(() => {
-    setProducerData([
-      {
-        label: "pushpender",
-      },
-      {
-        label: "pushpender1",
-      },
-      {
-        label: "pushpender2",
-      },
-    ]);
-  }, []);
+  const { producerData } = useGetProducerData();
 
   return (
     <>
