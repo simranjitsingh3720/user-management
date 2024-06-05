@@ -4,14 +4,14 @@ import styles from "./styles.module.css";
 import { PRODUCERTABLEHEADER } from "../constants";
 import useProducerData from "../hooks/useProducerData";
 
-const ProducerTable = () => {
-  const { data, updateData } = useProducerData();
+const ProducerTable = ({revalidationList}) => {
+  const { updateData } = useProducerData();
 
   return (
     <div className={styles.tableContainer}>
       <DynamicTable
         columns={PRODUCERTABLEHEADER}
-        data={data}
+        data={revalidationList}
         switchType="action"
         onDataUpdate={updateData}
       />
