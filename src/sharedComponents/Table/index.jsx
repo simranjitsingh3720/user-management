@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
   TableFooter, TablePagination, Paper, IconButton, Switch
@@ -48,6 +48,18 @@ const DynamicTable = ({ columns, data, switchType }) => {
   const [switchState, setSwitchState] = useState({});
   const [selectAll, setSelectAll] = useState(false);
 
+  useEffect(() => {
+    const initialSwitchState = {};
+    data.forEach(row => {
+      initialSwitchState[row.id] = row.active || false;
+    });
+    setSwitchState(initialSwitchState);
+
+    // Check if all rows are active to set the selectAll state
+    const allActive = data.every(row => row.active);
+    setSelectAll(allActive);
+  }, [data]);
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -58,7 +70,15 @@ const DynamicTable = ({ columns, data, switchType }) => {
   };
 
   const handleSwitchChange = (event, rowId) => {
-    setSwitchState({ ...switchState, [rowId]: event.target.checked });
+    const newSwitchState = { ...switchState, [rowId]: event.target.checked };
+    setSwitchState(newSwitchState);
+    
+    const updatedData = data.map(row => row.id === rowId ? { ...row, active: event.target.checked } : row);
+    console.log('Updated data:', updatedData); // For demonstration purposes, log the updated data
+
+    // Update selectAll state based on the new switch states
+    const allActive = Object.values(newSwitchState).every(state => state);
+    setSelectAll(allActive);
   };
 
   const handleSelectAllChange = (event) => {
@@ -68,6 +88,9 @@ const DynamicTable = ({ columns, data, switchType }) => {
     });
     setSwitchState(newState);
     setSelectAll(event.target.checked);
+
+    const updatedData = data.map(row => ({ ...row, active: event.target.checked }));
+    console.log('Updated data:', updatedData); // For demonstration purposes, log the updated data
   };
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
