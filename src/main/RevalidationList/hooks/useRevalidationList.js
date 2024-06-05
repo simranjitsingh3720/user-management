@@ -1,9 +1,9 @@
 import { useState, useCallback } from "react";
-import axiosInstance from "./../../../core/axiosInstance";
+import axiosInstance from "../../../core/axiosInstance";
 import { API_END_POINTS } from "../constants";
 
 
-const useGetRevalidationList = () => {
+const useRevalidationList = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -29,4 +29,4 @@ const useGetRevalidationList = () => {
   };
 };
 
-export default useGetRevalidationList;
+export default useRevalidationList;

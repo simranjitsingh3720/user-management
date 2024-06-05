@@ -1,13 +1,13 @@
 import React from "react";
 import ProducerForm from "./ProducerForm/index";
 import ProducerTable from "./ProducerTable/index";
-import useGetRevalidationList from "./hooks/useGetRevalidationList";
+import useRevalidationList from "./hooks/useRevalidationList";
 
 const RevalidationList = () => {
   const {
     revalidationList,
     revalidationListFetchData,
-  } = useGetRevalidationList();
+  } = useRevalidationList();
 
   const onFormSubmit = (data) => {
     const userId = data.producer.id;
