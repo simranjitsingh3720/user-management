@@ -2,10 +2,14 @@ import React from "react";
 import DynamicTable from "../../../sharedComponents/Table";
 import styles from "./styles.module.css";
 import { PRODUCERTABLEHEADER } from "../constants";
-import useProducerData from "../hooks/useProducerData";
+import useRevalidationList from "../hooks/useRevalidationList";
 
 const ProducerTable = ({ revalidationList }) => {
-  const { updateData } = useProducerData();
+  const { revalidationListUpdateData } = useRevalidationList();
+
+  const handleDataUpdate = (updatedData) => {
+    revalidationListUpdateData(updatedData, revalidationList);
+  };
 
   return (
     <div className={styles.tableContainer}>
@@ -13,7 +17,7 @@ const ProducerTable = ({ revalidationList }) => {
         columns={PRODUCERTABLEHEADER}
         data={revalidationList}
         switchType="action"
-        onDataUpdate={updateData}
+        onDataUpdate={handleDataUpdate}
       />
     </div>
   );
