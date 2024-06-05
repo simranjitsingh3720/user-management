@@ -8,7 +8,7 @@ const ProducerTable = ({ revalidationList }) => {
   const { revalidationListUpdateData } = useRevalidationList();
 
   const handleDataUpdate = (updatedData) => {
-    revalidationListUpdateData(updatedData, revalidationList);
+    revalidationListUpdateData(updatedData);
   };
 
   return (

@@ -27,15 +27,15 @@ const useRevalidationList = () => {
     }
   }, []);
 
-  const updateData = useCallback((updatedData, originalData) => {
+  const updateData = useCallback((updatedData) => {
     const transformedData = updatedData.map((item) => ({
       ...item,
       status: item.active,
     }));
-
+    setData(transformedData);
+    
     // Create payload with only the updated items
     const payload = transformedData
-      .filter((item, index) => item.active !== originalData[index].active)
       .map((item) => ({
         id: item.id,
         properties: {
@@ -47,15 +47,12 @@ const useRevalidationList = () => {
       axiosInstance
         .put(API_END_POINTS.updateRevalidationList, payload)
         .then((response) => {
-          setData(transformedData);
           toast.success("Data updated successfully");
         })
         .catch((error) => {
-          setData(originalData);
           toast.error(error.message || "Failed to update data");
         });
     } else {
-      setData(originalData);
       toast.error("Something went Worng")
     }
   }, []);
