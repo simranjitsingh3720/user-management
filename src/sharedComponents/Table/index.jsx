@@ -84,7 +84,7 @@ const DynamicTable = ({ columns, data, switchType }) => {
             ))}
             {switchType && (
               <TableCell>
-                Action
+                <label>Action</label>
                 <Switch
                   checked={selectAll}
                   onChange={handleSelectAllChange}

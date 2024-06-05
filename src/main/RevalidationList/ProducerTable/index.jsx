@@ -1,5 +1,6 @@
 import React from 'react'
 import DynamicTable from '../../../sharedComponents/Table'
+import styles from "./styles.module.css"
 import { PRODUCERTABLEHEADER } from '../constants';
   
   const data = [
@@ -19,9 +20,9 @@ import { PRODUCERTABLEHEADER } from '../constants';
 
 const ProducerTable = () => {
   return (
-    <>
+    <div className={styles.tableContainer}>
         <DynamicTable columns={PRODUCERTABLEHEADER} data={data} switchType="action"  />
-    </>
+    </div>
   )
 }
 
