@@ -1,8 +1,8 @@
-import { Autocomplete, Button, TextField, Box } from "@mui/material";
+import { Autocomplete, Button, TextField } from "@mui/material";
 import React from "react";
 import styles from "./styles.module.css";
 import { Controller, useForm } from "react-hook-form";
-import useGetProducers from "../hooks/useGetProducers";
+import useGetUserData from "../../../utils/custom-hooks/useGetUserData";
 
 function ProducerForm() {
   const {
@@ -20,7 +20,7 @@ function ProducerForm() {
     console.log(data);
   };
 
-  const { producerData } = useGetProducers();
+  const { userData } = useGetUserData();
 
   return (
     <>
@@ -35,26 +35,30 @@ function ProducerForm() {
             render={({ field }) => (
               <Autocomplete
                 id="producer"
-                options={producerData}
-                getOptionLabel={(option) => option.label}
+                options={userData || []}
+                getOptionLabel={(option) => {
+                  return `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`;
+                }}
                 className="customize-select"
                 size="small"
-                renderOption={(props, options) => (
-                  <Box component="li" {...props}>
-                    {options.label}
-                  </Box>
-                )}
-                value={field.label}
-                onChange={(event, newValue) => {
-                  if (newValue) {
-                    field.onChange(newValue.label);
-                  } else {
-                    field.onChange(null);
-                  }
-                }}
+                isOptionEqualToValue={(option, value) => option.id === value.id}
                 renderInput={(params) => (
                   <TextField {...params} placeholder="Select" />
                 )}
+                value={field.value}
+                onChange={(event, newValue) => {
+                  field.onChange(newValue);
+                }}
+                renderOption={(props, option) => (
+                  <li {...props} key={option.id}>
+                    {option?.firstName?.toUpperCase()} {option?.lastName?.toUpperCase()}
+                  </li>
+                )}
+                ListboxProps={{
+                  style: {
+                    maxHeight: "200px",
+                  },
+                }}
               />
             )}
           />
