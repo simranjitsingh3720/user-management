@@ -49,12 +49,14 @@ const HealthConfigurationForm = lazy(() =>
   import("../main/HealthConfiguration/HealthConfigurationForm")
 );
 const EmployeeFlagConfig = lazy(() => import("../main/EmployeeFlagConfig"));
-const EmployeeConfigurationForm = lazy(() =>
-  import("../main/EmployeeFlagConfig/EmployeeConfigurationForm")
-);
+
 const SyncedProducers = lazy(() => import("../main/SyncedProducer"));
 const AliasUser = lazy(() => import("../main/AliasUser"));
 const NotFoundPage = lazy(() => import("../sharedComponents/NotFoundPage"));
+const EmployeeConfigurationForm = lazy(() =>
+  import("../main/EmployeeFlagConfig/EmployeeConfigurationForm")
+);
+const RevalidationList = lazy(() => import("../main/RevalidationList"));
 
 const AppRoutes = () => {
   return (
@@ -260,6 +262,14 @@ const AppRoutes = () => {
           element={
             <ResponsiveDrawer showSidebarAndHeader={true}>
               <HealthConfiguration />
+            </ResponsiveDrawer>
+          }
+        />
+        <Route
+          path="/revalidation-list"
+          element={
+            <ResponsiveDrawer showSidebarAndHeader={true}>
+              <RevalidationList />
             </ResponsiveDrawer>
           }
         />

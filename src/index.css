@@ -14,3 +14,26 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.label-text {
+  color: #566475;
+  font-size: 14px;
+}
+
+.required-field:after {
+  content: "*";
+  color: #ff6262;
+  padding-left: 0.25rem;
+}
+
+.customize-select {
+  background-color: #ffffff;
+  width: 500px; /* Set the maximum width to 300px */
+  font-size: 14px !important;
+  height: 40px;
+}
+
+.error-msg {
+  color: #fd6262;
+  font-size: 12px;
+}

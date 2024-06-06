@@ -93,6 +93,11 @@ export const SideNavData = [
     navigateRoute: "alias-users",
   },
   {
+    label: "Revalidation List",
+    icon: GridViewIcon,
+    navigateRoute: "revalidation-list",
+  },
+  {
     label: "Producer Management",
     icon: ManageAccountsIcon,
   },
