@@ -11,7 +11,6 @@ import {
   Paper,
   IconButton,
   Switch,
-  CircularProgress,
 } from "@mui/material";
 import {
   FirstPage,
