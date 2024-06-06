@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import axiosInstance from "./../../core/axiosInstance";
+import axiosInstance from "../../axiosInstance";
 import { API_END_POINTS } from "../constants";
 import { toast } from "react-toastify";
 

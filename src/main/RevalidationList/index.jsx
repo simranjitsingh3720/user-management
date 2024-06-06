@@ -16,7 +16,7 @@ const RevalidationList = () => {
 
   return (
     <div className="container">
-      <ProducerForm onFormSubmit={onFormSubmit} />
+      <ProducerForm onFormSubmit={onFormSubmit} revalidationList={revalidationList} />
       {revalidationList.length > 0 ? <ProducerTable revalidationList={revalidationList} /> : ""}
     </div>
   );

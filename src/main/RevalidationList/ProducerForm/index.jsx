@@ -2,9 +2,11 @@ import { Autocomplete, Button, TextField } from "@mui/material";
 import React from "react";
 import styles from "./styles.module.css";
 import { Controller, useForm } from "react-hook-form";
-import useGetUserData from "../../../utils/custom-hooks/useGetUserData";
+import useGetUserData from "../../../core/utils/custom-hooks/useGetUserData";
+import DownloadIcon from "./../../../assets/DownloadLogo";
+import excelExport from "../../../core/utils/excelExport";
 
-const ProducerForm = ({onFormSubmit}) => {
+const ProducerForm = ({ onFormSubmit, revalidationList }) => {
   const {
     handleSubmit,
     control,
@@ -17,10 +19,23 @@ const ProducerForm = ({onFormSubmit}) => {
 
   const onSubmit = (data) => {
     // Handle Form Data
-    onFormSubmit(data)
+    onFormSubmit(data);
   };
 
   const { userData } = useGetUserData();
+
+  const downloadExcel = () => {
+    const filteredData = revalidationList.map(
+      ({ name, status, emailId, mobileNo }) => ({
+        name,
+        emailId,
+        mobileNo,
+        status,
+      })
+    );
+
+    excelExport(filteredData);
+  };
 
   return (
     <>
@@ -51,7 +66,8 @@ const ProducerForm = ({onFormSubmit}) => {
                 }}
                 renderOption={(props, option) => (
                   <li {...props} key={option.id}>
-                    {option?.firstName?.toUpperCase()} {option?.lastName?.toUpperCase()}
+                    {option?.firstName?.toUpperCase()}{" "}
+                    {option?.lastName?.toUpperCase()}
                   </li>
                 )}
                 ListboxProps={{
@@ -75,10 +91,21 @@ const ProducerForm = ({onFormSubmit}) => {
           >
             Submit
           </Button>
+          {revalidationList.length > 0 ? (
+            <Button
+              variant="outlined"
+              startIcon={<DownloadIcon />}
+              onClick={downloadExcel}
+              className={styles.exportBtn}
+            >
+              Export Data
+            </Button>
+          
+          )  : <></>}
         </div>
       </form>
     </>
   );
-}
+};
 
 export default ProducerForm;
