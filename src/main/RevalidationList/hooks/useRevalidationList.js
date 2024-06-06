@@ -20,7 +20,6 @@ const useRevalidationList = () => {
         })) || [];
       setData(transformedData);
     } catch (error) {
-      debugger
       toast.error(error.response?.data?.error?.message || "Failed to fetch revalidation list");
       setData([]);
     } finally {

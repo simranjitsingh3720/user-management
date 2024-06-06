@@ -19,6 +19,7 @@ import {
   KeyboardArrowLeft,
   KeyboardArrowRight,
 } from "@mui/icons-material";
+import ListLoader from "../../../sharedComponents/ListLoader";
 
 function TablePaginationActions(props) {
   const { count, page, rowsPerPage, onPageChange } = props;
@@ -122,88 +123,78 @@ const DynamicTable = ({ columns, data, switchType, onDataUpdate, loading }) => {
 
   return (
     <div style={{ position: "relative" }}>
-      {loading && (
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
-            zIndex: 1,
-          }}
-        >
-          <CircularProgress />
-        </div>
-      )}
-      <TableContainer component={Paper}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              {columns.map((column) => (
-                <TableCell key={column.field}>{column.headerName}</TableCell>
-              ))}
-              {switchType && (
-                <TableCell>
-                  <Switch
-                    checked={selectAll}
-                    onChange={handleSelectAllChange}
-                    color="primary"
-                  />
-                </TableCell>
-              )}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {(rowsPerPage > 0
-              ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              : data
-            ).map((row) => (
-              <TableRow key={row.id}>
+      {loading && <ListLoader />}
+      {!loading && (
+        <TableContainer component={Paper}>
+          <Table>
+            <TableHead>
+              <TableRow>
                 {columns.map((column) => (
-                  <TableCell key={column.field}>{row[column.field]}</TableCell>
+                  <TableCell key={column.field}>{column.headerName}</TableCell>
                 ))}
                 {switchType && (
                   <TableCell>
                     <Switch
-                      checked={switchState[row.id] || false}
-                      onChange={(event) => handleSwitchChange(event, row.id)}
+                      checked={selectAll}
+                      onChange={handleSelectAllChange}
                       color="primary"
                     />
                   </TableCell>
                 )}
               </TableRow>
-            ))}
-            {emptyRows > 0 && (
-              <TableRow style={{ height: 53 * emptyRows }}>
-                <TableCell colSpan={columns.length + 1} />
+            </TableHead>
+            <TableBody>
+              {(rowsPerPage > 0
+                ? data.slice(
+                    page * rowsPerPage,
+                    page * rowsPerPage + rowsPerPage
+                  )
+                : data
+              ).map((row) => (
+                <TableRow key={row.id}>
+                  {columns.map((column) => (
+                    <TableCell key={column.field}>
+                      {row[column.field]}
+                    </TableCell>
+                  ))}
+                  {switchType && (
+                    <TableCell>
+                      <Switch
+                        checked={switchState[row.id] || false}
+                        onChange={(event) => handleSwitchChange(event, row.id)}
+                        color="primary"
+                      />
+                    </TableCell>
+                  )}
+                </TableRow>
+              ))}
+              {emptyRows > 0 && (
+                <TableRow style={{ height: 53 * emptyRows }}>
+                  <TableCell colSpan={columns.length + 1} />
+                </TableRow>
+              )}
+            </TableBody>
+            <TableFooter>
+              <TableRow>
+                <TablePagination
+                  rowsPerPageOptions={[5, 10, 25]}
+                  colSpan={columns.length + (switchType ? 1 : 0)}
+                  count={data.length}
+                  rowsPerPage={rowsPerPage}
+                  page={page}
+                  SelectProps={{
+                    inputProps: { "aria-label": "rows per page" },
+                    native: true,
+                  }}
+                  onPageChange={handleChangePage}
+                  onRowsPerPageChange={handleChangeRowsPerPage}
+                  ActionsComponent={TablePaginationActions}
+                />
               </TableRow>
-            )}
-          </TableBody>
-          <TableFooter>
-            <TableRow>
-              <TablePagination
-                rowsPerPageOptions={[5, 10, 25]}
-                colSpan={columns.length + (switchType ? 1 : 0)}
-                count={data.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                SelectProps={{
-                  inputProps: { "aria-label": "rows per page" },
-                  native: true,
-                }}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-                ActionsComponent={TablePaginationActions}
-              />
-            </TableRow>
-          </TableFooter>
-        </Table>
-      </TableContainer>
+            </TableFooter>
+          </Table>
+        </TableContainer>
+      )}
     </div>
   );
 };
