@@ -6,6 +6,7 @@ import useRevalidationList from "./hooks/useRevalidationList";
 const RevalidationList = () => {
   const {
     revalidationList,
+    revalidationListLoading,
     revalidationListFetchData,
   } = useRevalidationList();
 
@@ -16,8 +17,8 @@ const RevalidationList = () => {
 
   return (
     <div className="container">
-      <ProducerForm onFormSubmit={onFormSubmit} revalidationList={revalidationList} />
-      {revalidationList.length > 0 ? <ProducerTable revalidationList={revalidationList} /> : ""}
+      <ProducerForm onFormSubmit={onFormSubmit} revalidationList={revalidationList}/>
+      {revalidationList.length > 0 ? <ProducerTable revalidationList={revalidationList} revalidationListLoading={revalidationListLoading}/> : ""}
     </div>
   );
 };

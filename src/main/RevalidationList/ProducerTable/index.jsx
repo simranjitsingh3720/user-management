@@ -4,7 +4,7 @@ import styles from "./styles.module.css";
 import { PRODUCERTABLEHEADER } from "../constants";
 import useRevalidationList from "../hooks/useRevalidationList";
 
-const ProducerTable = ({ revalidationList }) => {
+const ProducerTable = ({ revalidationList, revalidationListLoading }) => {
   const { revalidationListUpdateData } = useRevalidationList();
 
   const handleDataUpdate = (updatedData) => {
@@ -18,6 +18,7 @@ const ProducerTable = ({ revalidationList }) => {
         data={revalidationList}
         switchType="action"
         onDataUpdate={handleDataUpdate}
+        loading={revalidationListLoading}
       />
     </div>
   );
