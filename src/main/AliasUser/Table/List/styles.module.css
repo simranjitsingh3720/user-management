@@ -8,28 +8,19 @@
   border-bottom: 1px solid #c5cfde;
 }
 
-.type {
+.code {
   font-size: 14px;
   color: #465465;
   width: 10%;
 }
 
-.value {
+.producerName {
   font-size: 14px;
   color: #465465;
   width: 10%;
 }
-.lobName {
-  font-size: 14px;
-  color: #465465;
-  width: 10%;
-}
-.lobLevel {
-  font-size: 14px;
-  color: #465465;
-  width: 10%;
-}
-.product {
+
+.unlockedDays {
   font-size: 14px;
   color: #465465;
   width: 10%;
@@ -48,6 +39,12 @@
 }
 
 .createdAt {
+  font-size: 14px;
+  color: #465465;
+  width: 10%;
+}
+
+.reason {
   font-size: 14px;
   color: #465465;
   width: 10%;

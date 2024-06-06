@@ -16,6 +16,7 @@ function TableHeader({ sort, setSort }) {
   return (
     <div className={styles.tableHeader}>
       <div className={styles.type}>Type</div>
+      <div className={styles.type}>Name</div>
       <div className={styles.value}>Value</div>
       <div className={styles.lobName}>LOB</div>
       <div className={styles.product}>Product</div>

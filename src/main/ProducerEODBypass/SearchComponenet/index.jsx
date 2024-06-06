@@ -78,6 +78,7 @@ function SearchComponenet({
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                       <DatePicker
                         className={styles.dateStyle}
+                        minDate={dayjs()}
                         slotProps={{ textField: { size: "small" } }}
                         onChange={(date) => {
                           const formattedDate =
@@ -104,6 +105,7 @@ function SearchComponenet({
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                       <DatePicker
                         className={styles.dateStyle}
+                        minDate={dayjs()}
                         onChange={(date) => {
                           const formattedDate =
                             dayjs(date).format("DD-MM-YYYY");

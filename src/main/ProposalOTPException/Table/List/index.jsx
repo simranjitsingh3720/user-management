@@ -44,7 +44,12 @@ function List({ item, fetchData: fetchGroupList }) {
         <div className={styles.type}>
           {item?.producer ? "Producer" : "Channel"}
         </div>
-        <div className={styles.value}>{"-"}</div>
+        <div className={styles.type}>
+          {`${item?.producer?.firstName} ${item?.producer?.lastName}` || "-"}
+        </div>
+        <div className={styles.value}>
+          {item?.producer?.producerCode || "-"}
+        </div>
         <div className={styles.lobName}>{item?.lob?.lob || "-"}</div>
         <div className={styles.product}>{item?.product?.product || "-"}</div>
         <div className={styles.startDate}> {item?.startDate || "-"}</div>
@@ -88,7 +93,7 @@ function List({ item, fetchData: fetchGroupList }) {
             <InfoIcon fontSize="x-large" className={styles.iconStyle} />
           </div>
           <text className={styles.styledText}>
-            Are you sure you want to change the product status?
+            Are you sure you want to change the Proposal OTP Exception status?
           </text>
 
           <div className={styles.SubmitContainer}>

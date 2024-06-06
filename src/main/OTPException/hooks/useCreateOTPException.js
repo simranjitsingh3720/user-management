@@ -2,7 +2,7 @@ import { useState } from "react";
 import axiosInstance from "../../../core/axiosInstance";
 import { toast } from "react-toastify";
 
-function useCreateOTPException() {
+function useCreateOTPException({ fetchData }) {
   const [loading, setLoading] = useState(false);
 
   async function postData(data) {
@@ -12,6 +12,7 @@ function useCreateOTPException() {
       toast.success(
         response?.data?.message || "OTP Exception created successfully"
       );
+      fetchData();
     } catch (error) {
       toast.error(
         error?.response?.data?.error?.message ||

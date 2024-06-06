@@ -155,6 +155,7 @@ function ProducerEODFrom() {
                           className={styles.dateStyle}
                           // {...register("startDate", { required: true })}
                           slotProps={{ textField: { size: "small" } }}
+                          minDate={dayjs()}
                           value={
                             field.value
                               ? dayjs(field.value, "DD/MM/YYYY")
@@ -187,6 +188,7 @@ function ProducerEODFrom() {
                       <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DatePicker
                           className={styles.dateStyle}
+                          minDate={dayjs()}
                           // {...register("expiryDate", { required: true })}
                           // value={watch("expiryDate")}
                           value={

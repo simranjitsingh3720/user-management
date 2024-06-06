@@ -69,8 +69,8 @@ function SearchComponenet({
                   render={({ field }) => (
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                       <DatePicker
-                        className={styles.dateStyle}
                         minDate={dayjs()}
+                        className={styles.dateStyle}
                         slotProps={{ textField: { size: "small" } }}
                         onChange={(date) => {
                           const formattedDate =

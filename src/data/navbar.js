@@ -88,6 +88,11 @@ export const SideNavData = [
     navigateRoute: "gc-sync-updation",
   },
   {
+    label: "Alias User",
+    icon: GridViewIcon,
+    navigateRoute: "alias-users",
+  },
+  {
     label: "Producer Management",
     icon: ManageAccountsIcon,
   },

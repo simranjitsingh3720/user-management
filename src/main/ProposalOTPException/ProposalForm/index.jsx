@@ -228,7 +228,7 @@ function ProposalForm() {
                       options={lobListData?.data || []}
                       getOptionLabel={(option) => {
                         return `${option?.lob?.toUpperCase()} - ${
-                          option?.lob_code
+                          option?.lob_value
                         }`;
                       }}
                       className={styles.customizeSelect}
@@ -305,6 +305,7 @@ function ProposalForm() {
                       <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DatePicker
                           className={styles.dateStyle}
+                          minDate={dayjs()}
                           // {...register("startDate", { required: true })}
                           slotProps={{ textField: { size: "small" } }}
                           //   value={dayjs(field.value)}
@@ -335,6 +336,7 @@ function ProposalForm() {
                       <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DatePicker
                           className={styles.dateStyle}
+                          minDate={dayjs()}
                           // {...register("expiryDate", { required: true })}
                           // value={watch("expiryDate")}
                           //   value={dayjs(field.value)}

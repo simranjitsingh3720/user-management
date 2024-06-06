@@ -25,7 +25,7 @@ function SetOTPException({ fetchData }) {
 
   const { errors } = formState;
 
-  const { postData, loading } = useCreateOTPException();
+  const { postData, loading } = useCreateOTPException({ fetchData });
 
   const onSubmit = (data) => {
     console.log("data", data);
@@ -33,7 +33,6 @@ function SetOTPException({ fetchData }) {
       producerId: data.producerCode.id,
     };
     postData(payload);
-    fetchData();
   };
 
   return (
