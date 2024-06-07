@@ -113,7 +113,7 @@ function SearchComponenet({
         onClick={handleCreateNewForm}
         sx={{ textTransform: "none" }}
       >
-        <Typography noWrap className={styles.buttonTextStyle}>
+        <Typography nowrap="true" className={styles.buttonTextStyle}>
           Create Health Configuration
         </Typography>
       </Button>

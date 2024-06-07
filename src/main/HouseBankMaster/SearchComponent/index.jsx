@@ -56,7 +56,7 @@ function SearchComponenet({ setPageChange, setQuery, searched, setSearched }) {
         onClick={handleCreateNewForm}
         sx={{ textTransform: "none" }}
       >
-        <Typography noWrap className={styles.buttonTextStyle}>
+        <Typography nowrap="true" className={styles.buttonTextStyle}>
           Create House Master Configuration
         </Typography>
       </Button>

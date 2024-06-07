@@ -34,7 +34,7 @@ function Header({ handleDrawerToggle, selectedNavbar, selectedParentIndex }) {
             >
               <MenuIcon />
             </IconButton>
-            <div noWrap className={styles.userManagementText}>
+            <div nowrap="true" className={styles.userManagementText}>
               {selectedNavbar}
               {selectedParentIndex}
             </div>

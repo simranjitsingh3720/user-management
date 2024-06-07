@@ -67,7 +67,7 @@ function SearchComponent({ setQuery, setLoading, setPageChange }) {
             onClick={handleCreateNewForm}
             sx={{ textTransform: "none" }}
           >
-            <Typography noWrap className={styles.buttonTextStyle}>
+            <Typography nowrap="true" className={styles.buttonTextStyle}>
               Create New Permission
             </Typography>
           </Button>
