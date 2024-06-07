@@ -36,3 +36,8 @@ code {
   color: #fd6262;
   font-size: 12px;
 }
+
+.label {
+  color: #465465;
+  font-size: 0.75rem;
+}

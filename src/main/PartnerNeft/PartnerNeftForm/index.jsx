@@ -8,8 +8,12 @@ import {
   Card,
   CardContent,
   Grid,
+  IconButton,
+  Divider,
 } from "@mui/material";
 import styles from "./styles.module.css";
+import LeftArrow from "../../../assets/LeftArrow";
+import RestartAltIcon from "@mui/icons-material/RestartAlt";
 
 const options = [
   { label: "Option 1", value: "option1" },
@@ -41,8 +45,144 @@ const PartnerNeftForm = () => {
             rowSpacing={1}
             columnSpacing={{ xs: 1, sm: 2, md: 3 }}
           >
+            <Grid item xs={12}>
+              <Grid
+                container
+                rowSpacing={1}
+                columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+              >
+                <Grid item xs={8}>
+                  <div className={styles.headerContainer}>
+                    <IconButton
+                      aria-label="back"
+                      //   onClick={() => {
+                      //     navigate("/product");
+                      //   }}
+                    >
+                      <LeftArrow />
+                    </IconButton>
+                    <span className={styles.headerTextStyle}>
+                      Create New Partner NEFT Flag
+                    </span>
+                  </div>
+                  <div>
+                    <span className="label">
+                      Please fill the details below and click Submit to create a
+                      new partner NEFT flag.
+                    </span>
+                  </div>
+                </Grid>
+                <Grid
+                  item
+                  xs={4}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "flex-end",
+                  }}
+                >
+                  <Button
+                    variant="outlined"
+                    startIcon={<RestartAltIcon />}
+                    className={styles.secondaryBtn}
+                  >
+                    Reset
+                  </Button>
+                </Grid>
+              </Grid>
+              <Divider style={{ margin: '1rem 0' }} />
+            </Grid>
+
             <Grid item xs={12} sm={6} lg={4}>
-              <text className="label-text required-field">Select Producer</text>
+              <text className="label-text required-field">LOB</text>
+              <Controller
+                name="lob"
+                id="lob"
+                control={control}
+                rules={{ required: "LOB is required" }}
+                render={({ field }) => (
+                  <Autocomplete
+                    id="lob"
+                    options={options || []}
+                    //   getOptionLabel={(option) => {
+                    //     return `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`;
+                    //   }}
+                    className="customize-select"
+                    size="small"
+                    isOptionEqualToValue={(option, value) =>
+                      option.id === value.id
+                    }
+                    renderInput={(params) => (
+                      <TextField {...params} placeholder="Select" />
+                    )}
+                    value={field.value}
+                    onChange={(event, newValue) => {
+                      field.onChange(newValue);
+                    }}
+                    //   renderOption={(props, option) => (
+                    //     <li {...props} key={option.id}>
+                    //       {option?.firstName?.toUpperCase()}{" "}
+                    //       {option?.lastName?.toUpperCase()}
+                    //     </li>
+                    //   )}
+                    ListboxProps={{
+                      style: {
+                        maxHeight: "200px",
+                      },
+                    }}
+                  />
+                )}
+              />
+              <div className="error-msg">
+                {errors.lob && <span>{errors.lob.message}</span>}
+              </div>
+            </Grid>
+            <Grid item xs={12} sm={6} lg={4}>
+              <text className="label-text required-field">Product</text>
+              <Controller
+                name="product"
+                id="product"
+                control={control}
+                rules={{ required: "Product is required" }}
+                render={({ field }) => (
+                  <Autocomplete
+                    id="product"
+                    options={options || []}
+                    //   getOptionLabel={(option) => {
+                    //     return `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`;
+                    //   }}
+                    className="customize-select"
+                    size="small"
+                    isOptionEqualToValue={(option, value) =>
+                      option.id === value.id
+                    }
+                    renderInput={(params) => (
+                      <TextField {...params} placeholder="Select" />
+                    )}
+                    value={field.value}
+                    onChange={(event, newValue) => {
+                      field.onChange(newValue);
+                    }}
+                    //   renderOption={(props, option) => (
+                    //     <li {...props} key={option.id}>
+                    //       {option?.firstName?.toUpperCase()}{" "}
+                    //       {option?.lastName?.toUpperCase()}
+                    //     </li>
+                    //   )}
+                    ListboxProps={{
+                      style: {
+                        maxHeight: "200px",
+                      },
+                    }}
+                  />
+                )}
+              />
+              <div className="error-msg">
+                {errors.product && <span>{errors.product.message}</span>}
+              </div>
+            </Grid>
+            <Grid item xs={12} sm={6} lg={4}>
+              <text className="label-text required-field">Producer</text>
               <Controller
                 name="producer"
                 id="producer"
@@ -86,148 +226,52 @@ const PartnerNeftForm = () => {
               </div>
             </Grid>
             <Grid item xs={12} sm={6} lg={4}>
-             
-                <text className="label-text required-field">
-                  Select Producer
-                </text>
-                <Controller
-                  name="producer"
-                  id="producer"
-                  control={control}
-                  rules={{ required: "Producer is required" }}
-                  render={({ field }) => (
-                    <Autocomplete
-                      id="producer"
-                      options={options || []}
-                      //   getOptionLabel={(option) => {
-                      //     return `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`;
-                      //   }}
-                      className="customize-select"
-                      size="small"
-                      isOptionEqualToValue={(option, value) =>
-                        option.id === value.id
-                      }
-                      renderInput={(params) => (
-                        <TextField {...params} placeholder="Select" />
-                      )}
-                      value={field.value}
-                      onChange={(event, newValue) => {
-                        field.onChange(newValue);
-                      }}
-                      //   renderOption={(props, option) => (
-                      //     <li {...props} key={option.id}>
-                      //       {option?.firstName?.toUpperCase()}{" "}
-                      //       {option?.lastName?.toUpperCase()}
-                      //     </li>
-                      //   )}
-                      ListboxProps={{
-                        style: {
-                          maxHeight: "200px",
-                        },
-                      }}
-                    />
-                  )}
-                />
-                <div className="error-msg">
-                  {errors.producer && <span>{errors.producer.message}</span>}
-                </div>
-             
-            </Grid>
-            <Grid item xs={12} sm={6} lg={4}>
-             
-                <text className="label-text required-field">
-                  Select Producer
-                </text>
-                <Controller
-                  name="producer"
-                  id="producer"
-                  control={control}
-                  rules={{ required: "Producer is required" }}
-                  render={({ field }) => (
-                    <Autocomplete
-                      id="producer"
-                      options={options || []}
-                      //   getOptionLabel={(option) => {
-                      //     return `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`;
-                      //   }}
-                      className="customize-select"
-                      size="small"
-                      isOptionEqualToValue={(option, value) =>
-                        option.id === value.id
-                      }
-                      renderInput={(params) => (
-                        <TextField {...params} placeholder="Select" />
-                      )}
-                      value={field.value}
-                      onChange={(event, newValue) => {
-                        field.onChange(newValue);
-                      }}
-                      //   renderOption={(props, option) => (
-                      //     <li {...props} key={option.id}>
-                      //       {option?.firstName?.toUpperCase()}{" "}
-                      //       {option?.lastName?.toUpperCase()}
-                      //     </li>
-                      //   )}
-                      ListboxProps={{
-                        style: {
-                          maxHeight: "200px",
-                        },
-                      }}
-                    />
-                  )}
-                />
-                <div className="error-msg">
-                  {errors.producer && <span>{errors.producer.message}</span>}
-                </div>
-             
-            </Grid>
-            <Grid item xs={12} sm={6} lg={4}>
-             
-                <text className="label-text required-field">
-                  Select Producer
-                </text>
-                <Controller
-                  name="producer"
-                  id="producer"
-                  control={control}
-                  rules={{ required: "Producer is required" }}
-                  render={({ field }) => (
-                    <Autocomplete
-                      id="producer"
-                      options={options || []}
-                      //   getOptionLabel={(option) => {
-                      //     return `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`;
-                      //   }}
-                      className="customize-select"
-                      size="small"
-                      isOptionEqualToValue={(option, value) =>
-                        option.id === value.id
-                      }
-                      renderInput={(params) => (
-                        <TextField {...params} placeholder="Select" />
-                      )}
-                      value={field.value}
-                      onChange={(event, newValue) => {
-                        field.onChange(newValue);
-                      }}
-                      //   renderOption={(props, option) => (
-                      //     <li {...props} key={option.id}>
-                      //       {option?.firstName?.toUpperCase()}{" "}
-                      //       {option?.lastName?.toUpperCase()}
-                      //     </li>
-                      //   )}
-                      ListboxProps={{
-                        style: {
-                          maxHeight: "200px",
-                        },
-                      }}
-                    />
-                  )}
-                />
-                <div className="error-msg">
-                  {errors.producer && <span>{errors.producer.message}</span>}
-                </div>
-             
+              <text className="label-text required-field">
+                Verification Method
+              </text>
+              <Controller
+                name="verificationMethod"
+                id="verificationMethod"
+                control={control}
+                rules={{ required: "Verification Method is required" }}
+                render={({ field }) => (
+                  <Autocomplete
+                    id="verificationMethod"
+                    options={options || []}
+                    //   getOptionLabel={(option) => {
+                    //     return `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`;
+                    //   }}
+                    className="customize-select"
+                    size="small"
+                    isOptionEqualToValue={(option, value) =>
+                      option.id === value.id
+                    }
+                    renderInput={(params) => (
+                      <TextField {...params} placeholder="Select" />
+                    )}
+                    value={field.value}
+                    onChange={(event, newValue) => {
+                      field.onChange(newValue);
+                    }}
+                    //   renderOption={(props, option) => (
+                    //     <li {...props} key={option.id}>
+                    //       {option?.firstName?.toUpperCase()}{" "}
+                    //       {option?.lastName?.toUpperCase()}
+                    //     </li>
+                    //   )}
+                    ListboxProps={{
+                      style: {
+                        maxHeight: "200px",
+                      },
+                    }}
+                  />
+                )}
+              />
+              <div className="error-msg">
+                {errors.verificationMethod && (
+                  <span>{errors.verificationMethod.message}</span>
+                )}
+              </div>
             </Grid>
           </Grid>
         </CardContent>
