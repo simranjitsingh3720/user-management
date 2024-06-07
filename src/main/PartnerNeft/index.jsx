@@ -13,14 +13,10 @@ function PartnerNeft() {
     <Box>
       <Card>
         <CardContent>
-          <Grid container spacing={1}>
-            <Grid
-              item
-              xs={12}
-              direction="row"
-              justifyContent="flex-end"
-              alignItems="flex-start"
-            >
+          <Grid
+            container            
+          >
+            <Grid item xs={12}>
               <Button
                 type="submit"
                 variant="contained"
