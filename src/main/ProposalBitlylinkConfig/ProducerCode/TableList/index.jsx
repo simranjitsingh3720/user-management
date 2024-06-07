@@ -30,7 +30,7 @@ function TableList({ dataList, setDataList }) {
               }}
               size="small"
               displayEmpty
-              defaultValue="yes"
+              defaultValue="no"
               className={styles.customizeSelect}
               renderValue={(selected) => {
                 if (selected === undefined) {

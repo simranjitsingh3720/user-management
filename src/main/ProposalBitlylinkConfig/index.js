@@ -5,7 +5,7 @@ import Channel from "./Channel";
 import ProducerCode from "./ProducerCode";
 
 function ProposalBitlyLinkConfig() {
-  const [value, setValue] = useState("byChannel");
+  const [value, setValue] = useState("byproducerCode");
 
   console.log("value", value);
 

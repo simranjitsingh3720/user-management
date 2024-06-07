@@ -7,10 +7,13 @@ import {
   DialogTitle,
   IconButton,
   Switch,
+  Tooltip,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import InfoIcon from "@mui/icons-material/Info";
 import useUpdateProposal from "../../hooks/useUpdateProposal";
+import EditIcon from "@mui/icons-material/Edit";
+import { useNavigate } from "react-router-dom";
 
 function List({ item, fetchData: fetchGroupList }) {
   const [changeStatusOpen, setChangeStatusOpen] = useState(false);
@@ -37,6 +40,11 @@ function List({ item, fetchData: fetchGroupList }) {
       },
     };
     UpdateDataFun(payload);
+  };
+  const navigate = useNavigate();
+
+  const handleEditClick = () => {
+    navigate(`/proposalOtpException/form/${item.id}`);
   };
   return (
     <div>
@@ -66,6 +74,19 @@ function List({ item, fetchData: fetchGroupList }) {
           <div className={styles.styledActiveSelect}>
             {item?.status ? "Active" : "Inactive"}
           </div>
+        </div>
+        <div className={styles.editIcon}>
+          <Tooltip title="Edit Proposal OTP">
+            <IconButton
+              aria-label="back"
+              type="button"
+              onClick={() => {
+                handleEditClick();
+              }}
+            >
+              <EditIcon color="primary" />
+            </IconButton>
+          </Tooltip>
         </div>
       </div>
       <Dialog

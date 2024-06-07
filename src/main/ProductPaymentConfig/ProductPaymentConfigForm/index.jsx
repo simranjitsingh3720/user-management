@@ -189,7 +189,10 @@ function ProductPaymentConfigForm() {
                   <Autocomplete
                     id="payment"
                     value={getValues("payment")}
-                    options={paymentData?.data || []}
+                    options={[
+                      { name: "Select All" },
+                      ...(paymentData?.data || []),
+                    ]}
                     getOptionLabel={(option) => {
                       return option?.name?.toUpperCase();
                     }}
@@ -200,8 +203,25 @@ function ProductPaymentConfigForm() {
                     renderInput={(params) => (
                       <TextField {...params} placeholder="Select" />
                     )}
+                    // onChange={(event, newValue) => {
+                    //   field.onChange(newValue);
+                    // }}
                     onChange={(event, newValue) => {
-                      field.onChange(newValue);
+                      if (
+                        newValue.some((option) => option.name === "Select All")
+                      ) {
+                        const isSelectAllSelected = newValue.find(
+                          (option) => option.name === "Select All"
+                        );
+                        if (isSelectAllSelected) {
+                          const allOptionsSelected = paymentData?.data || [];
+                          field.onChange(allOptionsSelected);
+                        } else {
+                          field.onChange([]);
+                        }
+                      } else {
+                        field.onChange(newValue);
+                      }
                     }}
                     ListboxProps={{
                       style: {

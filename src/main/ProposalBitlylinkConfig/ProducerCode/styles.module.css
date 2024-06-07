@@ -42,3 +42,8 @@
 .tableStyle {
   padding: 12px;
 }
+
+.styledError {
+  color: #fd6262;
+  font-size: 12px;
+}

@@ -7,9 +7,7 @@ import {
   DialogTitle,
   IconButton,
   Switch,
-  Tooltip,
 } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
 import CloseIcon from "@mui/icons-material/Close";
 import InfoIcon from "@mui/icons-material/Info";
 import useUpdateBitlyLink from "../../../hooks/useUpdateBitlyLink";
@@ -86,7 +84,7 @@ function List({ item, fetchData: fetchGroupList }) {
             <InfoIcon fontSize="x-large" className={styles.iconStyle} />
           </div>
           <text className={styles.styledText}>
-            Are you sure you want to change the product status?
+            Are you sure you want to change the Proposal Bitly Link status?
           </text>
 
           <div className={styles.SubmitContainer}>
