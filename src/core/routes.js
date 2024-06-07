@@ -1,6 +1,7 @@
 import React, { Suspense, lazy } from "react";
 import { Route, Routes } from "react-router-dom";
 import ResponsiveDrawer from "../sharedComponents/LayoutDesign";
+import PartnerNeftForm from "../main/PartnerNeft/PartnerNeftForm";
 
 // Lazy load components
 const UserManagement = lazy(() => import("../main/UserManagement"));
@@ -287,6 +288,14 @@ const AppRoutes = () => {
           element={
             <ResponsiveDrawer showSidebarAndHeader={true}>
               <PartnerNeft />
+            </ResponsiveDrawer>
+          }
+        />
+        <Route
+          path="partner-neft-form"
+          element={
+            <ResponsiveDrawer showSidebarAndHeader={true}>
+              <PartnerNeftForm />
             </ResponsiveDrawer>
           }
         />

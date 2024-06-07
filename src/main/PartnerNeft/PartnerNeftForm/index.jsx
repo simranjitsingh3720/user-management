@@ -14,6 +14,7 @@ import {
 import styles from "./styles.module.css";
 import LeftArrow from "../../../assets/LeftArrow";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
+import { useNavigate } from "react-router-dom";
 
 const options = [
   { label: "Option 1", value: "option1" },
@@ -22,6 +23,7 @@ const options = [
 ];
 
 const PartnerNeftForm = () => {
+  const navigate = useNavigate();
   const {
     handleSubmit,
     control,
@@ -55,9 +57,9 @@ const PartnerNeftForm = () => {
                   <div className={styles.headerContainer}>
                     <IconButton
                       aria-label="back"
-                      //   onClick={() => {
-                      //     navigate("/product");
-                      //   }}
+                      onClick={() => {
+                        navigate("/partner-neft");
+                      }}
                     >
                       <LeftArrow />
                     </IconButton>
@@ -90,7 +92,7 @@ const PartnerNeftForm = () => {
                   </Button>
                 </Grid>
               </Grid>
-              <Divider style={{ margin: '1rem 0' }} />
+              <Divider style={{ margin: "1rem 0" }} />
             </Grid>
 
             <Grid item xs={12} sm={6} lg={4}>
