@@ -3,6 +3,7 @@
   width: 150px;
   font-size: 14px !important;
   height: 40px;
+  margin-right: 12px;
 }
 .textFieldSearch {
   background-color: #ffffff;
@@ -17,4 +18,18 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.selectContainer {
+  display: flex;
+}
+
+.customizeGroupSelect {
+  background-color: #ffffff;
+  width: 100%;
+  max-width: 300px;
+  min-width: 200px;
+  font-size: 14px !important;
+  min-height: 40px;
+  margin: 0px 12px !important;
 }

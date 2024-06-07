@@ -1,9 +1,12 @@
 import { useState } from "react";
 import axiosInstance from "../../../core/axiosInstance";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 function useUpdateProposal(setChangeStatusOpen, fetchGroupList) {
   const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate();
 
   async function UpdateDataFun(data) {
     setLoading(true);
@@ -13,8 +16,9 @@ function useUpdateProposal(setChangeStatusOpen, fetchGroupList) {
         data
       );
       toast.success(response?.data?.message || "Proposal updated successfully");
-      setChangeStatusOpen(false);
-      fetchGroupList();
+      navigate("/proposalOtpException");
+      if (setChangeStatusOpen) setChangeStatusOpen(false);
+      if (fetchGroupList) fetchGroupList();
     } catch (error) {
       toast.error(
         error?.response?.data?.error?.message ||

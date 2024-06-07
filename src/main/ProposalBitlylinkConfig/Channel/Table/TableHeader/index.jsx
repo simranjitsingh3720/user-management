@@ -19,7 +19,7 @@ function TableHeader({ sort, setSort }) {
         Type{renderSortIcon("type")}
       </div>
       <div className={styles.nameCell}>Value</div>
-      <div className={styles.nameCell}>Send Proposal Bitly Link</div>
+      <div className={styles.nameCell}>Proposal Bitly Link details</div>
       <div className={styles.createdAt} onClick={() => handleSort("createdAt")}>
         Created At {renderSortIcon("createdAt")}
       </div>

@@ -65,10 +65,14 @@ function Table({ ListData, fetchData, sort, setSort, paymentData }) {
       </div>
       <div className={styles.lastHeaderStyle}>
         <div className={styles.headerStyle}>
+          <div className={styles.action}>Created At</div>
+          <div className={styles.action}>Updated At</div>
           <div className={styles.action}>Action</div>
         </div>
         {ListData.map((item) => (
           <div className={styles.listHeader}>
+            <div className={styles.createdAt}>{item.createdAt}</div>
+            <div className={styles.createdAt}>{item.updatedAt}</div>
             <div className={styles.productStatus}>
               <Tooltip title="Edit Payment Modes">
                 <IconButton

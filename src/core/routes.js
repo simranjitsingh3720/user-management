@@ -204,7 +204,7 @@ const AppRoutes = () => {
           }
         />
         <Route
-          path="/proposalOtpException/form"
+          path="/proposalOtpException/form/:id?"
           element={
             <ResponsiveDrawer showSidebarAndHeader={true}>
               <ProposalForm />

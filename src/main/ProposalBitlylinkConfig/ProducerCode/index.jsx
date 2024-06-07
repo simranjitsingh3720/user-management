@@ -9,7 +9,11 @@ import useCreateBitlyLink from "../hooks/useCreateBitlyLink";
 import Loader from "./Loader";
 
 function ProducerCode() {
-  const { handleSubmit, control, formState } = useForm();
+  const { handleSubmit, control, formState, setValue } = useForm({
+    defaultValues: {
+      producer: null,
+    },
+  });
   const { errors } = formState;
 
   const { userData } = useGetUserData();
@@ -25,7 +29,7 @@ function ProducerCode() {
     (producerList?.data || []).map((item) => ({
       name: item.product,
       productId: item.id,
-      isMandatory: true,
+      isMandatory: false,
     }))
   );
 
@@ -35,13 +39,12 @@ function ProducerCode() {
         (producerList?.data || []).map((item) => ({
           name: item.product,
           productId: item.id,
-          isMandatory: true,
+          isMandatory: false,
         }))
       );
   }, [producerList]);
 
   const onSubmit = (data) => {
-    console.log("dataList", dataList);
     const field = (dataList || []).map((item) => ({
       productId: item.productId,
       isMandatory: item.isMandatory,
@@ -52,10 +55,12 @@ function ProducerCode() {
       fields: field,
     };
     postData(payload);
-    console.log("data", data);
   };
 
-  console.log("dataList", dataList);
+  const handleCancel = () => {
+    setDataList([]);
+    setValue("producer", null);
+  };
 
   return (
     <div>
@@ -76,6 +81,7 @@ function ProducerCode() {
                   getOptionLabel={(option) => {
                     return `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`;
                   }}
+                  value={field.value}
                   className={styles.customizeSelect}
                   size="small"
                   renderInput={(params) => (
@@ -94,7 +100,7 @@ function ProducerCode() {
               )}
             />
             <div className={styles.styledError}>
-              {errors.channel && <span>{errors.channel.message}</span>}
+              {errors.producer && <span>{errors.producer.message}</span>}
             </div>
           </div>
           {producerLoading ? (
@@ -102,7 +108,7 @@ function ProducerCode() {
               <Loader />
             </div>
           ) : (
-            producerList && (
+            dataList.length > 0 && (
               <div className={styles.tableStyle}>
                 <TableList dataList={dataList} setDataList={setDataList} />
               </div>
@@ -117,7 +123,11 @@ function ProducerCode() {
             >
               Submit
             </Button>
-            <Button variant="outlined" className={styles.styledButton}>
+            <Button
+              variant="outlined"
+              className={styles.styledButton}
+              onClick={() => handleCancel()}
+            >
               Cancel
             </Button>
           </div>

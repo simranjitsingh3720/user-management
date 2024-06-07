@@ -18,9 +18,7 @@ function TableList({ dataList, setDataList }) {
               labelId="search-select"
               id="bitlyLinkMandatory"
               onChange={(event, newValue) => {
-                console.log("event", event);
                 const newDataList = [...dataList];
-                console.log("newDataList", newDataList);
                 newDataList.forEach((obj) => {
                   if (obj.productId === item.productId) {
                     obj.isMandatory = !obj.isMandatory;
@@ -30,7 +28,7 @@ function TableList({ dataList, setDataList }) {
               }}
               size="small"
               displayEmpty
-              defaultValue="yes"
+              defaultValue="no"
               className={styles.customizeSelect}
               renderValue={(selected) => {
                 if (selected === undefined) {

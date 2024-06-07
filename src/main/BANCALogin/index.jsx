@@ -119,7 +119,6 @@ function BANCALogin() {
 
   const onSubmit = (data) => {
     if (bancaData && bancaData?.data) {
-      console.log("data", data);
       const result = {};
       fieldData.forEach(({ value, Enable, Mandatory }) => {
         result[value] = {
@@ -147,7 +146,6 @@ function BANCALogin() {
         };
       });
 
-      console.log("result", result);
       const payload = {
         producerId: data.producerCode.id,
         productId: data.product.id,
@@ -403,7 +401,6 @@ function BANCALogin() {
                 onChange={(event) => {
                   const file = event.target.files[0];
 
-                  console.log("file", file);
                   if (file) {
                     setFileName(file.name);
                   }

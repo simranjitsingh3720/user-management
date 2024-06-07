@@ -56,7 +56,6 @@ function HealthConfigurationForm() {
   }, [healthConfigData]);
 
   const onSubmit = (data) => {
-    console.log("data", data);
     if (id) {
       const payload = {
         id: id,

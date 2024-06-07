@@ -41,7 +41,6 @@ function PermissionModule() {
     setRowsPage(event.target.value);
   };
 
-  console.log("data", data);
   return (
     <div>
       <SearchComponent

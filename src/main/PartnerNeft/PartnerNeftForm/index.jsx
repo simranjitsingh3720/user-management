@@ -34,9 +34,7 @@ const PartnerNeftForm = () => {
     },
   });
 
-  const onSubmit = (data) => {
-    console.log(data);
-  };
+  const onSubmit = (data) => {};
 
   return (
     <Box component="form" onSubmit={handleSubmit(onSubmit)}>

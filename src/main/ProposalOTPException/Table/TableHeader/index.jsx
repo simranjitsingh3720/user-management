@@ -31,6 +31,7 @@ function TableHeader({ sort, setSort }) {
         {renderSortIcon("createdAt")}
       </div>{" "}
       <div className={styles.productStatus}>Status</div>
+      <div className={styles.editStatus}>Edit</div>
     </div>
   );
 }
