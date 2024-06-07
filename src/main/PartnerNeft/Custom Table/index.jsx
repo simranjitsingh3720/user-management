@@ -1,63 +1,9 @@
-import React from 'react';
-import {
-  Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
-  Paper, CircularProgress, TableFooter, TablePagination
-} from '@mui/material';
+import React from 'react'
 
-// Custom Table Header Component
-const TableHeader = ({ children }) => (
-  <TableHead>
-    {children}
-  </TableHead>
-);
-
-// Custom Table Body Component
-const TableBodyComponent = ({ children, loading, data }) => {
-  if (loading) {
-    return (
-      <TableBody>
-        <TableRow>
-          <TableCell colSpan={5} align="center">
-            <CircularProgress />
-          </TableCell>
-        </TableRow>
-      </TableBody>
-    );
-  }
-
-  if (data.length === 0) {
-    return (
-      <TableBody>
-        <TableRow>
-          <TableCell colSpan={5} align="center">
-            No records found
-          </TableCell>
-        </TableRow>
-      </TableBody>
-    );
-  }
-
+const CustomTable = () => {
   return (
-    <TableBody>
-      {children}
-    </TableBody>
-  );
-};
+    <div>CustomTable</div>
+  )
+}
 
-// Custom Table Footer Component
-const TableFooterComponent = ({ children }) => (
-  <TableFooter>
-    {children}
-  </TableFooter>
-);
-
-// Main Custom Table Component
-const CustomTable = ({ children }) => (
-  <TableContainer component={Paper}>
-    <Table>
-      {children}
-    </Table>
-  </TableContainer>
-);
-
-export default CustomTable;
+export default CustomTable
