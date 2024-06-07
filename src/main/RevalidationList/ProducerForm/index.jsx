@@ -1,6 +1,6 @@
 import { Autocomplete, Button, Grid, TextField } from "@mui/material";
 import React from "react";
-import styles from "./styles.module.css";
+import styles from "./styles.module.scss";
 import { Controller, useForm } from "react-hook-form";
 import useGetUserData from "../../../core/utils/custom-hooks/useGetUserData";
 import DownloadIcon from "./../../../assets/DownloadLogo";

@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./styles.module.css";
+import styles from "./styles.module.scss";
 import { Tooltip } from "@mui/material";
 
 function TableHeader({ sort, setSort, paymentData }) {

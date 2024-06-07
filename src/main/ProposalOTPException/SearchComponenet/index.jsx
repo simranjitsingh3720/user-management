@@ -1,7 +1,7 @@
 import { Button, MenuItem, Select, TextField, Typography } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "./styles.module.css";
+import styles from "./styles.module.scss";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";

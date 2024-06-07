@@ -1,6 +1,6 @@
 import { Button, MenuItem, Select, TextField, Typography } from "@mui/material";
 import React from "react";
-import styles from "./styles.module.css";
+import styles from "./styles.module.scss";
 import { ProductPayment } from "../constants";
 import { useNavigate } from "react-router-dom";
 

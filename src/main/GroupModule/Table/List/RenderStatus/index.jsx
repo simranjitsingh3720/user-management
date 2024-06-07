@@ -1,6 +1,6 @@
 import { MenuItem, Select } from "@mui/material";
 import React from "react";
-import styles from "./styles.module.css";
+import styles from "./styles.module.scss";
 
 function RenderStatus({ status }) {
   const [insillionStatus, setInsillionStatus] = React.useState(status);

@@ -1,6 +1,6 @@
 import { MenuItem, Select, TextField } from "@mui/material";
 import React from "react";
-import styles from "./styles.module.css";
+import styles from "./styles.module.scss";
 import { BitlyLink } from "../constants";
 
 function SearchComponent({ setQuery, setPageChange, searched, setSearched }) {

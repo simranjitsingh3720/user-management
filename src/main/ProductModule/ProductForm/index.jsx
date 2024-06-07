@@ -10,7 +10,7 @@ import {
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import styles from "./styles.module.css";
+import styles from "./styles.module.scss";
 import LeftArrow from "../../../assets/LeftArrow";
 import useGetLobListData from "../hooks/useGetLobListData";
 import useCreateProduct from "../hooks/useCreateProduct";

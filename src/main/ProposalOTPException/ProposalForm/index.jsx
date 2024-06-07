@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import styles from "./styles.module.css";
+import styles from "./styles.module.scss";
 import {
   Autocomplete,
   Button,

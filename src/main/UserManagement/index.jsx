@@ -1,6 +1,6 @@
 import { Box, MenuItem, Pagination, Select } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import styles from "./styles.module.css";
+import styles from "./styles.module.scss";
 import Table from "./Components/Table";
 import SearchComponent from "./Components/SearchComponent";
 import useGetUser from "./Components/hooks/useGetUser";

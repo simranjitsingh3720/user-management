@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import NavbarDrawer from "../NavbarDrawer";
 import Header from "../Header";
-import Styles from "./styles.module.css";
+import Styles from "./styles.module.scss";
 import { drawerWidth } from "../../globalization/globalConstants";
 import { useLocation } from "react-router-dom";
 import { SideNavData } from "../../data/navbar";

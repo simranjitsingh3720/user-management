@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import CreateLob from "./CreateLob";
-import styles from "./styles.module.css";
+import styles from "./styles.module.scss";
 import useGetLob from "./hooks/useGetLob";
 import TableHeader from "./Table/TableHeader";
 import ListLoader from "../../sharedComponents/ListLoader";

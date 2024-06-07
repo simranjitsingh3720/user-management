@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styles from "./styles.module.css";
+import styles from "./styles.module.scss";
 import { useNavigate } from "react-router-dom";
 import {
   Autocomplete,

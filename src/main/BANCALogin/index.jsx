@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import useGetBancaLoginData from "./hooks/useGetBancaLoginData";
-import styles from "./styles.module.css";
+import styles from "./styles.module.scss";
 import {
   Autocomplete,
   Button,

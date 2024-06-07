@@ -11,7 +11,7 @@ import {
   IconButton,
   Divider,
 } from "@mui/material";
-import styles from "./styles.module.css";
+import styles from "./styles.module.scss";
 import LeftArrow from "../../../assets/LeftArrow";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import { useNavigate } from "react-router-dom";

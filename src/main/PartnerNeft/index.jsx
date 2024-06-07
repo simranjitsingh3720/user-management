@@ -1,7 +1,7 @@
 import { Card, CardContent, Grid, Button, Box } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "./styles.module.css";
+import styles from "./styles.module.scss";
 
 function PartnerNeft() {
   const navigate = useNavigate();

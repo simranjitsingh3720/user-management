@@ -1,7 +1,7 @@
 import { AppBar, Avatar, Button, IconButton, Toolbar } from "@mui/material";
 import React from "react";
 import MenuIcon from "@mui/icons-material/Menu";
-import styles from "./styles.module.css";
+import styles from "./styles.module.scss";
 import LogoutIcon from "../../assets/LogoutIcon";
 import { useNavigate } from "react-router-dom";
 

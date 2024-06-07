@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import SearchComponent from "./SearchComponent";
 import Table from "./Table";
 import { MenuItem, Pagination, Select } from "@mui/material";
-import styles from "./styles.module.css";
+import styles from "./styles.module.scss";
 import useGetPrivilege from "./hooks/useGetPrivilege";
 import ListLoader from "../../sharedComponents/ListLoader";
 import TableHeader from "./Table/TableHeader";

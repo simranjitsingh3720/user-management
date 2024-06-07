@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import SearchComponenet from "./SearchComponent";
 import Table from "./Table";
-import styles from "./styles.module.css";
+import styles from "./styles.module.scss";
 import { MenuItem, Pagination, Select } from "@mui/material";
 import TableHeader from "./Table/TableHeader";
 import NoDataFound from "../../sharedComponents/NoDataCard";
