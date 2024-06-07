@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import React, { useEffect } from "react";
 import LeftArrow from "../../../assets/LeftArrow";
-import styles from "./styles.module.css";
+import styles from "./styles.module.scss";
 import { Controller, useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 

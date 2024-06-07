@@ -2,7 +2,7 @@ import React from "react";
 import TableHeader from "./TableHeader";
 import List from "./List";
 import TableFooter from "./TableFooter";
-import styles from "./styles.module.css";
+import styles from "./styles.module.scss";
 
 function Table({ ListData, loading, fetchData, setLoading, sort, setSort }) {
   return (

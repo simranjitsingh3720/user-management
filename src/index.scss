@@ -28,7 +28,6 @@ code {
 
 .customize-select {
   background-color: #ffffff;
-  width: 500px; /* Set the maximum width to 300px */
   font-size: 14px !important;
   height: 40px;
 }
@@ -36,4 +35,9 @@ code {
 .error-msg {
   color: #fd6262;
   font-size: 12px;
+}
+
+.label {
+  color: #465465;
+  font-size: 0.75rem;
 }

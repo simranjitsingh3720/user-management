@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styles from "./styles.module.css";
+import styles from "./styles.module.scss";
 import { Controller, useForm } from "react-hook-form";
 import { Autocomplete, Button, TextField } from "@mui/material";
 import TableList from "./TableList";

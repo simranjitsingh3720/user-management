@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./styles.module.css";
+import styles from "./styles.module.scss";
 import { Card, CardContent, MenuItem, Select, Typography } from "@mui/material";
 import { BitlyLinkMandatory } from "../../constants";
 

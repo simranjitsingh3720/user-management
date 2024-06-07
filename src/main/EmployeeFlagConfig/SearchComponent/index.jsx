@@ -6,7 +6,7 @@ import {
   TextField,
 } from "@mui/material";
 import React from "react";
-import styles from "./styles.module.css";
+import styles from "./styles.module.scss";
 import { searchOption } from "../constants";
 
 import useGetUserData from "../../BANCALogin/hooks/useGetUserData";

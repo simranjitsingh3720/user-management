@@ -1,7 +1,7 @@
 import React from "react";
 import TableHeader from "./TableHeader";
 import List from "./List";
-import styles from "./styles.module.css";
+import styles from "./styles.module.scss";
 
 function Table({ ListData, fetchData, sort, setSort }) {
   return (

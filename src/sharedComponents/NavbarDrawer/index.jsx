@@ -10,7 +10,7 @@ import {
   ListItemIcon,
 } from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
-import Styles from "./styles.module.css";
+import Styles from "./styles.module.scss";
 import { SideNavData } from "../../data/navbar";
 import { drawerWidth } from "../../globalization/globalConstants";
 import { useNavigate } from "react-router-dom";

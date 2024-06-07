@@ -1,6 +1,6 @@
 import React from "react";
 import DynamicTable from "./../DynamicTable";
-import styles from "./styles.module.css";
+import styles from "./styles.module.scss";
 import { PRODUCERTABLEHEADER } from "../constants";
 import useRevalidationList from "../hooks/useRevalidationList";
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
-import Styles from "./styles.module.css";
+import Styles from "./styles.module.scss";
 
 function SearchInput({ onSearch }) {
   const [searchTerm, setSearchTerm] = useState("");

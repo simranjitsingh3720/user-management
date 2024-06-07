@@ -1,6 +1,7 @@
 import React, { Suspense, lazy } from "react";
 import { Route, Routes } from "react-router-dom";
 import ResponsiveDrawer from "../sharedComponents/LayoutDesign";
+import PartnerNeftForm from "../main/PartnerNeft/PartnerNeftForm";
 
 // Lazy load components
 const UserManagement = lazy(() => import("../main/UserManagement"));
@@ -57,6 +58,7 @@ const EmployeeConfigurationForm = lazy(() =>
   import("../main/EmployeeFlagConfig/EmployeeConfigurationForm")
 );
 const RevalidationList = lazy(() => import("../main/RevalidationList"));
+const PartnerNeft = lazy(() => import("../main/PartnerNeft"));
 
 const AppRoutes = () => {
   return (
@@ -266,6 +268,14 @@ const AppRoutes = () => {
           }
         />
         <Route
+          path="/health-config/form/:id?"
+          element={
+            <ResponsiveDrawer showSidebarAndHeader={true}>
+              <HealthConfigurationForm />
+            </ResponsiveDrawer>
+          }
+        />
+        <Route
           path="/revalidation-list"
           element={
             <ResponsiveDrawer showSidebarAndHeader={true}>
@@ -274,10 +284,18 @@ const AppRoutes = () => {
           }
         />
         <Route
-          path="/health-config/form/:id?"
+          path="/partner-neft"
           element={
             <ResponsiveDrawer showSidebarAndHeader={true}>
-              <HealthConfigurationForm />
+              <PartnerNeft />
+            </ResponsiveDrawer>
+          }
+        />
+        <Route
+          path="partner-neft-form"
+          element={
+            <ResponsiveDrawer showSidebarAndHeader={true}>
+              <PartnerNeftForm />
             </ResponsiveDrawer>
           }
         />

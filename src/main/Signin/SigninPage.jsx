@@ -1,4 +1,4 @@
-import styles from "./styles.module.css";
+import styles from "./styles.module.scss";
 import { useForm } from "react-hook-form";
 import React from "react";
 import { Box, Button, TextField } from "@mui/material";

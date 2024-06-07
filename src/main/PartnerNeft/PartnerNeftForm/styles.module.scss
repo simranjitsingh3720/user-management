@@ -1,0 +1,26 @@
+.buttonContainer {
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.primaryBtn, .exportBtn {
+  height: 40px;
+  margin-right: 0.5rem !important;
+}
+
+.headerContainer{ 
+  display: flex;
+  align-items: center;
+}
+
+.headerTextStyle {
+  margin-left: 12px;
+  font-size: 18px;
+  color: #465465;
+  font-weight: 600;
+}
+
+.secondaryBtn {
+  height: 40px;
+}

@@ -13,7 +13,7 @@ import {
 import React, { useState } from "react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import LeftArrow from "../../../assets/LeftArrow";
-import styles from "./styles.module.css";
+import styles from "./styles.module.scss";
 import { useNavigate } from "react-router-dom";
 import { selectData } from "../../UserManagement/constants";
 import {

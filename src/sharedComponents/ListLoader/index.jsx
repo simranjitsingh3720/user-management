@@ -1,6 +1,6 @@
 import { Skeleton } from "@mui/material";
 import React from "react";
-import styles from "./styles.module.css";
+import styles from "./styles.module.scss";
 
 function ListLoader({ rows = 10, column = 5 }) {
   return (

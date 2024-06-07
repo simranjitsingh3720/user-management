@@ -7,7 +7,7 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
-import styles from "./styles.module.css";
+import styles from "./styles.module.scss";
 import { SearchKey, searchOption } from "../constants";
 import { useNavigate } from "react-router-dom";
 import useGetUserData from "../../BANCALogin/hooks/useGetUserData";

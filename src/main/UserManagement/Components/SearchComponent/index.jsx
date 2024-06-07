@@ -1,7 +1,7 @@
 import { Button, MenuItem, Select, TextField } from "@mui/material";
 import React from "react";
 import DownloadIcon from "../../../../assets/DownloadLogo";
-import styles from "./styles.module.css";
+import styles from "./styles.module.scss";
 import { selectData } from "../../constants";
 import { DatePicker } from "@mui/x-date-pickers";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";

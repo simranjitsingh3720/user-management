@@ -1,6 +1,6 @@
 import { Autocomplete, Button, TextField, Typography } from "@mui/material";
 import React from "react";
-import styles from "./styles.module.css";
+import styles from "./styles.module.scss";
 import { useNavigate } from "react-router-dom";
 
 const fetchIdsAndConvert = (inputData) => {

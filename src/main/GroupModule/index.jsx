@@ -4,7 +4,7 @@ import SearchComponenet from "./SearchComponent";
 import useGetGroup from "./hooks/useGetGroup";
 import useGetPermission from "./hooks/useGetPermission";
 import Table from "./Table";
-import styles from "./styles.module.css";
+import styles from "./styles.module.scss";
 import { MenuItem, Pagination, Select } from "@mui/material";
 import TableHeader from "./Table/TableHeader";
 import NoDataFound from "../../sharedComponents/NoDataCard";

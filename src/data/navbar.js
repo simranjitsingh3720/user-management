@@ -98,6 +98,12 @@ export const SideNavData = [
     navigateRoute: "revalidation-list",
   },
   {
+    label: "Partner NEFT Flag",
+    icon: GridViewIcon,
+    navigateRoute: "partner-neft",
+  },
+
+  {
     label: "Producer Management",
     icon: ManageAccountsIcon,
   },
