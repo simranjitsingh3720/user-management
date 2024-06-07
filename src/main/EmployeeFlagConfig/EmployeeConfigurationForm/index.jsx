@@ -44,8 +44,6 @@ function EmployeeConfigurationForm() {
   const { data: EmployeeProducerData, fetchData: fetchDataByProducer } =
     useGetEmployeeByProducer();
 
-  console.log("data", EmployeeProducerData);
-
   useEffect(() => {
     if (EmployeeProducerData && EmployeeProducerData?.data) {
       setDataList(
@@ -108,7 +106,6 @@ function EmployeeConfigurationForm() {
 
   const onSubmit = (data) => {
     if (EmployeeProducerData && EmployeeProducerData?.data) {
-      console.log("update");
       const field = dataList.map((item) => ({
         productId: item.productId,
         isEmployee: item.isEmployee,
@@ -122,7 +119,6 @@ function EmployeeConfigurationForm() {
       };
       UpdateDataFun(payload);
     } else {
-      console.log("data", data);
       const field = dataList.map((item) => ({
         productId: item.productId,
         isEmployee: item.isEmployee,

@@ -1,13 +1,10 @@
 import { FormControlLabel, Radio, RadioGroup } from "@mui/material";
 import React, { useState } from "react";
-import styles from "./styles.module.scss";
 import Channel from "./Channel";
 import ProducerCode from "./ProducerCode";
 
 function ProposalBitlyLinkConfig() {
   const [value, setValue] = useState("byproducerCode");
-
-  console.log("value", value);
 
   const handleChange = (event) => {
     setValue(event.target.value);

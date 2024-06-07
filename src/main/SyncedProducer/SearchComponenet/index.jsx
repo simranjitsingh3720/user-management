@@ -41,7 +41,6 @@ function SearchComponenet({
 
   const onSubmit = (data) => {
     fetchData(data, null);
-    console.log("data", data);
   };
 
   const handleChange = (event) => {

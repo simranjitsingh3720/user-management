@@ -185,10 +185,6 @@ function CreateGroupForm() {
     setFilteredPermission(newPermissions);
   };
 
-  console.log("query", query);
-
-  console.log("checkedPermission", checkedPermission);
-
   useEffect(() => {
     if (query === "") {
       setFilteredPermission(checkedPermission);

@@ -9,7 +9,7 @@ function useGetPaymentConfig(pageChange, rowsPage, query, searched) {
     sortOrder: "asc",
   });
 
-  const fetchData = async () => {
+  const fetchData = async (searched, resultProductString) => {
     try {
       setLoading(true);
       let url = `/api/product-wise-payment-method?pageNo=${
@@ -17,9 +17,11 @@ function useGetPaymentConfig(pageChange, rowsPage, query, searched) {
       }&sortKey=${sort.sortKey}&sortOrder=${
         sort.sortOrder
       }&pageSize=${rowsPage}`;
-
-      if (query && searched) {
-        url += `&searchKey=${searched}&searchString=${query}`;
+      if (searched === "product" && resultProductString) {
+        url += `&edge=hasProducer&ids=${resultProductString}`;
+      }
+      if (searched === "lob" && resultProductString) {
+        url += `&edge=hasLob&ids=${resultProductString}`;
       }
       const response = await axiosInstance.get(url);
       setData(response.data);

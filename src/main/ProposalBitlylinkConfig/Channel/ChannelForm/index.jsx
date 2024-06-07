@@ -19,9 +19,7 @@ function ChannelForm() {
   const { handleSubmit, control, formState } = useForm();
   const { errors } = formState;
 
-  const onSubmit = (data) => {
-    console.log("data", data);
-  };
+  const onSubmit = (data) => {};
 
   return (
     <div>

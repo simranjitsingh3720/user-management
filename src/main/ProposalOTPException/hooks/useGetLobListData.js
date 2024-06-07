@@ -19,7 +19,7 @@ function useGetLobListData() {
     }
   };
 
-  return { producerList: data, fetchData, loading };
+  return { data, fetchData, loading };
 }
 
 export default useGetLobListData;

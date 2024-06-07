@@ -10,7 +10,6 @@ function useGetEODBypass(pageChange, rowsPage, query, searched) {
   });
 
   const fetchData = async (data = null, resultProducersId = null) => {
-    console.log("resultProducersId", resultProducersId);
     try {
       setLoading(true);
       let url = `/api/producer-eod-bypass?pageNo=${pageChange - 1}&sortKey=${

@@ -27,8 +27,6 @@ function UserManagement() {
 
   const { data, loading, fetchData, setLoading, setSort, sort } = useGetUser();
 
-  console.log("data", data);
-
   const selectRowsData = [5, 10, 15, 20];
 
   useEffect(() => {

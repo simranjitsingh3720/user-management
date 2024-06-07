@@ -49,8 +49,6 @@ function EmployeeFlagConfig() {
     setRowsPage(event.target.value);
   };
 
-  console.log("data", data);
-
   return (
     <div>
       <EmployeeConfigurationForm />

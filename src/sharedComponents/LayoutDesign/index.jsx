@@ -31,15 +31,10 @@ function ResponsiveDrawer({ showSidebarAndHeader, children }) {
   const location = useLocation();
   const path = location.pathname; // Get the pathname from the location
 
-  console.log("path", path);
-
   // Split the pathname by '/' and get the last part
   const parts = path.split("/");
 
-  console.log("parts", parts);
   const defaultRoute = parts[1];
-
-  console.log("defaultRoute", defaultRoute);
 
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);

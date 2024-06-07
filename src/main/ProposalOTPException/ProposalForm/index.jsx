@@ -44,8 +44,6 @@ function ProposalForm() {
   const { data: proposalDataByID, fetchData: fetchDataProposalById } =
     useGetProposalOTPById();
 
-  console.log("proposalDataByID", proposalDataByID);
-
   useEffect(() => {
     if (id) fetchDataProposalById(id);
   }, [id]);
@@ -82,19 +80,15 @@ function ProposalForm() {
   const { producerList, fetchData: fetchProducerListData } =
     useGetProducerData();
 
-  const { lobList, fetchData: fetchLobData } = useGetLobListData();
-
-  console.log("producerList", producerList);
+  const { data: lobList, fetchData: fetchLobData } = useGetLobListData();
 
   const { userData } = useGetUserData();
 
   const { postData, loading: proposalOTPLoading } = useCreateProposalOTP();
 
-  const { UpdateDataFun, updateLoading } = useUpdateProposal();
+  const { UpdateDataFun } = useUpdateProposal();
 
   const onSubmit = (data) => {
-    console.log("data", data);
-
     if (id) {
       let payload = {};
 

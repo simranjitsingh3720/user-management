@@ -58,7 +58,6 @@ function ProductPaymentConfigForm() {
         id: id,
         properties: {
           status: true,
-          lobId: data?.lob?.id,
           productId: data?.product?.id,
           paymentTypeIds: data?.payment.map((item) => item.id),
         },
@@ -125,7 +124,6 @@ function ProductPaymentConfigForm() {
                       />
                     )}
                     onChange={(event, newValue) => {
-                      console.log("newValue", newValue);
                       fetchData(newValue?.id);
                       field.onChange(newValue);
                     }}

@@ -1,16 +1,44 @@
-import { Button, MenuItem, Select, TextField, Typography } from "@mui/material";
+import {
+  Autocomplete,
+  Button,
+  MenuItem,
+  Select,
+  TextField,
+  Typography,
+} from "@mui/material";
 import React from "react";
 import styles from "./styles.module.scss";
 import { ProductPayment } from "../constants";
 import { useNavigate } from "react-router-dom";
+import useGetAllProduct from "../hooks/useGetAllProduct";
+import useGetLobListData from "../../ProductModule/hooks/useGetLobListData";
 
-function SearchComponenet({ setPageChange, setQuery, searched, setSearched }) {
+const fetchIdsAndConvert = (inputData) => {
+  const ids = inputData.map((permission) => permission.id);
+  return ids.join();
+};
+
+function SearchComponenet({
+  fetchData,
+  searched,
+  setSearched,
+  productValue,
+  setProductValue,
+  lobValue,
+  setLobValue,
+}) {
   const handleChange = (event) => {
     setSearched(event.target.value);
   };
 
   const handleGo = () => {
-    console.log("GO");
+    if (searched === "product") {
+      const resultProductString = fetchIdsAndConvert(productValue);
+      fetchData(searched, resultProductString);
+    } else {
+      const resultLobString = fetchIdsAndConvert(lobValue);
+      fetchData(searched, resultLobString);
+    }
   };
 
   const navigate = useNavigate();
@@ -19,9 +47,13 @@ function SearchComponenet({ setPageChange, setQuery, searched, setSearched }) {
     navigate("/product-payment-config/form");
   };
 
+  const { data } = useGetAllProduct();
+
+  const { data: allLobData } = useGetLobListData();
+
   return (
     <div className={styles.flexSearchContainer}>
-      <div>
+      <div className={styles.selectContainer}>
         <Select
           labelId="search-select"
           id="search-select"
@@ -42,18 +74,52 @@ function SearchComponenet({ setPageChange, setQuery, searched, setSearched }) {
             </MenuItem>
           ))}
         </Select>
-
-        <TextField
-          id="search"
-          variant="outlined"
-          placeholder="Search"
-          size="small"
-          className={styles.textFieldSearch}
-          onChange={(e) => {
-            setQuery(e.target.value);
-            setPageChange(1);
-          }}
-        />
+        {searched === "product" && (
+          <Autocomplete
+            multiple
+            id="groupMultiSelect"
+            options={data?.data || []}
+            getOptionLabel={(option) => option?.product?.toUpperCase()}
+            className={styles.customizeGroupSelect}
+            limitTags={2}
+            disableCloseOnSelect
+            size="small"
+            renderInput={(params) => (
+              <TextField {...params} placeholder="Select" />
+            )}
+            onChange={(event, newValue) => {
+              setProductValue(newValue);
+            }}
+            ListboxProps={{
+              style: {
+                maxHeight: "200px",
+              },
+            }}
+          />
+        )}
+        {searched === "lob" && (
+          <Autocomplete
+            multiple
+            id="groupMultiSelect"
+            options={allLobData.data || []}
+            getOptionLabel={(option) => option?.lob?.toUpperCase()}
+            className={styles.customizeGroupSelect}
+            limitTags={2}
+            disableCloseOnSelect
+            size="small"
+            renderInput={(params) => (
+              <TextField {...params} placeholder="Select" />
+            )}
+            onChange={(event, newValue) => {
+              setLobValue(newValue);
+            }}
+            ListboxProps={{
+              style: {
+                maxHeight: "200px",
+              },
+            }}
+          />
+        )}
 
         <Button variant="outlined" onClick={handleGo}>
           Go

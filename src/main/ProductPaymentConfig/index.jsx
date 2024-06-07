@@ -27,6 +27,8 @@ function getSelectedRowData(count) {
 function ProductPaymentConfig() {
   const [query, setQuery] = useState("");
   const [searched, setSearched] = useState("product");
+  const [productValue, setProductValue] = useState([]);
+  const [lobValue, setLobValue] = useState([]);
 
   const [rowsPage, setRowsPage] = useState(10);
 
@@ -53,11 +55,15 @@ function ProductPaymentConfig() {
   return (
     <div>
       <SearchComponenet
-        // fetchData={fetchData}
+        fetchData={fetchData}
         setPageChange={setPageChange}
         setQuery={setQuery}
         searched={searched}
         setSearched={setSearched}
+        productValue={productValue}
+        setProductValue={setProductValue}
+        lobValue={lobValue}
+        setLobValue={setLobValue}
       />
       <div className={styles.tableContainerStyle}>
         <div className={styles.tableStyled}>

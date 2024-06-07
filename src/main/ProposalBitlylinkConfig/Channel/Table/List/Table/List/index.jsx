@@ -7,7 +7,7 @@ function List({ item }) {
       <div className={styles.nameCell}>{item.product}</div>
       <div className={styles.nameCell}>{item.product_code}</div>
       <div className={styles.privilegeStatusCell}>
-        {item.isEmployee ? "yes" : "No"}
+        {item.isMandatory ? "yes" : "No"}
       </div>
     </div>
   );

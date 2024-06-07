@@ -49,8 +49,6 @@ function ProducerEODBypass() {
     setRowsPage(event.target.value);
   };
 
-  console.log("producers", producers);
-
   return (
     <div>
       <SearchComponenet

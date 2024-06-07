@@ -45,7 +45,6 @@ function ProducerCode() {
   }, [producerList]);
 
   const onSubmit = (data) => {
-    console.log("dataList", dataList);
     const field = (dataList || []).map((item) => ({
       productId: item.productId,
       isMandatory: item.isMandatory,
@@ -56,10 +55,7 @@ function ProducerCode() {
       fields: field,
     };
     postData(payload);
-    console.log("data", data);
   };
-
-  console.log("dataList", dataList);
 
   const handleCancel = () => {
     setDataList([]);
