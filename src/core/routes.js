@@ -267,26 +267,26 @@ const AppRoutes = () => {
           }
         />
         <Route
-        path="/revalidation-list"
-        element={
-          <ResponsiveDrawer showSidebarAndHeader={true}>
-            <RevalidationList />
-          </ResponsiveDrawer>
-        }
-      />
-      <Route
-        path="/partner-neft"
-        element={
-          <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PartnerNeft />
-          </ResponsiveDrawer>
-        }
-      />
-        <Route
           path="/health-config/form/:id?"
           element={
             <ResponsiveDrawer showSidebarAndHeader={true}>
               <HealthConfigurationForm />
+            </ResponsiveDrawer>
+          }
+        />
+        <Route
+          path="/revalidation-list"
+          element={
+            <ResponsiveDrawer showSidebarAndHeader={true}>
+              <RevalidationList />
+            </ResponsiveDrawer>
+          }
+        />
+        <Route
+          path="/partner-neft"
+          element={
+            <ResponsiveDrawer showSidebarAndHeader={true}>
+              <PartnerNeft />
             </ResponsiveDrawer>
           }
         />
