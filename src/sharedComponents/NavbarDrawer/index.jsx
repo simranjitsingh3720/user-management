@@ -131,7 +131,7 @@ function NavbarDrawer({
               <Collapse in={open} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
                   {obj.child.map((childObj, index) => (
-                    <ListItem key={childObj.label} disablePadding>
+                    <ListItem key={index} disablePadding>
                       <ListItemButton
                         selected={
                           selectedParentIndex ===
