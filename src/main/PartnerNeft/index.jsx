@@ -1,10 +1,10 @@
 import React from "react";
+import PartnerNeftForm from "./PartnerNeftForm";
 
 function PartnerNeft() {
- 
   return (
     <div>
-      Partner Neft
+      <PartnerNeftForm />
     </div>
   );
 }
