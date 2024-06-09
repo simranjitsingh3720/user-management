@@ -2,6 +2,7 @@ import { Card, CardContent, Grid, Button, Box } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./styles.module.scss";
+import PartnerTable from "./PartnerTable";
 
 function PartnerNeft() {
   const navigate = useNavigate();
@@ -25,6 +26,9 @@ function PartnerNeft() {
               >
                 Create New NEFT Flag
               </Button>
+            </Grid>
+            <Grid item xs={12}>
+              <PartnerTable />
             </Grid>
           </Grid>
         </CardContent>
