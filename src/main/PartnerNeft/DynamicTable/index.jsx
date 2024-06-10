@@ -16,6 +16,8 @@ import {
   DialogContentText,
   DialogTitle,
   Button,
+  TextField,
+  Typography,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import ListLoader from "../../../sharedComponents/ListLoader";
@@ -27,10 +29,24 @@ const DynamicTable = ({ columns, data, loading, navigateToNeftForm }) => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [currentRowId, setCurrentRowId] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredData, setFilteredData] = useState(data);
 
   useEffect(() => {
     setCurrentRowId(null);
   }, [data]);
+
+  useEffect(() => {
+    const filtered = data.filter((row) =>
+      columns.some((column) =>
+        row[column.field]
+          .toString()
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase())
+      )
+    );
+    setFilteredData(filtered);
+  }, [searchQuery, data, columns]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -43,7 +59,7 @@ const DynamicTable = ({ columns, data, loading, navigateToNeftForm }) => {
 
   const handleEditClick = (rowId) => {
     console.log(`Edit clicked for row with id: ${rowId}`);
-    navigateToNeftForm(rowId)
+    navigateToNeftForm(rowId);
     setCurrentRowId(rowId);
     setDialogOpen(true);
   };
@@ -60,7 +76,8 @@ const DynamicTable = ({ columns, data, loading, navigateToNeftForm }) => {
   };
 
   const emptyRows =
-    rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
+    rowsPerPage -
+    Math.min(rowsPerPage, filteredData.length - page * rowsPerPage);
 
   return (
     <div style={{ position: "relative" }}>
@@ -72,14 +89,24 @@ const DynamicTable = ({ columns, data, loading, navigateToNeftForm }) => {
               <TableHead>
                 <TableRow>
                   <TableCell colSpan={columns.length + 1}>
-                    <Button
-                      type="submit"
-                      variant="contained"
-                      className={styles.primaryBtn}
-                      onClick={navigateToNeftForm}
-                    >
-                      Create New NEFT Flag
-                    </Button>
+                    <div className="flex justify-between w-100">
+                      <TextField
+                        variant="outlined"
+                        size="small"
+                        placeholder="Search..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                      />
+
+                      <Button
+                        type="submit"
+                        variant="contained"
+                        className={styles.primaryBtn}
+                        onClick={navigateToNeftForm}
+                      >
+                        Create New NEFT Flag
+                      </Button>
+                    </div>
                   </TableCell>
                 </TableRow>
                 <TableRow>
@@ -92,30 +119,41 @@ const DynamicTable = ({ columns, data, loading, navigateToNeftForm }) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {(rowsPerPage > 0
-                  ? data.slice(
-                      page * rowsPerPage,
-                      page * rowsPerPage + rowsPerPage
-                    )
-                  : data
-                ).map((row) => (
-                  <TableRow key={row.id}>
-                    {columns.map((column) => (
-                      <TableCell key={column.field}>
-                        {row[column.field]}
-                      </TableCell>
-                    ))}
-                    <TableCell key={row.id + "action"}>
-                      <IconButton
-                        onClick={() => handleEditClick(row.id)}
-                        color="primary"
-                      >
-                        <EditIcon />
-                      </IconButton>
+                {filteredData.length === 0 ? (
+                  <TableRow>
+                    <TableCell
+                      colSpan={columns.length + 1}
+                      style={{ textAlign: "center" }}
+                    >
+                      <Typography variant="body1">No records found</Typography>
                     </TableCell>
                   </TableRow>
-                ))}
-                {emptyRows > 0 && (
+                ) : (
+                  (rowsPerPage > 0
+                    ? filteredData.slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage
+                      )
+                    : filteredData
+                  ).map((row) => (
+                    <TableRow key={row.id}>
+                      {columns.map((column) => (
+                        <TableCell key={column.field}>
+                          {row[column.field]}
+                        </TableCell>
+                      ))}
+                      <TableCell key={row.id + "action"}>
+                        <IconButton
+                          onClick={() => handleEditClick(row.id)}
+                          color="primary"
+                        >
+                          <EditIcon />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )}
+                {emptyRows > 0 && filteredData.length > 0 && (
                   <TableRow style={{ height: 53 * emptyRows }}>
                     <TableCell colSpan={columns.length + 1} />
                   </TableRow>
@@ -126,13 +164,9 @@ const DynamicTable = ({ columns, data, loading, navigateToNeftForm }) => {
                   <TablePagination
                     rowsPerPageOptions={[5, 10, 25]}
                     colSpan={columns.length + 1}
-                    count={data.length}
+                    count={filteredData.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
-                    SelectProps={{
-                      inputProps: { "aria-label": "rows per page" },
-                      native: true,
-                    }}
                     onPageChange={handleChangePage}
                     onRowsPerPageChange={handleChangeRowsPerPage}
                     ActionsComponent={TablePaginationActions}
