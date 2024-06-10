@@ -20,10 +20,10 @@ const PartnerTable = () => {
   const navigate = useNavigate();
 
   const createNeftForm = () => {
-      navigate("/partner-neft-form");
+      navigate("/partner-neft/form");
   };
   const udpateNeftForm = (id) => {
-    navigate("/partner-neft-form/"+id);
+    navigate("/partner-neft/form/"+id);
 };
 
   return <DynamicTable

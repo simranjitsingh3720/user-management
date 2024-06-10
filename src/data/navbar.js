@@ -102,7 +102,6 @@ export const SideNavData = [
     icon: GridViewIcon,
     navigateRoute: "partner-neft",
   },
-
   {
     label: "Producer Management",
     icon: ManageAccountsIcon,

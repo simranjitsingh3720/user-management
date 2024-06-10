@@ -292,7 +292,7 @@ const AppRoutes = () => {
           }
         />
         <Route
-          path="partner-neft-form/:id?"
+          path="partner-neft/form/:id?"
           element={
             <ResponsiveDrawer showSidebarAndHeader={true}>
               <PartnerNeftForm />
