@@ -1,6 +1,7 @@
 import React from "react";
 import DynamicTable from "../DynamicTable";
 import { useNavigate } from "react-router-dom";
+import COLUMNS from "./../constant";
 
 const PartnerTable = () => {
   const data = [
@@ -16,13 +17,7 @@ const PartnerTable = () => {
     { id: 10,lob: 10, product: "James Blue", producerCode: 38, producerName: "Producer Name", verificationMethod: "method"},
   ];
 
-  const columns = [
-    { headerName: "LOB", field: "lob" },
-    { headerName: "Product", field: "product" },
-    { headerName: "Producer Name", field: "producerName" },
-    { headerName: "Producer Code", field: "producerCode" },
-    { headerName: "Verification Method", field: "verificationMethod" }
-  ];
+  
 
   const navigate = useNavigate();
 
@@ -31,7 +26,7 @@ const PartnerTable = () => {
   };
 
   return <DynamicTable
-          columns={columns}
+          columns={COLUMNS}
           data={data}
           createNeftForm={createNeftForm}
         />
