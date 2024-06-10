@@ -2,6 +2,7 @@ import React, { Suspense, lazy } from "react";
 import { Route, Routes } from "react-router-dom";
 import ResponsiveDrawer from "../../components/LayoutDesign";
 import PartnerNeftForm from "../../features/PartnerNeft/PartnerNeftForm";
+import FullPageLoader from "../../components/FullPageLoader";
 
 // Lazy load components
 const UserManagement = lazy(() => import("../../features/UserManagement"));
@@ -62,7 +63,7 @@ const PartnerNeft = lazy(() => import("../../features/PartnerNeft"));
 
 const AppRoutes = () => {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<FullPageLoader />}>
       <Routes>
         <Route path="/" element={<SignInPage />} />
         <Route
