@@ -1,7 +1,8 @@
 import { useEffect, useState, useCallback } from "react";
 import axiosInstance from "../utils/axiosInstance";
 import { toast } from "react-toastify";
-import { API_END_POINTS } from "../features/RevalidationList/constants";
+
+import { API_END_POINTS } from "../utils/constants";
 
 function useGetUserData() {
   const [data, setData] = useState([]);
