@@ -5,6 +5,27 @@ import { IconButton, Tooltip } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import { useNavigate } from "react-router-dom";
 
+const convertFormat = (dateString) => {
+  const parts = dateString.split("/");
+  const reformattedStartDateString = `${parts[2]}-${parts[1]}-${parts[0]}`;
+  return reformattedStartDateString;
+};
+
+const calculateUnlockedDays = (startDateString, endDateString) => {
+  const newStartString = convertFormat(startDateString);
+  const newEndString = convertFormat(endDateString);
+
+  const startDate = new Date(newStartString);
+  const endDate = new Date(newEndString);
+
+  const differenceInTime = endDate.getTime() - startDate.getTime();
+
+  // Calculate the difference in days
+  const differenceInDays = differenceInTime / (1000 * 3600 * 24);
+
+  return differenceInDays;
+};
+
 function List({ item, fetchData: fetchGroupList }) {
   const navigate = useNavigate();
 
@@ -19,7 +40,9 @@ function List({ item, fetchData: fetchGroupList }) {
           {`${item?.producer?.firstName} ${item?.producer?.lastName} ` || "-"}
         </div>
 
-        <div className={styles.unlockedDays}>{"-"}</div>
+        <div className={styles.unlockedDays}>
+          {calculateUnlockedDays(item?.startDate, item?.endDate) || "-"}
+        </div>
         <div className={styles.startDate}> {item?.startDate || "-"}</div>
 
         <div className={styles.endDate}> {item?.endDate || "-"}</div>

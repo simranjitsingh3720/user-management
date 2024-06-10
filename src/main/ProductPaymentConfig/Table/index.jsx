@@ -3,6 +3,9 @@ import styles from "./styles.module.scss";
 import { IconButton, Tooltip } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import { useNavigate } from "react-router-dom";
+import capitalizeFirstLetter, {
+  capitalizeWords,
+} from "../../../globalization/globalizationFunction";
 
 function Table({ ListData, fetchData, sort, setSort, paymentData }) {
   const resultFun = (item) => {
@@ -48,7 +51,7 @@ function Table({ ListData, fetchData, sort, setSort, paymentData }) {
             <div className={styles.paymentObj}>
               {(paymentData?.data || []).map((paymentObj) => (
                 <div className={styles.subPayment}>
-                  <span>{paymentObj.name || ""}</span>
+                  <span>{capitalizeWords(paymentObj.name) || ""}</span>
                 </div>
               ))}
             </div>

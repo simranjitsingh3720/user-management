@@ -263,6 +263,8 @@ function ProposalForm() {
                       onChange={(event, newValue) => {
                         field.onChange(newValue);
                         fetchProducerListData(newValue.id);
+                        setValue("product", null);
+                        setValue("lob", null);
                       }}
                       ListboxProps={{
                         style: {
@@ -306,6 +308,7 @@ function ProposalForm() {
                       onChange={(event, newValue) => {
                         field.onChange(newValue);
                         fetchLobData(newValue.id);
+                        setValue("lob", null);
                       }}
                       ListboxProps={{
                         style: {
