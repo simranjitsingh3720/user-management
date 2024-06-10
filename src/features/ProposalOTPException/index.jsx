@@ -26,6 +26,7 @@ function getSelectedRowData(count) {
 function ProposalOTPException() {
   const [query, setQuery] = useState("");
   const [searched, setSearched] = useState("type");
+  const [date, setDate] = useState({ startDate: "", endDate: "" });
 
   const [rowsPage, setRowsPage] = useState(10);
 
@@ -35,8 +36,12 @@ function ProposalOTPException() {
     pageChange,
     rowsPage,
     query,
-    searched
+    searched,
+    date,
+    setDate
   );
+
+  console.log("date", date);
 
   const handlePaginationChange = (event, page) => {
     setPageChange(page);
@@ -54,6 +59,8 @@ function ProposalOTPException() {
         setQuery={setQuery}
         searched={searched}
         setSearched={setSearched}
+        date={date}
+        setDate={setDate}
       />
       <div className={styles.tableContainerStyle}>
         <div className={styles.tableStyled}>

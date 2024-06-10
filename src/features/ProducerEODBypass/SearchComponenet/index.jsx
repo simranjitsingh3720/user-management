@@ -15,9 +15,10 @@ import dayjs from "dayjs";
 import { Controller, useForm } from "react-hook-form";
 import { ProposalEODBypass } from "../constants";
 import useGetUserData from "../../BANCALogin/hooks/useGetUserData";
+import RestartAltIcon from "@mui/icons-material/RestartAlt";
 
 const fetchIdsAndConvert = (inputData) => {
-  const ids = inputData.map((producer) => producer.id);
+  const ids = (inputData || []).map((producer) => producer.id);
   return ids.join();
 };
 
@@ -29,6 +30,8 @@ function SearchComponenet({
   setSearched,
   producers,
   setProducers,
+  date,
+  setDate,
 }) {
   const navigate = useNavigate();
 
@@ -48,7 +51,10 @@ function SearchComponenet({
   const { errors } = formState;
 
   const onSubmit = (data) => {
-    fetchData(data, null);
+    setDate({
+      startDate: data.startDate,
+      endDate: data.endDate,
+    });
   };
 
   const handleChange = (event) => {
@@ -58,6 +64,12 @@ function SearchComponenet({
   const handleGo = () => {
     const resultProducersId = fetchIdsAndConvert(producers);
     fetchData(null, resultProducersId);
+  };
+
+  const handleResetButton = () => {
+    setDate({});
+    setValue("startDate", null);
+    setValue("endDate", null);
   };
   return (
     <div>
@@ -78,10 +90,13 @@ function SearchComponenet({
                       <DatePicker
                         className={styles.dateStyle}
                         minDate={dayjs()}
+                        value={
+                          field.value ? dayjs(field.value, "DD/MM/YYYY") : null
+                        }
                         slotProps={{ textField: { size: "small" } }}
                         onChange={(date) => {
                           const formattedDate =
-                            dayjs(date).format("DD-MM-YYYY");
+                            dayjs(date).format("DD/MM/YYYY");
                           setValue("startDate", formattedDate);
                         }}
                       />
@@ -105,9 +120,12 @@ function SearchComponenet({
                       <DatePicker
                         className={styles.dateStyle}
                         minDate={dayjs()}
+                        value={
+                          field.value ? dayjs(field.value, "DD/MM/YYYY") : null
+                        }
                         onChange={(date) => {
                           const formattedDate =
-                            dayjs(date).format("DD-MM-YYYY");
+                            dayjs(date).format("DD/MM/YYYY");
                           setValue("endDate", formattedDate);
                         }}
                         slotProps={{ textField: { size: "small" } }}
@@ -127,6 +145,16 @@ function SearchComponenet({
               >
                 Go
               </Button>
+              <div>
+                <Button
+                  variant="outlined"
+                  startIcon={<RestartAltIcon />}
+                  sx={{ textTransform: "none" }}
+                  onClick={() => handleResetButton()}
+                >
+                  Reset
+                </Button>
+              </div>
             </div>
             <div>
               <Button

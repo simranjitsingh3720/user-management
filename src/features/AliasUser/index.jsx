@@ -26,6 +26,7 @@ function getSelectedRowData(count) {
 function AliasUser() {
   const [query, setQuery] = useState("");
   const [searched, setSearched] = useState("producers");
+  const [date, setDate] = useState({ startDate: "", endDate: "" });
 
   const [producers, setProducers] = useState("");
 
@@ -37,7 +38,8 @@ function AliasUser() {
     pageChange,
     rowsPage,
     query,
-    searched
+    searched,
+    date
   );
 
   const handlePaginationChange = (event, page) => {
@@ -59,6 +61,8 @@ function AliasUser() {
         setSearched={setSearched}
         producers={producers}
         setProducers={setProducers}
+        date={date}
+        setDate={setDate}
       />
 
       <div className={styles.tableContainerStyle}>
