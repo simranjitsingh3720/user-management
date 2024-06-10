@@ -24,7 +24,7 @@ import ListLoader from "../../../sharedComponents/ListLoader";
 import TablePaginationActions from "./TablePaginationActions";
 import styles from "./styles.module.scss";
 
-const DynamicTable = ({ columns, data, loading, navigateToNeftForm }) => {
+const DynamicTable = ({ columns, data, loading, createNeftForm, udpateNeftForm }) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -59,7 +59,7 @@ const DynamicTable = ({ columns, data, loading, navigateToNeftForm }) => {
 
   const handleEditClick = (rowId) => {
     console.log(`Edit clicked for row with id: ${rowId}`);
-    navigateToNeftForm(rowId);
+    udpateNeftForm(rowId);
     setCurrentRowId(rowId);
     setDialogOpen(true);
   };
@@ -102,7 +102,7 @@ const DynamicTable = ({ columns, data, loading, navigateToNeftForm }) => {
                         type="submit"
                         variant="contained"
                         className={styles.primaryBtn}
-                        onClick={navigateToNeftForm}
+                        onClick={createNeftForm}
                       >
                         Create New NEFT Flag
                       </Button>

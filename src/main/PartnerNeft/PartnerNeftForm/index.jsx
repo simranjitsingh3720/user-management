@@ -14,7 +14,7 @@ import {
 import styles from "./styles.module.scss";
 import LeftArrow from "../../../assets/LeftArrow";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const options = [
   { label: "Option 1", value: "option1" },
@@ -24,6 +24,8 @@ const options = [
 
 const PartnerNeftForm = () => {
   const navigate = useNavigate();
+  const params = useParams();
+  console.log(params)
   const {
     handleSubmit,
     control,
