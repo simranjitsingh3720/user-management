@@ -1,9 +1,19 @@
 import React from "react";
+import moment from "moment";
 import styles from "./styles.module.scss";
 import { IconButton, Tooltip } from "@mui/material";
 
 import EditIcon from "@mui/icons-material/Edit";
 import { useNavigate } from "react-router-dom";
+
+const calculateUnlockedDays = (startDateString, endDateString) => {
+  const startMoment = moment(startDateString, "DD/MM/YYYY");
+  const endMoment = moment(endDateString, "DD/MM/YYYY");
+
+  const differenceInDays = endMoment.diff(startMoment, "days");
+
+  return differenceInDays;
+};
 
 function List({ item, fetchData: fetchGroupList }) {
   const navigate = useNavigate();
@@ -19,7 +29,9 @@ function List({ item, fetchData: fetchGroupList }) {
           {`${item?.producer?.firstName} ${item?.producer?.lastName} ` || "-"}
         </div>
 
-        <div className={styles.unlockedDays}>{"-"}</div>
+        <div className={styles.unlockedDays}>
+          {calculateUnlockedDays(item?.startDate, item?.endDate) || "-"}
+        </div>
         <div className={styles.startDate}> {item?.startDate || "-"}</div>
 
         <div className={styles.endDate}> {item?.endDate || "-"}</div>
@@ -39,7 +51,7 @@ function List({ item, fetchData: fetchGroupList }) {
         <div className={styles.createdAt}> {item?.updatedAt || "-"}</div>
 
         <div className={styles.productStatus}>
-          <Tooltip title="Edit Role">
+          <Tooltip title="Edit EOD Lock Bypass">
             <IconButton
               aria-label="back"
               type="button"

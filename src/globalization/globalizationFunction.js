@@ -3,3 +3,13 @@ function capitalizeFirstLetter(str) {
 }
 
 export default capitalizeFirstLetter;
+
+export function capitalizeWords(str) {
+  let words = str.split(" ");
+
+  let capitalizedWords = words.map(
+    (word) => word.charAt(0).toUpperCase() + word.slice(1)
+  );
+
+  return capitalizedWords.join(" ");
+}

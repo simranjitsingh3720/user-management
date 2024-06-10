@@ -11,6 +11,7 @@ import useGetUserData from "../../BANCALogin/hooks/useGetUserData";
 import useCreateEODBypass from "../hooks/useCreateEODBypass";
 import useGetDataById from "../hooks/useGetDataById";
 import useUpdateEODBypass from "../hooks/useUpdateEODBypass";
+import { alphaNumericRegex } from "../../../globalization/globalConstants";
 
 function ProducerEODFrom() {
   const { id } = useParams();
@@ -19,10 +20,10 @@ function ProducerEODFrom() {
 
   const { handleSubmit, control, setValue, formState, getValues } = useForm({
     defaultValues: {
-      producerCode: {},
+      producerCode: null,
       startDate: null,
       endDate: null,
-      reason: "",
+      reason: null,
     },
   });
 
@@ -39,7 +40,6 @@ function ProducerEODFrom() {
       const payload = {
         id: id,
         properties: {
-          producerId: data.producerCode.id,
           startDate: data.startDate,
           endDate: data.endDate,
           reason: data.reason,
@@ -66,8 +66,14 @@ function ProducerEODFrom() {
     if (data && data?.data) {
       setValue("producerCode", data?.data?.producer || {});
       setValue("reason", data?.data?.reason);
-      setValue("startDate", dayjs(data?.data?.startDate, "DD-MM-YYYY"));
-      setValue("endDate", dayjs(data?.data?.endDate, "DD-MM-YYYY"));
+      setValue(
+        "startDate",
+        dayjs(data?.data?.startDate, "DD/MM/YYYY").format("DD/MM/YYYY")
+      );
+      setValue(
+        "endDate",
+        dayjs(data?.data?.endDate, "DD/MM/YYYY").format("DD/MM/YYYY")
+      );
     }
   }, [data]);
 
@@ -108,13 +114,15 @@ function ProducerEODFrom() {
                 render={({ field }) => (
                   <Autocomplete
                     id="producerCode"
-                    value={getValues("producerCode")}
+                    // value={getValues("producerCode")}
+                    value={field.value}
                     options={userData || []}
                     getOptionLabel={(option) => {
                       return `${option?.firstName?.toUpperCase() || ""} ${
                         option?.lastName?.toUpperCase() || ""
                       }`;
                     }}
+                    disabled={id}
                     className={styles.customizeSelect}
                     size="small"
                     isOptionEqualToValue={(option, value) =>
@@ -222,13 +230,27 @@ function ProducerEODFrom() {
                   name="reason"
                   control={control}
                   defaultValue=""
-                  rules={{ required: "Reason is required" }}
+                  rules={{
+                    required: "Reason is required",
+                    minLength: {
+                      value: 2,
+                      message: "Reason must be at least 2 characters",
+                    },
+                    maxLength: {
+                      value: 1000,
+                      message: "Reason cannot exceed 1000 characters",
+                    },
+                    pattern: {
+                      value: alphaNumericRegex,
+                      message: "Reason must be alphanumeric",
+                    },
+                  }}
                   render={({ field }) => (
                     <TextField {...field} variant="outlined" fullWidth />
                   )}
                 />
                 <div className={styles.styledError}>
-                  {errors.endDate && <span>This field is required</span>}
+                  {errors.reason && <span>{errors.reason.message}</span>}
                 </div>
               </div>
             </div>
