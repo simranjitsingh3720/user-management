@@ -1,27 +1,16 @@
 import React from "react";
+import moment from "moment";
 import styles from "./styles.module.scss";
 import { IconButton, Tooltip } from "@mui/material";
 
 import EditIcon from "@mui/icons-material/Edit";
 import { useNavigate } from "react-router-dom";
 
-const convertFormat = (dateString) => {
-  const parts = dateString.split("/");
-  const reformattedStartDateString = `${parts[2]}-${parts[1]}-${parts[0]}`;
-  return reformattedStartDateString;
-};
-
 const calculateUnlockedDays = (startDateString, endDateString) => {
-  const newStartString = convertFormat(startDateString);
-  const newEndString = convertFormat(endDateString);
+  const startMoment = moment(startDateString, "DD/MM/YYYY");
+  const endMoment = moment(endDateString, "DD/MM/YYYY");
 
-  const startDate = new Date(newStartString);
-  const endDate = new Date(newEndString);
-
-  const differenceInTime = endDate.getTime() - startDate.getTime();
-
-  // Calculate the difference in days
-  const differenceInDays = differenceInTime / (1000 * 3600 * 24);
+  const differenceInDays = endMoment.diff(startMoment, "days");
 
   return differenceInDays;
 };

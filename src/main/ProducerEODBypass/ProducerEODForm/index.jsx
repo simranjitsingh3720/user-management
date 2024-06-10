@@ -11,6 +11,7 @@ import useGetUserData from "../../BANCALogin/hooks/useGetUserData";
 import useCreateEODBypass from "../hooks/useCreateEODBypass";
 import useGetDataById from "../hooks/useGetDataById";
 import useUpdateEODBypass from "../hooks/useUpdateEODBypass";
+import { alphaNumericRegex } from "../../../globalization/globalConstants";
 
 function ProducerEODFrom() {
   const { id } = useParams();
@@ -39,7 +40,6 @@ function ProducerEODFrom() {
       const payload = {
         id: id,
         properties: {
-          producerId: data.producerCode.id,
           startDate: data.startDate,
           endDate: data.endDate,
           reason: data.reason,
@@ -78,8 +78,6 @@ function ProducerEODFrom() {
   }, [data]);
 
   const navigate = useNavigate();
-
-  console.log("errors", errors);
 
   return (
     <div>
@@ -124,6 +122,7 @@ function ProducerEODFrom() {
                         option?.lastName?.toUpperCase() || ""
                       }`;
                     }}
+                    disabled={id}
                     className={styles.customizeSelect}
                     size="small"
                     isOptionEqualToValue={(option, value) =>
@@ -242,7 +241,7 @@ function ProducerEODFrom() {
                       message: "Reason cannot exceed 1000 characters",
                     },
                     pattern: {
-                      value: /^[a-zA-Z0-9\s]*$/,
+                      value: alphaNumericRegex,
                       message: "Reason must be alphanumeric",
                     },
                   }}
