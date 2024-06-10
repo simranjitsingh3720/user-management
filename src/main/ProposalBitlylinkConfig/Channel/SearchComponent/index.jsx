@@ -83,7 +83,7 @@ function SearchComponent({ setQuery, setPageChange, searched, setSearched }) {
             onClick={handleCreateNewForm}
             sx={{ textTransform: "none" }}
           >
-            <Typography noWrap className={styles.buttonTextStyle}>
+            <Typography nowrap="true" className={styles.buttonTextStyle}>
               Create Config
             </Typography>
           </Button>
