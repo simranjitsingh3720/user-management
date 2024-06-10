@@ -15,16 +15,22 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  Button,
   TextField,
   Typography,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import ListLoader from "../../../components/ListLoader";
 import TablePaginationActions from "./TablePaginationActions";
-import styles from "./styles.module.scss";
 
-const DynamicTable = ({ columns, data, loading, createNeftForm, udpateNeftForm }) => {
+import Button from "./../../../components/Button";
+
+const DynamicTable = ({
+  columns,
+  data,
+  loading,
+  createNeftForm,
+  udpateNeftForm,
+}) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -59,15 +65,15 @@ const DynamicTable = ({ columns, data, loading, createNeftForm, udpateNeftForm }
 
   const handleEditClick = (rowId) => {
     console.log(`Edit clicked for row with id: ${rowId}`);
-    udpateNeftForm(rowId);
     setCurrentRowId(rowId);
     setDialogOpen(true);
-  };
-
-  const handleConfirmEdit = () => {
-    console.log(`Confirmed edit for row with id: ${currentRowId}`);
-    setDialogOpen(false);
-    setCurrentRowId(null);
+    };
+    
+    const handleConfirmEdit = () => {
+      console.log(`Confirmed edit for row with id: ${currentRowId}`);
+      udpateNeftForm(currentRowId);
+      setDialogOpen(false);
+      setCurrentRowId(null);
   };
 
   const handleCancelEdit = () => {
@@ -100,8 +106,6 @@ const DynamicTable = ({ columns, data, loading, createNeftForm, udpateNeftForm }
 
                       <Button
                         type="submit"
-                        variant="contained"
-                        className={styles.primaryBtn}
                         onClick={createNeftForm}
                       >
                         Create New NEFT Flag
@@ -186,10 +190,10 @@ const DynamicTable = ({ columns, data, loading, createNeftForm, udpateNeftForm }
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCancelEdit} color="primary">
+          <Button onClick={handleCancelEdit} variant="secondary">
             Cancel
           </Button>
-          <Button onClick={handleConfirmEdit} color="primary">
+          <Button onClick={handleConfirmEdit} >
             Confirm
           </Button>
         </DialogActions>
