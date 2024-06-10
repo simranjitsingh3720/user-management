@@ -23,7 +23,7 @@ const PartnerTable = () => {
       navigate("/partner-neft-form");
   };
   const udpateNeftForm = (id) => {
-    navigate("/partner-neft-form"+id);
+    navigate("/partner-neft-form/"+id);
 };
 
   return <DynamicTable
