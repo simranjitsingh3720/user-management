@@ -1,64 +1,64 @@
 import React, { Suspense, lazy } from "react";
 import { Route, Routes } from "react-router-dom";
-import ResponsiveDrawer from "../../sharedComponents/LayoutDesign";
-import PartnerNeftForm from "../../main/PartnerNeft/PartnerNeftForm";
+import ResponsiveDrawer from "../../components/LayoutDesign";
+import PartnerNeftForm from "../../features/PartnerNeft/PartnerNeftForm";
 
 // Lazy load components
-const UserManagement = lazy(() => import("../../main/UserManagement"));
-const SignInPage = lazy(() => import("../../main/Signin/SigninPage"));
+const UserManagement = lazy(() => import("../../features/UserManagement"));
+const SignInPage = lazy(() => import("../../features/Signin/SigninPage"));
 const CreateUserManagementForm = lazy(() =>
-  import("../../main/UserManagement/Components/CreateForm")
+  import("../../features/UserManagement/Components/CreateForm")
 );
-const PermissionModule = lazy(() => import("../../main/PermissionModule"));
-const RoleModule = lazy(() => import("../../main/RoleModule"));
-const GroupModule = lazy(() => import("../../main/GroupModule"));
+const PermissionModule = lazy(() => import("../../features/PermissionModule"));
+const RoleModule = lazy(() => import("../../features/RoleModule"));
+const GroupModule = lazy(() => import("../../features/GroupModule"));
 const CreateGroupForm = lazy(() =>
-  import("../../main/GroupModule/CreateGroupForm copy")
+  import("../../features/GroupModule/CreateGroupForm copy")
 );
-const CreateRoleForm = lazy(() => import("../../main/RoleModule/CreateRoleForm"));
-const Form = lazy(() => import("../../main/PermissionModule/Form"));
-const LOBModule = lazy(() => import("../../main/LOBModule"));
-const LobForm = lazy(() => import("../../main/LOBModule/LobForm"));
-const Product = lazy(() => import("../../main/ProductModule"));
-const ProductForm = lazy(() => import("../../main/ProductModule/ProductForm"));
+const CreateRoleForm = lazy(() => import("../../features/RoleModule/CreateRoleForm"));
+const Form = lazy(() => import("../../features/PermissionModule/Form"));
+const LOBModule = lazy(() => import("../../features/LOBModule"));
+const LobForm = lazy(() => import("../../features/LOBModule/LobForm"));
+const Product = lazy(() => import("../../features/ProductModule"));
+const ProductForm = lazy(() => import("../../features/ProductModule/ProductForm"));
 const ProposalBitlyLinkConfig = lazy(() =>
-  import("../../main/ProposalBitlylinkConfig")
+  import("../../features/ProposalBitlylinkConfig")
 );
 const ChannelForm = lazy(() =>
-  import("../../main/ProposalBitlylinkConfig/Channel/ChannelForm")
+  import("../../features/ProposalBitlylinkConfig/Channel/ChannelForm")
 );
-const OTPException = lazy(() => import("../../main/OTPException"));
-const ProposalOTPException = lazy(() => import("../../main/ProposalOTPException"));
-const BANCALogin = lazy(() => import("../../main/BANCALogin"));
+const OTPException = lazy(() => import("../../features/OTPException"));
+const ProposalOTPException = lazy(() => import("../../features/ProposalOTPException"));
+const BANCALogin = lazy(() => import("../../features/BANCALogin"));
 const ProposalForm = lazy(() =>
-  import("../../main/ProposalOTPException/ProposalForm")
+  import("../../features/ProposalOTPException/ProposalForm")
 );
-const ProducerEODBypass = lazy(() => import("../../main/ProducerEODBypass"));
+const ProducerEODBypass = lazy(() => import("../../features/ProducerEODBypass"));
 const ProducerEODFrom = lazy(() =>
-  import("../../main/ProducerEODBypass/ProducerEODForm")
+  import("../../features/ProducerEODBypass/ProducerEODForm")
 );
-const ProductPaymentConfig = lazy(() => import("../../main/ProductPaymentConfig"));
+const ProductPaymentConfig = lazy(() => import("../../features/ProductPaymentConfig"));
 const ProductPaymentConfigForm = lazy(() =>
-  import("../../main/ProductPaymentConfig/ProductPaymentConfigForm")
+  import("../../features/ProductPaymentConfig/ProductPaymentConfigForm")
 );
-const HouseBankMaster = lazy(() => import("../../main/HouseBankMaster"));
+const HouseBankMaster = lazy(() => import("../../features/HouseBankMaster"));
 const HouseBankMasterForm = lazy(() =>
-  import("../../main/HouseBankMaster/HouseBankMasterForm")
+  import("../../features/HouseBankMaster/HouseBankMasterForm")
 );
-const HealthConfiguration = lazy(() => import("../../main/HealthConfiguration"));
+const HealthConfiguration = lazy(() => import("../../features/HealthConfiguration"));
 const HealthConfigurationForm = lazy(() =>
-  import("../../main/HealthConfiguration/HealthConfigurationForm")
+  import("../../features/HealthConfiguration/HealthConfigurationForm")
 );
-const EmployeeFlagConfig = lazy(() => import("../../main/EmployeeFlagConfig"));
+const EmployeeFlagConfig = lazy(() => import("../../features/EmployeeFlagConfig"));
 
-const SyncedProducers = lazy(() => import("../../main/SyncedProducer"));
-const AliasUser = lazy(() => import("../../main/AliasUser"));
-const NotFoundPage = lazy(() => import("../../sharedComponents/NotFoundPage"));
+const SyncedProducers = lazy(() => import("../../features/SyncedProducer"));
+const AliasUser = lazy(() => import("../../features/AliasUser"));
+const NotFoundPage = lazy(() => import("../../components/NotFoundPage"));
 const EmployeeConfigurationForm = lazy(() =>
-  import("../../main/EmployeeFlagConfig/EmployeeConfigurationForm")
+  import("../../features/EmployeeFlagConfig/EmployeeConfigurationForm")
 );
-const RevalidationList = lazy(() => import("../../main/RevalidationList"));
-const PartnerNeft = lazy(() => import("../../main/PartnerNeft"));
+const RevalidationList = lazy(() => import("../../features/RevalidationList"));
+const PartnerNeft = lazy(() => import("../../features/PartnerNeft"));
 
 const AppRoutes = () => {
   return (

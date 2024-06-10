@@ -3,7 +3,7 @@ import { ThemeProvider } from "@mui/material";
 import { Provider } from "react-redux";
 
 import theme from "../../core/themeMuiProvider";
-import appStore from "../../core/utils/appStore";
+import appStore from "../../stores/appStore"
 
 const AppProvider = ({ children }) => {
   return (
