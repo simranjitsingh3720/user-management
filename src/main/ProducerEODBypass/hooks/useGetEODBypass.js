@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../../../core/axiosInstance";
 
-function useGetEODBypass(pageChange, rowsPage, query, searched) {
+function useGetEODBypass(pageChange, rowsPage, query, searched, date) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [sort, setSort] = useState({
@@ -21,6 +21,8 @@ function useGetEODBypass(pageChange, rowsPage, query, searched) {
       } else if (searched === "producers" && resultProducersId) {
         url += `&producers=${resultProducersId}`;
       }
+      if (date?.startDate && date?.endDate)
+        url += `&startDate=${date.startDate}&endDate=${date.endDate}`;
       const response = await axiosInstance.get(url);
       setData(response.data);
     } catch (error) {
@@ -31,7 +33,7 @@ function useGetEODBypass(pageChange, rowsPage, query, searched) {
   };
   useEffect(() => {
     fetchData();
-  }, [pageChange, sort, rowsPage, query]);
+  }, [pageChange, sort, rowsPage, query, date]);
 
   return { data, loading, sort, setSort, fetchData };
 }
