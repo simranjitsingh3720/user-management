@@ -1,4 +1,4 @@
-const COLUMNS = [
+export const TABLE_COLUMNS = [
   { headerName: "LOB", field: "lob" },
   { headerName: "Product", field: "product" },
   { headerName: "Producer Name", field: "producerName" },

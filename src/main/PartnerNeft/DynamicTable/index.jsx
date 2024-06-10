@@ -22,7 +22,7 @@ import ListLoader from "../../../sharedComponents/ListLoader";
 import TablePaginationActions from "./TablePaginationActions";
 import styles from "./styles.module.scss";
 
-const DynamicTable = ({ columns, data, onDataUpdate, loading, createNeftForm }) => {
+const DynamicTable = ({ columns, data, loading, createNeftForm }) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [dialogOpen, setDialogOpen] = useState(false);
