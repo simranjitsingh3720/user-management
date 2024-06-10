@@ -34,7 +34,10 @@ const PartnerNeftForm = () => {
     },
   });
 
-  const onSubmit = (data) => {};
+  const onSubmit = (data) => {
+    console.log(data);
+    navigate("/partner-neft")
+  };
 
   return (
     <Box component="form" onSubmit={handleSubmit(onSubmit)}>
