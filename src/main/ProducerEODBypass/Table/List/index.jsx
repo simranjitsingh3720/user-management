@@ -62,7 +62,7 @@ function List({ item, fetchData: fetchGroupList }) {
         <div className={styles.createdAt}> {item?.updatedAt || "-"}</div>
 
         <div className={styles.productStatus}>
-          <Tooltip title="Edit Role">
+          <Tooltip title="Edit EOD Lock Bypass">
             <IconButton
               aria-label="back"
               type="button"
