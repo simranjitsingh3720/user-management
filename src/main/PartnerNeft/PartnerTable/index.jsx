@@ -19,14 +19,15 @@ const data = [
 const PartnerTable = () => {
   const navigate = useNavigate();
 
-  const createNeftForm = () => {
+  const navigateToNeftForm = (id) => {
+    console.log(id)
     navigate("/partner-neft-form");
   };
 
   return <DynamicTable
           columns={TABLE_COLUMNS}
           data={data}
-          createNeftForm={createNeftForm}
+          navigateToNeftForm={navigateToNeftForm}
         />
 };
 
