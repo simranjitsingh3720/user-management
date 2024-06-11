@@ -16,6 +16,13 @@ const columnsArr = [
                     console.log(param)
                 }}
             },
+            {
+                component: "switch",
+                selectAll: true,
+                onClick: (param) => {
+                  console.log(param);
+                },
+            }
         ]
     },
     {

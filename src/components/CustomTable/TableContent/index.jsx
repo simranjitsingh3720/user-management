@@ -5,6 +5,7 @@ import {
   TableCell,
   IconButton,
   Checkbox,
+  Switch,
 } from "@mui/material";
 
 const TableContent = ({ columns, data, handleClick }) => {
@@ -20,6 +21,8 @@ const TableContent = ({ columns, data, handleClick }) => {
                   <span key={`${col.id}-${index}`}>
                     {action.component === "checkbox" ? (
                       <Checkbox onChange={() => handleClick(action, row)} />
+                    ) : action.component === "switch" ? (
+                      <Switch onChange={() => handleClick(action, row)} />
                     ) : action.showIcon ? (
                       <IconButton onClick={() => handleClick(action, row)}>
                         {action.iconName}
