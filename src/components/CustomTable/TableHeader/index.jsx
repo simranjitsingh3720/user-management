@@ -1,22 +1,41 @@
 import React from "react";
-import { TableHead, TableRow, TableCell } from "@mui/material";
+import { TableHead, TableRow, TableCell, TableSortLabel } from "@mui/material";
 import PropTypes from "prop-types";
 
 const TableHeader = ({
   columns = [],
-  extraRow = null,
+  order,
+  orderBy,
+  onRequestSort,
   customStyles = {
     header: {},
-    extraRow: {},
     cell: {},
   },
 }) => {
+  const createSortHandler = (property) => (event) => {
+    onRequestSort(event, property);
+  };
+
   return (
     <TableHead style={customStyles.header}>
       <TableRow>
-        {columns.map((column, index) => (
-          <TableCell key={column.id +  index} style={customStyles.cell}>
-            {column.value}
+        {columns.map((column) => (
+          <TableCell
+            key={column.id}
+            sortDirection={orderBy === column.id ? order : false}
+            style={customStyles.cell}
+          >
+            {column.sortable ? (
+              <TableSortLabel
+                active={orderBy === column.id}
+                direction={orderBy === column.id ? order : 'asc'}
+                onClick={createSortHandler(column.id)}
+              >
+                {column.value}
+              </TableSortLabel>
+            ) : (
+              column.value
+            )}
           </TableCell>
         ))}
       </TableRow>
@@ -26,7 +45,9 @@ const TableHeader = ({
 
 TableHeader.propTypes = {
   columns: PropTypes.array.isRequired,
-  extraRow: PropTypes.array,
+  order: PropTypes.string.isRequired,
+  orderBy: PropTypes.string.isRequired,
+  onRequestSort: PropTypes.func.isRequired,
   customStyles: PropTypes.object,
 };
 
