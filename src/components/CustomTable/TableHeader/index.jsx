@@ -24,8 +24,8 @@ const TableHeader = ({
       )}
       <TableRow>
         {columns.map((column, index) => (
-          <TableCell key={index} style={customStyles.cell}>
-            {column}
+          <TableCell key={column.id +  index} style={customStyles.cell}>
+            {column.value}
           </TableCell>
         ))}
       </TableRow>

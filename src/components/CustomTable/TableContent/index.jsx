@@ -1,32 +1,38 @@
 import React from "react";
-import { TableBody, TableRow, TableCell } from "@mui/material";
-import PropTypes from "prop-types";
+import {
+  TableBody,
+  TableRow,
+  TableCell,
+  IconButton,
+  Checkbox,
+} from "@mui/material";
 
-const TableContent = ({
-  rows,
-  customStyles = {
-    row: {},
-    cell: {},
-  }
-}) => {
+const TableContent = ({ columns, data, handleClick }) => {
   return (
     <TableBody>
-      {rows.map((row, rowIndex) => (
-        <TableRow key={rowIndex} style={customStyles.row}>
-          {row.map((cell, cellIndex) => (
-            <TableCell key={cellIndex} style={customStyles.cell}>
-              {cell}
+      {data.map((row) => (
+        <TableRow key={row.id}>
+          {columns.map((col) => (
+            <TableCell key={`${row.id}-${col.id}`} className="py-2">
+              {row[col.id] ? <span>{row[col.id]} </span> : null}
+              {col.action &&
+                col.action.map((action, index) => (
+                  <span key={`${col.id}-${index}`}>
+                    {action.component === "checkbox" ? (
+                      <Checkbox onChange={() => handleClick(action, row)} />
+                    ) : action.showIcon ? (
+                      <IconButton onClick={() => handleClick(action, row)}>
+                        {action.iconName}
+                      </IconButton>
+                    ) : null}
+                  </span>
+                ))}
             </TableCell>
           ))}
         </TableRow>
       ))}
     </TableBody>
   );
-};
-
-TableContent.propTypes = {
-  rows: PropTypes.array.isRequired,
-  customStyles: PropTypes.object,
 };
 
 export default TableContent;

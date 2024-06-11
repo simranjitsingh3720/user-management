@@ -4,7 +4,7 @@ import TableHeader from './TableHeader';
 import TableContent from './TableContent';
 import TableFooter from './TableFooter';
 
-const CustomTable = ({ columns, rows, footerContent, extraHeaderRow, customStyles }) => {
+const CustomTable = ({ columns, rows, footerContent=[], extraHeaderRow=[], customStyles }) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -17,13 +17,18 @@ const CustomTable = ({ columns, rows, footerContent, extraHeaderRow, customStyle
     setPage(0);
   };
 
+  const handleClick = (action, row) => {
+    console.log(action)
+    console.log(row)
+  }
+
   const displayedRows = rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
   return (
     <TableContainer component={Paper}>
       <Table>
         <TableHeader columns={columns} extraRow={extraHeaderRow} customStyles={customStyles} />
-        <TableContent rows={displayedRows} customStyles={customStyles} />
+        <TableContent data={displayedRows} customStyles={customStyles} columns={columns} handleClick={handleClick} />
         <TableFooter
           footerContent={footerContent}
           customStyles={customStyles}
