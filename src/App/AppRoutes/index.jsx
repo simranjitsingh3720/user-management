@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import ResponsiveDrawer from "../../components/LayoutDesign";
 import PartnerNeftForm from "../../features/PartnerNeft/PartnerNeftForm";
 import FullPageLoader from "../../components/FullPageLoader";
+import CustomTable from "../../components/CustomTable";
 
 // Lazy load components
 const UserManagement = lazy(() => import("../../features/UserManagement"));
@@ -66,6 +67,14 @@ const AppRoutes = () => {
     <Suspense fallback={<FullPageLoader />}>
       <Routes>
         <Route path="/" element={<SignInPage />} />
+        <Route
+          path="/custom-table"
+          element={
+            <ResponsiveDrawer showSidebarAndHeader={true}>
+              <CustomTable />
+            </ResponsiveDrawer>
+          }
+        />
         <Route
           path="/user-management"
           element={
