@@ -18,6 +18,7 @@ function TableHeader({ sort, setSort }) {
       <div className={styles.nameCell} onClick={() => handleSort("type")}>
         Type{renderSortIcon("type")}
       </div>
+      <div className={styles.nameCell}> Name</div>
       <div className={styles.nameCell}>Value</div>
       <div className={styles.nameCell}>Proposal Bitly Link details</div>
       <div className={styles.createdAt} onClick={() => handleSort("createdAt")}>

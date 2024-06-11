@@ -26,6 +26,7 @@ function getSelectedRowData(count) {
 function ProducerEODBypass() {
   const [query, setQuery] = useState("");
   const [searched, setSearched] = useState("producers");
+  const [date, setDate] = useState({ startDate: "", endDate: "" });
 
   const [producers, setProducers] = useState("");
 
@@ -37,7 +38,8 @@ function ProducerEODBypass() {
     pageChange,
     rowsPage,
     query,
-    searched
+    searched,
+    date
   );
 
   const handlePaginationChange = (event, page) => {
@@ -59,6 +61,8 @@ function ProducerEODBypass() {
         setSearched={setSearched}
         producers={producers}
         setProducers={setProducers}
+        date={date}
+        setDate={setDate}
       />
 
       <div className={styles.tableContainerStyle}>

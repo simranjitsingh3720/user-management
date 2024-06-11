@@ -3,9 +3,7 @@ import styles from "./styles.module.scss";
 import { IconButton, Tooltip } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import { useNavigate } from "react-router-dom";
-import {
-  capitalizeWords,
-} from "../../../utils/globalizationFunction";
+import { capitalizeWords } from "../../../utils/globalizationFunction";
 
 function Table({ ListData, fetchData, sort, setSort, paymentData }) {
   const resultFun = (item) => {
@@ -33,7 +31,7 @@ function Table({ ListData, fetchData, sort, setSort, paymentData }) {
       <div className={styles.firstHeaderStyle}>
         <div className={styles.headerStyle}>
           <div className={styles.product}>Product</div>
-          <div className={styles.product}>LOB</div>
+          <div className={styles.lob}>LOB</div>
         </div>
         {ListData.map((item) => (
           <div className={styles.listHeader}>

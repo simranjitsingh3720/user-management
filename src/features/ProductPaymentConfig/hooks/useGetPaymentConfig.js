@@ -18,7 +18,7 @@ function useGetPaymentConfig(pageChange, rowsPage, query, searched) {
         sort.sortOrder
       }&pageSize=${rowsPage}`;
       if (searched === "product" && resultProductString) {
-        url += `&edge=hasProducer&ids=${resultProductString}`;
+        url += `&edge=hasProduct&ids=${resultProductString}`;
       }
       if (searched === "lob" && resultProductString) {
         url += `&edge=hasLob&ids=${resultProductString}`;
