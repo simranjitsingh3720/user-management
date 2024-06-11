@@ -59,6 +59,9 @@ function List({ item, fetchData: fetchGroupList }) {
           {item?.producer ? "Producer" : "Channel" || "-"}
         </div>
         <div className={styles.nameCell}>
+          {`${item?.producer.firstName} ${item?.producer.lastName}` || "-"}
+        </div>
+        <div className={styles.nameCell}>
           {item?.producer?.producerCode || "-"}
         </div>
         <div className={styles.nameCell}>
