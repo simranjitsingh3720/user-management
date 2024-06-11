@@ -6,7 +6,7 @@ export const SideNavData = [
   {
     label: "Dashboard",
     icon: GridViewIcon,
-    navigateRoute: 'custom-table'
+    navigateRoute: 'dashboard'
   },
   {
     label: "User Management",
