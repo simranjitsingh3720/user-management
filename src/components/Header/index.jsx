@@ -23,7 +23,7 @@ function Header({ handleDrawerToggle, selectedNavbar, selectedParentIndex }) {
           backgroundColor: "#FFFFFF",
         }}
       >
-        <div className={styles.headerContainer}>
+        <div className="flex items-center justify-between">
           <Toolbar>
             <IconButton
               color="inherit"
@@ -39,12 +39,12 @@ function Header({ handleDrawerToggle, selectedNavbar, selectedParentIndex }) {
               {selectedParentIndex}
             </div>
           </Toolbar>
-          <div className={styles.logoutContainer}>
-            <div className={styles.iconContainer}>
+          <div className='flex items-center mr-3'>
+            <div className='flex items-center'>
               <IconButton>
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
               </IconButton>
-              <div className={styles.loginText}>
+              <div className='flex flex-col'>
                 <text className={styles.styledName}>KRUTIKA SAWANT</text>
                 <text className={styles.styledRole}>Admin</text>
               </div>
