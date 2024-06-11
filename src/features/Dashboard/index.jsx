@@ -21,6 +21,16 @@ const columnsArr = [
     {
         id: 'age',
         value: "Age",
+        action: [
+            {
+                showIcon: true,
+                iconName: <VisibilityIcon />,
+                onclick : {
+                    function (param) {
+                    console.log(param)
+                }}
+            },
+        ]
     },
     {
         id: 'gender',
@@ -50,17 +60,9 @@ const columnsArr = [
     }
     
 ]
-
-// const extraHeaderRow = [
-//   "Extra Header 1",
-//   "Extra Header 2",
-//   "Extra Header 3",
-//   "Extra Header 4",
-// ];
 const rows = [
   {id: 1,  name: "John Doe", age: '23', gender: 'Male'},
 ];
-// const footerContent = ["Footer 1", "Footer 2", "Footer 3", "Footer 4"];
 
 const Dashboard = () => {
   return (
@@ -68,9 +70,6 @@ const Dashboard = () => {
       <CustomTable
         columns={columnsArr}
         rows={rows}
-        // footerContent={footerContent}
-        // extraHeaderRow={extraHeaderRow}
-        // customStyles={customStyles}
       />
     </div>
   );

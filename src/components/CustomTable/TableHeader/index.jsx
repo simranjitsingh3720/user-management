@@ -13,15 +13,6 @@ const TableHeader = ({
 }) => {
   return (
     <TableHead style={customStyles.header}>
-      {extraRow && (
-        <TableRow style={customStyles.extraRow}>
-          {extraRow.map((cell, index) => (
-            <TableCell key={index} style={customStyles.cell}>
-              {cell}
-            </TableCell>
-          ))}
-        </TableRow>
-      )}
       <TableRow>
         {columns.map((column, index) => (
           <TableCell key={column.id +  index} style={customStyles.cell}>
