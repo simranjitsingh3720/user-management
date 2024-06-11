@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
+import { toast } from "react-toastify";
 
 function useGetEODBypass(pageChange, rowsPage, query, searched, date) {
   const [data, setData] = useState(null);
@@ -26,7 +27,9 @@ function useGetEODBypass(pageChange, rowsPage, query, searched, date) {
       const response = await axiosInstance.get(url);
       setData(response.data);
     } catch (error) {
-      setData([]);
+      toast.error(
+        error?.response?.data?.details || "An error occurred. Please try again."
+      );
     } finally {
       setLoading(false);
     }

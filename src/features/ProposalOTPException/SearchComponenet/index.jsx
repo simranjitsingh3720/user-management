@@ -8,6 +8,7 @@ import dayjs from "dayjs";
 import { Controller, useForm } from "react-hook-form";
 import { ProposalOTPSearch } from "../constants";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
+import "dayjs/locale/en-gb";
 
 function SearchComponenet({
   fetchData,
@@ -65,11 +66,13 @@ function SearchComponenet({
                   control={control}
                   rules={{ required: true }}
                   render={({ field }) => (
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <LocalizationProvider
+                      dateAdapter={AdapterDayjs}
+                      adapterLocale="en-gb"
+                    >
                       <DatePicker
                         className={styles.dateStyle}
                         slotProps={{ textField: { size: "small" } }}
-                        minDate={dayjs()}
                         value={
                           field.value ? dayjs(field.value, "DD/MM/YYYY") : null
                         }
@@ -95,10 +98,12 @@ function SearchComponenet({
                   control={control}
                   rules={{ required: true }}
                   render={({ field }) => (
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <LocalizationProvider
+                      dateAdapter={AdapterDayjs}
+                      adapterLocale="en-gb"
+                    >
                       <DatePicker
                         className={styles.dateStyle}
-                        minDate={dayjs()}
                         value={
                           field.value ? dayjs(field.value, "DD/MM/YYYY") : null
                         }

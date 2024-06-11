@@ -7,6 +7,7 @@ import { DatePicker } from "@mui/x-date-pickers";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useNavigate } from "react-router-dom";
+import "dayjs/locale/en-gb";
 
 function SearchComponent({
   searched = "",
@@ -61,7 +62,10 @@ function SearchComponent({
 
           {searched === "dateCreation" ? (
             <div className={styles.dateContainer}>
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <LocalizationProvider
+                dateAdapter={AdapterDayjs}
+                adapterLocale="en-gb"
+              >
                 <DatePicker
                   label="From Date"
                   value={fromDate}
@@ -71,7 +75,10 @@ function SearchComponent({
                 />
               </LocalizationProvider>
 
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <LocalizationProvider
+                dateAdapter={AdapterDayjs}
+                adapterLocale="en-gb"
+              >
                 <DatePicker
                   label="To Date"
                   value={toDate}
