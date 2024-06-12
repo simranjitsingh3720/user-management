@@ -1,7 +1,4 @@
 import React from "react";
-// import DynamicTable from "./../DynamicTable";
-import styles from "./styles.module.scss";
-// import { PRODUCERTABLEHEADER } from "../constants";
 import useRevalidationList from "../hooks/useRevalidationList";
 import CustomTable from "../../../components/CustomTable";
 
@@ -49,16 +46,8 @@ const ProducerTable = ({ revalidationList, revalidationListLoading }) => {
   };
 
   return (
-    <div className={styles.tableContainer}>
-      <CustomTable columns={HEADER_COLUMNS} rows={revalidationList} />
-
-      {/* <DynamicTable
-        columns={PRODUCERTABLEHEADER}
-        data={revalidationList}
-        switchType="action"
-        onDataUpdate={handleDataUpdate}
-        loading={revalidationListLoading}
-      /> */}
+    <div className="mt-8">
+      <CustomTable columns={HEADER_COLUMNS} rows={revalidationList} loading={revalidationListLoading} />
     </div>
   );
 };

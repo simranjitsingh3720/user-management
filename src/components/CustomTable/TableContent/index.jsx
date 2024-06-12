@@ -10,10 +10,17 @@ import {
 
 const TableContent = ({
   columns,
-  data
+  data,
+  loading
 }) => {
+  if(true) {
+    return <TableBody>
+      <TableCell colSpan={columns.length + 1}>Loading</TableCell>
+    </TableBody>
+  }
   return (
     <TableBody>
+      
       {data.map((row) => (
         <TableRow key={row.id}>
           {columns.map((col) => (
