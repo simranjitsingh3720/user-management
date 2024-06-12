@@ -30,13 +30,16 @@ const ProducerTable = ({ revalidationList, revalidationListLoading }) => {
         {
           component: "switch",
           onClick: (data, row) => {
-            const updatedData = data.map((item) => 
-              item.id === row.id ? { ...item, checked: !item.checked } : item
-            );
+            data.map((item) => {
+              if (item.id === row.id) {
+                return row.checked = !row.checked;
+              }
 
-            const allActive = updatedData.every((item) => item.checked);
+              return row.checked;
+            });
+            handleDataUpdate(data);
+            const allActive = revalidationList.every((row) => row.checked);
             setSelectAll(allActive);
-            handleDataUpdate(updatedData);
           },
         },
       ],
@@ -50,16 +53,17 @@ const ProducerTable = ({ revalidationList, revalidationListLoading }) => {
   useEffect(() => {
     const allActive = revalidationList.every((row) => row.checked);
     setSelectAll(allActive);
-  }, [revalidationList]);
+  }, [revalidationList, selectAll]);
 
   const handleSelectAllChange = (event) => {
-    const updatedList = revalidationList.map((item) => ({
-      ...item,
-      checked: event.target.checked,
-    }));
-    
-    setSelectAll(event.target.checked);
+    const updatedList = revalidationList.map((item) => {
+      item.checked = event.target.checked;
+      return item;
+    });
+
     handleDataUpdate(updatedList);
+    const allActive = updatedList.every((row) => row.checked);
+    setSelectAll(allActive);
   };
 
   const customExtraHeader = (
@@ -74,7 +78,7 @@ const ProducerTable = ({ revalidationList, revalidationListLoading }) => {
               color="primary"
             />
           }
-          label={selectAll ? "Select All (Inactive)" : "Select All (Active)"}
+          label={!selectAll ? "Select All (Active)" : "Select All (Inactive)"}
         />
       </TableCell>
     </TableRow>

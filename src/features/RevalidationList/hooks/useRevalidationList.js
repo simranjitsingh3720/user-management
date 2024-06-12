@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
 import { API_END_POINTS } from "../constants";
 import { toast } from "react-toastify";
@@ -10,14 +10,11 @@ const useRevalidationList = () => {
   const fetchData = useCallback(async (id) => {
     setLoading(true);
     try {
-      const response = await axiosInstance.get(
-        API_END_POINTS.getRevalidationList + id
-      );
-      const transformedData =
-        response?.data?.data.map((item) => ({
-          ...item,
-          checked: item.status,
-        })) || [];
+      const response = await axiosInstance.get(API_END_POINTS.getRevalidationList + id);
+      const transformedData = response?.data?.data.map((item) => ({
+        ...item,
+        checked: item.status,
+      })) || [];
       setData(transformedData);
     } catch (error) {
       toast.error(error.response?.data?.error?.message || "Failed to fetch revalidation list");
@@ -27,35 +24,34 @@ const useRevalidationList = () => {
     }
   }, []);
 
-  const updateData = useCallback((updatedData) => {
+  const updateData = useCallback(async (updatedData) => {
     const transformedData = updatedData.map((item) => ({
       ...item,
       status: item.checked,
     }));
-    setData(updatedData);
-    
-    // Create payload with only the updated items
-    const payload = transformedData
-      .map((item) => ({
-        id: item.id,
-        properties: {
-          status: item.checked,
-        },
-      }));
 
-    if (payload.length > 0) {
-      axiosInstance
-        .put(API_END_POINTS.updateRevalidationList, payload)
-        .then((response) => {
-          toast.success("Data updated successfully");
-        })
-        .catch((error) => {
-          toast.error(error.response?.data?.error?.message || "Failed to update data");
-        });
-    } else {
-      toast.error("Something went Worng")
+    // Create payload with only the updated items
+    const payload = transformedData.map((item) => ({
+      id: item.id,
+      properties: {
+        status: item.checked,
+      },
+    }));
+
+    try {
+      await axiosInstance.put(API_END_POINTS.updateRevalidationList, payload);
+      toast.success("Data updated successfully");
+      setData(transformedData); // Set the updated data after successful API response
+    } catch (error) {
+      toast.error(error.response?.data?.error?.message || "Failed to update data");
     }
   }, []);
+
+  // Effect to trigger when data changes
+  useEffect(() => {
+    // Code to notify other components or trigger side-effects
+    // Can be left empty if not needed, this ensures all components re-render when data changes
+  }, [data]);
 
   return {
     revalidationList: data,
