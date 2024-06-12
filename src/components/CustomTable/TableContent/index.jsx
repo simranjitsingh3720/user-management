@@ -8,7 +8,10 @@ import {
   Switch,
 } from "@mui/material";
 
-const TableContent = ({ columns, data }) => {
+const TableContent = ({
+  columns,
+  data
+}) => {
   return (
     <TableBody>
       {data.map((row) => (
@@ -20,9 +23,15 @@ const TableContent = ({ columns, data }) => {
                 col.action.map((action, index) => (
                   <span key={`${col.id}-${index}`}>
                     {action.component === "checkbox" ? (
-                      <Checkbox onChange={() => action.onClick(row)} />
+                      <Checkbox
+                        checked={row.checked || false}
+                        onChange={() => action.onClick(row)}
+                      />
                     ) : action.component === "switch" ? (
-                      <Switch onChange={() => action.onClick(row)} />
+                      <Switch
+                        checked={row.checked || false}
+                        onChange={() => action.onClick(data,row)}
+                      />
                     ) : action.showIcon ? (
                       <IconButton onClick={() => action.onClick(row)}>
                         {action.iconName}

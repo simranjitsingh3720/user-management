@@ -16,7 +16,7 @@ const useRevalidationList = () => {
       const transformedData =
         response?.data?.data.map((item) => ({
           ...item,
-          active: item.status,
+          checked: item.status,
         })) || [];
       setData(transformedData);
     } catch (error) {
@@ -30,16 +30,16 @@ const useRevalidationList = () => {
   const updateData = useCallback((updatedData) => {
     const transformedData = updatedData.map((item) => ({
       ...item,
-      status: item.active,
+      status: item.checked,
     }));
-    setData(transformedData);
+    setData(updatedData);
     
     // Create payload with only the updated items
     const payload = transformedData
       .map((item) => ({
         id: item.id,
         properties: {
-          status: item.active,
+          status: item.checked,
         },
       }));
 
