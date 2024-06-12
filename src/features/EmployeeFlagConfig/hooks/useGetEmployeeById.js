@@ -6,7 +6,6 @@ function useGetEmployeeByProducer() {
   const [loading, setLoading] = useState(true);
 
   const fetchData = async (producerId) => {
-    console.log("employee Producer");
     try {
       let url = `/api/employee-flag-config?producers=${producerId}`;
 

@@ -6,8 +6,6 @@ function useGetProducerData() {
   const [loading, setLoading] = useState(false);
 
   const fetchData = async (id) => {
-    console.log("Products");
-
     try {
       setLoading(true);
       let url = `/api/user/${id}/products`;

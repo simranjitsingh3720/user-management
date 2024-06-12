@@ -67,13 +67,13 @@ const DynamicTable = ({
     console.log(`Edit clicked for row with id: ${rowId}`);
     setCurrentRowId(rowId);
     setDialogOpen(true);
-    };
-    
-    const handleConfirmEdit = () => {
-      console.log(`Confirmed edit for row with id: ${currentRowId}`);
-      udpateNeftForm(currentRowId);
-      setDialogOpen(false);
-      setCurrentRowId(null);
+  };
+
+  const handleConfirmEdit = () => {
+    console.log(`Confirmed edit for row with id: ${currentRowId}`);
+    udpateNeftForm(currentRowId);
+    setDialogOpen(false);
+    setCurrentRowId(null);
   };
 
   const handleCancelEdit = () => {
@@ -104,10 +104,7 @@ const DynamicTable = ({
                         onChange={(e) => setSearchQuery(e.target.value)}
                       />
 
-                      <Button
-                        type="submit"
-                        onClick={createNeftForm}
-                      >
+                      <Button type="submit" onClick={createNeftForm}>
                         Create New NEFT Flag
                       </Button>
                     </div>
@@ -193,9 +190,7 @@ const DynamicTable = ({
           <Button onClick={handleCancelEdit} variant="secondary">
             Cancel
           </Button>
-          <Button onClick={handleConfirmEdit} >
-            Confirm
-          </Button>
+          <Button onClick={handleConfirmEdit}>Confirm</Button>
         </DialogActions>
       </Dialog>
     </div>

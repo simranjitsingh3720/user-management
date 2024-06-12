@@ -41,8 +41,6 @@ function ProposalOTPException() {
     setDate
   );
 
-  console.log("date", date);
-
   const handlePaginationChange = (event, page) => {
     setPageChange(page);
   };

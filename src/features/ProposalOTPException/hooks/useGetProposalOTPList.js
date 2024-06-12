@@ -25,7 +25,6 @@ function useGetProposalOTPList(pageChange, rowsPage, query, searched, date) {
       const response = await axiosInstance.get(url);
       setData(response.data);
     } catch (error) {
-      console.log("error", error);
       toast.error(
         error?.response?.data?.details || "An error occurred. Please try again."
       );

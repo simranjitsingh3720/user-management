@@ -28,8 +28,6 @@ function EmployeeConfigurationForm({ fetchData: listFetchFun }) {
   const { data: EmployeeProducerData, fetchData: fetchDataByProducer } =
     useGetEmployeeByProducer();
 
-  console.log("EmployeeProducerData", EmployeeProducerData);
-
   useEffect(() => {
     if (EmployeeProducerData && EmployeeProducerData?.data) {
       setDataList(
@@ -56,10 +54,6 @@ function EmployeeConfigurationForm({ fetchData: listFetchFun }) {
         }))
       );
   }, [producerList, EmployeeProducerData]);
-
-  console.log("producerList", producerList);
-
-  console.log("dataList", dataList);
 
   const { handleSubmit, control, setValue, formState } = useForm({
     defaultValues: {

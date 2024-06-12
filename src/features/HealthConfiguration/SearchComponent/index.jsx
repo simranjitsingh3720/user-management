@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import useGetUserData from "../../../hooks/useGetUserData";
 
 const fetchIdsAndConvert = (inputData) => {
-  console.log("inputData", inputData);
   const ids = (inputData || []).map((producer) => producer.id);
   return ids.join();
 };
