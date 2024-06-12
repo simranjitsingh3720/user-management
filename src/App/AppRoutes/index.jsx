@@ -5,6 +5,7 @@ import PartnerNeftForm from "../../features/PartnerNeft/PartnerNeftForm";
 import FullPageLoader from "../../components/FullPageLoader";
 
 // Lazy load components
+const Dashboard = lazy(() => import("../../features/Dashboard"));
 const UserManagement = lazy(() => import("../../features/UserManagement"));
 const SignInPage = lazy(() => import("../../features/Signin/SigninPage"));
 const CreateUserManagementForm = lazy(() =>
@@ -66,6 +67,14 @@ const AppRoutes = () => {
     <Suspense fallback={<FullPageLoader />}>
       <Routes>
         <Route path="/" element={<SignInPage />} />
+        <Route
+          path="/dashboard"
+          element={
+            <ResponsiveDrawer showSidebarAndHeader={true}>
+              <Dashboard />
+            </ResponsiveDrawer>
+          }
+        />
         <Route
           path="/user-management"
           element={

@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
 import { API_END_POINTS } from "../constants";
 import { toast } from "react-toastify";
@@ -16,46 +16,47 @@ const useRevalidationList = () => {
       const transformedData =
         response?.data?.data.map((item) => ({
           ...item,
-          active: item.status,
+          checked: item.status,
         })) || [];
       setData(transformedData);
     } catch (error) {
-      toast.error(error.response?.data?.error?.message || "Failed to fetch revalidation list");
+      toast.error(
+        error.response?.data?.error?.message ||
+          "Failed to fetch revalidation list"
+      );
       setData([]);
     } finally {
       setLoading(false);
     }
   }, []);
 
-  const updateData = useCallback((updatedData) => {
+  const updateData = useCallback(async (updatedData) => {
     const transformedData = updatedData.map((item) => ({
       ...item,
-      status: item.active,
+      status: item.checked,
     }));
-    setData(transformedData);
-    
-    // Create payload with only the updated items
-    const payload = transformedData
-      .map((item) => ({
-        id: item.id,
-        properties: {
-          status: item.active,
-        },
-      }));
 
-    if (payload.length > 0) {
-      axiosInstance
-        .put(API_END_POINTS.updateRevalidationList, payload)
-        .then((response) => {
-          toast.success("Data updated successfully");
-        })
-        .catch((error) => {
-          toast.error(error.response?.data?.error?.message || "Failed to update data");
-        });
-    } else {
-      toast.error("Something went Worng")
+    // Create payload with only the updated items
+    const payload = transformedData.map((item) => ({
+      id: item.id,
+      properties: {
+        status: item.checked,
+      },
+    }));
+
+    try {
+      await axiosInstance.put(API_END_POINTS.updateRevalidationList, payload);
+      toast.success("Data updated successfully");
+      setData(transformedData); // Set the updated data after successful API response
+    } catch (error) {
+      toast.error(
+        error.response?.data?.error?.message || "Failed to update data"
+      );
     }
   }, []);
+
+  // Effect to trigger when data changes
+  useEffect(() => {}, [data]);
 
   return {
     revalidationList: data,
