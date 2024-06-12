@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import useRevalidationList from "../hooks/useRevalidationList";
 import CustomTable from "../../../components/CustomTable";
+import { Checkbox, FormControlLabel, TableCell, TableRow } from "@mui/material";
 
 const ProducerTable = ({ revalidationList, revalidationListLoading }) => {
   const { revalidationListUpdateData } = useRevalidationList();
+  const [selectAll, setSelectAll] = useState(false);
 
   const HEADER_COLUMNS = [
     {
@@ -27,14 +29,14 @@ const ProducerTable = ({ revalidationList, revalidationListLoading }) => {
       action: [
         {
           component: "switch",
-          selectAll: true,
           onClick: (data, row) => {
-            data.map((item) => {
-              if (item.id === row.id) {
-                row.checked = !row.checked;
-              }
-            });
-            handleDataUpdate(data);
+            const updatedData = data.map((item) => 
+              item.id === row.id ? { ...item, checked: !item.checked } : item
+            );
+
+            const allActive = updatedData.every((item) => item.checked);
+            setSelectAll(allActive);
+            handleDataUpdate(updatedData);
           },
         },
       ],
@@ -45,9 +47,47 @@ const ProducerTable = ({ revalidationList, revalidationListLoading }) => {
     revalidationListUpdateData(updatedData);
   };
 
+  useEffect(() => {
+    const allActive = revalidationList.every((row) => row.checked);
+    setSelectAll(allActive);
+  }, [revalidationList]);
+
+  const handleSelectAllChange = (event) => {
+    const updatedList = revalidationList.map((item) => ({
+      ...item,
+      checked: event.target.checked,
+    }));
+    
+    setSelectAll(event.target.checked);
+    handleDataUpdate(updatedList);
+  };
+
+  const customExtraHeader = (
+    <TableRow>
+      <TableCell colSpan={HEADER_COLUMNS.length}>
+        <FormControlLabel
+          sx={{ display: "flex", justifyContent: "end" }}
+          control={
+            <Checkbox
+              checked={selectAll}
+              onChange={handleSelectAllChange}
+              color="primary"
+            />
+          }
+          label={selectAll ? "Select All (Inactive)" : "Select All (Active)"}
+        />
+      </TableCell>
+    </TableRow>
+  );
+
   return (
     <div className="mt-8">
-      <CustomTable columns={HEADER_COLUMNS} rows={revalidationList} loading={revalidationListLoading} />
+      <CustomTable
+        columns={HEADER_COLUMNS}
+        rows={revalidationList}
+        loading={revalidationListLoading}
+        customExtraHeader={customExtraHeader}
+      />
     </div>
   );
 };

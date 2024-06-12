@@ -11,6 +11,7 @@ const TableHeader = ({
     header: {},
     cell: {},
   },
+  customExtraHeader
 }) => {
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
@@ -18,6 +19,7 @@ const TableHeader = ({
 
   return (
     <TableHead style={customStyles.header}>
+      {customExtraHeader}
       <TableRow>
         {columns.map((column) => (
           <TableCell

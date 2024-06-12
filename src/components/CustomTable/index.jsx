@@ -4,7 +4,7 @@ import TableHeader from './TableHeader';
 import TableContent from './TableContent';
 import TableFooter from './TableFooter';
 
-const CustomTable = ({ columns, rows, footerContent = [], extraHeaderRow = [], customStyles, loading }) => {
+const CustomTable = ({ columns, rows, footerContent = [], extraHeaderRow = [], customStyles, loading, customExtraHeader=null }) => {
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('');
   const [page, setPage] = useState(0);
@@ -45,6 +45,7 @@ const CustomTable = ({ columns, rows, footerContent = [], extraHeaderRow = [], c
           orderBy={orderBy}
           onRequestSort={handleRequestSort}
           customStyles={customStyles}
+          customExtraHeader={customExtraHeader}
         />
         <TableContent data={displayedRows} customStyles={customStyles} columns={columns} loading={loading} />
         <TableFooter
