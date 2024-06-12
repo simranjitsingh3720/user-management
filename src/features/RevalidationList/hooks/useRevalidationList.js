@@ -10,14 +10,20 @@ const useRevalidationList = () => {
   const fetchData = useCallback(async (id) => {
     setLoading(true);
     try {
-      const response = await axiosInstance.get(API_END_POINTS.getRevalidationList + id);
-      const transformedData = response?.data?.data.map((item) => ({
-        ...item,
-        checked: item.status,
-      })) || [];
+      const response = await axiosInstance.get(
+        API_END_POINTS.getRevalidationList + id
+      );
+      const transformedData =
+        response?.data?.data.map((item) => ({
+          ...item,
+          checked: item.status,
+        })) || [];
       setData(transformedData);
     } catch (error) {
-      toast.error(error.response?.data?.error?.message || "Failed to fetch revalidation list");
+      toast.error(
+        error.response?.data?.error?.message ||
+          "Failed to fetch revalidation list"
+      );
       setData([]);
     } finally {
       setLoading(false);
@@ -43,15 +49,14 @@ const useRevalidationList = () => {
       toast.success("Data updated successfully");
       setData(transformedData); // Set the updated data after successful API response
     } catch (error) {
-      toast.error(error.response?.data?.error?.message || "Failed to update data");
+      toast.error(
+        error.response?.data?.error?.message || "Failed to update data"
+      );
     }
   }, []);
 
   // Effect to trigger when data changes
-  useEffect(() => {
-    // Code to notify other components or trigger side-effects
-    // Can be left empty if not needed, this ensures all components re-render when data changes
-  }, [data]);
+  useEffect(() => {}, [data]);
 
   return {
     revalidationList: data,
