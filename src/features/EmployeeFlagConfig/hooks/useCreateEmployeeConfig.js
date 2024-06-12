@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../../utils/axiosInstance";
 import { toast } from "react-toastify";
 
-function useCreateEmployeeConfig() {
+function useCreateEmployeeConfig(listFetchFun) {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
@@ -19,6 +19,9 @@ function useCreateEmployeeConfig() {
         response?.data?.message ||
           "Employee Flag Configuration Created successfully"
       );
+      if (listFetchFun) {
+        listFetchFun();
+      }
       navigate("/employee-flag-config");
     } catch (error) {
       toast.error(

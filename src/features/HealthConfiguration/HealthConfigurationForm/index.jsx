@@ -47,7 +47,7 @@ function HealthConfigurationForm() {
 
   useEffect(() => {
     if (healthConfigData && healthConfigData?.data) {
-      setValue("producerCode", healthConfigData?.data?.producer || null);
+      setValue("producer", healthConfigData?.data?.producer || null);
       setValue(
         "medicare",
         healthConfigData?.data?.isExistingCustomer ? "yes" : "no" || null
@@ -116,6 +116,7 @@ function HealthConfigurationForm() {
                     getOptionLabel={(option) => {
                       return `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`;
                     }}
+                    disabled={id}
                     className={styles.customizeSelect}
                     size="small"
                     isOptionEqualToValue={(option, value) =>
@@ -167,7 +168,7 @@ function HealthConfigurationForm() {
                     displayEmpty
                     className={styles.customizeSelect}
                     renderValue={(selected) => {
-                      if (selected === undefined) {
+                      if (selected === null) {
                         return (
                           <div className={styles.placeholderStyle}>Select</div>
                         );

@@ -7,9 +7,10 @@
   margin-bottom: 20px;
 }
 .formHeaderStyle {
-  padding: 16px 0px 0px 8px;
+  padding: 16px;
   display: flex;
-  align-items: baseline;
+  align-items: center;
+  justify-content: space-between;
   border-bottom: 1px solid #c5cfde;
   height: 80px;
 }

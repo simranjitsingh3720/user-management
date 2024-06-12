@@ -51,16 +51,12 @@ function EmployeeFlagConfig() {
 
   return (
     <div>
-      <EmployeeConfigurationForm />
+      <EmployeeConfigurationForm fetchData={fetchData} />
       <SearchComponenet
         fetchData={fetchData}
         producers={producers}
         setProducers={setProducers}
         setPageChange={setPageChange}
-        query={query}
-        setQuery={setQuery}
-        searched={searched}
-        setSearched={setSearched}
       />
       <div className={styles.tableContainerStyle}>
         <div className={styles.tableStyled}>

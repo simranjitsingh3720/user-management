@@ -33,7 +33,7 @@ function List({ item }) {
           {`${item?.producer?.firstName}  ${item.producer.lastName}`}
         </div>
         <div className={styles.producerCode}>
-          <Tooltip title="View permissions">
+          <Tooltip title="Product Details">
             <IconButton
               aria-label="back"
               type="button"
@@ -55,7 +55,7 @@ function List({ item }) {
         maxWidth="sm"
       >
         <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-          Permissions
+          Product Details
         </DialogTitle>
         <IconButton
           aria-label="close"

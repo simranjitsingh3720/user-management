@@ -16,6 +16,11 @@ function TableList({ dataList, setDataList }) {
     });
     setDataList(newUpdatedDataList);
   };
+
+  if (!dataList.length) {
+    return;
+  }
+
   return (
     <div>
       <div className={styles.headerTextOTP}>

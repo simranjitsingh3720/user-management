@@ -1,16 +1,9 @@
-import {
-  Autocomplete,
-  Button,
-  IconButton,
-  MenuItem,
-  Select,
-  TextField,
-} from "@mui/material";
+import { Autocomplete, Button, TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import LeftArrow from "../../../assets/LeftArrow";
 import styles from "./styles.module.scss";
 import { Controller, useForm } from "react-hook-form";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import RestartAltIcon from "@mui/icons-material/RestartAlt";
 
 // import useUpdatePaymentConfig from "../hooks/useUpdateHealthConfig";
 // import { BitlyLinkMandatory } from "../constants";
@@ -24,30 +17,23 @@ import useUpdateEmployeeConfig from "../hooks/useUpdateEmployeeConfig";
 // import useCreateHealthConfig from "../hooks/useCreateHealthConfig";
 // import useGetHealthConfigByID from "../hooks/useGetHealthConfigById";
 
-function EmployeeConfigurationForm() {
-  const { id } = useParams();
-
+function EmployeeConfigurationForm({ fetchData: listFetchFun }) {
   const {
     producerList,
     fetchData,
     loading: producerLoading,
   } = useGetProducerData();
 
-  const [dataList, setDataList] = useState(
-    (producerList?.data || []).map((item) => ({
-      name: item.product,
-      productId: item.id,
-      isEmployee: false,
-    }))
-  );
-
+  const [dataList, setDataList] = useState([]);
   const { data: EmployeeProducerData, fetchData: fetchDataByProducer } =
     useGetEmployeeByProducer();
+
+  console.log("EmployeeProducerData", EmployeeProducerData);
 
   useEffect(() => {
     if (EmployeeProducerData && EmployeeProducerData?.data) {
       setDataList(
-        (EmployeeProducerData?.data[0].products || []).map((item) => ({
+        (EmployeeProducerData?.data[0]?.products || []).map((item) => ({
           name: item.product,
           productId: item.productId,
           isEmployee: item.isEmployee,
@@ -57,7 +43,11 @@ function EmployeeConfigurationForm() {
   }, [EmployeeProducerData]);
 
   useEffect(() => {
-    if (producerList && producerList?.data)
+    if (
+      producerList &&
+      producerList?.data &&
+      !EmployeeProducerData?.data.length
+    )
       setDataList(
         (producerList?.data || []).map((item) => ({
           name: item.product,
@@ -65,7 +55,11 @@ function EmployeeConfigurationForm() {
           isEmployee: false,
         }))
       );
-  }, [producerList]);
+  }, [producerList, EmployeeProducerData]);
+
+  console.log("producerList", producerList);
+
+  console.log("dataList", dataList);
 
   const { handleSubmit, control, setValue, formState } = useForm({
     defaultValues: {
@@ -100,12 +94,13 @@ function EmployeeConfigurationForm() {
   //   }
   // }, [healthConfigData]);
 
-  const { postData, loading } = useCreateEmployeeConfig();
+  const { postData, loading } = useCreateEmployeeConfig(listFetchFun);
 
-  const { UpdateDataFun, loading: updateLoading } = useUpdateEmployeeConfig();
+  const { UpdateDataFun, loading: updateLoading } =
+    useUpdateEmployeeConfig(listFetchFun);
 
   const onSubmit = (data) => {
-    if (EmployeeProducerData && EmployeeProducerData?.data) {
+    if (EmployeeProducerData && EmployeeProducerData?.data.length) {
       const field = dataList.map((item) => ({
         productId: item.productId,
         isEmployee: item.isEmployee,
@@ -131,6 +126,11 @@ function EmployeeConfigurationForm() {
     }
   };
 
+  const handleResetButton = () => {
+    setDataList([]);
+    setValue("producer", null);
+  };
+
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -147,13 +147,23 @@ function EmployeeConfigurationForm() {
                 </div>
               </span>
             </div>
+            <div>
+              <Button
+                variant="outlined"
+                startIcon={<RestartAltIcon />}
+                sx={{ textTransform: "none" }}
+                onClick={() => handleResetButton()}
+              >
+                Reset
+              </Button>
+            </div>
           </div>{" "}
           <div className={styles.containerStyle}>
             <div className={styles.fieldContainerStyle}>
               <text className={styles.labelText}>
                 Select Producer <span className={styles.styledRequired}>*</span>
               </text>
-              <Controller
+              {/* <Controller
                 name="producer" // Name of the field in the form data
                 control={control}
                 rules={{ required: "Producer is required" }}
@@ -181,6 +191,46 @@ function EmployeeConfigurationForm() {
                     }}
                   />
                 )}
+              /> */}
+              <Controller
+                name="producer"
+                id="producer"
+                control={control}
+                rules={{ required: "Producer is required" }}
+                render={({ field }) => (
+                  <Autocomplete
+                    id="producer"
+                    options={userData || []}
+                    getOptionLabel={(option) => {
+                      return `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`;
+                    }}
+                    value={field.value}
+                    className={styles.customizeSelect}
+                    size="small"
+                    isOptionEqualToValue={(option, value) =>
+                      option.id === value.id
+                    }
+                    renderInput={(params) => (
+                      <TextField {...params} placeholder="Select" />
+                    )}
+                    onChange={(event, newValue) => {
+                      field.onChange(newValue);
+                      fetchDataByProducer(newValue?.id);
+                      fetchData(newValue?.id);
+                    }}
+                    renderOption={(props, option) => (
+                      <li {...props} key={option.id}>
+                        {option?.firstName?.toUpperCase()}{" "}
+                        {option?.lastName?.toUpperCase()}
+                      </li>
+                    )}
+                    ListboxProps={{
+                      style: {
+                        maxHeight: "200px",
+                      },
+                    }}
+                  />
+                )}
               />
               <div className={styles.styledError}>
                 {errors.producer && <span>{errors.producer.message}</span>}
@@ -192,7 +242,7 @@ function EmployeeConfigurationForm() {
                 <Loader />
               </div>
             ) : (
-              producerList && (
+              producerList?.data?.length && (
                 <div className={styles.tableStyle}>
                   <TableList dataList={dataList} setDataList={setDataList} />
                 </div>
@@ -206,7 +256,7 @@ function EmployeeConfigurationForm() {
           className={styles.styledButton}
           disabled={loading || updateLoading}
         >
-          {EmployeeProducerData?.data ? "Update" : "Submit"}
+          save
         </Button>
       </form>
     </div>
