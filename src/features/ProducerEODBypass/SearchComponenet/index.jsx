@@ -16,6 +16,7 @@ import { Controller, useForm } from "react-hook-form";
 import { ProposalEODBypass } from "../constants";
 import useGetUserData from "../../BANCALogin/hooks/useGetUserData";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
+import "dayjs/locale/en-gb";
 
 const fetchIdsAndConvert = (inputData) => {
   const ids = (inputData || []).map((producer) => producer.id);
@@ -86,10 +87,12 @@ function SearchComponenet({
                   control={control}
                   rules={{ required: true }}
                   render={({ field }) => (
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <LocalizationProvider
+                      dateAdapter={AdapterDayjs}
+                      adapterLocale="en-gb"
+                    >
                       <DatePicker
                         className={styles.dateStyle}
-                        minDate={dayjs()}
                         value={
                           field.value ? dayjs(field.value, "DD/MM/YYYY") : null
                         }
@@ -116,10 +119,12 @@ function SearchComponenet({
                   control={control}
                   rules={{ required: true }}
                   render={({ field }) => (
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <LocalizationProvider
+                      dateAdapter={AdapterDayjs}
+                      adapterLocale="en-gb"
+                    >
                       <DatePicker
                         className={styles.dateStyle}
-                        minDate={dayjs()}
                         value={
                           field.value ? dayjs(field.value, "DD/MM/YYYY") : null
                         }

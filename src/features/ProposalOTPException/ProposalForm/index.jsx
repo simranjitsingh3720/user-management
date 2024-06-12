@@ -21,6 +21,7 @@ import useGetProposalOTPById from "../hooks/useGetProposalOTPById";
 import useUpdateProposal from "../hooks/useUpdateProposal";
 import useGetProducerData from "../../BANCALogin/hooks/useGetProducerData";
 import useGetLobListData from "../hooks/useGetLobListData";
+import "dayjs/locale/en-gb";
 
 function ProposalForm() {
   const { id } = useParams();
@@ -375,7 +376,10 @@ function ProposalForm() {
                     control={control}
                     rules={{ required: true }}
                     render={({ field }) => (
-                      <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <LocalizationProvider
+                        dateAdapter={AdapterDayjs}
+                        adapterLocale="en-gb"
+                      >
                         <DatePicker
                           className={styles.dateStyle}
                           minDate={dayjs()}
@@ -411,7 +415,10 @@ function ProposalForm() {
                     control={control}
                     rules={{ required: true }}
                     render={({ field }) => (
-                      <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <LocalizationProvider
+                        dateAdapter={AdapterDayjs}
+                        adapterLocale="en-gb"
+                      >
                         <DatePicker
                           className={styles.dateStyle}
                           minDate={dayjs()}

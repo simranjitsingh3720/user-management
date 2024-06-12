@@ -12,13 +12,14 @@ import useCreateEODBypass from "../hooks/useCreateEODBypass";
 import useGetDataById from "../hooks/useGetDataById";
 import useUpdateEODBypass from "../hooks/useUpdateEODBypass";
 import { alphaNumericRegex } from "../../../utils/globalConstants";
+import "dayjs/locale/en-gb";
 
 function ProducerEODFrom() {
   const { id } = useParams();
 
   const { data, fetchData } = useGetDataById();
 
-  const { handleSubmit, control, setValue, formState, getValues } = useForm({
+  const { handleSubmit, control, setValue, formState } = useForm({
     defaultValues: {
       producerCode: null,
       startDate: null,
@@ -158,7 +159,10 @@ function ProducerEODFrom() {
                     control={control}
                     rules={{ required: true }}
                     render={({ field }) => (
-                      <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <LocalizationProvider
+                        dateAdapter={AdapterDayjs}
+                        adapterLocale="en-gb"
+                      >
                         <DatePicker
                           className={styles.dateStyle}
                           // {...register("startDate", { required: true })}
@@ -193,7 +197,10 @@ function ProducerEODFrom() {
                     control={control}
                     rules={{ required: true }}
                     render={({ field }) => (
-                      <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <LocalizationProvider
+                        dateAdapter={AdapterDayjs}
+                        adapterLocale="en-gb"
+                      >
                         <DatePicker
                           className={styles.dateStyle}
                           minDate={dayjs()}

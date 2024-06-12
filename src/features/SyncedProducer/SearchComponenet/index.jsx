@@ -13,6 +13,7 @@ import dayjs from "dayjs";
 import { Controller, useForm } from "react-hook-form";
 import { ProposalEODBypass } from "../constants";
 import useGetUserData from "../../BANCALogin/hooks/useGetUserData";
+import "dayjs/locale/en-gb";
 
 const fetchIdsAndConvert = (inputData) => {
   const ids = (inputData || []).map((producer) => producer.id);
@@ -66,10 +67,12 @@ function SearchComponenet({
                   control={control}
                   rules={{ required: true }}
                   render={({ field }) => (
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <LocalizationProvider
+                      dateAdapter={AdapterDayjs}
+                      adapterLocale="en-gb"
+                    >
                       <DatePicker
                         className={styles.dateStyle}
-                        minDate={dayjs()}
                         slotProps={{ textField: { size: "small" } }}
                         onChange={(date) => {
                           const formattedDate =
@@ -93,10 +96,12 @@ function SearchComponenet({
                   control={control}
                   rules={{ required: true }}
                   render={({ field }) => (
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <LocalizationProvider
+                      dateAdapter={AdapterDayjs}
+                      adapterLocale="en-gb"
+                    >
                       <DatePicker
                         className={styles.dateStyle}
-                        minDate={dayjs()}
                         onChange={(date) => {
                           const formattedDate =
                             dayjs(date).format("DD-MM-YYYY");

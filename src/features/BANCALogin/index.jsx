@@ -19,6 +19,7 @@ import { FieldDataList, labels } from "./constants";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import useCreateBancaField from "./hooks/useCreateBancaField";
 import useUpdateBancaField from "./hooks/useUpdateBancaField";
+import "dayjs/locale/en-gb";
 
 function BANCALogin() {
   const [fileName, setFileName] = useState("");
@@ -290,7 +291,10 @@ function BANCALogin() {
                     control={control}
                     rules={{ required: true }}
                     render={({ field }) => (
-                      <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <LocalizationProvider
+                        dateAdapter={AdapterDayjs}
+                        adapterLocale="en-gb"
+                      >
                         <DatePicker
                           className={styles.dateStyle}
                           // {...register("startDate", { required: true })}
@@ -325,7 +329,10 @@ function BANCALogin() {
                     control={control}
                     rules={{ required: true }}
                     render={({ field }) => (
-                      <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <LocalizationProvider
+                        dateAdapter={AdapterDayjs}
+                        adapterLocale="en-gb"
+                      >
                         <DatePicker
                           className={styles.dateStyle}
                           // {...register("expiryDate", { required: true })}
