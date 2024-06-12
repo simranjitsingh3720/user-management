@@ -8,19 +8,19 @@ import {
   Switch,
 } from "@mui/material";
 
-const TableContent = ({
-  columns,
-  data,
-  loading
-}) => {
-  if(true) {
-    return <TableBody>
-      <TableCell colSpan={columns.length + 1}>Loading</TableCell>
-    </TableBody>
+const TableContent = ({ columns, data, loading }) => {
+  if (loading) {
+    return (
+      <TableBody>
+        <TableRow>
+          <TableCell colSpan={columns.length + 1}>Loading</TableCell>
+        </TableRow>
+      </TableBody>
+    );
   }
+
   return (
     <TableBody>
-      
       {data.map((row) => (
         <TableRow key={row.id}>
           {columns.map((col) => (
@@ -37,7 +37,7 @@ const TableContent = ({
                     ) : action.component === "switch" ? (
                       <Switch
                         checked={row.checked || false}
-                        onChange={() => action.onClick(data,row)}
+                        onChange={() => action.onClick(data, row)}
                       />
                     ) : action.showIcon ? (
                       <IconButton onClick={() => action.onClick(row)}>
