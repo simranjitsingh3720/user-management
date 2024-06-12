@@ -59,6 +59,9 @@ function List({
     <div>
       <div className={styles.listHeader}>
         <div className={styles.producerCode}>
+          {`${item?.producer?.firstName}  ${item.producer.lastName}`}
+        </div>
+        <div className={styles.producerCode}>
           {item?.producer?.producerCode || "-"}
         </div>
         <div className={styles.isExistingCustomer}>

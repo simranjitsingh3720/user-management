@@ -23,7 +23,7 @@ function HealthConfigurationForm() {
 
   const { handleSubmit, control, setValue, formState } = useForm({
     defaultValues: {
-      producerCode: null,
+      producer: null,
       medicare: null,
     },
   });
@@ -67,7 +67,7 @@ function HealthConfigurationForm() {
       UpdateDataFun(payload);
     } else {
       const payload = {
-        producerId: data?.producerCode?.id,
+        producerId: data?.producer?.id,
         isExistingCustomer: data?.medicare === "yes" ? true : false,
       };
       postData(payload);
@@ -103,20 +103,18 @@ function HealthConfigurationForm() {
                 Select Producer
                 <span className={styles.styledRequired}>*</span>
               </text>
+
               <Controller
-                name="producerCode" // Name of the field in the form data
+                name="producer"
+                id="producer"
                 control={control}
-                rules={{ required: true }}
+                rules={{ required: "Producer is required" }}
                 render={({ field }) => (
                   <Autocomplete
-                    id="producerCode"
-                    value={field.value}
-                    disabled={id}
+                    id="producer"
                     options={userData || []}
                     getOptionLabel={(option) => {
-                      return `${option?.firstName?.toUpperCase() || ""} ${
-                        option?.lastName?.toUpperCase() || ""
-                      }`;
+                      return `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`;
                     }}
                     className={styles.customizeSelect}
                     size="small"
@@ -126,9 +124,16 @@ function HealthConfigurationForm() {
                     renderInput={(params) => (
                       <TextField {...params} placeholder="Select" />
                     )}
+                    value={field.value}
                     onChange={(event, newValue) => {
                       field.onChange(newValue);
                     }}
+                    renderOption={(props, option) => (
+                      <li {...props} key={option.id}>
+                        {option?.firstName?.toUpperCase()}{" "}
+                        {option?.lastName?.toUpperCase()}
+                      </li>
+                    )}
                     ListboxProps={{
                       style: {
                         maxHeight: "200px",
@@ -138,7 +143,7 @@ function HealthConfigurationForm() {
                 )}
               />
               <div className={styles.styledError}>
-                {errors.producerCode && <span>This field is required</span>}{" "}
+                {errors.producer && <span>This field is required</span>}{" "}
               </div>
             </div>
             <div className={styles.fieldContainerStyle}>

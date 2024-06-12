@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
 
-function useGetHealthConfig(pageChange, rowsPage, query, searched) {
+function useGetHealthConfig(pageChange, rowsPage) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [sort, setSort] = useState({
@@ -16,11 +16,8 @@ function useGetHealthConfig(pageChange, rowsPage, query, searched) {
         sort.sortKey
       }&sortOrder=${sort.sortOrder}&pageSize=${rowsPage}`;
 
-      if (query && searched) {
-        url += `&searchKey=${searched}&searchString=${query}`;
-      }
       if (resultProducersId) {
-        url += `&producers=${resultProducersId}`;
+        url += `&edge=hasProducer&ids=${resultProducersId}`;
       }
       const response = await axiosInstance.get(url);
       setData(response.data);
@@ -32,7 +29,7 @@ function useGetHealthConfig(pageChange, rowsPage, query, searched) {
   };
   useEffect(() => {
     fetchData();
-  }, [pageChange, sort, rowsPage, query]);
+  }, [pageChange, sort, rowsPage]);
 
   return { data, loading, sort, setSort, fetchData };
 }

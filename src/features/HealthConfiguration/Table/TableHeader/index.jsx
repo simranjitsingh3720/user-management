@@ -15,7 +15,8 @@ function TableHeader({ sort, setSort }) {
   };
   return (
     <div className={styles.tableHeader}>
-      <div className={styles.producerCode}>Producer</div>
+      <div className={styles.producerCode}>Producer Name</div>
+      <div className={styles.producerCode}>Producer Code</div>
       <div className={styles.isExistingCustomer}>
         Medicare Existing TATA AIG General Insurance Customer
       </div>
