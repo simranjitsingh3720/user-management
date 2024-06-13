@@ -136,7 +136,7 @@ function NavbarDrawer({
                         selected={
                           selectedParentIndex ===
                           `${obj.label}/${childObj.label}`
-                        } // Apply selectedNavbar
+                        }
                         onClick={(event) =>
                           handleCollpaseListItemClick(
                             event,
@@ -190,7 +190,7 @@ function NavbarDrawer({
           keepMounted: true, // Better open performance on mobile.
         }}
         sx={{
-          display: { xs: "block", sm: "none" },
+          display: { xs: "block", md: "none", },
           "& .MuiDrawer-paper": { boxSizing: "border-box", width: drawerWidth },
         }}
       >
@@ -199,7 +199,7 @@ function NavbarDrawer({
       <Drawer
         variant="permanent"
         sx={{
-          display: { xs: "none", sm: "block" },
+          display: { xs: "none", md: "block" },
           "& .MuiDrawer-paper": {
             boxSizing: "border-box",
             width: drawerWidth,
