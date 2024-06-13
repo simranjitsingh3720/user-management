@@ -9,37 +9,53 @@ import {
   Grid,
   IconButton,
   Divider,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
+  Select,
+  MenuItem,
 } from "@mui/material";
 import styles from "./styles.module.scss";
 import LeftArrow from "../../../assets/LeftArrow";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import { useNavigate, useParams } from "react-router-dom";
 import CustomButton from "../../../components/CustomButton";
+import { forWhom } from "../utils/constants";
+import useGetLobData from "../../../hooks/useGetLobData";
+import useGetProductByLobId from "../../../hooks/useGetProductByLobId";
 
-const options = [
-  { label: "Option 1", value: "option1" },
-  { label: "Option 2", value: "option2" },
-  { label: "Option 3", value: "option3" },
-];
-
-const PartnerNeftForm = () => {
+const CykcForm = () => {
   const navigate = useNavigate();
   const params = useParams();
   console.log(params);
   const {
     handleSubmit,
     control,
+    setValue,
     formState: { errors },
   } = useForm({
     defaultValues: {
-      producer: null,
+      lob: null,
+      product: null,
+      cykc: "enable",
+      forWhom: "both",
     },
   });
 
   const onSubmit = (data) => {
     console.log(data);
-    navigate("/partner-neft");
   };
+
+  const handleResetButton = () => {
+    setValue("lob", null);
+    setValue("product", null);
+    setValue("cykc", "enable");
+    setValue("forWhom", "both");
+  };
+
+  const { data: lobListData } = useGetLobData();
+
+  const { data, fetchData } = useGetProductByLobId();
 
   return (
     <Box component="form" onSubmit={handleSubmit(onSubmit)}>
@@ -61,19 +77,19 @@ const PartnerNeftForm = () => {
                     <IconButton
                       aria-label="back"
                       onClick={() => {
-                        navigate("/partner-neft");
+                        navigate("/ckyc-config");
                       }}
                     >
                       <LeftArrow />
                     </IconButton>
                     <span className={styles.headerTextStyle}>
-                      Create New Partner NEFT Flag
+                      Create New CKYC Config
                     </span>
                   </div>
                   <div>
                     <span className="label">
-                      Please fill the details below and click Submit to create a
-                      new partner NEFT flag.
+                      Please fill the details below and click ‘Submit’ to create
+                      a new CKYC config.
                     </span>
                   </div>
                 </Grid>
@@ -89,7 +105,7 @@ const PartnerNeftForm = () => {
                   <CustomButton
                     variant="outlined"
                     startIcon={<RestartAltIcon />}
-                    className={styles.secondaryBtn}
+                    onClick={() => handleResetButton()}
                   >
                     Reset
                   </CustomButton>
@@ -108,10 +124,10 @@ const PartnerNeftForm = () => {
                 render={({ field }) => (
                   <Autocomplete
                     id="lob"
-                    options={options || []}
-                    //   getOptionLabel={(option) => {
-                    //     return `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`;
-                    //   }}
+                    options={lobListData?.data || []}
+                    getOptionLabel={(option) => {
+                      return option?.lob?.toUpperCase() || "";
+                    }}
                     className="customize-select"
                     size="small"
                     isOptionEqualToValue={(option, value) =>
@@ -122,14 +138,15 @@ const PartnerNeftForm = () => {
                     )}
                     value={field.value}
                     onChange={(event, newValue) => {
+                      setValue("product", null);
                       field.onChange(newValue);
+                      fetchData(newValue?.id);
                     }}
-                    //   renderOption={(props, option) => (
-                    //     <li {...props} key={option.id}>
-                    //       {option?.firstName?.toUpperCase()}{" "}
-                    //       {option?.lastName?.toUpperCase()}
-                    //     </li>
-                    //   )}
+                    renderOption={(props, option) => (
+                      <li {...props} key={option.id}>
+                        {option?.lob?.toUpperCase()}
+                      </li>
+                    )}
                     ListboxProps={{
                       style: {
                         maxHeight: "200px",
@@ -152,10 +169,10 @@ const PartnerNeftForm = () => {
                 render={({ field }) => (
                   <Autocomplete
                     id="product"
-                    options={options || []}
-                    //   getOptionLabel={(option) => {
-                    //     return `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`;
-                    //   }}
+                    options={data?.data || []}
+                    getOptionLabel={(option) =>
+                      option?.product?.toUpperCase() || ""
+                    }
                     className="customize-select"
                     size="small"
                     isOptionEqualToValue={(option, value) =>
@@ -168,12 +185,11 @@ const PartnerNeftForm = () => {
                     onChange={(event, newValue) => {
                       field.onChange(newValue);
                     }}
-                    //   renderOption={(props, option) => (
-                    //     <li {...props} key={option.id}>
-                    //       {option?.firstName?.toUpperCase()}{" "}
-                    //       {option?.lastName?.toUpperCase()}
-                    //     </li>
-                    //   )}
+                    renderOption={(props, option) => (
+                      <li {...props} key={option.id}>
+                        {option?.product?.toUpperCase()}
+                      </li>
+                    )}
                     ListboxProps={{
                       style: {
                         maxHeight: "200px",
@@ -187,95 +203,79 @@ const PartnerNeftForm = () => {
               </div>
             </Grid>
             <Grid item xs={12} sm={6} lg={4}>
-              <text className="label-text required-field">Producer</text>
+              <text className="label-text required-field">CKYC Applicable</text>
               <Controller
-                name="producer"
-                id="producer"
+                name="cykc" // Name of the field in the form data
                 control={control}
-                rules={{ required: "Producer is required" }}
+                rules={{ required: "CKYC Applicable is required" }}
                 render={({ field }) => (
-                  <Autocomplete
-                    id="producer"
-                    options={options || []}
-                    //   getOptionLabel={(option) => {
-                    //     return `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`;
-                    //   }}
-                    className="customize-select"
-                    size="small"
-                    isOptionEqualToValue={(option, value) =>
-                      option.id === value.id
-                    }
-                    renderInput={(params) => (
-                      <TextField {...params} placeholder="Select" />
-                    )}
-                    value={field.value}
-                    onChange={(event, newValue) => {
-                      field.onChange(newValue);
-                    }}
-                    //   renderOption={(props, option) => (
-                    //     <li {...props} key={option.id}>
-                    //       {option?.firstName?.toUpperCase()}{" "}
-                    //       {option?.lastName?.toUpperCase()}
-                    //     </li>
-                    //   )}
-                    ListboxProps={{
-                      style: {
-                        maxHeight: "200px",
-                      },
-                    }}
-                  />
+                  <RadioGroup
+                    row
+                    aria-labelledby="insillion-status-row-radio-buttons-group-label"
+                    name="cykc"
+                    {...field}
+                  >
+                    <FormControlLabel
+                      value="enable"
+                      control={<Radio />}
+                      label="Enable"
+                      className={styles.radioStyle}
+                    />
+                    <FormControlLabel
+                      value="disable"
+                      control={<Radio />}
+                      label="Disable"
+                    />
+                  </RadioGroup>
                 )}
               />
               <div className="error-msg">
-                {errors.producer && <span>{errors.producer.message}</span>}
+                {errors.cykc && <span>{errors.cykc.message}</span>}
               </div>
             </Grid>
             <Grid item xs={12} sm={6} lg={4}>
-              <text className="label-text required-field">
-                Verification Method
-              </text>
+              <text className="label-text required-field">For Whom</text>
               <Controller
-                name="verificationMethod"
-                id="verificationMethod"
+                name="forWhom"
+                id="forWhom" // Name of the field in the form data
                 control={control}
-                rules={{ required: "Verification Method is required" }}
+                rules={{ required: "This field is required" }}
                 render={({ field }) => (
-                  <Autocomplete
-                    id="verificationMethod"
-                    options={options || []}
-                    //   getOptionLabel={(option) => {
-                    //     return `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`;
-                    //   }}
-                    className="customize-select"
-                    size="small"
-                    isOptionEqualToValue={(option, value) =>
-                      option.id === value.id
-                    }
-                    renderInput={(params) => (
-                      <TextField {...params} placeholder="Select" />
-                    )}
+                  <Select
+                    id="forWhom"
                     value={field.value}
                     onChange={(event, newValue) => {
-                      field.onChange(newValue);
+                      field.onChange(event.target.value);
                     }}
-                    //   renderOption={(props, option) => (
-                    //     <li {...props} key={option.id}>
-                    //       {option?.firstName?.toUpperCase()}{" "}
-                    //       {option?.lastName?.toUpperCase()}
-                    //     </li>
-                    //   )}
-                    ListboxProps={{
-                      style: {
-                        maxHeight: "200px",
-                      },
+                    size="small"
+                    displayEmpty
+                    fullWidth
+                    className="customize-select"
+                    renderValue={(selected) => {
+                      if (selected === null) {
+                        return (
+                          <div className={styles.placeholderStyle}>Select</div>
+                        );
+                      }
+                      const selectedItem = forWhom.find(
+                        (item) => item.value === selected
+                      );
+                      return selectedItem ? selectedItem.label : "";
                     }}
-                  />
+                  >
+                    {forWhom.map((item) => (
+                      <MenuItem
+                        value={item.value}
+                        className={styles.styledOptionText}
+                      >
+                        {item.label}
+                      </MenuItem>
+                    ))}
+                  </Select>
                 )}
               />
               <div className="error-msg">
-                {errors.verificationMethod && (
-                  <span>{errors.verificationMethod.message}</span>
-                )}
+                {errors.forWhom && <span>{errors.forWhom.message}</span>}
               </div>
             </Grid>
           </Grid>
@@ -294,4 +294,4 @@ const PartnerNeftForm = () => {
   );
 };
 
-export default PartnerNeftForm;
+export default CykcForm;

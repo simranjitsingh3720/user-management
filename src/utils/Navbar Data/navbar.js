@@ -6,7 +6,7 @@ export const SideNavData = [
   {
     label: "Dashboard",
     icon: GridViewIcon,
-    navigateRoute: 'dashboard'
+    navigateRoute: "dashboard",
   },
   {
     label: "User Management",
@@ -102,6 +102,11 @@ export const SideNavData = [
     label: "Partner NEFT Flag",
     icon: GridViewIcon,
     navigateRoute: "partner-neft",
+  },
+  {
+    label: "cKYC Config",
+    icon: GridViewIcon,
+    navigateRoute: "ckyc-config",
   },
   {
     label: "Producer Management",
