@@ -1,4 +1,4 @@
-import { Autocomplete, Button, IconButton, TextField } from "@mui/material";
+import { Autocomplete,  IconButton, TextField } from "@mui/material";
 import React, { useEffect } from "react";
 import LeftArrow from "../../../assets/LeftArrow";
 import styles from "./styles.module.scss";
@@ -8,6 +8,7 @@ import useGetGroup from "../hooks/useGetGroup";
 import useCreateRole from "../hooks/useCreateRole";
 import useGetRoleById from "../hooks/useGetRoleByID";
 import useUpdateRole from "../hooks/useUpdateRole";
+import CustomButton from "../../../components/CustomButton";
 
 const convertToDesiredFormat = (data, roleName) => {
   const groupId = data.id;
@@ -153,14 +154,14 @@ function CreateRoleForm() {
             </div>
           </div>
         </div>
-        <Button
+        <CustomButton
           type="submit"
           variant="contained"
-          className={styles.styledButton}
+          
           disabled={loading || (id && roleUpdateLoading) || updateLoading}
         >
           {id ? "Update" : "Submit"}
-        </Button>
+        </CustomButton>
       </form>
     </div>
   );

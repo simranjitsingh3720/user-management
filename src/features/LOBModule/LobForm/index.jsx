@@ -1,5 +1,5 @@
 import {
-  Button,
+  
   FormControlLabel,
   IconButton,
   Radio,
@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./styles.module.scss";
 import LeftArrow from "../../../assets/LeftArrow";
 import useCreateLob from "../hooks/useCreateLob";
+import CustomButton from "../../../components/CustomButton";
 
 function LobForm() {
   const navigate = useNavigate();
@@ -129,14 +130,14 @@ function LobForm() {
             </div>
           </div>
         </div>
-        <Button
+        <CustomButton
           type="submit"
           variant="contained"
-          className={styles.styledButton}
+          
           disabled={loading}
         >
           {loading ? "Submiting..." : "Submit"}
-        </Button>
+        </CustomButton>
       </form>
     </div>
   );

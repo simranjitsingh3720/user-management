@@ -3,10 +3,8 @@ import useGetBancaLoginData from "./hooks/useGetBancaLoginData";
 import styles from "./styles.module.scss";
 import {
   Autocomplete,
-  Button,
   Switch,
   TextField,
-  Tooltip,
 } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
@@ -20,6 +18,7 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import useCreateBancaField from "./hooks/useCreateBancaField";
 import useUpdateBancaField from "./hooks/useUpdateBancaField";
 import "dayjs/locale/en-gb";
+import CustomButton from "../../components/CustomButton";
 
 function BANCALogin() {
   const [fileName, setFileName] = useState("");
@@ -186,14 +185,13 @@ function BANCALogin() {
               </div>
             </div>
             <div>
-              <Button
+              <CustomButton
                 variant="outlined"
                 startIcon={<RestartAltIcon />}
-                sx={{ textTransform: "none" }}
                 onClick={() => handleResetButton()}
               >
                 Reset
-              </Button>
+              </CustomButton>
             </div>
           </div>
           <div className={styles.fieldStyle}>
@@ -413,7 +411,7 @@ function BANCALogin() {
                   }
                 }}
               />
-              <Button
+              <CustomButton
                 component="label"
                 role={undefined}
                 variant="contained"
@@ -427,7 +425,7 @@ function BANCALogin() {
                 onClick={() => handleButtonClick()}
               >
                 Upload file
-              </Button>
+              </CustomButton>
               {fileName && (
                 <div className={styles.fileNameStyle}>{fileName}</div>
               )}
@@ -435,14 +433,13 @@ function BANCALogin() {
           </div>
         </div>
         <div>
-          <Button
+          <CustomButton
             type="submit"
             variant="contained"
-            className={styles.styledButton}
             disabled={updateBancaLoding || createBancaLoding}
           >
             Submit
-          </Button>
+          </CustomButton>
         </div>
       </form>
     </div>

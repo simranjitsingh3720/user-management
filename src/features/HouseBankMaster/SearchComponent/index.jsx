@@ -1,8 +1,9 @@
-import { Button, MenuItem, Select, TextField, Typography } from "@mui/material";
+import {  MenuItem, Select, TextField, Typography } from "@mui/material";
 import React from "react";
 import styles from "./styles.module.scss";
 import { SearchKey } from "../constants";
 import { useNavigate } from "react-router-dom";
+import CustomButton from "../../../components/CustomButton";
 
 function SearchComponenet({ setPageChange, setQuery, searched, setSearched }) {
   const handleChange = (event) => {
@@ -51,15 +52,14 @@ function SearchComponenet({ setPageChange, setQuery, searched, setSearched }) {
           }}
         />
       </div>
-      <Button
+      <CustomButton
         variant="contained"
         onClick={handleCreateNewForm}
-        sx={{ textTransform: "none" }}
       >
         <Typography nowrap="true" className={styles.buttonTextStyle}>
           Create House Master Configuration
         </Typography>
-      </Button>
+      </CustomButton>
     </div>
   );
 }

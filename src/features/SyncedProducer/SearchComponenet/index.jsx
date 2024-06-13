@@ -1,6 +1,6 @@
 import {
   Autocomplete,
-  Button,
+  
   MenuItem,
   Select,
   TextField,
@@ -14,6 +14,7 @@ import { Controller, useForm } from "react-hook-form";
 import { ProposalEODBypass } from "../constants";
 import useGetUserData from "../../BANCALogin/hooks/useGetUserData";
 import "dayjs/locale/en-gb";
+import CustomButton from "../../../components/CustomButton";
 
 const fetchIdsAndConvert = (inputData) => {
   const ids = (inputData || []).map((producer) => producer.id);
@@ -117,13 +118,13 @@ function SearchComponenet({
                 </div>
               </div>
 
-              <Button
+              <CustomButton
                 variant="outlined"
                 type="submit"
                 className={styles.stylesButton}
               >
                 Go
-              </Button>
+              </CustomButton>
             </div>
           </div>
           <div>
@@ -191,9 +192,9 @@ function SearchComponenet({
                   }}
                 />
               )}
-              <Button variant="outlined" onClick={handleGo}>
+              <CustomButton variant="outlined" onClick={handleGo}>
                 Go
-              </Button>
+              </CustomButton>
             </div>
           </div>
         </div>

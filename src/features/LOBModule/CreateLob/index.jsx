@@ -1,7 +1,8 @@
-import { Button, Typography } from "@mui/material";
+import {  Typography } from "@mui/material";
 import React from "react";
 import styles from "./styles.module.scss";
 import { useNavigate } from "react-router-dom";
+import CustomButton from "../../../components/CustomButton";
 
 function CreateLob() {
   const navigate = useNavigate();
@@ -11,7 +12,7 @@ function CreateLob() {
   return (
     <div>
       <div className={styles.createContainer}>
-        <Button
+        <CustomButton
           variant="contained"
           onClick={handleCreateNewForm}
           sx={{ textTransform: "none" }}
@@ -19,7 +20,7 @@ function CreateLob() {
           <Typography nowrap="true" className={styles.buttonTextStyle}>
             Create New LOB
           </Typography>
-        </Button>
+        </CustomButton>
       </div>
     </div>
   );

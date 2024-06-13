@@ -1,6 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from '@mui/material/Button';
+import { styled } from '@mui/material/styles';
+
+const StyledButton = styled(Button)(({ theme, size }) => ({
+  '&:not(:last-of-type)': {
+    marginRight: theme.spacing(2),
+  },
+  ...(size === 'medium' && {
+    height: '2.5rem',
+  }),
+}));
 
 const CustomButton = ({
   children,
@@ -17,7 +27,7 @@ const CustomButton = ({
   ...props
 }) => {
   return (
-    <Button
+    <StyledButton
       className={className}
       onClick={onClick}
       type={type}
@@ -31,7 +41,7 @@ const CustomButton = ({
       {...props}
     >
       {children}
-    </Button>
+    </StyledButton>
   );
 };
 

@@ -1,4 +1,4 @@
-import { Autocomplete, Button, IconButton, TextField } from "@mui/material";
+import { Autocomplete,  IconButton, TextField } from "@mui/material";
 import React, { useEffect } from "react";
 import LeftArrow from "../../../assets/LeftArrow";
 import styles from "./styles.module.scss";
@@ -13,6 +13,7 @@ import useGetDataById from "../hooks/useGetDataById";
 import useUpdateEODBypass from "../hooks/useUpdateEODBypass";
 import { alphaNumericRegex } from "../../../utils/globalConstants";
 import "dayjs/locale/en-gb";
+import CustomButton from "../../../components/CustomButton";
 
 function ProducerEODFrom() {
   const { id } = useParams();
@@ -263,14 +264,14 @@ function ProducerEODFrom() {
             </div>
           </div>
         </div>
-        <Button
+        <CustomButton
           type="submit"
           variant="contained"
-          className={styles.styledButton}
+          
           disabled={updateLoading || createLoading}
         >
           {id ? "Update" : "Submit"}
-        </Button>
+        </CustomButton>
       </form>
     </div>
   );

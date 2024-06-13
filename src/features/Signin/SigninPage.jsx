@@ -1,8 +1,9 @@
 import styles from "./styles.module.scss";
 import { useForm } from "react-hook-form";
 import React from "react";
-import { Box, Button, TextField } from "@mui/material";
+import { Box, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import CustomButton from "../../components/CustomButton";
 
 /**
  * The sign in page.
@@ -64,13 +65,12 @@ function SignInPage() {
             </div>
             <br />
             <div>
-              <Button
+              <CustomButton
                 type="submit"
                 variant="contained"
-                className={styles.styledButton}
               >
                 Submit
-              </Button>
+              </CustomButton>
             </div>
           </form>
         </div>

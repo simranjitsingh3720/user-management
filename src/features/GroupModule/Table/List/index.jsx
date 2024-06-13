@@ -3,7 +3,6 @@ import styles from "./styles.module.scss";
 import { useNavigate } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
 import {
-  Button,
   Dialog,
   DialogContent,
   DialogTitle,
@@ -20,6 +19,7 @@ import ListLoader from "./ListLoader";
 import EditIcon from "@mui/icons-material/Edit";
 import InfoIcon from "@mui/icons-material/Info";
 import useUpdateGroup from "../../hooks/useUpdateGroup";
+import CustomButton from "../../../../components/CustomButton";
 
 function List({
   item,
@@ -184,22 +184,19 @@ function List({
           </text>
 
           <div className={styles.SubmitContainer}>
-            <Button
+            <CustomButton
               variant="outlined"
               onClick={() => setChangeStatusOpen(false)}
-              size="small"
             >
               No
-            </Button>
-            <Button
+            </CustomButton>
+            <CustomButton
               variant="contained"
-              className={styles.styledButton}
-              size="small"
               disabled={updateLoading}
               onClick={() => handleClickYes()}
             >
               yes
-            </Button>
+            </CustomButton>
           </div>
         </DialogContent>
       </Dialog>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./styles.module.scss";
 import {
   Autocomplete,
-  Button,
+  
   Checkbox,
   TextField,
   Tooltip,
@@ -16,6 +16,7 @@ import useGetAllModule from "../hooks/useGetAllModule";
 import capitalizeFirstLetter from "../../../utils/globalizationFunction";
 import useGetSubModule from "../hooks/useGetSubModule";
 import DeleteIcon from "@mui/icons-material/Delete";
+import CustomButton from "../../../components/CustomButton";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -241,15 +242,14 @@ function CreateNewUserContainer({
         <div className={styles.buttonWrapper}>
           {(index > 0 || itemLength > 1) && (
             <Tooltip title="Remove permission">
-              <Button
+              <CustomButton
                 type="button"
                 variant="text"
-                size="small"
                 startIcon={<DeleteIcon />}
                 onClick={() => remove()}
               >
                 Remove
-              </Button>
+              </CustomButton>
             </Tooltip>
           )}
         </div>

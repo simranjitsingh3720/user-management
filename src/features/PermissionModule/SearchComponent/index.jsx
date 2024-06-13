@@ -1,7 +1,8 @@
-import { Button, TextField, Typography } from "@mui/material";
+import {  TextField, Typography } from "@mui/material";
 import React from "react";
 import styles from "./styles.module.scss";
 import { useNavigate } from "react-router-dom";
+import CustomButton from "../../../components/CustomButton";
 
 function SearchComponent({ setQuery, setLoading, setPageChange }) {
   // const handleChange = (event) => {
@@ -57,12 +58,12 @@ function SearchComponent({ setQuery, setLoading, setPageChange }) {
             }}
           />
 
-          {/* <Button variant="outlined" onClick={handleGo}>
+          {/* <CustomButton variant="outlined" onClick={handleGo}>
             Go
-          </Button> */}
+          </CustomButton> */}
         </div>
         <div>
-          <Button
+          <CustomButton
             variant="contained"
             onClick={handleCreateNewForm}
             sx={{ textTransform: "none" }}
@@ -70,7 +71,7 @@ function SearchComponent({ setQuery, setLoading, setPageChange }) {
             <Typography nowrap="true" className={styles.buttonTextStyle}>
               Create New Permission
             </Typography>
-          </Button>
+          </CustomButton>
         </div>
       </div>
     </div>

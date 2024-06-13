@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styles from "./styles.module.scss";
 import {
   Autocomplete,
-  Button,
+  
   FormControlLabel,
   Radio,
   RadioGroup,
@@ -11,6 +11,7 @@ import {
 import { Controller, useForm } from "react-hook-form";
 import useGetUserData from "../../BANCALogin/hooks/useGetUserData";
 import useCreateOTPException from "../hooks/useCreateOTPException";
+import CustomButton from "../../../components/CustomButton";
 
 function SetOTPException({ fetchData }) {
   const [OTPValue, setOTPValue] = useState("byChannnel");
@@ -164,14 +165,14 @@ function SetOTPException({ fetchData }) {
               </div>
             </div>
           )}
-          <Button
+          <CustomButton
             type="submit"
             variant="contained"
-            className={styles.styledButton}
+            
             loading={loading}
           >
             Add
-          </Button>
+          </CustomButton>
         </form>
       </div>
     </div>

@@ -1,6 +1,6 @@
 import {
   Autocomplete,
-  Button,
+  
   IconButton,
   MenuItem,
   Select,
@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./styles.module.scss";
 import LeftArrow from "../../../../assets/LeftArrow";
 import { BitlyLinkMandatory } from "../../constants";
+import CustomButton from "../../../../components/CustomButton";
 
 function ChannelForm() {
   const navigate = useNavigate();
@@ -125,13 +126,13 @@ function ChannelForm() {
             </div>
           </div>
         </div>
-        <Button
+        <CustomButton
           type="submit"
           variant="contained"
-          className={styles.styledButton}
+          
         >
           Submit
-        </Button>
+        </CustomButton>
       </form>
     </div>
   );

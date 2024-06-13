@@ -1,9 +1,10 @@
-import { AppBar, Avatar, Button, IconButton, Toolbar } from "@mui/material";
+import { AppBar, Avatar, IconButton, Toolbar } from "@mui/material";
 import React from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import styles from "./styles.module.scss";
 import LogoutIcon from "../../assets/LogoutIcon";
 import { useNavigate } from "react-router-dom";
+import CustomButton from "../CustomButton";
 
 const drawerWidth = 240;
 
@@ -50,14 +51,13 @@ function Header({ handleDrawerToggle, selectedNavbar, selectedParentIndex }) {
               </div>
             </div>
             <div className={styles.lineStyle} />
-            <Button
+            <CustomButton
               variant="text"
               startIcon={<LogoutIcon />}
-              className={styles.logoutButton}
               onClick={handleLogout}
             >
               Logout
-            </Button>
+            </CustomButton>
           </div>
         </div>
       </AppBar>

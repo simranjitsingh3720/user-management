@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import styles from "./styles.module.scss";
-import EditLogo from "../../../../../assets/EditLogo";
 import {
-  Button,
   Dialog,
   DialogContent,
   DialogTitle,
@@ -15,6 +13,7 @@ import InfoIcon from "@mui/icons-material/Info";
 import useUpdateUser from "../../hooks/useUpdateUser";
 import EditIcon from "@mui/icons-material/Edit";
 import { useNavigate } from "react-router-dom";
+import CustomButton from "../../../../../components/CustomButton";
 
 function List({ item, loading, fetchData, setLoading }) {
   const [checked, setChecked] = useState(item?.status);
@@ -120,21 +119,18 @@ function List({ item, loading, fetchData, setLoading }) {
           </text>
 
           <div className={styles.SubmitContainer}>
-            <Button
+            <CustomButton
               variant="outlined"
               onClick={() => setOpen(false)}
-              size="small"
             >
               No
-            </Button>
-            <Button
+            </CustomButton>
+            <CustomButton
               variant="contained"
-              className={styles.styledButton}
-              size="small"
               onClick={() => handleClickYes()}
             >
               yes
-            </Button>
+            </CustomButton>
           </div>
         </DialogContent>
       </Dialog>

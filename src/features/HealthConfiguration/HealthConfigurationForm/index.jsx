@@ -1,6 +1,5 @@
 import {
   Autocomplete,
-  Button,
   IconButton,
   MenuItem,
   Select,
@@ -17,6 +16,7 @@ import { BitlyLinkMandatory } from "../constants";
 import useGetUserData from "../../BANCALogin/hooks/useGetUserData";
 import useCreateHealthConfig from "../hooks/useCreateHealthConfig";
 import useGetHealthConfigByID from "../hooks/useGetHealthConfigById";
+import CustomButton from "../../../components/CustomButton";
 
 function HealthConfigurationForm() {
   const { id } = useParams();
@@ -196,14 +196,13 @@ function HealthConfigurationForm() {
             </div>
           </div>
         </div>
-        <Button
+        <CustomButton
           type="submit"
           variant="contained"
-          className={styles.styledButton}
           disabled={updateLoading || createPaymentLoading}
         >
           {id ? "Update" : "Submit"}
-        </Button>
+        </CustomButton>
       </form>
     </div>
   );

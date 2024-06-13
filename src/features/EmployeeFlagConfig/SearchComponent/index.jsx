@@ -1,15 +1,12 @@
 import {
   Autocomplete,
-  Button,
-  MenuItem,
-  Select,
   TextField,
 } from "@mui/material";
 import React from "react";
 import styles from "./styles.module.scss";
-import { searchOption } from "../constants";
 
 import useGetUserData from "../../BANCALogin/hooks/useGetUserData";
+import CustomButton from "../../../components/CustomButton";
 
 const fetchIdsAndConvert = (inputData) => {
   const ids = (inputData || []).map((producer) => producer.id);
@@ -56,9 +53,9 @@ function SearchComponenet({ producers, fetchData, setProducers }) {
           }}
         />
 
-        <Button variant="outlined" onClick={handleGo}>
+        <CustomButton variant="outlined" onClick={handleGo}>
           Go
-        </Button>
+        </CustomButton>
       </div>
     </div>
   );

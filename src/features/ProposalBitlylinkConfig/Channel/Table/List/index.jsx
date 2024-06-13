@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./styles.module.scss";
 import {
-  Button,
+  
   Dialog,
   DialogContent,
   DialogTitle,
@@ -15,6 +15,7 @@ import useUpdateBitlyLink from "../../../hooks/useUpdateBitlyLink";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import Table from "./Table";
 import NoDataFound from "../../../../../components/NoDataCard";
+import CustomButton from "../../../../../components/CustomButton";
 
 function List({ item, fetchData: fetchGroupList }) {
   const [changeStatusOpen, setChangeStatusOpen] = useState(false);
@@ -118,22 +119,22 @@ function List({ item, fetchData: fetchGroupList }) {
           </text>
 
           <div className={styles.SubmitContainer}>
-            <Button
+            <CustomButton
               variant="outlined"
               onClick={() => setChangeStatusOpen(false)}
               size="small"
             >
               No
-            </Button>
-            <Button
+            </CustomButton>
+            <CustomButton
               variant="contained"
-              className={styles.styledButton}
+              
               size="small"
               disabled={updateLoading}
               onClick={() => handleClickYes()}
             >
               yes
-            </Button>
+            </CustomButton>
           </div>
         </DialogContent>
       </Dialog>

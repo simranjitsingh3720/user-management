@@ -3,7 +3,7 @@ import { useForm, Controller } from "react-hook-form";
 import {
   Autocomplete,
   TextField,
-  Button,
+  
   Box,
   Card,
   CardContent,
@@ -15,6 +15,7 @@ import styles from "./styles.module.scss";
 import LeftArrow from "../../../assets/LeftArrow";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import { useNavigate, useParams } from "react-router-dom";
+import CustomButton from "../../../components/CustomButton";
 
 const options = [
   { label: "Option 1", value: "option1" },
@@ -86,13 +87,13 @@ const PartnerNeftForm = () => {
                     justifyContent: "flex-end",
                   }}
                 >
-                  <Button
+                  <CustomButton
                     variant="outlined"
                     startIcon={<RestartAltIcon />}
                     className={styles.secondaryBtn}
                   >
                     Reset
-                  </Button>
+                  </CustomButton>
                 </Grid>
               </Grid>
               <Divider style={{ margin: "1rem 0" }} />
@@ -282,9 +283,9 @@ const PartnerNeftForm = () => {
         </CardContent>
       </Card>
       <div className={styles.buttonContainer}>
-        <Button type="submit" variant="contained" className={styles.primaryBtn}>
+        <CustomButton type="submit" variant="contained" className={styles.primaryBtn}>
           Submit
-        </Button>
+        </CustomButton>
       </div>
     </Box>
   );

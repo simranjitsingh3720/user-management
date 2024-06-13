@@ -1,6 +1,6 @@
 import {
   Autocomplete,
-  Button,
+  
   MenuItem,
   Select,
   TextField,
@@ -10,6 +10,7 @@ import React from "react";
 import styles from "./styles.module.scss";
 import { useNavigate } from "react-router-dom";
 import { GroupSearchBy } from "../constants";
+import CustomButton from "../../../components/CustomButton";
 
 function SearchComponent({
   searched,
@@ -95,12 +96,12 @@ function SearchComponent({
             />
           )}
 
-          <Button variant="outlined" onClick={handleGo}>
+          <CustomButton variant="outlined" onClick={handleGo}>
             Go
-          </Button>
+          </CustomButton>
         </div>
         <div>
-          <Button
+          <CustomButton
             variant="contained"
             onClick={handleCreateNewForm}
             sx={{ textTransform: "none" }}
@@ -108,7 +109,7 @@ function SearchComponent({
             <Typography nowrap="true" className={styles.buttonTextStyle}>
               Create New Role
             </Typography>
-          </Button>
+          </CustomButton>
         </div>
       </div>
     </div>

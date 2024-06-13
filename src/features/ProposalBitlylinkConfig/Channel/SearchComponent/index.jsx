@@ -1,8 +1,9 @@
-import { Button, MenuItem, Select, TextField, Typography } from "@mui/material";
+import {  MenuItem, Select, TextField, Typography } from "@mui/material";
 import React from "react";
 import styles from "./styles.module.scss";
 import { useNavigate } from "react-router-dom";
 import { BitlyLink } from "../../constants";
+import CustomButton from "../../../../components/CustomButton";
 
 function SearchComponent({ setQuery, setPageChange, searched, setSearched }) {
   const handleChange = (event) => {
@@ -73,12 +74,12 @@ function SearchComponent({ setQuery, setPageChange, searched, setSearched }) {
             />
           </div>
 
-          {/* <Button variant="outlined" onClick={handleGo}>
+          {/* <CustomButton variant="outlined" onClick={handleGo}>
             Go
-          </Button> */}
+          </CustomButton> */}
         </div>
         <div>
-          <Button
+          <CustomButton
             variant="contained"
             onClick={handleCreateNewForm}
             sx={{ textTransform: "none" }}
@@ -86,7 +87,7 @@ function SearchComponent({ setQuery, setPageChange, searched, setSearched }) {
             <Typography nowrap="true" className={styles.buttonTextStyle}>
               Create Config
             </Typography>
-          </Button>
+          </CustomButton>
         </div>
       </div>
     </div>

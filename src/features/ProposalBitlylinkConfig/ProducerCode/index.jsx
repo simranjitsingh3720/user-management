@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import styles from "./styles.module.scss";
 import { Controller, useForm } from "react-hook-form";
-import { Autocomplete, Button, TextField } from "@mui/material";
+import { Autocomplete,  TextField } from "@mui/material";
 import TableList from "./TableList";
 import useGetProducerData from "../../BANCALogin/hooks/useGetProducerData";
 import useGetUserData from "../../BANCALogin/hooks/useGetUserData";
 import useCreateBitlyLink from "../hooks/useCreateBitlyLink";
 import Loader from "./Loader";
+import CustomButton from "../../../components/CustomButton";
 
 function ProducerCode() {
   const { handleSubmit, control, formState, setValue } = useForm({
@@ -115,21 +116,21 @@ function ProducerCode() {
             )
           )}
           <div className={styles.buttonContainer}>
-            <Button
+            <CustomButton
               type="submit"
               variant="contained"
-              className={styles.styledButton}
+              
               disabled={producerLoading || createLoading}
             >
               Submit
-            </Button>
-            <Button
+            </CustomButton>
+            <CustomButton
               variant="outlined"
-              className={styles.styledButton}
+              
               onClick={() => handleCancel()}
             >
               Cancel
-            </Button>
+            </CustomButton>
           </div>
         </div>
       </form>
