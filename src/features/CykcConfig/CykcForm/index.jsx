@@ -282,11 +282,7 @@ const CykcForm = () => {
         </CardContent>
       </Card>
       <div className={styles.buttonContainer}>
-        <CustomButton
-          type="submit"
-          variant="contained"
-          className={styles.primaryBtn}
-        >
+        <CustomButton type="submit" variant="contained">
           Submit
         </CustomButton>
       </div>
