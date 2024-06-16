@@ -9,6 +9,11 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useNavigate } from "react-router-dom";
 import "dayjs/locale/en-gb";
 import CustomButton from "../../../../components/CustomButton";
+import Content from "../Dialog/Content";
+import Actions from "../Dialog/Action";
+import { useDispatch } from "react-redux";
+import { showDialog } from "../../../../stores/slices/dialogSlice";
+import CustomDialog from "../../../../components/CustomDialog";
 
 function SearchComponent({
   searched = "",
@@ -21,6 +26,8 @@ function SearchComponent({
   setQuery,
   fetchData,
 }) {
+  const dispatch = useDispatch();
+
   const handleChange = (event) => {
     setSearched(event.target.value);
   };
@@ -33,6 +40,16 @@ function SearchComponent({
 
   const handleGo = () => {
     fetchData(searched, query);
+  };
+
+  const handleOpenDialog = () => {
+    dispatch(
+      showDialog({
+        title: 'Custom Dialog Title',
+        content: <Content />,
+        actions: <Actions />,
+      })
+    );
   };
 
   return (
@@ -54,8 +71,8 @@ function SearchComponent({
                 : () => <div className={styles.placeholderStyle}>Select</div>
             }
           >
-            {selectData.map((item) => (
-              <MenuItem value={item.value} className={styles.styledOptionText}>
+            {selectData.map((item, index) => (
+              <MenuItem key={index} value={item.value} className={styles.styledOptionText}>
                 {item.label}
               </MenuItem>
             ))}
@@ -110,6 +127,7 @@ function SearchComponent({
           <CustomButton
             variant="outlined"
             startIcon={<DownloadIcon />}
+            onClick={handleOpenDialog}
           >
             Export Data
           </CustomButton>
@@ -122,6 +140,8 @@ function SearchComponent({
           </CustomButton>
         </div>
       </div>
+
+      <CustomDialog />
     </div>
   );
 }
