@@ -1,6 +1,6 @@
 import {
   Autocomplete,
-  Button,
+  
   FormControlLabel,
   IconButton,
   Radio,
@@ -14,6 +14,7 @@ import styles from "./styles.module.scss";
 import LeftArrow from "../../../assets/LeftArrow";
 import useGetLobListData from "../hooks/useGetLobListData";
 import useCreateProduct from "../hooks/useCreateProduct";
+import CustomButton from "../../../components/CustomButton";
 
 function ProductForm() {
   const navigate = useNavigate();
@@ -171,14 +172,14 @@ function ProductForm() {
             </div>
           </div>
         </div>
-        <Button
+        <CustomButton
           type="submit"
           variant="contained"
-          className={styles.styledButton}
+          
           disabled={loading}
         >
           Submit
-        </Button>
+        </CustomButton>
       </form>
     </div>
   );

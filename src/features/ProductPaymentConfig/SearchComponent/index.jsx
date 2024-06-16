@@ -1,6 +1,6 @@
 import {
   Autocomplete,
-  Button,
+  
   MenuItem,
   Select,
   TextField,
@@ -12,6 +12,7 @@ import { ProductPayment } from "../constants";
 import { useNavigate } from "react-router-dom";
 import useGetAllProduct from "../hooks/useGetAllProduct";
 import useGetLobListData from "../../ProductModule/hooks/useGetLobListData";
+import CustomButton from "../../../components/CustomButton";
 
 const fetchIdsAndConvert = (inputData) => {
   const ids = inputData.map((permission) => permission.id);
@@ -121,11 +122,11 @@ function SearchComponenet({
           />
         )}
 
-        <Button variant="outlined" onClick={handleGo}>
+        <CustomButton variant="outlined" onClick={handleGo}>
           Go
-        </Button>
+        </CustomButton>
       </div>
-      <Button
+      <CustomButton
         variant="contained"
         onClick={handleCreateNewForm}
         sx={{ textTransform: "none" }}
@@ -133,7 +134,7 @@ function SearchComponenet({
         <Typography nowrap="true" className={styles.buttonTextStyle}>
           Create New Payment Configuration
         </Typography>
-      </Button>
+      </CustomButton>
     </div>
   );
 }

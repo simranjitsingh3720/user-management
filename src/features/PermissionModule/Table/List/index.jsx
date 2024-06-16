@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./styles.module.scss";
 import {
-  Button,
+  
   Dialog,
   DialogContent,
   DialogTitle,
@@ -13,6 +13,7 @@ import capitalizeFirstLetter from "../../../../utils/globalizationFunction";
 import CloseIcon from "@mui/icons-material/Close";
 import InfoIcon from "@mui/icons-material/Info";
 import useUpdatePrivilege from "../../hooks/useUpdatePrivilege";
+import CustomButton from "../../../../components/CustomButton";
 
 function List({ item, fetchData, setLoading }) {
   const [open, setOpen] = useState(false);
@@ -108,21 +109,18 @@ function List({ item, fetchData, setLoading }) {
           </text>
 
           <div className={styles.SubmitContainer}>
-            <Button
+            <CustomButton
               variant="outlined"
               onClick={() => setOpen(false)}
-              size="small"
             >
               No
-            </Button>
-            <Button
+            </CustomButton>
+            <CustomButton
               variant="contained"
-              className={styles.styledButton}
-              size="small"
               onClick={() => handleClickYes()}
             >
               yes
-            </Button>
+            </CustomButton>
           </div>
         </DialogContent>
       </Dialog>

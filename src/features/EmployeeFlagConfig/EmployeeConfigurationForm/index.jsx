@@ -1,4 +1,4 @@
-import { Autocomplete, Button, TextField } from "@mui/material";
+import { Autocomplete, TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import styles from "./styles.module.scss";
 import { Controller, useForm } from "react-hook-form";
@@ -14,6 +14,7 @@ import TableList from "./TableList";
 import useCreateEmployeeConfig from "../hooks/useCreateEmployeeConfig";
 import useGetEmployeeByProducer from "../hooks/useGetEmployeeById";
 import useUpdateEmployeeConfig from "../hooks/useUpdateEmployeeConfig";
+import CustomButton from "../../../components/CustomButton";
 // import useCreateHealthConfig from "../hooks/useCreateHealthConfig";
 // import useGetHealthConfigByID from "../hooks/useGetHealthConfigById";
 
@@ -142,14 +143,14 @@ function EmployeeConfigurationForm({ fetchData: listFetchFun }) {
               </span>
             </div>
             <div>
-              <Button
+              <CustomButton
                 variant="outlined"
                 startIcon={<RestartAltIcon />}
                 sx={{ textTransform: "none" }}
                 onClick={() => handleResetButton()}
               >
                 Reset
-              </Button>
+              </CustomButton>
             </div>
           </div>{" "}
           <div className={styles.containerStyle}>
@@ -244,14 +245,13 @@ function EmployeeConfigurationForm({ fetchData: listFetchFun }) {
             )}
           </div>
         </div>
-        <Button
+        <CustomButton
           type="submit"
           variant="contained"
-          className={styles.styledButton}
           disabled={loading || updateLoading}
         >
-          save
-        </Button>
+          Save
+        </CustomButton>
       </form>
     </div>
   );

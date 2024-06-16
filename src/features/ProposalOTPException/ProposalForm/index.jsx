@@ -3,7 +3,7 @@ import { Controller, useForm } from "react-hook-form";
 import styles from "./styles.module.scss";
 import {
   Autocomplete,
-  Button,
+  
   FormControlLabel,
   IconButton,
   Radio,
@@ -22,6 +22,7 @@ import useUpdateProposal from "../hooks/useUpdateProposal";
 import useGetProducerData from "../../BANCALogin/hooks/useGetProducerData";
 import useGetLobListData from "../hooks/useGetLobListData";
 import "dayjs/locale/en-gb";
+import CustomButton from "../../../components/CustomButton";
 
 function ProposalForm() {
   const { id } = useParams();
@@ -448,14 +449,14 @@ function ProposalForm() {
             </div>
           </div>
         </div>
-        <Button
+        <CustomButton
           type="submit"
           variant="contained"
-          className={styles.styledButton}
+          
           disabled={proposalOTPLoading}
         >
           {id ? "Update" : "Submit"}
-        </Button>
+        </CustomButton>
       </form>
     </div>
   );

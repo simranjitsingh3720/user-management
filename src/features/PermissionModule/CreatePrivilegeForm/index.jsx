@@ -1,6 +1,6 @@
 import {
   Autocomplete,
-  Button,
+  
   Checkbox,
   IconButton,
   ListItemText,
@@ -25,6 +25,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 
 import useCreatePrivilege from "../hooks/useCreatePrivilege";
+import CustomButton from "../../../components/CustomButton";
 
 const PrivilegeForm = () => {
   const [selectedTags, setSelectedTags] = useState([]);
@@ -454,13 +455,13 @@ const PrivilegeForm = () => {
           </div>
         </div>
 
-        <Button
+        <CustomButton
           type="submit"
           variant="contained"
-          className={styles.styledButton}
+          
         >
           Submit
-        </Button>
+        </CustomButton>
       </form>
       <Snackbar
         open={toast}

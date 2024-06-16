@@ -1,4 +1,4 @@
-import { Autocomplete, Button, IconButton, TextField } from "@mui/material";
+import { Autocomplete,  IconButton, TextField } from "@mui/material";
 import React, { useEffect } from "react";
 import LeftArrow from "../../../assets/LeftArrow";
 import styles from "./styles.module.scss";
@@ -10,6 +10,7 @@ import useGetPayment from "../hooks/useGetPayment";
 import useCreatePaymentConfig from "../hooks/useCreatePaymentConfig";
 import useGetPaymentConfigByID from "../hooks/useGetPaymentConfigByID";
 import useUpdatePaymentConfig from "../hooks/useUpdatePaymentConfig";
+import CustomButton from "../../../components/CustomButton";
 
 function ProductPaymentConfigForm() {
   const { id } = useParams();
@@ -235,14 +236,14 @@ function ProductPaymentConfigForm() {
             </div>
           </div>
         </div>
-        <Button
+        <CustomButton
           type="submit"
           variant="contained"
-          className={styles.styledButton}
+          
           disabled={updateLoading || createPaymentLoading}
         >
           {id ? "Update" : "Submit"}
-        </Button>
+        </CustomButton>
       </form>
     </div>
   );

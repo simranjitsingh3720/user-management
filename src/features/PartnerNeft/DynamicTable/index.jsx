@@ -22,7 +22,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import ListLoader from "../../../components/ListLoader";
 import TablePaginationActions from "./TablePaginationActions";
 
-import Button from "./../../../components/Button";
+import CustomButton from "./../../../components/CustomButton";
 
 const DynamicTable = ({
   columns,
@@ -104,9 +104,9 @@ const DynamicTable = ({
                         onChange={(e) => setSearchQuery(e.target.value)}
                       />
 
-                      <Button type="submit" onClick={createNeftForm}>
+                      <CustomButton type="submit" onClick={createNeftForm}>
                         Create New NEFT Flag
-                      </Button>
+                      </CustomButton>
                     </div>
                   </TableCell>
                 </TableRow>
@@ -187,10 +187,10 @@ const DynamicTable = ({
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCancelEdit} variant="secondary">
+          <CustomButton onClick={handleCancelEdit} color="secondary">
             Cancel
-          </Button>
-          <Button onClick={handleConfirmEdit}>Confirm</Button>
+          </CustomButton>
+          <CustomButton onClick={handleConfirmEdit}>Confirm</CustomButton>
         </DialogActions>
       </Dialog>
     </div>

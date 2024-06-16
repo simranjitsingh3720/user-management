@@ -1,4 +1,4 @@
-import { Button, MenuItem, Select, TextField } from "@mui/material";
+import { MenuItem, Select, TextField } from "@mui/material";
 import React from "react";
 import DownloadIcon from "../../../../assets/DownloadLogo";
 import styles from "./styles.module.scss";
@@ -8,6 +8,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useNavigate } from "react-router-dom";
 import "dayjs/locale/en-gb";
+import CustomButton from "../../../../components/CustomButton";
 
 function SearchComponent({
   searched = "",
@@ -101,25 +102,24 @@ function SearchComponent({
               className={styles.textFieldStyle}
             />
           )}
-          <Button variant="outlined" onClick={() => handleGo()}>
+          <CustomButton variant="outlined" onClick={() => handleGo()}>
             Go
-          </Button>
+          </CustomButton>
         </div>
         <div>
-          <Button
+          <CustomButton
             variant="outlined"
             startIcon={<DownloadIcon />}
-            className={styles.exportButtonStyle}
           >
             Export Data
-          </Button>
-          <Button
+          </CustomButton>
+          <CustomButton
             variant="contained"
             onClick={handleCreateNewForm}
             sx={{ textTransform: "none" }}
           >
             Create New User
-          </Button>
+          </CustomButton>
         </div>
       </div>
     </div>

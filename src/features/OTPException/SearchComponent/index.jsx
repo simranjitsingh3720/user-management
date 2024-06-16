@@ -66,9 +66,9 @@ function SearchComponent({ setQuery, setPageChange, searched, setSearched }) {
             />
           </div>
 
-          {/* <Button variant="outlined" onClick={handleGo}>
+          {/* <CustomButton variant="outlined" onClick={handleGo}>
             Go
-          </Button> */}
+          </CustomButton> */}
         </div>
       </div>
     </div>

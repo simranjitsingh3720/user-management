@@ -1,4 +1,4 @@
-import { Button, MenuItem, Select, TextField, Typography } from "@mui/material";
+import {  MenuItem, Select, TextField, Typography } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./styles.module.scss";
@@ -9,6 +9,7 @@ import { Controller, useForm } from "react-hook-form";
 import { ProposalOTPSearch } from "../constants";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import "dayjs/locale/en-gb";
+import CustomButton from "../../../components/CustomButton";
 
 function SearchComponenet({
   fetchData,
@@ -122,26 +123,26 @@ function SearchComponenet({
                 </div>
               </div>
 
-              <Button
+              <CustomButton
                 variant="outlined"
                 type="submit"
                 className={styles.stylesButton}
               >
                 Go
-              </Button>
+              </CustomButton>
               <div>
-                <Button
+                <CustomButton
                   variant="outlined"
                   startIcon={<RestartAltIcon />}
                   sx={{ textTransform: "none" }}
                   onClick={() => handleResetButton()}
                 >
                   Reset
-                </Button>
+                </CustomButton>
               </div>
             </div>
             <div>
-              <Button
+              <CustomButton
                 variant="contained"
                 onClick={handleCreateNewForm}
                 sx={{ textTransform: "none" }}
@@ -149,7 +150,7 @@ function SearchComponenet({
                 <Typography nowrap="true" className={styles.buttonTextStyle}>
                   Create New Proposal Exception
                 </Typography>
-              </Button>
+              </CustomButton>
             </div>
           </div>
           <div>

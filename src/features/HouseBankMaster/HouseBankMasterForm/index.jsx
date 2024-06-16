@@ -1,4 +1,4 @@
-import { Button, IconButton, TextField } from "@mui/material";
+import { IconButton, TextField } from "@mui/material";
 import React, { useEffect } from "react";
 import LeftArrow from "../../../assets/LeftArrow";
 import styles from "./styles.module.scss";
@@ -8,6 +8,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import useUpdatePaymentConfig from "../hooks/useUpdateHouseBank";
 import useCreateHouseBank from "../hooks/useCreateHouseBank";
 import useGetHouseBankByID from "../hooks/useGetHouseBankById";
+import CustomButton from "../../../components/CustomButton";
 
 function HouseBankMasterForm() {
   const { id } = useParams();
@@ -218,14 +219,13 @@ function HouseBankMasterForm() {
             </div>
           </div>
         </div>
-        <Button
+        <CustomButton
           type="submit"
           variant="contained"
-          className={styles.styledButton}
           disabled={updateLoading || createPaymentLoading}
         >
           {id ? "Update" : "Submit"}
-        </Button>
+        </CustomButton>
       </form>
     </div>
   );

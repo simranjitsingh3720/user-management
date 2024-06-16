@@ -1,7 +1,8 @@
-import { Autocomplete, Button, TextField, Typography } from "@mui/material";
+import { Autocomplete,  TextField, Typography } from "@mui/material";
 import React from "react";
 import styles from "./styles.module.scss";
 import { useNavigate } from "react-router-dom";
+import CustomButton from "../../../components/CustomButton";
 
 const fetchIdsAndConvert = (inputData) => {
   const ids = inputData.map((permission) => permission.id);
@@ -49,16 +50,16 @@ function SearchComponent({ lobListData, value, setValue, fetchData }) {
             }}
           />
 
-          <Button
+          <CustomButton
             variant="outlined"
             onClick={() => handleGo()}
             disabled={!value.length}
           >
             Go
-          </Button>
+          </CustomButton>
         </div>
         <div>
-          <Button
+          <CustomButton
             variant="contained"
             onClick={handleCreateNewForm}
             sx={{ textTransform: "none" }}
@@ -66,7 +67,7 @@ function SearchComponent({ lobListData, value, setValue, fetchData }) {
             <Typography nowrap="true" className={styles.buttonTextStyle}>
               Create New Product
             </Typography>
-          </Button>
+          </CustomButton>
         </div>
       </div>
     </div>

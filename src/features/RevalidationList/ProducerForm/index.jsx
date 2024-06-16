@@ -1,10 +1,11 @@
-import { Autocomplete, Button, Grid, TextField } from "@mui/material";
+import { Autocomplete,  Grid, TextField } from "@mui/material";
 import React from "react";
 import styles from "./styles.module.scss";
 import { Controller, useForm } from "react-hook-form";
 import useGetUserData from "../../../hooks/useGetUserData";
 import DownloadIcon from "./../../../assets/DownloadLogo";
 import excelExport from "../../../utils/excelExport";
+import CustomButton from "../../../components/CustomButton";
 
 const ProducerForm = ({ onFormSubmit, revalidationList }) => {
   const {
@@ -87,22 +88,22 @@ const ProducerForm = ({ onFormSubmit, revalidationList }) => {
         </Grid>
 
         <div className={styles.buttonContainer}>
-          <Button
+          <CustomButton
             type="submit"
             variant="contained"
             className={styles.primaryBtn}
           >
             Submit
-          </Button>
+          </CustomButton>
           {revalidationList.length > 0 ? (
-            <Button
+            <CustomButton
               variant="outlined"
               startIcon={<DownloadIcon />}
               onClick={downloadExcel}
               className={styles.exportBtn}
             >
               Export Data
-            </Button>
+            </CustomButton>
           ) : (
             <></>
           )}

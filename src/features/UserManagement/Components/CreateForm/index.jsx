@@ -13,13 +13,13 @@ import { Controller, useForm } from "react-hook-form";
 import LeftArrow from "../../../../assets/LeftArrow";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
-import { Button } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import useGetGroup from "../hooks/useGetGroup";
 import useGetRole from "../hooks/useGetRole";
 import usePostUser from "../hooks/usePostUser";
 import useGetUserById from "../hooks/useGetUserById";
 import useUpdateUser from "../hooks/useUpdateUser";
+import CustomButton from "../../../../components/CustomButton";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -610,14 +610,14 @@ function CreateUserMangementForm() {
           </div>
         </div>
       </div>
-      <Button
+      <CustomButton
         type="submit"
         variant="contained"
-        className={styles.styledButton}
+        
         disabled={loading || updateUserLoading}
       >
         {id ? "Update" : "Submit"}
-      </Button>
+      </CustomButton>
     </form>
   );
 }

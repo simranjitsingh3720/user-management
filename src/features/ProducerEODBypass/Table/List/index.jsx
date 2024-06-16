@@ -93,22 +93,19 @@ function List({ item, fetchData: fetchGroupList }) {
           </text>
 
           <div className={styles.SubmitContainer}>
-            <Button
+            <CustomButton
               variant="outlined"
               onClick={() => setChangeStatusOpen(false)}
-              size="small"
             >
               No
-            </Button>
-            <Button
+            </CustomButton>
+            <CustomButton
               variant="contained"
-              className={styles.styledButton}
-              size="small"
               disabled={updateLoading}
               onClick={() => handleClickYes()}
             >
               yes
-            </Button>
+            </CustomButton>
           </div>
         </DialogContent>
       </Dialog> */}

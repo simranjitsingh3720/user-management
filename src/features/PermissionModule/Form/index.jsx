@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import CreateNewUserContainer from "../CreateNewPrivilegeForm copy";
-import { IconButton, Button } from "@mui/material";
+import { IconButton } from "@mui/material";
 import styles from "./styles.module.scss";
 import { useNavigate } from "react-router-dom";
 import LeftArrow from "../../../assets/LeftArrow";
 import AddIcon from "@mui/icons-material/Add";
 import useCreatePrivilege from "../hooks/useCreatePrivilege";
+import CustomButton from "../../../components/CustomButton";
 
 function Form() {
   const [selectedSubmodules, setSelectedSubmodules] = useState({});
@@ -98,26 +99,23 @@ function Form() {
             />
           ))}
 
-          <Button
+          <CustomButton
             type="button"
-            variant="text"
-            className={styles.styledAppendButton}
-            size="small"
+            variant="outlined"
+            sx={{ 'margin-left': '2rem' }}
             startIcon={<AddIcon />}
             onClick={() => append({})}
           >
             Add New Permission
-          </Button>
+          </CustomButton>
         </div>
-        <Button
+        <CustomButton
           type="submit"
           variant="contained"
-          className={styles.styledButton}
           disabled={loading}
-          size="small"
         >
           Submit
-        </Button>
+        </CustomButton>
       </form>
     </div>
   );

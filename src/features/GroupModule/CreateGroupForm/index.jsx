@@ -1,4 +1,4 @@
-import { Autocomplete, Button, IconButton, TextField } from "@mui/material";
+import { Autocomplete, IconButton, TextField } from "@mui/material";
 import React, { useEffect } from "react";
 import LeftArrow from "../../../assets/LeftArrow";
 import styles from "./styles.module.scss";
@@ -9,6 +9,7 @@ import useGetPermission from "../hooks/useGetPermission";
 import useCreateGroup from "../hooks/useCreateGroup";
 import useGetGroupById from "../hooks/useGetGroupByID";
 import useUpdateGroup from "../hooks/useUpdateGroup";
+import CustomButton from "../../../components/CustomButton";
 
 const convertToDesiredFormat = (data, groupName) => {
   const permissions = data?.map((permission) => permission.id);
@@ -172,14 +173,13 @@ function CreateGroupForm() {
             </div>
           </div>
         </div>
-        <Button
+        <CustomButton
           type="submit"
           variant="contained"
-          className={styles.styledButton}
           disabled={loading || (id && GroupUpdateLoading) || updateLoading}
         >
           {id ? "Update" : "Submit"}
-        </Button>
+        </CustomButton>
       </form>
     </div>
   );

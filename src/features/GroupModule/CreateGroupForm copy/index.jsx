@@ -1,5 +1,4 @@
 import {
-  Button,
   IconButton,
   TextField,
   RadioGroup,
@@ -24,6 +23,7 @@ import ListLoader from "../../../components/ListLoader";
 import NoDataFound from "../../../components/NoDataCard";
 import useGetUser from "../hooks/useGetUser";
 import useUpdateUser from "../hooks/useUpdateUser";
+import CustomButton from "../../../components/CustomButton";
 
 const convertToDesiredFormat = (data, groupName, groupStatus) => {
   const permissions = data?.map((permission) => permission.id);
@@ -330,32 +330,6 @@ function CreateGroupForm() {
                   onInputChange={(event, val) => {
                     setInput(val);
                   }}
-                  // PaperComponent={(options) => {
-                  //   const { containerProps, children } = options;
-                  //   return (
-                  //     <Paper {...containerProps}>
-                  //       {children}
-
-                  //       <div
-                  //         style={{
-                  //           width: "100%",
-                  //           display: "flex",
-                  //           justifyContent: "center",
-                  //         }}
-                  //       >
-                  //         <Button
-                  //           color="primary"
-                  //           fullWidth
-                  //           size="small"
-                  //           disabled={userLoading}
-                  //           onClick={() => handlePageChange()}
-                  //         >
-                  //           <span>Load more</span>
-                  //         </Button>
-                  //       </div>
-                  //     </Paper>
-                  //   );
-                  // }}
                 />
               )}
             />
@@ -450,14 +424,13 @@ function CreateGroupForm() {
             </div>
           </div>
         </div>
-        <Button
+        <CustomButton
           type="submit"
           variant="contained"
-          className={styles.styledButton}
           disabled={loading || (id && GroupUpdateLoading) || updateLoading}
         >
           {id ? "Update" : "Submit"}
-        </Button>
+        </CustomButton>
       </form>
     </div>
   );

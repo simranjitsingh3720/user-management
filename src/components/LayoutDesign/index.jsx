@@ -3,37 +3,32 @@ import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import NavbarDrawer from "../NavbarDrawer";
 import Header from "../Header";
-import Styles from "./styles.module.scss";
 import { drawerWidth } from "../../utils/globalConstants";
 import { useLocation } from "react-router-dom";
 import { SideNavData } from "../../utils/Navbar Data/navbar";
 
+const HEADER_HEIGHT = 64; // Adjust this based on the height of your header
+
 export const getLabelFromPath = (pathData) => {
-  // Iterate through the SideNavData array
   for (const item of SideNavData) {
-    // Check if navigateRoute property is present and matches pathData
     if (item.navigateRoute && item.navigateRoute === pathData) {
-      return item.label; // Return the label if match found
+      return item.label;
     }
-    // If child items are present, check them recursively
     if (item.child) {
       for (const childItem of item.child) {
         if (childItem.navigateRoute && childItem.navigateRoute === pathData) {
-          return childItem.label; // Return the child label if match found
+          return childItem.label;
         }
       }
     }
   }
-  return null; // Return null if no match found
+  return null;
 };
 
 function ResponsiveDrawer({ showSidebarAndHeader, children }) {
   const location = useLocation();
-  const path = location.pathname; // Get the pathname from the location
-
-  // Split the pathname by '/' and get the last part
+  const path = location.pathname;
   const parts = path.split("/");
-
   const defaultRoute = parts[1];
 
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -41,7 +36,6 @@ function ResponsiveDrawer({ showSidebarAndHeader, children }) {
   const [selectedNavbar, setSelectedNavbar] = useState(
     getLabelFromPath(defaultRoute) || "Permission"
   );
-
   const [selectedParentIndex, setSelectedParentIndex] = useState(null);
 
   const handleDrawerToggle = () => {
@@ -51,18 +45,16 @@ function ResponsiveDrawer({ showSidebarAndHeader, children }) {
   };
 
   return (
-    <Box className={Styles.mainContainer}>
+    <Box sx={{ display: "flex", height: "100vh" }}>
       <CssBaseline />
       {showSidebarAndHeader && (
-        <React.Fragment>
-          <Header
-            handleDrawerToggle={handleDrawerToggle}
-            selectedNavbar={selectedNavbar}
-            selectedParentIndex={selectedParentIndex}
-          />
+        <>
           <Box
             component="nav"
-            sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+            sx={{
+              width: { md: drawerWidth },
+              flexShrink: { md: 0 },
+            }}
             aria-label="mailbox folders"
           >
             <NavbarDrawer
@@ -75,12 +67,34 @@ function ResponsiveDrawer({ showSidebarAndHeader, children }) {
               setSelectedParentIndex={setSelectedParentIndex}
             />
           </Box>
-        </React.Fragment>
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: "flex",
+              flexDirection: "column",
+              height: "100vh",
+              overflow: "hidden",
+              paddingTop: `${HEADER_HEIGHT}px`, // Adjust this based on the height of your header
+            }}
+          >
+            <Header
+              handleDrawerToggle={handleDrawerToggle}
+              selectedNavbar={selectedNavbar}
+              selectedParentIndex={selectedParentIndex}
+            />
+            <Box
+              component="main"
+              sx={{
+                flexGrow: 1,
+                overflowY: "auto",
+                padding: 3,
+              }}
+            >
+              {children}
+            </Box>
+          </Box>
+        </>
       )}
-
-      <Box component="main" className={Styles.main}>
-        {children}
-      </Box>
     </Box>
   );
 }

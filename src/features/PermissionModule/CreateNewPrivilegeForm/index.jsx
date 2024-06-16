@@ -3,7 +3,7 @@ import styles from "./styles.module.scss";
 import { useNavigate } from "react-router-dom";
 import {
   Autocomplete,
-  Button,
+  
   Checkbox,
   IconButton,
   TextField,
@@ -17,6 +17,7 @@ import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import useGetAllModule from "../hooks/useGetAllModule";
 import capitalizeFirstLetter from "../../../globalization/globalizationFunction";
 import useGetSubModule from "../hooks/useGetSubModule";
+import CustomButton from "../../../components/CustomButton";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -323,14 +324,14 @@ function CreateNewUserContainer() {
           </div>
         </div>
 
-        <Button
+        <CustomButton
           type="submit"
           variant="contained"
-          className={styles.styledButton}
+          
           disabled={loading}
         >
           Submit
-        </Button>
+        </CustomButton>
       </form>
     </div>
   );
