@@ -8,8 +8,9 @@ function Table({ ListData, loading, fetchData, setLoading, sort, setSort }) {
   return (
     <div className={styles.tableContainer}>
       <TableHeader sort={sort} setSort={setSort} />
-      {(ListData || []).map((item) => (
+      {(ListData || []).map((item, index) => (
         <List
+          key={index}
           item={item}
           loading={loading}
           fetchData={fetchData}

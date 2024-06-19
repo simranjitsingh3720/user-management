@@ -78,8 +78,8 @@ function UserManagement() {
                 size="small"
                 className={styles.customizeRowsSelect}
               >
-                {selectRowsData.map((item) => (
-                  <MenuItem value={item} className={styles.styledOptionText}>
+                {selectRowsData.map((item, index) => (
+                  <MenuItem key={index} value={item} className={styles.styledOptionText}>
                     {item}
                   </MenuItem>
                 ))}

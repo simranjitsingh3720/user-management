@@ -10,6 +10,7 @@ import { showDialog } from '../../stores/slices/dialogSlice';
 import { setLast30Days, setSelectedValue } from '../../stores/slices/filterSlice';
 import Content from './Dialog/Content';
 import DownloadIcon from '../../assets/DownloadLogo';
+import Actions from './Dialog/Action';
 
 const options = ["Last 30 Days", "Custom"];
 
@@ -28,7 +29,7 @@ export default function ExportDropdown() {
     dispatch(showDialog({
       title: 'Export Data',
       content: <Content />,
-      actions: null, // Replace with your dialog actions if any
+      actions: <Actions />, // Replace with your dialog actions if any
     }));
   };
 
