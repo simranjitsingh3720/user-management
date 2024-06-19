@@ -12,7 +12,7 @@ import {
   setSelectedValue,
   setFromDate,
   setToDate,
-} from "../../../../stores/slices/filterSlice";
+} from "../../../stores/slices/filterSlice";
 import { Grid } from "@mui/material";
 
 const RadioOptions = () => {
