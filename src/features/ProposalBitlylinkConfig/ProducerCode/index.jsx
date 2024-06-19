@@ -68,9 +68,9 @@ function ProducerCode() {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.createNewUserContainer}>
           <div className={styles.fieldContainerStyle}>
-            <text className={styles.labelText}>
+            <span className={styles.labelText}>
               Select Producer <span className={styles.styledRequired}>*</span>
-            </text>
+            </span>
             <Controller
               name="producer" // Name of the field in the form data
               control={control}

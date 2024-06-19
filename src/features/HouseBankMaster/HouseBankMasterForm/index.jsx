@@ -93,9 +93,9 @@ function HouseBankMasterForm() {
           </div>{" "}
           <div className={styles.containerStyle}>
             <div className={styles.fieldContainerStyle}>
-              <text className={styles.labelText}>
+              <span className={styles.labelText}>
                 House Bank Code <span className={styles.styledRequired}>*</span>
-              </text>
+              </span>
               <Controller
                 name="houseBankCode"
                 control={control}
@@ -127,9 +127,9 @@ function HouseBankMasterForm() {
               />
             </div>
             <div className={styles.fieldContainerStyle}>
-              <text className={styles.labelText}>
+              <span className={styles.labelText}>
                 Bank Code <span className={styles.styledRequired}>*</span>
-              </text>
+              </span>
               <Controller
                 name="bankCode"
                 control={control}
@@ -159,9 +159,9 @@ function HouseBankMasterForm() {
               />
             </div>
             <div className={styles.fieldContainerStyle}>
-              <text className={styles.labelText}>
+              <span className={styles.labelText}>
                 Branch Name <span className={styles.styledRequired}>*</span>
-              </text>
+              </span>
               <Controller
                 name="branchName"
                 control={control}
@@ -187,9 +187,9 @@ function HouseBankMasterForm() {
               />
             </div>
             <div className={styles.fieldContainerStyle}>
-              <text className={styles.labelText}>
+              <span className={styles.labelText}>
                 Account Number <span className={styles.styledRequired}>*</span>
-              </text>
+              </span>
               <Controller
                 name="accountNumber"
                 control={control}

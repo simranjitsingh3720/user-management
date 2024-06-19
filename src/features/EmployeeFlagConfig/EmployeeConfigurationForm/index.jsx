@@ -155,9 +155,9 @@ function EmployeeConfigurationForm({ fetchData: listFetchFun }) {
           </div>{" "}
           <div className={styles.containerStyle}>
             <div className={styles.fieldContainerStyle}>
-              <text className={styles.labelText}>
+              <span className={styles.labelText}>
                 Select Producer <span className={styles.styledRequired}>*</span>
-              </text>
+              </span>
               {/* <Controller
                 name="producer" // Name of the field in the form data
                 control={control}

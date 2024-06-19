@@ -99,7 +99,7 @@ const PartnerNeftForm = () => {
             </Grid>
 
             <Grid item xs={12} sm={6} lg={4}>
-              <text className="label-text required-field">LOB</text>
+              <span className="label-text required-field">LOB</span>
               <Controller
                 name="lob"
                 id="lob"
@@ -143,7 +143,7 @@ const PartnerNeftForm = () => {
               </div>
             </Grid>
             <Grid item xs={12} sm={6} lg={4}>
-              <text className="label-text required-field">Product</text>
+              <span className="label-text required-field">Product</span>
               <Controller
                 name="product"
                 id="product"
@@ -187,7 +187,7 @@ const PartnerNeftForm = () => {
               </div>
             </Grid>
             <Grid item xs={12} sm={6} lg={4}>
-              <text className="label-text required-field">Producer</text>
+              <span className="label-text required-field">Producer</span>
               <Controller
                 name="producer"
                 id="producer"
@@ -231,9 +231,9 @@ const PartnerNeftForm = () => {
               </div>
             </Grid>
             <Grid item xs={12} sm={6} lg={4}>
-              <text className="label-text required-field">
+              <span className="label-text required-field">
                 Verification Method
-              </text>
+              </span>
               <Controller
                 name="verificationMethod"
                 id="verificationMethod"

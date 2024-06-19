@@ -99,10 +99,10 @@ function HealthConfigurationForm() {
           </div>{" "}
           <div className={styles.containerStyle}>
             <div className={styles.fieldContainerStyle}>
-              <text className={styles.labelText}>
+              <span className={styles.labelText}>
                 Select Producer
                 <span className={styles.styledRequired}>*</span>
-              </text>
+              </span>
 
               <Controller
                 name="producer"
@@ -148,10 +148,10 @@ function HealthConfigurationForm() {
               </div>
             </div>
             <div className={styles.fieldContainerStyle}>
-              <text className={styles.labelText}>
+              <span className={styles.labelText}>
                 Medicare Existing TATA AIG General Insurance Customer
                 <span className={styles.styledRequired}>*</span>
-              </text>
+              </span>
               <Controller
                 name="medicare" // Name of the field in the form data
                 control={control}

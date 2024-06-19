@@ -106,9 +106,9 @@ function ProducerEODFrom() {
           </div>{" "}
           <div className={styles.containerStyle}>
             <div className={styles.fieldContainerStyle}>
-              <text className={styles.labelText}>
+              <span className={styles.labelText}>
                 Producer <span className={styles.styledRequired}>*</span>
-              </text>
+              </span>
               <Controller
                 name="producerCode" // Name of the field in the form data
                 control={control}

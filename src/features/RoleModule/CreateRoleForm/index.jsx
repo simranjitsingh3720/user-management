@@ -113,9 +113,9 @@ function CreateRoleForm() {
               </div>
             </div>
             <div className={styles.fieldContainerStyle}>
-              <text className={styles.labelText}>
+              <span className={styles.labelText}>
                 Group Name <span className={styles.styledRequired}>*</span>
-              </text>
+              </span>
               <Controller
                 name="groups" // Name of the field in the form data
                 control={control}

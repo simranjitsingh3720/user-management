@@ -373,9 +373,9 @@ function BANCALogin() {
                       onChange={() => handleEnableChange(obj.value)}
                       inputProps={{ "aria-label": "toggle button" }}
                     />
-                    <text className={styles.enableStyle}>
+                    <span className={styles.enableStyle}>
                       {obj.Enable ? "Enabled" : "Non Enabled"}
-                    </text>
+                    </span>
                   </div>
                   <div className={styles.mandatorySwitchStyle}>
                     <Switch
@@ -384,9 +384,9 @@ function BANCALogin() {
                       inputProps={{ "aria-label": "toggle button" }}
                       disabled={!obj.Enable}
                     />
-                    <text className={styles.enableStyle}>
+                    <span className={styles.enableStyle}>
                       {obj.Mandatory ? "Mandatory" : "Non Mandatory"}
-                    </text>
+                    </span>
                   </div>
                 </div>
               </div>

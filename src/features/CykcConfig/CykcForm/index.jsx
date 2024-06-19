@@ -115,7 +115,7 @@ const CykcForm = () => {
             </Grid>
 
             <Grid item xs={12} sm={6} lg={4}>
-              <text className="label-text required-field">LOB</text>
+              <span className="label-text required-field">LOB</span>
               <Controller
                 name="lob"
                 id="lob"
@@ -160,7 +160,7 @@ const CykcForm = () => {
               </div>
             </Grid>
             <Grid item xs={12} sm={6} lg={4}>
-              <text className="label-text required-field">Product</text>
+              <span className="label-text required-field">Product</span>
               <Controller
                 name="product"
                 id="product"
@@ -203,7 +203,7 @@ const CykcForm = () => {
               </div>
             </Grid>
             <Grid item xs={12} sm={6} lg={4}>
-              <text className="label-text required-field">CKYC Applicable</text>
+              <span className="label-text required-field">CKYC Applicable</span>
               <Controller
                 name="cykc" // Name of the field in the form data
                 control={control}
@@ -234,7 +234,7 @@ const CykcForm = () => {
               </div>
             </Grid>
             <Grid item xs={12} sm={6} lg={4}>
-              <text className="label-text required-field">For Whom</text>
+              <span className="label-text required-field">For Whom</span>
               <Controller
                 name="forWhom"
                 id="forWhom" // Name of the field in the form data
