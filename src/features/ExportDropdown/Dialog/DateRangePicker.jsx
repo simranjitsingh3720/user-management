@@ -6,13 +6,13 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { Grid } from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
-import { setFromDate, setToDate } from "../../../stores/slices/filterSlice";
+import { setFromDate, setToDate } from "../../../stores/slices/exportSlice";
 import dayjs from "dayjs";
 import "dayjs/locale/en-gb";
 
 const DateRangePicker = () => {
   const dispatch = useDispatch();
-  const { fromDate, toDate } = useSelector((state) => state.filter);
+  const { fromDate, toDate } = useSelector((state) => state.export);
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">

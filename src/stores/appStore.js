@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import dialogReducer from './slices/dialogSlice';
-import filterReducer from './slices/filterSlice';
+import exportReducer from './slices/exportSlice';
 
 const appStore = configureStore({
   reducer: {
     dialog: dialogReducer,
-    filter: filterReducer,
+    export: exportReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

@@ -5,7 +5,7 @@ import CustomButton from "../../../components/CustomButton";
 
 const Actions = () => {
   const dispatch = useDispatch();
-  const selectedFilter = useSelector((state) => state.filter);
+  const selectedFilter = useSelector((state) => state.export);
 
   const confirmAction = () => {
     console.log("Custom action!", selectedFilter);

@@ -7,14 +7,14 @@ import { useDispatch } from 'react-redux';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import CustomButton from '../../components/CustomButton';
 import { showDialog } from '../../stores/slices/dialogSlice';
-import { setLast30Days, setSelectedValue } from '../../stores/slices/filterSlice';
+import { setLast30Days, setSelectedValue } from '../../stores/slices/exportSlice';
 import Content from './Dialog/Content';
 import DownloadIcon from '../../assets/DownloadLogo';
 import Actions from './Dialog/Action';
 
 const options = ["Last 30 Days", "Custom"];
 
-export default function ExportDropdown() {
+const ExportDropdown = ({ columnsList }) => {
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
   const dispatch = useDispatch();
@@ -101,3 +101,6 @@ export default function ExportDropdown() {
     </React.Fragment>
   );
 }
+
+
+export default ExportDropdown;
