@@ -26,7 +26,9 @@ const exportSlice = createSlice({
       state.toDate = dayjs().format("DD-MM-YYYY");
     },
     setColumns: (state, action) => {
-      state.columns = action.payload;
+      let columns = action.payload;
+      columns = columns.map((item) => item.checked = false)
+      state.columns = columns;
     },
     toggleColumn: (state, action) => {
       const columnIndex = state.columns.findIndex(col => col.id === action.payload);

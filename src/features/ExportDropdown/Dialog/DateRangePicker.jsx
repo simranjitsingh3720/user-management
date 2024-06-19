@@ -12,28 +12,30 @@ import "dayjs/locale/en-gb";
 
 const DateRangePicker = () => {
   const dispatch = useDispatch();
-  const { fromDate, toDate } = useSelector((state) => state.export);
+  const { fromDate, toDate, selectedValue } = useSelector((state) => state.export);
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
       <Grid container spacing={2}>
         <Grid item xs={6}>
-          <FormControl>
+          <FormControl className="w-full">
             <FormLabel id="fromDate">From</FormLabel>
             <DatePicker
               value={fromDate ? dayjs(fromDate, "DD/MM/YYYY") : null}
               onChange={(newValue) => dispatch(setFromDate(newValue))}
               slotProps={{ textField: { size: "medium" } }}
+              disabled={selectedValue !== 'custom'}
             />
           </FormControl>
         </Grid>
         <Grid item xs={6}>
-          <FormControl>
+          <FormControl className="w-full">
             <FormLabel id="toDate">To</FormLabel>
             <DatePicker
               value={toDate ? dayjs(toDate, "DD/MM/YYYY") : null}
               onChange={(newValue) => dispatch(setToDate(newValue))}
               slotProps={{ textField: { size: "medium" } }}
+              disabled={selectedValue !== 'custom'}
             />
           </FormControl>
         </Grid>

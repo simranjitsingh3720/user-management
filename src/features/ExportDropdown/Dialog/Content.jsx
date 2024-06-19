@@ -13,7 +13,7 @@ const Content = () => {
   };
 
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={2} className="pt-4">
       <Grid item xs={12}>
         <DateRangePicker />
       </Grid>

@@ -22,6 +22,7 @@ const ExportDropdown = ({ columnsList }) => {
   const handleMenuItemClick = (event, index) => {
     setOpen(false);
     if (options[index] === 'Last 30 Days') {
+      dispatch(setSelectedValue(options[index]))
       dispatch(setLast30Days());
     } else if (options[index] === 'Custom') {
       dispatch(setSelectedValue('custom'));
