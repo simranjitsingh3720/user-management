@@ -1,4 +1,6 @@
+// filterSlice.js
 import { createSlice } from '@reduxjs/toolkit';
+import dayjs from 'dayjs';
 
 const initialState = {
   selectedValue: 'bulk',
@@ -14,14 +16,17 @@ const filterSlice = createSlice({
       state.selectedValue = action.payload;
     },
     setFromDate: (state, action) => {
-      state.fromDate = action.payload;
+      state.fromDate = dayjs(action.payload).format("DD-MM-YYYY");;
     },
     setToDate: (state, action) => {
-      state.toDate = action.payload;
+      state.toDate = dayjs(action.payload).format("DD-MM-YYYY");;
+    },
+    setLast30Days: (state) => {
+      state.fromDate = dayjs().subtract(30, 'day').toDate();
+      state.toDate = dayjs().toDate();
     },
   },
 });
 
-export const { setSelectedValue, setFromDate, setToDate } = filterSlice.actions;
-
+export const { setSelectedValue, setFromDate, setToDate, setLast30Days } = filterSlice.actions;
 export default filterSlice.reducer;

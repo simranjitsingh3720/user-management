@@ -14,7 +14,7 @@ const Actions = () => {
 
   return (
     <div>
-      <CustomButton onClick={() => dispatch(hideDialog())}>Cancel</CustomButton>
+      <CustomButton variant="outlined" onClick={() => dispatch(hideDialog())}>Cancel</CustomButton>
       <CustomButton onClick={confirmAction}>Confirm</CustomButton>
     </div>
   );

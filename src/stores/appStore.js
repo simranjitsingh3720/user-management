@@ -9,10 +9,7 @@ const appStore = configureStore({
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: ['dialog/showDialog'],
-        ignoredPaths: ['dialog.content', 'dialog.actions'],
-      },
+      serializableCheck: false
     }),
 });
 
