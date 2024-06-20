@@ -199,7 +199,7 @@ function ProposalForm() {
                   Channel <span className={styles.styledRequired}>*</span>
                 </span>
                 <Controller
-                  name="channel" // Name of the field in the form data
+                  name="channel" 
                   control={control}
                   rules={{ required: true }}
                   render={({ field }) => (
@@ -242,7 +242,7 @@ function ProposalForm() {
                   Producer Code <span className={styles.styledRequired}>*</span>
                 </span>
                 <Controller
-                  name="producerCode" // Name of the field in the form data
+                  name="producerCode" 
                   control={control}
                   rules={{ required: true }}
                   render={({ field }) => (
@@ -288,7 +288,7 @@ function ProposalForm() {
                   Product <span className={styles.styledRequired}>*</span>
                 </span>
                 <Controller
-                  name="product" // Name of the field in the form data
+                  name="product" 
                   control={control}
                   rules={{ required: true }}
                   render={({ field }) => (
@@ -329,7 +329,7 @@ function ProposalForm() {
                   LOB <span className={styles.styledRequired}>*</span>
                 </span>
                 <Controller
-                  name="lob" // Name of the field in the form data
+                  name="lob" 
                   control={control}
                   rules={{ required: true }}
                   render={({ field }) => (
@@ -373,7 +373,7 @@ function ProposalForm() {
                     Start Date <span className={styles.styledRequired}>*</span>
                   </div>
                   <Controller
-                    name="startDate" // Name of the field in the form data
+                    name="startDate" 
                     control={control}
                     rules={{ required: true }}
                     render={({ field }) => (
@@ -412,7 +412,7 @@ function ProposalForm() {
                     End Date <span className={styles.styledRequired}>*</span>
                   </div>
                   <Controller
-                    name="endDate" // Name of the field in the form data
+                    name="endDate" 
                     control={control}
                     rules={{ required: true }}
                     render={({ field }) => (

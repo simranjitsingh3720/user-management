@@ -46,7 +46,7 @@ function ChannelForm() {
                 Select Channel <span className={styles.styledRequired}>*</span>
               </span>
               <Controller
-                name="channel" // Name of the field in the form data
+                name="channel" 
                 control={control}
                 rules={{ required: "Channel is required" }}
                 render={({ field }) => (
@@ -82,7 +82,7 @@ function ChannelForm() {
                 <span className={styles.styledRequired}>*</span>
               </span>
               <Controller
-                name="bitlyLinkMandatory" // Name of the field in the form data
+                name="bitlyLinkMandatory" 
                 control={control}
                 rules={{ required: "Bitly Link is required" }}
                 render={({ field }) => (

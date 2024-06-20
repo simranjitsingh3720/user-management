@@ -153,7 +153,7 @@ function HealthConfigurationForm() {
                 <span className={styles.styledRequired}>*</span>
               </span>
               <Controller
-                name="medicare" // Name of the field in the form data
+                name="medicare" 
                 control={control}
                 rules={{ required: "This field is required" }}
                 render={({ field }) => (

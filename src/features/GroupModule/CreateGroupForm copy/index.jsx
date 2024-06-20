@@ -288,7 +288,7 @@ function CreateGroupForm() {
           <div className={styles.fieldContainerStyle}>
             <span className={styles.labelText}>Group User</span>
             <Controller
-              name="groupUser" // Name of the field in the form data
+              name="groupUser" 
               control={control}
               render={({ field }) => (
                 <Autocomplete

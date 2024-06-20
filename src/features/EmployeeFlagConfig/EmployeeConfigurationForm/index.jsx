@@ -159,7 +159,7 @@ function EmployeeConfigurationForm({ fetchData: listFetchFun }) {
                 Select Producer <span className={styles.styledRequired}>*</span>
               </span>
               {/* <Controller
-                name="producer" // Name of the field in the form data
+                name="producer" 
                 control={control}
                 rules={{ required: "Producer is required" }}
                 render={({ field }) => (

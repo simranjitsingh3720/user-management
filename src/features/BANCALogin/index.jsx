@@ -201,7 +201,7 @@ function BANCALogin() {
                   Producer Code <span className={styles.styledRequired}>*</span>
                 </span>
                 <Controller
-                  name="producerCode" // Name of the field in the form data
+                  name="producerCode" 
                   control={control}
                   rules={{ required: true }}
                   render={({ field }) => (
@@ -241,7 +241,7 @@ function BANCALogin() {
                   Products <span className={styles.styledRequired}>*</span>
                 </span>
                 <Controller
-                  name="product" // Name of the field in the form data
+                  name="product" 
                   control={control}
                   value={getValues("product")}
                   rules={{ required: true }}
@@ -285,7 +285,7 @@ function BANCALogin() {
                     Start Date <span className={styles.styledRequired}>*</span>
                   </div>
                   <Controller
-                    name="startDate" // Name of the field in the form data
+                    name="startDate" 
                     control={control}
                     rules={{ required: true }}
                     render={({ field }) => (
@@ -323,7 +323,7 @@ function BANCALogin() {
                     End Date <span className={styles.styledRequired}>*</span>
                   </div>
                   <Controller
-                    name="endDate" // Name of the field in the form data
+                    name="endDate" 
                     control={control}
                     rules={{ required: true }}
                     render={({ field }) => (

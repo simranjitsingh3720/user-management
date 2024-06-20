@@ -205,7 +205,7 @@ const CykcForm = () => {
             <Grid item xs={12} sm={6} lg={4}>
               <span className="label-text required-field">CKYC Applicable</span>
               <Controller
-                name="cykc" // Name of the field in the form data
+                name="cykc" 
                 control={control}
                 rules={{ required: "CKYC Applicable is required" }}
                 render={({ field }) => (
@@ -237,7 +237,7 @@ const CykcForm = () => {
               <span className="label-text required-field">For Whom</span>
               <Controller
                 name="forWhom"
-                id="forWhom" // Name of the field in the form data
+                id="forWhom" 
                 control={control}
                 rules={{ required: "This field is required" }}
                 render={({ field }) => (

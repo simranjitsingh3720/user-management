@@ -103,7 +103,7 @@ function ProductPaymentConfigForm() {
                 LOB <span className={styles.styledRequired}>*</span>
               </span>
               <Controller
-                name="lob" // Name of the field in the form data
+                name="lob" 
                 control={control}
                 rules={{ required: true }}
                 render={({ field }) => (
@@ -145,7 +145,7 @@ function ProductPaymentConfigForm() {
                 Product <span className={styles.styledRequired}>*</span>
               </span>
               <Controller
-                name="product" // Name of the field in the form data
+                name="product" 
                 control={control}
                 rules={{ required: true }}
                 render={({ field }) => (
@@ -181,7 +181,7 @@ function ProductPaymentConfigForm() {
                 Payment Type <span className={styles.styledRequired}>*</span>
               </span>
               <Controller
-                name="payment" // Name of the field in the form data
+                name="payment" 
                 control={control}
                 rules={{ required: true }}
                 render={({ field }) => (

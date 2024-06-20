@@ -135,7 +135,7 @@ function CreateGroupForm() {
                 Permission Name <span className={styles.styledRequired}>*</span>
               </span>
               <Controller
-                name="permissions" // Name of the field in the form data
+                name="permissions" 
                 control={control}
                 rules={{ required: true }}
                 render={({ field }) => (

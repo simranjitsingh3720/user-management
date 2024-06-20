@@ -134,7 +134,7 @@ function CreateUserMangementForm() {
               Role <span className={styles.styledRequired}>*</span>
             </span>
             <Controller
-              name="roleSelect" // Name of the field in the form data
+              name="roleSelect" 
               control={control}
               rules={{ required: "Role is required" }}
               render={({ field }) => (
@@ -184,7 +184,7 @@ function CreateUserMangementForm() {
               Group <span className={styles.styledRequired}>*</span>
             </span>
             <Controller
-              name="groupSelect" // Name of the field in the form data
+              name="groupSelect" 
               control={control}
               rules={{ required: "Group is required" }}
               render={({ field }) => (
@@ -230,7 +230,7 @@ function CreateUserMangementForm() {
               User Id <span className={styles.styledRequired}>*</span>
             </span>
             <Controller
-              name="userId" // Name of the field in the form data
+              name="userId" 
               control={control}
               rules={{ required: " User Id is required" }}
               render={({ field }) => (
@@ -253,7 +253,7 @@ function CreateUserMangementForm() {
                 {item.label} <span className={styles.styledRequired}>*</span>
               </span>
               <Controller
-                name={item.value} // Name of the field in the form data
+                name={item.value} 
                 control={control}
                 rules={{
                   required: `${item.label} is required`,
@@ -292,7 +292,7 @@ function CreateUserMangementForm() {
               Mobile Number <span className={styles.styledRequired}>*</span>
             </span>
             <Controller
-              name="mobileNumber" // Name of the field in the form data
+              name="mobileNumber" 
               control={control}
               rules={{
                 required: "Mobile number is required",
@@ -330,7 +330,7 @@ function CreateUserMangementForm() {
               Email Id <span className={styles.styledRequired}>*</span>
             </span>
             <Controller
-              name="emailId" // Name of the field in the form data
+              name="emailId" 
               control={control}
               rules={{
                 required: "Email address is required",
@@ -361,7 +361,7 @@ function CreateUserMangementForm() {
               NT Login <span className={styles.styledRequired}>*</span>
             </span>
             <Controller
-              name="ntLogin" // Name of the field in the form data
+              name="ntLogin" 
               control={control}
               rules={{ required: "NT Login is required" }}
               render={({ field }) => (
@@ -383,7 +383,7 @@ function CreateUserMangementForm() {
               Producer Code <span className={styles.styledRequired}>*</span>
             </span>
             <Controller
-              name="producerCode" // Name of the field in the form data
+              name="producerCode" 
               control={control}
               rules={{ required: "Producer Code is required" }}
               render={({ field }) => (
@@ -407,7 +407,7 @@ function CreateUserMangementForm() {
               Insillion Status <span className={styles.styledRequired}>*</span>
             </span>
             <Controller
-              name="insillionStatus" // Name of the field in the form data
+              name="insillionStatus" 
               control={control}
               rules={{ required: "Insillion Status is required" }}
               render={({ field }) => (

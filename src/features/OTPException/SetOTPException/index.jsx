@@ -86,7 +86,7 @@ function SetOTPException({ fetchData }) {
                 Channel <span className={styles.styledRequired}>*</span>
               </span>
               <Controller
-                name="channel" // Name of the field in the form data
+                name="channel" 
                 control={control}
                 rules={{ required: true }}
                 render={({ field }) => (
@@ -128,7 +128,7 @@ function SetOTPException({ fetchData }) {
                 Producer Code <span className={styles.styledRequired}>*</span>
               </span>
               <Controller
-                name="producerCode" // Name of the field in the form data
+                name="producerCode" 
                 control={control}
                 rules={{ required: true }}
                 render={({ field }) => (

@@ -117,7 +117,7 @@ function CreateRoleForm() {
                 Group Name <span className={styles.styledRequired}>*</span>
               </span>
               <Controller
-                name="groups" // Name of the field in the form data
+                name="groups" 
                 control={control}
                 rules={{ required: true }}
                 render={({ field }) => (

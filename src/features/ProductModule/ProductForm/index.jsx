@@ -106,7 +106,7 @@ function ProductForm() {
                 Lob Name <span className={styles.styledRequired}>*</span>
               </span>
               <Controller
-                name="lob" // Name of the field in the form data
+                name="lob" 
                 control={control}
                 rules={{ required: true }}
                 render={({ field }) => (
@@ -141,7 +141,7 @@ function ProductForm() {
                 Status <span className={styles.styledRequired}>*</span>
               </span>
               <Controller
-                name="status" // Name of the field in the form data
+                name="status" 
                 control={control}
                 rules={{ required: "Status is required" }}
                 defaultValue="active"
