@@ -158,35 +158,6 @@ function EmployeeConfigurationForm({ fetchData: listFetchFun }) {
               <span className={styles.labelText}>
                 Select Producer <span className={styles.styledRequired}>*</span>
               </span>
-              {/* <Controller
-                name="producer" 
-                control={control}
-                rules={{ required: "Producer is required" }}
-                render={({ field }) => (
-                  <Autocomplete
-                    id="producer"
-                    options={userData || []}
-                    getOptionLabel={(option) => {
-                      return `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`;
-                    }}
-                    className={styles.customizeSelect}
-                    size="small"
-                    renderInput={(params) => (
-                      <TextField {...params} placeholder="Select" />
-                    )}
-                    onChange={(event, newValue) => {
-                      field.onChange(newValue);
-                      fetchDataByProducer(newValue?.id);
-                      fetchData(newValue?.id);
-                    }}
-                    ListboxProps={{
-                      style: {
-                        maxHeight: "200px",
-                      },
-                    }}
-                  />
-                )}
-              /> */}
               <Controller
                 name="producer"
                 id="producer"
