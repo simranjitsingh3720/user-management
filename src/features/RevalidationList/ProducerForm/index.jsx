@@ -67,6 +67,7 @@ const ProducerForm = ({ onFormSubmit, revalidationList }) => {
                   onChange={(event, newValue) => {
                     field.onChange(newValue);
                   }}
+                  disableClearable='true'
                   renderOption={(props, option) => (
                     <li {...props} key={option.id}>
                       {option?.firstName?.toUpperCase()}{" "}

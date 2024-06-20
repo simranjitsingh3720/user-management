@@ -6,7 +6,8 @@ import generateTableHeaders from "../utils/generateTableHeaders";
 
 const ProducerTable = ({ revalidationList, revalidationListLoading }) => {
   const { revalidationListUpdateData } = useRevalidationList();
-  const [selectAll, setSelectAll] = useState(false);
+  const [selectAllActive, setSelectAllActive] = useState(false);
+  const [selectAllInactive, setSelectAllInactive] = useState(false);
 
   const handleDataUpdate = (updatedData) => {
     revalidationListUpdateData(updatedData);
@@ -15,39 +16,69 @@ const ProducerTable = ({ revalidationList, revalidationListLoading }) => {
   const HEADER_COLUMNS = generateTableHeaders(
     handleDataUpdate,
     revalidationList,
-    setSelectAll
+    setSelectAllActive,
+    setSelectAllInactive
   );
 
   useEffect(() => {
     const allActive = revalidationList.every((row) => row.checked);
-    setSelectAll(allActive);
-  }, [revalidationList, selectAll]);
+    const allInactive = revalidationList.every((row) => !row.checked);
 
-  const handleSelectAllChange = (event) => {
+    setSelectAllActive(allActive);
+    setSelectAllInactive(allInactive);
+  }, [revalidationList]);
+
+  const handleSelectAllActiveChange = (event) => {
     const updatedList = revalidationList.map((item) => {
-      item.checked = event.target.checked;
+      if (!item.checked) {
+        item.checked = event.target.checked;
+      }
       return item;
     });
 
     handleDataUpdate(updatedList);
-    const allActive = updatedList.every((row) => row.checked);
-    setSelectAll(allActive);
+    setSelectAllActive(event.target.checked);
+    setSelectAllInactive(false);
+  };
+
+  const handleSelectAllInactiveChange = (event) => {
+    const updatedList = revalidationList.map((item) => {
+      if (item.checked) {
+        item.checked = !event.target.checked;
+      }
+      return item;
+    });
+
+    handleDataUpdate(updatedList);
+    setSelectAllInactive(event.target.checked);
+    setSelectAllActive(false);
   };
 
   const customExtraHeader = (
     <TableRow>
       <TableCell colSpan={HEADER_COLUMNS.length}>
-        <FormControlLabel
-          sx={{ display: "flex", justifyContent: "end" }}
-          control={
-            <Checkbox
-              checked={selectAll}
-              onChange={handleSelectAllChange}
-              color="primary"
-            />
-          }
-          label={!selectAll ? "Select All (Active)" : "Select All (Inactive)"}
-        />
+        <div style={{ display: "flex", justifyContent: "end" }}>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={selectAllActive}
+                onChange={handleSelectAllActiveChange}
+                color="primary"
+              />
+            }
+            label="All Active"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={selectAllInactive}
+                onChange={handleSelectAllInactiveChange}
+                color="primary"
+              />
+            }
+            label="All Inactive"
+          />
+        </div>
       </TableCell>
     </TableRow>
   );
