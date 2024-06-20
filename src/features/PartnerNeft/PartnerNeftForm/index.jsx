@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import {
   Autocomplete,
@@ -15,6 +15,8 @@ import LeftArrow from "../../../assets/LeftArrow";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import { useNavigate, useParams } from "react-router-dom";
 import CustomButton from "../../../components/CustomButton";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchLobData } from "../../../stores/slices/lobSlice";
 
 const options = [
   { label: "Option 1", value: "option1" },
@@ -23,6 +25,9 @@ const options = [
 ];
 
 const PartnerNeftForm = () => {
+  const dispatch = useDispatch();
+  const { allLob, loading } = useSelector((state) => state.lob);
+
   const navigate = useNavigate();
   const params = useParams();
   console.log(params);
@@ -40,6 +45,12 @@ const PartnerNeftForm = () => {
     console.log(data);
     navigate("/partner-neft");
   };
+
+  useEffect(() => {
+    dispatch(fetchLobData());
+  }, [dispatch]);
+
+  if (loading) return <div>Loading...</div>;
 
   return (
     <Box component="form" onSubmit={handleSubmit(onSubmit)}>
@@ -108,10 +119,10 @@ const PartnerNeftForm = () => {
                 render={({ field }) => (
                   <Autocomplete
                     id="lob"
-                    options={options || []}
-                    //   getOptionLabel={(option) => {
-                    //     return `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`;
-                    //   }}
+                    options={allLob.data}
+                    getOptionLabel={(option) => {
+                      return `${option?.lob?.toUpperCase()}`;
+                    }}
                     className="customize-select"
                     size="small"
                     isOptionEqualToValue={(option, value) =>
@@ -124,17 +135,17 @@ const PartnerNeftForm = () => {
                     onChange={(event, newValue) => {
                       field.onChange(newValue);
                     }}
-                    //   renderOption={(props, option) => (
-                    //     <li {...props} key={option.id}>
-                    //       {option?.firstName?.toUpperCase()}{" "}
-                    //       {option?.lastName?.toUpperCase()}
-                    //     </li>
-                    //   )}
+                    renderOption={(props, option) => (
+                      <li {...props} key={option.id}>
+                        {option?.lob?.toUpperCase()}
+                      </li>
+                    )}
                     ListboxProps={{
                       style: {
                         maxHeight: "200px",
                       },
                     }}
+                    disableClearable='true'
                   />
                 )}
               />
