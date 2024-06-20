@@ -1,36 +1,60 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef } from "react";
 import {
-  ButtonGroup, ClickAwayListener, Grow, Paper, Popper, MenuItem, MenuList
-} from '@mui/material';
-import { useDispatch } from 'react-redux';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import CustomButton from '../../components/CustomButton';
-import { showDialog } from '../../stores/slices/dialogSlice';
-import { setLast30Days, setSelectedValue } from '../../stores/slices/exportSlice';
-import Content from './Dialog/Content';
-import DownloadIcon from '../../assets/DownloadLogo';
-import Actions from './Dialog/Action';
+  ButtonGroup,
+  ClickAwayListener,
+  Grow,
+  Paper,
+  Popper,
+  MenuItem,
+  MenuList,
+} from "@mui/material";
+import { useDispatch } from "react-redux";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import CustomButton from "../../components/CustomButton";
+import { showDialog } from "../../stores/slices/dialogSlice";
+import {
+  setLast30Days,
+  setSelectedValue,
+} from "../../stores/slices/exportSlice";
+import Content from "./Dialog/Content";
+import DownloadIcon from "../../assets/DownloadLogo";
+import Actions from "./Dialog/Action";
 
-const options = ["Last 30 Days", "Custom"];
-
-const ExportDropdown = ({ columnsList }) => {
+const ExportDropdown = () => {
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
   const dispatch = useDispatch();
+  const EXPORT_DROPDOWN_VALUE = ["Last 30 Days", "Custom"];
+
+  const EXPORT_ACTIONS = {
+    "Last 30 Days": {
+      selectedValue: "Last 30 Days",
+      actions: [setLast30Days],
+    },
+    Custom: {
+      selectedValue: "custom",
+      actions: [],
+    },
+  };
 
   const handleMenuItemClick = (event, index) => {
     setOpen(false);
-    if (options[index] === 'Last 30 Days') {
-      dispatch(setSelectedValue(options[index]))
-      dispatch(setLast30Days());
-    } else if (options[index] === 'Custom') {
-      dispatch(setSelectedValue('custom'));
+
+    const selectedValue = EXPORT_DROPDOWN_VALUE[index];
+    const config = EXPORT_ACTIONS[selectedValue];
+
+    if (config) {
+      dispatch(setSelectedValue(config.selectedValue));
+      config.actions.forEach((action) => dispatch(action()));
     }
-    dispatch(showDialog({
-      title: 'Export Data',
-      content: <Content />,
-      actions: <Actions />, // Replace with your dialog actions if any
-    }));
+
+    dispatch(
+      showDialog({
+        title: "Export Data",
+        content: <Content />,
+        actions: <Actions />,
+      })
+    );
   };
 
   const handleToggle = () => {
@@ -50,13 +74,13 @@ const ExportDropdown = ({ columnsList }) => {
         variant="contained"
         ref={anchorRef}
         aria-label="Export Button"
-        sx={{ boxShadow: 'none' }}
+        sx={{ boxShadow: "none" }}
         className="mr-2"
       >
         <CustomButton
           variant="outlined"
-          aria-controls={open ? 'split-button-menu' : undefined}
-          aria-expanded={open ? 'true' : undefined}
+          aria-controls={open ? "split-button-menu" : undefined}
+          aria-expanded={open ? "true" : undefined}
           aria-label="select merge strategy"
           aria-haspopup="menu"
           onClick={handleToggle}
@@ -78,13 +102,14 @@ const ExportDropdown = ({ columnsList }) => {
           <Grow
             {...TransitionProps}
             style={{
-              transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom',
+              transformOrigin:
+                placement === "bottom" ? "center top" : "center bottom",
             }}
           >
             <Paper>
               <ClickAwayListener onClickAway={handleClose}>
                 <MenuList id="split-button-menu" autoFocusItem>
-                  {options.map((option, index) => (
+                  {EXPORT_DROPDOWN_VALUE.map((option, index) => (
                     <MenuItem
                       key={option}
                       onClick={(event) => handleMenuItemClick(event, index)}
@@ -100,7 +125,6 @@ const ExportDropdown = ({ columnsList }) => {
       </Popper>
     </React.Fragment>
   );
-}
-
+};
 
 export default ExportDropdown;

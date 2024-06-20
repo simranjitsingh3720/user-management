@@ -8,7 +8,6 @@ const Actions = () => {
   const selectedFilter = useSelector((state) => state.export);
 
   const confirmAction = () => {
-    console.log("Custom action!", selectedFilter);
     dispatch(hideDialog());
   };
 
