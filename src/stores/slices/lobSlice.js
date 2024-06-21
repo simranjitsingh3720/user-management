@@ -19,21 +19,21 @@ const lobSlice = createSlice({
   name: 'lob',
   initialState: {
     allLob: [],
-    loading: false,
+    lobLoading: false,
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchLobData.pending, (state) => {
-        state.loading = true;
+        state.lobLoading = true;
       })
       .addCase(fetchLobData.fulfilled, (state, action) => {
         state.allLob = action.payload;
-        state.loading = false;
+        state.lobLoading = false;
       })
       .addCase(fetchLobData.rejected, (state) => {
         state.allLob = [];
-        state.loading = false;
+        state.lobLoading = false;
       });
   },
 });
