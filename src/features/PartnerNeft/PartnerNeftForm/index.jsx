@@ -17,6 +17,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import CustomButton from "../../../components/CustomButton";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchLobData } from "../../../stores/slices/lobSlice";
+import { fetchAllProductData } from "../../../stores/slices/productSlice";
 
 const options = [
   { label: "Option 1", value: "option1" },
@@ -26,7 +27,8 @@ const options = [
 
 const PartnerNeftForm = () => {
   const dispatch = useDispatch();
-  const { allLob, loading } = useSelector((state) => state.lob);
+  const { allLob, lobLoading } = useSelector((state) => state.lob);
+  const { products, productLoading } = useSelector((state) => state.product);
 
   const navigate = useNavigate();
   const params = useParams();
@@ -35,9 +37,13 @@ const PartnerNeftForm = () => {
     handleSubmit,
     control,
     formState: { errors },
+    setValue
   } = useForm({
     defaultValues: {
+      lob: null,
+      product: null,
       producer: null,
+      verificationMethod: null,
     },
   });
 
@@ -49,8 +55,6 @@ const PartnerNeftForm = () => {
   useEffect(() => {
     dispatch(fetchLobData());
   }, [dispatch]);
-
-  if (loading) return <div>Loading...</div>;
 
   return (
     <Box component="form" onSubmit={handleSubmit(onSubmit)}>
@@ -113,27 +117,30 @@ const PartnerNeftForm = () => {
               <span className="label-text required-field">LOB</span>
               <Controller
                 name="lob"
-                id="lob"
                 control={control}
+                defaultValue={null}
                 rules={{ required: "LOB is required" }}
                 render={({ field }) => (
                   <Autocomplete
                     id="lob"
-                    options={allLob.data}
-                    getOptionLabel={(option) => {
-                      return `${option?.lob?.toUpperCase()}`;
-                    }}
+                    options={allLob.data || []}
+                    getOptionLabel={(option) => option?.lob?.toUpperCase() || ""}
                     className="customize-select"
                     size="small"
+                    loading={lobLoading}
                     isOptionEqualToValue={(option, value) =>
                       option.id === value.id
                     }
                     renderInput={(params) => (
                       <TextField {...params} placeholder="Select" />
                     )}
-                    value={field.value}
+                    value={field.value || null}
                     onChange={(event, newValue) => {
                       field.onChange(newValue);
+                      setValue("product", null);
+                      if (newValue && newValue.id) {
+                        dispatch(fetchAllProductData({ lobId: newValue.id }));
+                      }
                     }}
                     renderOption={(props, option) => (
                       <li {...props} key={option.id}>
@@ -145,7 +152,7 @@ const PartnerNeftForm = () => {
                         maxHeight: "200px",
                       },
                     }}
-                    disableClearable='true'
+                    disableClearable={true}
                   />
                 )}
               />
@@ -153,20 +160,22 @@ const PartnerNeftForm = () => {
                 {errors.lob && <span>{errors.lob.message}</span>}
               </div>
             </Grid>
+
             <Grid item xs={12} sm={6} lg={4}>
               <span className="label-text required-field">Product</span>
               <Controller
                 name="product"
-                id="product"
                 control={control}
+                defaultValue={null}
                 rules={{ required: "Product is required" }}
                 render={({ field }) => (
                   <Autocomplete
                     id="product"
-                    options={options || []}
-                    //   getOptionLabel={(option) => {
-                    //     return `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`;
-                    //   }}
+                    options={products.data || []}
+                    getOptionLabel={(option) =>
+                      option?.product?.toUpperCase() || ""
+                    }
+                    loading={productLoading}
                     className="customize-select"
                     size="small"
                     isOptionEqualToValue={(option, value) =>
@@ -175,21 +184,21 @@ const PartnerNeftForm = () => {
                     renderInput={(params) => (
                       <TextField {...params} placeholder="Select" />
                     )}
-                    value={field.value}
+                    value={field.value || null}
                     onChange={(event, newValue) => {
                       field.onChange(newValue);
                     }}
-                    //   renderOption={(props, option) => (
-                    //     <li {...props} key={option.id}>
-                    //       {option?.firstName?.toUpperCase()}{" "}
-                    //       {option?.lastName?.toUpperCase()}
-                    //     </li>
-                    //   )}
+                    renderOption={(props, option) => (
+                      <li {...props} key={option.id}>
+                        {option?.product?.toUpperCase()}
+                      </li>
+                    )}
                     ListboxProps={{
                       style: {
                         maxHeight: "200px",
                       },
                     }}
+                    disableClearable={true}
                   />
                 )}
               />
@@ -197,43 +206,36 @@ const PartnerNeftForm = () => {
                 {errors.product && <span>{errors.product.message}</span>}
               </div>
             </Grid>
+
             <Grid item xs={12} sm={6} lg={4}>
               <span className="label-text required-field">Producer</span>
               <Controller
                 name="producer"
-                id="producer"
                 control={control}
+                defaultValue={null}
                 rules={{ required: "Producer is required" }}
                 render={({ field }) => (
                   <Autocomplete
                     id="producer"
                     options={options || []}
-                    //   getOptionLabel={(option) => {
-                    //     return `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`;
-                    //   }}
                     className="customize-select"
                     size="small"
                     isOptionEqualToValue={(option, value) =>
-                      option.id === value.id
+                      option.value === value.value
                     }
                     renderInput={(params) => (
                       <TextField {...params} placeholder="Select" />
                     )}
-                    value={field.value}
+                    value={field.value || null}
                     onChange={(event, newValue) => {
                       field.onChange(newValue);
                     }}
-                    //   renderOption={(props, option) => (
-                    //     <li {...props} key={option.id}>
-                    //       {option?.firstName?.toUpperCase()}{" "}
-                    //       {option?.lastName?.toUpperCase()}
-                    //     </li>
-                    //   )}
                     ListboxProps={{
                       style: {
                         maxHeight: "200px",
                       },
                     }}
+                    disableClearable={true}
                   />
                 )}
               />
@@ -241,45 +243,38 @@ const PartnerNeftForm = () => {
                 {errors.producer && <span>{errors.producer.message}</span>}
               </div>
             </Grid>
+
             <Grid item xs={12} sm={6} lg={4}>
               <span className="label-text required-field">
                 Verification Method
               </span>
               <Controller
                 name="verificationMethod"
-                id="verificationMethod"
                 control={control}
+                defaultValue={null}
                 rules={{ required: "Verification Method is required" }}
                 render={({ field }) => (
                   <Autocomplete
                     id="verificationMethod"
                     options={options || []}
-                    //   getOptionLabel={(option) => {
-                    //     return `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`;
-                    //   }}
                     className="customize-select"
                     size="small"
                     isOptionEqualToValue={(option, value) =>
-                      option.id === value.id
+                      option.value === value.value
                     }
                     renderInput={(params) => (
                       <TextField {...params} placeholder="Select" />
                     )}
-                    value={field.value}
+                    value={field.value || null}
                     onChange={(event, newValue) => {
                       field.onChange(newValue);
                     }}
-                    //   renderOption={(props, option) => (
-                    //     <li {...props} key={option.id}>
-                    //       {option?.firstName?.toUpperCase()}{" "}
-                    //       {option?.lastName?.toUpperCase()}
-                    //     </li>
-                    //   )}
                     ListboxProps={{
                       style: {
                         maxHeight: "200px",
                       },
                     }}
+                    disableClearable={true}
                   />
                 )}
               />
