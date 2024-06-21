@@ -51,7 +51,7 @@ function HouseBankMasterForm() {
       const payload = {
         id: id,
         properties: {
-          houseBankCode: data?.houseBankCode,
+          houseBankCode: Number(data?.houseBankCode),
           bankCode: data?.bankCode,
           branchName: data?.branchName,
         },
@@ -59,7 +59,7 @@ function HouseBankMasterForm() {
       UpdateDataFun(payload);
     } else {
       const payload = {
-        houseBankCode: data?.houseBankCode,
+        houseBankCode: Number(data?.houseBankCode),
         bankCode: data?.bankCode,
         branchName: data?.branchName,
         accountNumber: data?.accountNumber,
@@ -120,7 +120,7 @@ function HouseBankMasterForm() {
                     }
                     {...field}
                     onChange={(e) => {
-                      setValue("houseBankCode", Number(e.target.value));
+                      setValue("houseBankCode", e.target.value);
                     }}
                   />
                 )}
@@ -136,10 +136,10 @@ function HouseBankMasterForm() {
                 defaultValue=""
                 rules={{
                   required: "Bank Code is required",
-                  //   pattern: {
-                  //     value: /^[a-zA-Z]{4}0[a-zA-Z0-9]{6}$/,
-                  //     message: "Invalid Bank Code format",
-                  //   },
+                  pattern: {
+                    value: /^[A-Z]{4}0[A-Z0-9]{6}$/,
+                    message: "Invalid Bank Code format",
+                  },
                 }}
                 render={({ field }) => (
                   <TextField
@@ -196,6 +196,10 @@ function HouseBankMasterForm() {
                 defaultValue=""
                 rules={{
                   required: "Account Number is required",
+                  pattern: {
+                    value: /^[0-9]+$/,
+                    message: "Only numeric values are allowed",
+                  },
                 }}
                 render={({ field }) => (
                   <TextField
