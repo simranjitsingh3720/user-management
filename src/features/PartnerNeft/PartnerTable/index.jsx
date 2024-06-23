@@ -1,7 +1,7 @@
 import React from "react";
 import DynamicTable from "../DynamicTable";
 import { useNavigate } from "react-router-dom";
-import { TABLE_COLUMNS } from "../constant";
+import { TABLE_COLUMNS } from "../utils/constant";
 
 const data = [
   { id: 1, lob: 1, product: "John Doe", producerCode: 28, producerName: "Producer Name", verificationMethod: "method"},

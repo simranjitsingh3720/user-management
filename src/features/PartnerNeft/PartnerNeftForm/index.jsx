@@ -19,7 +19,7 @@ import { fetchLobData } from "../../../stores/slices/lobSlice";
 import { fetchAllProductData } from "../../../stores/slices/productSlice";
 import { fetchUser } from "../../../stores/slices/userSlice";
 import { COMMON_WORDS } from "../../../utils/constants";
-import { VERIFICATION_METHOD } from "../constant";
+import { VERIFICATION_METHOD } from "../utils/constant";
 import LeftArrow from "../../../assets/LeftArrow";
 import useSubmit from "../hooks/useSubmit";
 
