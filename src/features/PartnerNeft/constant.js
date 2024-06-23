@@ -5,3 +5,9 @@ export const TABLE_COLUMNS = [
   { headerName: "Producer Code", field: "producerCode" },
   { headerName: "Verification Method", field: "verificationMethod" },
 ];
+
+export const VERIFICATION_METHOD = [
+    { label: "Partner", value: "partner" },
+    { label: "NEFT PACE", value: "neftPace" },
+    { label: "Banca", value: "banca" },
+]

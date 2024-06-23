@@ -9,26 +9,24 @@ import {
   Grid,
   IconButton,
   Divider,
+  Typography,
 } from "@mui/material";
-import styles from "./styles.module.scss";
-import LeftArrow from "../../../assets/LeftArrow";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import { useNavigate, useParams } from "react-router-dom";
 import CustomButton from "../../../components/CustomButton";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchLobData } from "../../../stores/slices/lobSlice";
 import { fetchAllProductData } from "../../../stores/slices/productSlice";
-
-const options = [
-  { label: "Option 1", value: "option1" },
-  { label: "Option 2", value: "option2" },
-  { label: "Option 3", value: "option3" },
-];
+import { fetchUser } from "../../../stores/slices/userSlice";
+import { COMMON_WORDS } from "../../../utils/constants";
+import { VERIFICATION_METHOD } from "../constant";
+import LeftArrow from "../../../assets/LeftArrow";
 
 const PartnerNeftForm = () => {
   const dispatch = useDispatch();
   const { allLob, lobLoading } = useSelector((state) => state.lob);
   const { products, productLoading } = useSelector((state) => state.product);
+  const { user, userLoading } = useSelector((state) => state.user);
 
   const navigate = useNavigate();
   const params = useParams();
@@ -37,7 +35,7 @@ const PartnerNeftForm = () => {
     handleSubmit,
     control,
     formState: { errors },
-    setValue
+    setValue,
   } = useForm({
     defaultValues: {
       lob: null,
@@ -54,6 +52,7 @@ const PartnerNeftForm = () => {
 
   useEffect(() => {
     dispatch(fetchLobData());
+    dispatch(fetchUser({ userType: COMMON_WORDS.PRODUCER }));
   }, [dispatch]);
 
   return (
@@ -72,7 +71,7 @@ const PartnerNeftForm = () => {
                 columnSpacing={{ xs: 1, sm: 2, md: 3 }}
               >
                 <Grid item xs={8}>
-                  <div className={styles.headerContainer}>
+                  <div className="flex items-center">
                     <IconButton
                       aria-label="back"
                       onClick={() => {
@@ -81,9 +80,9 @@ const PartnerNeftForm = () => {
                     >
                       <LeftArrow />
                     </IconButton>
-                    <span className={styles.headerTextStyle}>
+                    <Typography variant="h6" noWrap fontWeight={600} color="#465465">
                       Create New Partner NEFT Flag
-                    </span>
+                    </Typography>
                   </div>
                   <div>
                     <span className="label">
@@ -104,7 +103,6 @@ const PartnerNeftForm = () => {
                   <CustomButton
                     variant="outlined"
                     startIcon={<RestartAltIcon />}
-                    className={styles.secondaryBtn}
                   >
                     Reset
                   </CustomButton>
@@ -124,7 +122,9 @@ const PartnerNeftForm = () => {
                   <Autocomplete
                     id="lob"
                     options={allLob.data || []}
-                    getOptionLabel={(option) => option?.lob?.toUpperCase() || ""}
+                    getOptionLabel={(option) =>
+                      option?.lob?.toUpperCase() || ""
+                    }
                     className="customize-select"
                     size="small"
                     loading={lobLoading}
@@ -217,14 +217,24 @@ const PartnerNeftForm = () => {
                 render={({ field }) => (
                   <Autocomplete
                     id="producer"
-                    options={options || []}
+                    options={user.data || []}
                     className="customize-select"
                     size="small"
+                    loading={userLoading}
                     isOptionEqualToValue={(option, value) =>
                       option.value === value.value
                     }
+                    getOptionLabel={(option) => {
+                      return `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`;
+                    }}
                     renderInput={(params) => (
                       <TextField {...params} placeholder="Select" />
+                    )}
+                    renderOption={(props, option) => (
+                      <li {...props} key={option.id}>
+                        {option?.firstName?.toUpperCase()}{" "}
+                        {option?.lastName?.toUpperCase()}
+                      </li>
                     )}
                     value={field.value || null}
                     onChange={(event, newValue) => {
@@ -256,7 +266,7 @@ const PartnerNeftForm = () => {
                 render={({ field }) => (
                   <Autocomplete
                     id="verificationMethod"
-                    options={options || []}
+                    options={VERIFICATION_METHOD || []}
                     className="customize-select"
                     size="small"
                     isOptionEqualToValue={(option, value) =>
@@ -287,12 +297,8 @@ const PartnerNeftForm = () => {
           </Grid>
         </CardContent>
       </Card>
-      <div className={styles.buttonContainer}>
-        <CustomButton
-          type="submit"
-          variant="contained"
-          className={styles.primaryBtn}
-        >
+      <div className="flex items-center mt-4">
+        <CustomButton type="submit" variant="contained">
           Submit
         </CustomButton>
       </div>

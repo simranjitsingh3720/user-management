@@ -11,7 +11,7 @@ function useGetUserData() {
   const fetchData = useCallback(async () => {
     setLoading(true);
     try {
-      const response = await axiosInstance.get(API_END_POINTS.USERAPI + 'Producer');
+      const response = await axiosInstance.get(`${API_END_POINTS.USERAPI}?searchString=Producer`);
       setData(response?.data?.data || []);
     } catch (error) {
       toast.error(error.response?.data?.error?.message || "Failed to fetch user data");
