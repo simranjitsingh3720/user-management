@@ -21,7 +21,7 @@ import { fetchUser } from "../../../stores/slices/userSlice";
 import { COMMON_WORDS } from "../../../utils/constants";
 import { VERIFICATION_METHOD } from "../constant";
 import LeftArrow from "../../../assets/LeftArrow";
-import useSubmit from "../../PermissionModule/hooks/useSubmit";
+import useSubmit from "../hooks/useSubmit";
 
 const PartnerNeftForm = () => {
   const dispatch = useDispatch();

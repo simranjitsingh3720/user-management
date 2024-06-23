@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { API_END_POINTS } from '../../PartnerNeft/constant';
+import { API_END_POINTS } from '../constant';
 
 const useSubmit = () => {
   const navigate = useNavigate();
