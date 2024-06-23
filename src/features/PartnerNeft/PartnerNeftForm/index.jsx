@@ -12,7 +12,7 @@ import {
   Typography,
 } from "@mui/material";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import CustomButton from "../../../components/CustomButton";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchLobData } from "../../../stores/slices/lobSlice";
@@ -21,6 +21,7 @@ import { fetchUser } from "../../../stores/slices/userSlice";
 import { COMMON_WORDS } from "../../../utils/constants";
 import { VERIFICATION_METHOD } from "../constant";
 import LeftArrow from "../../../assets/LeftArrow";
+import useSubmit from "../../PermissionModule/hooks/useSubmit";
 
 const PartnerNeftForm = () => {
   const dispatch = useDispatch();
@@ -29,8 +30,8 @@ const PartnerNeftForm = () => {
   const { user, userLoading } = useSelector((state) => state.user);
 
   const navigate = useNavigate();
-  const params = useParams();
-  console.log(params);
+  const { createPartnerNeft } = useSubmit();
+
   const {
     handleSubmit,
     control,
@@ -45,9 +46,8 @@ const PartnerNeftForm = () => {
     },
   });
 
-  const onSubmit = (data) => {
-    console.log(data);
-    navigate("/partner-neft");
+  const onSubmit = async (data) => {
+    createPartnerNeft(data);
   };
 
   useEffect(() => {
@@ -80,7 +80,12 @@ const PartnerNeftForm = () => {
                     >
                       <LeftArrow />
                     </IconButton>
-                    <Typography variant="h6" noWrap fontWeight={600} color="#465465">
+                    <Typography
+                      variant="h6"
+                      noWrap
+                      fontWeight={600}
+                      color="#465465"
+                    >
                       Create New Partner NEFT Flag
                     </Typography>
                   </div>

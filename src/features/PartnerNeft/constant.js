@@ -11,3 +11,7 @@ export const VERIFICATION_METHOD = [
     { label: "NEFT PACE", value: "neftPace" },
     { label: "Banca", value: "banca" },
 ]
+
+export const API_END_POINTS = {
+  POST_API: 'api/partner-neft'
+}
