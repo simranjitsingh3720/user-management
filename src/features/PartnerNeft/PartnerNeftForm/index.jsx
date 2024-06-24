@@ -177,6 +177,7 @@ const PartnerNeftForm = () => {
                         dispatch(fetchAllProductData({ lobId: newValue.id }));
                       }
                     }}
+                    disabled={params.id ? true : false}
                     renderOption={(props, option) => (
                       <li {...props} key={option.id}>
                         {option?.lob?.toUpperCase()}
@@ -213,6 +214,7 @@ const PartnerNeftForm = () => {
                     loading={productLoading}
                     className="customize-select"
                     size="small"
+                    disabled={params.id ? true : false}
                     isOptionEqualToValue={(option, value) =>
                       option.id === value.id
                     }

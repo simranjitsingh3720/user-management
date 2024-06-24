@@ -55,16 +55,13 @@ const useSubmit = () => {
 
   const updatePartnerNeft = useCallback(
     async (id, data) => {
-      const { lob, product, producer, verificationMethod } = data;
+      const { producer, verificationMethod } = data;
 
       const body = {
         id: id,
         properties: {
-          lobId: lob.id,
-          productId: product.id,
           producerId: producer.id,
           verificationMethod: verificationMethod.value,
-          status: true,
         }
       };
 
