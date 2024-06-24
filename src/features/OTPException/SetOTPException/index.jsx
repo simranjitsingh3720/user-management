@@ -45,9 +45,9 @@ function SetOTPException({ fetchData }) {
         </div>
       </div>
       <div className={styles.OTPSelectStyle}>
-        <text className={styles.labelText}>
+        <span className={styles.labelText}>
           Select <span className={styles.styledRequired}>*</span>
-        </text>
+        </span>
         <div className={styles.radioContainer}>
           <RadioGroup
             row
@@ -82,11 +82,11 @@ function SetOTPException({ fetchData }) {
         <form onSubmit={handleSubmit(onSubmit)}>
           {OTPValue === "byChannnel" ? (
             <div className={styles.fieldContainerStyle}>
-              <text className={styles.labelText}>
+              <span className={styles.labelText}>
                 Channel <span className={styles.styledRequired}>*</span>
-              </text>
+              </span>
               <Controller
-                name="channel" // Name of the field in the form data
+                name="channel" 
                 control={control}
                 rules={{ required: true }}
                 render={({ field }) => (
@@ -124,11 +124,11 @@ function SetOTPException({ fetchData }) {
             </div>
           ) : (
             <div className={styles.fieldContainerStyle}>
-              <text className={styles.labelText}>
+              <span className={styles.labelText}>
                 Producer Code <span className={styles.styledRequired}>*</span>
-              </text>
+              </span>
               <Controller
-                name="producerCode" // Name of the field in the form data
+                name="producerCode" 
                 control={control}
                 rules={{ required: true }}
                 render={({ field }) => (

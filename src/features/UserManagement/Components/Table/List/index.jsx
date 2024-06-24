@@ -54,13 +54,13 @@ function List({ item, loading, fetchData, setLoading }) {
         >{`${item.firstName} ${item.lastName}`}</div>
 
         <div className={styles.loginCell}>
-          <text>
+          <span>
             NT Login:<span>{item.ntId}</span>
-          </text>
-          <text>
+          </span>
+          <span>
             Email ID:
             <span>{item.email}</span>
-          </text>
+          </span>
         </div>
         <div className={styles.mobileCell}>{item.mobileNo}</div>
         <div className={styles.roleCell}>{item.roleName}</div>
@@ -114,9 +114,9 @@ function List({ item, loading, fetchData, setLoading }) {
           <div className={styles.infoIconStyle}>
             <InfoIcon fontSize="x-large" className={styles.iconStyle} />
           </div>
-          <text className={styles.styledText}>
+          <span className={styles.styledText}>
             Are you sure you want to change the Group status?
-          </text>
+          </span>
 
           <div className={styles.SubmitContainer}>
             <CustomButton

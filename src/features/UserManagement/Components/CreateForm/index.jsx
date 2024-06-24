@@ -37,32 +37,6 @@ const formField1 = [
   },
 ];
 
-const formField2 = [
-  {
-    label: "LOB",
-    value: "lob",
-  },
-  {
-    label: "Product",
-    value: "product",
-  },
-];
-
-const formField = [
-  {
-    label: "Vertical",
-    value: "vertical",
-  },
-  {
-    label: "Sub Vertical",
-    value: "subVertical",
-  },
-  {
-    label: "SOL ID",
-    value: "solId",
-  },
-];
-
 function CreateUserMangementForm() {
   const navigate = useNavigate();
   const { groupData } = useGetGroup();
@@ -156,11 +130,11 @@ function CreateUserMangementForm() {
         </div>
         <div className={styles.formContainer}>
           <div className={styles.fieldContainerStyle}>
-            <text className={styles.labelText}>
+            <span className={styles.labelText}>
               Role <span className={styles.styledRequired}>*</span>
-            </text>
+            </span>
             <Controller
-              name="roleSelect" // Name of the field in the form data
+              name="roleSelect" 
               control={control}
               rules={{ required: "Role is required" }}
               render={({ field }) => (
@@ -206,11 +180,11 @@ function CreateUserMangementForm() {
             />
           </div>
           <div className={styles.fieldContainerStyle}>
-            <text className={styles.labelText}>
+            <span className={styles.labelText}>
               Group <span className={styles.styledRequired}>*</span>
-            </text>
+            </span>
             <Controller
-              name="groupSelect" // Name of the field in the form data
+              name="groupSelect" 
               control={control}
               rules={{ required: "Group is required" }}
               render={({ field }) => (
@@ -252,11 +226,11 @@ function CreateUserMangementForm() {
             />
           </div>
           <div className={styles.fieldContainerStyle}>
-            <text className={styles.labelText}>
+            <span className={styles.labelText}>
               User Id <span className={styles.styledRequired}>*</span>
-            </text>
+            </span>
             <Controller
-              name="userId" // Name of the field in the form data
+              name="userId" 
               control={control}
               rules={{ required: " User Id is required" }}
               render={({ field }) => (
@@ -275,11 +249,11 @@ function CreateUserMangementForm() {
           </div>
           {formField1.map((item) => (
             <div className={styles.fieldContainerStyle}>
-              <text className={styles.labelText}>
+              <span className={styles.labelText}>
                 {item.label} <span className={styles.styledRequired}>*</span>
-              </text>
+              </span>
               <Controller
-                name={item.value} // Name of the field in the form data
+                name={item.value} 
                 control={control}
                 rules={{
                   required: `${item.label} is required`,
@@ -313,43 +287,12 @@ function CreateUserMangementForm() {
               />
             </div>
           ))}
-          {/* <div className={styles.fieldContainerStyle}>
-            <text className={styles.labelText}>
-              Location <span className={styles.styledRequired}>*</span>
-            </text>
-            <Controller
-              name="location" // Name of the field in the form data
-              control={control}
-              rules={{ required: true }}
-              render={({ field }) => (
-                <Autocomplete
-                  disablePortal
-                  id="location"
-                  options={selectData}
-                  className={styles.customizeSelect}
-                  size="small"
-                  renderInput={(params) => (
-                    <TextField {...params} placeholder="Select" />
-                  )}
-                  ListboxProps={{
-                    style: {
-                      maxHeight: "200px",
-                    },
-                  }}
-                  {...field}
-                />
-              )}
-            />
-            <div className={styles.styledError}>
-              {errors.location && <span>This field is required</span>}
-            </div>
-          </div> */}
           <div className={styles.fieldContainerStyle}>
-            <text className={styles.labelText}>
+            <span className={styles.labelText}>
               Mobile Number <span className={styles.styledRequired}>*</span>
-            </text>
+            </span>
             <Controller
-              name="mobileNumber" // Name of the field in the form data
+              name="mobileNumber" 
               control={control}
               rules={{
                 required: "Mobile number is required",
@@ -383,11 +326,11 @@ function CreateUserMangementForm() {
             />
           </div>
           <div className={styles.fieldContainerStyle}>
-            <text className={styles.labelText}>
+            <span className={styles.labelText}>
               Email Id <span className={styles.styledRequired}>*</span>
-            </text>
+            </span>
             <Controller
-              name="emailId" // Name of the field in the form data
+              name="emailId" 
               control={control}
               rules={{
                 required: "Email address is required",
@@ -414,11 +357,11 @@ function CreateUserMangementForm() {
             </div> */}
           </div>
           <div className={styles.fieldContainerStyle}>
-            <text className={styles.labelText}>
+            <span className={styles.labelText}>
               NT Login <span className={styles.styledRequired}>*</span>
-            </text>
+            </span>
             <Controller
-              name="ntLogin" // Name of the field in the form data
+              name="ntLogin" 
               control={control}
               rules={{ required: "NT Login is required" }}
               render={({ field }) => (
@@ -436,11 +379,11 @@ function CreateUserMangementForm() {
             />
           </div>
           <div className={styles.fieldContainerStyle}>
-            <text className={styles.labelText}>
+            <span className={styles.labelText}>
               Producer Code <span className={styles.styledRequired}>*</span>
-            </text>
+            </span>
             <Controller
-              name="producerCode" // Name of the field in the form data
+              name="producerCode" 
               control={control}
               rules={{ required: "Producer Code is required" }}
               render={({ field }) => (
@@ -459,126 +402,12 @@ function CreateUserMangementForm() {
               )}
             />
           </div>
-          {/* {formField2.map(({ label, value }) => (
-            <div className={styles.fieldContainerStyle}>
-              <text className={styles.labelText}>
-                {label} <span className={styles.styledRequired}>*</span>
-              </text>
-              <Controller
-                name={value} // Name of the field in the form data
-                control={control}
-                rules={{ required: true }}
-                render={({ field }) => (
-                  <Autocomplete
-                    {...field}
-                    multiple
-                    id={value}
-                    options={selectData}
-                    disableCloseOnSelect
-                    getOptionLabel={(option) => option.label}
-                    onChange={(event, newValue) => {
-                      field.onChange(newValue);
-                    }}
-                    renderOption={(props, option, { selected }) => (
-                      <li {...props}>
-                        <Checkbox
-                          icon={icon}
-                          checkedIcon={checkedIcon}
-                          style={{ marginRight: 8 }}
-                          checked={selected}
-                        />
-                        {option.label}
-                      </li>
-                    )}
-                    size="small"
-                    className={styles.customizeSelect}
-                    renderInput={(params) => (
-                      <TextField {...params} placeholder="Select" />
-                    )}
-                  />
-                )}
-              />
-
-              <div className={styles.styledError}>
-                {errors[value] && <span>This field is required</span>}
-              </div>
-            </div>
-          ))} */}
-          {/* {formField.map((item) => (
-            <div className={styles.fieldContainerStyle}>
-              <text className={styles.labelText}>
-                {item.label} <span className={styles.styledRequired}>*</span>
-              </text>
-              <Controller
-                name={item.value} // Name of the field in the form data
-                control={control}
-                rules={{ required: true }}
-                render={({ field }) => (
-                  <TextField
-                    id={item.value}
-                    variant="outlined"
-                    placeholder="Enter Last Name"
-                    size="small"
-                    className={styles.customizeSelect}
-                    {...field}
-                  />
-                )}
-              />
-              <div className={styles.styledError}>
-                {errors[item.value] && <span>This field is required</span>}
-              </div>
-            </div>
-          ))} */}
-          {/* <div className={styles.fieldContainerStyle}>
-            <text className={styles.labelText}>
-              Active Period <span className={styles.styledRequired}>*</span>
-            </text>
-            <div className={styles.dateContainer}>
-              <Controller
-                name="startDate" // Name of the field in the form data
-                control={control}
-                rules={{ required: true }}
-                render={({ field }) => (
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DatePicker
-                      label="Select Start Date"
-                      className={styles.dateStyle}
-                      {...register("startDate", { required: true })}
-                      slotProps={{ textField: { size: "small" } }}
-                      value={watch("startDate")}
-                      onChange={(date) => setValue("startDate", date)}
-                    />
-                  </LocalizationProvider>
-                )}
-              />
-              <Controller
-                name="expiryDate" // Name of the field in the form data
-                control={control}
-                rules={{ required: true }}
-                render={({ field }) => (
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DatePicker
-                      label="Select Expiry Date"
-                      className={styles.dateStyle}
-                      {...register("expiryDate", { required: true })}
-                      value={watch("expiryDate")}
-                      onChange={(date) => setValue("expiryDate", date)}
-                      slotProps={{ textField: { size: "small" } }}
-                    />
-                  </LocalizationProvider>
-                )}
-              />
-            </div>
-            <div className={styles.styledError}>
-              {errors.lastName && <span>This field is required</span>}
-            </div>
-          </div> */}
           <div className={styles.fieldContainerStyle}>
-            <text className={styles.labelText}>
+            <span className={styles.labelText}>
               Insillion Status <span className={styles.styledRequired}>*</span>
-            </text>
+            </span>
             <Controller
-              name="insillionStatus" // Name of the field in the form data
+              name="insillionStatus" 
               control={control}
               rules={{ required: "Insillion Status is required" }}
               render={({ field }) => (

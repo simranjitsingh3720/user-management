@@ -102,11 +102,11 @@ function ProductForm() {
             ))}
 
             <div className={styles.fieldContainerStyle}>
-              <text className={styles.labelText}>
+              <span className={styles.labelText}>
                 Lob Name <span className={styles.styledRequired}>*</span>
-              </text>
+              </span>
               <Controller
-                name="lob" // Name of the field in the form data
+                name="lob" 
                 control={control}
                 rules={{ required: true }}
                 render={({ field }) => (
@@ -137,11 +137,11 @@ function ProductForm() {
               </div>
             </div>
             <div className={styles.fieldContainerStyle}>
-              <text className={styles.labelText}>
+              <span className={styles.labelText}>
                 Status <span className={styles.styledRequired}>*</span>
-              </text>
+              </span>
               <Controller
-                name="status" // Name of the field in the form data
+                name="status" 
                 control={control}
                 rules={{ required: "Status is required" }}
                 defaultValue="active"

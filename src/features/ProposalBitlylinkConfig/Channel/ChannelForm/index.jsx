@@ -42,11 +42,11 @@ function ChannelForm() {
           </div>{" "}
           <div className={styles.containerStyle}>
             <div className={styles.fieldContainerStyle}>
-              <text className={styles.labelText}>
+              <span className={styles.labelText}>
                 Select Channel <span className={styles.styledRequired}>*</span>
-              </text>
+              </span>
               <Controller
-                name="channel" // Name of the field in the form data
+                name="channel" 
                 control={control}
                 rules={{ required: "Channel is required" }}
                 render={({ field }) => (
@@ -77,12 +77,12 @@ function ChannelForm() {
               </div>
             </div>
             <div className={styles.fieldContainerStyle}>
-              <text className={styles.labelText}>
+              <span className={styles.labelText}>
                 Bitly Link Mandatory{" "}
                 <span className={styles.styledRequired}>*</span>
-              </text>
+              </span>
               <Controller
-                name="bitlyLinkMandatory" // Name of the field in the form data
+                name="bitlyLinkMandatory" 
                 control={control}
                 rules={{ required: "Bitly Link is required" }}
                 render={({ field }) => (
