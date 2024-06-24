@@ -12,7 +12,7 @@ import {
   Typography,
 } from "@mui/material";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import CustomButton from "../../../components/CustomButton";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchLobData } from "../../../stores/slices/lobSlice";
@@ -25,12 +25,13 @@ import useSubmit from "../hooks/useSubmit";
 
 const PartnerNeftForm = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const parms = useParams();
+
   const { allLob, lobLoading } = useSelector((state) => state.lob);
   const { products, productLoading } = useSelector((state) => state.product);
   const { user, userLoading } = useSelector((state) => state.user);
-
-  const navigate = useNavigate();
-  const { createPartnerNeft } = useSubmit();
+  const { createPartnerNeft, getPartnerNeft, updatePartnerNeft } = useSubmit();
 
   const {
     handleSubmit,
@@ -47,8 +48,23 @@ const PartnerNeftForm = () => {
   });
 
   const onSubmit = async (data) => {
-    createPartnerNeft(data);
+    if (parms.id) {
+      updatePartnerNeft(parms.id, data);
+    } else {
+      createPartnerNeft(data);
+    }
   };
+
+  const getPartnerNeftDetails = async (id) => {
+    const data = await getPartnerNeft(id);
+    console.log(data)
+    // setValue() // set multiple records
+  }
+
+  if (parms?.id) {
+    const data = getPartnerNeftDetails(parms.id)
+    console.log(data);
+  }
 
   useEffect(() => {
     dispatch(fetchLobData());

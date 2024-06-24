@@ -15,6 +15,7 @@ const useGetPartnerNeft = () => {
         `${API_END_POINTS.GET_API}?isAll=true`
       );
       const partnerNeftData = response.data.data.map((item) => ({
+        id: item.id,
         lob: item.lob.lob,
         product: item.product.product,
         producerName: item.producer.firstName,
