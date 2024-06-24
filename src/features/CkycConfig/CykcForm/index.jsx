@@ -24,7 +24,7 @@ import { forWhom } from "../utils/constants";
 import useGetLobData from "../../../hooks/useGetLobData";
 import useGetProductByLobId from "../../../hooks/useGetProductByLobId";
 
-const CykcForm = () => {
+const CkycForm = () => {
   const navigate = useNavigate();
   const params = useParams();
   console.log(params);
@@ -290,4 +290,4 @@ const CykcForm = () => {
   );
 };
 
-export default CykcForm;
+export default CkycForm;

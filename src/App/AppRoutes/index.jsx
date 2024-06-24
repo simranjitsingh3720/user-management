@@ -76,9 +76,9 @@ const EmployeeConfigurationForm = lazy(() =>
 const RevalidationList = lazy(() => import("../../features/RevalidationList"));
 const PartnerNeft = lazy(() => import("../../features/PartnerNeft"));
 
-const CykcConfig = lazy(() => import("../../features/CykcConfig"));
+const CkycConfig = lazy(() => import("../../features/CkycConfig"));
 
-const CykcForm = lazy(() => import("../../features/CykcConfig/CykcForm"));
+const CkycForm = lazy(() => import("../../features/CkycConfig/CykcForm"));
 
 const AppRoutes = () => {
   return (
@@ -363,7 +363,7 @@ const AppRoutes = () => {
           path="/ckyc-config"
           element={
             <ResponsiveDrawer showSidebarAndHeader={true}>
-              <CykcConfig />
+              <CkycConfig />
             </ResponsiveDrawer>
           }
         />
@@ -371,7 +371,7 @@ const AppRoutes = () => {
           path="/ckyc-config/form/:id?"
           element={
             <ResponsiveDrawer showSidebarAndHeader={true}>
-              <CykcForm />
+              <CkycForm />
             </ResponsiveDrawer>
           }
         />
