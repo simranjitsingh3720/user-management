@@ -26,7 +26,7 @@ import useSubmit from "../hooks/useSubmit";
 const PartnerNeftForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const parms = useParams();
+  const params = useParams();
 
   const { allLob, lobLoading } = useSelector((state) => state.lob);
   const { products, productLoading } = useSelector((state) => state.product);
@@ -48,8 +48,8 @@ const PartnerNeftForm = () => {
   });
 
   const onSubmit = async (data) => {
-    if (parms.id) {
-      updatePartnerNeft(parms.id, data);
+    if (params.id) {
+      updatePartnerNeft(params.id, data);
     } else {
       createPartnerNeft(data);
     }
@@ -57,14 +57,25 @@ const PartnerNeftForm = () => {
 
   const getPartnerNeftDetails = async (id) => {
     const data = await getPartnerNeft(id);
-    console.log(data)
-    // setValue() // set multiple records
-  }
+    if (data) {
+      setValue("lob", data.lob);
+      setValue("producer", data.producer);
 
-  if (parms?.id) {
-    const data = getPartnerNeftDetails(parms.id)
-    console.log(data);
-  }
+      const index = VERIFICATION_METHOD.findIndex(item => data.verificationMethod === item.value)
+      setValue("verificationMethod", VERIFICATION_METHOD[index]);
+      // Fetch related products if lob is set
+      if (data.lob?.id) {
+        dispatch(fetchAllProductData({ lobId: data.lob.id }));
+        setValue("product", data.product);
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (params.id) {
+      getPartnerNeftDetails(params.id);
+    }
+  }, [params.id]);
 
   useEffect(() => {
     dispatch(fetchLobData());
@@ -102,13 +113,15 @@ const PartnerNeftForm = () => {
                       fontWeight={600}
                       color="#465465"
                     >
-                      Create New Partner NEFT Flag
+                      {params.id
+                        ? "Update Partner NEFT Flag"
+                        : "Create New Partner NEFT Flag"}
                     </Typography>
                   </div>
                   <div>
                     <span className="label">
-                      Please fill the details below and click Submit to create a
-                      new partner NEFT flag.
+                      Please fill the details below and click Submit to{" "}
+                      {params.id ? "update" : "create"} a partner NEFT flag.
                     </span>
                   </div>
                 </Grid>
@@ -124,6 +137,7 @@ const PartnerNeftForm = () => {
                   <CustomButton
                     variant="outlined"
                     startIcon={<RestartAltIcon />}
+                    onClick={() => navigate("/partner-neft")}
                   >
                     Reset
                   </CustomButton>
@@ -243,7 +257,7 @@ const PartnerNeftForm = () => {
                     size="small"
                     loading={userLoading}
                     isOptionEqualToValue={(option, value) =>
-                      option.value === value.value
+                      option.id === value.id
                     }
                     getOptionLabel={(option) => {
                       return `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`;
@@ -291,7 +305,7 @@ const PartnerNeftForm = () => {
                     className="customize-select"
                     size="small"
                     isOptionEqualToValue={(option, value) =>
-                      option.value === value.value
+                      option.value === value?.value
                     }
                     renderInput={(params) => (
                       <TextField {...params} placeholder="Select" />
@@ -309,6 +323,7 @@ const PartnerNeftForm = () => {
                   />
                 )}
               />
+
               <div className="error-msg">
                 {errors.verificationMethod && (
                   <span>{errors.verificationMethod.message}</span>
