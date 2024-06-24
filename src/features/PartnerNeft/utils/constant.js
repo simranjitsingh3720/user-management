@@ -8,7 +8,7 @@ export const TABLE_COLUMNS = [
 
 export const VERIFICATION_METHOD = [
     { label: "Partner", value: "partner" },
-    { label: "NEFT PACE", value: "neftPace" },
+    { label: "NEFT PACE", value: "neft pace" },
     { label: "Banca", value: "banca" },
 ]
 

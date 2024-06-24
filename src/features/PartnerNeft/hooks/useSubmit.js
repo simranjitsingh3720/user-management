@@ -1,8 +1,8 @@
 import { useCallback } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { API_END_POINTS } from '../utils/constant';
+import axiosInstance from './../../../utils/axiosInstance'
 
 const useSubmit = () => {
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ const useSubmit = () => {
     };
 
     try {
-      const { data: responseData } = await axios.post(API_END_POINTS.POST_API, body);
+      const { data: responseData } = await axiosInstance.post(API_END_POINTS.POST_API, body);
       toast.success(responseData?.message || "Partner NEFT created successfully");
       navigate("/partner-neft");
     } catch (e) {
