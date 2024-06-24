@@ -1,4 +1,4 @@
-import {  MenuItem, Select, TextField, Typography } from "@mui/material";
+import { MenuItem, Select, TextField, Typography } from "@mui/material";
 import React from "react";
 import styles from "./styles.module.scss";
 import { SearchKey } from "../constants";
@@ -52,12 +52,9 @@ function SearchComponenet({ setPageChange, setQuery, searched, setSearched }) {
           }}
         />
       </div>
-      <CustomButton
-        variant="contained"
-        onClick={handleCreateNewForm}
-      >
+      <CustomButton variant="contained" onClick={handleCreateNewForm}>
         <Typography nowrap="true" className={styles.buttonTextStyle}>
-          Create House Master Configuration
+          Create House Bank Master Configuration
         </Typography>
       </CustomButton>
     </div>
