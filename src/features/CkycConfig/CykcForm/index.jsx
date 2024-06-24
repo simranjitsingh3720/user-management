@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import {
   Autocomplete,
@@ -20,30 +20,90 @@ import LeftArrow from "../../../assets/LeftArrow";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import { useNavigate, useParams } from "react-router-dom";
 import CustomButton from "../../../components/CustomButton";
-import { forWhom } from "../utils/constants";
+import { forWhomDisable, forWhomEnable } from "../utils/constants";
 import useGetLobData from "../../../hooks/useGetLobData";
 import useGetProductByLobId from "../../../hooks/useGetProductByLobId";
+import useCreateCkyc from "../hooks/useCreateCkyc";
+import useGetCkycById from "../hooks/useGetCkycById";
+import useUpdateCkyc from "../hooks/useUpdateCkyc";
 
 const CkycForm = () => {
   const navigate = useNavigate();
-  const params = useParams();
-  console.log(params);
+  const { id } = useParams();
+  console.log(id);
   const {
     handleSubmit,
     control,
     setValue,
     formState: { errors },
+    watch,
   } = useForm({
     defaultValues: {
       lob: null,
       product: null,
       cykc: "enable",
-      forWhom: "both",
+      forWhom: null,
     },
   });
 
+  useEffect(() => {
+    setValue("forWhom", null);
+  }, [watch("cykc")]);
+
+  const { postData, loading } = useCreateCkyc();
+
+  const { UpdateDataFun, updateLoading } = useUpdateCkyc();
+
+  const { data: ckycDataById, fetchData: ckycFetchData } = useGetCkycById();
+
+  const { data, fetchData } = useGetProductByLobId();
+
+  console.log("ckycDataById", ckycDataById);
+
+  useEffect(() => {
+    ckycFetchData(id);
+  }, [id]);
+
+  useEffect(() => {
+    if (ckycDataById && ckycDataById?.data) {
+      setValue("lob", ckycDataById.data.lob);
+      setValue("product", ckycDataById.data.product);
+      setValue(
+        "cykc",
+        ckycDataById.data.isCKYCApplicable ? "enable" : "disable"
+      );
+      setValue("forWhom", ckycDataById.data.forWhom);
+      fetchData(ckycDataById.data.lob.id);
+    }
+  }, [ckycDataById]);
+
   const onSubmit = (data) => {
-    console.log(data);
+    if (id) {
+      const payload = {
+        id: id,
+        properties: {
+          isCKYCApplicable: data.cykc === "enable" ? true : false,
+        },
+      };
+
+      if (payload.properties.isCKYCApplicable) {
+        payload.properties.forWhom = data.forWhom;
+      }
+
+      UpdateDataFun(payload);
+    } else {
+      const payload = {
+        lobId: data.lob.id,
+        productId: data.product.id,
+        isCKYCApplicable: data.cykc === "enable" ? true : false,
+      };
+
+      if (payload.isCKYCApplicable) {
+        payload.forWhom = data.forWhom;
+      }
+
+      postData(payload);
+    }
   };
 
   const handleResetButton = () => {
@@ -54,8 +114,6 @@ const CkycForm = () => {
   };
 
   const { data: lobListData } = useGetLobData();
-
-  const { data, fetchData } = useGetProductByLobId();
 
   return (
     <Box component="form" onSubmit={handleSubmit(onSubmit)}>
@@ -83,7 +141,7 @@ const CkycForm = () => {
                       <LeftArrow />
                     </IconButton>
                     <span className={styles.headerTextStyle}>
-                      Create New CKYC Config
+                      {id ? "Update New CKYC Config" : "Create New CKYC Config"}
                     </span>
                   </div>
                   <div>
@@ -233,57 +291,68 @@ const CkycForm = () => {
                 {errors.cykc && <span>{errors.cykc.message}</span>}
               </div>
             </Grid>
-            <Grid item xs={12} sm={6} lg={4}>
-              <text className="label-text required-field">For Whom</text>
-              <Controller
-                name="forWhom"
-                id="forWhom" // Name of the field in the form data
-                control={control}
-                rules={{ required: "This field is required" }}
-                render={({ field }) => (
-                  <Select
-                    id="forWhom"
-                    value={field.value}
-                    onChange={(event, newValue) => {
-                      field.onChange(event.target.value);
-                    }}
-                    size="small"
-                    displayEmpty
-                    fullWidth
-                    className="customize-select"
-                    renderValue={(selected) => {
-                      if (selected === null) {
-                        return (
-                          <div className={styles.placeholderStyle}>Select</div>
+            {watch("cykc") === "enable" && (
+              <Grid item xs={12} sm={6} lg={4}>
+                <text className="label-text required-field">For Whom</text>
+                <Controller
+                  name="forWhom"
+                  id="forWhom" // Name of the field in the form data
+                  control={control}
+                  rules={{ required: "This field is required" }}
+                  render={({ field }) => (
+                    <Select
+                      id="forWhom"
+                      value={field.value}
+                      onChange={(event, newValue) => {
+                        field.onChange(event.target.value);
+                      }}
+                      size="small"
+                      displayEmpty
+                      fullWidth
+                      className="customize-select"
+                      renderValue={(selected) => {
+                        if (selected === null) {
+                          return (
+                            <div className={styles.placeholderStyle}>
+                              Select
+                            </div>
+                          );
+                        }
+                        const selectedItem = forWhomEnable.find(
+                          (item) => item.value === selected
                         );
-                      }
-                      const selectedItem = forWhom.find(
-                        (item) => item.value === selected
-                      );
-                      return selectedItem ? selectedItem.label : "";
-                    }}
-                  >
-                    {forWhom.map((item) => (
-                      <MenuItem
-                        value={item.value}
-                        className={styles.styledOptionText}
-                      >
-                        {item.label}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                )}
-              />
-              <div className="error-msg">
-                {errors.forWhom && <span>{errors.forWhom.message}</span>}
-              </div>
-            </Grid>
+                        return selectedItem ? selectedItem.label : "";
+                      }}
+                    >
+                      {(watch("cykc") === "enable"
+                        ? forWhomEnable
+                        : forWhomDisable
+                      ).map((item) => (
+                        <MenuItem
+                          value={item.value}
+                          className={styles.styledOptionText}
+                        >
+                          {item.label}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  )}
+                />
+                <div className="error-msg">
+                  {errors.forWhom && <span>{errors.forWhom.message}</span>}
+                </div>
+              </Grid>
+            )}
           </Grid>
         </CardContent>
       </Card>
       <div className={styles.buttonContainer}>
-        <CustomButton type="submit" variant="contained">
-          Submit
+        <CustomButton
+          type="submit"
+          variant="contained"
+          disabled={loading || updateLoading}
+        >
+          {id ? "Update" : "Submit"}
         </CustomButton>
       </div>
     </Box>
