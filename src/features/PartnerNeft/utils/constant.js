@@ -13,5 +13,12 @@ export const VERIFICATION_METHOD = [
 ]
 
 export const API_END_POINTS = {
-  POST_API: 'api/partner-neft'
+  POST_API: 'api/partner-neft',
+  GET_API: 'api/partner-neft'
 }
+
+export const VERFICATION_ENUM = Object.freeze({
+  partner: "Partner",
+  "neft pace": "NEFT PACE",
+  banca: "Banca"
+});

@@ -1,13 +1,32 @@
 import { Box } from "@mui/material";
 import React from "react";
-import PartnerTable from "./PartnerTable";
+import DynamicTable from "./DynamicTable";
+import { useNavigate } from "react-router-dom";
+import { TABLE_COLUMNS } from "./utils/constant";
+import useGetPartnerNeft from "./hooks/useGetPartnerNeft";
 
-function PartnerNeft() {
+const PartnerNeft = () => {
+  const navigate = useNavigate();
+  const { partnerNeftData, partnerNeftLoading } = useGetPartnerNeft();
+
+  const createNeftForm = () => {
+    navigate("/partner-neft/form");
+  };
+  const udpateNeftForm = (id) => {
+    navigate("/partner-neft/form/" + id);
+  };
+
   return (
     <Box>
-      <PartnerTable />
+      <DynamicTable
+        columns={TABLE_COLUMNS}
+        data={partnerNeftData}
+        createNeftForm={createNeftForm}
+        udpateNeftForm={udpateNeftForm}
+        loading={partnerNeftLoading}
+      />
     </Box>
   );
-}
+};
 
 export default PartnerNeft;
