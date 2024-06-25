@@ -36,10 +36,6 @@ const TableFooter = ({
           count={count}
           rowsPerPage={rowsPerPage}
           page={page}
-          SelectProps={{
-            inputProps: { "aria-label": "rows per page" },
-            native: true,
-          }}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
           style={customStyles.pagination}
