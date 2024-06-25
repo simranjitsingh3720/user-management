@@ -105,7 +105,7 @@ function NavbarDrawer({
               </ListItemButton>
             </ListItem>
           ) : (
-            <>
+            <React.Fragment key={index}>
               <ListItemButton
                 onClick={handleClick}
                 sx={{
@@ -172,7 +172,7 @@ function NavbarDrawer({
                   ))}
                 </List>
               </Collapse>
-            </>
+            </React.Fragment>
           )
         )}
       </List>

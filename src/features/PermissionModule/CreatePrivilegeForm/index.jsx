@@ -298,40 +298,6 @@ const PrivilegeForm = () => {
                       <span className={styles.labelText}>
                         Crud <span className={styles.styledRequired}>*</span>
                       </span>
-                      {/* <Controller
-                        name={`items[${index}].crud`}
-                        control={control}
-                        rules={{ required: true }}
-                        render={({ field }) => (
-                          <Autocomplete
-                            {...field}
-                            multiple
-                            id="crud"
-                            options={CrudSelect}
-                            disableCloseOnSelect
-                            getOptionLabel={(option) => option.label}
-                            onChange={(event, newValue) => {
-                              field.onChange(newValue);
-                            }}
-                            renderOption={(props, option, { selected }) => (
-                              <li {...props}>
-                                <Checkbox
-                                  icon={icon}
-                                  checkedIcon={checkedIcon}
-                                  style={{ marginRight: 8 }}
-                                  checked={selected}
-                                />
-                                {option.label}
-                              </li>
-                            )}
-                            size="small"
-                            className={styles.customizeSelect}
-                            renderInput={(params) => (
-                              <TextField {...params} placeholder="Select" />
-                            )}
-                          />
-                        )}
-                      /> */}
                       <Controller
                         name={`items[${index}].permissionType`}
                         control={control}

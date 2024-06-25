@@ -4,12 +4,7 @@
   margin-top: 1rem;
 }
 
-.primaryBtn, .exportBtn {
-  height: 40px;
-  margin-right: 0.5rem !important;
-}
-
-.headerContainer{ 
+.headerContainer {
   display: flex;
   align-items: center;
 }
@@ -19,8 +14,4 @@
   font-size: 18px;
   color: #465465;
   font-weight: 600;
-}
-
-.secondaryBtn {
-  height: 40px;
 }

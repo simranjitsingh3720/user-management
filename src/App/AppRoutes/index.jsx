@@ -21,12 +21,16 @@ const GroupModule = lazy(() => import("../../features/GroupModule"));
 const CreateGroupForm = lazy(() =>
   import("../../features/GroupModule/CreateGroupForm copy")
 );
-const CreateRoleForm = lazy(() => import("../../features/RoleModule/CreateRoleForm"));
+const CreateRoleForm = lazy(() =>
+  import("../../features/RoleModule/CreateRoleForm")
+);
 const Form = lazy(() => import("../../features/PermissionModule/Form"));
 const LOBModule = lazy(() => import("../../features/LOBModule"));
 const LobForm = lazy(() => import("../../features/LOBModule/LobForm"));
 const Product = lazy(() => import("../../features/ProductModule"));
-const ProductForm = lazy(() => import("../../features/ProductModule/ProductForm"));
+const ProductForm = lazy(() =>
+  import("../../features/ProductModule/ProductForm")
+);
 const ProposalBitlyLinkConfig = lazy(() =>
   import("../../features/ProposalBitlylinkConfig")
 );
@@ -34,16 +38,22 @@ const ChannelForm = lazy(() =>
   import("../../features/ProposalBitlylinkConfig/Channel/ChannelForm")
 );
 const OTPException = lazy(() => import("../../features/OTPException"));
-const ProposalOTPException = lazy(() => import("../../features/ProposalOTPException"));
+const ProposalOTPException = lazy(() =>
+  import("../../features/ProposalOTPException")
+);
 const BANCALogin = lazy(() => import("../../features/BANCALogin"));
 const ProposalForm = lazy(() =>
   import("../../features/ProposalOTPException/ProposalForm")
 );
-const ProducerEODBypass = lazy(() => import("../../features/ProducerEODBypass"));
+const ProducerEODBypass = lazy(() =>
+  import("../../features/ProducerEODBypass")
+);
 const ProducerEODFrom = lazy(() =>
   import("../../features/ProducerEODBypass/ProducerEODForm")
 );
-const ProductPaymentConfig = lazy(() => import("../../features/ProductPaymentConfig"));
+const ProductPaymentConfig = lazy(() =>
+  import("../../features/ProductPaymentConfig")
+);
 const ProductPaymentConfigForm = lazy(() =>
   import("../../features/ProductPaymentConfig/ProductPaymentConfigForm")
 );
@@ -51,11 +61,15 @@ const HouseBankMaster = lazy(() => import("../../features/HouseBankMaster"));
 const HouseBankMasterForm = lazy(() =>
   import("../../features/HouseBankMaster/HouseBankMasterForm")
 );
-const HealthConfiguration = lazy(() => import("../../features/HealthConfiguration"));
+const HealthConfiguration = lazy(() =>
+  import("../../features/HealthConfiguration")
+);
 const HealthConfigurationForm = lazy(() =>
   import("../../features/HealthConfiguration/HealthConfigurationForm")
 );
-const EmployeeFlagConfig = lazy(() => import("../../features/EmployeeFlagConfig"));
+const EmployeeFlagConfig = lazy(() =>
+  import("../../features/EmployeeFlagConfig")
+);
 
 const SyncedProducers = lazy(() => import("../../features/SyncedProducer"));
 const AliasUser = lazy(() => import("../../features/AliasUser"));
@@ -65,6 +79,10 @@ const EmployeeConfigurationForm = lazy(() =>
 );
 const RevalidationList = lazy(() => import("../../features/RevalidationList"));
 const PartnerNeft = lazy(() => import("../../features/PartnerNeft"));
+
+const CkycConfig = lazy(() => import("../../features/CkycConfig"));
+
+const CkycForm = lazy(() => import("../../features/CkycConfig/CykcForm"));
 
 const AppRoutes = () => {
   return (
@@ -350,6 +368,22 @@ const AppRoutes = () => {
           element={
             <ResponsiveDrawer showSidebarAndHeader={true}>
               <AliasUser />
+            </ResponsiveDrawer>
+          }
+        />
+        <Route
+          path="/ckyc-config"
+          element={
+            <ResponsiveDrawer showSidebarAndHeader={true}>
+              <CkycConfig />
+            </ResponsiveDrawer>
+          }
+        />
+        <Route
+          path="/ckyc-config/form/:id?"
+          element={
+            <ResponsiveDrawer showSidebarAndHeader={true}>
+              <CkycForm />
             </ResponsiveDrawer>
           }
         />

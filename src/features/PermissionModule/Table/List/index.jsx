@@ -104,9 +104,9 @@ function List({ item, fetchData, setLoading }) {
           <div className={styles.infoIconStyle}>
             <InfoIcon fontSize="x-large" className={styles.iconStyle} />
           </div>
-          <text className={styles.styledText}>
+          <span className={styles.styledText}>
             Are you sure you want to change the permission status?
-          </text>
+          </span>
 
           <div className={styles.SubmitContainer}>
             <CustomButton

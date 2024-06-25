@@ -156,9 +156,9 @@ function ProposalForm() {
           </div>{" "}
           <div className={styles.containerStyle}>
             <div>
-              <text className={styles.labelText}>
+              <span className={styles.labelText}>
                 Select <span className={styles.styledRequired}>*</span>
-              </text>
+              </span>
               <div className={styles.radioContainer}>
                 <RadioGroup
                   row
@@ -195,11 +195,11 @@ function ProposalForm() {
             </div>
             {OTPValue === "byChannel" ? (
               <div className={styles.fieldContainerStyle}>
-                <text className={styles.labelText}>
+                <span className={styles.labelText}>
                   Channel <span className={styles.styledRequired}>*</span>
-                </text>
+                </span>
                 <Controller
-                  name="channel" // Name of the field in the form data
+                  name="channel" 
                   control={control}
                   rules={{ required: true }}
                   render={({ field }) => (
@@ -238,11 +238,11 @@ function ProposalForm() {
               </div>
             ) : (
               <div className={styles.fieldContainerStyle}>
-                <text className={styles.labelText}>
+                <span className={styles.labelText}>
                   Producer Code <span className={styles.styledRequired}>*</span>
-                </text>
+                </span>
                 <Controller
-                  name="producerCode" // Name of the field in the form data
+                  name="producerCode" 
                   control={control}
                   rules={{ required: true }}
                   render={({ field }) => (
@@ -284,11 +284,11 @@ function ProposalForm() {
 
             <div className={styles.fieldStyle}>
               <div className={styles.fieldContainerStyle}>
-                <text className={styles.labelText}>
+                <span className={styles.labelText}>
                   Product <span className={styles.styledRequired}>*</span>
-                </text>
+                </span>
                 <Controller
-                  name="product" // Name of the field in the form data
+                  name="product" 
                   control={control}
                   rules={{ required: true }}
                   render={({ field }) => (
@@ -325,11 +325,11 @@ function ProposalForm() {
                 </div>
               </div>
               <div className={styles.fieldContainerStyle}>
-                <text className={styles.labelText}>
+                <span className={styles.labelText}>
                   LOB <span className={styles.styledRequired}>*</span>
-                </text>
+                </span>
                 <Controller
-                  name="lob" // Name of the field in the form data
+                  name="lob" 
                   control={control}
                   rules={{ required: true }}
                   render={({ field }) => (
@@ -373,7 +373,7 @@ function ProposalForm() {
                     Start Date <span className={styles.styledRequired}>*</span>
                   </div>
                   <Controller
-                    name="startDate" // Name of the field in the form data
+                    name="startDate" 
                     control={control}
                     rules={{ required: true }}
                     render={({ field }) => (
@@ -412,7 +412,7 @@ function ProposalForm() {
                     End Date <span className={styles.styledRequired}>*</span>
                   </div>
                   <Controller
-                    name="endDate" // Name of the field in the form data
+                    name="endDate" 
                     control={control}
                     rules={{ required: true }}
                     render={({ field }) => (

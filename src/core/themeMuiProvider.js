@@ -42,6 +42,30 @@ const updatedTheme = createTheme(theme, {
         },
       },
     },
+    MuiDialogTitle: {
+      styleOverrides: {
+        root: {
+          backgroundColor: '#C5CFDE',
+          color: '#465465'
+        },
+      },
+    },
+    MuiDialogContent: {
+      styleOverrides: {
+        root: {
+          backgroundColor: '#ECF2FB',
+          color: '#566475'
+        },
+      },
+    },
+    MuiDialogActions: {
+      styleOverrides: {
+        root: {
+          backgroundColor: '#ECF2FB',
+          color: '#566475'
+        }
+      }
+    }
   },
 });
 

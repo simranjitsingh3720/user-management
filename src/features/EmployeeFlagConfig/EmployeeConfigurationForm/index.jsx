@@ -155,38 +155,9 @@ function EmployeeConfigurationForm({ fetchData: listFetchFun }) {
           </div>{" "}
           <div className={styles.containerStyle}>
             <div className={styles.fieldContainerStyle}>
-              <text className={styles.labelText}>
+              <span className={styles.labelText}>
                 Select Producer <span className={styles.styledRequired}>*</span>
-              </text>
-              {/* <Controller
-                name="producer" // Name of the field in the form data
-                control={control}
-                rules={{ required: "Producer is required" }}
-                render={({ field }) => (
-                  <Autocomplete
-                    id="producer"
-                    options={userData || []}
-                    getOptionLabel={(option) => {
-                      return `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`;
-                    }}
-                    className={styles.customizeSelect}
-                    size="small"
-                    renderInput={(params) => (
-                      <TextField {...params} placeholder="Select" />
-                    )}
-                    onChange={(event, newValue) => {
-                      field.onChange(newValue);
-                      fetchDataByProducer(newValue?.id);
-                      fetchData(newValue?.id);
-                    }}
-                    ListboxProps={{
-                      style: {
-                        maxHeight: "200px",
-                      },
-                    }}
-                  />
-                )}
-              /> */}
+              </span>
               <Controller
                 name="producer"
                 id="producer"

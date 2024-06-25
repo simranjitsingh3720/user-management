@@ -246,80 +246,10 @@ function CreateNewUserContainer() {
                     />
                   )}
                 />
-                {/* <Controller
-                  name="permissionType"
-                  control={control}
-                  defaultValue={[]}
-                  render={({ field }) => (
-                    <Select
-                      labelId={"tags-label"}
-                      id="tags"
-                      multiple
-                      input={<OutlinedInput />}
-                      size="small"
-                      className={styles.customizeSelect}
-                      displayEmpty
-                      onChange={(event, newValue) => {
-                        field.onChange(newValue);
-                      }}
-                      renderValue={(selected) =>
-                        selected.length > 0 ? (
-                          selected.join(", ")
-                        ) : (
-                          <div className={styles.placeholderStyle}>Select</div>
-                        )
-                      }
-                    >
-                      {CrudSelect.map((tag) => (
-                        <MenuItem key={tag.value} value={tag.value}>
-                          <Checkbox checked />
-                          <ListItemText primary={tag.label} />
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  )}
-                /> */}
                 <div className={styles.styledError}>
                   {errors.permissionType && <span>This field is required</span>}{" "}
                 </div>
               </div>
-
-              {/* <div className={styles.fieldContainerStyle}>
-                <span className={styles.labelText}>
-                  Status <span className={styles.styledRequired}>*</span>
-                </span>
-                <Controller
-                  name="status"
-                  control={control}
-                  defaultValue="active"
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <Select
-                      labelId="privilege-status"
-                      id="privilege-status"
-                      size="small"
-                      className={styles.customizeSelect}
-                      defaultValue={"active"}
-                      onChange={(e) => {
-                        setValue("status", e.target.value);
-                      }}
-                      {...field}
-                    >
-                      {PrivilegeStatusSelect.map(({ label, value }) => (
-                        <MenuItem
-                          value={value}
-                          className={styles.styledOptionText}
-                        >
-                          {label}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  )}
-                />
-                <div className={styles.styledError}>
-                  {errors.status && <span>This field is required</span>}{" "}
-                </div>
-              </div> */}
             </div>
           </div>
         </div>

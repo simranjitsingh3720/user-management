@@ -95,11 +95,11 @@ function LobForm() {
               </div>
             ))}
             <div className={styles.fieldContainerStyle}>
-              <text className={styles.labelText}>
+              <span className={styles.labelText}>
                 LOB Status <span className={styles.styledRequired}>*</span>
-              </text>
+              </span>
               <Controller
-                name="status" // Name of the field in the form data
+                name="status" 
                 control={control}
                 rules={{ required: "Status is required" }}
                 defaultValue="active"
