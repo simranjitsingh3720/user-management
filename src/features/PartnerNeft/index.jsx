@@ -1,33 +1,32 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import SearchComponent from "../../components/SearchComponent";
-import useGetPartnerNeft from "./hooks/useGetPartnerNeft";
 import CustomTable from "../../components/CustomTable";
+import useGetPartnerNeft from "./hooks/useGetPartnerNeft";
 import { Header } from "./utils/header";
 import { ProductPayment } from "../../utils/globalConstants";
 import { fetchLobData } from "../../stores/slices/lobSlice";
 import { fetchAllProductData } from "../../stores/slices/productSlice";
-import { useDispatch, useSelector } from "react-redux";
 
 const PartnerNeft = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { allLob } = useSelector((state) => state.lob);
   const { products } = useSelector((state) => state.product);
+
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(5);
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("");
-
   const [searched, setSearched] = useState("product");
   const [productValue, setProductValue] = useState([]);
   const [lobValue, setLobValue] = useState([]);
 
-  const { getPartnerNeft, partnerNeftData, partnerNeftLoading, totalCount } =
-    useGetPartnerNeft();
+  const { getPartnerNeft, partnerNeftData, partnerNeftLoading, totalCount } = useGetPartnerNeft();
 
-  useEffect(() => {
+  const loadData = useCallback(() => {
     getPartnerNeft({
       sortKey: orderBy,
       sortOrder: order,
@@ -37,11 +36,12 @@ const PartnerNeft = () => {
   }, [orderBy, order, page, pageSize, getPartnerNeft]);
 
   useEffect(() => {
-    if (searched === "product") {
-      setLobValue([]);
-    } else {
-      setProductValue([]);
-    }
+    loadData();
+  }, [loadData]);
+
+  useEffect(() => {
+    if (searched === "product") setLobValue([]);
+    else setProductValue([]);
   }, [searched]);
 
   useEffect(() => {
@@ -49,45 +49,20 @@ const PartnerNeft = () => {
     dispatch(fetchAllProductData());
   }, [dispatch]);
 
-  const fetchIdsAndConvert = (inputData) => {
-    const ids = inputData.map((permission) => permission.id);
-    return ids.join();
-  };
+  const fetchIdsAndConvert = (inputData) => inputData.map((item) => item.id).join();
 
   const handleGo = () => {
-    if (searched === "product") {
-      const resultProductString = fetchIdsAndConvert(productValue);
-      getPartnerNeft({
-        searchKey: "productId",
-        searchString: resultProductString,
-      });
-    } else {
-      const resultLobString = fetchIdsAndConvert(lobValue);
-      getPartnerNeft({ searchKey: "lobId", searchString: resultLobString });
-    }
+    const searchKey = searched === "product" ? "productId" : "lobId";
+    const searchString = fetchIdsAndConvert(searched === "product" ? productValue : lobValue);
+    getPartnerNeft({ searchKey, searchString });
   };
 
-  const updateNeftForm = (row) => {
-    navigate("/partner-neft/form/" + row.id);
-  };
+  const updateNeftForm = (row) => navigate("/partner-neft/form/" + row.id);
 
-  const optionLabelProduct = (option) => {
-    return option?.product ? option.product.toUpperCase() : "";
-  };
-
-  const renderOptionProductFunction = (props, option) => (
+  const optionLabel = (option, type) => (option[type] ? option[type].toUpperCase() : "");
+  const renderOptionFunction = (props, option, type) => (
     <li {...props} key={option?.id}>
-      {option?.product ? option?.product?.toUpperCase() : ""}
-    </li>
-  );
-
-  const optionLabelLob = (option) => {
-    return option?.lob ? option?.lob?.toUpperCase() : "";
-  };
-
-  const renderOptionLobFunction = (props, option) => (
-    <li {...props} key={option?.id}>
-      {option?.lob ? option?.lob?.toUpperCase() : ""}
+      {option[type] ? option[type].toUpperCase() : ""}
     </li>
   );
 
@@ -96,27 +71,14 @@ const PartnerNeft = () => {
   return (
     <Box>
       <SearchComponent
-        optionsData={
-          searched === "product" ? products?.data ?? [] : allLob?.data ?? []
-        }
+        optionsData={searched === "product" ? products?.data ?? [] : allLob?.data ?? []}
         option={searched === "product" ? productValue : lobValue}
         setOption={searched === "product" ? setProductValue : setLobValue}
-        fetchData={getPartnerNeft}
-        optionLabel={
-          searched === "product" ? optionLabelProduct : optionLabelLob
-        }
-        placeholder={
-          searched === "product"
-            ? "Search by Producer Name"
-            : "Search by Lob Name"
-        }
-        renderOptionFunction={
-          searched === "product"
-            ? renderOptionProductFunction
-            : renderOptionLobFunction
-        }
-        buttonText={"Create NEFT Flag"}
-        navigateRoute={"/partner-neft/form"}
+        optionLabel={(option) => optionLabel(option, searched === "product" ? "product" : "lob")}
+        placeholder={searched === "product" ? "Search by Producer Name" : "Search by Lob Name"}
+        renderOptionFunction={(props, option) => renderOptionFunction(props, option, searched === "product" ? "product" : "lob")}
+        buttonText="Create NEFT Flag"
+        navigateRoute="/partner-neft/form"
         searched={searched}
         setSearched={setSearched}
         selectOptions={ProductPayment}
