@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axiosInstance from "./../utils/axiosInstance"
 
-export const getProducts = createAsyncThunk("product/getProducts", async (id) => {
+export const getProducts = createAsyncThunk("productUserCreation/getProducts", async (id) => {
     try {
         let url = `/api/product?isAll=${true}`;
         const response = await axiosInstance.get(url);
@@ -16,8 +16,8 @@ export const getProducts = createAsyncThunk("product/getProducts", async (id) =>
     }
 });
 
-export const product = createSlice({
-    name: 'product',
+export const productUserCreation = createSlice({
+    name: 'productUserCreation',
     initialState: {
         product: [],
         loading: true,
@@ -41,4 +41,4 @@ export const product = createSlice({
     },
 })
 
-export default product.reducer;
+export default productUserCreation.reducer;

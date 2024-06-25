@@ -26,7 +26,7 @@ const AutocompleteField = ({
   resetClicked,
   roleChanged
 }) => {
-  const [selectedValues, setSelectedValues] = useState(multiple ? [] : []);
+  const [selectedValues, setSelectedValues] = useState(name === "roleSelect" ? null:[]);
 
   useEffect(() => {
     if( multiple){

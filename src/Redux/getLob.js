@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axiosInstance from "./../utils/axiosInstance"
 
-export const getLobs = createAsyncThunk("lob/getLobs", async () => {
+export const getLobs = createAsyncThunk("lobUserCreation/getLobs", async () => {
     try {
         let url = `/api/lob?isAll=${true}`;
         const response = await axiosInstance.get(url);
@@ -17,8 +17,8 @@ export const getLobs = createAsyncThunk("lob/getLobs", async () => {
     }
 });
 
-export const lob = createSlice({
-    name: 'lob',
+export const lobUserCreation = createSlice({
+    name: 'lobUserCreation',
     initialState: {
         lob: [],
         loading: true,
@@ -42,4 +42,4 @@ export const lob = createSlice({
     },
 })
 
-export default lob.reducer;
+export default lobUserCreation.reducer;

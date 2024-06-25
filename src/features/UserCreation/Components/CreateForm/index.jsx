@@ -23,8 +23,8 @@ import { getProducerCodes } from "../../../../Redux/getProducerCode";
 
 function CreateUserCreationForm() {
   const dispatch = useDispatch();
-  const lobs = useSelector((state) => state.lob.lob);
-  const products = useSelector((state) => state.product.product);
+  const lobs = useSelector((state) => state.lobUserCreation.lob);
+  const products = useSelector((state) => state.productUserCreation.product);
   const locations = useSelector((state) => state.location.location);
   const role = useSelector((state) => state.role.role);
   const paymentType = useSelector((state) => state.paymentType.paymentType);
@@ -125,13 +125,14 @@ function CreateUserCreationForm() {
         gcStatus: "no",
         producerStatus: "Active",
         defaultHouseBank: "yes",
+        paymentType: []
       };
       roleConfig.forEach((item) => {
         if(item.type === "autocomplete" && item.multiple === true){
-          resetValues[item.id] = [];
+          resetValues[item.id] = []
         }
         if(item.type === "autocomplete"){
-          resetValues[item.id] = null;
+          resetValues[item.id] = [];
         }
         else if (item.type !== "dropdown") {
           resetValues[item.id] = '';
