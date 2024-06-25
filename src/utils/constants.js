@@ -1,5 +1,7 @@
 export const COMMON_WORDS = {
-  PRODUCER: 'producer'
+  PRODUCER: 'producer',
+  USER_TYPE: 'userType',
+  ROLE_NAME: 'roleName'
 }
 
 export const API_END_POINTS = {
