@@ -29,26 +29,13 @@ function CreateUserCreationForm() {
   const role = useSelector((state) => state.role.role);
   const paymentType = useSelector((state) => state.paymentType.paymentType);
   const producerCode = useSelector((state) => state.producerCode.producerCode);
-  // const paymentType = [
-  //   {
-  //     label: 'Neft',
-  //     value: 'neft'
-  //   },
-  //   {
-  //     label: 'Cheque',
-  //     value: 'cheque'
-  //   },
-  //   {
-  //     label: 'Cash',
-  //     value: 'cash'
-  //   }
-  // ]
-  const [apiDataMap, setApiDataMap] = useState({ lob: lobs, product: products, location: locations, paymentType: role, producerCode: producerCode });
+  const [apiDataMap, setApiDataMap] = useState({ lob: lobs, product: products, location: locations, paymentType: paymentType, producerCode: producerCode });
   const navigate = useNavigate();
   const { loading } = usePostUser();
   const [roleConfig, setRoleConfig] = useState([]);
   const [resetClicked, setResetClicked] = useState(false);
   const [jsonData, setJsonData] = useState([]);
+  const [roleChanged, setRoleChanged] = useState(false);
   const {
     handleSubmit,
     setValue,
@@ -109,7 +96,7 @@ function CreateUserCreationForm() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        let url = `/mockData.json`;
+        let url = `/userCreationData.json`;
         const response = await axios.get(url);
         setJsonData(response.data.roles);
         setRoleConfig(response.data.roles[0]);
@@ -130,12 +117,6 @@ function CreateUserCreationForm() {
     }
   }, []);
 
-  // useEffect(() => {
-  //   setValue("paymentType", []);
-  // }, [roleValue])
-
-  const [roleChanged, setRoleChanged] = useState(false);
-
   useEffect(() => {
     if (roleValue) {
       let resetValues = {
@@ -146,7 +127,13 @@ function CreateUserCreationForm() {
         defaultHouseBank: "yes",
       };
       roleConfig.forEach((item) => {
-        if (item.type !== "dropdown") {
+        if(item.type === "autocomplete" && item.multiple === true){
+          resetValues[item.id] = [];
+        }
+        if(item.type === "autocomplete"){
+          resetValues[item.id] = null;
+        }
+        else if (item.type !== "dropdown") {
           resetValues[item.id] = '';
         }
       });
@@ -174,9 +161,17 @@ function CreateUserCreationForm() {
 
   const handleReset = () => {
     let originalArray = roleConfig
-    let resultObject = originalArray.reduce((acc, obj) => {
-      acc[obj.id] = "";
-      return acc;
+    let resultObject = originalArray.reduce((resetValues, item) => {
+      if(item.type === "autocomplete" && item.multiple === true){
+        resetValues[item.id] = [];
+      }
+      if(item.type === "autocomplete"){
+        resetValues[item.id] = null;
+      }
+      else if (item.type !== "dropdown") {
+        resetValues[item.id] = '';
+      }
+      return resetValues;
     }, {});
     resultObject.roleSelect = "";
     setResetClicked(!resetClicked);

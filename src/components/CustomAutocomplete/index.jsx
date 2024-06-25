@@ -26,14 +26,17 @@ const AutocompleteField = ({
   resetClicked,
   roleChanged
 }) => {
-  const [selectedValues, setSelectedValues] = useState(multiple ? [] : null);
+  const [selectedValues, setSelectedValues] = useState(multiple ? [] : []);
 
   useEffect(() => {
     if( multiple){
       setSelectedValues([]);
     }
+    else if(name === "roleSelect"){
+      setSelectedValues(null);
+    }
     else{
-        setSelectedValues(null);
+      setSelectedValues([]);
     }
   }, [resetClicked]);
 
@@ -76,7 +79,7 @@ const AutocompleteField = ({
             disableCloseOnSelect={multiple}
             options={options.length > 0 ? options : []}
             getOptionLabel={(option) => option.label}
-            {...(multiple || name === "roleSelect" ? { value: selectedValues } : {})}
+            {...(multiple || name === "roleSelect" ? { value: selectedValues } : {})} 
             onChange={(event, newValue) => {
               if (multiple) {
                 handleAutocompleteChangeMultiple(event, newValue);
