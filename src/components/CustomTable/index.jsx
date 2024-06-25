@@ -1,27 +1,29 @@
-import React, { useState } from 'react';
-import { Table, TableContainer, Paper } from '@mui/material';
-import TableHeader from './TableHeader';
-import TableContent from './TableContent';
-import TableFooter from './TableFooter';
+import React from "react";
+import { Table, TableContainer, Paper } from "@mui/material";
+import TableHeader from "./TableHeader";
+import TableContent from "./TableContent";
+import TableFooter from "./TableFooter";
 
-const CustomTable = ({ 
-  columns, 
-  rows, 
-  footerContent = [], 
-  extraHeaderRow = [], 
-  customStyles, 
-  loading, 
+const CustomTable = ({
+  columns,
+  rows,
+  footerContent = [],
+  customStyles,
+  loading,
   customExtraHeader = null,
-  totalCount
+  totalCount,
+  page,
+  setPage,
+  rowsPerPage,
+  setRowsPerPage,
+  order,
+  setOrder,
+  orderBy,
+  setOrderBy,
 }) => {
-  const [order, setOrder] = useState('asc');
-  const [orderBy, setOrderBy] = useState('');
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-
   const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
+    const isAsc = orderBy === property && order === "asc";
+    setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
   };
 
@@ -34,17 +36,6 @@ const CustomTable = ({
     setPage(0);
   };
 
-  const sortedRows = [...rows].sort((a, b) => {
-    if (orderBy) {
-      if (a[orderBy] < b[orderBy]) return order === 'asc' ? -1 : 1;
-      if (a[orderBy] > b[orderBy]) return order === 'asc' ? 1 : -1;
-      return 0;
-    }
-    return 0;
-  });
-
-  const displayedRows = sortedRows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
-
   return (
     <TableContainer component={Paper}>
       <Table>
@@ -56,7 +47,12 @@ const CustomTable = ({
           customStyles={customStyles}
           customExtraHeader={customExtraHeader}
         />
-        <TableContent data={displayedRows} customStyles={customStyles} columns={columns} loading={loading} />
+        <TableContent
+          data={rows}
+          customStyles={customStyles}
+          columns={columns}
+          loading={loading}
+        />
         <TableFooter
           footerContent={footerContent}
           customStyles={customStyles}

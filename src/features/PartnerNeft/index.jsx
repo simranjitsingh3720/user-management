@@ -1,34 +1,33 @@
-import { Box, TableCell, TableRow, TextField } from "@mui/material";
-import React, { useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import useGetPartnerNeft from "./hooks/useGetPartnerNeft";
-import CustomTable from "../../components/CustomTable";
-import { Header } from "./utils/header";
-import CustomButton from "../../components/CustomButton";
+import React, { useState, useEffect } from 'react';
+import { Box, TableCell, TableRow, TextField } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import useGetPartnerNeft from './hooks/useGetPartnerNeft';
+import CustomTable from '../../components/CustomTable';
+import { Header } from './utils/header';
+import CustomButton from '../../components/CustomButton';
 
 const PartnerNeft = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
-  const { partnerNeftData, partnerNeftLoading, totalCount } = useGetPartnerNeft();
-  
+  const [page, setPage] = useState(0);
+  const [pageSize, setPageSize] = useState(5);
+  const [order, setOrder] = useState('asc');
+  const [orderBy, setOrderBy] = useState('');
+  const { getPartnerNeft, partnerNeftData, partnerNeftLoading, totalCount } = useGetPartnerNeft();
+
+  useEffect(() => {
+    getPartnerNeft({ searchString: searchQuery, sortKey: orderBy, sortOrder: order, pageNo: page, pageSize });
+  }, [searchQuery, orderBy, order, page, pageSize, getPartnerNeft]);
+
   const createNeftForm = () => {
     navigate("/partner-neft/form");
   };
-  const udpateNeftForm = (row) => {
+
+  const updateNeftForm = (row) => {
     navigate("/partner-neft/form/" + row.id);
   };
 
-  const filteredData = useMemo(() => {
-    return partnerNeftData.filter((item) =>
-      Object.values(item).some(
-        (value) =>
-          typeof value === "string" &&
-          value.toLowerCase().includes(searchQuery.toLowerCase())
-      )
-    );
-  }, [partnerNeftData, searchQuery]);
-  
-  const header = Header(udpateNeftForm);
+  const header = Header(updateNeftForm);
 
   const customExtraHeader = (
     <TableRow>
@@ -41,7 +40,6 @@ const PartnerNeft = () => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
-
           <CustomButton type="submit" onClick={createNeftForm}>
             Create New NEFT Flag
           </CustomButton>
@@ -53,11 +51,19 @@ const PartnerNeft = () => {
   return (
     <Box>
       <CustomTable
-        rows={filteredData}
+        rows={partnerNeftData}
         columns={header}
         customExtraHeader={customExtraHeader}
         loading={partnerNeftLoading}
         totalCount={totalCount}
+        page={page}
+        setPage={setPage}
+        rowsPerPage={pageSize}
+        setRowsPerPage={setPageSize}
+        order={order}
+        setOrder={setOrder}
+        orderBy={orderBy}
+        setOrderBy={setOrderBy}
       />
     </Box>
   );
