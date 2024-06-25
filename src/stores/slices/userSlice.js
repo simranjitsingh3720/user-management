@@ -4,10 +4,10 @@ import { API_END_POINTS } from "./../../utils/constants";
 
 export const fetchUser = createAsyncThunk(
   "lob/fetchUser",
-  async ({ userType } = {}, { rejectWithValue }) => {
+  async ({ userType, searchKey } = {}, { rejectWithValue }) => {
     try {
       const url = userType
-        ? `${API_END_POINTS.USERAPI}?searchString=${userType}`
+        ? `${API_END_POINTS.USERAPI}?searchString=${userType}&searchKey=${searchKey}`
         : `${API_END_POINTS.USERAPI}`;
       const response = await axiosInstance.get(url);
       return response.data;

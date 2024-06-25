@@ -79,7 +79,7 @@ const PartnerNeftForm = () => {
 
   useEffect(() => {
     dispatch(fetchLobData());
-    dispatch(fetchUser({ userType: COMMON_WORDS.PRODUCER }));
+    dispatch(fetchUser({ userType: COMMON_WORDS.PRODUCER, searchKey: COMMON_WORDS.ROLE_NAME }));
   }, [dispatch]);
 
   return (
