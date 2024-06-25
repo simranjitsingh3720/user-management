@@ -89,6 +89,7 @@ function SearchComponent({
                     >
                       {selectOptions.map((item) => (
                         <MenuItem
+                          key={item.value}
                           value={item.value}
                           className={styles.styledOptionText}
                         >
