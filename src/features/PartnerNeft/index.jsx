@@ -9,7 +9,7 @@ import CustomButton from "../../components/CustomButton";
 const PartnerNeft = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
-  const { partnerNeftData, partnerNeftLoading } = useGetPartnerNeft();
+  const { partnerNeftData, partnerNeftLoading, totalCount } = useGetPartnerNeft();
   
   const createNeftForm = () => {
     navigate("/partner-neft/form");
@@ -57,6 +57,7 @@ const PartnerNeft = () => {
         columns={header}
         customExtraHeader={customExtraHeader}
         loading={partnerNeftLoading}
+        totalCount={totalCount}
       />
     </Box>
   );

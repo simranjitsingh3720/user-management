@@ -6,6 +6,7 @@ import axiosInstance from "./../../../utils/axiosInstance";
 const useGetPartnerNeft = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [totalCount, setTotalCount] = useState(0)
 
   // Get Partner Neft Data
   const getPartnerNeft = useCallback(async (data) => {
@@ -23,6 +24,7 @@ const useGetPartnerNeft = () => {
         verificationMethod: VERFICATION_ENUM[item.verificationMethod],
       }));
       setData(partnerNeftData);
+      setTotalCount(response.data.totalCount)
     } catch (e) {
       toast.error(
         e?.response?.data?.error?.message ||
@@ -42,6 +44,7 @@ const useGetPartnerNeft = () => {
     getPartnerNeft: getPartnerNeft,
     partnerNeftData: data,
     partnerNeftLoading: loading,
+    totalCount: totalCount
   };
 };
 

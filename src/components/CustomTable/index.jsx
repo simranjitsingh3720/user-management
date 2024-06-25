@@ -1,10 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Table, TableContainer, Paper } from '@mui/material';
 import TableHeader from './TableHeader';
 import TableContent from './TableContent';
 import TableFooter from './TableFooter';
 
-const CustomTable = ({ columns, rows, footerContent = [], extraHeaderRow = [], customStyles, loading, customExtraHeader=null }) => {
+const CustomTable = ({ 
+  columns, 
+  rows, 
+  footerContent = [], 
+  extraHeaderRow = [], 
+  customStyles, 
+  loading, 
+  customExtraHeader = null,
+  totalCount
+}) => {
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('');
   const [page, setPage] = useState(0);
@@ -51,7 +60,7 @@ const CustomTable = ({ columns, rows, footerContent = [], extraHeaderRow = [], c
         <TableFooter
           footerContent={footerContent}
           customStyles={customStyles}
-          count={rows.length}
+          count={totalCount}
           rowsPerPage={rowsPerPage}
           page={page}
           handleChangePage={handleChangePage}
