@@ -22,15 +22,17 @@ import { useNavigate, useParams } from "react-router-dom";
 import CustomButton from "../../../components/CustomButton";
 import { forWhomDisable, forWhomEnable } from "../utils/constants";
 import useGetLobData from "../../../hooks/useGetLobData";
-import useGetProductByLobId from "../../../hooks/useGetProductByLobId";
-import useCreateCkyc from "../hooks/useCreateCkyc";
 import useGetCkycById from "../hooks/useGetCkycById";
-import useUpdateCkyc from "../hooks/useUpdateCkyc";
+import useHandleCkyc from "../hooks/useHandleCkyc";
+import { fetchAllProductData } from "../../../stores/slices/productSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const CkycForm = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
-  console.log(id);
+  const { products, productLoading } = useSelector((state) => state.product);
+
   const {
     handleSubmit,
     control,
@@ -50,18 +52,14 @@ const CkycForm = () => {
     setValue("forWhom", null);
   }, [watch("cykc")]);
 
-  const { postData, loading } = useCreateCkyc();
-
-  const { UpdateDataFun, updateLoading } = useUpdateCkyc();
+  const { UpdateData, postData, loading } = useHandleCkyc();
 
   const { data: ckycDataById, fetchData: ckycFetchData } = useGetCkycById();
 
-  const { data, fetchData } = useGetProductByLobId();
-
-  console.log("ckycDataById", ckycDataById);
-
   useEffect(() => {
-    ckycFetchData(id);
+    if (id) {
+      ckycFetchData(id);
+    }
   }, [id]);
 
   useEffect(() => {
@@ -73,36 +71,15 @@ const CkycForm = () => {
         ckycDataById.data.isCKYCApplicable ? "enable" : "disable"
       );
       setValue("forWhom", ckycDataById.data.forWhom);
-      fetchData(ckycDataById.data.lob.id);
+      dispatch(fetchAllProductData({ lobId: ckycDataById.data.lob.id }));
     }
   }, [ckycDataById]);
 
   const onSubmit = (data) => {
     if (id) {
-      const payload = {
-        id: id,
-        properties: {
-          isCKYCApplicable: data.cykc === "enable" ? true : false,
-        },
-      };
-
-      if (payload.properties.isCKYCApplicable) {
-        payload.properties.forWhom = data.forWhom;
-      }
-
-      UpdateDataFun(payload);
+      UpdateData(id, data);
     } else {
-      const payload = {
-        lobId: data.lob.id,
-        productId: data.product.id,
-        isCKYCApplicable: data.cykc === "enable" ? true : false,
-      };
-
-      if (payload.isCKYCApplicable) {
-        payload.forWhom = data.forWhom;
-      }
-
-      postData(payload);
+      postData(data);
     }
   };
 
@@ -141,7 +118,7 @@ const CkycForm = () => {
                       <LeftArrow />
                     </IconButton>
                     <span className={styles.headerTextStyle}>
-                      {id ? "Update New CKYC Config" : "Create New CKYC Config"}
+                      {id ? "Update CKYC Config" : "Create New CKYC Config"}
                     </span>
                   </div>
                   <div>
@@ -151,23 +128,25 @@ const CkycForm = () => {
                     </span>
                   </div>
                 </Grid>
-                <Grid
-                  item
-                  xs={4}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "flex-end",
-                  }}
-                >
-                  <CustomButton
-                    variant="outlined"
-                    startIcon={<RestartAltIcon />}
-                    onClick={() => handleResetButton()}
+                {!id && (
+                  <Grid
+                    item
+                    xs={4}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "flex-end",
+                    }}
                   >
-                    Reset
-                  </CustomButton>
-                </Grid>
+                    <CustomButton
+                      variant="outlined"
+                      startIcon={<RestartAltIcon />}
+                      onClick={() => handleResetButton()}
+                    >
+                      Reset
+                    </CustomButton>
+                  </Grid>
+                )}
               </Grid>
               <Divider style={{ margin: "1rem 0" }} />
             </Grid>
@@ -186,6 +165,7 @@ const CkycForm = () => {
                     getOptionLabel={(option) => {
                       return option?.lob?.toUpperCase() || "";
                     }}
+                    disabled={id}
                     className="customize-select"
                     size="small"
                     isOptionEqualToValue={(option, value) =>
@@ -198,7 +178,7 @@ const CkycForm = () => {
                     onChange={(event, newValue) => {
                       setValue("product", null);
                       field.onChange(newValue);
-                      fetchData(newValue?.id);
+                      dispatch(fetchAllProductData({ lobId: newValue?.id }));
                     }}
                     renderOption={(props, option) => (
                       <li {...props} key={option.id}>
@@ -227,10 +207,12 @@ const CkycForm = () => {
                 render={({ field }) => (
                   <Autocomplete
                     id="product"
-                    options={data?.data || []}
+                    options={products.data || []}
                     getOptionLabel={(option) =>
                       option?.product?.toUpperCase() || ""
                     }
+                    disabled={id}
+                    loading={productLoading}
                     className="customize-select"
                     size="small"
                     isOptionEqualToValue={(option, value) =>
@@ -296,7 +278,7 @@ const CkycForm = () => {
                 <text className="label-text required-field">For Whom</text>
                 <Controller
                   name="forWhom"
-                  id="forWhom" // Name of the field in the form data
+                  id="forWhom"
                   control={control}
                   rules={{ required: "This field is required" }}
                   render={({ field }) => (
@@ -347,11 +329,7 @@ const CkycForm = () => {
         </CardContent>
       </Card>
       <div className={styles.buttonContainer}>
-        <CustomButton
-          type="submit"
-          variant="contained"
-          disabled={loading || updateLoading}
-        >
+        <CustomButton type="submit" variant="contained" disabled={loading}>
           {id ? "Update" : "Submit"}
         </CustomButton>
       </div>

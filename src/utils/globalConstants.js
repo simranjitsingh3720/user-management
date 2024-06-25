@@ -15,3 +15,4 @@ export const ProductPayment = [
     value: "lob",
   },
 ];
+export const COMMON_ERROR = "An error occurred. Please try again.";

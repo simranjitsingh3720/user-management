@@ -51,7 +51,6 @@ function CkycConfig() {
   const HEADER_COLUMNS = generateTableHeaders(handleEditClick);
 
   const optionLabelProduct = (option) => {
-    console.log("option", option);
     return option?.product ? option.product.toUpperCase() : "";
   };
 
@@ -62,7 +61,6 @@ function CkycConfig() {
   );
 
   const optionLabelLob = (option) => {
-    console.log("optionLob", option);
     return option?.lob ? option?.lob?.toUpperCase() : "";
   };
 
