@@ -14,6 +14,11 @@ export const SideNavData = [
     navigateRoute: "user-management",
   },
   {
+    label: "User Creation",
+    icon: ManageAccountsIcon,
+    navigateRoute: "user-creation",
+  },
+  {
     label: "Permission",
     icon: ManageAccountsIcon,
     navigateRoute: "permission",
