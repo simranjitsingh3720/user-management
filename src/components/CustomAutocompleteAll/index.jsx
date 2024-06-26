@@ -22,7 +22,8 @@ const AutocompleteFieldAll = ({
   errors = {},
   apiDataMap,
   classes,
-  resetClicked
+  resetClicked,
+  roleChanged
 }) => {
   const [selectedValues, setSelectedValues] = useState([]);
 
@@ -30,15 +31,21 @@ const AutocompleteFieldAll = ({
     setSelectedValues([]);
   }, [resetClicked]);
 
+  useEffect(()=> {
+    if(name !== "roleSelect"){
+      setSelectedValues([])
+    }
+  },[roleChanged]);
+
   const handleAutocompleteChangeAll = (event, newValue) => {
-    if (newValue.some(option => option.value === 'all')) {
+    if (newValue.some(option => option?.value === 'all')) {
       if (isCheckedAll()) {
         setSelectedValues([]);
       } else {
         setSelectedValues(apiDataMap[name] || []);
       }
     } else {
-      setSelectedValues(newValue.filter(option => option.value !== 'all'));
+      setSelectedValues(newValue.filter(option => option?.value !== 'all'));
     }
   };
 
@@ -47,7 +54,7 @@ const AutocompleteFieldAll = ({
   };
 
   const isSelected = (option) => {
-    return selectedValues.some(selectedOption => selectedOption.value === option.value);
+    return selectedValues.some(selectedOption => selectedOption?.value === option?.value);
   };
 
   return (
@@ -66,7 +73,7 @@ const AutocompleteFieldAll = ({
             id={name}
             options={[{ label: 'All', value: 'all' }, ...(options || [])]}
             disableCloseOnSelect
-            getOptionLabel={(option) => option.label}
+            getOptionLabel={(option) => option?.label}
             value={selectedValues || []}
             onChange={(event, newValue) => {
               handleAutocompleteChangeAll(event, newValue);
@@ -76,12 +83,12 @@ const AutocompleteFieldAll = ({
               }
             }}
             renderOption={(props, option) => (
-              <li {...props} key={option.value}>
+              <li {...props} key={option?.value}>
                 <Checkbox
                   icon={icon}
                   checkedIcon={checkedIcon}
                   style={{ marginRight: 8 }}
-                  checked={option.value === 'all' ? isCheckedAll() : isSelected(option)}
+                  checked={option?.value === 'all' ? isCheckedAll() : isSelected(option)}
                 />
                 {option.label}
               </li>

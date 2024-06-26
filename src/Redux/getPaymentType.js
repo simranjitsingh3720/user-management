@@ -13,13 +13,15 @@ export const getPaymentTypes = createAsyncThunk("paymentType/getPaymentTypes",  
         let url = `/api/payment-type?isAll=${true}`;
         const response = await axiosInstance.get(url);
         const formattedArray = response?.data?.data?.map(obj => ({
-            label: obj.name,
-            value: obj.name
+            ...obj,
+            label: obj?.name,
+            value: obj?.name
         }));
         return formattedArray;
     }
     catch (error) {
         console.log("error in fetching payment type");
+        return rejectWithValue([]);
     }
 });
 

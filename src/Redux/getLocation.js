@@ -1,18 +1,25 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axiosInstance from "../utils/axiosInstance"
 
-export const getLocations = createAsyncThunk("location/getLocations", async () => {
+export const getLocations = createAsyncThunk("location/getLocations", async (_, { getState, rejectWithValue }) => {
     try {
+        const { location } = getState();
+        if (location?.location?.length > 0) {
+            return location.location; // Return existing data
+        }
+
         let url = `/api/location?isAll=${true}`;
         const response = await axiosInstance.get(url);
         const formattedArray = response?.data?.data?.map(obj => ({
-            label: obj.locationName.charAt(0).toUpperCase() + obj.locationName.slice(1),
-            value: obj.locationName
+            ...obj,
+            label: obj?.locationName?.charAt(0)?.toUpperCase() + obj?.locationName?.slice(1),
+            value: obj?.locationName
         }));
         return formattedArray;
     }
     catch (error) {
         console.log("error in fetching location");
+        return rejectWithValue([]);
     }
 });
 

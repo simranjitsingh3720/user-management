@@ -44,7 +44,7 @@ const DateField = ({
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
                 value={field.value ? dayjs(field.value) : null}
-                minDate={dayjs()}
+                // minDate={dayjs()}
                 className={`${styles.dateStyle} ${classes}`}
                 slotProps={{ textField: { size: "small" } }}
                 onChange={(date) => {

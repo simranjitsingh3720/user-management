@@ -40,6 +40,12 @@ const AutocompleteField = ({
     }
   }, [resetClicked]);
 
+  useEffect(()=> {
+    if(name !== "roleSelect"){
+      setSelectedValues([])
+    }
+  },[roleChanged]);
+
   const handleAutocompleteChangeMultiple = (event, newValue) => {
     setSelectedValues(newValue);
   };
@@ -50,13 +56,13 @@ const AutocompleteField = ({
 
   const isSelected = (option) => {
     if (multiple) {
-      return selectedValues.some(selectedOption => selectedOption.value === option.value);
+      return selectedValues.some(selectedOption => selectedOption?.value === option?.value);
     } else {
       if(name === "roleSelect"){
-        return selectedValues?.roleName === option.roleName;
+        return selectedValues?.roleName === option?.roleName;
       }
       else{
-        return selectedValues?.value === option.value;
+        return selectedValues?.value === option?.value;
       }
     }
   };
@@ -78,7 +84,7 @@ const AutocompleteField = ({
             disabled={disabled}
             disableCloseOnSelect={multiple}
             options={options.length > 0 ? options : []}
-            getOptionLabel={(option) => option.label}
+            getOptionLabel={(option) => option?.label}
             {...(multiple || name === "roleSelect" ? { value: selectedValues } : {})} 
             onChange={(event, newValue) => {
               if (multiple) {
@@ -89,7 +95,7 @@ const AutocompleteField = ({
               field.onChange( newValue);
             }}
             renderOption={(props, option, { selected }) => (
-              <li {...props} key={option.value || option.roleName}>
+              <li {...props} key={option?.value || option?.roleName}>
                 <Checkbox
                   icon={icon}
                   checkedIcon={checkedIcon}
@@ -99,7 +105,7 @@ const AutocompleteField = ({
                     let newValue;
                     if (multiple) {
                       if (isSelected(option)) {
-                        newValue = selectedValues.filter(selectedOption => selectedOption.value !== option.value);
+                        newValue = selectedValues.filter(selectedOption => selectedOption?.value !== option?.value);
                       } else {
                         newValue = [...selectedValues, option];
                       }

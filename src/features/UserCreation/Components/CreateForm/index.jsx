@@ -18,7 +18,7 @@ import DateField from "../../../../components/CustomDateInput";
 import SelectField from "../../../../components/CustomSelect";
 import AutocompleteMultipleField from "../../../../components/CustomAutocomplete";
 import AutocompleteFieldAll from "../../../../components/CustomAutocompleteAll";
-import getPaymentType, { getPaymentTypes } from "../../../../Redux/getPaymentType";
+import { getPaymentTypes } from "../../../../Redux/getPaymentType";
 import { getProducerCodes } from "../../../../Redux/getProducerCode";
 
 function CreateUserCreationForm() {
@@ -58,18 +58,10 @@ function CreateUserCreationForm() {
   const paymentsType = watch("paymentType");
 
   useEffect(() => {
-    if (!lobs || lobs.length === 0) {
-      dispatch(getLobs());
-    }
-    if (!products || products.length === 0) {
-      dispatch(getProducts());
-    }
-    if (!locations || locations.length === 0) {
-      dispatch(getLocations());
-    }
-    if (!role || role.length === 0) {
-      dispatch(getRoles())
-    }
+    dispatch(getLobs());
+    dispatch(getProducts());
+    dispatch(getLocations());
+    dispatch(getRoles())
     dispatch(getPaymentTypes())
   }, [])
 
@@ -85,7 +77,7 @@ function CreateUserCreationForm() {
       updatedApiDataMap.location = locations;
     }
     if (paymentType) {
-      updatedApiDataMap.paymentType = role;
+      updatedApiDataMap.paymentType = paymentType;
     }
     if (producerCode) {
       updatedApiDataMap.producerCode = producerCode;
@@ -98,8 +90,8 @@ function CreateUserCreationForm() {
       try {
         let url = `/userCreationData.json`;
         const response = await axios.get(url);
-        setJsonData(response.data.roles);
-        setRoleConfig(response.data.roles[0]);
+        setJsonData(response?.data?.roles);
+        setRoleConfig(response?.data?.roles[0]);
       } catch (error) {
         console.error("Error fetching mock data:", error);
       }
@@ -125,17 +117,17 @@ function CreateUserCreationForm() {
         gcStatus: "no",
         producerStatus: "Active",
         defaultHouseBank: "yes",
-        paymentType: []
       };
+     
       roleConfig.forEach((item) => {
-        if(item.type === "autocomplete" && item.multiple === true){
-          resetValues[item.id] = []
+        if(item?.type === "autocomplete" && item?.multiple === true){
+          resetValues[item?.id] = []
         }
-        if(item.type === "autocomplete"){
-          resetValues[item.id] = [];
+        if(item?.type === "autocomplete"){
+          resetValues[item?.id] = [];
         }
-        else if (item.type !== "dropdown") {
-          resetValues[item.id] = '';
+        else if (item?.type !== "dropdown") {
+          resetValues[item?.id] = '';
         }
       });
       setRoleChanged(!roleChanged);
@@ -155,7 +147,7 @@ function CreateUserCreationForm() {
         }
       }
       if (!keyFound) {
-        setRoleConfig(jsonData.others);
+        setRoleConfig(jsonData?.others);
       }
     }
   }, [roleValue, jsonData]);
@@ -163,14 +155,14 @@ function CreateUserCreationForm() {
   const handleReset = () => {
     let originalArray = roleConfig
     let resultObject = originalArray.reduce((resetValues, item) => {
-      if(item.type === "autocomplete" && item.multiple === true){
-        resetValues[item.id] = [];
+      if(item?.type === "autocomplete" && item?.multiple === true){
+        resetValues[item?.id] = [];
       }
-      if(item.type === "autocomplete"){
-        resetValues[item.id] = null;
+      if(item?.type === "autocomplete"){
+        resetValues[item?.id] = null;
       }
-      else if (item.type !== "dropdown") {
-        resetValues[item.id] = '';
+      else if (item?.type !== "dropdown") {
+        resetValues[item?.id] = '';
       }
       return resetValues;
     }, {});
@@ -218,87 +210,89 @@ function CreateUserCreationForm() {
             classes="w-full sm:w-3/4 md:w-3/4 xl:w-7/12"
           />
           {roleConfig?.map((item) =>
-            (item.type === "input") ?
+            (item?.type === "input") ?
               (
                 <InputField
-                  key={item.id}
-                  id={item.id}
-                  required={item.required}
-                  label={item.label}
-                  validation={item.validation}
+                  key={item?.id}
+                  id={item?.id}
+                  required={item?.required}
+                  label={item?.label}
+                  validation={item?.validation}
                   control={control}
                   errors={errors}
-                  disabled={item.disabled}
+                  disabled={item?.disabled}
                   classes="w-full sm:w-3/4 md:w-3/4 xl:w-7/12"
                 />
-              ) : (item.type === "date") ?
+              ) : (item?.type === "date") ?
                 (
                   <DateField
-                    key={item.id}
+                    key={item?.id}
                     control={control}
                     watch={watch}
                     setValue={setValue}
-                    name={item.id}
-                    label={item.label}
-                    required={item.required}
+                    name={item?.id}
+                    label={item?.label}
+                    required={item?.required}
                     errors={errors}
                     classes="w-full sm:w-3/4 md:w-3/4 xl:w-7/12"
                   />
-                ) : (item.type === 'autocomplete' && item.multiple === true) ?
+                ) : (item?.type === 'autocomplete' && item?.multiple === true) ?
                   (
                     <AutocompleteMultipleField
-                      key={item.id}
+                      key={item?.id}
                       control={control}
-                      name={item.id}
-                      label={item.label}
-                      required={item.required}
-                      disabled={item.disabled}
-                      options={apiDataMap[item.id]}
-                      validation={item.validation}
+                      roleChanged={roleChanged}
+                      name={item?.id}
+                      label={item?.label}
+                      required={item?.required}
+                      disabled={item?.disabled}
+                      options={apiDataMap[item?.id]}
+                      validation={item?.validation}
                       errors={errors}
-                      multiple={item.multiple}
+                      multiple={item?.multiple}
                       resetClicked={resetClicked}
                       classes="w-full sm:w-3/4 md:w-3/4 xl:w-7/12"
                     />
-                  ) : (item.type === 'autocomplete' && item.all === true) ? (
-                    <div key={item.id}>
+                  ) : (item?.type === 'autocomplete' && item?.all === true) ? (
+                    <div key={item?.id}>
                       <AutocompleteFieldAll
                         control={control}
-                        name={item.id}
-                        label={item.label}
-                        required={item.required}
-                        disabled={item.disabled}
-                        options={apiDataMap[item.id]}
+                        name={item?.id}
+                        label={item?.label}
+                        required={item?.required}
+                        roleChanged={roleChanged}
+                        disabled={item?.disabled}
+                        options={apiDataMap[item?.id]}
                         resetClicked={resetClicked}
-                        validation={item.validation}
+                        validation={item?.validation}
                         errors={errors}
                         apiDataMap={apiDataMap}
                         classes="w-full sm:w-3/4 md:w-3/4 xl:w-7/12"
                       />
                       {
-                        item?.subFields!== undefined && item.subFields['neft'] && roleValue !== "partner" && paymentsType && paymentsType?.some(item => item.value === 'neft' || item.value === 'all') ?
-                        <div key={item.subFields['neft'][0].id}>
+                        item?.subFields!== undefined && item?.subFields['neft'] && roleValue !== "partner" && paymentsType && paymentsType?.some(item => item?.value === 'neft' || item?.value === 'all') ?
+                        <div key={item?.subFields['neft'][0]?.id}>
                           <SelectField
-                            key={item.subFields['neft'][0].id}
+                            key={item?.subFields['neft'][0]?.id}
                             control={control}
-                            name={item.subFields['neft'][0].id}
-                            label={item.subFields['neft'][0].label}
-                            required={item.subFields['neft'][0].required}
-                            disabled={item.subFields['neft'][0].disabled}
-                            menuItem={item.subFields['neft'][0].menuItem}
+                            name={item?.subFields['neft'][0]?.id}
+                            label={item?.subFields['neft'][0]?.label}
+                            required={item?.subFields['neft'][0]?.required}
+                            disabled={item?.subFields['neft'][0]?.disabled}
+                            menuItem={item?.subFields['neft'][0]?.menuItem}
                             placeholder="Select"
                             errors={errors}
                             setValue={setValue}
                             classes="w-full sm:w-3/4 md:w-3/4 xl:w-7/12"
                           />
                           <InputField
-                            id={item.subFields['accountNumber'][0].id}
-                            required={item.subFields['accountNumber'][0].required}
-                            label={item.subFields['accountNumber'][0].label}
-                            validation={item.subFields['accountNumber'][0].validation}
+                            id={item?.subFields['accountNumber'][0]?.id}
+                            required={item?.subFields['accountNumber'][0]?.required}
+                            label={item?.subFields['accountNumber'][0]?.label}
+                            validation={item?.subFields['accountNumber'][0]?.validation}
                             control={control}
                             errors={errors}
-                            disabled={item.subFields['accountNumber'][0].disabled}
+                            disabled={item?.subFields['accountNumber'][0]?.disabled}
                             classes="w-full sm:w-3/4 md:w-3/4 xl:w-7/12"
                           />
                         </div>
@@ -306,46 +300,47 @@ function CreateUserCreationForm() {
                          <div></div>
                       }
                       {
-                        item?.subFields && paymentsType && paymentsType?.some(item => item.value === 'cheque' || item.value === 'all') &&
+                        item?.subFields && paymentsType && paymentsType?.some(item => item?.value === 'cheque' || item?.value === 'all') &&
                         <div>
                           <SelectField
-                            key={item.subFields['cheque'][0].id}
+                            key={item?.subFields['cheque'][0]?.id}
                             control={control}
-                            name={item.subFields['cheque'][0].id}
-                            label={item.subFields['cheque'][0].label}
-                            required={item.subFields['cheque'][0].required}
-                            disabled={item.subFields['cheque'][0].disabled}
-                            menuItem={item.subFields['cheque'][0].menuItem}
+                            name={item?.subFields['cheque'][0]?.id}
+                            label={item?.subFields['cheque'][0]?.label}
+                            required={item?.subFields['cheque'][0]?.required}
+                            disabled={item?.subFields['cheque'][0]?.disabled}
+                            menuItem={item?.subFields['cheque'][0]?.menuItem}
                             placeholder="Select"
                             errors={errors}
                             classes="w-full sm:w-3/4 md:w-3/4 xl:w-7/12"
                           />
                         </div>
                       }
-                    </div>) : (item.type === 'autocomplete') ?
+                    </div>) : (item?.type === 'autocomplete') ?
                     <AutocompleteMultipleField
-                      key={item.id}
+                      key={item?.id}
                       control={control}
-                      name={item.id}
-                      label={item.label}
-                      required={item.required}
-                      disabled={item.disabled}
-                      options={apiDataMap[item.id]}
-                      validation={item.validation}
+                      name={item?.id}
+                      label={item?.label}
+                      required={item?.required}
+                      roleChanged={roleChanged}
+                      disabled={item?.disabled}
+                      options={apiDataMap[item?.id]}
+                      validation={item?.validation}
                       errors={errors}
                       multiple={false}
                       resetClicked={resetClicked}
                       classes="w-full sm:w-3/4 md:w-3/4 xl:w-7/12"
                     /> : (
                       <SelectField
-                        key={item.id}
+                        key={item?.id}
                         control={control}
-                        name={item.id}
-                        label={item.label}
-                        required={item.required}
-                        disabled={item.disabled}
-                        menuItem={item.menuItem}
-                        placeholder={item.label}
+                        name={item?.id}
+                        label={item?.label}
+                        required={item?.required}
+                        disabled={item?.disabled}
+                        menuItem={item?.menuItem}
+                        placeholder={item?.label}
                         errors={errors}
                         setValue={setValue}
                         classes="w-full sm:w-3/4 md:w-3/4 xl:w-7/12"

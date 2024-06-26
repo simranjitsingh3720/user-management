@@ -1,18 +1,20 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axiosInstance from "./../utils/axiosInstance"
 
-export const getProducts = createAsyncThunk("productUserCreation/getProducts", async (id) => {
+export const getProducts = createAsyncThunk("productUserCreation/getProducts", async (_, { rejectWithValue }) => {
     try {
         let url = `/api/product?isAll=${true}`;
         const response = await axiosInstance.get(url);
         const formattedArray = response?.data?.data?.map(obj => ({
-            label: obj.product.charAt(0).toUpperCase() + obj.product.slice(1),
-            value: obj.product_value
+            ...obj,
+            label: obj?.product?.charAt(0)?.toUpperCase() + obj?.product?.slice(1),
+            value: obj?.product_value
         }));
         return formattedArray;
     }
     catch (error) {
         console.log("error in fetching product");
+        return rejectWithValue([]);
     }
 });
 

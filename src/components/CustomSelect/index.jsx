@@ -25,7 +25,7 @@ const SelectField = ({
       <Controller
         name={name}
         control={control}
-        defaultValue={(menuItem.length>0 && menuItem[0].value) || 'yes'}
+        defaultValue={(menuItem.length > 0 && menuItem[0]?.value) || 'yes'}
         render={({ field }) => (
           <Select
             {...field}
@@ -34,17 +34,17 @@ const SelectField = ({
             id={name}
             placeholder={placeholder || label}
             value={field.value ||
-              (menuItem.length>0 && menuItem[0].value) || 'yes'}
+              (menuItem.length > 0 && menuItem[0]?.value) || 'yes'}
             onChange={field.onChange}
             className={`${styles.customizeSelect} ${classes}`}
             size="small"
           >
             {menuItem.length > 0
               ? menuItem.map((item) => (
-                  <MenuItem key={item.value} value={item.value} className={styles.styledMenuText}>
-                    {item.label}
-                  </MenuItem>
-                ))
+                <MenuItem key={item.value} value={item.value} className={styles.styledMenuText}>
+                  {item.label}
+                </MenuItem>
+              ))
               : null}
           </Select>
         )}

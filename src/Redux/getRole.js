@@ -1,18 +1,24 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axiosInstance from "../utils/axiosInstance"
 
-export const getRoles = createAsyncThunk("role/getRoles", async () => {
+export const getRoles = createAsyncThunk("role/getRoles", async (_, { getState, rejectWithValue }) => {
     try {
+        const { role } = getState();
+        if (role?.role?.length > 0) {
+            return role.role; // Return existing data
+        }
+
         let url = `/api/role?isAll=${true}`;
         const response = await axiosInstance.get(url);
         const formattedArray = response?.data?.data?.map(obj => ({
             ...obj,
-            label: obj.roleName.charAt(0).toUpperCase() + obj.roleName.slice(1)
+            label: obj?.roleName?.charAt(0)?.toUpperCase() + obj?.roleName?.slice(1)
         }));
         return formattedArray;
     }
     catch (error) {
         console.log("error in fetching role");
+        return rejectWithValue([]);
     }
 });
 
