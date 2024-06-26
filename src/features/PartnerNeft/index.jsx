@@ -9,6 +9,7 @@ import { Header } from "./utils/header";
 import { ProductPayment } from "../../utils/globalConstants";
 import { fetchLobData } from "../../stores/slices/lobSlice";
 import { fetchAllProductData } from "../../stores/slices/productSlice";
+import { COMMON_WORDS } from "../../utils/constants";
 
 const PartnerNeft = () => {
   const navigate = useNavigate();
@@ -40,7 +41,7 @@ const PartnerNeft = () => {
   }, [loadData]);
 
   useEffect(() => {
-    if (searched === "product") setLobValue([]);
+    if (searched === COMMON_WORDS.PRODUCT) setLobValue([]);
     else setProductValue([]);
   }, [searched]);
 
@@ -52,8 +53,8 @@ const PartnerNeft = () => {
   const fetchIdsAndConvert = (inputData) => inputData.map((item) => item.id).join();
 
   const handleGo = () => {
-    const searchKey = searched === "product" ? "productId" : "lobId";
-    const searchString = fetchIdsAndConvert(searched === "product" ? productValue : lobValue);
+    const searchKey = searched === COMMON_WORDS.PRODUCT ? "productId" : "lobId";
+    const searchString = fetchIdsAndConvert(searched === COMMON_WORDS.PRODUCT ? productValue : lobValue);
     getPartnerNeft({ searchKey, searchString });
   };
 
@@ -71,12 +72,12 @@ const PartnerNeft = () => {
   return (
     <Box>
       <SearchComponent
-        optionsData={searched === "product" ? products?.data ?? [] : allLob?.data ?? []}
-        option={searched === "product" ? productValue : lobValue}
-        setOption={searched === "product" ? setProductValue : setLobValue}
-        optionLabel={(option) => optionLabel(option, searched === "product" ? "product" : "lob")}
-        placeholder={searched === "product" ? "Search by Producer Name" : "Search by Lob Name"}
-        renderOptionFunction={(props, option) => renderOptionFunction(props, option, searched === "product" ? "product" : "lob")}
+        optionsData={searched === COMMON_WORDS.PRODUCT ? products?.data ?? [] : allLob?.data ?? []}
+        option={searched === COMMON_WORDS.PRODUCT ? productValue : lobValue}
+        setOption={searched === COMMON_WORDS.PRODUCT ? setProductValue : setLobValue}
+        optionLabel={(option) => optionLabel(option, searched === COMMON_WORDS.PRODUCT ? "product" : "lob")}
+        placeholder={searched === COMMON_WORDS.PRODUCT ? "Search by Product Name" : "Search by Lob Name"}
+        renderOptionFunction={(props, option) => renderOptionFunction(props, option, searched === COMMON_WORDS.PRODUCT ? "product" : "lob")}
         buttonText="Create NEFT Flag"
         navigateRoute="/partner-neft/form"
         searched={searched}
