@@ -2,20 +2,14 @@ import { useEffect, useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
 import { API_END_POINTS } from "../../../utils/constants";
 
-function useGetCkycData(pageChange, rowsPage) {
+function useGetCkycData(page, pageSize, order, orderBy) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [sort, setSort] = useState({
-    sortKey: "createdAt",
-    sortOrder: "asc",
-  });
 
   const fetchData = async (searched, resultProductString) => {
     try {
       setLoading(true);
-      let url = `/${API_END_POINTS.CKYC}?pageNo=${pageChange - 1}&sortKey=${
-        sort.sortKey
-      }&sortOrder=${sort.sortOrder}&pageSize=${rowsPage}`;
+      let url = `/${API_END_POINTS.CKYC}?pageNo=${page}&sortKey=${orderBy}&sortOrder=${order}&pageSize=${pageSize}`;
 
       if (searched === "product" && resultProductString) {
         url += `&edge=hasProduct&ids=${resultProductString}`;
@@ -33,9 +27,9 @@ function useGetCkycData(pageChange, rowsPage) {
   };
   useEffect(() => {
     fetchData();
-  }, [pageChange, sort, rowsPage]);
+  }, [page, order, orderBy, pageSize]);
 
-  return { data, loading, sort, setSort, fetchData };
+  return { data, loading, fetchData };
 }
 
 export default useGetCkycData;

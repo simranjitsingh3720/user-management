@@ -5,17 +5,17 @@ function generateTableHeaders(handleEditClick) {
     {
       id: "lob",
       value: "LOB",
-      sortable: true,
+      sortable: false,
     },
     {
       id: "product",
       value: "PRODUCT",
-      sortable: true,
+      sortable: false,
     },
     {
       id: "CKYCApplicable",
       value: "STATUS",
-      sortable: true,
+      sortable: false,
     },
     {
       id: "forWhom",

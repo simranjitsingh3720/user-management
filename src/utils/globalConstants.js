@@ -8,8 +8,17 @@ export const REGEX = {
   alphaNumericRegex: /^[a-zA-Z0-9\s]*$/,
   numericRegex: /^[0-9]+$/,
   letterRegex: /^[A-Za-z]+$/,
-  emailRegex: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
-}
+  emailRegex: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+};
+
+export const BUTTON_TEXT = {
+  CKYC_CONFIG: "Create CKYC Configuration",
+};
+
+export const PLACEHOLDER_TEXT = {
+  product: "Search by Product Name",
+  lob: "Search by Lob Name",
+};
 
 export const ProductPayment = [
   {
