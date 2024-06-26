@@ -19,9 +19,9 @@ const PartnerNeft = () => {
 
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(5);
-  const [order, setOrder] = useState("asc");
+  const [order, setOrder] = useState(COMMON_WORDS.ASC);
   const [orderBy, setOrderBy] = useState("");
-  const [searched, setSearched] = useState("product");
+  const [searched, setSearched] = useState(COMMON_WORDS.PRODUCT);
   const [productValue, setProductValue] = useState([]);
   const [lobValue, setLobValue] = useState([]);
 
@@ -75,9 +75,9 @@ const PartnerNeft = () => {
         optionsData={searched === COMMON_WORDS.PRODUCT ? products?.data ?? [] : allLob?.data ?? []}
         option={searched === COMMON_WORDS.PRODUCT ? productValue : lobValue}
         setOption={searched === COMMON_WORDS.PRODUCT ? setProductValue : setLobValue}
-        optionLabel={(option) => optionLabel(option, searched === COMMON_WORDS.PRODUCT ? "product" : "lob")}
+        optionLabel={(option) => optionLabel(option, searched === COMMON_WORDS.PRODUCT ? COMMON_WORDS.PRODUCT : COMMON_WORDS.LOB)}
         placeholder={searched === COMMON_WORDS.PRODUCT ? "Search by Product Name" : "Search by Lob Name"}
-        renderOptionFunction={(props, option) => renderOptionFunction(props, option, searched === COMMON_WORDS.PRODUCT ? "product" : "lob")}
+        renderOptionFunction={(props, option) => renderOptionFunction(props, option, searched === COMMON_WORDS.PRODUCT ? COMMON_WORDS.PRODUCT : COMMON_WORDS.LOB)}
         buttonText="Create NEFT Flag"
         navigateRoute="/partner-neft/form"
         searched={searched}
