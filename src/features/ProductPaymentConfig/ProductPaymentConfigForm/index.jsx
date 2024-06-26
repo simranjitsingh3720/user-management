@@ -99,11 +99,11 @@ function ProductPaymentConfigForm() {
           </div>{" "}
           <div className={styles.containerStyle}>
             <div className={styles.fieldContainerStyle}>
-              <text className={styles.labelText}>
+              <span className={styles.labelText}>
                 LOB <span className={styles.styledRequired}>*</span>
-              </text>
+              </span>
               <Controller
-                name="lob" // Name of the field in the form data
+                name="lob" 
                 control={control}
                 rules={{ required: true }}
                 render={({ field }) => (
@@ -141,11 +141,11 @@ function ProductPaymentConfigForm() {
               </div>
             </div>
             <div className={styles.fieldContainerStyle}>
-              <text className={styles.labelText}>
+              <span className={styles.labelText}>
                 Product <span className={styles.styledRequired}>*</span>
-              </text>
+              </span>
               <Controller
-                name="product" // Name of the field in the form data
+                name="product" 
                 control={control}
                 rules={{ required: true }}
                 render={({ field }) => (
@@ -177,11 +177,11 @@ function ProductPaymentConfigForm() {
               </div>
             </div>
             <div className={styles.fieldContainerStyle}>
-              <text className={styles.labelText}>
+              <span className={styles.labelText}>
                 Payment Type <span className={styles.styledRequired}>*</span>
-              </text>
+              </span>
               <Controller
-                name="payment" // Name of the field in the form data
+                name="payment" 
                 control={control}
                 rules={{ required: true }}
                 render={({ field }) => (

@@ -114,9 +114,9 @@ function List({ item, fetchData: fetchGroupList }) {
           <div className={styles.infoIconStyle}>
             <InfoIcon fontSize="x-large" className={styles.iconStyle} />
           </div>
-          <text className={styles.styledText}>
+          <span className={styles.styledText}>
             Are you sure you want to change the Proposal Bitly Link status?
-          </text>
+          </span>
 
           <div className={styles.SubmitContainer}>
             <CustomButton

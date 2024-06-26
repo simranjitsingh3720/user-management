@@ -26,6 +26,7 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 
 import useCreatePrivilege from "../hooks/useCreatePrivilege";
 import CustomButton from "../../../components/CustomButton";
+import { COMMON_ERROR } from "../../../utils/globalConstants";
 
 const PrivilegeForm = () => {
   const [selectedTags, setSelectedTags] = useState([]);
@@ -298,40 +299,6 @@ const PrivilegeForm = () => {
                       <span className={styles.labelText}>
                         Crud <span className={styles.styledRequired}>*</span>
                       </span>
-                      {/* <Controller
-                        name={`items[${index}].crud`}
-                        control={control}
-                        rules={{ required: true }}
-                        render={({ field }) => (
-                          <Autocomplete
-                            {...field}
-                            multiple
-                            id="crud"
-                            options={CrudSelect}
-                            disableCloseOnSelect
-                            getOptionLabel={(option) => option.label}
-                            onChange={(event, newValue) => {
-                              field.onChange(newValue);
-                            }}
-                            renderOption={(props, option, { selected }) => (
-                              <li {...props}>
-                                <Checkbox
-                                  icon={icon}
-                                  checkedIcon={checkedIcon}
-                                  style={{ marginRight: 8 }}
-                                  checked={selected}
-                                />
-                                {option.label}
-                              </li>
-                            )}
-                            size="small"
-                            className={styles.customizeSelect}
-                            renderInput={(params) => (
-                              <TextField {...params} placeholder="Select" />
-                            )}
-                          />
-                        )}
-                      /> */}
                       <Controller
                         name={`items[${index}].permissionType`}
                         control={control}
@@ -467,7 +434,7 @@ const PrivilegeForm = () => {
         open={toast}
         autoHideDuration={6000}
         onClose={() => setToast(false)}
-        message="An error occurred. Please try again."
+        message= {COMMON_ERROR}
         TransitionComponent="SlideTransition"
         anchorOrigin={{
           vertical: "top",

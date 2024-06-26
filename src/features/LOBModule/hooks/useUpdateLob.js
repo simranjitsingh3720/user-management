@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
 import { toast } from "react-toastify";
+import { COMMON_ERROR } from "../../../utils/globalConstants";
 
 function useUpdateLob(setChangeStatusOpen, fetchGroupList) {
   const [loading, setLoading] = useState(false);
@@ -14,8 +15,7 @@ function useUpdateLob(setChangeStatusOpen, fetchGroupList) {
       fetchGroupList();
     } catch (error) {
       toast.error(
-        error?.response?.data?.error?.message ||
-          "An error occurred. Please try again."
+        error?.response?.data?.error?.message || COMMON_ERROR
       );
       // Handle errors
     } finally {

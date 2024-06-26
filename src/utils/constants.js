@@ -1,7 +1,17 @@
+export const COMMON_WORDS = {
+  PRODUCER: "producer",
+  USER_TYPE: "userType",
+  ROLE_NAME: "roleName",
+  PRODUCT: "product",
+  ASC: 'asc',
+  LOB: 'lob'
+};
+
 export const API_END_POINTS = {
-  USERAPI: "api/user?searchString=",
+  USERAPI: "api/user",
   LOBAPI: "api/lob",
   PRODUCTAPI: "api/product",
+  CKYC: "api/ckyc",
 };
 
 export const HEADER = {

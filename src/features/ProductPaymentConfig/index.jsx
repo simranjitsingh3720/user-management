@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import SearchComponenet from "./SearchComponent";
+import React, { useEffect, useState } from "react";
+import SearchComponenet from "../../components/SearchComponent";
 import styles from "./styles.module.scss";
 import TableHeader from "./Table/TableHeader";
 import ListLoader from "../../components/ListLoader";
@@ -9,6 +9,9 @@ import { MenuItem, Pagination, Select } from "@mui/material";
 import { selectRowsData } from "../../utils/globalConstants";
 import useGetPaymentConfig from "./hooks/useGetPaymentConfig";
 import useGetPayment from "./hooks/useGetPayment";
+import { ProductPayment } from "./constants";
+import useGetAllProduct from "../../hooks/useGetAllProduct";
+import useGetLobData from "../../hooks/useGetLobData";
 
 function getSelectedRowData(count) {
   // Initialize the selected row data array
@@ -52,9 +55,58 @@ function ProductPaymentConfig() {
     setRowsPage(event.target.value);
   };
 
+  const { data: productData } = useGetAllProduct();
+
+  const { data: lobData } = useGetLobData();
+
+  const optionLabelProduct = (option) => {
+    console.log("option", option);
+    return option?.product ? option.product.toUpperCase() : "";
+  };
+
+  const renderOptionProductFunction = (props, option) => (
+    <li {...props} key={option?.id}>
+      {option?.product ? option?.product?.toUpperCase() : ""}
+    </li>
+  );
+
+  const optionLabelLob = (option) => {
+    console.log("optionLob", option);
+    return option?.lob ? option?.lob?.toUpperCase() : "";
+  };
+
+  const renderOptionLobFunction = (props, option) => (
+    <li {...props} key={option?.id}>
+      {option?.lob ? option?.lob?.toUpperCase() : ""}
+    </li>
+  );
+
+  useEffect(() => {
+    if (searched === "product") {
+      setLobValue([]);
+    } else {
+      setProductValue([]);
+    }
+  }, [searched]);
+
+  const handleGo = () => {
+    if (searched === "product") {
+      const resultProductString = fetchIdsAndConvert(productValue);
+      fetchData(searched, resultProductString);
+    } else {
+      const resultLobString = fetchIdsAndConvert(lobValue);
+      fetchData(searched, resultLobString);
+    }
+  };
+
+  const fetchIdsAndConvert = (inputData) => {
+    const ids = inputData.map((permission) => permission.id);
+    return ids.join();
+  };
+
   return (
     <div>
-      <SearchComponenet
+      {/* <SearchComponenet
         fetchData={fetchData}
         setPageChange={setPageChange}
         setQuery={setQuery}
@@ -64,6 +116,33 @@ function ProductPaymentConfig() {
         setProductValue={setProductValue}
         lobValue={lobValue}
         setLobValue={setLobValue}
+      /> */}
+      <SearchComponenet
+        optionsData={
+          searched === "product" ? productData?.data ?? [] : lobData?.data ?? []
+        }
+        option={searched === "product" ? productValue : lobValue}
+        setOption={searched === "product" ? setProductValue : setLobValue}
+        fetchData={fetchData}
+        optionLabel={
+          searched === "product" ? optionLabelProduct : optionLabelLob
+        }
+        placeholder={
+          searched === "product"
+            ? "Search by Producer Name"
+            : "Search by Lob Name"
+        }
+        renderOptionFunction={
+          searched === "product"
+            ? renderOptionProductFunction
+            : renderOptionLobFunction
+        }
+        buttonText={"Create New Payment Configuration"}
+        navigateRoute={"/product-payment-config/form"}
+        searched={searched}
+        setSearched={setSearched}
+        selectOptions={ProductPayment}
+        handleGo={handleGo}
       />
       <div className={styles.tableContainerStyle}>
         <div className={styles.tableStyled}>

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import SearchComponenet from "./SearchComponent";
 import styles from "./styles.module.scss";
 import TableHeader from "./Table/TableHeader";
 import ListLoader from "../../components/ListLoader";
@@ -8,6 +7,8 @@ import NoDataFound from "../../components/NoDataCard";
 import { MenuItem, Pagination, Select } from "@mui/material";
 import { selectRowsData } from "../../utils/globalConstants";
 import useGetHouseBank from "./hooks/useGetHealthConfig";
+import useGetUserData from "../../hooks/useGetUserData";
+import SearchComponenet from "../../components/SearchComponent";
 
 function getSelectedRowData(count) {
   // Initialize the selected row data array
@@ -24,13 +25,10 @@ function getSelectedRowData(count) {
 }
 
 function HealthConfiguration() {
-  const [query, setQuery] = useState("");
-  const [searched, setSearched] = useState("producers");
-
   const [rowsPage, setRowsPage] = useState(10);
 
   const [pageChange, setPageChange] = useState(1);
-  const [producers, setProducers] = useState("");
+  const [producers, setProducers] = useState([]);
 
   const handlePaginationChange = (event, page) => {
     setPageChange(page);
@@ -38,9 +36,7 @@ function HealthConfiguration() {
 
   const { data, loading, sort, setSort, fetchData } = useGetHouseBank(
     pageChange,
-    rowsPage,
-    query,
-    searched
+    rowsPage
   );
 
   const handleRowsChange = (event) => {
@@ -48,17 +44,41 @@ function HealthConfiguration() {
     setRowsPage(event.target.value);
   };
 
+  const { userData } = useGetUserData();
+
+  const optionLabel = (option) => {
+    return `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`;
+  };
+
+  const renderOptionFunction = (props, option) => (
+    <li {...props} key={option?.id}>
+      {option?.firstName?.toUpperCase()} {option?.lastName?.toUpperCase()}
+    </li>
+  );
+
+  const handleGo = () => {
+    const resultProducersId = fetchIdsAndConvert(producers);
+    fetchData(resultProducersId);
+  };
+
+  const fetchIdsAndConvert = (inputData) => {
+    const ids = (inputData || []).map((producer) => producer.id);
+    return ids.join();
+  };
+
   return (
     <div>
       <SearchComponenet
+        optionsData={userData || []}
+        option={producers}
+        setOption={setProducers}
         fetchData={fetchData}
-        producers={producers}
-        setProducers={setProducers}
-        setPageChange={setPageChange}
-        query={query}
-        setQuery={setQuery}
-        searched={searched}
-        setSearched={setSearched}
+        optionLabel={optionLabel}
+        placeholder={"Search by Producer Name"}
+        renderOptionFunction={renderOptionFunction}
+        buttonText={"Create Health Configuration"}
+        navigateRoute={"/health-config/form"}
+        handleGo={handleGo}
       />
       <div className={styles.tableContainerStyle}>
         <div className={styles.tableStyled}>

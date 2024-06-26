@@ -9,6 +9,7 @@ import useUpdatePaymentConfig from "../hooks/useUpdateHouseBank";
 import useCreateHouseBank from "../hooks/useCreateHouseBank";
 import useGetHouseBankByID from "../hooks/useGetHouseBankById";
 import CustomButton from "../../../components/CustomButton";
+import { REGEX } from "../../../utils/globalConstants";
 
 function HouseBankMasterForm() {
   const { id } = useParams();
@@ -51,7 +52,7 @@ function HouseBankMasterForm() {
       const payload = {
         id: id,
         properties: {
-          houseBankCode: data?.houseBankCode,
+          houseBankCode: Number(data?.houseBankCode),
           bankCode: data?.bankCode,
           branchName: data?.branchName,
         },
@@ -59,7 +60,7 @@ function HouseBankMasterForm() {
       UpdateDataFun(payload);
     } else {
       const payload = {
-        houseBankCode: data?.houseBankCode,
+        houseBankCode: Number(data?.houseBankCode),
         bankCode: data?.bankCode,
         branchName: data?.branchName,
         accountNumber: data?.accountNumber,
@@ -93,9 +94,9 @@ function HouseBankMasterForm() {
           </div>{" "}
           <div className={styles.containerStyle}>
             <div className={styles.fieldContainerStyle}>
-              <text className={styles.labelText}>
+              <span className={styles.labelText}>
                 House Bank Code <span className={styles.styledRequired}>*</span>
-              </text>
+              </span>
               <Controller
                 name="houseBankCode"
                 control={control}
@@ -103,7 +104,7 @@ function HouseBankMasterForm() {
                 rules={{
                   required: "House Bank Code is required",
                   pattern: {
-                    value: /^[0-9]+$/,
+                    value: REGEX.numericRegex,
                     message: "Only numeric values are allowed",
                   },
                 }}
@@ -120,26 +121,26 @@ function HouseBankMasterForm() {
                     }
                     {...field}
                     onChange={(e) => {
-                      setValue("houseBankCode", Number(e.target.value));
+                      setValue("houseBankCode", e.target.value);
                     }}
                   />
                 )}
               />
             </div>
             <div className={styles.fieldContainerStyle}>
-              <text className={styles.labelText}>
+              <span className={styles.labelText}>
                 Bank Code <span className={styles.styledRequired}>*</span>
-              </text>
+              </span>
               <Controller
                 name="bankCode"
                 control={control}
                 defaultValue=""
                 rules={{
                   required: "Bank Code is required",
-                  //   pattern: {
-                  //     value: /^[a-zA-Z]{4}0[a-zA-Z0-9]{6}$/,
-                  //     message: "Invalid Bank Code format",
-                  //   },
+                  pattern: {
+                    value: REGEX.alphaNumericRegex,
+                    message: "Invalid Bank Code format",
+                  },
                 }}
                 render={({ field }) => (
                   <TextField
@@ -159,9 +160,9 @@ function HouseBankMasterForm() {
               />
             </div>
             <div className={styles.fieldContainerStyle}>
-              <text className={styles.labelText}>
+              <span className={styles.labelText}>
                 Branch Name <span className={styles.styledRequired}>*</span>
-              </text>
+              </span>
               <Controller
                 name="branchName"
                 control={control}
@@ -187,15 +188,19 @@ function HouseBankMasterForm() {
               />
             </div>
             <div className={styles.fieldContainerStyle}>
-              <text className={styles.labelText}>
+              <span className={styles.labelText}>
                 Account Number <span className={styles.styledRequired}>*</span>
-              </text>
+              </span>
               <Controller
                 name="accountNumber"
                 control={control}
                 defaultValue=""
                 rules={{
                   required: "Account Number is required",
+                  pattern: {
+                    value: REGEX.numericRegex,
+                    message: "Only numeric values are allowed",
+                  },
                 }}
                 render={({ field }) => (
                   <TextField

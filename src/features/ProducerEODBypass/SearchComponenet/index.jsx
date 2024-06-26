@@ -84,7 +84,7 @@ function SearchComponenet({
                   Start Date <span className={styles.styledRequired}>*</span>
                 </div>
                 <Controller
-                  name="startDate" // Name of the field in the form data
+                  name="startDate" 
                   control={control}
                   rules={{ required: true }}
                   render={({ field }) => (
@@ -116,7 +116,7 @@ function SearchComponenet({
                   End Date <span className={styles.styledRequired}>*</span>
                 </div>
                 <Controller
-                  name="endDate" // Name of the field in the form data
+                  name="endDate" 
                   control={control}
                   rules={{ required: true }}
                   render={({ field }) => (

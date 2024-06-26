@@ -11,7 +11,7 @@ import useGetUserData from "../../BANCALogin/hooks/useGetUserData";
 import useCreateEODBypass from "../hooks/useCreateEODBypass";
 import useGetDataById from "../hooks/useGetDataById";
 import useUpdateEODBypass from "../hooks/useUpdateEODBypass";
-import { alphaNumericRegex } from "../../../utils/globalConstants";
+import { REGEX } from "../../../utils/globalConstants";
 import "dayjs/locale/en-gb";
 import CustomButton from "../../../components/CustomButton";
 
@@ -106,11 +106,11 @@ function ProducerEODFrom() {
           </div>{" "}
           <div className={styles.containerStyle}>
             <div className={styles.fieldContainerStyle}>
-              <text className={styles.labelText}>
+              <span className={styles.labelText}>
                 Producer <span className={styles.styledRequired}>*</span>
-              </text>
+              </span>
               <Controller
-                name="producerCode" // Name of the field in the form data
+                name="producerCode" 
                 control={control}
                 rules={{ required: true }}
                 render={({ field }) => (
@@ -156,7 +156,7 @@ function ProducerEODFrom() {
                     Start Date <span className={styles.styledRequired}>*</span>
                   </div>
                   <Controller
-                    name="startDate" // Name of the field in the form data
+                    name="startDate" 
                     control={control}
                     rules={{ required: true }}
                     render={({ field }) => (
@@ -194,7 +194,7 @@ function ProducerEODFrom() {
                     End Date <span className={styles.styledRequired}>*</span>
                   </div>
                   <Controller
-                    name="endDate" // Name of the field in the form data
+                    name="endDate" 
                     control={control}
                     rules={{ required: true }}
                     render={({ field }) => (
@@ -249,7 +249,7 @@ function ProducerEODFrom() {
                       message: "Reason cannot exceed 1000 characters",
                     },
                     pattern: {
-                      value: alphaNumericRegex,
+                      value: REGEX.alphaNumericRegex,
                       message: "Reason must be alphanumeric",
                     },
                   }}

@@ -61,18 +61,17 @@ function NavbarDrawer({
     );
     setFilteredNavData(filteredData);
   }, [searchQuery]);
+
   const drawer = (
     <div>
-      <div className={Styles.IconContainer}>
+      <div className='flex justify-center items-center flex-col text-center px-3'>
         <div className={Styles.StyledIcon}>
           <TataNormalLogo />
         </div>
-        <div className={Styles.styledText}>User Management Portal</div>
-        <div className={Styles.StyledSearch}>
+        <div className={Styles.StyledText}>User Management Portal</div>
           <SearchInput onSearch={(query) => setSearchQuery(query)} />
-        </div>
       </div>
-      <List sx={{ marginRight: "12px" }}>
+      <List className="mr-3">
         {filteredNavData.map((obj, index) =>
           !obj.child ? (
             <ListItem key={index} disablePadding>
@@ -86,39 +85,23 @@ function NavbarDrawer({
                     obj.label
                   )
                 }
-                sx={{
-                  "&.Mui-selected": {
-                    color: "#185EC4",
-                    backgroundColor: "#F2F7FF",
-                    borderLeft: "4px solid #185EC4",
-                  },
-                }}
+                className={selectedNavbar === obj.label ? Styles.selectedButton : ""}
               >
-                <ListItemIcon
-                  sx={{
-                    color: selectedNavbar === obj.label ? "#185EC4" : "#7E84A3", // Change color when selected
-                  }}
-                >
+                <ListItemIcon className={Styles.ListItemIcon}>
                   <obj.icon className={Styles.navbarIcon} />
                 </ListItemIcon>
                 <div className={Styles.navbarText}>{obj?.label}</div>
               </ListItemButton>
             </ListItem>
           ) : (
-            <>
+            <React.Fragment key={index}>
               <ListItemButton
                 onClick={handleClick}
-                sx={{
-                  backgroundColor:
-                    selectedParentIndex !== null ? "#F2F7FF" : "",
-                }}
+                className={
+                  selectedParentIndex !== null ? Styles.selectedButton : ""
+                }
               >
-                <ListItemIcon
-                  sx={{
-                    color:
-                      selectedParentIndex === obj.label ? "#185EC4" : "#7E84A3", // Change color when selected
-                  }}
-                >
+                <ListItemIcon className={Styles.ListItemIcon}>
                   <obj.icon />
                 </ListItemIcon>
                 <div className={Styles.navbarText}>{obj.label}</div>
@@ -145,23 +128,14 @@ function NavbarDrawer({
                             childObj.label
                           )
                         }
-                        sx={{
-                          "&.Mui-selected": {
-                            color: "#185EC4",
-                            backgroundColor: "#F2F7FF",
-                            borderLeft: "4px solid #185EC4",
-                          },
-                        }}
+                        className={
+                          selectedParentIndex ===
+                          `${obj.label}/${childObj.label}`
+                            ? Styles.selectedButton
+                            : ""
+                        }
                       >
-                        <ListItemIcon
-                          sx={{
-                            color:
-                              selectedParentIndex ===
-                              `${obj.label}/${childObj.label}`
-                                ? "#185EC4"
-                                : "#7E84A3", // Change color when selected
-                          }}
-                        >
+                        <ListItemIcon className={Styles.ListItemIcon}>
                           <childObj.icon />
                         </ListItemIcon>
                         <div className={Styles.navbarText}>
@@ -172,7 +146,7 @@ function NavbarDrawer({
                   ))}
                 </List>
               </Collapse>
-            </>
+            </React.Fragment>
           )
         )}
       </List>
@@ -190,7 +164,7 @@ function NavbarDrawer({
           keepMounted: true, // Better open performance on mobile.
         }}
         sx={{
-          display: { xs: "block", md: "none", },
+          display: { xs: "block", md: "none" },
           "& .MuiDrawer-paper": { boxSizing: "border-box", width: drawerWidth },
         }}
       >

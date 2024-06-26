@@ -286,9 +286,9 @@ function CreateGroupForm() {
             </div>
           </div>
           <div className={styles.fieldContainerStyle}>
-            <text className={styles.labelText}>Group User</text>
+            <span className={styles.labelText}>Group User</span>
             <Controller
-              name="groupUser" // Name of the field in the form data
+              name="groupUser" 
               control={control}
               render={({ field }) => (
                 <Autocomplete
@@ -335,9 +335,9 @@ function CreateGroupForm() {
             />
           </div>
           <div className={styles.fieldContainerStyle}>
-            <text className={styles.labelText}>
+            <span className={styles.labelText}>
               Permissions <span className={styles.styledRequired}>*</span>
-            </text>
+            </span>
             <div className={styles.permissionContainer}>
               <div className={styles.permissionSelect}>
                 <div className={styles.permissionInnerSelect}>

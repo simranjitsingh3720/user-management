@@ -1,75 +1,103 @@
-import { Autocomplete, TextField, Typography } from "@mui/material";
 import React from "react";
-import styles from "./styles.module.scss";
+import { Autocomplete, Box, Grid, MenuItem, Select, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import useGetUserData from "../../../hooks/useGetUserData";
-import CustomButton from "../../../components/CustomButton";
+import CustomButton from "../CustomButton";
 
-const fetchIdsAndConvert = (inputData) => {
-  const ids = (inputData || []).map((producer) => producer.id);
-  return ids.join();
-};
-
-function SearchComponenet({ producers, fetchData, setProducers }) {
+function SearchComponent({
+  option,
+  setOption,
+  fetchData,
+  optionsData,
+  optionLabel,
+  placeholder,
+  renderOptionFunction,
+  buttonText,
+  navigateRoute,
+  searched,
+  setSearched,
+  selectOptions,
+  handleGo,
+}) {
   const navigate = useNavigate();
 
   const handleCreateNewForm = () => {
-    navigate("/health-config/form");
+    navigate(navigateRoute);
   };
-
-  const handleGo = () => {
-    const resultProducersId = fetchIdsAndConvert(producers);
-    fetchData(resultProducersId);
-  };
-
-  const { userData } = useGetUserData();
 
   return (
-    <div className={styles.flexSearchContainer}>
-      <div className={styles.flexSearchContainer}>
-        <Autocomplete
-          id="producer"
-          options={userData || []}
-          getOptionLabel={(option) => {
-            return `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`;
-          }}
-          multiple
-          className={styles.customizeGroupSelect}
-          size="small"
-          isOptionEqualToValue={(option, value) => option.id === value.id}
-          renderInput={(params) => (
-            <TextField {...params} placeholder="Search by Producer Name" />
-          )}
-          onChange={(event, newValue) => {
-            setProducers(newValue);
-          }}
-          renderOption={(props, option) => (
-            <li {...props} key={option.id}>
-              {option?.firstName?.toUpperCase()}{" "}
-              {option?.lastName?.toUpperCase()}
-            </li>
-          )}
-          ListboxProps={{
-            style: {
-              maxHeight: "200px",
-            },
-          }}
-        />
-        <CustomButton variant="outlined" onClick={handleGo}>
-          Go
-        </CustomButton>
-      </div>
-      <CustomButton
-        variant="contained"
-        onClick={handleCreateNewForm}
-        sx={{ textTransform: "none" }}
+    <Box>
+      <Grid
+        container
+        spacing={2}
+        justifyContent="space-between"
+        alignItems="center"
       >
-        <Typography nowrap="true" className={styles.buttonTextStyle}>
-          Create Health Configuration
-        </Typography>
-      </CustomButton>
-    </div>
+        <Grid item xs={12} md={8}>
+          <Grid container spacing={2} alignItems="center">
+            {selectOptions && (
+              <Grid item xs={12} sm={4} md={3}>
+                <Select
+                  labelId="search-select"
+                  id="search-select"
+                  value={searched}
+                  onChange={(event) => setSearched(event.target.value)}
+                  fullWidth
+                  displayEmpty
+                  size="small"
+                  renderValue={
+                    searched !== "" ? undefined : () => (
+                      <span>Select</span>
+                    )
+                  }
+                >
+                  {selectOptions.map((item) => (
+                    <MenuItem
+                      key={item.value}
+                      value={item.value}
+                    >
+                      {item.label}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </Grid>
+            )}
+            <Grid item xs={12} sm={6} md={6}>
+              <Autocomplete
+                id="producer"
+                options={optionsData || []}
+                getOptionLabel={optionLabel}
+                multiple
+                size="small"
+                renderInput={(params) => (
+                  <TextField {...params} placeholder={placeholder} />
+                )}
+                value={option}
+                onChange={(event, newValue) => setOption(newValue)}
+                renderOption={renderOptionFunction}
+                ListboxProps={{
+                  style: { maxHeight: "200px" },
+                }}
+                fullWidth
+              />
+            </Grid>
+            <Grid item xs={12} sm={2} md={2}>
+              <CustomButton variant="outlined" onClick={handleGo} fullWidth>
+                Go
+              </CustomButton>
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid item xs={12} md={4} container justifyContent="flex-end">
+          <CustomButton
+            variant="contained"
+            onClick={handleCreateNewForm}
+          >
+              {buttonText}
+          </CustomButton>
+        </Grid>
+      </Grid>
+    </Box>
   );
 }
 
-export default SearchComponenet;
+export default SearchComponent;

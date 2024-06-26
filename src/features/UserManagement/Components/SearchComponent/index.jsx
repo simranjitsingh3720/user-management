@@ -1,6 +1,5 @@
 import { MenuItem, Select, TextField } from "@mui/material";
 import React from "react";
-import DownloadIcon from "../../../../assets/DownloadLogo";
 import styles from "./styles.module.scss";
 import { selectData } from "../../constants";
 import { DatePicker } from "@mui/x-date-pickers";
@@ -9,6 +8,8 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useNavigate } from "react-router-dom";
 import "dayjs/locale/en-gb";
 import CustomButton from "../../../../components/CustomButton";
+import CustomDialog from "../../../../components/CustomDialog";
+import ExportDropdown from "../../../ExportDropdown";
 
 function SearchComponent({
   searched = "",
@@ -54,8 +55,12 @@ function SearchComponent({
                 : () => <div className={styles.placeholderStyle}>Select</div>
             }
           >
-            {selectData.map((item) => (
-              <MenuItem value={item.value} className={styles.styledOptionText}>
+            {selectData.map((item, index) => (
+              <MenuItem
+                key={index}
+                value={item.value}
+                className={styles.styledOptionText}
+              >
                 {item.label}
               </MenuItem>
             ))}
@@ -106,13 +111,8 @@ function SearchComponent({
             Go
           </CustomButton>
         </div>
-        <div>
-          <CustomButton
-            variant="outlined"
-            startIcon={<DownloadIcon />}
-          >
-            Export Data
-          </CustomButton>
+        <div className="flex">
+          <ExportDropdown />
           <CustomButton
             variant="contained"
             onClick={handleCreateNewForm}
@@ -122,6 +122,8 @@ function SearchComponent({
           </CustomButton>
         </div>
       </div>
+
+      <CustomDialog />
     </div>
   );
 }
