@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
 import { toast } from "react-toastify";
+import { COMMON_ERROR } from "../../../utils/globalConstants";
 
 function useGetProposalOTPList(pageChange, rowsPage, query, searched, date) {
   const [data, setData] = useState(null);
@@ -26,7 +27,7 @@ function useGetProposalOTPList(pageChange, rowsPage, query, searched, date) {
       setData(response.data);
     } catch (error) {
       toast.error(
-        error?.response?.data?.details || "An error occurred. Please try again."
+        error?.response?.data?.details || COMMON_ERROR
       );
     } finally {
       setLoading(false);

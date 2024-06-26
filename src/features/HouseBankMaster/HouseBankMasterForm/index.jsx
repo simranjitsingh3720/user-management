@@ -9,6 +9,7 @@ import useUpdatePaymentConfig from "../hooks/useUpdateHouseBank";
 import useCreateHouseBank from "../hooks/useCreateHouseBank";
 import useGetHouseBankByID from "../hooks/useGetHouseBankById";
 import CustomButton from "../../../components/CustomButton";
+import { REGEX } from "../../../utils/globalConstants";
 
 function HouseBankMasterForm() {
   const { id } = useParams();
@@ -103,7 +104,7 @@ function HouseBankMasterForm() {
                 rules={{
                   required: "House Bank Code is required",
                   pattern: {
-                    value: /^[0-9]+$/,
+                    value: REGEX.numericRegex,
                     message: "Only numeric values are allowed",
                   },
                 }}
@@ -137,7 +138,7 @@ function HouseBankMasterForm() {
                 rules={{
                   required: "Bank Code is required",
                   pattern: {
-                    value: /^[A-Z]{4}0[A-Z0-9]{6}$/,
+                    value: REGEX.alphaNumericRegex,
                     message: "Invalid Bank Code format",
                   },
                 }}
@@ -197,7 +198,7 @@ function HouseBankMasterForm() {
                 rules={{
                   required: "Account Number is required",
                   pattern: {
-                    value: /^[0-9]+$/,
+                    value: REGEX.numericRegex,
                     message: "Only numeric values are allowed",
                   },
                 }}

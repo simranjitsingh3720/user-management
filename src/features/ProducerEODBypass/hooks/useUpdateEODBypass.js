@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axiosInstance from "../../../utils/axiosInstance";
+import { COMMON_ERROR } from "../../../utils/globalConstants";
 
 function useUpdateEODBypass() {
   const [loading, setLoading] = useState(false);
@@ -21,8 +22,7 @@ function useUpdateEODBypass() {
       navigate("/producer-eod-bypass-list");
     } catch (error) {
       toast.error(
-        error?.response?.data?.error?.message ||
-          "An error occurred. Please try again."
+        error?.response?.data?.error?.message || COMMON_ERROR
       );
 
       // Handle errors

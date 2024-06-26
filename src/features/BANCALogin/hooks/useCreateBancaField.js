@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
 import { toast } from "react-toastify";
+import { COMMON_ERROR } from "../../../utils/globalConstants";
 
 function useCreateBancaField() {
   const [loading, setLoading] = useState(false);
@@ -14,7 +15,7 @@ function useCreateBancaField() {
       );
     } catch (error) {
       toast.error(
-        error?.response?.data?.details || "An error occurred. Please try again."
+        error?.response?.data?.details || COMMON_ERROR
       );
       // Handle errors
     } finally {
