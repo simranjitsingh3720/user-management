@@ -2,7 +2,7 @@ import EditIcon from "@mui/icons-material/Edit";
 
 export const Header = (editAction) => {
   return [
-    { value: "LOB", id: "lob" },
+    { value: "LOB", id: "lobId", sortable: true, },
     { value: "Product", id: "product" },
     { value: "Producer Name", id: "producerName" },
     { value: "Producer Code", id: "producerCode" },
