@@ -1,0 +1,23 @@
+.tableHeader {
+    border-bottom: 'none';
+    color: #465465;
+    font-size: 13px;
+
+}
+.table-container {
+    overflow-x: auto;
+  }
+  
+  .fixed-width-table {
+    width: 100%;
+    table-layout: fixed;
+  }
+  
+  .fixed-width-cell {
+    width: 200px; /* Adjust the width as needed */
+  }
+
+.labelText {
+    color: #607083;
+    font-size: 13px;
+}

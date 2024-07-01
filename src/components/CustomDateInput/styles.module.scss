@@ -4,6 +4,11 @@
   flex-direction: column;
 }
 
+.fieldContainerNoMarginStyle {
+  display: flex;
+  flex-direction: column;
+}
+
 .labelText {
   color: #566475;
   font-size: 14px;
@@ -15,6 +20,10 @@
 
 .dateStyle {
   background-color: #ffffff;
+}
+
+.myDatePicker fieldset.MuiOutlinedInput-notchedOutline {
+  border-color: green;
 }
 
 .styledError {

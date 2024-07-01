@@ -20,6 +20,7 @@ import AutocompleteMultipleField from "../../../../components/CustomAutocomplete
 import AutocompleteFieldAll from "../../../../components/CustomAutocompleteAll";
 import { getPaymentTypes } from "../../../../Redux/getPaymentType";
 import { getProducerCodes } from "../../../../Redux/getProducerCode";
+import CustomButton from "../../../../components/CustomButton";
 
 function CreateUserCreationForm() {
   const dispatch = useDispatch();
@@ -231,6 +232,7 @@ function CreateUserCreationForm() {
                     watch={watch}
                     setValue={setValue}
                     name={item?.id}
+                    labelVisible={true}
                     label={item?.label}
                     required={item?.required}
                     errors={errors}
@@ -350,24 +352,18 @@ function CreateUserCreationForm() {
         </div>
       </div>
       <div className={styles.btnContainer}>
-        <Button
-          variant="contained"
+        <CustomButton
           color="error"
-          className={styles.styledButton}
-          disabled={loading}
           onClick={handleReset}
-        >
-          Reset
-        </Button>
+          >
+            Reset
+          </CustomButton>
         <div className="ml-2">
-          <Button
-            type="submit"
-            variant="contained"
-            className={styles.styledButton}
-            disabled={loading}
+          <CustomButton
+            onClick={onSubmit}
           >
             Submit
-          </Button>
+          </CustomButton>
         </div>
       </div>
     </form>
