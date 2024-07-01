@@ -3,8 +3,11 @@ export const COMMON_WORDS = {
   USER_TYPE: "userType",
   ROLE_NAME: "roleName",
   PRODUCT: "product",
-  ASC: 'asc',
-  LOB: 'lob'
+  ASC: "asc",
+  LOB: "lob",
+  CREATED_AT: "createdAt",
+  ENABLE: "Enable",
+  DISABLE: "Disable",
 };
 
 export const API_END_POINTS = {

@@ -1,5 +1,12 @@
 import React from "react";
-import { Autocomplete, Box, Grid, MenuItem, Select, TextField } from "@mui/material";
+import {
+  Autocomplete,
+  Box,
+  Grid,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import CustomButton from "../CustomButton";
 
@@ -43,18 +50,14 @@ function SearchComponent({
                   onChange={(event) => setSearched(event.target.value)}
                   fullWidth
                   displayEmpty
+                  className="customize-select"
                   size="small"
                   renderValue={
-                    searched !== "" ? undefined : () => (
-                      <span>Select</span>
-                    )
+                    searched !== "" ? undefined : () => <span>Select</span>
                   }
                 >
                   {selectOptions.map((item) => (
-                    <MenuItem
-                      key={item.value}
-                      value={item.value}
-                    >
+                    <MenuItem key={item.value} value={item.value}>
                       {item.label}
                     </MenuItem>
                   ))}
@@ -71,6 +74,7 @@ function SearchComponent({
                 renderInput={(params) => (
                   <TextField {...params} placeholder={placeholder} />
                 )}
+                className="customize-select"
                 value={option}
                 onChange={(event, newValue) => setOption(newValue)}
                 renderOption={renderOptionFunction}
@@ -88,11 +92,8 @@ function SearchComponent({
           </Grid>
         </Grid>
         <Grid item xs={12} md={4} container justifyContent="flex-end">
-          <CustomButton
-            variant="contained"
-            onClick={handleCreateNewForm}
-          >
-              {buttonText}
+          <CustomButton variant="contained" onClick={handleCreateNewForm}>
+            {buttonText}
           </CustomButton>
         </Grid>
       </Grid>
