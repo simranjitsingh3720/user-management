@@ -38,6 +38,7 @@ const PartnerNeftForm = () => {
     control,
     formState: { errors },
     setValue,
+    reset
   } = useForm({
     defaultValues: {
       lob: null,
@@ -137,7 +138,7 @@ const PartnerNeftForm = () => {
                   <CustomButton
                     variant="outlined"
                     startIcon={<RestartAltIcon />}
-                    onClick={() => navigate("/partner-neft")}
+                    onClick={() => reset()}
                   >
                     Reset
                   </CustomButton>
