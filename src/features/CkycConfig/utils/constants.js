@@ -4,22 +4,22 @@ export const forWhomEnable = [
     value: "both",
   },
   {
-    label: "By Producer",
-    value: "by producer",
+    label: "Producer",
+    value: "producer",
   },
   {
-    label: "By Customer",
-    value: "by customer",
+    label: "Customer",
+    value: "customer",
   },
 ];
 
 export const forWhomDisable = [
   {
-    label: "By Producer",
-    value: "by producer",
+    label: "Producer",
+    value: "producer",
   },
   {
-    label: "By Customer",
-    value: "by customer",
+    label: "Customer",
+    value: "customer",
   },
 ];

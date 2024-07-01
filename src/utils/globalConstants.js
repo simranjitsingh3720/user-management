@@ -4,9 +4,24 @@ export const BASE_URL = "https://dev-usermgmt.tataaig.com";
 
 export const selectRowsData = [5, 10, 15, 20];
 export const alphaNumericRegex = /^[a-zA-Z0-9\s]*$/;
-export const nameRegex = "^[A-Za-z]+$";
-export const emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$";
-export const mobileRegex = "^[0-9]*$";
+
+export const REGEX = {
+  alphaNumericRegex: /^[a-zA-Z0-9\s]*$/,
+  numericRegex: /^[0-9]+$/,
+  letterRegex: /^[A-Za-z]+$/,
+  emailRegex: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+  nameRegex: "^[A-Za-z]+$",
+  mobileRegex: "^[0-9]*$",
+};
+
+export const BUTTON_TEXT = {
+  CKYC_CONFIG: "Create CKYC Configuration",
+};
+
+export const PLACEHOLDER_TEXT = {
+  product: "Search by Product Name",
+  lob: "Search by Lob Name",
+};
 
 export const ProductPayment = [
   {

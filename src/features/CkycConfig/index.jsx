@@ -3,24 +3,35 @@ import CustomTable from "../../components/CustomTable";
 import generateTableHeaders from "./utils/generateTableHeaders";
 import { useNavigate } from "react-router-dom";
 import SearchComponenet from "../../components/SearchComponent";
-import { Box, Grid } from "@mui/material";
+import { Box } from "@mui/material";
 import useGetCkycData from "./hooks/useGetCkycData";
 import useGetAllProduct from "../../hooks/useGetAllProduct";
 import useGetLobData from "../../hooks/useGetLobData";
-import { ProductPayment } from "../../utils/globalConstants";
+import {
+  BUTTON_TEXT,
+  ProductPayment,
+  PLACEHOLDER_TEXT,
+} from "../../utils/globalConstants";
+import { COMMON_WORDS } from "../../utils/constants";
 
 function CkycConfig() {
-  const [rowsPage, setRowsPage] = useState(10);
   const [tableData, setTableData] = useState([]);
-  const [pageChange, setPageChange] = useState(1);
-  const [searched, setSearched] = useState("product");
+
+  const [searched, setSearched] = useState(COMMON_WORDS.PRODUCT);
+
+  const [page, setPage] = useState(0);
+  const [pageSize, setPageSize] = useState(5);
+  const [order, setOrder] = useState(COMMON_WORDS.ASC);
+  const [orderBy, setOrderBy] = useState(COMMON_WORDS.CREATED_AT);
 
   const [productValue, setProductValue] = useState([]);
   const [lobValue, setLobValue] = useState([]);
 
-  const { data, loading, sort, setSort, fetchData } = useGetCkycData(
-    pageChange,
-    rowsPage
+  const { data, loading, fetchData } = useGetCkycData(
+    page,
+    pageSize,
+    order,
+    orderBy
   );
 
   useEffect(() => {
@@ -29,7 +40,9 @@ function CkycConfig() {
         id: item.id,
         lob: item.lob.lob,
         product: item.product.product,
-        CKYCApplicable: item.isCKYCApplicable ? "Enable" : "Disable",
+        CKYCApplicable: item.isCKYCApplicable
+          ? COMMON_WORDS.ENABLE
+          : COMMON_WORDS.DISABLE,
         forWhom: item.forWhom,
         createdAt: item.createdAt,
         updatedAt: item.updatedAt,
@@ -71,7 +84,7 @@ function CkycConfig() {
   );
 
   useEffect(() => {
-    if (searched === "product") {
+    if (searched === COMMON_WORDS.PRODUCT) {
       setLobValue([]);
     } else {
       setProductValue([]);
@@ -79,7 +92,7 @@ function CkycConfig() {
   }, [searched]);
 
   const handleGo = () => {
-    if (searched === "product") {
+    if (searched === COMMON_WORDS.PRODUCT) {
       const resultProductString = fetchIdsAndConvert(productValue);
       fetchData(searched, resultProductString);
     } else {
@@ -95,42 +108,55 @@ function CkycConfig() {
 
   return (
     <Box>
-      <Grid container rowSpacing={0.5} direction="column">
-        <SearchComponenet
-          optionsData={
-            searched === "product"
-              ? productData?.data ?? []
-              : lobData?.data ?? []
-          }
-          option={searched === "product" ? productValue : lobValue}
-          setOption={searched === "product" ? setProductValue : setLobValue}
-          fetchData={fetchData}
-          optionLabel={
-            searched === "product" ? optionLabelProduct : optionLabelLob
-          }
-          placeholder={
-            searched === "product"
-              ? "Search by Producer Name"
-              : "Search by Lob Name"
-          }
-          renderOptionFunction={
-            searched === "product"
-              ? renderOptionProductFunction
-              : renderOptionLobFunction
-          }
-          buttonText={"Create CKYC Configuration"}
-          navigateRoute={"/ckyc-config/form"}
-          searched={searched}
-          setSearched={setSearched}
-          selectOptions={ProductPayment}
-          handleGo={handleGo}
-        />
+      <SearchComponenet
+        optionsData={
+          searched === COMMON_WORDS.PRODUCT
+            ? productData?.data ?? []
+            : lobData?.data ?? []
+        }
+        option={searched === COMMON_WORDS.PRODUCT ? productValue : lobValue}
+        setOption={
+          searched === COMMON_WORDS.PRODUCT ? setProductValue : setLobValue
+        }
+        fetchData={fetchData}
+        optionLabel={
+          searched === COMMON_WORDS.PRODUCT
+            ? optionLabelProduct
+            : optionLabelLob
+        }
+        placeholder={
+          searched === COMMON_WORDS.PRODUCT
+            ? PLACEHOLDER_TEXT.product
+            : PLACEHOLDER_TEXT.lob
+        }
+        renderOptionFunction={
+          searched === COMMON_WORDS.PRODUCT
+            ? renderOptionProductFunction
+            : renderOptionLobFunction
+        }
+        buttonText={BUTTON_TEXT.CKYC_CONFIG}
+        navigateRoute={"/ckyc-config/form"}
+        searched={searched}
+        setSearched={setSearched}
+        selectOptions={ProductPayment}
+        handleGo={handleGo}
+      />
+      <div className="mt-4">
         <CustomTable
           columns={HEADER_COLUMNS}
           rows={tableData || []}
           loading={loading}
+          totalCount={data?.totalCount || 0}
+          page={page}
+          setPage={setPage}
+          rowsPerPage={pageSize}
+          setRowsPerPage={setPageSize}
+          order={order}
+          setOrder={setOrder}
+          orderBy={orderBy}
+          setOrderBy={setOrderBy}
         />
-      </Grid>
+      </div>
     </Box>
   );
 }

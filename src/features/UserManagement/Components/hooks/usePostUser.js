@@ -3,6 +3,7 @@ import axiosInstance from "../../../../utils/axiosInstance"; // Import the insta
 
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { COMMON_ERROR } from "../../../../utils/globalConstants";
 
 export default function usePostUser() {
   const [loading, setLoading] = useState(false);
@@ -17,8 +18,7 @@ export default function usePostUser() {
       navigate("/user-management");
     } catch (error) {
       toast.error(
-        error?.response?.data?.error?.message ||
-          "An error occurred. Please try again."
+        error?.response?.data?.error?.message || COMMON_ERROR
       );
 
       // Handle errors

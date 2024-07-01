@@ -2,6 +2,7 @@ import { useCallback, useState } from "react";
 import { toast } from "react-toastify";
 import { API_END_POINTS, VERFICATION_ENUM } from "../utils/constant";
 import axiosInstance from "./../../../utils/axiosInstance";
+import { COMMON_ERROR } from "../../../utils/globalConstants";
 
 const useGetPartnerNeft = () => {
   const [data, setData] = useState([]);
@@ -56,8 +57,7 @@ const useGetPartnerNeft = () => {
         setTotalCount(response.data.totalCount);
       } catch (e) {
         toast.error(
-          e?.response?.data?.error?.message ||
-            "An error occurred. Please try again."
+          e?.response?.data?.error?.message || COMMON_ERROR
         );
         setData([]);
       } finally {

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import axiosInstance from "../../../../utils/axiosInstance";
+import { COMMON_ERROR } from "../../../../utils/globalConstants";
 
 export default function useUpdateUser(setOpen, fetchData) {
   const [loading, setLoading] = useState(false);
@@ -44,8 +45,7 @@ export default function useUpdateUser(setOpen, fetchData) {
       if (fetchData) fetchData();
     } catch (error) {
       toast.error(
-        error?.response?.data?.error?.message ||
-          "An error occurred. Please try again."
+        error?.response?.data?.error?.message || COMMON_ERROR
       );
     } finally {
       setLoading(false);

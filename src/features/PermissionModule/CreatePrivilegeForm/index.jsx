@@ -26,6 +26,7 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 
 import useCreatePrivilege from "../hooks/useCreatePrivilege";
 import CustomButton from "../../../components/CustomButton";
+import { COMMON_ERROR } from "../../../utils/globalConstants";
 
 const PrivilegeForm = () => {
   const [selectedTags, setSelectedTags] = useState([]);
@@ -433,7 +434,7 @@ const PrivilegeForm = () => {
         open={toast}
         autoHideDuration={6000}
         onClose={() => setToast(false)}
-        message="An error occurred. Please try again."
+        message= {COMMON_ERROR}
         TransitionComponent="SlideTransition"
         anchorOrigin={{
           vertical: "top",

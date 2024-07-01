@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance"; // Import the instance
 import { toast } from "react-toastify";
+import { COMMON_ERROR } from "../../../utils/globalConstants";
 
 function useUpdatePrivilege(setOpen, fetchData) {
   const [loading, setLoading] = useState(false);
@@ -22,8 +23,7 @@ function useUpdatePrivilege(setOpen, fetchData) {
       fetchData();
     } catch (error) {
       toast.error(
-        error?.response?.data?.error?.message ||
-          "An error occurred. Please try again."
+        error?.response?.data?.error?.message || COMMON_ERROR
       );
     } finally {
       setLoading(false);

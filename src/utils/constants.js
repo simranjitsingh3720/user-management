@@ -2,6 +2,12 @@ export const COMMON_WORDS = {
   PRODUCER: "producer",
   USER_TYPE: "userType",
   ROLE_NAME: "roleName",
+  PRODUCT: "product",
+  ASC: "asc",
+  LOB: "lob",
+  CREATED_AT: "createdAt",
+  ENABLE: "Enable",
+  DISABLE: "Disable",
 };
 
 export const API_END_POINTS = {

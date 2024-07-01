@@ -11,7 +11,7 @@ import useGetUserData from "../../BANCALogin/hooks/useGetUserData";
 import useCreateEODBypass from "../hooks/useCreateEODBypass";
 import useGetDataById from "../hooks/useGetDataById";
 import useUpdateEODBypass from "../hooks/useUpdateEODBypass";
-import { alphaNumericRegex } from "../../../utils/globalConstants";
+import { REGEX } from "../../../utils/globalConstants";
 import "dayjs/locale/en-gb";
 import CustomButton from "../../../components/CustomButton";
 
@@ -249,7 +249,7 @@ function ProducerEODFrom() {
                       message: "Reason cannot exceed 1000 characters",
                     },
                     pattern: {
-                      value: alphaNumericRegex,
+                      value: REGEX.alphaNumericRegex,
                       message: "Reason must be alphanumeric",
                     },
                   }}

@@ -20,6 +20,7 @@ import usePostUser from "../hooks/usePostUser";
 import useGetUserById from "../hooks/useGetUserById";
 import useUpdateUser from "../hooks/useUpdateUser";
 import CustomButton from "../../../../components/CustomButton";
+import { REGEX } from "../../../../utils/globalConstants";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -266,7 +267,7 @@ function CreateUserMangementForm() {
                     message: `${item.label} should not exceed 50 characters`,
                   },
                   pattern: {
-                    value: /^[A-Za-z]+$/,
+                    value: REGEX.letterRegex,
                     message: `${item.label} should contain only letters`,
                   },
                 }}
@@ -305,7 +306,7 @@ function CreateUserMangementForm() {
                   message: "Mobile number should not exceed 10 digits",
                 },
                 pattern: {
-                  value: /^[0-9]*$/,
+                  value: REGEX.numericRegex,
                   message: "Mobile number should contain only digits",
                 },
               }}
@@ -335,7 +336,7 @@ function CreateUserMangementForm() {
               rules={{
                 required: "Email address is required",
                 pattern: {
-                  value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                  value: REGEX.emailRegex,
                   message: "Please enter a valid email address",
                 },
               }}

@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Autocomplete,
   Box,
@@ -5,12 +6,8 @@ import {
   MenuItem,
   Select,
   TextField,
-  Typography,
 } from "@mui/material";
-import React from "react";
-import styles from "./styles.module.scss";
 import { useNavigate } from "react-router-dom";
-
 import CustomButton from "../CustomButton";
 
 function SearchComponent({
@@ -38,113 +35,65 @@ function SearchComponent({
     <Box>
       <Grid
         container
-        rowSpacing={1}
-        columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-        direction="row"
+        spacing={2}
         justifyContent="space-between"
+        alignItems="center"
       >
-        {/* Autocomplete and Go Button */}
-
-        <Grid item xs={12} sm={6} lg={8}>
-          <Grid
-            container
-            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-            direction="row"
-            alignItems="center"
-          >
-            <Grid item xs={12} sm={6} lg={6}>
-              <Grid
-                container
-                columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                direction="row"
-                alignItems="center"
-              >
-                {selectOptions && (
-                  <Grid
-                    item
-                    xs={selectOptions ? 2 : 12}
-                    sm={selectOptions ? 6 : 12}
-                    lg={selectOptions ? 4 : 12}
-                  >
-                    <Select
-                      labelId="search-select"
-                      id="search-select"
-                      value={searched}
-                      onChange={(event) => {
-                        setSearched(event.target.value);
-                      }}
-                      className="customize-select"
-                      size="small"
-                      displayEmpty
-                      fullWidth
-                      renderValue={
-                        searched !== ""
-                          ? undefined
-                          : () => (
-                              <div className={styles.placeholderStyle}>
-                                Select
-                              </div>
-                            )
-                      }
-                    >
-                      {selectOptions.map((item) => (
-                        <MenuItem
-                          value={item.value}
-                          className={styles.styledOptionText}
-                        >
-                          {item.label}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </Grid>
-                )}
-                <Grid
-                  item
-                  xs={selectOptions ? 2 : 12}
-                  sm={selectOptions ? 6 : 12}
-                  lg={selectOptions ? 8 : 12}
+        <Grid item xs={12} md={8}>
+          <Grid container spacing={2} alignItems="center">
+            {selectOptions && (
+              <Grid item xs={12} sm={4} md={3}>
+                <Select
+                  labelId="search-select"
+                  id="search-select"
+                  value={searched}
+                  onChange={(event) => setSearched(event.target.value)}
+                  fullWidth
+                  displayEmpty
+                  className="customize-select"
+                  size="small"
+                  renderValue={
+                    searched !== "" ? undefined : () => <span>Select</span>
+                  }
                 >
-                  <Autocomplete
-                    id="producer"
-                    options={optionsData || []}
-                    getOptionLabel={optionLabel}
-                    multiple
-                    size="small"
-                    renderInput={(params) => (
-                      <TextField {...params} placeholder={placeholder} />
-                    )}
-                    value={option}
-                    className="customize-select"
-                    onChange={(event, newValue) => {
-                      setOption(newValue);
-                    }}
-                    renderOption={renderOptionFunction}
-                    ListboxProps={{
-                      style: {
-                        maxHeight: "200px",
-                      },
-                    }}
-                  />
-                </Grid>
+                  {selectOptions.map((item) => (
+                    <MenuItem key={item.value} value={item.value}>
+                      {item.label}
+                    </MenuItem>
+                  ))}
+                </Select>
               </Grid>
+            )}
+            <Grid item xs={12} sm={6} md={6}>
+              <Autocomplete
+                id="producer"
+                options={optionsData || []}
+                getOptionLabel={optionLabel}
+                multiple
+                size="small"
+                renderInput={(params) => (
+                  <TextField {...params} placeholder={placeholder} />
+                )}
+                className="customize-select"
+                value={option}
+                onChange={(event, newValue) => setOption(newValue)}
+                renderOption={renderOptionFunction}
+                ListboxProps={{
+                  style: { maxHeight: "200px" },
+                }}
+                fullWidth
+              />
             </Grid>
-            <Grid item xs={2} sm={6} lg={6}>
-              <CustomButton variant="outlined" onClick={handleGo}>
+            <Grid item xs={12} sm={2} md={2}>
+              <CustomButton variant="outlined" onClick={handleGo} fullWidth>
                 Go
               </CustomButton>
             </Grid>
           </Grid>
         </Grid>
-
-        <Grid item>
-          <CustomButton
-            variant="contained"
-            onClick={handleCreateNewForm}
-            sx={{ textTransform: "none", height: "100%" }}
-          >
-            <Typography className={styles.buttonTextStyle}>
-              {buttonText}
-            </Typography>
+        <Grid item xs={12} md={4} container justifyContent="flex-end">
+          <CustomButton variant="contained" onClick={handleCreateNewForm}>
+            {buttonText}
           </CustomButton>
         </Grid>
       </Grid>
