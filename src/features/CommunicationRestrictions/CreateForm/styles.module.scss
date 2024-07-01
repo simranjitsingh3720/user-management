@@ -1,4 +1,4 @@
-.createNewUserContainer {
+.createContainer {
   background-color: #ffffff;
   box-shadow: 0px 6px 12px #185ec414;
   border-radius: 12px;
@@ -34,13 +34,6 @@
   padding: 16px 16px;
 }
 
-.customizeSelect {
-  background-color: #ffffff;
-  width: 500px;
-  font-size: 14px !important;
-  height: 40px;
-}
-
 .labelText {
   color: #566475;
   font-size: 14px;
@@ -66,26 +59,6 @@
   flex-wrap: wrap;
 }
 
-.textFieldStyle {
-  width: 300px;
-}
-
-.dateContainer {
-  display: flex;
-  align-items: center;
-}
-
-.dateStyle {
-  width: 250px;
-  background-color: #ffffff;
-}
-
 .formMainContainer {
   margin-bottom: 12px;
-}
-
-.styledError {
-  color: #d32f2f;
-  margin-left: 12px;
-  font-size: 12px;
 }

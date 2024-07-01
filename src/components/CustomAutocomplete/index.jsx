@@ -6,8 +6,8 @@ import TextField from '@mui/material/TextField';
 import styles from './styles.module.scss';
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
-import { ListItem } from '@mui/material';
 import { useEffect } from 'react';
+import { Role_Select } from './constants';
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -26,13 +26,13 @@ const AutocompleteField = ({
   resetClicked,
   roleChanged
 }) => {
-  const [selectedValues, setSelectedValues] = useState(name === "roleSelect" ? null:[]);
+  const [selectedValues, setSelectedValues] = useState(name === Role_Select ? null:[]);
 
   useEffect(() => {
     if( multiple){
       setSelectedValues([]);
     }
-    else if(name === "roleSelect"){
+    else if(name === Role_Select){
       setSelectedValues(null);
     }
     else{
@@ -41,7 +41,7 @@ const AutocompleteField = ({
   }, [resetClicked]);
 
   useEffect(()=> {
-    if(name !== "roleSelect"){
+    if(name !== Role_Select){
       setSelectedValues([])
     }
   },[roleChanged]);
@@ -58,7 +58,7 @@ const AutocompleteField = ({
     if (multiple) {
       return selectedValues.some(selectedOption => selectedOption?.value === option?.value);
     } else {
-      if(name === "roleSelect"){
+      if(name === Role_Select){
         return selectedValues?.roleName === option?.roleName;
       }
       else{
@@ -85,7 +85,7 @@ const AutocompleteField = ({
             disableCloseOnSelect={multiple}
             options={options.length > 0 ? options : []}
             getOptionLabel={(option) => option?.label}
-            {...(multiple || name === "roleSelect" ? { value: selectedValues } : {})} 
+            {...(multiple || name === Role_Select ? { value: selectedValues } : {})} 
             onChange={(event, newValue) => {
               if (multiple) {
                 handleAutocompleteChangeMultiple(event, newValue);

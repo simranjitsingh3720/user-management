@@ -1,6 +1,5 @@
 import { useState } from "react";
 import axiosInstance from "../../../../utils/axiosInstance"; // Import the instance
-
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -20,10 +19,8 @@ export default function usePostUser() {
         error?.response?.data?.error?.message ||
           "An error occurred. Please try again."
       );
-
-      // Handle errors
     } finally {
-      setLoading(false); // Set loading to false when request finishes (whether success or failure)
+      setLoading(false);
     }
   }
   return { postData, loading };

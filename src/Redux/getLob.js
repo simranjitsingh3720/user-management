@@ -18,7 +18,7 @@ export const getLobs = createAsyncThunk("lobUserCreation/getLobs", async (_, { g
         return formattedArray;
     }
     catch (error) {
-        console.log("error in fetching lob");
+        console.error(error);
         return rejectWithValue([]);
     }
 });

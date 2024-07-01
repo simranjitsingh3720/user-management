@@ -84,6 +84,7 @@ const CkycConfig = lazy(() => import("../../features/CkycConfig"));
 
 const CkycForm = lazy(() => import("../../features/CkycConfig/CykcForm"));
 const CommunicationRestrictions = lazy(() => import("../../features/CommunicationRestrictions"));
+const CommunicationRestrictionsForm = lazy(() => import("../../features/CommunicationRestrictions/CreateForm"));
 
 const AppRoutes = () => {
   return (
@@ -114,11 +115,19 @@ const AppRoutes = () => {
             </ResponsiveDrawer>
           }
         />
-          <Route
+        <Route
           path="/communication-restrictions"
           element={
             <ResponsiveDrawer showSidebarAndHeader={true}>
               <CommunicationRestrictions />
+            </ResponsiveDrawer>
+          }
+        />
+        <Route
+          path="/communication-restrictions/communication-restrictions-form"
+          element={
+            <ResponsiveDrawer showSidebarAndHeader={true}>
+              <CommunicationRestrictionsForm />
             </ResponsiveDrawer>
           }
         />

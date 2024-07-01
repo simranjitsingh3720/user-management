@@ -17,7 +17,7 @@ export const getRoles = createAsyncThunk("role/getRoles", async (_, { getState, 
         return formattedArray;
     }
     catch (error) {
-        console.log("error in fetching role");
+        console.error(error)
         return rejectWithValue([]);
     }
 });

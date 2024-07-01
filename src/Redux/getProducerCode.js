@@ -14,7 +14,7 @@ export const getProducerCodes = createAsyncThunk("producerCode/getProducerCodes"
         return formattedArray;
     }
     catch (error) {
-        console.log("error in fetching producer code");
+        console.error(error)
         return rejectWithValue([]);
     }
 });

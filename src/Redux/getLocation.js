@@ -18,7 +18,7 @@ export const getLocations = createAsyncThunk("location/getLocations", async (_, 
         return formattedArray;
     }
     catch (error) {
-        console.log("error in fetching location");
+        console.error(error)
         return rejectWithValue([]);
     }
 });

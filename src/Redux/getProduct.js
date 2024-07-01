@@ -13,7 +13,7 @@ export const getProducts = createAsyncThunk("productUserCreation/getProducts", a
         return formattedArray;
     }
     catch (error) {
-        console.log("error in fetching product");
+        console.error(error)
         return rejectWithValue([]);
     }
 });

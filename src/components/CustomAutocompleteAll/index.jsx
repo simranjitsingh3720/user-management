@@ -7,6 +7,7 @@ import styles from './styles.module.scss';
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import { useEffect } from 'react';
+import { All, Role_Select } from './constants';
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -32,20 +33,20 @@ const AutocompleteFieldAll = ({
   }, [resetClicked]);
 
   useEffect(()=> {
-    if(name !== "roleSelect"){
+    if(name !== Role_Select){
       setSelectedValues([])
     }
   },[roleChanged]);
 
   const handleAutocompleteChangeAll = (event, newValue) => {
-    if (newValue.some(option => option?.value === 'all')) {
+    if (newValue.some(option => option?.value === All)) {
       if (isCheckedAll()) {
         setSelectedValues([]);
       } else {
         setSelectedValues(apiDataMap[name] || []);
       }
     } else {
-      setSelectedValues(newValue.filter(option => option?.value !== 'all'));
+      setSelectedValues(newValue.filter(option => option?.value !== All));
     }
   };
 
@@ -78,7 +79,7 @@ const AutocompleteFieldAll = ({
             onChange={(event, newValue) => {
               handleAutocompleteChangeAll(event, newValue);
               field.onChange(newValue);
-              if (newValue?.length !== 0 && newValue[0]?.value === "all") {
+              if (newValue?.length !== 0 && newValue[0]?.value === All) {
                 field.onChange(apiDataMap[name])
               }
             }}
@@ -88,7 +89,7 @@ const AutocompleteFieldAll = ({
                   icon={icon}
                   checkedIcon={checkedIcon}
                   style={{ marginRight: 8 }}
-                  checked={option?.value === 'all' ? isCheckedAll() : isSelected(option)}
+                  checked={option?.value === All ? isCheckedAll() : isSelected(option)}
                 />
                 {option.label}
               </li>

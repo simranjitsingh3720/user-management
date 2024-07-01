@@ -5,10 +5,8 @@ export const getPaymentTypes = createAsyncThunk("paymentType/getPaymentTypes",  
     try {
         const { paymentType } = getState();
         if (paymentType?.paymentType?.length > 0) {
-            console.log(paymentType, "data is there paymenttype")
-            return paymentType.paymentType; // Return existing data
+            return paymentType.paymentType;
         }
-        console.log(paymentType, "data not there paymenttype")
     
         let url = `/api/payment-type?isAll=${true}`;
         const response = await axiosInstance.get(url);
@@ -20,7 +18,7 @@ export const getPaymentTypes = createAsyncThunk("paymentType/getPaymentTypes",  
         return formattedArray;
     }
     catch (error) {
-        console.log("error in fetching payment type");
+        console.error(error)
         return rejectWithValue([]);
     }
 });

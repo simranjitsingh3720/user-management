@@ -9,23 +9,10 @@ import UserTypeToggle from "../../../components/CustomRadioButtonGroup";
 import InputField from "../../../components/CustomTextfield";
 import SelectField from "../../../components/CustomSelect";
 import NotificationTable from "../Table";
+import { customerArr, userArray } from "../utils/constants";
 
 function CreateCommunicationRestrictionForm() {
   const navigate = useNavigate();
-
-  const userArray = [
-    {
-      id: "customer",
-      label: "Customer",
-      value: "customer",
-    },
-    {
-      id: "producer",
-      label: "Producer",
-      value: "producer",
-    },
-  ];
-
   const {
     handleSubmit,
     control,
@@ -38,91 +25,28 @@ function CreateCommunicationRestrictionForm() {
     },
   });
 
-  const customerArr = [
-    {
-      id: "customerName",
-      label: "Customer Name",
-      required: true,
-      validation: {
-        required: "This field is required",
-        minLength: {
-          value: 3,
-          message: "It should be at least 3 characters long",
-        },
-        maxLength: {
-          value: 30,
-          message: "It should not exceed 30 characters",
-        },
-        pattern: {
-          value: "^[A-Za-z]+$",
-          message: "It should contain only letters",
-        },
-      },
-      disabled: false,
-    },
-    {
-      id: "email",
-      label: "Email",
-      required: true,
-      validation: {
-        required: "This field is required",
-        pattern: {
-          value: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$",
-          message: "It should contain digits and letters only",
-        },
-      },
-      disabled: false,
-    },
-    {
-      id: "mobileNumber",
-      label: "Mobile Number",
-      type: "input",
-      required: true,
-      validation: {
-        required: "This field is required",
-        minLength: {
-          value: 10,
-          message: "It should be at least 10 digits long",
-        },
-        maxLength: {
-          value: 10,
-          message: "It should not exceed 10 digits",
-        },
-        pattern: {
-          value: "^[0-9]*$",
-          message: "It should contain only digits",
-        },
-      },
-    },
-  ];
-
   const user = watch("typeOfUser");
 
   const onSubmit = (data) => {
     console.log(data);
   };
 
-  const cancel = () => {
-    navigate("/communication-restrictions")
-  }
+  const back = () => {
+    navigate("/communication-restrictions");
+  };
 
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
       className={styles.formMainContainer}
     >
-      <div className={styles.createNewUserContainer}>
+      <div className={styles.createContainer}>
         <div
           className={`flex items-center justify-between ${styles.borderBottom}`}
         >
           <div className={`${styles.formHeaderStyle} flex flex-col`}>
             <div className={styles.subHeader}>
-              <IconButton
-                aria-label="back"
-                onClick={() => {
-                  navigate("/user-management");
-                }}
-              >
+              <IconButton aria-label="back" onClick={back}>
                 <LeftArrow />
               </IconButton>
               <span className={styles.headerTextStyle}>
@@ -135,7 +59,9 @@ function CreateCommunicationRestrictionForm() {
             </div>
           </div>
           <div className={styles.buttonContainer}>
-            <CustomButton variant="outlined" onClick={cancel}>Cancel</CustomButton>
+            <CustomButton variant="outlined" onClick={back}>
+              Cancel
+            </CustomButton>
           </div>
         </div>
         <div className={styles.formContainer}>
@@ -177,12 +103,17 @@ function CreateCommunicationRestrictionForm() {
             />
           )}
         </div>
-        <NotificationTable control={control} setValue={setValue}/>
-       <div className="mt-8 w-32">
-       <CustomButton className="w-full" type="submit" variant="contained" onClick={onSubmit}>
-          Submit
-        </CustomButton>
-       </div>
+        <NotificationTable control={control} setValue={setValue} />
+        <div className="mt-8 w-32">
+          <CustomButton
+            className="w-full"
+            type="submit"
+            variant="contained"
+            onClick={onSubmit}
+          >
+            Submit
+          </CustomButton>
+        </div>
       </div>
     </form>
   );
