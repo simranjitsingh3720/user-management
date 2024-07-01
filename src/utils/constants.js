@@ -8,6 +8,7 @@ export const COMMON_WORDS = {
   CREATED_AT: "createdAt",
   ENABLE: "Enable",
   DISABLE: "Disable",
+  LOGOUT: "Logout"
 };
 
 export const API_END_POINTS = {
