@@ -9,7 +9,7 @@ import {
   MenuItem,
   Menu,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useNavigate } from "react-router-dom";
 import { COMMON_WORDS, HEADER } from "../../utils/constants";
@@ -44,13 +44,12 @@ function stringAvatar(name) {
 
 function Header({ handleDrawerToggle, selectedNavbar, selectedParentIndex }) {
   const navigate = useNavigate();
+  const [anchorElUser, setAnchorElUser] = useState(null);
   const settings = ['Logout'];
 
   const handleLogout = () => {
     navigate("/sign-in");
   };
-
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
