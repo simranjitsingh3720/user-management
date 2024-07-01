@@ -119,12 +119,6 @@ const PartnerNeftForm = () => {
                         : "Create New Partner NEFT Flag"}
                     </Typography>
                   </div>
-                  <div>
-                    <span className="label">
-                      Please fill the details below and click Submit to{" "}
-                      {params.id ? "update" : "create"} a partner NEFT flag.
-                    </span>
-                  </div>
                 </Grid>
                 <Grid
                   item
