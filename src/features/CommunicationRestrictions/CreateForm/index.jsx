@@ -103,7 +103,7 @@ function CreateCommunicationRestrictionForm() {
             />
           )}
         </div>
-        <NotificationTable control={control} setValue={setValue} />
+        <NotificationTable control={control} setValue={setValue} watch={watch} />
         <div className="mt-8 w-32">
           <CustomButton
             className="w-full"

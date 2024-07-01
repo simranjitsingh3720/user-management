@@ -13,7 +13,7 @@ import DateField from "../../../components/CustomDateInput";
 import BasicTimePicker from "../../../components/CustomTimeField";
 import { products } from "./constants";
 
-const NotificationTable = ({ control, setValue }) => {
+const NotificationTable = ({ control, setValue, watch}) => {
   const stylesSX = {
     tableHeader: {
       borderBottom: "none",
@@ -117,6 +117,7 @@ const NotificationTable = ({ control, setValue }) => {
                   labelVisible={false}
                   label="end date"
                   required
+                  watch={watch}
                   //classes="w-full"
                   setValue={setValue}
                 />

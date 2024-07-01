@@ -49,9 +49,9 @@ function CreateUserCreationForm() {
       active: "yes",
       gcStatus: "no",
       producerStatus: "Active",
-      roleSelect: {},
       defaultHouseBank: "yes",
       paymentType: [],
+      roleSelect: ""
     },
   });
 
@@ -106,7 +106,7 @@ function CreateUserCreationForm() {
 
   useEffect(() => {
     if (jsonData) {
-      setValue('roleSelect', {})
+      setValue('roleSelect', "")
     }
   }, []);
 
@@ -200,10 +200,10 @@ function CreateUserCreationForm() {
             control={control}
             name="roleSelect"
             label="Role"
-            required={true}
+            required
             disabled={false}
             options={role || []}
-            validation={{ required: "Role is required" }}
+            validation={{required: "Role is required" }}
             errors={errors}
             multiple={false}
             resetClicked={resetClicked}
@@ -360,7 +360,7 @@ function CreateUserCreationForm() {
           </CustomButton>
         <div className="ml-2">
           <CustomButton
-            onClick={onSubmit}
+            type="submit"
           >
             Submit
           </CustomButton>
