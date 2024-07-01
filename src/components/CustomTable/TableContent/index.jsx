@@ -13,7 +13,21 @@ const TableContent = ({ columns, data, loading }) => {
     return (
       <TableBody>
         <TableRow>
-          <TableCell colSpan={columns.length + 1}>Loading</TableCell>
+          <TableCell colSpan={columns.length + 1} align="center">
+            Loading
+          </TableCell>
+        </TableRow>
+      </TableBody>
+    );
+  }
+
+  if (data.length === 0) {
+    return (
+      <TableBody>
+        <TableRow>
+          <TableCell colSpan={columns.length + 1} align="center">
+            No records found
+          </TableCell>
         </TableRow>
       </TableBody>
     );
