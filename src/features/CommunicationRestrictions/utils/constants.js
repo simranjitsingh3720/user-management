@@ -1,4 +1,4 @@
-import { emailRegex, mobileRegex, nameRegex } from "../../../utils/globalConstants";
+import { REGEX } from "../../../utils/globalConstants";
 
 export const userArray = [
     {
@@ -29,7 +29,7 @@ export const customerArr = [
           message: "It should not exceed 30 characters",
         },
         pattern: {
-          value: nameRegex,
+          value: REGEX.nameRegex,
           message: "It should contain only letters",
         },
       },
@@ -42,7 +42,7 @@ export const customerArr = [
       validation: {
         required: "This field is required",
         pattern: {
-          value: emailRegex,
+          value: REGEX.emailRegex,
           message: "Please enter a valid email address",
         },
       },
@@ -64,7 +64,7 @@ export const customerArr = [
           message: "It should not exceed 10 digits",
         },
         pattern: {
-          value: mobileRegex,
+          value: REGEX.mobileRegex,
           message: "It should contain only digits",
         },
       },
