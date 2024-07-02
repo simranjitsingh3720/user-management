@@ -50,7 +50,7 @@ function Form() {
   const onSubmit = () => {
     const formattedData = [];
 
-    // Iterate over selected modules
+   
     for (const moduleId in selectedSubmodules) {
       const subModules = selectedSubmodules[moduleId];
       const lastSubModule = subModules[subModules.length - 1]; 
