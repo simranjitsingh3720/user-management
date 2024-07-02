@@ -5,7 +5,7 @@ export const getLocations = createAsyncThunk("location/getLocations", async (_, 
     try {
         const { location } = getState();
         if (location?.location?.length > 0) {
-            return location.location; // Return existing data
+            return location.location; 
         }
 
         let url = `/api/location?isAll=${true}`;

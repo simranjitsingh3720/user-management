@@ -67,7 +67,7 @@ const PartnerNeftForm = () => {
         (item) => data.verificationMethod === item.value
       );
       setValue("verificationMethod", VERIFICATION_METHOD[index]);
-      // Fetch related products if lob is set
+      
       if (data.lob?.id) {
         dispatch(fetchAllProductData({ lobId: data.lob.id }));
         setValue("product", data.product);

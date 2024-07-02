@@ -7,7 +7,7 @@ import { drawerWidth } from "../../utils/globalConstants";
 import { useLocation } from "react-router-dom";
 import { SideNavData } from "../../utils/Navbar Data/navbar";
 
-const HEADER_HEIGHT = 64; // Adjust this based on the height of your header
+const HEADER_HEIGHT = 64;
 
 export const getLabelFromPath = (pathData) => {
   for (const item of SideNavData) {
@@ -74,7 +74,7 @@ function ResponsiveDrawer({ showSidebarAndHeader, children }) {
               flexDirection: "column",
               height: "100vh",
               overflow: "hidden",
-              paddingTop: `${HEADER_HEIGHT}px`, // Adjust this based on the height of your header
+              paddingTop: `${HEADER_HEIGHT}px`, 
             }}
           >
             <Header
