@@ -154,17 +154,6 @@ function SearchComponenet({
             </div>
           </div>
           <div>
-            {/* <TextField
-              id="search"
-              variant="outlined"
-              placeholder="Search by Name/Type..."
-              size="small"
-              className={styles.textFieldStyle}
-              onChange={(e) => {
-                setPageChange(1);
-                setQuery(e.target.value);
-              }}
-            /> */}
             <div className={styles.flexSearchContainer}>
               <Select
                 labelId="search-select"

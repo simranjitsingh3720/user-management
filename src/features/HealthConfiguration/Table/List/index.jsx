@@ -70,18 +70,6 @@ function List({
 
         <div className={styles.createdAt}> {item?.createdAt || "-"}</div>
         <div className={styles.updatedAt}> {item?.updatedAt || "-"}</div>
-        {/* <div className={styles.StatusCell}>
-          <div>
-            <Switch
-              checked={checked}
-              onChange={handleChange}
-              inputProps={{ "aria-label": "toggle button" }}
-            />
-          </div>
-          <div className={styles.styledActiveSelect}>
-            {item?.status ? "Active" : "Inactive"}
-          </div>
-        </div> */}
 
         <div className={styles.actionCell}>
           <Tooltip title="Edit Health Config">
@@ -96,55 +84,7 @@ function List({
             </IconButton>
           </Tooltip>
         </div>
-      </div>{" "}
-      {/* <Dialog
-        onClose={handleChangeStatusClose}
-        aria-labelledby="customized-dialog-title"
-        open={changeStatusOpen}
-      >
-        <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-          Change status
-        </DialogTitle>
-        <IconButton
-          aria-label="close"
-          onClick={handleChangeStatusClose}
-          sx={{
-            position: "absolute",
-            right: 8,
-            top: 8,
-            color: (theme) => theme.palette.grey[500],
-          }}
-        >
-          <CloseIcon />
-        </IconButton>
-        <DialogContent dividers>
-          <div className={styles.infoIconStyle}>
-            <InfoIcon fontSize="x-large" className={styles.iconStyle} />
-          </div>
-          <span className={styles.styledText}>
-            Are you sure you want to change the House Bank status?
-          </span>
-
-          <div className={styles.SubmitContainer}>
-            <Button
-              variant="outlined"
-              onClick={() => setChangeStatusOpen(false)}
-              size="small"
-            >
-              No
-            </Button>
-            <Button
-              variant="contained"
-              className={styles.styledButton}
-              size="small"
-              disabled={updateLoading}
-              onClick={() => handleClickYes()}
-            >
-              yes
-            </Button>
-          </div>
-        </DialogContent>
-      </Dialog> */}
+      </div>
     </div>
   );
 }
