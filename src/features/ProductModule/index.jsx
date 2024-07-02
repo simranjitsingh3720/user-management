@@ -11,10 +11,10 @@ import useGetProduct from "./hooks/useGetProduct";
 import { selectRowsData } from "../../utils/globalConstants";
 
 function getSelectedRowData(count) {
-  // Initialize the selected row data array
+  
   let selectedRowData = [];
 
-  // Iterate over selectRowsData and add elements <= count
+  
   for (let i = 0; i < selectRowsData.length; i++) {
     if (selectRowsData[i] <= count) {
       selectedRowData.push(selectRowsData[i]);

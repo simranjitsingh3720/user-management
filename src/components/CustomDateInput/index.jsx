@@ -61,14 +61,13 @@ const DateField = ({
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
                 value={field.value ? dayjs(field.value) : null}
-                // minDate={dayjs()}
                 className={`${styles.dateStyle} ${classes}`}
                 slotProps={{
                   textField: {
                     size: "small",
                     variant: labelVisible ? "outlined" : "standard",
                     InputProps: {
-                      disableUnderline: true, // Remove borderBottom
+                      disableUnderline: true,
                       style: !labelVisible ? { display: 'flex', flexDirection: 'row-reverse',gap:10, fontSize:13, marginLeft:'-22px', color: "#607083", } : {}, 
                     },
                   },

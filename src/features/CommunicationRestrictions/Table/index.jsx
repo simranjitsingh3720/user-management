@@ -117,7 +117,6 @@ const NotificationTable = ({ control, setValue }) => {
                   labelVisible={false}
                   label="end date"
                   required
-                  //classes="w-full"
                   setValue={setValue}
                 />
               </TableCell>

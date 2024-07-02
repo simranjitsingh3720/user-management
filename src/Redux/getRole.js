@@ -5,7 +5,7 @@ export const getRoles = createAsyncThunk("role/getRoles", async (_, { getState, 
     try {
         const { role } = getState();
         if (role?.role?.length > 0) {
-            return role.role; // Return existing data
+            return role.role; 
         }
 
         let url = `/api/role?isAll=${true}`;

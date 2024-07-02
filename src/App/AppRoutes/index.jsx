@@ -3,9 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import ResponsiveDrawer from "../../components/LayoutDesign";
 import PartnerNeftForm from "../../features/PartnerNeft/PartnerNeftForm";
 import FullPageLoader from "../../components/FullPageLoader";
-import UserCreation from "../../features/UserCreation";
 
-// Lazy load components
 const Dashboard = lazy(() => import("../../features/Dashboard"));
 const UserManagement = lazy(() => import("../../features/UserManagement"));
 const SignInPage = lazy(() => import("../../features/Signin/SigninPage"));
