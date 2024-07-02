@@ -2,25 +2,25 @@ import axiosInstance from "../../../utils/axiosInstance"; // Import the instance
 
 import { useEffect, useState } from "react";
 
-function useGetPrivilege(pageChange = 1, query, rowsPage) {
-  const [sort, setSort] = useState({
-    sortKey: "createdAt",
-    sortOrder: "asc",
-  });
+function useGetPrivilege(page, pageSize, query, order, orderBy) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const fetchData = async () => {
     try {
       setLoading(true);
-      let url = `/api/permission?pageNo=${pageChange - 1}&sortKey=${
-        sort.sortKey
-      }&sortOrder=${sort.sortOrder}&pageSize=${rowsPage}`;
+      let url = `/api/permission?pageNo=${page}&sortKey=${orderBy}&sortOrder=${order}&pageSize=${pageSize}`;
       if (query) {
         url += `&searchString=${query}`;
       }
       const response = await axiosInstance.get(url);
-      setData(response.data);
+      const transformedData =
+        response?.data?.data.map((item) => ({
+          ...item,
+          checked: item.status,
+        })) || [];
+      setData(transformedData);
+      // setData(response.data);
     } catch (error) {
       setData([]);
     } finally {
@@ -29,9 +29,9 @@ function useGetPrivilege(pageChange = 1, query, rowsPage) {
   };
   useEffect(() => {
     fetchData();
-  }, [pageChange, query, sort, rowsPage]);
+  }, [page, pageSize, query, order, orderBy]);
 
-  return { data, loading, fetchData, setLoading, sort, setSort };
+  return { data, loading, fetchData, setLoading };
 }
 
 export default useGetPrivilege;
