@@ -1,16 +1,69 @@
-import { AppBar, Avatar, IconButton, Toolbar, Typography, Box } from "@mui/material";
-import React from "react";
+import {
+  AppBar,
+  Avatar,
+  IconButton,
+  Toolbar,
+  Typography,
+  Box,
+  Tooltip,
+  MenuItem,
+  Menu,
+} from "@mui/material";
+import React, { useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
-import LogoutIcon from "../../assets/LogoutIcon";
 import { useNavigate } from "react-router-dom";
-import CustomButton from "../CustomButton";
-import { HEADER } from "../../utils/constants";
+import { COMMON_WORDS, HEADER } from "../../utils/constants";
+
+function stringToColor(string) {
+  let hash = 0;
+  let i;
+
+  /* eslint-disable no-bitwise */
+  for (i = 0; i < string.length; i += 1) {
+    hash = string.charCodeAt(i) + ((hash << 5) - hash);
+  }
+
+  let color = '#';
+
+  for (i = 0; i < 3; i += 1) {
+    const value = (hash >> (i * 8)) & 0xff;
+    color += `00${value.toString(16)}`.slice(-2);
+  }
+
+  return color;
+}
+
+function stringAvatar(name) {
+  return {
+    sx: {
+      bgcolor: stringToColor(name),
+    },
+    children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
+  };
+}
 
 function Header({ handleDrawerToggle, selectedNavbar, selectedParentIndex }) {
   const navigate = useNavigate();
+  const [anchorElUser, setAnchorElUser] = useState(null);
+  const settings = ['Logout'];
 
   const handleLogout = () => {
     navigate("/sign-in");
+  };
+
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
+
+  const handleMenuItemClick = (setting) => {
+    if (setting === COMMON_WORDS.LOGOUT) {
+      handleLogout();
+    }
+    handleCloseUserMenu();
   };
 
   return (
@@ -34,33 +87,47 @@ function Header({ handleDrawerToggle, selectedNavbar, selectedParentIndex }) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap fontWeight={HEADER.HEADING_FONT_WEIGHT}>
+          <Typography
+            variant="h6"
+            noWrap
+            fontWeight={HEADER.HEADING_FONT_WEIGHT}
+            textOverflow="ellipsis"
+            sx={{
+              maxWidth: { sm: '100%', xs: "200px" }
+            }}
+          >
             {selectedNavbar}
             {selectedParentIndex}
           </Typography>
         </Box>
-        <Box display="flex" alignItems="center" mr={3}>
-          <Box display="flex" alignItems="center">
-            <IconButton>
-              <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+        <Box sx={{ flexGrow: 0 }}>
+          <Tooltip title="Open Menu">
+            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+              <Avatar {...stringAvatar('KRUTIKA SAWANT')} />
             </IconButton>
-            <Box display="flex" flexDirection="column" ml={1}>
-              <Typography variant="body1">
-                KRUTIKA SAWANT
-              </Typography>
-              <Typography variant="body2">
-                Admin
-              </Typography>
-            </Box>
-          </Box>
-          <Box mx={2} />
-          <CustomButton
-            variant="text"
-            startIcon={<LogoutIcon />}
-            onClick={handleLogout}
+          </Tooltip>
+          <Menu
+            sx={{ mt: "45px" }}
+            id="menu-appbar"
+            anchorEl={anchorElUser}
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            keepMounted
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            open={Boolean(anchorElUser)}
+            onClose={handleCloseUserMenu}
           >
-            Logout
-          </CustomButton>
+            {settings.map((setting) => (
+              <MenuItem key={setting} onClick={() => handleMenuItemClick(setting)}>
+                <Typography textAlign="center">{setting}</Typography>
+              </MenuItem>
+            ))}
+          </Menu>
         </Box>
       </Toolbar>
     </AppBar>

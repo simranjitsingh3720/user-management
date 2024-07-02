@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import ResponsiveDrawer from "../../components/LayoutDesign";
 import PartnerNeftForm from "../../features/PartnerNeft/PartnerNeftForm";
 import FullPageLoader from "../../components/FullPageLoader";
+import UserCreation from "../../features/UserCreation";
 
 // Lazy load components
 const Dashboard = lazy(() => import("../../features/Dashboard"));
@@ -10,6 +11,9 @@ const UserManagement = lazy(() => import("../../features/UserManagement"));
 const SignInPage = lazy(() => import("../../features/Signin/SigninPage"));
 const CreateUserManagementForm = lazy(() =>
   import("../../features/UserManagement/Components/CreateForm")
+);
+const CreateUserCreationForm = lazy(() =>
+  import("../../features/UserCreation/Components/CreateForm")
 );
 const PermissionModule = lazy(() => import("../../features/PermissionModule"));
 const RoleModule = lazy(() => import("../../features/RoleModule"));
@@ -79,6 +83,8 @@ const PartnerNeft = lazy(() => import("../../features/PartnerNeft"));
 const CkycConfig = lazy(() => import("../../features/CkycConfig"));
 
 const CkycForm = lazy(() => import("../../features/CkycConfig/CykcForm"));
+const CommunicationRestrictions = lazy(() => import("../../features/CommunicationRestrictions"));
+const CommunicationRestrictionsForm = lazy(() => import("../../features/CommunicationRestrictions/CreateForm"));
 
 const AppRoutes = () => {
   return (
@@ -98,6 +104,30 @@ const AppRoutes = () => {
           element={
             <ResponsiveDrawer showSidebarAndHeader={true}>
               <UserManagement />
+            </ResponsiveDrawer>
+          }
+        />
+        <Route
+          path="/user-creation"
+          element={
+            <ResponsiveDrawer showSidebarAndHeader={true}>
+              <CreateUserCreationForm />
+            </ResponsiveDrawer>
+          }
+        />
+        <Route
+          path="/communication-restrictions"
+          element={
+            <ResponsiveDrawer showSidebarAndHeader={true}>
+              <CommunicationRestrictions />
+            </ResponsiveDrawer>
+          }
+        />
+        <Route
+          path="/communication-restrictions/communication-restrictions-form"
+          element={
+            <ResponsiveDrawer showSidebarAndHeader={true}>
+              <CommunicationRestrictionsForm />
             </ResponsiveDrawer>
           }
         />

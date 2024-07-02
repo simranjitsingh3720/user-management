@@ -5,7 +5,11 @@ module.exports = {
     "./public/index.html",
   ],
   theme: {
-    extend: {},
+    extend: {
+      width :{
+        49: '48%', 
+      }
+    },
   },
   plugins: [],
 }

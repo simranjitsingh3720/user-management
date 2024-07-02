@@ -1,0 +1,4080 @@
+{
+    "name": "User Creation Form",
+    "roles": {
+        "csm": [
+            {
+                "id": "employeeId",
+                "label": "Employee ID",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "pattern": {
+                        "value": "^[0-9]+$",
+                        "message": "It should contain only digits"
+                    }
+                }
+            },
+            {
+                "id": "producerCode",
+                "label": "Producer Code",
+                "type": "autocomplete",
+                "required": true,
+                "multiple": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "firstName",
+                "label": "First Name",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "minLength": {
+                        "value": 3,
+                        "message": "It should be at least 3 characters long"
+                    },
+                    "maxLength": {
+                        "value": 30,
+                        "message": "It should not exceed 30 characters"
+                    },
+                    "pattern": {
+                        "value": "^[A-Za-z]+$",
+                        "message": "It should contain only letters"
+                    }
+                }
+            },
+            {
+                "id": "lastName",
+                "label": "Last Name",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "minLength": {
+                        "value": 3,
+                        "message": "It should be at least 3 characters long"
+                    },
+                    "maxLength": {
+                        "value": 30,
+                        "message": "It should not exceed 30 characters"
+                    },
+                    "pattern": {
+                        "value": "^[A-Za-z]+$",
+                        "message": "It should contain only letters"
+                    }
+                }
+            },
+            {
+                "id": "mobileNumber",
+                "label": "Mobile Number",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "minLength": {
+                        "value": 10,
+                        "message": "It should be at least 10 digits long"
+                    },
+                    "maxLength": {
+                        "value": 10,
+                        "message": "It should not exceed 10 digits"
+                    },
+                    "pattern": {
+                        "value": "^[0-9]*$",
+                        "message": "It should contain only digits"
+                    }
+                }
+            },
+            {
+                "id": "email",
+                "label": "Email",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "location",
+                "label": "Location",
+                "type": "autocomplete",
+                "required": true,
+                "multiple": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "lob",
+                "label": "LOB",
+                "type": "autocomplete",
+                "required": true,
+                "multiple": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "product",
+                "label": "Product",
+                "type": "autocomplete",
+                "required": true,
+                "multiple": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "ntloginId",
+                "label": "NT ID",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9]+$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "vertical",
+                "label": "Vertical",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9]+$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "subVertical",
+                "label": "Sub Vertical",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9]+$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "solId",
+                "label": "Sol ID",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9]+$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "startDate",
+                "label": "Start Date",
+                "type": "date",
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "endDate",
+                "label": "End Date",
+                "type": "date",
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "active",
+                "label": "Active",
+                "type": "dropdown",
+                "menuItem": [
+                    {
+                        "value": "yes",
+                        "label": "Yes"
+                    },
+                    {
+                        "value": "no",
+                        "label": "No"
+                    }
+                ],
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            }
+        ],
+        "offlineuser": [
+            {
+                "id": "employeeId",
+                "label": "Employee ID",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "pattern": {
+                        "value": "^[0-9]+$",
+                        "message": "It should contain only digits"
+                    }
+                }
+            },
+            {
+                "id": "producerCode",
+                "label": "Producer Code",
+                "type": "autocomplete",
+                "required": true,
+                "multiple": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "firstName",
+                "label": "First Name",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "minLength": {
+                        "value": 3,
+                        "message": "It should be at least 3 characters long"
+                    },
+                    "maxLength": {
+                        "value": 30,
+                        "message": "It should not exceed 30 characters"
+                    },
+                    "pattern": {
+                        "value": "^[A-Za-z]+$",
+                        "message": "It should contain only letters"
+                    }
+                }
+            },
+            {
+                "id": "lastName",
+                "label": "Last Name",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "minLength": {
+                        "value": 3,
+                        "message": "It should be at least 3 characters long"
+                    },
+                    "maxLength": {
+                        "value": 30,
+                        "message": "It should not exceed 30 characters"
+                    },
+                    "pattern": {
+                        "value": "^[A-Za-z]+$",
+                        "message": "It should contain only letters"
+                    }
+                }
+            },
+            {
+                "id": "mobileNumber",
+                "label": "Mobile Number",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "minLength": {
+                        "value": 10,
+                        "message": "It should be at least 10 digits long"
+                    },
+                    "maxLength": {
+                        "value": 10,
+                        "message": "It should not exceed 10 digits"
+                    },
+                    "pattern": {
+                        "value": "^[0-9]*$",
+                        "message": "It should contain only digits"
+                    }
+                }
+            },
+            {
+                "id": "email",
+                "label": "Email",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "location",
+                "label": "Location",
+                "type": "autocomplete",
+                "required": true,
+                "multiple": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "lob",
+                "label": "LOB",
+                "type": "autocomplete",
+                "required": true,
+                "multiple": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "product",
+                "label": "Product",
+                "type": "autocomplete",
+                "required": true,
+                "multiple": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "ntloginId",
+                "label": "NT ID",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9]+$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "vertical",
+                "label": "Vertical",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9]+$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "subVertical",
+                "label": "Sub Vertical",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9]+$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "solId",
+                "label": "Sol ID",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9]+$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "startDate",
+                "label": "Start Date",
+                "type": "date",
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "endDate",
+                "label": "End Date",
+                "type": "date",
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "active",
+                "label": "Active",
+                "type": "dropdown",
+                "menuItem": [
+                    {
+                        "value": "yes",
+                        "label": "Yes"
+                    },
+                    {
+                        "value": "no",
+                        "label": "No"
+                    }
+                ],
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            }
+        ],
+        "commercialuw": [
+            {
+                "id": "employeeId",
+                "label": "Employee ID",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "pattern": {
+                        "value": "^[0-9]+$",
+                        "message": "It should contain only digits"
+                    }
+                }
+            },
+            {
+                "id": "producerCode",
+                "label": "Producer Code",
+                "type": "autocomplete",
+                "required": true,
+                "multiple": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "firstName",
+                "label": "First Name",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "minLength": {
+                        "value": 3,
+                        "message": "It should be at least 3 characters long"
+                    },
+                    "maxLength": {
+                        "value": 30,
+                        "message": "It should not exceed 30 characters"
+                    },
+                    "pattern": {
+                        "value": "^[A-Za-z]+$",
+                        "message": "It should contain only letters"
+                    }
+                }
+            },
+            {
+                "id": "lastName",
+                "label": "Last Name",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "minLength": {
+                        "value": 3,
+                        "message": "It should be at least 3 characters long"
+                    },
+                    "maxLength": {
+                        "value": 30,
+                        "message": "It should not exceed 30 characters"
+                    },
+                    "pattern": {
+                        "value": "^[A-Za-z]+$",
+                        "message": "It should contain only letters"
+                    }
+                }
+            },
+            {
+                "id": "mobileNumber",
+                "label": "Mobile Number",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "minLength": {
+                        "value": 10,
+                        "message": "It should be at least 10 digits long"
+                    },
+                    "maxLength": {
+                        "value": 10,
+                        "message": "It should not exceed 10 digits"
+                    },
+                    "pattern": {
+                        "value": "^[0-9]*$",
+                        "message": "It should contain only digits"
+                    }
+                }
+            },
+            {
+                "id": "email",
+                "label": "Email",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "location",
+                "label": "Location",
+                "type": "autocomplete",
+                "required": true,
+                "multiple": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "lob",
+                "label": "LOB",
+                "type": "autocomplete",
+                "required": true,
+                "multiple": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "product",
+                "label": "Product",
+                "type": "autocomplete",
+                "required": true,
+                "multiple": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "ntloginId",
+                "label": "NT ID",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9]+$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "vertical",
+                "label": "Vertical",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9]+$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "subVertical",
+                "label": "Sub Vertical",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9]+$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "solId",
+                "label": "Sol ID",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9]+$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "startDate",
+                "label": "Start Date",
+                "type": "date",
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "endDate",
+                "label": "End Date",
+                "type": "date",
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "active",
+                "label": "Active",
+                "type": "dropdown",
+                "menuItem": [
+                    {
+                        "value": "yes",
+                        "label": "Yes"
+                    },
+                    {
+                        "value": "no",
+                        "label": "No"
+                    }
+                ],
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            }
+        ],
+        "producer": [
+            {
+                "id": "parentCode",
+                "label": "Parent Code",
+                "type": "autocomplete",
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "firstName",
+                "label": "First Name",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "minLength": {
+                        "value": 3,
+                        "message": "It should be at least 3 characters long"
+                    },
+                    "maxLength": {
+                        "value": 30,
+                        "message": "It should not exceed 30 characters"
+                    },
+                    "pattern": {
+                        "value": "^[A-Za-z]+$",
+                        "message": "It should contain only letters"
+                    }
+                }
+            },
+            {
+                "id": "lastName",
+                "label": "Last Name",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "minLength": {
+                        "value": 3,
+                        "message": "It should be at least 3 characters long"
+                    },
+                    "maxLength": {
+                        "value": 30,
+                        "message": "It should not exceed 30 characters"
+                    },
+                    "pattern": {
+                        "value": "^[A-Za-z]+$",
+                        "message": "It should contain only letters"
+                    }
+                }
+            },
+            {
+                "id": "mobileNumber",
+                "label": "Mobile Number",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "minLength": {
+                        "value": 10,
+                        "message": "It should be at least 10 digits long"
+                    },
+                    "maxLength": {
+                        "value": 10,
+                        "message": "It should not exceed 10 digits"
+                    },
+                    "pattern": {
+                        "value": "^[0-9]*$",
+                        "message": "It should contain only digits"
+                    }
+                }
+            },
+            {
+                "id": "email",
+                "label": "Email",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "gcStatus",
+                "label": "GC Status",
+                "type": "dropdown",
+                "required": true,
+                "disabled": true,
+                "menuItem": [
+                    {
+                        "value": "yes",
+                        "label": "Yes"
+                    },
+                    {
+                        "value": "no",
+                        "label": "No"
+                    }
+                ],
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "producerCode",
+                "label": "Producer Code",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "pattern": {
+                        "value": "^[0-9]+$",
+                        "message": "It should contain only digits"
+                    }
+                }
+            },
+            {
+                "id": "typeOfProducer",
+                "label": "Type Of Producer",
+                "type": "dropdown",
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "lob",
+                "label": "LOB",
+                "type": "autocomplete",
+                "required": true,
+                "disabled": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "product",
+                "label": "Product",
+                "type": "autocomplete",
+                "required": true,
+                "disabled": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "channelType",
+                "label": "Channel Type",
+                "type": "dropdown",
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "vertical",
+                "label": "Vertical",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9]+$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "subVertical",
+                "label": "Sub Vertical",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9]+$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "bankingLimit",
+                "label": "Banking Limit",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "pattern": {
+                        "value": "^[0-9]*$",
+                        "message": "Please enter a valid numeric value"
+                    }
+                }
+            },
+            {
+                "id": "sendEmail",
+                "label": "Send Email",
+                "type": "dropdown",
+                "required": false,
+                "menuItem": [
+                    {
+                        "value": "yes",
+                        "label": "Yes"
+                    },
+                    {
+                        "value": "no",
+                        "label": "No"
+                    }
+                ],
+                "validation": {}
+            },
+            {
+                "id": "domain",
+                "label": "Domain",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "pattern": {
+                        "value": "^[A-Za-z]+$",
+                        "message": "It should contain only letters"
+                    }
+                }
+            },
+            {
+                "id": "startDate",
+                "label": "Start Date",
+                "type": "date",
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "endDate",
+                "label": "End Date",
+                "type": "date",
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "active",
+                "label": "Active",
+                "type": "dropdown",
+                "required": true,
+                "menuItem": [
+                    {
+                        "value": "yes",
+                        "label": "Yes"
+                    },
+                    {
+                        "value": "no",
+                        "label": "No"
+                    }
+                ],
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "cKyc",
+                "label": "cKYC",
+                "type": "dropdown",
+                "menuItem": [
+                    {
+                        "value": "yes",
+                        "label": "Yes"
+                    },
+                    {
+                        "value": "no",
+                        "label": "No"
+                    }
+                ],
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "paymentType",
+                "label": "Payment Type",
+                "type": "autocomplete",
+                "required": true,
+                "all": true,
+                "validation": {
+                    "required": "This field is required"
+                },
+                "subFields": {
+                    "cheque": [
+                        {
+                            "id": "chequeOCRScanning",
+                            "label": "OCR Cheque Scanning Mandatory",
+                            "type": "dropdown",
+                            "required": true,
+                            "menuItem": [
+                                {
+                                    "value": "yes",
+                                    "label": "Yes"
+                                },
+                                {
+                                    "value": "no",
+                                    "label": "No"
+                                }
+                            ],
+                            "validation": {
+                                "required": "This field is required"
+                            }
+                        }
+                    ],
+                    "neft": [
+                        {
+                            "id": "neftDefaultBank",
+                            "label": "Default House Bank ",
+                            "type": "dropdown",
+                            "required": true,
+                            "disabled" : false,
+                            "menuItem": [
+                                {
+                                    "value": "yes",
+                                    "label": "Yes"
+                                },
+                                {
+                                    "value": "no",
+                                    "label": "No"
+                                }
+                            ],
+                            "validation": {
+                                "required": "This field is required"
+                            }
+                        }
+                    ],
+                    "accountNumber": [
+                        {
+                            "id": "accountNumber",
+                            "label": "Account Number",
+                            "type": "input",
+                            "required": true,
+                            "disabled" : false,
+                            "validation": {
+                                "required": "This field is required",
+                                "minLength": {
+                                    "value": 8,
+                                    "message": "It should be at least 8 characters long"
+                                },
+                                "maxLength": {
+                                    "value": 17,
+                                    "message": "It should not exceed 17 characters"
+                                },
+                                "pattern": {
+                                    "value": "^[0-9]*$",
+                                    "message": "It should contain only digits"
+                                }
+                            }
+                        }
+                    ]
+                }
+            }
+        ],
+        "subproducer": [
+            {
+                "id": "parentCode",
+                "label": "Parent Code",
+                "type": "autocomplete",
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "firstName",
+                "label": "First Name",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "minLength": {
+                        "value": 3,
+                        "message": "It should be at least 3 characters long"
+                    },
+                    "maxLength": {
+                        "value": 30,
+                        "message": "It should not exceed 30 characters"
+                    },
+                    "pattern": {
+                        "value": "^[A-Za-z]+$",
+                        "message": "It should contain only letters"
+                    }
+                }
+            },
+            {
+                "id": "lastName",
+                "label": "Last Name",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "minLength": {
+                        "value": 3,
+                        "message": "It should be at least 3 characters long"
+                    },
+                    "maxLength": {
+                        "value": 30,
+                        "message": "It should not exceed 30 characters"
+                    },
+                    "pattern": {
+                        "value": "^[A-Za-z]+$",
+                        "message": "It should contain only letters"
+                    }
+                }
+            },
+            {
+                "id": "mobileNumber",
+                "label": "Mobile Number",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "minLength": {
+                        "value": 10,
+                        "message": "It should be at least 10 digits long"
+                    },
+                    "maxLength": {
+                        "value": 10,
+                        "message": "It should not exceed 10 digits"
+                    },
+                    "pattern": {
+                        "value": "^[0-9]*$",
+                        "message": "It should contain only digits"
+                    }
+                }
+            },
+            {
+                "id": "email",
+                "label": "Email",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "gcStatus",
+                "label": "GC Status",
+                "type": "dropdown",
+                "required": true,
+                "disabled": true,
+                "menuItem": [
+                    {
+                        "value": "yes",
+                        "label": "Yes"
+                    },
+                    {
+                        "value": "no",
+                        "label": "No"
+                    }
+                ],
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "producerCode",
+                "label": "Producer Code",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "pattern": {
+                        "value": "^[0-9]+$",
+                        "message": "It should contain only digits"
+                    }
+                }
+            },
+            {
+                "id": "typeOfProducer",
+                "label": "Type Of Producer",
+                "type": "dropdown",
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "lob",
+                "label": "LOB",
+                "type": "autocomplete",
+                "required": true,
+                "disabled": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "product",
+                "label": "Product",
+                "type": "autocomplete",
+                "required": true,
+                "disabled": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "channelType",
+                "label": "Channel Type",
+                "type": "dropdown",
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "vertical",
+                "label": "Vertical",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9]+$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "subVertical",
+                "label": "Sub Vertical",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9]+$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "bankingLimit",
+                "label": "Banking Limit",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "pattern": {
+                        "value": "^[0-9]*$",
+                        "message": "Please enter a valid numeric value"
+                    }
+                }
+            },
+            {
+                "id": "sendEmail",
+                "label": "Send Email",
+                "type": "dropdown",
+                "required": false,
+                "menuItem": [
+                    {
+                        "value": "yes",
+                        "label": "Yes"
+                    },
+                    {
+                        "value": "no",
+                        "label": "No"
+                    }
+                ],
+                "validation": {}
+            },
+            {
+                "id": "domain",
+                "label": "Domain",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "pattern": {
+                        "value": "^[A-Za-z]+$",
+                        "message": "It should contain only letters"
+                    }
+                }
+            },
+            {
+                "id": "startDate",
+                "label": "Start Date",
+                "type": "date",
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "endDate",
+                "label": "End Date",
+                "type": "date",
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "active",
+                "label": "Active",
+                "type": "dropdown",
+                "required": true,
+                "menuItem": [
+                    {
+                        "value": "yes",
+                        "label": "Yes"
+                    },
+                    {
+                        "value": "no",
+                        "label": "No"
+                    }
+                ],
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "paymentType",
+                "label": "Payment Type",
+                "type": "autocomplete",
+                "required": true,
+                "all": true,
+                "validation": {
+                    "required": "This field is required"
+                },
+                "subFields": {
+                    "cheque": [
+                        {
+                            "id": "chequeOCRScanning",
+                            "label": "OCR Cheque Scanning Mandatory",
+                            "type": "dropdown",
+                            "required": true,
+                            "menuItem": [
+                                {
+                                    "value": "yes",
+                                    "label": "Yes"
+                                },
+                                {
+                                    "value": "no",
+                                    "label": "No"
+                                }
+                            ],
+                            "validation": {
+                                "required": "This field is required"
+                            }
+                        }
+                    ],
+                    "neft": [
+                        {
+                            "id": "neftDefaultBank",
+                            "label": "Default House Bank ",
+                            "type": "dropdown",
+                            "required": true,
+                            "menuItem": [
+                                {
+                                    "value": "yes",
+                                    "label": "Yes"
+                                },
+                                {
+                                    "value": "no",
+                                    "label": "No"
+                                }
+                            ],
+                            "validation": {
+                                "required": "This field is required"
+                            }
+                        }
+                    ],
+                    "accountNumber": [
+                        {
+                            "id": "accountNumber",
+                            "label": "Account Number",
+                            "type": "input",
+                            "required": true,
+                            "validation": {
+                                "required": "This field is required",
+                                "minLength": {
+                                    "value": 8,
+                                    "message": "It should be at least 8 characters long"
+                                },
+                                "maxLength": {
+                                    "value": 17,
+                                    "message": "It should not exceed 17 characters"
+                                },
+                                "pattern": {
+                                    "value": "^[0-9]*$",
+                                    "message": "It should contain only digits"
+                                }
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "cKyc",
+                "label": "cKYC",
+                "type": "dropdown",
+                "menuItem": [
+                    {
+                        "value": "yes",
+                        "label": "Yes"
+                    },
+                    {
+                        "value": "no",
+                        "label": "No"
+                    }
+                ],
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            }
+        ],
+        "dealer": [
+            {
+                "id": "parentCode",
+                "label": "Parent Code",
+                "type": "autocomplete",
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "firstName",
+                "label": "First Name",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "minLength": {
+                        "value": 3,
+                        "message": "It should be at least 3 characters long"
+                    },
+                    "maxLength": {
+                        "value": 30,
+                        "message": "It should not exceed 30 characters"
+                    },
+                    "pattern": {
+                        "value": "^[A-Za-z]+$",
+                        "message": "It should contain only letters"
+                    }
+                }
+            },
+            {
+                "id": "lastName",
+                "label": "Last Name",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "minLength": {
+                        "value": 3,
+                        "message": "It should be at least 3 characters long"
+                    },
+                    "maxLength": {
+                        "value": 30,
+                        "message": "It should not exceed 30 characters"
+                    },
+                    "pattern": {
+                        "value": "^[A-Za-z]+$",
+                        "message": "It should contain only letters"
+                    }
+                }
+            },
+            {
+                "id": "mobileNumber",
+                "label": "Mobile Number",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "minLength": {
+                        "value": 10,
+                        "message": "It should be at least 10 digits long"
+                    },
+                    "maxLength": {
+                        "value": 10,
+                        "message": "It should not exceed 10 digits"
+                    },
+                    "pattern": {
+                        "value": "^[0-9]*$",
+                        "message": "It should contain only digits"
+                    }
+                }
+            },
+            {
+                "id": "email",
+                "label": "Email",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "gcStatus",
+                "label": "GC Status",
+                "type": "dropdown",
+                "required": true,
+                "disabled": true,
+                "menuItem": [
+                    {
+                        "value": "yes",
+                        "label": "Yes"
+                    },
+                    {
+                        "value": "no",
+                        "label": "No"
+                    }
+                ],
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "producerCode",
+                "label": "Producer Code",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "pattern": {
+                        "value": "^[0-9]+$",
+                        "message": "It should contain only digits"
+                    }
+                }
+            },
+            {
+                "id": "typeOfProducer",
+                "label": "Type Of Producer",
+                "type": "dropdown",
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "lob",
+                "label": "LOB",
+                "type": "autocomplete",
+                "required": true,
+                "disabled": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "product",
+                "label": "Product",
+                "type": "autocomplete",
+                "required": true,
+                "disabled": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "channelType",
+                "label": "Channel Type",
+                "type": "dropdown",
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "vertical",
+                "label": "Vertical",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9]+$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "subVertical",
+                "label": "Sub Vertical",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9]+$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "bankingLimit",
+                "label": "Banking Limit",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "pattern": {
+                        "value": "^[0-9]*$",
+                        "message": "Please enter a valid numeric value"
+                    }
+                }
+            },
+            {
+                "id": "sendEmail",
+                "label": "Send Email",
+                "type": "dropdown",
+                "required": false,
+                "menuItem": [
+                    {
+                        "value": "yes",
+                        "label": "Yes"
+                    },
+                    {
+                        "value": "no",
+                        "label": "No"
+                    }
+                ],
+                "validation": {}
+            },
+            {
+                "id": "domain",
+                "label": "Domain",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "pattern": {
+                        "value": "^[A-Za-z]+$",
+                        "message": "It should contain only letters"
+                    }
+                }
+            },
+            {
+                "id": "startDate",
+                "label": "Start Date",
+                "type": "date",
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "endDate",
+                "label": "End Date",
+                "type": "date",
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "active",
+                "label": "Active",
+                "type": "dropdown",
+                "required": true,
+                "menuItem": [
+                    {
+                        "value": "yes",
+                        "label": "Yes"
+                    },
+                    {
+                        "value": "no",
+                        "label": "No"
+                    }
+                ],
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "paymentType",
+                "label": "Payment Type",
+                "type": "autocomplete",
+                "required": true,
+                "all": true,
+                "validation": {
+                    "required": "This field is required"
+                },
+                "subFields": {
+                    "cheque": [
+                        {
+                            "id": "chequeOCRScanning",
+                            "label": "OCR Cheque Scanning Mandatory",
+                            "type": "dropdown",
+                            "required": true,
+                            "menuItem": [
+                                {
+                                    "value": "yes",
+                                    "label": "Yes"
+                                },
+                                {
+                                    "value": "no",
+                                    "label": "No"
+                                }
+                            ],
+                            "validation": {
+                                "required": "This field is required"
+                            }
+                        }
+                    ],
+                    "neft": [
+                        {
+                            "id": "neftDefaultBank",
+                            "label": "Default House Bank ",
+                            "type": "dropdown",
+                            "required": true,
+                            "menuItem": [
+                                {
+                                    "value": "yes",
+                                    "label": "Yes"
+                                },
+                                {
+                                    "value": "no",
+                                    "label": "No"
+                                }
+                            ],
+                            "validation": {
+                                "required": "This field is required"
+                            }
+                        }
+                    ],
+                    "accountNumber": [
+                        {
+                            "id": "accountNumber",
+                            "label": "Account Number",
+                            "type": "input",
+                            "required": true,
+                            "validation": {
+                                "required": "This field is required",
+                                "minLength": {
+                                    "value": 8,
+                                    "message": "It should be at least 8 characters long"
+                                },
+                                "maxLength": {
+                                    "value": 17,
+                                    "message": "It should not exceed 17 characters"
+                                },
+                                "pattern": {
+                                    "value": "^[0-9]*$",
+                                    "message": "It should contain only digits"
+                                }
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "cKyc",
+                "label": "cKYC",
+                "type": "dropdown",
+                "menuItem": [
+                    {
+                        "value": "yes",
+                        "label": "Yes"
+                    },
+                    {
+                        "value": "no",
+                        "label": "No"
+                    }
+                ],
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            }
+        ],
+        "partner": [
+            {
+                "id": "customerFirstName",
+                "label": "Customer First Name",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "minLength": {
+                        "value": 2,
+                        "message": "It should be at least 2 characters long"
+                    },
+                    "maxLength": {
+                        "value": 10,
+                        "message": "It should not exceed 10 characters"
+                    },
+                    "pattern": {
+                        "value": "^[A-Za-z]+$",
+                        "message": "It should contain only letters"
+                    }
+                }
+            },
+            {
+                "id": "customerLastName",
+                "label": "Customer Last Name",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "minLength": {
+                        "value": 2,
+                        "message": "It should be at least 2 characters long"
+                    },
+                    "maxLength": {
+                        "value": 10,
+                        "message": "It should not exceed 10 characters"
+                    },
+                    "pattern": {
+                        "value": "^[A-Za-z]+$",
+                        "message": "It should contain only letters"
+                    }
+                }
+            },
+            {
+                "id": "mobileNumber",
+                "label": "Mobile Number",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "minLength": {
+                        "value": 10,
+                        "message": "It should be at least 10 digits long"
+                    },
+                    "maxLength": {
+                        "value": 10,
+                        "message": "It should not exceed 10 digits"
+                    },
+                    "pattern": {
+                        "value": "^[0-9]*$",
+                        "message": "It should contain only digits"
+                    }
+                }
+            },
+            {
+                "id": "email",
+                "label": "Email",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "partnerName",
+                "label": "Partner Name",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "minLength": {
+                        "value": 2,
+                        "message": "It should be at least 2 characters long"
+                    },
+                    "maxLength": {
+                        "value": 10,
+                        "message": "It should not exceed 10 characters"
+                    },
+                    "pattern": {
+                        "value": "^[A-Za-z]+$",
+                        "message": "It should contain only letters"
+                    }
+                }
+            },
+            {
+                "id": "lob",
+                "label": "LOB",
+                "type": "autocomplete",
+                "required": true,
+                "apiData": "lobData",
+                "all": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "product",
+                "label": "Product",
+                "type": "autocomplete",
+                "all": true,
+                "apiData": "product",
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+           
+            {
+                "id": "sendEmail",
+                "label": "Send Email",
+                "type": "dropdown",
+                "menuItem": [
+                    {
+                        "value": "yes",
+                        "label": "Yes"
+                    },
+                    {
+                        "value": "no",
+                        "label": "No"
+                    }
+                ],
+                "required": false,
+                "validation": {}
+            },
+            {
+                "id": "domain",
+                "label": "Domain",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "pattern": {
+                        "value": "^[A-Za-z]+$",
+                        "message": "It should contain only letters"
+                    }
+                }
+            },
+            {
+                "id": "startDate",
+                "label": "Start Date",
+                "type": "date",
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "endDate",
+                "label": "End Date",
+                "type": "date",
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "active",
+                "label": "Active",
+                "type": "dropdown",
+                "required": true,
+                "menuItem": [
+                    {
+                        "value": "yes",
+                        "label": "Yes"
+                    },
+                    {
+                        "value": "no",
+                        "label": "No"
+                    }
+                ],
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "paymentType",
+                "label": "Payment Type",
+                "type": "autocomplete",
+                "all": true,
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                },
+                "subFields": {
+                    "cheque": [
+                        {
+                            "id": "chequeOCRScanning",
+                            "label": "OCR Cheque Scanning Mandatory",
+                            "type": "dropdown",
+                            "required": true,
+                            "menuItem": [
+                                {
+                                    "value": "yes",
+                                    "label": "Yes"
+                                },
+                                {
+                                    "value": "no",
+                                    "label": "No"
+                                }
+                            ],
+                            "validation": {
+                                "required": "This field is required"
+                            }
+                        }
+                    ]
+                }
+            }
+        ],
+        "producermarine": [
+            {
+                "id": "firstName",
+                "label": "First Name",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "minLength": {
+                        "value": 3,
+                        "message": "It should be at least 3 characters long"
+                    },
+                    "maxLength": {
+                        "value": 30,
+                        "message": "It should not exceed 30 characters"
+                    },
+                    "pattern": {
+                        "value": "^[A-Za-z]+$",
+                        "message": "It should contain only letters"
+                    }
+                }
+            },
+            {
+                "id": "lastName",
+                "label": "Last Name",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "minLength": {
+                        "value": 3,
+                        "message": "It should be at least 3 characters long"
+                    },
+                    "maxLength": {
+                        "value": 30,
+                        "message": "It should not exceed 30 characters"
+                    },
+                    "pattern": {
+                        "value": "^[A-Za-z]+$",
+                        "message": "It should contain only letters"
+                    }
+                }
+            },
+            {
+                "id": "mobileNumber",
+                "label": "Mobile Number",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "minLength": {
+                        "value": 10,
+                        "message": "It should be at least 10 digits long"
+                    },
+                    "maxLength": {
+                        "value": 10,
+                        "message": "It should not exceed 10 digits"
+                    },
+                    "pattern": {
+                        "value": "^[0-9]*$",
+                        "message": "It should contain only digits"
+                    }
+                }
+            },
+            {
+                "id": "email",
+                "label": "Email",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "producerCode",
+                "label": "Producer Code",
+                "type": "dropdown",
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "location",
+                "label": "Location",
+                "type": "autocomplete",
+                "required": true,
+                "all": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "brokerType",
+                "label": "Broker Type",
+                "type": "dropdown",
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "brokerUserType",
+                "label": "Broker User Type",
+                "type": "dropdown",
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "branchCode",
+                "label": "Branch Code",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9]+$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "product",
+                "label": "Product",
+                "type": "autocomplete",
+                "required": true,
+                "all": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "active",
+                "label": "Active",
+                "type": "dropdown",
+                "required": true,
+                "menuItem": [
+                    {
+                        "value": "yes",
+                        "label": "Yes"
+                    },
+                    {
+                        "value": "no",
+                        "label": "No"
+                    }
+                ],
+                "validation": {
+                    "required": "This field is required"
+                }
+            }
+        ],
+        "distops": [
+            {
+                "id": "employeeId",
+                "label": "Employee ID",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "pattern": {
+                        "value": "^[0-9]+$",
+                        "message": "Please enter a valid number"
+                    }
+                }
+            },
+            {
+                "id": "firstName",
+                "label": "First Name",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "minLength": {
+                        "value": 3,
+                        "message": "It should be at least 3 characters long"
+                    },
+                    "maxLength": {
+                        "value": 30,
+                        "message": "It should not exceed 30 characters"
+                    },
+                    "pattern": {
+                        "value": "^[A-Za-z]+$",
+                        "message": "It should contain only letters"
+                    }
+                }
+            },
+            {
+                "id": "lastName",
+                "label": "Last Name",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "minLength": {
+                        "value": 3,
+                        "message": "It should be at least 3 characters long"
+                    },
+                    "maxLength": {
+                        "value": 30,
+                        "message": "It should not exceed 30 characters"
+                    },
+                    "pattern": {
+                        "value": "^[A-Za-z]+$",
+                        "message": "It should contain only letters"
+                    }
+                }
+            },
+            {
+                "id": "mobileNumber",
+                "label": "Mobile Number",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "minLength": {
+                        "value": 10,
+                        "message": "It should be at least 10 digits long"
+                    },
+                    "maxLength": {
+                        "value": 10,
+                        "message": "It should not exceed 10 digits"
+                    },
+                    "pattern": {
+                        "value": "^[0-9]*$",
+                        "message": "It should contain only digits"
+                    }
+                }
+            },
+            {
+                "id": "email",
+                "label": "Email",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "ntloginId",
+                "label": "NT ID",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9]+$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "vertical",
+                "label": "Vertical",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9]+$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "subVertical",
+                "label": "Sub Vertical",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9]+$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "solId",
+                "label": "Sol ID",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9]+$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "startDate",
+                "label": "Start Date",
+                "type": "date",
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "endDate",
+                "label": "End Date",
+                "type": "date",
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "active",
+                "label": "Active",
+                "type": "dropdown",
+                "required": true,
+                "menuItem": [
+                    {
+                        "value": "yes",
+                        "label": "Yes"
+                    },
+                    {
+                        "value": "no",
+                        "label": "No"
+                    }
+                ],
+                "validation": {
+                    "required": "This field is required"
+                }
+            }
+        ],
+        "admin": [
+            {
+                "id": "employeeId",
+                "label": "Employee ID",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "pattern": {
+                        "value": "^[0-9]+$",
+                        "message": "Please enter a valid number"
+                    }
+                }
+            },
+            {
+                "id": "firstName",
+                "label": "First Name",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "minLength": {
+                        "value": 3,
+                        "message": "It should be at least 3 characters long"
+                    },
+                    "maxLength": {
+                        "value": 30,
+                        "message": "It should not exceed 30 characters"
+                    },
+                    "pattern": {
+                        "value": "^[A-Za-z]+$",
+                        "message": "It should contain only letters"
+                    }
+                }
+            },
+            {
+                "id": "lastName",
+                "label": "Last Name",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "minLength": {
+                        "value": 3,
+                        "message": "It should be at least 3 characters long"
+                    },
+                    "maxLength": {
+                        "value": 30,
+                        "message": "It should not exceed 30 characters"
+                    },
+                    "pattern": {
+                        "value": "^[A-Za-z]+$",
+                        "message": "It should contain only letters"
+                    }
+                }
+            },
+            {
+                "id": "mobileNumber",
+                "label": "Mobile Number",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "minLength": {
+                        "value": 10,
+                        "message": "It should be at least 10 digits long"
+                    },
+                    "maxLength": {
+                        "value": 10,
+                        "message": "It should not exceed 10 digits"
+                    },
+                    "pattern": {
+                        "value": "^[0-9]*$",
+                        "message": "It should contain only digits"
+                    }
+                }
+            },
+            {
+                "id": "email",
+                "label": "Email",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "location",
+                "label": "Location",
+                "type": "autocomplete",
+                "multiple": true,
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "ntloginId",
+                "label": "NT ID",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9]+$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "vertical",
+                "label": "Vertical",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9]+$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "subVertical",
+                "label": "Sub Vertical",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9]+$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "solId",
+                "label": "Sol ID",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9]+$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "startDate",
+                "label": "Start Date",
+                "type": "date",
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "endDate",
+                "label": "End Date",
+                "type": "date",
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "active",
+                "label": "Active",
+                "type": "dropdown",
+                "required": true,
+                "menuItem": [
+                    {
+                        "value": "yes",
+                        "label": "Yes"
+                    },
+                    {
+                        "value": "no",
+                        "label": "No"
+                    }
+                ],
+                "validation": {
+                    "required": "This field is required"
+                }
+            }
+        ],
+        "adminview": [
+            {
+                "id": "employeeId",
+                "label": "Employee ID",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "pattern": {
+                        "value": "^[0-9]+$",
+                        "message": "Please enter a valid number"
+                    }
+                }
+            },
+            {
+                "id": "firstName",
+                "label": "First Name",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "minLength": {
+                        "value": 3,
+                        "message": "It should be at least 3 characters long"
+                    },
+                    "maxLength": {
+                        "value": 30,
+                        "message": "It should not exceed 30 characters"
+                    },
+                    "pattern": {
+                        "value": "^[A-Za-z]+$",
+                        "message": "It should contain only letters"
+                    }
+                }
+            },
+            {
+                "id": "lastName",
+                "label": "Last Name",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "minLength": {
+                        "value": 3,
+                        "message": "It should be at least 3 characters long"
+                    },
+                    "maxLength": {
+                        "value": 30,
+                        "message": "It should not exceed 30 characters"
+                    },
+                    "pattern": {
+                        "value": "^[A-Za-z]+$",
+                        "message": "It should contain only letters"
+                    }
+                }
+            },
+            {
+                "id": "mobileNumber",
+                "label": "Mobile Number",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "minLength": {
+                        "value": 10,
+                        "message": "It should be at least 10 digits long"
+                    },
+                    "maxLength": {
+                        "value": 10,
+                        "message": "It should not exceed 10 digits"
+                    },
+                    "pattern": {
+                        "value": "^[0-9]*$",
+                        "message": "It should contain only digits"
+                    }
+                }
+            },
+            {
+                "id": "email",
+                "label": "Email",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "location",
+                "label": "Location",
+                "type": "autocomplete",
+                "multiple": true,
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "ntloginId",
+                "label": "NT ID",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9]+$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "vertical",
+                "label": "Vertical",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9]+$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "subVertical",
+                "label": "Sub Vertical",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9]+$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "solId",
+                "label": "Sol ID",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9]+$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "startDate",
+                "label": "Start Date",
+                "type": "date",
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "endDate",
+                "label": "End Date",
+                "type": "date",
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "active",
+                "label": "Active",
+                "type": "dropdown",
+                "required": true,
+                "menuItem": [
+                    {
+                        "value": "yes",
+                        "label": "Yes"
+                    },
+                    {
+                        "value": "no",
+                        "label": "No"
+                    }
+                ],
+                "validation": {
+                    "required": "This field is required"
+                }
+            }
+        ],
+        "lcu": [
+            {
+                "id": "employeeId",
+                "label": "Employee ID",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "pattern": {
+                        "value": "^[0-9]+$",
+                        "message": "Please enter a valid number"
+                    }
+                }
+            },
+            {
+                "id": "firstName",
+                "label": "First Name",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "minLength": {
+                        "value": 3,
+                        "message": "It should be at least 3 characters long"
+                    },
+                    "maxLength": {
+                        "value": 30,
+                        "message": "It should not exceed 30 characters"
+                    },
+                    "pattern": {
+                        "value": "^[A-Za-z]+$",
+                        "message": "It should contain only letters"
+                    }
+                }
+            },
+            {
+                "id": "lastName",
+                "label": "Last Name",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "minLength": {
+                        "value": 3,
+                        "message": "It should be at least 3 characters long"
+                    },
+                    "maxLength": {
+                        "value": 30,
+                        "message": "It should not exceed 30 characters"
+                    },
+                    "pattern": {
+                        "value": "^[A-Za-z]+$",
+                        "message": "It should contain only letters"
+                    }
+                }
+            },
+            {
+                "id": "mobileNumber",
+                "label": "Mobile Number",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "minLength": {
+                        "value": 10,
+                        "message": "It should be at least 10 digits long"
+                    },
+                    "maxLength": {
+                        "value": 10,
+                        "message": "It should not exceed 10 digits"
+                    },
+                    "pattern": {
+                        "value": "^[0-9]*$",
+                        "message": "It should contain only digits"
+                    }
+                }
+            },
+            {
+                "id": "email",
+                "label": "Email",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "location",
+                "label": "Location",
+                "type": "autocomplete",
+                "multiple": true,
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "ntloginId",
+                "label": "NT ID",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9]+$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "vertical",
+                "label": "Vertical",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9]+$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "subVertical",
+                "label": "Sub Vertical",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9]+$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "solId",
+                "label": "Sol ID",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9]+$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "startDate",
+                "label": "Start Date",
+                "type": "date",
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "endDate",
+                "label": "End Date",
+                "type": "date",
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "active",
+                "label": "Active",
+                "type": "dropdown",
+                "required": true,
+                "menuItem": [
+                    {
+                        "value": "yes",
+                        "label": "Yes"
+                    },
+                    {
+                        "value": "no",
+                        "label": "No"
+                    }
+                ],
+                "validation": {
+                    "required": "This field is required"
+                }
+            }
+        ],
+        "loginmanagement": [
+            {
+                "id": "employeeId",
+                "label": "Employee ID",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "pattern": {
+                        "value": "^[0-9]+$",
+                        "message": "Please enter a valid number"
+                    }
+                }
+            },
+            {
+                "id": "firstName",
+                "label": "First Name",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "minLength": {
+                        "value": 3,
+                        "message": "It should be at least 3 characters long"
+                    },
+                    "maxLength": {
+                        "value": 30,
+                        "message": "It should not exceed 30 characters"
+                    },
+                    "pattern": {
+                        "value": "^[A-Za-z]+$",
+                        "message": "It should contain only letters"
+                    }
+                }
+            },
+            {
+                "id": "lastName",
+                "label": "Last Name",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "minLength": {
+                        "value": 3,
+                        "message": "It should be at least 3 characters long"
+                    },
+                    "maxLength": {
+                        "value": 30,
+                        "message": "It should not exceed 30 characters"
+                    },
+                    "pattern": {
+                        "value": "^[A-Za-z]+$",
+                        "message": "It should contain only letters"
+                    }
+                }
+            },
+            {
+                "id": "mobileNumber",
+                "label": "Mobile Number",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "minLength": {
+                        "value": 10,
+                        "message": "It should be at least 10 digits long"
+                    },
+                    "maxLength": {
+                        "value": 10,
+                        "message": "It should not exceed 10 digits"
+                    },
+                    "pattern": {
+                        "value": "^[0-9]*$",
+                        "message": "It should contain only digits"
+                    }
+                }
+            },
+            {
+                "id": "email",
+                "label": "Email",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "location",
+                "label": "Location",
+                "type": "autocomplete",
+                "multiple": true,
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "ntloginId",
+                "label": "NT ID",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9]+$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "vertical",
+                "label": "Vertical",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9]+$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "subVertical",
+                "label": "Sub Vertical",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9]+$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "solId",
+                "label": "Sol ID",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9]+$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "startDate",
+                "label": "Start Date",
+                "type": "date",
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "endDate",
+                "label": "End Date",
+                "type": "date",
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "active",
+                "label": "Active",
+                "type": "dropdown",
+                "required": true,
+                "menuItem": [
+                    {
+                        "value": "yes",
+                        "label": "Yes"
+                    },
+                    {
+                        "value": "no",
+                        "label": "No"
+                    }
+                ],
+                "validation": {
+                    "required": "This field is required"
+                }
+            }
+        ],
+        "dataEntryOperatorPartnerEmployee": [
+            {
+                "id": "producerCode",
+                "label": "Producer Code",
+                "type": "autocomplete",
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "solIdDealerCode",
+                "label": "Sol ID/ Dealer Code",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9]+$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "dataEntryUserName",
+                "label": "Data Entry Username",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9]+$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "employeeCodeUserLoginId",
+                "label": "Employee Code/ User Login ID",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9]+$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "mobileNumber",
+                "label": "Mobile Number",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "minLength": {
+                        "value": 10,
+                        "message": "It should be at least 10 digits long"
+                    },
+                    "maxLength": {
+                        "value": 10,
+                        "message": "It should not exceed 10 digits"
+                    },
+                    "pattern": {
+                        "value": "^[0-9]*$",
+                        "message": "It should contain only digits"
+                    }
+                }
+            },
+            {
+                "id": "email",
+                "label": "Email",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This is a required field",
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "lob",
+                "label": "LOB",
+                "type": "autocomplete",
+                "required": true,
+                "all": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "product",
+                "label": "Product",
+                "type": "autocomplete",
+                "all": true,
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "location",
+                "label": "Location",
+                "type": "autocomplete",
+                "all": true,
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "pospAadhar",
+                "label": "POSP Aadhar",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "pattern": {
+                        "value": "^[0-9]{12}$",
+                        "message": "It should contain exactly 12 digits."
+                    }
+                }
+            },
+            {
+                "id": "pospPAN",
+                "label": "POSP PAN",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "pattern": {
+                        "value": "^[A-Z]{5}[0-9]{4}[A-Z]$",
+                        "message": "Please enter a valid PAN number."
+                    }
+                }
+            },
+            {
+                "id": "plan",
+                "label": "Plan",
+                "type": "autocomplete",
+                "all": true,
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "zone",
+                "label": "Zone",
+                "type": "autocomplete",
+                "all": true,
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "transactionType",
+                "label": "Transaction Type",
+                "type": "dropdown",
+                "required": true,
+                "menuItem": [
+                    {
+                        "value": "all",
+                        "label": "All"
+                    },
+                    {
+                        "value": "new",
+                        "label": "New"
+                    },
+                    {
+                        "value": "rollover",
+                        "label": "Rollover"
+                    },
+                    {
+                        "value": "renewal",
+                        "label": "Renewal"
+                    }
+                ],
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "paymentMode",
+                "label": "Payment Mode",
+                "type": "autocomplete",
+                "all": true,
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "startDate",
+                "label": "Start Date",
+                "type": "date",
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "endDate",
+                "label": "End Date",
+                "type": "date",
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "producerStatus",
+                "label": "Producer Status",
+                "type": "input",
+                "required": true,
+                "disabled": true,
+                "validation": {
+                    "required": "This field is required",
+                    "pattern": {
+                        "value": "^[A-Za-z]+$",
+                        "message": "It should contain only letters"
+                    }
+                }
+            },
+            {
+                "id": "revalidation",
+                "label": "Revalidation",
+                "type": "dropdown",
+                "menuItem": [
+                    {
+                        "value": "active",
+                        "label": "Active"
+                    },
+                    {
+                        "value": "inactive",
+                        "label": "Inactive"
+                    }
+                ],
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "externalPosp",
+                "label": "External POSP",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9]+$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "status",
+                "label": "Status",
+                "type": "dropdown",
+                "menuItem": [
+                    {
+                        "value": "active",
+                        "label": "Active"
+                    },
+                    {
+                        "value": "inactive",
+                        "label": "Inactive"
+                    }
+                ],
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "roleAssignment",
+                "label": "Role Assignment",
+                "type": "dropdown",
+                "required": true,
+                "menuItem": [
+                    {
+                        "value": "none",
+                        "label": "None"
+                    },
+                    {
+                        "value": "maker",
+                        "label": "Maker"
+                    },
+                    {
+                        "value": "checker",
+                        "label": "Checker"
+                    },
+                    {
+                        "value": "makerchecker",
+                        "label": "Makerchecker"
+                    }
+                ],
+                "validation": {
+                    "required": "This field is required"
+                }
+            }
+        ],
+        "dataEntryOperatorExternalPOSP": [
+            {
+                "id": "producerCode",
+                "label": "Producer Code",
+                "type": "autocomplete",
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "solIdDealerCode",
+                "label": "Sol ID/ Dealer Code",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9]+$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "dataEntryUserName",
+                "label": "Data Entry Username",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9]+$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "employeeCodeUserLoginId",
+                "label": "Employee Code/ User Login ID",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9]+$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "mobileNumber",
+                "label": "Mobile Number",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "minLength": {
+                        "value": 10,
+                        "message": "It should be at least 10 digits long"
+                    },
+                    "maxLength": {
+                        "value": 10,
+                        "message": "It should not exceed 10 digits"
+                    },
+                    "pattern": {
+                        "value": "^[0-9]*$",
+                        "message": "It should contain only digits"
+                    }
+                }
+            },
+            {
+                "id": "email",
+                "label": "Email",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "lob",
+                "label": "LOB",
+                "type": "autocomplete",
+                "required": true,
+                "all": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "product",
+                "label": "Product",
+                "type": "autocomplete",
+                "required": true,
+                "all": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "plan",
+                "label": "Plan",
+                "type": "autocomplete",
+                "all": true,
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "zone",
+                "label": "Zone",
+                "type": "autocomplete",
+                "all": true,
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "transactionType",
+                "label": "Transaction Type",
+                "type": "dropdown",
+                "required": true,
+                "menuItem": [
+                    {
+                        "value": "all",
+                        "label": "All"
+                    },
+                    {
+                        "value": "new",
+                        "label": "New"
+                    },
+                    {
+                        "value": "rollover",
+                        "label": "Rollover"
+                    },
+                    {
+                        "value": "renewal",
+                        "label": "Renewal"
+                    }
+                ],
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "paymentMode",
+                "label": "Payment Mode",
+                "type": "autocomplete",
+                "required": true,
+                "all": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "startDate",
+                "label": "Start Date",
+                "type": "date",
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "endDate",
+                "label": "End Date",
+                "type": "date",
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "producerStatus",
+                "label": "Producer Status",
+                "type": "input",
+                "required": true,
+                "disabled": true,
+                "validation": {
+                    "required": "This field is required",
+                    "pattern": {
+                        "value": "^[A-Za-z]+$",
+                        "message": "It should contain only letters"
+                    }
+                }
+            },
+            {
+                "id": "revalidation",
+                "label": "Revalidation",
+                "type": "dropdown",
+                "required": true,
+                "menuItem": [
+                    {
+                        "value": "active",
+                        "label": "Active"
+                    },
+                    {
+                        "value": "inactive",
+                        "label": "Inactive"
+                    }
+                ],
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "status",
+                "label": "Status",
+                "type": "dropdown",
+                "menuItem": [
+                    {
+                        "value": "active",
+                        "label": "Active"
+                    },
+                    {
+                        "value": "inactive",
+                        "label": "Inactive"
+                    }
+                ],
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "roleAssignment",
+                "label": "Role Assignment",
+                "type": "dropdown",
+                "required": true,
+                "menuItem": [
+                    {
+                        "value": "none",
+                        "label": "None"
+                    },
+                    {
+                        "value": "maker",
+                        "label": "Maker"
+                    },
+                    {
+                        "value": "checker",
+                        "label": "Checker"
+                    },
+                    {
+                        "value": "makerchecker",
+                        "label": "Makerchecker"
+                    }
+                ],
+                "validation": {
+                    "required": "This field is required"
+                }
+            }
+        ],
+        "dataEntryOperatorSingleSignOn": [
+            {
+                "id": "producerCode",
+                "label": "Producer Code",
+                "type": "autocomplete",
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "solIdDealerCode",
+                "label": "Sol ID/ Dealer Code",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9]+$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "dataEntryUserName",
+                "label": "Data Entry Username",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9]+$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "employeeCodeUserLoginId",
+                "label": "Employee Code/ User Login ID",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9]+$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "mobileNumber",
+                "label": "Mobile Number",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "minLength": {
+                        "value": 10,
+                        "message": "It should be at least 10 digits long"
+                    },
+                    "maxLength": {
+                        "value": 10,
+                        "message": "It should not exceed 10 digits"
+                    },
+                    "pattern": {
+                        "value": "^[0-9]*$",
+                        "message": "It should contain only digits"
+                    }
+                }
+            },
+            {
+                "id": "email",
+                "label": "Email",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "lob",
+                "label": "LOB",
+                "type": "autocomplete",
+                "required": true,
+                "all": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "product",
+                "label": "Product",
+                "type": "autocomplete",
+                "all": true,
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "location",
+                "label": "Location",
+                "type": "autocomplete",
+                "all": true,
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "pospAadhar",
+                "label": "POSP Aadhar",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "pattern": {
+                        "value": "^[0-9]{12}$",
+                        "message": "It should contain exactly 12 digits."
+                    }
+                }
+            },
+            {
+                "id": "pospPAN",
+                "label": "POSP PAN",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "pattern": {
+                        "value": "^[A-Z]{5}[0-9]{4}[A-Z]$",
+                        "message": "Please enter a valid PAN number."
+                    }
+                }
+            },
+            {
+                "id": "plan",
+                "label": "Plan",
+                "type": "autocomplete",
+                "all": true,
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "zone",
+                "label": "Zone",
+                "type": "autocomplete",
+                "all": true,
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "transactionType",
+                "label": "Transaction Type",
+                "type": "dropdown",
+                "required": true,
+                "menuItem": [
+                    {
+                        "value": "all",
+                        "label": "All"
+                    },
+                    {
+                        "value": "new",
+                        "label": "New"
+                    },
+                    {
+                        "value": "rollover",
+                        "label": "Rollover"
+                    },
+                    {
+                        "value": "renewal",
+                        "label": "Renewal"
+                    }
+                ],
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "paymentMode",
+                "label": "Payment Mode",
+                "type": "autocomplete",
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "startDate",
+                "label": "Start Date",
+                "type": "date",
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "endDate",
+                "label": "End Date",
+                "type": "date",
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "producerStatus",
+                "label": "Producer Status",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "pattern": {
+                        "value": "^[A-Za-z]+$",
+                        "message": "It should contain only letters"
+                    }
+                }
+            },
+            {
+                "id": "revalidation",
+                "label": "Revalidation",
+                "type": "dropdown",
+                "required": true,
+                "menuItem": [
+                    {
+                        "value": "active",
+                        "label": "Active"
+                    },
+                    {
+                        "value": "inactive",
+                        "label": "Inactive"
+                    }
+                ],
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "externalPosp",
+                "label": "External POSP",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9]+$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "status",
+                "label": "Status",
+                "type": "dropdown",
+                "menuItem": [
+                    {
+                        "value": "active",
+                        "label": "Active"
+                    },
+                    {
+                        "value": "inactive",
+                        "label": "Inactive"
+                    }
+                ],
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "roleAssignment",
+                "label": "Role Assignment",
+                "type": "dropdown",
+                "required": true,
+                "menuItem": [
+                    {
+                        "value": "none",
+                        "label": "None"
+                    },
+                    {
+                        "value": "maker",
+                        "label": "Maker"
+                    },
+                    {
+                        "value": "checker",
+                        "label": "Checker"
+                    },
+                    {
+                        "value": "makerchecker",
+                        "label": "Makerchecker"
+                    }
+                ],
+                "validation": {
+                    "required": "This field is required"
+                }
+            }
+        ],
+        "others": [
+            {
+                "id": "employeeId",
+                "label": "Employee ID",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "pattern": {
+                        "value": "^[0-9]+$",
+                        "message": "Please enter a valid number"
+                    }
+                }
+            },
+            {
+                "id": "firstName",
+                "label": "First Name",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "minLength": {
+                        "value": 3,
+                        "message": "It should be at least 3 characters long"
+                    },
+                    "maxLength": {
+                        "value": 30,
+                        "message": "It should not exceed 30 characters"
+                    },
+                    "pattern": {
+                        "value": "^[A-Za-z]+$",
+                        "message": "It should contain only letters"
+                    }
+                }
+            },
+            {
+                "id": "lastName",
+                "label": "Last Name",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "minLength": {
+                        "value": 3,
+                        "message": "It should be at least 3 characters long"
+                    },
+                    "maxLength": {
+                        "value": 30,
+                        "message": "It should not exceed 30 characters"
+                    },
+                    "pattern": {
+                        "value": "^[A-Za-z]+$",
+                        "message": "It should contain only letters"
+                    }
+                }
+            },
+            {
+                "id": "mobileNumber",
+                "label": "Mobile Number",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "minLength": {
+                        "value": 10,
+                        "message": "It should be at least 10 digits long"
+                    },
+                    "maxLength": {
+                        "value": 10,
+                        "message": "It should not exceed 10 digits"
+                    },
+                    "pattern": {
+                        "value": "^[0-9]*$",
+                        "message": "It should contain only digits"
+                    }
+                }
+            },
+            {
+                "id": "email",
+                "label": "Email",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "location",
+                "label": "Location",
+                "type": "autocomplete",
+                "multiple": true,
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "lob",
+                "label": "LOB",
+                "type": "autocomplete",
+                "required": true,
+                "multiple": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "product",
+                "label": "Product",
+                "type": "autocomplete",
+                "required": true,
+                "multiple": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "ntloginId",
+                "label": "NT ID",
+                "type": "input",
+                "required": true,
+                "validation": {
+                    "required": "This field is required",
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9]+$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "vertical",
+                "label": "Vertical",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9]+$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "subVertical",
+                "label": "Sub Vertical",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9]+$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "solId",
+                "label": "Sol ID",
+                "type": "input",
+                "required": false,
+                "validation": {
+                    "pattern": {
+                        "value": "^[a-zA-Z0-9]+$",
+                        "message": "It should contain digits and letters only"
+                    }
+                }
+            },
+            {
+                "id": "startDate",
+                "label": "Start Date",
+                "type": "date",
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "endDate",
+                "label": "End Date",
+                "type": "date",
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "active",
+                "label": "Active",
+                "type": "dropdown",
+                "required": true,
+                "menuItem": [
+                    {
+                        "value": "yes",
+                        "label": "Yes"
+                    },
+                    {
+                        "value": "no",
+                        "label": "No"
+                    }
+                ],
+                "validation": {
+                    "required": "This field is required"
+                }
+            }
+        ]
+    }
+}

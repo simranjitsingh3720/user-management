@@ -1,0 +1,12 @@
+.styledActiveSelect {
+  font-size: 13px;
+  color: #607083;
+}
+
+.groupStatusCell {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #465465;
+  width: 15%;
+}

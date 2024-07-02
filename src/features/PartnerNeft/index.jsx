@@ -78,7 +78,7 @@ const PartnerNeft = () => {
         optionLabel={(option) => optionLabel(option, searched === COMMON_WORDS.PRODUCT ? COMMON_WORDS.PRODUCT : COMMON_WORDS.LOB)}
         placeholder={searched === COMMON_WORDS.PRODUCT ? "Search by Product Name" : "Search by Lob Name"}
         renderOptionFunction={(props, option) => renderOptionFunction(props, option, searched === COMMON_WORDS.PRODUCT ? COMMON_WORDS.PRODUCT : COMMON_WORDS.LOB)}
-        buttonText="Create NEFT Flag"
+        buttonText="Create New NEFT Flag"
         navigateRoute="/partner-neft/form"
         searched={searched}
         setSearched={setSearched}

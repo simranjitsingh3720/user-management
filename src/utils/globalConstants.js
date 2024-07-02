@@ -3,12 +3,15 @@ export const drawerWidth = 240;
 export const BASE_URL = "https://uat-usermgmt.tataaig.com";
 
 export const selectRowsData = [5, 10, 15, 20];
+export const alphaNumericRegex = /^[a-zA-Z0-9\s]*$/;
 
 export const REGEX = {
   alphaNumericRegex: /^[a-zA-Z0-9\s]*$/,
   numericRegex: /^[0-9]+$/,
   letterRegex: /^[A-Za-z]+$/,
   emailRegex: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+  nameRegex: "^[A-Za-z]+$",
+  mobileRegex: "^[0-9]*$",
 };
 
 export const BUTTON_TEXT = {
