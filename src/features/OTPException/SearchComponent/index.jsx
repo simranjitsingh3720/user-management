@@ -8,27 +8,10 @@ function SearchComponent({ setQuery, setPageChange, searched, setSearched }) {
     setSearched(event.target.value);
   };
 
-  // const handleGo = () => {
-  //   fetchData(query);
-  // };
-
   return (
     <div>
-      {/* <div className={styles.searchText}>Search By</div> */}
       <div className={styles.selectContainer}>
         <div className={styles.flexSearchContainer}>
-          {/* <TextField
-            id="search"
-            variant="outlined"
-            placeholder="Search by Name/Type..."
-            size="small"
-            className={styles.textFieldStyle}
-            onChange={(e) => {
-              setPageChange(1);
-              setQuery(e.target.value);
-            }}
-          /> */}
-
           <div className={styles.flexSearchContainer}>
             <Select
               labelId="search-select"
@@ -65,10 +48,6 @@ function SearchComponent({ setQuery, setPageChange, searched, setSearched }) {
               }}
             />
           </div>
-
-          {/* <CustomButton variant="outlined" onClick={handleGo}>
-            Go
-          </CustomButton> */}
         </div>
       </div>
     </div>

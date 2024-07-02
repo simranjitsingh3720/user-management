@@ -35,7 +35,6 @@ function UserManagement() {
 
   return (
     <Box>
-      {/* <Toolbar /> */}
       <div>
         <SearchComponent
           searched={searched}

@@ -53,54 +53,6 @@ function List({ item, fetchData: fetchGroupList, paymentData }) {
           </Tooltip>
         </div>
       </div>
-      {/* <Dialog
-        onClose={handleChangeStatusClose}
-        aria-labelledby="customized-dialog-title"
-        open={changeStatusOpen}
-      >
-        <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-          Change status
-        </DialogTitle>
-        <IconButton
-          aria-label="close"
-          onClick={handleChangeStatusClose}
-          sx={{
-            position: "absolute",
-            right: 8,
-            top: 8,
-            color: (theme) => theme.palette.grey[500],
-          }}
-        >
-          <CloseIcon />
-        </IconButton>
-        <DialogContent dividers>
-          <div className={styles.infoIconStyle}>
-            <InfoIcon fontSize="x-large" className={styles.iconStyle} />
-          </div>
-          <span className={styles.styledText}>
-            Are you sure you want to change the product status?
-          </span>
-
-          <div className={styles.SubmitContainer}>
-            <CustomButton
-              variant="outlined"
-              onClick={() => setChangeStatusOpen(false)}
-              size="small"
-            >
-              No
-            </CustomButton>
-            <CustomButton
-              variant="contained"
-              
-              size="small"
-              disabled={updateLoading}
-              onClick={() => handleClickYes()}
-            >
-              yes
-            </CustomButton>
-          </div>
-        </DialogContent>
-      </Dialog> */}
     </div>
   );
 }

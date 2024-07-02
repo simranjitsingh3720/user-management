@@ -44,29 +44,29 @@
 
 .customizeSelect {
   background-color: #ffffff;
-  width: 100%; /* Set the width to 100% initially */
-  max-width: 300px; /* Set the maximum width to 300px */
+  width: 100%; 
+  max-width: 300px; 
   font-size: 14px !important;
   height: 40px;
 }
 
 .customizePrivilegeSelect {
   background-color: #ffffff;
-  width: 100%; /* Set the width to 100% initially */
-  max-width: 500px; /* Set the maximum width to 600px */
+  width: 100%; 
+  max-width: 500px; 
   min-width: 150px;
   font-size: 14px !important;
   height: 40px;
 }
 
 @media (min-width: 768px) {
-  /* Adjust width for larger screens */
+  
   .customizeSelect {
-    max-width: 400px; /* Adjust maximum width for larger screens */
+    max-width: 400px; 
   }
 
   .customizePrivilegeSelect {
-    max-width: 900px; /* Adjust maximum width for larger screens */
+    max-width: 900px; 
     min-width: 400px;
   }
 }
