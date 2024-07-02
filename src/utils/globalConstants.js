@@ -15,7 +15,7 @@ export const REGEX = {
 };
 
 export const BUTTON_TEXT = {
-  CKYC_CONFIG: "Create CKYC Configuration",
+  CKYC_CONFIG: "Create New CKYC Config",
 };
 
 export const PLACEHOLDER_TEXT = {

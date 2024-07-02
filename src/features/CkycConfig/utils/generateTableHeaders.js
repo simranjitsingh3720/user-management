@@ -9,12 +9,12 @@ function generateTableHeaders(handleEditClick) {
     },
     {
       id: "product",
-      value: "PRODUCT",
+      value: "Product",
       sortable: false,
     },
     {
       id: "CKYCApplicable",
-      value: "STATUS",
+      value: "Status",
       sortable: false,
     },
     {

@@ -114,7 +114,7 @@ export const SideNavData = [
     navigateRoute: "partner-neft",
   },
   {
-    label: "cKYC Config",
+    label: "CKYC Config",
     icon: GridViewIcon,
     navigateRoute: "ckyc-config",
   },
