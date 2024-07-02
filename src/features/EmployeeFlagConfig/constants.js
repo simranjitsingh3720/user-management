@@ -2,11 +2,7 @@ export const searchOption = [
   {
     label: "Producer Name",
     value: "producers",
-  },
-  //   {
-  //     label: "Value",
-  //     value: "value",
-  //   },
+  }
 ];
 
 export const BitlyLinkMandatory = [

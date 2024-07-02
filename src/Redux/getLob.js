@@ -5,7 +5,7 @@ export const getLobs = createAsyncThunk("lobUserCreation/getLobs", async (_, { g
     try {
         const { lobUserCreation } = getState();
         if (lobUserCreation?.lob?.length > 0) {
-            return lobUserCreation.lob; // Return existing data
+            return lobUserCreation.lob; 
         }
 
         let url = `/api/lob?isAll=${true}`;

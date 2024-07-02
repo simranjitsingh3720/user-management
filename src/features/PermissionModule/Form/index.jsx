@@ -53,7 +53,7 @@ function Form() {
     // Iterate over selected modules
     for (const moduleId in selectedSubmodules) {
       const subModules = selectedSubmodules[moduleId];
-      const lastSubModule = subModules[subModules.length - 1]; // Get the last sub-module
+      const lastSubModule = subModules[subModules.length - 1]; 
       const subModuleId = lastSubModule.id;
       const permissionTypes = permissionType[moduleId].map(
         (permission) => permission.value
