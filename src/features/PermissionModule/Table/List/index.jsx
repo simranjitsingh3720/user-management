@@ -68,17 +68,6 @@ function List({ item, fetchData, setLoading }) {
             {item?.status ? "Active" : "Inactive"}
           </div>
         </div>
-        {/* <div className={styles.actionCell}>
-          <Tooltip title="Change status">
-            <IconButton
-              aria-label="back"
-              type="button"
-              onClick={() => setOpen(true)}
-            >
-              <EditLogo color="primary" />
-            </IconButton>
-          </Tooltip>
-        </div> */}
       </div>
       <Dialog
         onClose={handleClose}

@@ -106,17 +106,6 @@ function ProductPaymentConfig() {
 
   return (
     <div>
-      {/* <SearchComponenet
-        fetchData={fetchData}
-        setPageChange={setPageChange}
-        setQuery={setQuery}
-        searched={searched}
-        setSearched={setSearched}
-        productValue={productValue}
-        setProductValue={setProductValue}
-        lobValue={lobValue}
-        setLobValue={setLobValue}
-      /> */}
       <SearchComponenet
         optionsData={
           searched === "product" ? productData?.data ?? [] : lobData?.data ?? []

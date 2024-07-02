@@ -175,7 +175,6 @@ function BANCALogin() {
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        {/* <NewBancaForm bancaData={bancaData} bancaFetchData={bancaFetchData} /> */}
         <div className={styles.bancaForm}>
           <div className={styles.headerTextStyle}>
             <div>
