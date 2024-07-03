@@ -8,6 +8,12 @@ module.exports = {
     extend: {
       width :{
         49: '48%', 
+      },
+      colors: {
+        cornFlower: '#18478b',
+        fiord: '#465465',
+        denim: "#185EC4",
+        persianRed: "#d32f2f",
       }
     },
   },

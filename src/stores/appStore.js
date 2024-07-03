@@ -10,6 +10,7 @@ import exportReducer from './slices/exportSlice';
 import lobReducer from './slices/lobSlice';
 import productReducer from './slices/productSlice';
 import userReducer from './slices/userSlice';
+import loginSlice from "../Redux/loginSlice";
 
 const appStore = configureStore({
   reducer: {
@@ -23,7 +24,8 @@ const appStore = configureStore({
     location: locationSlice,
     role: roleSlice,
     paymentType: paymentTypeSlice,
-    producerCode: producerCodeSlice
+    producerCode: producerCodeSlice,
+    login: loginSlice
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

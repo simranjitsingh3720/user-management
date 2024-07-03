@@ -5,11 +5,14 @@ import LogoutIcon from "../../assets/LogoutIcon";
 import { useNavigate } from "react-router-dom";
 import CustomButton from "../CustomButton";
 import { HEADER } from "../../utils/constants";
+import { TOKEN, TOKEN_EXPIRATION } from "../../utils/globalConstants";
 
 function Header({ handleDrawerToggle, selectedNavbar, selectedParentIndex }) {
   const navigate = useNavigate();
 
   const handleLogout = () => {
+    localStorage.removeItem(TOKEN);
+    localStorage.removeItem(TOKEN_EXPIRATION);
     navigate("/sign-in");
   };
 
