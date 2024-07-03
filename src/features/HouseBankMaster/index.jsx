@@ -10,10 +10,10 @@ import { selectRowsData } from "../../utils/globalConstants";
 import useGetHouseBank from "./hooks/useGetHouseBank";
 
 function getSelectedRowData(count) {
-  // Initialize the selected row data array
+  
   let selectedRowData = [];
 
-  // Iterate over selectRowsData and add elements <= count
+  
   for (let i = 0; i < selectRowsData.length; i++) {
     if (selectRowsData[i] <= count) {
       selectedRowData.push(selectRowsData[i]);

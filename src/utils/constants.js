@@ -8,6 +8,8 @@ export const COMMON_WORDS = {
   CREATED_AT: "createdAt",
   ENABLE: "Enable",
   DISABLE: "Disable",
+  CHANGE_STATUS: "Change Status",
+  LOGOUT: "Logout",
 };
 
 export const API_END_POINTS = {
@@ -15,6 +17,8 @@ export const API_END_POINTS = {
   LOBAPI: "api/lob",
   PRODUCTAPI: "api/product",
   CKYC: "api/ckyc",
+  PERMISSION: "api/permission",
+  MODULE: "api/module",
 };
 
 export const HEADER = {

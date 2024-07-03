@@ -5,7 +5,7 @@ export const PrivilegeSearch = [
   },
   {
     label: "Type",
-    value: "type",
+    value: "permissionType",
   },
 ];
 

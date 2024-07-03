@@ -29,7 +29,7 @@ function useCreateEmployeeConfig(listFetchFun) {
         error?.response?.data?.error?.message || COMMON_ERROR
       );
     } finally {
-      setLoading(false); // Set loading to false when request finishes (whether success or failure)
+      setLoading(false); 
     }
   }
   return { postData, loading };

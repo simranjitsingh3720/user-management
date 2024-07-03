@@ -31,7 +31,7 @@ function useHandleCkyc() {
     } catch (error) {
       toast.error(error?.response?.data?.error?.message || COMMON_ERROR);
     } finally {
-      setLoading(false); // Set loading to false when request finishes (whether success or failure)
+      setLoading(false); 
     }
   }
 

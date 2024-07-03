@@ -6,7 +6,6 @@ import FullPageLoader from "../../components/FullPageLoader";
 import PrivateRoute from "../../components/PrivateRoute";
 import PublicRoute from "../../components/PublicRoute";
 
-// Lazy load components
 const Dashboard = lazy(() => import("../../features/Dashboard"));
 const UserManagement = lazy(() => import("../../features/UserManagement"));
 const SignInPage = lazy(() => import("../../features/Signin/SigninPage"));

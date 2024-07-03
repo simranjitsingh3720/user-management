@@ -1,23 +1,24 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const dialogSlice = createSlice({
-  name: 'dialog',
+  name: "dialog",
   initialState: {
     open: false,
-    title: '',
+    title: "",
     content: null,
     actions: null,
   },
   reducers: {
     showDialog: (state, action) => {
+      console.log(state, action);
       state.open = true;
-      state.title = action.payload.title || '';
+      state.title = action.payload.title || "";
       state.content = action.payload.content || null;
       state.actions = action.payload.actions || null;
     },
     hideDialog: (state) => {
       state.open = false;
-      state.title = '';
+      state.title = "";
       state.content = null;
       state.actions = null;
     },

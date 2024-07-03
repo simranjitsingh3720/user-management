@@ -38,6 +38,8 @@ const PartnerNeftForm = () => {
     control,
     formState: { errors },
     setValue,
+    reset,
+    resetField,
   } = useForm({
     defaultValues: {
       lob: null,
@@ -61,13 +63,24 @@ const PartnerNeftForm = () => {
       setValue("lob", data.lob);
       setValue("producer", data.producer);
 
-      const index = VERIFICATION_METHOD.findIndex(item => data.verificationMethod === item.value)
+      const index = VERIFICATION_METHOD.findIndex(
+        (item) => data.verificationMethod === item.value
+      );
       setValue("verificationMethod", VERIFICATION_METHOD[index]);
-      // Fetch related products if lob is set
+      
       if (data.lob?.id) {
         dispatch(fetchAllProductData({ lobId: data.lob.id }));
         setValue("product", data.product);
       }
+    }
+  };
+
+  const handleReset = () => {
+    if (params.id) {
+      resetField("producer");
+      resetField("verificationMethod");
+    } else {
+      reset();
     }
   };
 
@@ -79,7 +92,12 @@ const PartnerNeftForm = () => {
 
   useEffect(() => {
     dispatch(fetchLobData());
-    dispatch(fetchUser({ userType: COMMON_WORDS.PRODUCER, searchKey: COMMON_WORDS.ROLE_NAME }));
+    dispatch(
+      fetchUser({
+        userType: COMMON_WORDS.PRODUCER,
+        searchKey: COMMON_WORDS.ROLE_NAME,
+      })
+    );
   }, [dispatch]);
 
   return (
@@ -118,12 +136,6 @@ const PartnerNeftForm = () => {
                         : "Create New Partner NEFT Flag"}
                     </Typography>
                   </div>
-                  <div>
-                    <span className="label">
-                      Please fill the details below and click Submit to{" "}
-                      {params.id ? "update" : "create"} a partner NEFT flag.
-                    </span>
-                  </div>
                 </Grid>
                 <Grid
                   item
@@ -137,7 +149,7 @@ const PartnerNeftForm = () => {
                   <CustomButton
                     variant="outlined"
                     startIcon={<RestartAltIcon />}
-                    onClick={() => navigate("/partner-neft")}
+                    onClick={handleReset}
                   >
                     Reset
                   </CustomButton>

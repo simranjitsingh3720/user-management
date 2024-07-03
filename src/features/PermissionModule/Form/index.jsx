@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
-import CreateNewUserContainer from "../CreateNewPrivilegeForm copy";
+import CreateNewUserContainer from "../CreateNewPrivilegeForm";
 import { IconButton } from "@mui/material";
 import styles from "./styles.module.scss";
 import { useNavigate } from "react-router-dom";
@@ -50,10 +50,10 @@ function Form() {
   const onSubmit = () => {
     const formattedData = [];
 
-    // Iterate over selected modules
+   
     for (const moduleId in selectedSubmodules) {
       const subModules = selectedSubmodules[moduleId];
-      const lastSubModule = subModules[subModules.length - 1]; // Get the last sub-module
+      const lastSubModule = subModules[subModules.length - 1]; 
       const subModuleId = lastSubModule.id;
       const permissionTypes = permissionType[moduleId].map(
         (permission) => permission.value
@@ -102,18 +102,14 @@ function Form() {
           <CustomButton
             type="button"
             variant="outlined"
-            sx={{ 'margin-left': '2rem' }}
+            sx={{ "margin-left": "2rem" }}
             startIcon={<AddIcon />}
             onClick={() => append({})}
           >
             Add New Permission
           </CustomButton>
         </div>
-        <CustomButton
-          type="submit"
-          variant="contained"
-          disabled={loading}
-        >
+        <CustomButton type="submit" variant="contained" disabled={loading}>
           Submit
         </CustomButton>
       </form>

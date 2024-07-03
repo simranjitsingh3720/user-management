@@ -14,10 +14,10 @@ import useGetAllProduct from "../../hooks/useGetAllProduct";
 import useGetLobData from "../../hooks/useGetLobData";
 
 function getSelectedRowData(count) {
-  // Initialize the selected row data array
+  
   let selectedRowData = [];
 
-  // Iterate over selectRowsData and add elements <= count
+  
   for (let i = 0; i < selectRowsData.length; i++) {
     if (selectRowsData[i] <= count) {
       selectedRowData.push(selectRowsData[i]);
@@ -106,17 +106,6 @@ function ProductPaymentConfig() {
 
   return (
     <div>
-      {/* <SearchComponenet
-        fetchData={fetchData}
-        setPageChange={setPageChange}
-        setQuery={setQuery}
-        searched={searched}
-        setSearched={setSearched}
-        productValue={productValue}
-        setProductValue={setProductValue}
-        lobValue={lobValue}
-        setLobValue={setLobValue}
-      /> */}
       <SearchComponenet
         optionsData={
           searched === "product" ? productData?.data ?? [] : lobData?.data ?? []

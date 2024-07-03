@@ -1,6 +1,7 @@
-import axiosInstance from "../../../utils/axiosInstance"; // Import the instance
+import axiosInstance from "../../../utils/axiosInstance"; 
 
 import { useEffect, useState } from "react";
+import { API_END_POINTS } from "../../../utils/constants";
 
 function useGetAllModule() {
   const [data, setData] = useState(null);
@@ -8,7 +9,9 @@ function useGetAllModule() {
 
   const fetchData = async (key, value) => {
     try {
-      const response = await axiosInstance.get(`api/module/all?status=${true}`);
+      const response = await axiosInstance.get(
+        `${API_END_POINTS.MODULE}/all?status=${true}`
+      );
       setData(response.data);
     } catch (error) {
       setData([]);
