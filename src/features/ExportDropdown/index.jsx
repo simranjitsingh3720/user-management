@@ -12,11 +12,14 @@ import { useDispatch } from "react-redux";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import CustomButton from "../../components/CustomButton";
 import { showDialog } from "../../stores/slices/dialogSlice";
-import { setSelectedValue } from "../../stores/slices/exportSlice";
+import {
+  setLast30Days,
+  setSelectedValue,
+} from "../../stores/slices/exportSlice";
 import Content from "./Dialog/Content";
 import DownloadIcon from "../../assets/DownloadLogo";
 import Actions from "./Dialog/Action";
-import { EXPORT_DROPDOWN_VALUES, EXPORT_ACTIONS, EXPORT_CONSTANTS } from "./utils/constants";
+import { EXPORT_DROPDOWN_VALUES, EXPORT_CONSTANTS } from "./utils/constants";
 
 const ExportDropdown = () => {
   const [open, setOpen] = useState(false);
@@ -25,13 +28,10 @@ const ExportDropdown = () => {
 
   const handleMenuItemClick = (event, index) => {
     setOpen(false);
-
     const selectedValue = EXPORT_DROPDOWN_VALUES[index];
-    const config = EXPORT_ACTIONS[selectedValue];
-
-    if (config) {
-      dispatch(setSelectedValue(config.selectedValue));
-      config.actions.forEach((action) => dispatch(action()));
+    dispatch(setSelectedValue(selectedValue));
+    if (selectedValue === EXPORT_CONSTANTS.last30Days) {
+      dispatch(setLast30Days());
     }
 
     dispatch(

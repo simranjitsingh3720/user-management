@@ -7,7 +7,7 @@ import { downloadData } from "../../../stores/slices/exportSlice";
 
 const Actions = () => {
   const dispatch = useDispatch();
-  const { columns, fromDate, toDate, selectedValue } = useSelector((state) => state.export);
+  const { columns, fromDate, toDate, selectedValue, tableName } = useSelector((state) => state.export);
 
   const confirmAction = () => {
     const selectedColumns = columns
@@ -16,10 +16,10 @@ const Actions = () => {
       .join(", ");
 
     let combinedData = {
-      tableName: "cKYC",
+      tableName: tableName,
       past30Days: selectedValue !== EXPORT_CONSTANTS.custom,
       isBulkDownload: selectedValue === EXPORT_CONSTANTS.custom,
-      // email: email,
+      // email: email, // Will uncomment once will get user
       columns: selectedColumns,
       startDate: fromDate,
       endDate: toDate,

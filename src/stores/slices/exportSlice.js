@@ -11,6 +11,7 @@ const initialState = {
   columns: [],
   loading: false,
   error: null,
+  tableName: '',
 };
 
 export const fetchColumns = createAsyncThunk(
@@ -60,6 +61,9 @@ const exportSlice = createSlice({
   reducers: {
     setSelectedValue: (state, action) => {
       state.selectedValue = action.payload;
+    },
+    setTableName: (state, action) => {
+      state.tableName = action.payload
     },
     setFromDate: (state, action) => {
       state.fromDate = dayjs(action.payload).format("DD-MM-YYYY");
