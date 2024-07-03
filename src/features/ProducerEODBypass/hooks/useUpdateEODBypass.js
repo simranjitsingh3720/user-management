@@ -25,9 +25,9 @@ function useUpdateEODBypass() {
         error?.response?.data?.error?.message || COMMON_ERROR
       );
 
-      // Handle errors
+      
     } finally {
-      setLoading(false); // Set loading to false when request finishes (whether success or failure)
+      setLoading(false); 
     }
   }
   return { UpdateDataFun, updateLoading: loading };

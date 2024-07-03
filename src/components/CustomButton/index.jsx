@@ -10,6 +10,7 @@ const StyledButton = styled(Button)(({ theme, size }) => ({
   ...(size === 'medium' && {
     height: '2.5rem',
   }),
+  textTransform: 'none'
 }));
 
 const CustomButton = ({

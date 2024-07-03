@@ -47,7 +47,6 @@ function TableHeader({ sort, setSort }) {
         Updated At
         {renderSortIcon("updatedAt")}
       </div>
-      {/* <div className={styles.StatusCell}>Status</div> */}
       <div className={styles.actionCell}>Action</div>
     </div>
   );

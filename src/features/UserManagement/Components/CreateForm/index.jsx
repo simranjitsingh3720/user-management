@@ -353,9 +353,6 @@ function CreateUserMangementForm() {
                 />
               )}
             />
-            {/* <div className={styles.styledError}>
-              {errors.emailId && <span>This field is required</span>}
-            </div> */}
           </div>
           <div className={styles.fieldContainerStyle}>
             <span className={styles.labelText}>

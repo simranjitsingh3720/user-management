@@ -1,4 +1,4 @@
-import axiosInstance from "../../../utils/axiosInstance"; // Import the instance
+import axiosInstance from "../../../utils/axiosInstance"; 
 
 import { useState } from "react";
 import { API_END_POINTS } from "../../../utils/constants";

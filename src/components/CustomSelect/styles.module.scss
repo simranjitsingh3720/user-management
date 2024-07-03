@@ -1,0 +1,20 @@
+.fieldContainerStyle {
+  margin: 10px 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.labelText {
+  color: #566475;
+  font-size: 14px;
+}
+
+.styledRequired {
+  color: #ff6262;
+}
+
+.customizeSelect {
+  background-color: #ffffff;
+  font-size: 14px !important;
+  height: 40px;
+}

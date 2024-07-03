@@ -12,10 +12,10 @@ import useGetGroup from "./hooks/useGetGroup";
 import { selectRowsData } from "../../utils/globalConstants";
 
 function getSelectedRowData(count) {
-  // Initialize the selected row data array
+  
   let selectedRowData = [];
 
-  // Iterate over selectRowsData and add elements <= count
+  
   for (let i = 0; i < selectRowsData.length; i++) {
     if (selectRowsData[i] <= count) {
       selectedRowData.push(selectRowsData[i]);
@@ -84,40 +84,11 @@ function RoleModule() {
                 sort={sort}
                 setSort={setSort}
               />
-
-              {/* <div className={styles.rowsPerPage}>
-                <p className={styles.totalRecordStyle}>Showing Results:</p>
-                <Select
-                  labelId="rows-per-page"
-                  id="rows-per-page"
-                  value={rowsPage}
-                  onChange={handleRowsChange}
-                  size="small"
-                  className={styles.customizeRowsSelect}
-                >
-                  {selectRowsData.map((item) => (
-                    <MenuItem value={item} className={styles.styledOptionText}>
-                      {item}
-                    </MenuItem>
-                  ))}
-                </Select>
-                <p className={styles.totalRecordStyle}>of 141</p>
-              </div> */}
             </>
           ) : (
             <NoDataFound />
           )}
         </div>
-        {/* <div className={styles.pageFooter}>
-          <Pagination
-            count={data?.totalPageSize}
-            color="primary"
-            size="small"
-            onChange={handlePaginationChange}
-            page={pageChange}
-            className={styles.marginFotter}
-          />
-        </div> */}
         <div className={styles.pageFooter}>
           <div className={styles.rowsPerPage}>
             <p className={styles.totalRecordStyle}>Showing Results:</p>

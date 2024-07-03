@@ -47,9 +47,9 @@ const useGetPartnerNeft = () => {
         );
         const partnerNeftData = response.data.data.map((item) => ({
           id: item.id,
-          lob: item.lob.lob,
+          lobId: item.lob.lob,
           product: item.product.product,
-          producerName: item.producer.firstName,
+          producerName: item.producer.firstName + item.producer.lastName,
           producerCode: item.producer.producerCode,
           verificationMethod: VERFICATION_ENUM[item.verificationMethod],
         }));

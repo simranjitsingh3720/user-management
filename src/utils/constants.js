@@ -9,6 +9,7 @@ export const COMMON_WORDS = {
   ENABLE: "Enable",
   DISABLE: "Disable",
   CHANGE_STATUS: "Change Status",
+  LOGOUT: "Logout",
 };
 
 export const API_END_POINTS = {

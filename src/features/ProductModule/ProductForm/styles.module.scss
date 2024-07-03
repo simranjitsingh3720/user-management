@@ -48,8 +48,8 @@
 
 .customizeSelect {
   background-color: #ffffff;
-  width: 100%; /* Set the width to 100% initially */
-  min-width: 520px !important; /* Set the maximum width to 300px */
+  width: 100%; 
+  min-width: 520px !important; 
   font-size: 14px !important;
   height: 40px;
 }
@@ -60,9 +60,9 @@
 }
 
 @media (max-width: 768px) {
-  /* Adjust width for larger screens */
+  
   .customizeSelect {
     min-width: 110px !important;
-    /* Adjust maximum width for larger screens */
+    
   }
 }

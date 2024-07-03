@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axiosInstance from "../../../utils/axiosInstance"; // Import the instance
+import axiosInstance from "../../../utils/axiosInstance"; 
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { COMMON_ERROR } from "../../../utils/globalConstants";
@@ -22,9 +22,9 @@ function useUpdateRole(id, setChangeStatusOpen, fetchGroupList) {
         error?.response?.data?.error?.message || COMMON_ERROR
       );
 
-      // Handle errors
+      
     } finally {
-      setLoading(false); // Set loading to false when request finishes (whether success or failure)
+      setLoading(false); 
     }
   }
   return { UpdateDataFun, updateLoading: loading };

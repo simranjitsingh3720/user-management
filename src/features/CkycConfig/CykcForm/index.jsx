@@ -121,12 +121,6 @@ const CkycForm = () => {
                       {id ? "Update CKYC Config" : "Create New CKYC Config"}
                     </span>
                   </div>
-                  <div>
-                    <span className="label">
-                      Please fill the details below and click ‘Submit’ to create
-                      a new CKYC config.
-                    </span>
-                  </div>
                 </Grid>
                 {!id && (
                   <Grid
