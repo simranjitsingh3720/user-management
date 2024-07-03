@@ -14,5 +14,11 @@ export const EXPORT_ACTIONS = {
 };
 
 export const EXPORT_CONSTANTS = {
-    dialogTitle: "Export Data"
+    dialogTitle: "Export Data",
+    custom: 'custom'
+}
+
+export const API_END_POINTS = {
+  getColumns: "/api/file/columns?tableName=",
+  downloadFile: "/api/file/download"
 }

@@ -2,10 +2,12 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { hideDialog } from "../../../stores/slices/dialogSlice";
 import CustomButton from "../../../components/CustomButton";
+import { EXPORT_CONSTANTS } from "../utils/constants";
+import { downloadData } from "../../../stores/slices/exportSlice";
 
 const Actions = () => {
   const dispatch = useDispatch();
-  const { columns, fromDate, toDate } = useSelector((state) => state.export);
+  const { columns, fromDate, toDate, selectedValue } = useSelector((state) => state.export);
 
   const confirmAction = () => {
     const selectedColumns = columns
@@ -14,13 +16,16 @@ const Actions = () => {
       .join(", ");
 
     let combinedData = {
+      tableName: "cKYC",
+      past30Days: selectedValue !== EXPORT_CONSTANTS.custom,
+      isBulkDownload: selectedValue === EXPORT_CONSTANTS.custom,
+      // email: email,
       columns: selectedColumns,
-      fromDate: fromDate,
-      toDate: toDate
+      startDate: fromDate,
+      endDate: toDate,
     }
 
-    console.log(combinedData);
-
+    dispatch(downloadData(combinedData));
     dispatch(hideDialog());
   };
 
