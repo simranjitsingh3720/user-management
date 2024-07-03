@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "./../../utils/axiosInstance";
 import dayjs from "dayjs";
 import { API_END_POINTS } from "../../features/ExportDropdown/utils/constants";
+import { toast } from "react-toastify";
 
 const initialState = {
   selectedValue: "",
@@ -104,15 +105,13 @@ const exportSlice = createSlice({
       })
       .addCase(downloadData.fulfilled, (state, action) => {
         state.loading = false;
-        debugger
         window.open(action.payload, '_blank');
-        alert("Download successful!");
+        toast.success("Download Successfully")
       })
       .addCase(downloadData.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-        debugger
-        alert("Download failed: " + action.payload.message);
+        toast.error("Download Failed: "+ action.payload.message)
       });
   },
 });
