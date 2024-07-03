@@ -126,5 +126,6 @@ export const {
   setToDate,
   setLast30Days,
   toggleColumn,
+  setTableName
 } = exportSlice.actions;
 export default exportSlice.reducer;

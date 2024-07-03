@@ -6,11 +6,11 @@ import { fetchColumns, toggleColumn } from "../../../stores/slices/exportSlice";
 
 const Content = () => {
   const dispatch = useDispatch();
-  const { columns } = useSelector((state) => state.export);
+  const { columns, tableName } = useSelector((state) => state.export);
   
   useEffect(() => {
-    dispatch(fetchColumns('gc_office'));
-  }, [dispatch]);
+    dispatch(fetchColumns(tableName));
+  }, [dispatch, tableName]);
 
   const handleCheckUncheck = (id) => {
     dispatch(toggleColumn(id));

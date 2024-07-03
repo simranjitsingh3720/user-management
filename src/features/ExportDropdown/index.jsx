@@ -8,7 +8,7 @@ import {
   MenuItem,
   MenuList,
 } from "@mui/material";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import CustomButton from "../../components/CustomButton";
 import { showDialog } from "../../stores/slices/dialogSlice";
@@ -25,6 +25,7 @@ const ExportDropdown = () => {
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
   const dispatch = useDispatch();
+  const { tableName } = useSelector((state) => state.export)
 
   const handleMenuItemClick = (event, index) => {
     setOpen(false);
@@ -53,6 +54,10 @@ const ExportDropdown = () => {
     }
     setOpen(false);
   };
+
+  if(!tableName) {
+    return;
+  }
 
   return (
     <React.Fragment>
