@@ -3,12 +3,12 @@ function generateTableHeaders(handleClicked) {
     {
       id: "permissionName",
       value: "Permission Name",
-      sortable: true,
+      sortable: false,
     },
     {
       id: "permissionType",
       value: "Permission Type",
-      sortable: true,
+      sortable: false,
     },
     {
       id: "createdAt",
@@ -27,15 +27,6 @@ function generateTableHeaders(handleClicked) {
         {
           component: "switch",
           onClick: (data, row) => {
-            // console.log("row", row);
-            // console.log("data", data);
-            // data.map((item) => {
-            //   if (item.id === row.id) {
-            //     return (row.checked = !row.checked);
-            //   }
-            //   return row.checked;
-            // });
-
             handleClicked(data, row);
           },
         },

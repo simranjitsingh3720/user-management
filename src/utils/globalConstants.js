@@ -13,6 +13,7 @@ export const REGEX = {
 
 export const BUTTON_TEXT = {
   CKYC_CONFIG: "Create CKYC Configuration",
+  Permission: "Create New Permission",
 };
 
 export const PLACEHOLDER_TEXT = {
