@@ -34,7 +34,7 @@ function ResponsiveDrawer({ showSidebarAndHeader, children }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const [selectedNavbar, setSelectedNavbar] = useState(
-    getLabelFromPath(defaultRoute) || "Permission"
+    getLabelFromPath(defaultRoute) || "dashboard"
   );
   const [selectedParentIndex, setSelectedParentIndex] = useState(null);
 

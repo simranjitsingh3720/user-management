@@ -10,10 +10,9 @@ import {
   ListItemIcon,
 } from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
-import Styles from "./styles.module.scss";
-import { SideNavData } from "../../utils/Navbar Data/navbar";
-import { drawerWidth } from "../../utils/globalConstants";
 import { useNavigate } from "react-router-dom";
+import { drawerWidth } from "../../utils/globalConstants";
+import useSideNavData from "./hooks/useSideNavData";
 
 function NavbarDrawer({
   setIsClosing,
@@ -25,7 +24,7 @@ function NavbarDrawer({
   setSelectedParentIndex,
 }) {
   const [open, setOpen] = useState(false);
-  const [filteredNavData, setFilteredNavData] = useState(SideNavData);
+  const [filteredNavData, setFilteredNavData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 
   const handleClick = () => {
@@ -34,15 +33,15 @@ function NavbarDrawer({
 
   const navigate = useNavigate();
 
-  const handleListItemClick = (event, index, navigateRoute, label) => {
+  const handleListItemClick = (navigateRoute, label) => {
     navigate(`/${navigateRoute}`);
     setSelectedParentIndex(null);
-    setSelectedNavbar(label);
+    setSelectedNavbar(label.toLowerCase());
     setOpen(false);
   };
 
-  const handleCollpaseListItemClick = (event, index, label, childLabel) => {
-    setSelectedParentIndex(`${label}/${childLabel}`);
+  const handleCollpaseListItemClick = (label, childLabel) => {
+    setSelectedParentIndex(`${label.toLowerCase()}/${childLabel}`);
     setSelectedNavbar(null);
   };
 
@@ -55,60 +54,67 @@ function NavbarDrawer({
     setIsClosing(false);
   };
 
+  const sideNavData = useSideNavData();
+
   useEffect(() => {
-    const filteredData = SideNavData.filter((item) =>
-      item.label.toLowerCase().includes(searchQuery.toLowerCase())
+    const filteredData = sideNavData.filter((item) =>
+      item.moduleName.toLowerCase().includes(searchQuery.toLowerCase())
     );
     setFilteredNavData(filteredData);
-  }, [searchQuery]);
+  }, [searchQuery, sideNavData]);
 
   const drawer = (
     <div>
-      <div className='flex justify-center items-center flex-col text-center px-3'>
-        <div className={Styles.StyledIcon}>
+      <div className="flex flex-col items-center text-center px-3">
+        <div className="my-4">
           <TataNormalLogo />
         </div>
-        <div className={Styles.StyledText}>User Management Portal</div>
-          <SearchInput onSearch={(query) => setSearchQuery(query)} />
+        <div className="text-[#18478b] text-lg font-semibold mb-4">
+          User Management Portal
+        </div>
+        <SearchInput onSearch={(query) => setSearchQuery(query)} />
       </div>
       <List className="mr-3">
         {filteredNavData.map((obj, index) =>
           !obj.child ? (
             <ListItem key={index} disablePadding>
               <ListItemButton
-                selected={selectedNavbar === obj.label}
+                selected={selectedNavbar === obj.moduleName}
                 onClick={(event) =>
                   handleListItemClick(
                     event,
                     index,
                     obj.navigateRoute,
-                    obj.label
+                    obj.moduleName
                   )
                 }
-                className={selectedNavbar === obj.label ? Styles.selectedButton : ""}
+                className={`${
+                  selectedNavbar === obj.moduleName ? "text-[#185ec4] bg-[#f2f7ff] border-l-4 border-[#185ec4]" : ""
+                }`}
               >
-                <ListItemIcon className={Styles.ListItemIcon}>
-                  <obj.icon className={Styles.navbarIcon} />
-                </ListItemIcon>
-                <div className={Styles.navbarText}>{obj?.label}</div>
+                
+                {/* <ListItemIcon className="text-[#7e84a3]">
+                  <obj.icon className="text-lg" />
+                </ListItemIcon> */}
+                <div className="text-sm">{obj?.moduleName}</div>
               </ListItemButton>
             </ListItem>
           ) : (
             <React.Fragment key={index}>
               <ListItemButton
                 onClick={handleClick}
-                className={
-                  selectedParentIndex !== null ? Styles.selectedButton : ""
-                }
+                className={`${
+                  selectedParentIndex !== null ? "text-[#185ec4] bg-[#f2f7ff] border-l-4 border-[#185ec4]" : ""
+                }`}
               >
-                <ListItemIcon className={Styles.ListItemIcon}>
+                {/* <ListItemIcon className="text-[#7e84a3]">
                   <obj.icon />
-                </ListItemIcon>
-                <div className={Styles.navbarText}>{obj.label}</div>
+                </ListItemIcon> */}
+                <div className="text-sm">{obj.moduleName}</div>
                 {open ? (
-                  <ExpandLess className={Styles.expandIconStyle} />
+                  <ExpandLess className="ml-3" />
                 ) : (
-                  <ExpandMore className={Styles.expandIconStyle} />
+                  <ExpandMore className="ml-3" />
                 )}
               </ListItemButton>
               <Collapse in={open} timeout="auto" unmountOnExit>
@@ -118,28 +124,28 @@ function NavbarDrawer({
                       <ListItemButton
                         selected={
                           selectedParentIndex ===
-                          `${obj.label}/${childObj.label}`
+                          `${obj.moduleName}/${childObj.moduleName}`
                         }
                         onClick={(event) =>
                           handleCollpaseListItemClick(
                             event,
                             index,
-                            obj.label,
-                            childObj.label
+                            obj.moduleName,
+                            childObj.moduleName
                           )
                         }
-                        className={
+                        className={`${
                           selectedParentIndex ===
-                          `${obj.label}/${childObj.label}`
-                            ? Styles.selectedButton
+                          `${obj.moduleName}/${childObj.moduleName}`
+                            ? "text-[#185ec4] bg-[#f2f7ff] border-l-4 border-[#185ec4]"
                             : ""
-                        }
+                        }`}
                       >
-                        <ListItemIcon className={Styles.ListItemIcon}>
+                        {/* <ListItemIcon className="text-[#7e84a3]">
                           <childObj.icon />
-                        </ListItemIcon>
-                        <div className={Styles.navbarText}>
-                          {childObj?.label}
+                        </ListItemIcon> */}
+                        <div className="teListItemIconxt-sm">
+                          {childObj?.moduleName}
                         </div>
                       </ListItemButton>
                     </ListItem>
