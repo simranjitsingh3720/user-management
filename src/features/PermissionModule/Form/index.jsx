@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
-import CreateNewUserContainer from "../CreateNewPrivilegeForm copy";
+import CreateNewUserContainer from "../CreateNewPrivilegeForm";
 import { IconButton } from "@mui/material";
 import styles from "./styles.module.scss";
 import { useNavigate } from "react-router-dom";
@@ -102,18 +102,14 @@ function Form() {
           <CustomButton
             type="button"
             variant="outlined"
-            sx={{ 'margin-left': '2rem' }}
+            sx={{ "margin-left": "2rem" }}
             startIcon={<AddIcon />}
             onClick={() => append({})}
           >
             Add New Permission
           </CustomButton>
         </div>
-        <CustomButton
-          type="submit"
-          variant="contained"
-          disabled={loading}
-        >
+        <CustomButton type="submit" variant="contained" disabled={loading}>
           Submit
         </CustomButton>
       </form>

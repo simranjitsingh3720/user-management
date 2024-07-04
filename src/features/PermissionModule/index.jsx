@@ -1,101 +1,81 @@
 import React, { useState } from "react";
-import SearchComponent from "./SearchComponent";
-import Table from "./Table";
-import { MenuItem, Pagination, Select } from "@mui/material";
-import styles from "./styles.module.scss";
 import useGetPrivilege from "./hooks/useGetPrivilege";
-import ListLoader from "../../components/ListLoader";
-import TableHeader from "./Table/TableHeader";
-import NoDataFound from "../../components/NoDataCard";
-import { selectRowsData } from "../../utils/globalConstants";
-
-function getSelectedRowData(count) {
-  
-  let selectedRowData = [];
-
-  
-  for (let i = 0; i < selectRowsData.length; i++) {
-    if (selectRowsData[i] <= count) {
-      selectedRowData.push(selectRowsData[i]);
-    }
-  }
-
-  return selectedRowData;
-}
+import { BUTTON_TEXT } from "../../utils/globalConstants";
+import CustomTable from "../../components/CustomTable";
+import generateTableHeaders from "./utils/generateTableHeaders";
+import { COMMON_WORDS } from "../../utils/constants";
+import { useDispatch } from "react-redux";
+import { showDialog } from "../../stores/slices/dialogSlice";
+import SearchComponent from "../../components/SearchComponent";
+import { PrivilegeSearch } from "./constants";
+import Content from "./Dialog/Content";
+import Actions from "./Dialog/Action";
+import CustomDialog from "../../components/CustomDialog";
 
 function PermissionModule() {
-  const [rowsPage, setRowsPage] = useState(10);
+  const dispatch = useDispatch();
+
   const [query, setQuery] = useState("");
-  const [pageChange, setPageChange] = useState(1);
+  const [searched, setSearched] = useState("permissionName");
+  const [page, setPage] = useState(0);
+  const [pageSize, setPageSize] = useState(5);
+  const [order, setOrder] = useState(COMMON_WORDS.ASC);
+  const [orderBy, setOrderBy] = useState(COMMON_WORDS.CREATED_AT);
 
-  const { fetchData, data, loading, setLoading, sort, setSort } =
-    useGetPrivilege(pageChange, query, rowsPage);
+  const { fetchData, data, loading } = useGetPrivilege(
+    page,
+    pageSize,
+    query,
+    order,
+    orderBy
+  );
 
-  const handlePaginationChange = (event, page) => {
-    setLoading(true);
-    setPageChange(page);
+  const handleClicked = (data, row) => {
+    dispatch(
+      showDialog({
+        title: COMMON_WORDS.CHANGE_STATUS,
+        content: <Content />,
+        actions: <Actions row={row} fetchData={fetchData} />,
+      })
+    );
   };
 
-  const handleRowsChange = (event) => {
-    setPageChange(1);
-    setRowsPage(event.target.value);
+  const HEADER_COLUMNS = generateTableHeaders(handleClicked);
+
+  const handleGo = () => {
+    fetchData(searched, query);
   };
 
   return (
     <div>
       <SearchComponent
+        selectOptions={PrivilegeSearch}
+        searched={searched}
+        setSearched={setSearched}
+        textField
+        textFieldPlaceholder="Search"
         setQuery={setQuery}
-        setLoading={setLoading}
-        setPageChange={setPageChange}
+        buttonText={BUTTON_TEXT.Permission}
+        navigateRoute={"/permission/permission-form"}
+        handleGo={handleGo}
       />
-      <div className={styles.tableContainerStyle}>
-        <div className={styles.tableStyled}>
-          {loading ? (
-            <>
-              <TableHeader />
-              <ListLoader />
-            </>
-          ) : data?.data && data?.data.length ? (
-            <Table
-              ListData={data?.data}
-              fetchData={fetchData}
-              setLoading={setLoading}
-              sort={sort}
-              setSort={setSort}
-            />
-          ) : (
-            <NoDataFound />
-          )}
-        </div>
-        <div className={styles.pageFooter}>
-          <div className={styles.rowsPerPage}>
-            <p className={styles.totalRecordStyle}>Showing Results:</p>
-            <Select
-              labelId="rows-per-page"
-              id="rows-per-page"
-              value={rowsPage}
-              onChange={handleRowsChange}
-              size="small"
-              className={styles.customizeRowsSelect}
-            >
-              {getSelectedRowData(data?.totalCount).map((item) => (
-                <MenuItem value={item} className={styles.styledOptionText}>
-                  {item}
-                </MenuItem>
-              ))}
-            </Select>
-            <p className={styles.totalRecordStyle}>of {data?.totalCount}</p>
-          </div>
-          <Pagination
-            count={data?.totalPageSize}
-            color="primary"
-            size="small"
-            onChange={handlePaginationChange}
-            page={pageChange}
-            className={styles.marginFotter}
-          />
-        </div>
+      <div className="mt-4">
+        <CustomTable
+          columns={HEADER_COLUMNS}
+          rows={data || []}
+          loading={loading}
+          totalCount={data?.totalCount || 0}
+          page={page}
+          setPage={setPage}
+          rowsPerPage={pageSize}
+          setRowsPerPage={setPageSize}
+          order={order}
+          setOrder={setOrder}
+          orderBy={orderBy}
+          setOrderBy={setOrderBy}
+        />
       </div>
+      <CustomDialog />
     </div>
   );
 }
