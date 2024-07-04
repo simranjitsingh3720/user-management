@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import ResponsiveDrawer from "../../components/LayoutDesign";
 import PartnerNeftForm from "../../features/PartnerNeft/PartnerNeftForm";
 import FullPageLoader from "../../components/FullPageLoader";
+import TermCondition from "../../features/TermCondition";
 
 const Dashboard = lazy(() => import("../../features/Dashboard"));
 const UserManagement = lazy(() => import("../../features/UserManagement"));
@@ -81,8 +82,12 @@ const PartnerNeft = lazy(() => import("../../features/PartnerNeft"));
 const CkycConfig = lazy(() => import("../../features/CkycConfig"));
 
 const CkycForm = lazy(() => import("../../features/CkycConfig/CykcForm"));
-const CommunicationRestrictions = lazy(() => import("../../features/CommunicationRestrictions"));
-const CommunicationRestrictionsForm = lazy(() => import("../../features/CommunicationRestrictions/CreateForm"));
+const CommunicationRestrictions = lazy(() =>
+  import("../../features/CommunicationRestrictions")
+);
+const CommunicationRestrictionsForm = lazy(() =>
+  import("../../features/CommunicationRestrictions/CreateForm")
+);
 
 const AppRoutes = () => {
   return (
@@ -400,6 +405,14 @@ const AppRoutes = () => {
           element={
             <ResponsiveDrawer showSidebarAndHeader={true}>
               <CkycForm />
+            </ResponsiveDrawer>
+          }
+        />
+        <Route
+          path="/tc-report"
+          element={
+            <ResponsiveDrawer showSidebarAndHeader={true}>
+              <TermCondition />
             </ResponsiveDrawer>
           }
         />
