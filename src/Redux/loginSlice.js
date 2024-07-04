@@ -10,7 +10,7 @@ export const fetchLoginDetails = createAsyncThunk(
       return response;
     } catch (error) {
       console.error(error);
-      return rejectWithValue("");
+      return rejectWithValue(error.response?.data?.details || "Something went wrong");
     }
   }
 );
@@ -19,7 +19,7 @@ export const loginSlice = createSlice({
   name: "login",
   initialState: {
     userDetails: [],
-    loading: true,
+    loading: false,
     error: "",
   },
   reducers: {
@@ -39,7 +39,7 @@ export const loginSlice = createSlice({
       })
       .addCase(fetchLoginDetails.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message;
+        state.error = action.payload;
       });
   },
 });

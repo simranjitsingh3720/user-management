@@ -11,6 +11,6 @@ export const isAuthenticated = () => {
 };
 
 export const expirationTime = () => {
-  const expiration = new Date().getTime() + 1 * 60 * 1000;
+  const expiration = new Date().getTime() + 30 * 60 * 1000;
   return expiration;
 };

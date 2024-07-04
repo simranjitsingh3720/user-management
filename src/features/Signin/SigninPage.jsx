@@ -11,12 +11,14 @@ import SignInImg from "../../assets/SignInImg";
 import { expirationTime } from "../../utils/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchLoginDetails, setLoginError } from "../../Redux/loginSlice";
+import Loader from "../../components/Loader";
 
 function SignInPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const loginData = useSelector((state) => state.login.userDetails);
   const loginError = useSelector((state) => state.login.error);
+  const loginLoading = useSelector((state) => state.login.loading);
   const onSubmit = (data) => {
     console.log(data);
     const payload = { ntId: data.emailId, password: data.password };
@@ -45,15 +47,15 @@ function SignInPage() {
   const email = watch("emailId");
   const password = watch("password");
 
-  useEffect(()=>{
-
-    if(loginError){
-      dispatch(setLoginError(''));
+  useEffect(() => {
+    if (loginError) {
+      dispatch(setLoginError(""));
     }
   }, [email, password]);
 
   return (
     <Box className="flex w-full h-screen">
+      {loginLoading && <Loader></Loader>}
       <div className="invisible w-0 lg:visible lg:w-1/2 h-full bg-cornFlower flex justify-center items-center overflow-hidden">
         <SignInImg></SignInImg>
       </div>
@@ -111,7 +113,9 @@ function SignInPage() {
                   label="Remember me"
                 />
               </div> */}
-              <div className="text-left px-8 text-persianRed text-xs">{loginError}</div>
+              <div className="text-left px-8 text-persianRed text-xs">
+                {loginError}
+              </div>
             </div>
             <div className="mx-7 mt-5">
               <CustomButton
