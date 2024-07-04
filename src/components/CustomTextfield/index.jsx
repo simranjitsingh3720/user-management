@@ -3,7 +3,7 @@ import styles from "./styles.module.scss";
 import { TextField } from "@mui/material";
 import { Controller } from "react-hook-form";
 
-const InputField = ({ id, required,label, validation, control, errors, disabled, classes, placeholder }) => {
+const InputField = ({ id, required,label, validation, control, errors, disabled, classes, placeholder, type='text' }) => {
   return (
     <div className={styles.fieldContainerStyle}>
       <label className={styles.labelText}>
@@ -22,6 +22,7 @@ const InputField = ({ id, required,label, validation, control, errors, disabled,
         render={({ field }) => (
           <TextField
             id={id}
+            type={type}
             variant="outlined"
             disabled={disabled}
             placeholder={`Enter ${label}`}

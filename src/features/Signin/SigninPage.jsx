@@ -1,81 +1,133 @@
-import styles from "./styles.module.scss";
 import { useForm } from "react-hook-form";
-import React from "react";
-import { Box, TextField } from "@mui/material";
+import React, { useEffect } from "react";
+import { Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import CustomButton from "../../components/CustomButton";
+import TataNormalLogo from "../../assets/TataNormalLogo";
+import InputField from "../../components/CustomTextfield";
+import { emailValidation, passwordValidation } from "./utils/constants";
+import { TOKEN, TOKEN_EXPIRATION } from "../../utils/globalConstants";
+import SignInImg from "../../assets/SignInImg";
+import { expirationTime } from "../../utils/auth";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchLoginDetails, setLoginError } from "../../Redux/loginSlice";
+import Loader from "../../components/Loader";
 
-/**
- * The sign in page.
- */
 function SignInPage() {
-  // Initialize useHistory
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
+  const loginData = useSelector((state) => state.login.userDetails);
+  const loginError = useSelector((state) => state.login.error);
+  const loginLoading = useSelector((state) => state.login.loading);
   const onSubmit = (data) => {
-    navigate("/permission");
+    console.log(data);
+    const payload = { email: data.emailId, password: data.password };
+    dispatch(fetchLoginDetails(payload));
+    // localStorage.setItem(TOKEN, "test token");
+    // localStorage.setItem(TOKEN_EXPIRATION, expirationTime());
+    // navigate("/dashboard");
   };
+
+  useEffect(() => {
+    if (loginData && Object.keys(loginData).length > 0 && loginData?.status === 200 && !localStorage.getItem(TOKEN)) {
+      localStorage.setItem(TOKEN, "test token");
+      localStorage.setItem(TOKEN_EXPIRATION, expirationTime());
+      navigate("/dashboard");
+    }
+  }, [loginData]);
+
   const {
     register,
     handleSubmit,
+    control,
+    watch,
     formState: { errors },
   } = useForm();
 
+  const email = watch("emailId");
+  const password = watch("password");
+
+  useEffect(() => {
+    if (loginError) {
+      dispatch(setLoginError(""));
+    }
+  }, [email, password]);
+
   return (
-    // <div className="flex min-w-0 flex-1 flex-col items-center sm:flex-row sm:justify-center md:items-start md:justify-start" />
-    <Box className={styles.boxStyle}>
-      <div className={styles.imageStyle}></div>
-      <div className={styles.signIN}>
-        <div className={styles.loginTextContainer}>
-          <div className={styles.welcomeStyle}>Welcome to</div>
-          <div className={styles.userManagementText}>
+    <Box className="flex w-full h-screen">
+      {loginLoading && <Loader></Loader>}
+      <div className="invisible w-0 lg:visible lg:w-1/2 h-full bg-cornFlower flex justify-center items-center overflow-hidden">
+        <SignInImg></SignInImg>
+      </div>
+      <div className="bg-white w-full lg:w-1/2 h-full flex flex-col justify-center items-center p-8 sm:p-28 lg:p-12 xl:p-28">
+        <div className="text-center w-full">
+          <div className="flex justify-center">
+            <TataNormalLogo />
+          </div>
+          <div className="text-cornFlower text-2xl font-semibold mt-3">
             User Management Portal
           </div>
-        </div>
-        <div>
-          <div className={styles.styledLoginText}>
-            Please login to your account.
+          <div className="text-fiord mt-8 text-lg font-medium">
+            Welcome back!
+          </div>
+          <div className="mt-1 text-fiord">
+            Please sign in to your account with your username.
           </div>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className={styles.fieldStyle}>
-              <div className={styles.styledText}>Username</div>
-              <TextField
-                id="userName"
-                variant="outlined"
-                {...register("userName", { required: true })}
-                placeholder="Enter Username"
-                size="small"
-                className={styles.textFieldStyle}
+            <div className="mt-8 px-2 grid grid-cols-1">
+              <InputField
+                key="emailId"
+                id="emailId"
+                required
+                label="Username"
+                validation={emailValidation}
+                control={control}
+                errors={errors}
+                disabled={false}
+                classes="w-full text-left"
               />
-              <div className={styles.styledError}>
-                {errors.userName && <span>This field is required</span>}
+              <InputField
+                key="password"
+                id="password"
+                type="password"
+                required
+                label="Password"
+                validation={passwordValidation}
+                control={control}
+                errors={errors}
+                disabled={false}
+                classes="w-full text-left"
+              />
+              {/* <div className="text-left px-5">
+                <FormControlLabel
+                  onChange={() => {
+                    setRememberMeChecked(!rememberMeChecked);
+                  }}
+                  checked={rememberMeChecked}
+                  control={<Checkbox size="small" />}
+                  sx={{
+                    "& .MuiTypography-root": {
+                      fontSize: "0.875rem",
+                      color: "#465465",
+                    },
+                  }}
+                  label="Remember me"
+                />
+              </div> */}
+              <div className="text-left px-8 text-persianRed text-xs">
+                {loginError}
               </div>
             </div>
-            <div className={styles.styledText}>Password</div>
-            <TextField
-              id="password"
-              variant="outlined"
-              {...register("password", { required: true })}
-              placeholder="Enter Password"
-              size="small"
-              className={styles.textFieldStyle}
-            />
-            <div className={styles.styledError}>
-              {errors.password && <span>This field is required</span>}
-            </div>
-            <br />
-            <div>
+            <div className="mx-7 mt-5">
               <CustomButton
                 type="submit"
                 variant="contained"
+                className="w-full"
               >
-                Submit
+                Sign In
               </CustomButton>
             </div>
           </form>
-        </div>
-        <div className={styles.signupText}>
-          New User? <span className={styles.signupLink}>Sign Up</span>
         </div>
       </div>
     </Box>

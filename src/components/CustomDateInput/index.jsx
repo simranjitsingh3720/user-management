@@ -11,7 +11,7 @@ const DateField = ({
   setValue,
   name,
   label,
-  required = false,
+  required,
   rules = {},
   errors = {},
   classes,
@@ -31,12 +31,12 @@ const DateField = ({
     }
   };
 
-  useEffect(()=>{
-    if(!labelVisible){
+  useEffect(() => {
+    if (!labelVisible) {
       const today = dayjs().format("YYYY-MM-DD");
       setValue(name, today);
     }
-  }, []);
+  }, [labelVisible]);
 
   return (
     <div
@@ -56,7 +56,7 @@ const DateField = ({
         <Controller
           name={name}
           control={control}
-          rules={{ validate: validateDate, ...rules }}
+          rules={{ validate: validateDate, required: required ? "This field is required": "" }}
           render={({ field }) => (
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
@@ -68,10 +68,20 @@ const DateField = ({
                     variant: labelVisible ? "outlined" : "standard",
                     InputProps: {
                       disableUnderline: true,
-                      style: !labelVisible ? { display: 'flex', flexDirection: 'row-reverse',gap:10, fontSize:13, marginLeft:'-22px', color: "#607083", } : {}, 
+                      style: !labelVisible
+                        ? {
+                            display: "flex",
+                            flexDirection: "row-reverse",
+                            gap: 10,
+                            fontSize: 13,
+                            marginLeft: "-22px",
+                            color: "#607083",
+                          }
+                        : {},
                     },
                   },
                 }}
+                minDate={labelVisible ? undefined : dayjs()}
                 onChange={(date) => {
                   const formattedDate = dayjs(date).format("YYYY-MM-DD");
                   setValue(name, formattedDate);
