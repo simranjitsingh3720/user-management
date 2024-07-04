@@ -1,10 +1,7 @@
 import { Autocomplete,  Grid, TextField } from "@mui/material";
 import React from "react";
-import styles from "./styles.module.scss";
 import { Controller, useForm } from "react-hook-form";
 import useGetUserData from "../../../hooks/useGetUserData";
-import DownloadIcon from "./../../../assets/DownloadLogo";
-import excelExport from "../../../utils/excelExport";
 import CustomButton from "../../../components/CustomButton";
 
 const ProducerForm = ({ onFormSubmit, revalidationList }) => {
@@ -53,7 +50,7 @@ const ProducerForm = ({ onFormSubmit, revalidationList }) => {
                   onChange={(event, newValue) => {
                     field.onChange(newValue);
                   }}
-                  disableClearable='true'
+                  disableClearable={true}
                   renderOption={(props, option) => (
                     <li {...props} key={option.id}>
                       {option?.firstName?.toUpperCase()}{" "}
@@ -72,17 +69,18 @@ const ProducerForm = ({ onFormSubmit, revalidationList }) => {
               {errors.producer && <span>{errors.producer.message}</span>}
             </div>
           </Grid>
-        </Grid>
 
-        <div className={styles.buttonContainer}>
-          <CustomButton
-            type="submit"
-            variant="contained"
-            className={styles.primaryBtn}
-          >
-            Submit
-          </CustomButton>
-        </div>
+          <Grid item xs={12} sm={6} lg={4} alignItems='flex-end' display='flex'>
+            <CustomButton
+              type="submit"
+              variant="contained"
+              color="primary"
+              className="w-full md:w-auto"
+            >
+              Submit
+            </CustomButton>
+            </Grid>
+        </Grid>
       </form>
     </>
   );

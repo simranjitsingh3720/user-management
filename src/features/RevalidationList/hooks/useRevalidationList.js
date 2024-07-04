@@ -2,16 +2,23 @@ import { useState, useCallback, useEffect } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
 import { API_END_POINTS } from "../constants";
 import { toast } from "react-toastify";
+import { COMMON_WORDS } from "../../../utils/constants";
+import { buildQueryString } from "../../../utils/globalizationFunction";
 
 const useRevalidationList = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const fetchData = useCallback(async (id) => {
+  const fetchData = useCallback(async (ids) => {
     setLoading(true);
+    const queryParams = buildQueryString({
+      ids,
+      edge: COMMON_WORDS.HAS_PRODUCER,
+      isExclusive: true,
+    });
     try {
       const response = await axiosInstance.get(
-        API_END_POINTS.getRevalidationList + id
+        API_END_POINTS.getRevalidationList + queryParams
       );
       const transformedData =
         response?.data?.data.map((item) => ({
