@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../../../../utils/axiosInstance";
+import { useDispatch } from "react-redux";
+import { setTableName } from "../../../../stores/slices/exportSlice";
 
 export default function useGetUser(pageChange = 1) {
   const [data, setData] = useState(null);
@@ -8,6 +10,7 @@ export default function useGetUser(pageChange = 1) {
     sortKey: "createdAt",
     sortOrder: "asc",
   });
+  const dispatch = useDispatch();
 
   const fetchData = async (key, query, resultGroupId) => {
     setLoading(true);
@@ -20,6 +23,9 @@ export default function useGetUser(pageChange = 1) {
       }
       const response = await axiosInstance.get(url);
       setData(response.data);
+      if(response.data.data.length > 0) {
+        dispatch(setTableName(response.data.data[0].label))
+      }
     } catch (error) {
       setData([]);
     } finally {

@@ -25,7 +25,8 @@ const PartnerNeft = () => {
   const [productValue, setProductValue] = useState([]);
   const [lobValue, setLobValue] = useState([]);
 
-  const { getPartnerNeft, partnerNeftData, partnerNeftLoading, totalCount } = useGetPartnerNeft();
+  const { getPartnerNeft, partnerNeftData, partnerNeftLoading, totalCount } =
+    useGetPartnerNeft();
 
   const loadData = useCallback(() => {
     getPartnerNeft({
@@ -52,17 +53,21 @@ const PartnerNeft = () => {
     dispatch(fetchAllProductData());
   }, [dispatch]);
 
-  const fetchIdsAndConvert = (inputData) => inputData.map((item) => item.id).join();
+  const fetchIdsAndConvert = (inputData) =>
+    inputData.map((item) => item.id).join();
 
   const handleGo = () => {
     const searchKey = searched === COMMON_WORDS.PRODUCT ? "productId" : "lobId";
-    const searchString = fetchIdsAndConvert(searched === COMMON_WORDS.PRODUCT ? productValue : lobValue);
+    const searchString = fetchIdsAndConvert(
+      searched === COMMON_WORDS.PRODUCT ? productValue : lobValue
+    );
     getPartnerNeft({ searchKey, searchString });
   };
 
   const updateNeftForm = (row) => navigate("/partner-neft/form/" + row.id);
 
-  const optionLabel = (option, type) => (option[type] ? option[type].toUpperCase() : "");
+  const optionLabel = (option, type) =>
+    option[type] ? option[type].toUpperCase() : "";
   const renderOptionFunction = (props, option, type) => (
     <li {...props} key={option?.id}>
       {option[type] ? option[type].toUpperCase() : ""}
@@ -74,18 +79,44 @@ const PartnerNeft = () => {
   return (
     <Box>
       <SearchComponent
-        optionsData={searched === COMMON_WORDS.PRODUCT ? products?.data ?? [] : allLob?.data ?? []}
+        optionsData={
+          searched === COMMON_WORDS.PRODUCT
+            ? products?.data ?? []
+            : allLob?.data ?? []
+        }
         option={searched === COMMON_WORDS.PRODUCT ? productValue : lobValue}
-        setOption={searched === COMMON_WORDS.PRODUCT ? setProductValue : setLobValue}
-        optionLabel={(option) => optionLabel(option, searched === COMMON_WORDS.PRODUCT ? COMMON_WORDS.PRODUCT : COMMON_WORDS.LOB)}
-        placeholder={searched === COMMON_WORDS.PRODUCT ? "Search by Product Name" : "Search by Lob Name"}
-        renderOptionFunction={(props, option) => renderOptionFunction(props, option, searched === COMMON_WORDS.PRODUCT ? COMMON_WORDS.PRODUCT : COMMON_WORDS.LOB)}
+        setOption={
+          searched === COMMON_WORDS.PRODUCT ? setProductValue : setLobValue
+        }
+        optionLabel={(option) =>
+          optionLabel(
+            option,
+            searched === COMMON_WORDS.PRODUCT
+              ? COMMON_WORDS.PRODUCT
+              : COMMON_WORDS.LOB
+          )
+        }
+        placeholder={
+          searched === COMMON_WORDS.PRODUCT
+            ? "Search by Product Name"
+            : "Search by Lob Name"
+        }
+        renderOptionFunction={(props, option) =>
+          renderOptionFunction(
+            props,
+            option,
+            searched === COMMON_WORDS.PRODUCT
+              ? COMMON_WORDS.PRODUCT
+              : COMMON_WORDS.LOB
+          )
+        }
         buttonText="Create New NEFT Flag"
         navigateRoute="/partner-neft/form"
         searched={searched}
         setSearched={setSearched}
         selectOptions={ProductPayment}
         handleGo={handleGo}
+        showButton
       />
       <div className="mt-4">
         <CustomTable
