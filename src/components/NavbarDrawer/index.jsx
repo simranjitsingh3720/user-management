@@ -6,8 +6,7 @@ import {
   Collapse,
   List,
   ListItem,
-  ListItemButton,
-  ListItemIcon,
+  ListItemButton
 } from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
@@ -33,10 +32,10 @@ function NavbarDrawer({
 
   const navigate = useNavigate();
 
-  const handleListItemClick = (navigateRoute, label) => {
-    navigate(`/${navigateRoute}`);
+  const handleListItemClick = (obj) => {
+    navigate(`/${obj.route}`);
     setSelectedParentIndex(null);
-    setSelectedNavbar(label.toLowerCase());
+    setSelectedNavbar(obj.moduleName);
     setOpen(false);
   };
 
@@ -80,22 +79,19 @@ function NavbarDrawer({
             <ListItem key={index} disablePadding>
               <ListItemButton
                 selected={selectedNavbar === obj.moduleName}
-                onClick={(event) =>
-                  handleListItemClick(
-                    event,
-                    index,
-                    obj.navigateRoute,
-                    obj.moduleName
-                  )
-                }
+                onClick={(event) => handleListItemClick(obj)}
                 className={`${
-                  selectedNavbar === obj.moduleName ? "text-[#185ec4] bg-[#f2f7ff] border-l-4 border-[#185ec4]" : ""
+                  selectedNavbar === obj.moduleName
+                    ? "text-[#185ec4] bg-[#f2f7ff] border-l-4 border-[#185ec4]"
+                    : ""
                 }`}
               >
-                
-                {/* <ListItemIcon className="text-[#7e84a3]">
-                  <obj.icon className="text-lg" />
-                </ListItemIcon> */}
+                {/** Show svg in image tag */}
+                <img
+                  src={"/icons/" + obj.icon}
+                  alt={obj.moduleName}
+                  className="w-6 h-6 mr-2"
+                />
                 <div className="text-sm">{obj?.moduleName}</div>
               </ListItemButton>
             </ListItem>
@@ -104,7 +100,9 @@ function NavbarDrawer({
               <ListItemButton
                 onClick={handleClick}
                 className={`${
-                  selectedParentIndex !== null ? "text-[#185ec4] bg-[#f2f7ff] border-l-4 border-[#185ec4]" : ""
+                  selectedParentIndex !== null
+                    ? "text-[#185ec4] bg-[#f2f7ff] border-l-4 border-[#185ec4]"
+                    : ""
                 }`}
               >
                 {/* <ListItemIcon className="text-[#7e84a3]">
