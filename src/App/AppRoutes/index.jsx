@@ -244,7 +244,7 @@ const AppRoutes = () => {
           }
         />
         <Route
-          path="/otpException"
+          path="/otpexception"
           element={
             <ResponsiveDrawer showSidebarAndHeader={true}>
               <OTPException />
