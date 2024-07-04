@@ -7,7 +7,7 @@ export const fetchLoginDetails = createAsyncThunk(
     try {
       let url = "/api/login";
       const response = await axiosInstance.post(url, payload);
-      return response;
+      return response?.data;
     } catch (error) {
       console.error(error);
       return rejectWithValue(error.response?.data?.error?.message || error.response?.data?.details || "Something went wrong");
