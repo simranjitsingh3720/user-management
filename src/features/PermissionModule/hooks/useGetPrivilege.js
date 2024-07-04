@@ -1,26 +1,26 @@
 import axiosInstance from "../../../utils/axiosInstance"; 
 
 import { useEffect, useState } from "react";
+import { API_END_POINTS } from "../../../utils/constants";
 
-function useGetPrivilege(pageChange = 1, query, rowsPage) {
-  const [sort, setSort] = useState({
-    sortKey: "createdAt",
-    sortOrder: "asc",
-  });
+function useGetPrivilege(page, pageSize, query, order, orderBy) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const fetchData = async () => {
+  const fetchData = async (searched, query) => {
     try {
       setLoading(true);
-      let url = `/api/permission?pageNo=${pageChange - 1}&sortKey=${
-        sort.sortKey
-      }&sortOrder=${sort.sortOrder}&pageSize=${rowsPage}`;
+      let url = `${API_END_POINTS.PERMISSION}?pageNo=${page}&sortKey=${orderBy}&sortOrder=${order}&pageSize=${pageSize}`;
       if (query) {
-        url += `&searchString=${query}`;
+        url += `&searchKey=${searched}&searchString=${query}`;
       }
       const response = await axiosInstance.get(url);
-      setData(response.data);
+      const transformedData =
+        response?.data?.data.map((item) => ({
+          ...item,
+          checked: item.status,
+        })) || [];
+      setData(transformedData);
     } catch (error) {
       setData([]);
     } finally {
@@ -29,9 +29,9 @@ function useGetPrivilege(pageChange = 1, query, rowsPage) {
   };
   useEffect(() => {
     fetchData();
-  }, [pageChange, query, sort, rowsPage]);
+  }, [page, pageSize, order, orderBy]);
 
-  return { data, loading, fetchData, setLoading, sort, setSort };
+  return { data, loading, fetchData, setLoading };
 }
 
 export default useGetPrivilege;

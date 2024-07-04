@@ -13,7 +13,6 @@ import CustomButton from "../CustomButton";
 function SearchComponent({
   option,
   setOption,
-  fetchData,
   optionsData,
   optionLabel,
   placeholder,
@@ -24,6 +23,9 @@ function SearchComponent({
   setSearched,
   selectOptions,
   handleGo,
+  textField,
+  textFieldPlaceholder,
+  setQuery,
 }) {
   const navigate = useNavigate();
 
@@ -65,24 +67,38 @@ function SearchComponent({
               </Grid>
             )}
             <Grid item xs={12} sm={6} md={6}>
-              <Autocomplete
-                id="producer"
-                options={optionsData || []}
-                getOptionLabel={optionLabel}
-                multiple
-                size="small"
-                renderInput={(params) => (
-                  <TextField {...params} placeholder={placeholder} />
-                )}
-                className="customize-select"
-                value={option}
-                onChange={(event, newValue) => setOption(newValue)}
-                renderOption={renderOptionFunction}
-                ListboxProps={{
-                  style: { maxHeight: "200px" },
-                }}
-                fullWidth
-              />
+              {textField ? (
+                <TextField
+                  id="search"
+                  variant="outlined"
+                  placeholder={textFieldPlaceholder}
+                  size="small"
+                  className="customize-select"
+                  onChange={(e) => {
+                    setQuery(e.target.value);
+                  }}
+                  fullWidth
+                />
+              ) : (
+                <Autocomplete
+                  id="producer"
+                  options={optionsData || []}
+                  getOptionLabel={optionLabel}
+                  multiple
+                  size="small"
+                  renderInput={(params) => (
+                    <TextField {...params} placeholder={placeholder} />
+                  )}
+                  className="customize-select"
+                  value={option}
+                  onChange={(event, newValue) => setOption(newValue)}
+                  renderOption={renderOptionFunction}
+                  ListboxProps={{
+                    style: { maxHeight: "200px" },
+                  }}
+                  fullWidth
+                />
+              )}
             </Grid>
             <Grid item xs={12} sm={2} md={2}>
               <CustomButton variant="outlined" onClick={handleGo} fullWidth>

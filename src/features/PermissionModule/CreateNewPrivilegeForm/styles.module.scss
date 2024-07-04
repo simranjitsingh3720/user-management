@@ -29,8 +29,13 @@
 
 .formContainer {
   display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.moduleWrapper {
+  display: flex;
   flex-wrap: wrap;
-  padding: 20px;
+  align-items: center;
 }
 
 .fieldContainerStyle {
@@ -82,4 +87,18 @@
 .placeholderStyle {
   color: #2f3741;
   opacity: 40%;
+}
+
+.buttonWrapper {
+  display: flex;
+  align-items: center;
+  margin-top: 28px;
+}
+
+.formWrapper {
+  padding: 20px 20px 0px 20px;
+}
+
+.skeletonStyle {
+  margin-top: 20px !important;
 }
