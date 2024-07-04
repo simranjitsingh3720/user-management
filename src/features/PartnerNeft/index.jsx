@@ -6,7 +6,7 @@ import SearchComponent from "../../components/SearchComponent";
 import CustomTable from "../../components/CustomTable";
 import useGetPartnerNeft from "./hooks/useGetPartnerNeft";
 import { Header } from "./utils/header";
-import { PLACEHOLDER_TEXT, ProductPayment } from "../../utils/globalConstants";
+import { BUTTON_TEXT, PLACEHOLDER_TEXT, ProductPayment } from "../../utils/globalConstants";
 import { fetchLobData } from "../../stores/slices/lobSlice";
 import { fetchAllProductData } from "../../stores/slices/productSlice";
 import { COMMON_FIELDS } from "./utils/constant";
@@ -95,7 +95,7 @@ const PartnerNeft = () => {
         optionLabel={(option) => optionLabel(option, searched === COMMON_WORDS.PRODUCT ? COMMON_WORDS.PRODUCT : COMMON_WORDS.LOB)}
         placeholder={searched === COMMON_WORDS.PRODUCT ? PLACEHOLDER_TEXT.product : PLACEHOLDER_TEXT.lob}
         renderOptionFunction={(props, option) => renderOptionFunction(props, option, searched === COMMON_WORDS.PRODUCT ? COMMON_WORDS.PRODUCT : COMMON_WORDS.LOB)}
-        buttonText="Create New NEFT Flag"
+        buttonText={BUTTON_TEXT.PARTNER_NEFT}
         navigateRoute="/partner-neft/form"
         searched={searched}
         setSearched={setSearched}
