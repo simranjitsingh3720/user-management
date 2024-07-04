@@ -1,6 +1,5 @@
 import React from "react";
 import { TableHead, TableRow, TableCell, TableSortLabel } from "@mui/material";
-import PropTypes from "prop-types";
 
 const TableHeader = ({
   columns = [],
