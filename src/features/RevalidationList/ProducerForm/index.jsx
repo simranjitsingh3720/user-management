@@ -23,20 +23,6 @@ const ProducerForm = ({ onFormSubmit, revalidationList }) => {
   };
 
   const { userData } = useGetUserData();
-
-  const downloadExcel = () => {
-    const filteredData = revalidationList.map(
-      ({ name, status, emailId, mobileNo }) => ({
-        name,
-        emailId,
-        mobileNo,
-        status,
-      })
-    );
-
-    excelExport(filteredData);
-  };
-
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -96,18 +82,6 @@ const ProducerForm = ({ onFormSubmit, revalidationList }) => {
           >
             Submit
           </CustomButton>
-          {revalidationList.length > 0 ? (
-            <CustomButton
-              variant="outlined"
-              startIcon={<DownloadIcon />}
-              onClick={downloadExcel}
-              className={styles.exportBtn}
-            >
-              Export Data
-            </CustomButton>
-          ) : (
-            <></>
-          )}
         </div>
       </form>
     </>
