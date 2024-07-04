@@ -109,7 +109,13 @@ const exportSlice = createSlice({
       })
       .addCase(downloadData.fulfilled, (state, action) => {
         state.loading = false;
-        window.open(action.payload, '_blank');
+
+        const link = document.createElement('a');
+        link.href = action.payload;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        
         toast.success("Download Successfully")
       })
       .addCase(downloadData.rejected, (state, action) => {
