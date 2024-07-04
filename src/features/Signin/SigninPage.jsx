@@ -90,6 +90,7 @@ function SignInPage() {
               <InputField
                 key="password"
                 id="password"
+                type="password"
                 required
                 label="Password"
                 validation={passwordValidation}
