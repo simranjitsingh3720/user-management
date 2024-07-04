@@ -30,7 +30,7 @@ const RevalidationList = () => {
     if (isFormSubmitted) {
       loadData();
     }
-  }, [page, pageSize, loadData]);
+  }, [page, pageSize, loadData, isFormSubmitted]);
 
   const onFormSubmit = (data) => {
     setUserId(data.producer.id);
