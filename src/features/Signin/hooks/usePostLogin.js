@@ -1,9 +1,11 @@
 import { useState } from "react";
-import axiosInstance from "../../../../utils/axiosInstance"; 
 import { useNavigate } from "react-router-dom";
+import axiosInstance from '../../../utils/axiosInstance';
 import { toast } from "react-toastify";
+import { TOKEN, TOKEN_EXPIRATION } from "../../../utils/globalConstants";
+import { expirationTime } from "../../../utils/auth";
 
-export default function usePostUser() {
+export default function usePostLogin() {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
@@ -11,8 +13,9 @@ export default function usePostUser() {
   async function postData(data) {
     setLoading(true);
     try {
-      const response = await axiosInstance.post("/api/user", data);
-      toast.success(response?.data?.message || "User created successfully");
+      const response = await axiosInstance.post("/api/login", data);
+      localStorage.setItem(TOKEN, "test token");
+      localStorage.setItem(TOKEN_EXPIRATION, expirationTime());
       navigate("/dashboard");
     } catch (error) {
       toast.error(

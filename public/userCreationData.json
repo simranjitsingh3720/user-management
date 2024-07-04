@@ -781,6 +781,7 @@
                 "label": "LOB",
                 "type": "autocomplete",
                 "required": true,
+                "multiple":true,
                 "disabled": true,
                 "validation": {
                     "required": "This field is required"
@@ -791,6 +792,7 @@
                 "label": "Product",
                 "type": "autocomplete",
                 "required": true,
+                "multiple":true,
                 "disabled": true,
                 "validation": {
                     "required": "This field is required"
@@ -965,16 +967,6 @@
                             "type": "dropdown",
                             "required": true,
                             "disabled" : false,
-                            "menuItem": [
-                                {
-                                    "value": "yes",
-                                    "label": "Yes"
-                                },
-                                {
-                                    "value": "no",
-                                    "label": "No"
-                                }
-                            ],
                             "validation": {
                                 "required": "This field is required"
                             }
@@ -1139,6 +1131,7 @@
                 "label": "LOB",
                 "type": "autocomplete",
                 "required": true,
+                "multiple":true,
                 "disabled": true,
                 "validation": {
                     "required": "This field is required"
@@ -1149,6 +1142,7 @@
                 "label": "Product",
                 "type": "autocomplete",
                 "required": true,
+                "multiple":true,
                 "disabled": true,
                 "validation": {
                     "required": "This field is required"
@@ -1267,6 +1261,25 @@
                 }
             },
             {
+                "id": "cKyc",
+                "label": "cKYC",
+                "type": "dropdown",
+                "menuItem": [
+                    {
+                        "value": "yes",
+                        "label": "Yes"
+                    },
+                    {
+                        "value": "no",
+                        "label": "No"
+                    }
+                ],
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
                 "id": "paymentType",
                 "label": "Payment Type",
                 "type": "autocomplete",
@@ -1303,16 +1316,7 @@
                             "label": "Default House Bank ",
                             "type": "dropdown",
                             "required": true,
-                            "menuItem": [
-                                {
-                                    "value": "yes",
-                                    "label": "Yes"
-                                },
-                                {
-                                    "value": "no",
-                                    "label": "No"
-                                }
-                            ],
+                            "disabled" : false,
                             "validation": {
                                 "required": "This field is required"
                             }
@@ -1324,6 +1328,7 @@
                             "label": "Account Number",
                             "type": "input",
                             "required": true,
+                            "disabled" : false,
                             "validation": {
                                 "required": "This field is required",
                                 "minLength": {
@@ -1342,28 +1347,9 @@
                         }
                     ]
                 }
-            },
-            {
-                "id": "cKyc",
-                "label": "cKYC",
-                "type": "dropdown",
-                "menuItem": [
-                    {
-                        "value": "yes",
-                        "label": "Yes"
-                    },
-                    {
-                        "value": "no",
-                        "label": "No"
-                    }
-                ],
-                "required": true,
-                "validation": {
-                    "required": "This field is required"
-                }
             }
         ],
-        "dealer": [
+        "dealer":[
             {
                 "id": "parentCode",
                 "label": "Parent Code",
@@ -1495,6 +1481,7 @@
                 "label": "LOB",
                 "type": "autocomplete",
                 "required": true,
+                "multiple":true,
                 "disabled": true,
                 "validation": {
                     "required": "This field is required"
@@ -1505,6 +1492,7 @@
                 "label": "Product",
                 "type": "autocomplete",
                 "required": true,
+                "multiple":true,
                 "disabled": true,
                 "validation": {
                     "required": "This field is required"
@@ -1623,6 +1611,25 @@
                 }
             },
             {
+                "id": "cKyc",
+                "label": "cKYC",
+                "type": "dropdown",
+                "menuItem": [
+                    {
+                        "value": "yes",
+                        "label": "Yes"
+                    },
+                    {
+                        "value": "no",
+                        "label": "No"
+                    }
+                ],
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
                 "id": "paymentType",
                 "label": "Payment Type",
                 "type": "autocomplete",
@@ -1659,16 +1666,7 @@
                             "label": "Default House Bank ",
                             "type": "dropdown",
                             "required": true,
-                            "menuItem": [
-                                {
-                                    "value": "yes",
-                                    "label": "Yes"
-                                },
-                                {
-                                    "value": "no",
-                                    "label": "No"
-                                }
-                            ],
+                            "disabled" : false,
                             "validation": {
                                 "required": "This field is required"
                             }
@@ -1680,6 +1678,7 @@
                             "label": "Account Number",
                             "type": "input",
                             "required": true,
+                            "disabled" : false,
                             "validation": {
                                 "required": "This field is required",
                                 "minLength": {
@@ -1698,30 +1697,11 @@
                         }
                     ]
                 }
-            },
-            {
-                "id": "cKyc",
-                "label": "cKYC",
-                "type": "dropdown",
-                "menuItem": [
-                    {
-                        "value": "yes",
-                        "label": "Yes"
-                    },
-                    {
-                        "value": "no",
-                        "label": "No"
-                    }
-                ],
-                "required": true,
-                "validation": {
-                    "required": "This field is required"
-                }
             }
         ],
         "partner": [
             {
-                "id": "customerFirstName",
+                "id": "firstName",
                 "label": "Customer First Name",
                 "type": "input",
                 "required": true,
@@ -1742,7 +1722,7 @@
                 }
             },
             {
-                "id": "customerLastName",
+                "id": "lastName",
                 "label": "Customer Last Name",
                 "type": "input",
                 "required": false,
@@ -1832,13 +1812,21 @@
                 "label": "Product",
                 "type": "autocomplete",
                 "all": true,
-                "apiData": "product",
                 "required": true,
                 "validation": {
                     "required": "This field is required"
                 }
             },
-           
+            {
+                "id": "masterPolicy",
+                "label": "Master Policy",
+                "type": "autocomplete",
+                "all": true,
+                "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
             {
                 "id": "sendEmail",
                 "label": "Send Email",
@@ -3291,7 +3279,7 @@
             },
             {
                 "id": "roleAssignment",
-                "label": "Role Assignment",
+                "label": "Role Assigned",
                 "type": "dropdown",
                 "required": true,
                 "menuItem": [
@@ -3546,7 +3534,7 @@
             },
             {
                 "id": "roleAssignment",
-                "label": "Role Assignment",
+                "label": "Role Assigned",
                 "type": "dropdown",
                 "required": true,
                 "menuItem": [
@@ -3844,7 +3832,7 @@
             },
             {
                 "id": "roleAssignment",
-                "label": "Role Assignment",
+                "label": "Role Assigned",
                 "type": "dropdown",
                 "required": true,
                 "menuItem": [

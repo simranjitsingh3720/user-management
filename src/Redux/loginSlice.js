@@ -43,6 +43,7 @@ export const loginSlice = createSlice({
       .addCase(fetchLoginDetails.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+        state.userDetails = [];
       });
   },
 });

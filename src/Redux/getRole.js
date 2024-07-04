@@ -43,6 +43,7 @@ export const role = createSlice({
             .addCase(getRoles.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message;
+                state.role = [];
             });
     },
 })

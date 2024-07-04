@@ -44,6 +44,7 @@ export const location = createSlice({
             .addCase(getLocations.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message;
+                state.location = [];
             });
     },
 })

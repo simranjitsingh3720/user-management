@@ -1,40 +1,27 @@
 import { useForm } from "react-hook-form";
-import React, { useEffect } from "react";
+import React from "react";
 import { Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import CustomButton from "../../components/CustomButton";
 import TataNormalLogo from "../../assets/TataNormalLogo";
 import InputField from "../../components/CustomTextfield";
 import { emailValidation, passwordValidation } from "./utils/constants";
-import { TOKEN, TOKEN_EXPIRATION } from "../../utils/globalConstants";
 import SignInImg from "../../assets/SignInImg";
-import { expirationTime } from "../../utils/auth";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchLoginDetails, setLoginError } from "../../Redux/loginSlice";
 import Loader from "../../components/Loader";
+import usePostLogin from "./hooks/usePostLogin";
+import backgroundImage from "../../assets/loginPageBackground.png";
 
 function SignInPage() {
+  const { postData, loading } = usePostLogin();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const loginData = useSelector((state) => state.login.userDetails);
-  const loginError = useSelector((state) => state.login.error);
-  const loginLoading = useSelector((state) => state.login.loading);
   const onSubmit = (data) => {
     console.log(data);
     const payload = { email: data.emailId, password: data.password };
-    dispatch(fetchLoginDetails(payload));
+    postData(payload);
     // localStorage.setItem(TOKEN, "test token");
-    // localStorage.setItem(TOKEN_EXPIRATION, expirationTime());
-    // navigate("/dashboard");
+    //   localStorage.setItem(TOKEN_EXPIRATION, expirationTime());
+    //   navigate("/dashboard");
   };
-
-  useEffect(() => {
-    if (loginData && loginData?.success === true && !localStorage.getItem(TOKEN)) {
-      localStorage.setItem(TOKEN, "test token");
-      localStorage.setItem(TOKEN_EXPIRATION, expirationTime());
-      navigate("/dashboard");
-    }
-  }, [loginData]);
 
   const {
     register,
@@ -42,24 +29,19 @@ function SignInPage() {
     control,
     watch,
     formState: { errors },
-  } = useForm();
-
-  const email = watch("emailId");
-  const password = watch("password");
-
-  useEffect(() => {
-    if (loginError) {
-      dispatch(setLoginError(""));
-    }
-  }, [email, password]);
+  } = useForm({
+  });
 
   return (
     <Box className="flex w-full h-screen">
-      {loginLoading && <Loader></Loader>}
-      <div className="invisible w-0 lg:visible lg:w-1/2 h-full bg-cornFlower flex justify-center items-center overflow-hidden">
+      {loading && <Loader></Loader>}
+      <div
+        className="invisible w-0 md:visible md:w-1/2 h-full bg-cornFlower flex justify-center items-center overflow-hidden bg-cover bg-center"
+        style={{ backgroundImage: `url(${backgroundImage})` }}
+      >
         <SignInImg></SignInImg>
       </div>
-      <div className="bg-white w-full lg:w-1/2 h-full flex flex-col justify-center items-center p-8 sm:p-28 lg:p-12 xl:p-28">
+      <div className="bg-white w-full md:w-1/2 h-full flex flex-col justify-center items-center p-8 sm:p-28 md:p-12 xl:p-28">
         <div className="text-center w-full">
           <div className="flex justify-center">
             <TataNormalLogo />
@@ -114,9 +96,9 @@ function SignInPage() {
                   label="Remember me"
                 />
               </div> */}
-              <div className="text-left px-8 text-persianRed text-xs">
+              {/* <div className="text-left px-8 text-persianRed text-xs">
                 {loginError}
-              </div>
+              </div> */}
             </div>
             <div className="mx-7 mt-5">
               <CustomButton

@@ -12,6 +12,7 @@ const InputField = ({ id, required,label, validation, control, errors, disabled,
       <Controller
         name={id}
         control={control}
+        defaultValue={''}
         rules={{
           ...validation,
           pattern: {
