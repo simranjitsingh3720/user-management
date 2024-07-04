@@ -6,8 +6,10 @@ import { fetchColumns, toggleColumn } from "../../../stores/slices/exportSlice";
 
 const Content = () => {
   const dispatch = useDispatch();
-  const { columns, tableName } = useSelector((state) => state.export);
-  
+  const { columns, tableName, columnLoading } = useSelector(
+    (state) => state.export
+  );
+
   useEffect(() => {
     dispatch(fetchColumns(tableName));
   }, [dispatch, tableName]);
@@ -22,19 +24,32 @@ const Content = () => {
         <DateRangePicker />
       </Grid>
 
-      {columns.length > 0 && columns.map((item, index) => (
-        <Grid item xs={12} md={6} lg={4} key={index}>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={item.checked || false}
-                onChange={() => handleCheckUncheck(item.id)}
-              />
-            }
-            label={item.name}
-          />
+      <Grid item xs={12}>
+        <h2 className="text-lg font-semibold">
+          Please select columns to download the data
+        </h2>
+      </Grid>
+      {columnLoading && (
+        <Grid item xs={12} className="flex items-center justify-center">
+          Loading...
         </Grid>
-      ))}
+      )}
+
+      {!columnLoading &&
+        columns.length > 0 &&
+        columns.map((item, index) => (
+          <Grid item xs={12} md={6} lg={4} key={index}>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={item.checked || false}
+                  onChange={() => handleCheckUncheck(item.id)}
+                />
+              }
+              label={item.name}
+            />
+          </Grid>
+        ))}
     </Grid>
   );
 };

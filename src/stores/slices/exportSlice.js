@@ -115,13 +115,13 @@ const exportSlice = createSlice({
         document.body.appendChild(link);
         link.click();
         link.remove();
-        
+
         toast.success("Download Successfully")
       })
       .addCase(downloadData.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-        toast.error("Download Failed: "+ action.payload.message)
+        toast.error("Download Failed: "+ action.payload.details)
       });
   },
 });
@@ -132,6 +132,7 @@ export const {
   setToDate,
   setLast30Days,
   toggleColumn,
-  setTableName
+  setTableName,
+  columnLoading: loading
 } = exportSlice.actions;
 export default exportSlice.reducer;
