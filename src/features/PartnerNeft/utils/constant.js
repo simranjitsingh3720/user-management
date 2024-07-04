@@ -14,3 +14,11 @@ export const VERFICATION_ENUM = Object.freeze({
   "neft pace": "NEFT PACE",
   banca: "Banca"
 });
+
+export const COMMON_FIELDS = {
+  childFieldsToFetch: "product,lob,producer",
+  childFieldsEdge: "hasProduct,hasLob,hasProducer",
+  hasProduct: "hasProduct",
+  hasLob: "hasLob",
+  createdAt: "createdAt"
+}

@@ -19,6 +19,7 @@ export const REGEX = {
 export const BUTTON_TEXT = {
   CKYC_CONFIG: "Create New CKYC Config",
   Permission: "Create New Permission",
+  PARTNER_NEFT: "Create New NEFT Flag",
 };
 
 export const PLACEHOLDER_TEXT = {

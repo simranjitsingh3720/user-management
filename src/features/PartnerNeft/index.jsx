@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,9 +6,10 @@ import SearchComponent from "../../components/SearchComponent";
 import CustomTable from "../../components/CustomTable";
 import useGetPartnerNeft from "./hooks/useGetPartnerNeft";
 import { Header } from "./utils/header";
-import { ProductPayment } from "../../utils/globalConstants";
+import { BUTTON_TEXT, PLACEHOLDER_TEXT, ProductPayment } from "../../utils/globalConstants";
 import { fetchLobData } from "../../stores/slices/lobSlice";
 import { fetchAllProductData } from "../../stores/slices/productSlice";
+import { COMMON_FIELDS } from "./utils/constant";
 import { COMMON_WORDS } from "../../utils/constants";
 
 const PartnerNeft = () => {
@@ -19,14 +20,13 @@ const PartnerNeft = () => {
 
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(5);
-  const [order, setOrder] = useState(COMMON_WORDS.ASC);
+  const [order, setOrder] = useState("");
   const [orderBy, setOrderBy] = useState("");
   const [searched, setSearched] = useState(COMMON_WORDS.PRODUCT);
   const [productValue, setProductValue] = useState([]);
   const [lobValue, setLobValue] = useState([]);
 
-  const { getPartnerNeft, partnerNeftData, partnerNeftLoading, totalCount } =
-    useGetPartnerNeft();
+  const { getPartnerNeft, partnerNeftData, partnerNeftLoading, totalCount } = useGetPartnerNeft();
 
   const loadData = useCallback(() => {
     getPartnerNeft({
@@ -34,6 +34,8 @@ const PartnerNeft = () => {
       sortOrder: order,
       pageNo: page,
       pageSize,
+      childFieldsToFetch: COMMON_FIELDS.childFieldsToFetch,
+      childFieldsEdge: COMMON_FIELDS.childFieldsEdge,
     });
   }, [orderBy, order, page, pageSize, getPartnerNeft]);
 
@@ -42,8 +44,11 @@ const PartnerNeft = () => {
   }, [loadData]);
 
   useEffect(() => {
-    if (searched === COMMON_WORDS.PRODUCT) setLobValue([]);
-    else setProductValue([]);
+    if (searched === COMMON_WORDS.PRODUCT) {
+      setLobValue([]);
+    } else {
+      setProductValue([]);
+    }
   }, [searched]);
 
   useEffect(() => {
@@ -51,64 +56,46 @@ const PartnerNeft = () => {
     dispatch(fetchAllProductData());
   }, [dispatch]);
 
-  const fetchIdsAndConvert = (inputData) =>
-    inputData.map((item) => item.id).join();
+  const fetchIdsAndConvert = (inputData) => inputData.map((item) => item.id).join();
 
-  const handleGo = () => {
-    const searchKey = searched === COMMON_WORDS.PRODUCT ? "productId" : "lobId";
-    const searchString = fetchIdsAndConvert(
-      searched === COMMON_WORDS.PRODUCT ? productValue : lobValue
-    );
-    getPartnerNeft({ searchKey, searchString });
-  };
+  const handleGo = useCallback(() => {
+    const searchString = fetchIdsAndConvert(searched === COMMON_WORDS.PRODUCT ? productValue : lobValue);
+    if (searchString) {
+      getPartnerNeft({
+        childFieldsToFetch: COMMON_FIELDS.childFieldsToFetch,
+        childFieldsEdge: COMMON_FIELDS.childFieldsEdge,
+        ids: searchString,
+        isExclusive: true,
+        edge: searched === COMMON_WORDS.PRODUCT ? COMMON_FIELDS.hasProduct : COMMON_FIELDS.hasLob,
+      });
+    } else {
+      loadData();
+    }
+  }, [searched, productValue, lobValue, getPartnerNeft, loadData]);
 
-  const updateNeftForm = (row) => navigate("/partner-neft/form/" + row.id);
+  const updateNeftForm = useCallback((row) => {
+    navigate("/partner-neft/form/" + row.id);
+  }, [navigate]);
 
-  const optionLabel = (option, type) =>
-    option[type] ? option[type].toUpperCase() : "";
+  const optionLabel = (option, type) => option[type]?.toUpperCase() || "";
   const renderOptionFunction = (props, option, type) => (
     <li {...props} key={option?.id}>
-      {option[type] ? option[type].toUpperCase() : ""}
+      {optionLabel(option, type)}
     </li>
   );
 
-  const header = Header(updateNeftForm);
+  const header = useMemo(() => Header(updateNeftForm), [updateNeftForm]);
 
   return (
     <Box>
       <SearchComponent
-        optionsData={
-          searched === COMMON_WORDS.PRODUCT
-            ? products?.data ?? []
-            : allLob?.data ?? []
-        }
+        optionsData={searched === COMMON_WORDS.PRODUCT ? products?.data ?? [] : allLob?.data ?? []}
         option={searched === COMMON_WORDS.PRODUCT ? productValue : lobValue}
-        setOption={
-          searched === COMMON_WORDS.PRODUCT ? setProductValue : setLobValue
-        }
-        optionLabel={(option) =>
-          optionLabel(
-            option,
-            searched === COMMON_WORDS.PRODUCT
-              ? COMMON_WORDS.PRODUCT
-              : COMMON_WORDS.LOB
-          )
-        }
-        placeholder={
-          searched === COMMON_WORDS.PRODUCT
-            ? "Search by Product Name"
-            : "Search by Lob Name"
-        }
-        renderOptionFunction={(props, option) =>
-          renderOptionFunction(
-            props,
-            option,
-            searched === COMMON_WORDS.PRODUCT
-              ? COMMON_WORDS.PRODUCT
-              : COMMON_WORDS.LOB
-          )
-        }
-        buttonText="Create New NEFT Flag"
+        setOption={searched === COMMON_WORDS.PRODUCT ? setProductValue : setLobValue}
+        optionLabel={(option) => optionLabel(option, searched === COMMON_WORDS.PRODUCT ? COMMON_WORDS.PRODUCT : COMMON_WORDS.LOB)}
+        placeholder={searched === COMMON_WORDS.PRODUCT ? PLACEHOLDER_TEXT.product : PLACEHOLDER_TEXT.lob}
+        renderOptionFunction={(props, option) => renderOptionFunction(props, option, searched === COMMON_WORDS.PRODUCT ? COMMON_WORDS.PRODUCT : COMMON_WORDS.LOB)}
+        buttonText={BUTTON_TEXT.PARTNER_NEFT}
         navigateRoute="/partner-neft/form"
         searched={searched}
         setSearched={setSearched}
