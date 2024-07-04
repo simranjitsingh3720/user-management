@@ -6,11 +6,11 @@ import SearchComponent from "../../components/SearchComponent";
 import CustomTable from "../../components/CustomTable";
 import useGetPartnerNeft from "./hooks/useGetPartnerNeft";
 import { Header } from "./utils/header";
-import { ProductPayment } from "../../utils/globalConstants";
+import { PLACEHOLDER_TEXT, ProductPayment } from "../../utils/globalConstants";
 import { fetchLobData } from "../../stores/slices/lobSlice";
 import { fetchAllProductData } from "../../stores/slices/productSlice";
-import { COMMON_WORDS } from "../../utils/constants";
 import { COMMON_FIELDS } from "./utils/constant";
+import { COMMON_WORDS } from "../../utils/constants";
 
 const PartnerNeft = () => {
   const navigate = useNavigate();
@@ -93,7 +93,7 @@ const PartnerNeft = () => {
         option={searched === COMMON_WORDS.PRODUCT ? productValue : lobValue}
         setOption={searched === COMMON_WORDS.PRODUCT ? setProductValue : setLobValue}
         optionLabel={(option) => optionLabel(option, searched === COMMON_WORDS.PRODUCT ? COMMON_WORDS.PRODUCT : COMMON_WORDS.LOB)}
-        placeholder={searched === COMMON_WORDS.PRODUCT ? "Search by Product Name" : "Search by Lob Name"}
+        placeholder={searched === COMMON_WORDS.PRODUCT ? PLACEHOLDER_TEXT.product : PLACEHOLDER_TEXT.lob}
         renderOptionFunction={(props, option) => renderOptionFunction(props, option, searched === COMMON_WORDS.PRODUCT ? COMMON_WORDS.PRODUCT : COMMON_WORDS.LOB)}
         buttonText="Create New NEFT Flag"
         navigateRoute="/partner-neft/form"
