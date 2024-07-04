@@ -21,7 +21,7 @@ function SignInPage() {
   const loginLoading = useSelector((state) => state.login.loading);
   const onSubmit = (data) => {
     console.log(data);
-    const payload = { ntId: data.emailId, password: data.password };
+    const payload = { email: data.emailId, password: data.password };
     dispatch(fetchLoginDetails(payload));
     // localStorage.setItem(TOKEN, "test token");
     // localStorage.setItem(TOKEN_EXPIRATION, expirationTime());
@@ -29,8 +29,9 @@ function SignInPage() {
   };
 
   useEffect(() => {
-    if (Object.keys(loginData).length > 0) {
-      localStorage.setItem(TOKEN, "1234");
+    console.log(loginData && Object.keys(loginData).length > 0 && loginData?.success === true && !localStorage.getItem(TOKEN));
+    if (loginData && Object.keys(loginData).length > 0 && loginData?.status === 200 && !localStorage.getItem(TOKEN)) {
+      localStorage.setItem(TOKEN, "test token");
       localStorage.setItem(TOKEN_EXPIRATION, expirationTime());
       navigate("/dashboard");
     }

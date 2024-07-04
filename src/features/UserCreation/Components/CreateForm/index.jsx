@@ -173,6 +173,12 @@ function CreateUserCreationForm() {
     reset(resultObject);
   }
 
+  const lobsWatch = watch('lobs');
+
+  useEffect(()=> {
+    console.log((lobsWatch));
+  }, [lobsWatch])
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}

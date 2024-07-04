@@ -12,7 +12,8 @@ export const REGEX = {
   emailRegex: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
   nameRegex: "^[A-Za-z]+$",
   mobileRegex: "^[0-9]*$",
-  passwordRegex: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{5,}$/,
+  // passwordRegex: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{5,}$/,
+  passwordRegex: /^\d{6}$/
 };
 
 export const BUTTON_TEXT = {

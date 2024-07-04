@@ -86,6 +86,9 @@ const CommunicationRestrictions = lazy(() =>
 const CommunicationRestrictionsForm = lazy(() =>
   import("../../features/CommunicationRestrictions/CreateForm")
 );
+const BulkUpload = lazy(() =>
+  import("../../features/BulkUpload/UploadForm")
+);
 
 const AppRoutes = () => {
   return (
@@ -121,6 +124,14 @@ const AppRoutes = () => {
           element={
             <ResponsiveDrawer showSidebarAndHeader={true}>
               {<PrivateRoute component={CommunicationRestrictions} />}
+            </ResponsiveDrawer>
+          }
+        />
+        <Route
+          path="/bulk-upload"
+          element={
+            <ResponsiveDrawer showSidebarAndHeader={true}>
+              {<PrivateRoute component={BulkUpload} />}
             </ResponsiveDrawer>
           }
         />

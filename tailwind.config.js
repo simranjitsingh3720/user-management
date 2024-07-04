@@ -14,6 +14,8 @@ module.exports = {
         fiord: '#465465',
         denim: "#185EC4",
         persianRed: "#d32f2f",
+        linkWater: "#ECF2FB",
+        blueHaze: "#C5CFDE",
       }
     },
   },

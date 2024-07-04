@@ -16,6 +16,8 @@ import CustomButton from "../CustomButton";
 import { HEADER } from "../../utils/constants";
 import { TOKEN, TOKEN_EXPIRATION } from "../../utils/globalConstants";
 import { COMMON_WORDS } from "../../utils/constants";
+import { useDispatch } from "react-redux";
+import { setLoginDetails } from "../../Redux/loginSlice";
 
 function stringToColor(string) {
   let hash = 0;
@@ -48,10 +50,12 @@ function Header({ handleDrawerToggle, selectedNavbar, selectedParentIndex }) {
   const navigate = useNavigate();
   const [anchorElUser, setAnchorElUser] = useState(null);
   const settings = ['Logout'];
+  const dispatch = useDispatch();
 
   const handleLogout = () => {
     localStorage.removeItem(TOKEN);
     localStorage.removeItem(TOKEN_EXPIRATION);
+    dispatch(setLoginDetails({}));
     navigate("/sign-in");
   };
 

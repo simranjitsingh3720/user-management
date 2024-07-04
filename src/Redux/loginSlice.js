@@ -10,7 +10,7 @@ export const fetchLoginDetails = createAsyncThunk(
       return response;
     } catch (error) {
       console.error(error);
-      return rejectWithValue(error.response?.data?.details || "Something went wrong");
+      return rejectWithValue(error.response?.data?.error?.message || error.response?.data?.details || "Something went wrong");
     }
   }
 );
@@ -18,7 +18,7 @@ export const fetchLoginDetails = createAsyncThunk(
 export const loginSlice = createSlice({
   name: "login",
   initialState: {
-    userDetails: [],
+    userDetails: {},
     loading: false,
     error: "",
   },
@@ -26,6 +26,9 @@ export const loginSlice = createSlice({
     setLoginError: (state, action) => {
       state.error = action.payload;
     },
+    setLoginDetails:(state, action) => {
+      state.userDetails = action.payload
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -44,5 +47,5 @@ export const loginSlice = createSlice({
   },
 });
 
-export const { setLoginError } = loginSlice.actions;
+export const { setLoginError,setLoginDetails } = loginSlice.actions;
 export default loginSlice.reducer;

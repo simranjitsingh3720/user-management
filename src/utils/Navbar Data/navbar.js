@@ -9,6 +9,11 @@ export const SideNavData = [
     navigateRoute: "dashboard",
   },
   {
+    label: "Bulk Upload",
+    icon: ManageAccountsIcon,
+    navigateRoute: "bulk-upload",
+  },
+  {
     label: "User Management",
     icon: ManageAccountsIcon,
     navigateRoute: "user-management",
