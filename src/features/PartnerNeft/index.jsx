@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -26,8 +26,7 @@ const PartnerNeft = () => {
   const [productValue, setProductValue] = useState([]);
   const [lobValue, setLobValue] = useState([]);
 
-  const { getPartnerNeft, partnerNeftData, partnerNeftLoading, totalCount } =
-    useGetPartnerNeft();
+  const { getPartnerNeft, partnerNeftData, partnerNeftLoading, totalCount } = useGetPartnerNeft();
 
   const loadData = useCallback(() => {
     getPartnerNeft({
@@ -45,8 +44,11 @@ const PartnerNeft = () => {
   }, [loadData]);
 
   useEffect(() => {
-    if (searched === COMMON_WORDS.PRODUCT) setLobValue([]);
-    else setProductValue([]);
+    if (searched === COMMON_WORDS.PRODUCT) {
+      setLobValue([]);
+    } else {
+      setProductValue([]);
+    }
   }, [searched]);
 
   useEffect(() => {
@@ -54,72 +56,45 @@ const PartnerNeft = () => {
     dispatch(fetchAllProductData());
   }, [dispatch]);
 
-  const fetchIdsAndConvert = (inputData) =>
-    inputData.map((item) => item.id).join();
+  const fetchIdsAndConvert = (inputData) => inputData.map((item) => item.id).join();
 
-  const handleGo = () => {
-    const searchString = fetchIdsAndConvert(
-      searched === COMMON_WORDS.PRODUCT ? productValue : lobValue
-    );
-    if(searchString !== "" || searchString.length) {
+  const handleGo = useCallback(() => {
+    const searchString = fetchIdsAndConvert(searched === COMMON_WORDS.PRODUCT ? productValue : lobValue);
+    if (searchString) {
       getPartnerNeft({
         childFieldsToFetch: COMMON_FIELDS.childFieldsToFetch,
         childFieldsEdge: COMMON_FIELDS.childFieldsEdge,
         ids: searchString,
         isExclusive: true,
-        edge: searched === COMMON_WORDS.PRODUCT ? COMMON_FIELDS.hasProduct: COMMON_FIELDS.hasLob
+        edge: searched === COMMON_WORDS.PRODUCT ? COMMON_FIELDS.hasProduct : COMMON_FIELDS.hasLob,
       });
     } else {
       loadData();
     }
-  };
+  }, [searched, productValue, lobValue, getPartnerNeft, loadData]);
 
-  const updateNeftForm = (row) => navigate("/partner-neft/form/" + row.id);
+  const updateNeftForm = useCallback((row) => {
+    navigate("/partner-neft/form/" + row.id);
+  }, [navigate]);
 
-  const optionLabel = (option, type) =>
-    option[type] ? option[type].toUpperCase() : "";
+  const optionLabel = (option, type) => option[type]?.toUpperCase() || "";
   const renderOptionFunction = (props, option, type) => (
     <li {...props} key={option?.id}>
-      {option[type] ? option[type].toUpperCase() : ""}
+      {optionLabel(option, type)}
     </li>
   );
 
-  const header = Header(updateNeftForm);
+  const header = useMemo(() => Header(updateNeftForm), [updateNeftForm]);
 
   return (
     <Box>
       <SearchComponent
-        optionsData={
-          searched === COMMON_WORDS.PRODUCT
-            ? products?.data ?? []
-            : allLob?.data ?? []
-        }
+        optionsData={searched === COMMON_WORDS.PRODUCT ? products?.data ?? [] : allLob?.data ?? []}
         option={searched === COMMON_WORDS.PRODUCT ? productValue : lobValue}
-        setOption={
-          searched === COMMON_WORDS.PRODUCT ? setProductValue : setLobValue
-        }
-        optionLabel={(option) =>
-          optionLabel(
-            option,
-            searched === COMMON_WORDS.PRODUCT
-              ? COMMON_WORDS.PRODUCT
-              : COMMON_WORDS.LOB
-          )
-        }
-        placeholder={
-          searched === COMMON_WORDS.PRODUCT
-            ? "Search by Product Name"
-            : "Search by Lob Name"
-        }
-        renderOptionFunction={(props, option) =>
-          renderOptionFunction(
-            props,
-            option,
-            searched === COMMON_WORDS.PRODUCT
-              ? COMMON_WORDS.PRODUCT
-              : COMMON_WORDS.LOB
-          )
-        }
+        setOption={searched === COMMON_WORDS.PRODUCT ? setProductValue : setLobValue}
+        optionLabel={(option) => optionLabel(option, searched === COMMON_WORDS.PRODUCT ? COMMON_WORDS.PRODUCT : COMMON_WORDS.LOB)}
+        placeholder={searched === COMMON_WORDS.PRODUCT ? "Search by Product Name" : "Search by Lob Name"}
+        renderOptionFunction={(props, option) => renderOptionFunction(props, option, searched === COMMON_WORDS.PRODUCT ? COMMON_WORDS.PRODUCT : COMMON_WORDS.LOB)}
         buttonText="Create New NEFT Flag"
         navigateRoute="/partner-neft/form"
         searched={searched}
