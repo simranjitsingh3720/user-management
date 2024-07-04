@@ -124,6 +124,11 @@ export const SideNavData = [
     navigateRoute: "ckyc-config",
   },
   {
+    label: "T & C Report",
+    icon: GridViewIcon,
+    navigateRoute: "tc-report",
+  },
+  {
     label: "Producer Management",
     icon: ManageAccountsIcon,
   },

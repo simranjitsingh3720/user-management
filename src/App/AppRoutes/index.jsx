@@ -5,6 +5,7 @@ import PartnerNeftForm from "../../features/PartnerNeft/PartnerNeftForm";
 import FullPageLoader from "../../components/FullPageLoader";
 import PrivateRoute from "../../components/PrivateRoute";
 import PublicRoute from "../../components/PublicRoute";
+import TermCondition from "../../features/TermCondition";
 
 const Dashboard = lazy(() => import("../../features/Dashboard"));
 const UserManagement = lazy(() => import("../../features/UserManagement"));
@@ -417,6 +418,14 @@ const AppRoutes = () => {
           element={
             <ResponsiveDrawer showSidebarAndHeader={true}>
               {<PrivateRoute component={CkycForm} />}
+            </ResponsiveDrawer>
+          }
+        />
+        <Route
+          path="/tc-report"
+          element={
+            <ResponsiveDrawer showSidebarAndHeader={true}>
+              <TermCondition />
             </ResponsiveDrawer>
           }
         />

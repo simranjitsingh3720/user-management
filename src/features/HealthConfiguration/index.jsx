@@ -11,10 +11,8 @@ import useGetUserData from "../../hooks/useGetUserData";
 import SearchComponenet from "../../components/SearchComponent";
 
 function getSelectedRowData(count) {
-  
   let selectedRowData = [];
 
-  
   for (let i = 0; i < selectRowsData.length; i++) {
     if (selectRowsData[i] <= count) {
       selectedRowData.push(selectRowsData[i]);
@@ -79,6 +77,7 @@ function HealthConfiguration() {
         buttonText={"Create Health Configuration"}
         navigateRoute={"/health-config/form"}
         handleGo={handleGo}
+        showButton
       />
       <div className={styles.tableContainerStyle}>
         <div className={styles.tableStyled}>
