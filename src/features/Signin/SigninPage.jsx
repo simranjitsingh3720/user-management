@@ -29,7 +29,7 @@ function SignInPage() {
   };
 
   useEffect(() => {
-    if (loginData && Object.keys(loginData).length > 0 && loginData?.status === 200 && !localStorage.getItem(TOKEN)) {
+    if (loginData && loginData?.success === true && !localStorage.getItem(TOKEN)) {
       localStorage.setItem(TOKEN, "test token");
       localStorage.setItem(TOKEN_EXPIRATION, expirationTime());
       navigate("/dashboard");
