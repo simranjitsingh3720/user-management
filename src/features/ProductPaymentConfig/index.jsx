@@ -14,10 +14,8 @@ import useGetAllProduct from "../../hooks/useGetAllProduct";
 import useGetLobData from "../../hooks/useGetLobData";
 
 function getSelectedRowData(count) {
-  
   let selectedRowData = [];
 
-  
   for (let i = 0; i < selectRowsData.length; i++) {
     if (selectRowsData[i] <= count) {
       selectedRowData.push(selectRowsData[i]);
@@ -132,6 +130,7 @@ function ProductPaymentConfig() {
         setSearched={setSearched}
         selectOptions={ProductPayment}
         handleGo={handleGo}
+        showButton
       />
       <div className={styles.tableContainerStyle}>
         <div className={styles.tableStyled}>

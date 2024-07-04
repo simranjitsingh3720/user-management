@@ -9,6 +9,11 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import CustomButton from "../CustomButton";
+import { Controller, useForm } from "react-hook-form";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs from "dayjs";
+import RestartAltIcon from "@mui/icons-material/RestartAlt";
 
 function SearchComponent({
   option,
@@ -26,6 +31,9 @@ function SearchComponent({
   textField,
   textFieldPlaceholder,
   setQuery,
+  setDate,
+  dateField,
+  showButton,
 }) {
   const navigate = useNavigate();
 
@@ -33,8 +41,118 @@ function SearchComponent({
     navigate(navigateRoute);
   };
 
+  const { handleSubmit, control, setValue, formState } = useForm({
+    defaultValues: {
+      startDate: null,
+      endDate: null,
+    },
+  });
+
+  const { errors } = formState;
+
+  const onSubmit = (data) => {
+    setDate({
+      startDate: data.startDate,
+      endDate: data.endDate,
+    });
+  };
+
+  const handleResetButton = () => {
+    setDate({});
+    setValue("startDate", null);
+    setValue("endDate", null);
+  };
+
   return (
     <Box>
+      {dateField && (
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Grid container spacing={2} alignItems="center" className="mb-4">
+            <Grid item xs={12} md={8} lg={2.5}>
+              <div>
+                <div className="label-text required-field">Start Date</div>
+                <Controller
+                  name="startDate"
+                  control={control}
+                  rules={{ required: "Start date is required" }}
+                  render={({ field }) => (
+                    <LocalizationProvider
+                      dateAdapter={AdapterDayjs}
+                      adapterLocale="en-gb"
+                    >
+                      <DatePicker
+                        className="customize-select"
+                        slotProps={{
+                          textField: { size: "small" },
+                        }}
+                        value={
+                          field.value ? dayjs(field.value, "DD/MM/YYYY") : null
+                        }
+                        onChange={(date) => {
+                          const formattedDate =
+                            dayjs(date).format("DD/MM/YYYY");
+                          setValue("startDate", formattedDate);
+                        }}
+                        fullWidth
+                      />
+                    </LocalizationProvider>
+                  )}
+                />
+                <div className="error-msg">
+                  {errors.startDate && <span>This field is required</span>}
+                </div>
+              </div>
+            </Grid>
+            <Grid item xs={12} md={8} lg={2.5}>
+              <div>
+                <div className="label-text required-field">End Date</div>
+                <Controller
+                  name="endDate"
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <LocalizationProvider
+                      dateAdapter={AdapterDayjs}
+                      adapterLocale="en-gb"
+                    >
+                      <DatePicker
+                        className="customize-select"
+                        slotProps={{ textField: { size: "small" } }}
+                        value={
+                          field.value ? dayjs(field.value, "DD/MM/YYYY") : null
+                        }
+                        onChange={(date) => {
+                          const formattedDate =
+                            dayjs(date).format("DD/MM/YYYY");
+                          setValue("endDate", formattedDate);
+                        }}
+                        fullWidth
+                      />
+                    </LocalizationProvider>
+                  )}
+                />
+                <div className="error-msg">
+                  {errors.endDate && <span>This field is required</span>}
+                </div>
+              </div>
+            </Grid>
+            <Grid item xs={12} md={8} lg={3}>
+              <CustomButton variant="outlined" type="submit">
+                Go
+              </CustomButton>
+              <CustomButton
+                variant="outlined"
+                startIcon={<RestartAltIcon />}
+                sx={{ textTransform: "none" }}
+                onClick={handleResetButton}
+              >
+                Reset
+              </CustomButton>
+            </Grid>
+          </Grid>
+        </form>
+      )}
+
       <Grid
         container
         spacing={2}
@@ -107,11 +225,13 @@ function SearchComponent({
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={12} md={4} container justifyContent="flex-end">
-          <CustomButton variant="contained" onClick={handleCreateNewForm}>
-            {buttonText}
-          </CustomButton>
-        </Grid>
+        {showButton && (
+          <Grid item xs={12} md={4} container justifyContent="flex-end">
+            <CustomButton variant="contained" onClick={handleCreateNewForm}>
+              {buttonText}
+            </CustomButton>
+          </Grid>
+        )}
       </Grid>
     </Box>
   );

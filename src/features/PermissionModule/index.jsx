@@ -58,6 +58,7 @@ function PermissionModule() {
         buttonText={BUTTON_TEXT.Permission}
         navigateRoute={"/permission/permission-form"}
         handleGo={handleGo}
+        showButton
       />
       <div className="mt-4">
         <CustomTable
