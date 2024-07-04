@@ -69,6 +69,8 @@ const useGetPartnerNeft = () => {
             producerName: producer[0].firstName + " " + producer[0].lastName,
             producerCode: producer[0].producerCode,
             verificationMethod: VERFICATION_ENUM[partnerNeft.verificationMethod],
+            createdAt: partnerNeft.createdAt,
+            updatedAt: partnerNeft.updatedAt,
           })
         });
 

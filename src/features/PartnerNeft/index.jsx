@@ -10,6 +10,7 @@ import { ProductPayment } from "../../utils/globalConstants";
 import { fetchLobData } from "../../stores/slices/lobSlice";
 import { fetchAllProductData } from "../../stores/slices/productSlice";
 import { COMMON_WORDS } from "../../utils/constants";
+import { COMMON_FIELDS } from "./utils/constant";
 
 const PartnerNeft = () => {
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ const PartnerNeft = () => {
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(5);
   const [order, setOrder] = useState(COMMON_WORDS.ASC);
-  const [orderBy, setOrderBy] = useState("createdAt");
+  const [orderBy, setOrderBy] = useState(COMMON_FIELDS.createdAt);
   const [searched, setSearched] = useState(COMMON_WORDS.PRODUCT);
   const [productValue, setProductValue] = useState([]);
   const [lobValue, setLobValue] = useState([]);
@@ -34,8 +35,8 @@ const PartnerNeft = () => {
       sortOrder: order,
       pageNo: page,
       pageSize,
-      childFieldsToFetch: "product,lob,producer",
-      childFieldsEdge: "hasProduct,hasLob,hasProducer",
+      childFieldsToFetch: COMMON_FIELDS.childFieldsToFetch,
+      childFieldsEdge: COMMON_FIELDS.childFieldsEdge,
     });
   }, [orderBy, order, page, pageSize, getPartnerNeft]);
 
@@ -57,11 +58,20 @@ const PartnerNeft = () => {
     inputData.map((item) => item.id).join();
 
   const handleGo = () => {
-    const searchKey = searched === COMMON_WORDS.PRODUCT ? "productId" : "lobId";
     const searchString = fetchIdsAndConvert(
       searched === COMMON_WORDS.PRODUCT ? productValue : lobValue
     );
-    getPartnerNeft({ searchKey, searchString });
+    if(searchString !== "" || searchString.length) {
+      getPartnerNeft({
+        childFieldsToFetch: COMMON_FIELDS.childFieldsToFetch,
+        childFieldsEdge: COMMON_FIELDS.childFieldsEdge,
+        ids: searchString,
+        isExclusive: true,
+        edge: searched === COMMON_WORDS.PRODUCT ? COMMON_FIELDS.hasProduct: COMMON_FIELDS.hasLob
+      });
+    } else {
+      loadData();
+    }
   };
 
   const updateNeftForm = (row) => navigate("/partner-neft/form/" + row.id);
