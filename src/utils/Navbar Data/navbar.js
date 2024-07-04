@@ -158,3 +158,25 @@ export const SideNavData = [
     icon: GridViewIcon,
   },
 ];
+
+/////// To be added
+// {
+  //   "moduleType": "UM",
+  //   "moduleName": "Data Entry User",
+  //   "route": "data-entry-user",
+  //   "icon": "dataentryuser.svg",
+  //   child: [
+  //     {
+  //       "moduleType": "UM",
+  //       "moduleName": "BANCA Login-1",
+  //       "route": "banca-login-1",
+  //       "icon": "banca-login-1.svg",
+  //     },
+  //     {
+  //       "moduleType": "UM",
+  //       "moduleName": "BANCA Login-2",
+  //       "route": "banca-login-2",
+  //       "icon": "banca-login-2.svg",
+  //     },
+  //   ],
+  // },
