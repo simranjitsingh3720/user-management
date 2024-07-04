@@ -13,3 +13,17 @@ export function capitalizeWords(str) {
 
   return capitalizedWords.join(" ");
 }
+
+/**
+ * Builds a query string from the given parameters object.
+ * @param {Object} params - The parameters object.
+ * @returns {string} - The generated query string.
+ */
+export const buildQueryString = (params) => {
+  return Object.keys(params)
+    .filter((key) => params[key] != null && params[key] !== "" && params[key] !== undefined) 
+    .map(
+      (key) => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`
+    )
+    .join("&");
+};

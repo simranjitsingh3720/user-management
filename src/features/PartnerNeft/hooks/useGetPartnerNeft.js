@@ -3,20 +3,12 @@ import { toast } from "react-toastify";
 import { API_END_POINTS, VERFICATION_ENUM } from "../utils/constant";
 import axiosInstance from "./../../../utils/axiosInstance";
 import { COMMON_ERROR } from "../../../utils/globalConstants";
+import { buildQueryString } from "../../../utils/globalizationFunction";
 
 const useGetPartnerNeft = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [totalCount, setTotalCount] = useState(0);
-
-  const buildQueryString = (params) => {
-    return Object.keys(params)
-      .filter((key) => params[key] != null && params[key] !== "" && params[key] !== undefined) 
-      .map(
-        (key) => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`
-      )
-      .join("&");
-  };
 
   const getPartnerNeft = useCallback(
     async ({
