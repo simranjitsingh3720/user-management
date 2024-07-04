@@ -20,7 +20,7 @@ const PartnerNeft = () => {
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(5);
   const [order, setOrder] = useState(COMMON_WORDS.ASC);
-  const [orderBy, setOrderBy] = useState("");
+  const [orderBy, setOrderBy] = useState("createdAt");
   const [searched, setSearched] = useState(COMMON_WORDS.PRODUCT);
   const [productValue, setProductValue] = useState([]);
   const [lobValue, setLobValue] = useState([]);
@@ -33,6 +33,8 @@ const PartnerNeft = () => {
       sortOrder: order,
       pageNo: page,
       pageSize,
+      childFieldsToFetch: "product,lob,producer",
+      childFieldsEdge: "hasProduct,hasLob,hasProducer",
     });
   }, [orderBy, order, page, pageSize, getPartnerNeft]);
 

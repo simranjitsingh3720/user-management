@@ -7,6 +7,7 @@ import {
   Checkbox,
   Switch,
 } from "@mui/material";
+import ListLoader from "../../ListLoader";
 
 const TableContent = ({ columns, data, loading }) => {
   if (loading) {
@@ -14,7 +15,7 @@ const TableContent = ({ columns, data, loading }) => {
       <TableBody>
         <TableRow>
           <TableCell colSpan={columns.length + 1} align="center">
-            Loading
+            <ListLoader />
           </TableCell>
         </TableRow>
       </TableBody>
@@ -41,7 +42,7 @@ const TableContent = ({ columns, data, loading }) => {
             <TableCell key={`${row.id}-${col.id}`} className="py-2">
               {col.action ? (
                 col.action.map((action, index) => (
-                  <>
+                  <React.Fragment key={index}>
                     {row[action.id] && <span>{row[action.id]}</span>}
                     <span key={`${col.id}-${index}`}>
                       {action.component === "checkbox" ? (
@@ -60,7 +61,7 @@ const TableContent = ({ columns, data, loading }) => {
                         </IconButton>
                       ) : null}
                     </span>
-                  </>
+                  </React.Fragment>
                 ))
               ) : row[col.id] ? (
                 <span>{row[col.id]}</span>

@@ -28,31 +28,51 @@ const useGetPartnerNeft = () => {
       searchKey,
       pageNo,
       pageSize,
+      ids,
+      edge,
+      childFieldsToFetch,
+      childFieldsEdge,
+      endDate,
+      startDate,	
+      isExclusive
     } = {}) => {
       setLoading(true);
       try {
         const queryParams = buildQueryString({
-          isAll,
           status,
-          searchString,
-          sortKey,
-          sortOrder,
-          searchKey,
           pageNo,
           pageSize,
+          searchString,
+          searchKey,
+          sortKey,
+          sortOrder,
+          isAll,
+          ids,
+          edge,
+          childFieldsToFetch,
+          childFieldsEdge,
+          endDate,
+          startDate,
+          isExclusive
         });
 
         const response = await axiosInstance.get(
           `${API_END_POINTS.GET_API}?${queryParams}`
         );
-        const partnerNeftData = response.data.data.map((item) => ({
-          id: item.id,
-          lobId: item.lob.lob,
-          product: item.product.product,
-          producerName: item.producer.firstName + item.producer.lastName,
-          producerCode: item.producer.producerCode,
-          verificationMethod: VERFICATION_ENUM[item.verificationMethod],
-        }));
+
+        const partnerNeftData = response.data.data.map((item) => {
+          const { partnerNeft, product, lob, producer } = item;
+          return ({
+            id: partnerNeft.id,
+            lobId: lob[0].lob,
+            product: product[0].product,
+            producerName: producer[0].firstName + " " + producer[0].lastName,
+            producerCode: producer[0].producerCode,
+            verificationMethod: VERFICATION_ENUM[partnerNeft.verificationMethod],
+          })
+        });
+
+        console.log(partnerNeftData);
         setData(partnerNeftData);
         setTotalCount(response.data.totalCount);
       } catch (e) {
