@@ -45,12 +45,4 @@ const TableHeader = ({
   );
 };
 
-TableHeader.propTypes = {
-  columns: PropTypes.array.isRequired,
-  order: PropTypes.string.isRequired,
-  orderBy: PropTypes.string.isRequired,
-  onRequestSort: PropTypes.func.isRequired,
-  customStyles: PropTypes.object,
-};
-
 export default TableHeader;
