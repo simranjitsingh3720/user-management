@@ -10,7 +10,8 @@ const CustomAutoCompleteWithoutCheckbox = ({
   options,
   getOptionLabel,
   className,
-  size,
+  loading,
+  size='small',
   isOptionEqualToValue,
   placeholder,
   disableClearable,
@@ -18,7 +19,8 @@ const CustomAutoCompleteWithoutCheckbox = ({
   renderOption,
   required,
   error,
-  helperText
+  helperText,
+  onChangeCallback
 }) => {
   return (
     <>
@@ -31,9 +33,10 @@ const CustomAutoCompleteWithoutCheckbox = ({
         rules={rules}
         render={({ field }) => (
           <Autocomplete
+            loading={loading}
             options={options || []}
             getOptionLabel={getOptionLabel}
-            className={className}
+            className={className +  "customize-select"}
             size={size}
             isOptionEqualToValue={isOptionEqualToValue}
             renderInput={(params) => (
@@ -42,6 +45,7 @@ const CustomAutoCompleteWithoutCheckbox = ({
             value={field.value}
             onChange={(event, newValue) => {
               field.onChange(newValue);
+              onChangeCallback && onChangeCallback(newValue);
             }}
             disableClearable={disableClearable}
             ListboxProps={ListboxProps}
