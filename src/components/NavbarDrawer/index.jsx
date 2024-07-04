@@ -2,12 +2,7 @@ import React, { useEffect, useState } from "react";
 import Drawer from "@mui/material/Drawer";
 import TataNormalLogo from "../../assets/TataNormalLogo";
 import SearchInput from "../SearchInput";
-import {
-  Collapse,
-  List,
-  ListItem,
-  ListItemButton
-} from "@mui/material";
+import { Collapse, List, ListItem, ListItemButton } from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { drawerWidth } from "../../utils/globalConstants";
@@ -86,7 +81,6 @@ function NavbarDrawer({
                     : ""
                 }`}
               >
-                {/** Show svg in image tag */}
                 <img
                   src={"/icons/" + obj.icon}
                   alt={obj.moduleName}
@@ -105,9 +99,11 @@ function NavbarDrawer({
                     : ""
                 }`}
               >
-                {/* <ListItemIcon className="text-[#7e84a3]">
-                  <obj.icon />
-                </ListItemIcon> */}
+                <img
+                  src={"/icons/" + obj.icon}
+                  alt={obj.moduleName}
+                  className="w-6 h-6 mr-2"
+                />
                 <div className="text-sm">{obj.moduleName}</div>
                 {open ? (
                   <ExpandLess className="ml-3" />
@@ -139,9 +135,11 @@ function NavbarDrawer({
                             : ""
                         }`}
                       >
-                        {/* <ListItemIcon className="text-[#7e84a3]">
-                          <childObj.icon />
-                        </ListItemIcon> */}
+                        <img
+                          src={"/icons/" + obj.icon}
+                          alt={obj.moduleName}
+                          className="w-6 h-6 mr-2"
+                        />
                         <div className="teListItemIconxt-sm">
                           {childObj?.moduleName}
                         </div>
