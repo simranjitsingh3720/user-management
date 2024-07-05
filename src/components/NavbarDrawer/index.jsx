@@ -82,7 +82,7 @@ function NavbarDrawer({
                 }`}
               >
                 <img
-                  src={"/icons/" + obj.icon}
+                  src={"/icons/" + obj.icon || "/icons/dashboard.svg"}
                   alt={obj.moduleName}
                   className="w-6 h-6 mr-2"
                 />
@@ -100,7 +100,7 @@ function NavbarDrawer({
                 }`}
               >
                 <img
-                  src={"/icons/" + obj.icon}
+                  src={"/icons/" + obj.icon || "/icons/dashboard.svg"}
                   alt={obj.moduleName}
                   className="w-6 h-6 mr-2"
                 />
@@ -136,7 +136,7 @@ function NavbarDrawer({
                         }`}
                       >
                         <img
-                          src={"/icons/" + obj.icon}
+                          src={"/icons/" + obj.icon || "/icons/dashboard.svg"}
                           alt={obj.moduleName}
                           className="w-6 h-6 mr-2"
                         />
