@@ -4,7 +4,7 @@ import CustomTable from "../../../components/CustomTable";
 import { Checkbox, FormControlLabel, TableCell, TableRow } from "@mui/material";
 import generateTableHeaders from "../utils/generateTableHeaders";
 
-const ProducerTable = ({ revalidationList, revalidationListLoading }) => {
+const ProducerTable = ({ revalidationList, revalidationListLoading, totalCount, page, setPage, pageSize, setPageSize }) => {
   const { revalidationListUpdateData } = useRevalidationList();
   const [selectAllActive, setSelectAllActive] = useState(false);
   const [selectAllInactive, setSelectAllInactive] = useState(false);
@@ -90,6 +90,11 @@ const ProducerTable = ({ revalidationList, revalidationListLoading }) => {
         rows={revalidationList}
         loading={revalidationListLoading}
         customExtraHeader={customExtraHeader}
+        totalCount={totalCount}
+        page={page}
+        setPage={setPage}
+        rowsPerPage={pageSize}
+        setRowsPerPage={setPageSize}
       />
     </div>
   );

@@ -9,6 +9,11 @@ export const SideNavData = [
     navigateRoute: "dashboard",
   },
   {
+    label: "Bulk Upload",
+    icon: ManageAccountsIcon,
+    navigateRoute: "bulk-upload",
+  },
+  {
     label: "User Management",
     icon: ManageAccountsIcon,
     navigateRoute: "user-management",
@@ -117,6 +122,11 @@ export const SideNavData = [
     label: "CKYC Config",
     icon: GridViewIcon,
     navigateRoute: "ckyc-config",
+  },
+  {
+    label: "T & C Report",
+    icon: GridViewIcon,
+    navigateRoute: "tc-report",
   },
   {
     label: "Producer Management",

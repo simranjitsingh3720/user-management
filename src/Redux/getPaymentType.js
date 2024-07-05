@@ -44,6 +44,7 @@ export const paymentType = createSlice({
             .addCase(getPaymentTypes.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message;
+                state.paymentType = [];
             });
     },
 })

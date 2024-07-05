@@ -1,6 +1,5 @@
 import React from "react";
 import { TableHead, TableRow, TableCell, TableSortLabel } from "@mui/material";
-import PropTypes from "prop-types";
 
 const TableHeader = ({
   columns = [],
@@ -43,14 +42,6 @@ const TableHeader = ({
       </TableRow>
     </TableHead>
   );
-};
-
-TableHeader.propTypes = {
-  columns: PropTypes.array.isRequired,
-  order: PropTypes.string.isRequired,
-  orderBy: PropTypes.string.isRequired,
-  onRequestSort: PropTypes.func.isRequired,
-  customStyles: PropTypes.object,
 };
 
 export default TableHeader;

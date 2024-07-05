@@ -140,6 +140,7 @@ function CkycConfig() {
         setSearched={setSearched}
         selectOptions={ProductPayment}
         handleGo={handleGo}
+        showButton
       />
       <div className="mt-4">
         <CustomTable

@@ -1,8 +1,6 @@
 import React, { useEffect } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import {
-  Autocomplete,
-  TextField,
   Box,
   Card,
   CardContent,
@@ -22,6 +20,7 @@ import { COMMON_WORDS } from "../../../utils/constants";
 import { VERIFICATION_METHOD } from "../utils/constant";
 import LeftArrow from "../../../assets/LeftArrow";
 import useSubmit from "../hooks/useSubmit";
+import CustomAutoCompleteWithoutCheckbox from "../../../components/CustomAutoCompleteWithoutCheckbox";
 
 const PartnerNeftForm = () => {
   const dispatch = useDispatch();
@@ -67,7 +66,7 @@ const PartnerNeftForm = () => {
         (item) => data.verificationMethod === item.value
       );
       setValue("verificationMethod", VERIFICATION_METHOD[index]);
-      
+
       if (data.lob?.id) {
         dispatch(fetchAllProductData({ lobId: data.lob.id }));
         setValue("product", data.product);
@@ -159,190 +158,104 @@ const PartnerNeftForm = () => {
             </Grid>
 
             <Grid item xs={12} sm={6} lg={4}>
-              <span className="label-text required-field">LOB</span>
-              <Controller
+              <CustomAutoCompleteWithoutCheckbox
                 name="lob"
+                label="LOB"
+                required={true}
+                loading={lobLoading}
+                options={allLob.data || []}
+                getOptionLabel={(option) => option?.lob?.toUpperCase()}
+                isOptionEqualToValue={(option, value) => option.id === value.id}
                 control={control}
-                defaultValue={null}
                 rules={{ required: "LOB is required" }}
-                render={({ field }) => (
-                  <Autocomplete
-                    id="lob"
-                    options={allLob.data || []}
-                    getOptionLabel={(option) =>
-                      option?.lob?.toUpperCase() || ""
-                    }
-                    className="customize-select"
-                    size="small"
-                    loading={lobLoading}
-                    isOptionEqualToValue={(option, value) =>
-                      option.id === value.id
-                    }
-                    renderInput={(params) => (
-                      <TextField {...params} placeholder="Select" />
-                    )}
-                    value={field.value || null}
-                    onChange={(event, newValue) => {
-                      field.onChange(newValue);
-                      setValue("product", null);
-                      if (newValue && newValue.id) {
-                        dispatch(fetchAllProductData({ lobId: newValue.id }));
-                      }
-                    }}
-                    disabled={params.id ? true : false}
-                    renderOption={(props, option) => (
-                      <li {...props} key={option.id}>
-                        {option?.lob?.toUpperCase()}
-                      </li>
-                    )}
-                    ListboxProps={{
-                      style: {
-                        maxHeight: "200px",
-                      },
-                    }}
-                    disableClearable={true}
-                  />
+                error={Boolean(errors.lob)}
+                helperText={errors.lob?.message}
+                disableClearable={true}
+                placeholder={COMMON_WORDS.SELECT}
+                renderOption={(props, option) => (
+                  <li {...props} key={option.id}>
+                    {option?.lob?.toUpperCase()}
+                  </li>
                 )}
+                disabled={params.id ? true : false}
+                onChangeCallback={(newValue) => {
+                  setValue("product", null);
+                  if (newValue && newValue.id) {
+                    dispatch(fetchAllProductData({ lobId: newValue.id }));
+                  }
+                }}
               />
-              <div className="error-msg">
-                {errors.lob && <span>{errors.lob.message}</span>}
-              </div>
             </Grid>
 
             <Grid item xs={12} sm={6} lg={4}>
-              <span className="label-text required-field">Product</span>
-              <Controller
-                name="product"
-                control={control}
-                defaultValue={null}
-                rules={{ required: "Product is required" }}
-                render={({ field }) => (
-                  <Autocomplete
-                    id="product"
-                    options={products.data || []}
-                    getOptionLabel={(option) =>
-                      option?.product?.toUpperCase() || ""
-                    }
-                    loading={productLoading}
-                    className="customize-select"
-                    size="small"
-                    disabled={params.id ? true : false}
-                    isOptionEqualToValue={(option, value) =>
-                      option.id === value.id
-                    }
-                    renderInput={(params) => (
-                      <TextField {...params} placeholder="Select" />
-                    )}
-                    value={field.value || null}
-                    onChange={(event, newValue) => {
-                      field.onChange(newValue);
-                    }}
-                    renderOption={(props, option) => (
-                      <li {...props} key={option.id}>
-                        {option?.product?.toUpperCase()}
-                      </li>
-                    )}
-                    ListboxProps={{
-                      style: {
-                        maxHeight: "200px",
-                      },
-                    }}
-                    disableClearable={true}
-                  />
-                )}
-              />
-              <div className="error-msg">
-                {errors.product && <span>{errors.product.message}</span>}
-              </div>
+                <CustomAutoCompleteWithoutCheckbox
+                  name="product"
+                  label="Product"
+                  required={true}
+                  loading={productLoading}
+                  options={products.data || []}
+                  getOptionLabel={(option) => option?.product?.toUpperCase()}
+                  isOptionEqualToValue={(option, value) => option.id === value.id}
+                  control={control}
+                  rules={{ required: "Product is required" }}
+                  error={Boolean(errors.product)}
+                  helperText={errors.product?.message}
+                  disableClearable={true}
+                  placeholder={COMMON_WORDS.SELECT}
+                  renderOption={(props, option) => (
+                    <li {...props} key={option.id}>
+                      {option?.product?.toUpperCase()}
+                    </li>
+                  )}
+                />
             </Grid>
 
             <Grid item xs={12} sm={6} lg={4}>
-              <span className="label-text required-field">Producer</span>
-              <Controller
+              <CustomAutoCompleteWithoutCheckbox
                 name="producer"
+                label="Producer"
+                required={true}
+                loading={userLoading}
+                options={user.data || []}
+                getOptionLabel={(option) => {
+                  return `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`;
+                }}
+                isOptionEqualToValue={(option, value) => option.id === value.id}
                 control={control}
-                defaultValue={null}
                 rules={{ required: "Producer is required" }}
-                render={({ field }) => (
-                  <Autocomplete
-                    id="producer"
-                    options={user.data || []}
-                    className="customize-select"
-                    size="small"
-                    loading={userLoading}
-                    isOptionEqualToValue={(option, value) =>
-                      option.id === value.id
-                    }
-                    getOptionLabel={(option) => {
-                      return `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`;
-                    }}
-                    renderInput={(params) => (
-                      <TextField {...params} placeholder="Select" />
-                    )}
-                    renderOption={(props, option) => (
-                      <li {...props} key={option.id}>
-                        {option?.firstName?.toUpperCase()}{" "}
-                        {option?.lastName?.toUpperCase()}
-                      </li>
-                    )}
-                    value={field.value || null}
-                    onChange={(event, newValue) => {
-                      field.onChange(newValue);
-                    }}
-                    ListboxProps={{
-                      style: {
-                        maxHeight: "200px",
-                      },
-                    }}
-                    disableClearable={true}
-                  />
+                error={Boolean(errors.producer)}
+                helperText={errors.producer?.message}
+                disableClearable={true}
+                placeholder={COMMON_WORDS.SELECT}
+                renderOption={(props, option) => (
+                  <li {...props} key={option.id}>
+                    {option?.firstName?.toUpperCase()}{" "}
+                    {option?.lastName?.toUpperCase()}
+                  </li>
                 )}
               />
-              <div className="error-msg">
-                {errors.producer && <span>{errors.producer.message}</span>}
-              </div>
             </Grid>
 
             <Grid item xs={12} sm={6} lg={4}>
-              <span className="label-text required-field">
-                Verification Method
-              </span>
-              <Controller
-                name="verificationMethod"
-                control={control}
-                defaultValue={null}
-                rules={{ required: "Verification Method is required" }}
-                render={({ field }) => (
-                  <Autocomplete
-                    id="verificationMethod"
-                    options={VERIFICATION_METHOD || []}
-                    className="customize-select"
-                    size="small"
-                    isOptionEqualToValue={(option, value) =>
-                      option.value === value?.value
-                    }
-                    renderInput={(params) => (
-                      <TextField {...params} placeholder="Select" />
-                    )}
-                    value={field.value || null}
-                    onChange={(event, newValue) => {
-                      field.onChange(newValue);
-                    }}
-                    ListboxProps={{
-                      style: {
-                        maxHeight: "200px",
-                      },
-                    }}
-                    disableClearable={true}
-                  />
-                )}
-              />
-
-              <div className="error-msg">
-                {errors.verificationMethod && (
-                  <span>{errors.verificationMethod.message}</span>
-                )}
-              </div>
+                <CustomAutoCompleteWithoutCheckbox
+                  name="verificationMethod"
+                  label="Verification Method"
+                  required={true}
+                  options={VERIFICATION_METHOD || []}
+                  getOptionLabel={(option) => option?.label}
+                  isOptionEqualToValue={(option, value) => option.value === value.value}
+                  control={control}
+                  rules={{ required: "Verification Method is required" }}
+                  error={Boolean(errors.verificationMethod)}
+                  helperText={errors.verificationMethod?.message}
+                  disableClearable={true}
+                  placeholder={COMMON_WORDS.SELECT}
+                  renderOption={(props, option) => (
+                    <li {...props} key={option.value}>
+                      {option?.label}
+                    </li>
+                  )}
+                />
             </Grid>
           </Grid>
         </CardContent>

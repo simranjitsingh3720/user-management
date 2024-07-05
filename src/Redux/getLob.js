@@ -44,6 +44,7 @@ export const lobUserCreation = createSlice({
             .addCase(getLobs.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message;
+                state.lob = [];
             });
     },
 })

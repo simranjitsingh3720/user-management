@@ -1,13 +1,14 @@
-import { Autocomplete,  Grid, TextField } from "@mui/material";
-import React from "react";
-import styles from "./styles.module.scss";
-import { Controller, useForm } from "react-hook-form";
-import useGetUserData from "../../../hooks/useGetUserData";
-import DownloadIcon from "./../../../assets/DownloadLogo";
-import excelExport from "../../../utils/excelExport";
+import { Grid } from "@mui/material";
+import React, { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
 import CustomButton from "../../../components/CustomButton";
+import CustomAutoCompleteWithoutCheckbox from "../../../components/CustomAutoCompleteWithoutCheckbox";
+import { COMMON_WORDS } from "../../../utils/constants";
+import { fetchUser } from "../../../stores/slices/userSlice";
 
-const ProducerForm = ({ onFormSubmit, revalidationList }) => {
+const ProducerForm = ({ onFormSubmit }) => {
+  const dispatch = useDispatch();
   const {
     handleSubmit,
     control,
@@ -22,93 +23,56 @@ const ProducerForm = ({ onFormSubmit, revalidationList }) => {
     onFormSubmit(data);
   };
 
-  const { userData } = useGetUserData();
-
-  const downloadExcel = () => {
-    const filteredData = revalidationList.map(
-      ({ name, status, emailId, mobileNo }) => ({
-        name,
-        emailId,
-        mobileNo,
-        status,
+  const { user, userLoading } = useSelector((state) => state.user);
+  useEffect(() => {
+    dispatch(
+      fetchUser({
+        userType: COMMON_WORDS.PRODUCER,
+        searchKey: COMMON_WORDS.ROLE_NAME,
       })
     );
-
-    excelExport(filteredData);
-  };
-
+  }, [dispatch]);
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
           <Grid item xs={12} sm={6} lg={4}>
-            <span className="label-text required-field">Select Producer</span>
-            <Controller
-              name="producer"
-              id="producer"
-              control={control}
-              rules={{ required: "Producer is required" }}
-              render={({ field }) => (
-                <Autocomplete
-                  id="producer"
-                  options={userData || []}
-                  getOptionLabel={(option) => {
-                    return `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`;
-                  }}
-                  className="customize-select"
-                  size="small"
-                  isOptionEqualToValue={(option, value) =>
-                    option.id === value.id
-                  }
-                  renderInput={(params) => (
-                    <TextField {...params} placeholder="Select" />
-                  )}
-                  value={field.value}
-                  onChange={(event, newValue) => {
-                    field.onChange(newValue);
-                  }}
-                  disableClearable='true'
-                  renderOption={(props, option) => (
-                    <li {...props} key={option.id}>
-                      {option?.firstName?.toUpperCase()}{" "}
-                      {option?.lastName?.toUpperCase()}
-                    </li>
-                  )}
-                  ListboxProps={{
-                    style: {
-                      maxHeight: "200px",
-                    },
-                  }}
-                />
-              )}
-            />
-            <div className="error-msg">
-              {errors.producer && <span>{errors.producer.message}</span>}
-            </div>
+          <CustomAutoCompleteWithoutCheckbox
+                name="producer"
+                label="Select Producer"
+                required={true}
+                loading={userLoading}
+                options={user.data || []}
+                getOptionLabel={(option) => {
+                  return `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`;
+                }}
+                isOptionEqualToValue={(option, value) => option.id === value.id}
+                control={control}
+                rules={{ required: "Producer is required" }}
+                error={Boolean(errors.producer)}
+                helperText={errors.producer?.message}
+                disableClearable={true}
+                placeholder={COMMON_WORDS.SELECT}
+                renderOption={(props, option) => (
+                  <li {...props} key={option.id}>
+                    {option?.firstName?.toUpperCase()}{" "}
+                    {option?.lastName?.toUpperCase()}
+                  </li>
+                )}
+              />
+          </Grid>
+
+          <Grid item xs={12} sm={6} lg={4} alignItems="flex-end" display="flex">
+            <CustomButton
+              type="submit"
+              variant="contained"
+              color="primary"
+              className="w-full md:w-auto"
+            >
+              Submit
+            </CustomButton>
           </Grid>
         </Grid>
-
-        <div className={styles.buttonContainer}>
-          <CustomButton
-            type="submit"
-            variant="contained"
-            className={styles.primaryBtn}
-          >
-            Submit
-          </CustomButton>
-          {revalidationList.length > 0 ? (
-            <CustomButton
-              variant="outlined"
-              startIcon={<DownloadIcon />}
-              onClick={downloadExcel}
-              className={styles.exportBtn}
-            >
-              Export Data
-            </CustomButton>
-          ) : (
-            <></>
-          )}
-        </div>
       </form>
     </>
   );

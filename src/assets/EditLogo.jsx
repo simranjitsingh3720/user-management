@@ -24,7 +24,7 @@ function EditLogo() {
           transform="translate(1949.2 3634.543)"
           fill="#607083"
           stroke="rgba(0,0,0,0)"
-          stroke-width="1"
+          strokeWidth="1"
         />
       </svg>
     </div>

@@ -13,7 +13,7 @@ export default function usePostUser() {
     try {
       const response = await axiosInstance.post("/api/user", data);
       toast.success(response?.data?.message || "User created successfully");
-      navigate("/user-management");
+      navigate("/dashboard");
     } catch (error) {
       toast.error(
         error?.response?.data?.error?.message ||

@@ -8,6 +8,7 @@ import FormLabel from "@mui/material/FormLabel";
 import { setFromDate, setToDate } from "../../../stores/slices/exportSlice";
 import dayjs from "dayjs";
 import "dayjs/locale/en-gb";
+import { EXPORT_CONSTANTS } from "../utils/constants";
 
 const DateRangePicker = () => {
   const dispatch = useDispatch();
@@ -23,7 +24,7 @@ const DateRangePicker = () => {
               value={fromDate ? dayjs(fromDate, "DD/MM/YYYY") : null}
               onChange={(newValue) => dispatch(setFromDate(newValue))}
               slotProps={{ textField: { size: "medium" } }}
-              disabled={selectedValue !== 'custom'}
+              disabled={selectedValue !== EXPORT_CONSTANTS.custom}
             />
           </FormControl>
         </Grid>
@@ -34,7 +35,7 @@ const DateRangePicker = () => {
               value={toDate ? dayjs(toDate, "DD/MM/YYYY") : null}
               onChange={(newValue) => dispatch(setToDate(newValue))}
               slotProps={{ textField: { size: "medium" } }}
-              disabled={selectedValue !== 'custom'}
+              disabled={selectedValue !== EXPORT_CONSTANTS.custom}
             />
           </FormControl>
         </Grid>

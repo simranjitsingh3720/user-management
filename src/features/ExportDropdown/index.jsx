@@ -8,7 +8,7 @@ import {
   MenuItem,
   MenuList,
 } from "@mui/material";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import CustomButton from "../../components/CustomButton";
 import { showDialog } from "../../stores/slices/dialogSlice";
@@ -19,38 +19,25 @@ import {
 import Content from "./Dialog/Content";
 import DownloadIcon from "../../assets/DownloadLogo";
 import Actions from "./Dialog/Action";
+import { EXPORT_DROPDOWN_VALUES, EXPORT_CONSTANTS } from "./utils/constants";
 
 const ExportDropdown = () => {
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
   const dispatch = useDispatch();
-  const EXPORT_DROPDOWN_VALUE = ["Last 30 Days", "Custom"];
-
-  const EXPORT_ACTIONS = {
-    "Last 30 Days": {
-      selectedValue: "Last 30 Days",
-      actions: [setLast30Days],
-    },
-    Custom: {
-      selectedValue: "custom",
-      actions: [],
-    },
-  };
+  const { tableName } = useSelector((state) => state.export)
 
   const handleMenuItemClick = (event, index) => {
     setOpen(false);
-
-    const selectedValue = EXPORT_DROPDOWN_VALUE[index];
-    const config = EXPORT_ACTIONS[selectedValue];
-
-    if (config) {
-      dispatch(setSelectedValue(config.selectedValue));
-      config.actions.forEach((action) => dispatch(action()));
+    const selectedValue = EXPORT_DROPDOWN_VALUES[index];
+    dispatch(setSelectedValue(selectedValue));
+    if (selectedValue === EXPORT_CONSTANTS.last30Days) {
+      dispatch(setLast30Days());
     }
 
     dispatch(
       showDialog({
-        title: "Export Data",
+        title: EXPORT_CONSTANTS.dialogTitle,
         content: <Content />,
         actions: <Actions />,
       })
@@ -67,6 +54,10 @@ const ExportDropdown = () => {
     }
     setOpen(false);
   };
+
+  if(!tableName) {
+    return;
+  }
 
   return (
     <React.Fragment>
@@ -109,7 +100,7 @@ const ExportDropdown = () => {
             <Paper>
               <ClickAwayListener onClickAway={handleClose}>
                 <MenuList id="split-button-menu" autoFocusItem>
-                  {EXPORT_DROPDOWN_VALUE.map((option, index) => (
+                  {EXPORT_DROPDOWN_VALUES.map((option, index) => (
                     <MenuItem
                       key={option}
                       onClick={(event) => handleMenuItemClick(event, index)}

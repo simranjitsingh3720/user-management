@@ -3,14 +3,16 @@ import axiosInstance from "../utils/axiosInstance"
 
 export const getProducerCodes = createAsyncThunk("producerCode/getProducerCodes", async (roleName, { rejectWithValue }) => {
     try {
-        let url = `/api/user?searchKey=roleName&searchString=${roleName}`;
+       if(roleName){
+        let url = `/api/user?ids=${roleName?.id}&edge=hasRole&isExclusive=true`;
         const response = await axiosInstance.get(url);
         const formattedArray = response?.data?.data?.map(obj => ({
             ...obj,
-            label: obj?.producerCode,
-            value: obj?.producerCode
+            label: obj?.ntId,
+            value: obj?.ntId
         }));
         return formattedArray;
+       }
     }
     catch (error) {
         console.error(error)
@@ -39,6 +41,7 @@ export const producerCode = createSlice({
             .addCase(getProducerCodes.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message;
+                state.producerCode = [];
             });
     },
 })
