@@ -7,17 +7,14 @@ function generateTableHeaders(
     {
       id: "name",
       value: "User Name",
-      sortable: true,
     },
     {
       id: "emailId",
       value: "Email ID",
-      sortable: true,
     },
     {
       id: "mobileNo",
       value: "Mobile Number",
-      sortable: true,
     },
     {
       id: "action",

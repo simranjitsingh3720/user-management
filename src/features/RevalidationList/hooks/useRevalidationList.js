@@ -2,16 +2,26 @@ import { useState, useCallback, useEffect } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
 import { API_END_POINTS } from "../constants";
 import { toast } from "react-toastify";
+import { COMMON_WORDS } from "../../../utils/constants";
+import { buildQueryString } from "../../../utils/globalizationFunction";
 
 const useRevalidationList = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [totalCount, setTotalCount] = useState(0);
 
-  const fetchData = useCallback(async (id) => {
+  const fetchData = useCallback(async ({userId, page, pageSize}) => {
     setLoading(true);
+    const queryParams = buildQueryString({
+      ids: userId,
+      edge: COMMON_WORDS.HAS_PRODUCER,
+      isExclusive: true,
+      pageNo: page,
+      pageSize: pageSize,
+    });
     try {
       const response = await axiosInstance.get(
-        API_END_POINTS.getRevalidationList + id
+        API_END_POINTS.getRevalidationList + queryParams
       );
       const transformedData =
         response?.data?.data.map((item) => ({
@@ -19,6 +29,7 @@ const useRevalidationList = () => {
           checked: item.status,
         })) || [];
       setData(transformedData);
+      setTotalCount(response?.data?.totalCount || 0);
     } catch (error) {
       toast.error(
         error.response?.data?.error?.message ||
@@ -63,6 +74,7 @@ const useRevalidationList = () => {
     revalidationListLoading: loading,
     revalidationListFetchData: fetchData,
     revalidationListUpdateData: updateData,
+    pageTotalCount: totalCount,
   };
 };
 
