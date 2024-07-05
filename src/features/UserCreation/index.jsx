@@ -6,5 +6,4 @@ const UserCreation = () => {
     )
 }
 
-
 export default UserCreation;

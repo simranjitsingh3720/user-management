@@ -7,7 +7,7 @@ import styles from './styles.module.scss';
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import { useEffect } from 'react';
-import { All, Role_Select } from './constants';
+import { All, PLACEHOLDER, REQUIRED_MSG, ROLE_SELECT } from './constants';
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -33,7 +33,7 @@ const AutocompleteFieldAll = ({
   }, [resetClicked]);
 
   useEffect(()=> {
-    if(name !== Role_Select){
+    if(name !== ROLE_SELECT){
       setSelectedValues([])
     }
   },[roleChanged]);
@@ -99,9 +99,9 @@ const AutocompleteFieldAll = ({
             renderInput={(params) => (
               <TextField
                 {...params}
-                placeholder="Select"
+                placeholder={PLACEHOLDER}
                 error={Boolean(errors[name])}
-                helperText={Boolean(errors[name]) ? 'This field is required' : ''}
+                helperText={Boolean(errors[name]) ? REQUIRED_MSG : ''}
               />
             )}
           />

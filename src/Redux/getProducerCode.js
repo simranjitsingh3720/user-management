@@ -1,12 +1,14 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axiosInstance from "../utils/axiosInstance"
+import apiUrls from "../utils/apiUrls";
 
 export const getProducerCodes = createAsyncThunk("producerCode/getProducerCodes", async (roleName, { rejectWithValue }) => {
     try {
        if(roleName){
-        let producerUrl = `/api/user-type?searchKey=userType&searchString=producer&status=true`;
-        const responseProducerCode = await axiosInstance.get(producerUrl);
-        let url = `/api/user?ids=${responseProducerCode?.data?.data[0]?.id}&edge=hasUserType&isExclusive=true`;
+        const userType = `${apiUrls.getUserType}?searchKey=userType&searchString=producer&status=true`;
+        const responseUserType = await axiosInstance.get(userType);
+        const userTypeID = responseUserType?.data?.data[0]?.id
+        const url = `${apiUrls.getUser}?ids=${userTypeID}&edge=hasUserType&isExclusive=true`;
         const response = await axiosInstance.get(url);
         const formattedArray = response?.data?.data?.map(obj => ({
             ...obj,

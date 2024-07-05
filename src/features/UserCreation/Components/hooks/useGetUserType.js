@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../../../../utils/axiosInstance";
+import apiUrls from "../../../../utils/apiUrls";
 
 function useGetUserType() {
   const [data, setData] = useState(null);
@@ -8,7 +9,7 @@ function useGetUserType() {
   const fetchData = async (roleId) => {
     try {
      if(roleId){
-      let url = `/api/user-type?ids=${roleId}&edge=hasRole&isExclusive=true&status=true`;
+      const url = `${apiUrls.getUserType}?ids=${roleId}&edge=hasRole&isExclusive=true&status=true`;
       const response = await axiosInstance.get(url);
       setData(response?.data?.data);
      }

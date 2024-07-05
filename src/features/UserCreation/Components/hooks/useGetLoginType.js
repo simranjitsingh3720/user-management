@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../../../../utils/axiosInstance";
+import apiUrls from "../../../../utils/apiUrls";
 
 function useGetLoginType() {
   const [data, setData] = useState(null);
@@ -7,7 +8,7 @@ function useGetLoginType() {
 
   const fetchData = async () => {
     try {
-      let url = `/api/login-type?isAll=${true}&status=true`;
+      const url = `${apiUrls.getLoginType}?isAll=true&status=true`;
       const response = await axiosInstance.get(url);
       if(response?.data){
         const formattedArray = response?.data?.data?.map((obj) => ({

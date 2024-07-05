@@ -1,11 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axiosInstance from "../utils/axiosInstance";
+import apiUrls from "../utils/apiUrls";
 
 export const getParentCode = createAsyncThunk(
   "parentCode/getParentCode",
   async (roleId, { getState, rejectWithValue }) => {
     try {
-        let url = `/api/role/${roleId?.id}/parent?productName=sales&status=true`;
+        const url = `${apiUrls.getParentCode}/${roleId?.id}/parent?productName=sales&status=true`;
         const response = await axiosInstance.get(url);
         const formattedArray = response?.data?.data?.map((obj) => ({
           ...obj,

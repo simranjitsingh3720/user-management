@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axiosInstance from "../utils/axiosInstance"
+import apiUrls from "../utils/apiUrls";
 
 export const getLocations = createAsyncThunk("location/getLocations", async (_, { getState, rejectWithValue }) => {
     try {
@@ -8,7 +9,7 @@ export const getLocations = createAsyncThunk("location/getLocations", async (_, 
             return location.location; 
         }
 
-        let url = `/api/location?isAll=${true}&status=true`;
+        const url = `${apiUrls.getLocation}?isAll=${true}&status=true`;
         const response = await axiosInstance.get(url);
         const formattedArray = response?.data?.data?.map(obj => ({
             ...obj,

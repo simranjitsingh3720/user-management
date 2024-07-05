@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./styles.module.scss";
 import { TextField } from "@mui/material";
 import { Controller } from "react-hook-form";
+import { ACTIVE, PRODUCER_STATUS } from "./utils/constants";
 
 const InputField = ({ id, required,label, validation, control, errors, disabled, classes, placeholder, type='text' }) => {
   return (
@@ -12,7 +13,7 @@ const InputField = ({ id, required,label, validation, control, errors, disabled,
       <Controller
         name={id}
         control={control}
-        defaultValue={id === "producerStatus" ? 'Active' : ''}
+        defaultValue={id === PRODUCER_STATUS ? ACTIVE : ''}
         rules={{
           ...validation,
           pattern: {

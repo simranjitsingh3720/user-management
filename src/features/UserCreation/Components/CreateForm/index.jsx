@@ -4,7 +4,6 @@ import styles from "./styles.module.scss";
 import { IconButton } from "@mui/material";
 import { useForm } from "react-hook-form";
 import LeftArrow from "../../../../assets/LeftArrow";
-import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import usePostUser from "../hooks/usePostUser";
 import axios from "axios";
@@ -27,6 +26,17 @@ import { getChannels } from "../../../../Redux/getChannel";
 import { getHouseBanks } from "../../../../Redux/getHouseBank";
 import useGetUserType from "../hooks/useGetUserType";
 import useGetRoleHierarchy from "../hooks/useRoleHierarchy";
+import {
+  AUTOCOMPLETE,
+  DROPDOWN,
+  LOB,
+  LOGIN_TYPE,
+  PAYMENT_TYPE,
+  REQUIRED_MSG,
+  ROLE_SELECT,
+  YES,
+} from "../utils/constants";
+import apiUrls from "../../../../utils/apiUrls";
 
 function CreateUserCreationForm() {
   const dispatch = useDispatch();
@@ -64,18 +74,17 @@ function CreateUserCreationForm() {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      active: "yes",
-      // gcStatus: "no",
-      // producerStatus: "Active",
-      // neftDefaultBank: "yes",
-      // paymentType: [],
       roleSelect: "",
     },
   });
 
-  const roleValue = watch("roleSelect")?.roleName;
-  const paymentsType = watch("paymentType");
+  const roleValue = watch(ROLE_SELECT)?.roleName;
+  const paymentsType = watch(PAYMENT_TYPE);
   const { loginType } = useGetLoginType();
+  const lobsWatch = watch(LOB);
+  const rolesWatch = watch(ROLE_SELECT);
+  const { userType, userTypeFetch } = useGetUserType();
+  const { roleHierarchy, roleHierarchyFetch } = useGetRoleHierarchy();
 
   useEffect(() => {
     dispatch(getLobs());
@@ -128,10 +137,12 @@ function CreateUserCreationForm() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        let url = `/userCreationData.json`;
+        const url = apiUrls.fetchUserCreationJSON;
         const response = await axios.get(url);
-        setJsonData(response?.data?.roles);
-        setRoleConfig(response?.data?.roles[0]);
+        if (response) {
+          setJsonData(response?.data?.roles);
+          setRoleConfig(response?.data?.roles[0]);
+        }
       } catch (error) {
         console.error("Error fetching mock data:", error);
       }
@@ -139,104 +150,25 @@ function CreateUserCreationForm() {
     fetchData();
   }, []);
 
-  const onSubmit = (data) => {
-    userTypeFetch(rolesWatch?.id);
-    const payload = {
-      mobileNo: data?.mobileNumber,
-      email: data?.email,
-      startDate: data?.startDate,
-      endDate: data?.endDate,
-      status: data?.active === "yes" ? true : false,
-      roleId: data?.roleSelect?.id,
-      roleName: data?.roleSelect?.roleName,
-      firstName: data?.firstName,
-      lastName: data?.lastName,
-      groupIds: data?.groupIds,
-      parentId: data?.parentCode,
-      childIds:
-        typeof data?.producerCode !== "string"
-          ? data?.producerCode?.map((code) => code.id)
-          : "",
-      password: "123456",
-      userType: userType && userType.length > 0 ? userType[0]?.userType : "",
-      userTypeId: userType && userType.length > 0 ? userType[0]?.id : "",
-      loginTypeIds: data?.loginType?.map((type) => type?.id),
-      roleHierarchyId:
-        roleHierarchy &&
-        (data?.parentCode ||
-          (typeof producerCode !== "string" &&
-            data?.producerCode?.map((code) => code.id)))
-          ? roleHierarchy?.id
-          : "",
-      employeeId: data?.employeeId,
-      locationIds: data?.location?.map((location) => location?.id),
-      ntId: data?.ntloginId,
-      productIds: data?.product?.map((product) => product?.id),
-      vertical: data?.vertical,
-      subVertical: data?.subVertical,
-      solId: data?.solId,
-      gcStatus: data?.gcStatus,
-      producerCode:
-        typeof data?.producerCode === "string" ? data?.producerCode : "",
-      producerType: data?.typeOfProducer,
-      channelId: data?.channelType,
-      bankingLimit: data?.bankingLimit,
-      sendEmail: data?.sendEmail,
-      domain: data?.domain,
-      paymentType: data?.paymentType?.map((payment) => payment?.name),
-      houseBankId: data?.neftDefaultBank?.id,
-      ocrChequeScanning: data?.chequeOCRScanning,
-      ckyc: data?.cKyc,
-      partnerName: data?.partnerName,
-      masterPolicyIds: data?.masterPolicy?.map((code) => code.id),
-      brokerType: data?.brokerType,
-      brokerRoleName: data?.brokerRoleName,
-      branchCode: data?.branchCode,
-      dataEntryUserName: data?.dataEntryUserName,
-      employeeCode: data?.employeeCodeUserLoginId,
-      pospAadhar: data?.pospAadhar,
-      pospPAN: data?.pospPAN,
-      transactionType: data?.transactionType,
-      producerStatus: data?.producerStatus,
-      revalidation: data?.revalidation,
-      roleAssigned: data?.roleAssignment,
-      externalPosp: data?.externalPosp,
-      planIds: data?.plan,
-      zoneIds: data?.zone,
-    };
-
-    const filteredData = Object.fromEntries(
-      Object.entries(payload).filter(
-        ([key, value]) =>
-          value !== "" && !(Array.isArray(value) && value.length === 0)
-      )
-    );
-    postData(filteredData);
-  };
-
   useEffect(() => {
     if (jsonData) {
-      setValue("roleSelect", "");
+      setValue(ROLE_SELECT, "");
     }
   }, []);
 
   useEffect(() => {
     if (roleValue) {
       let resetValues = {
-        roleSelect: watch("roleSelect"),
-        active: "yes",
-        //gcStatus: "no",
-        //producerStatus: "Active",
-        // neftDefaultBank: "yes",
+        roleSelect: watch(ROLE_SELECT),
       };
 
       roleConfig.forEach((item) => {
-        if (item?.type === "autocomplete" && item?.multiple === true) {
+        if (item?.type === AUTOCOMPLETE && item?.multiple === true) {
           resetValues[item?.id] = [];
         }
-        if (item?.type === "autocomplete") {
+        if (item?.type === AUTOCOMPLETE) {
           resetValues[item?.id] = [];
-        } else if (item?.type !== "dropdown") {
+        } else if (item?.type !== DROPDOWN) {
           resetValues[item?.id] = "";
         }
       });
@@ -264,12 +196,12 @@ function CreateUserCreationForm() {
   const handleReset = () => {
     let originalArray = roleConfig;
     let resultObject = originalArray.reduce((resetValues, item) => {
-      if (item?.type === "autocomplete" && item?.multiple === true) {
+      if (item?.type === AUTOCOMPLETE && item?.multiple === true) {
         resetValues[item?.id] = [];
       }
-      if (item?.type === "autocomplete") {
+      if (item?.type === AUTOCOMPLETE) {
         resetValues[item?.id] = null;
-      } else if (item?.type !== "dropdown") {
+      } else if (item?.type !== DROPDOWN) {
         resetValues[item?.id] = "";
       }
       return resetValues;
@@ -279,11 +211,6 @@ function CreateUserCreationForm() {
     console.log("reset", resultObject);
     reset(resultObject);
   };
-
-  const lobsWatch = watch("lob");
-  const rolesWatch = watch("roleSelect");
-  const { userType, userTypeFetch } = useGetUserType();
-  const { roleHierarchy, roleHierarchyFetch } = useGetRoleHierarchy();
 
   useEffect(() => {
     if (lobsWatch && lobsWatch?.length > 0) {
@@ -299,6 +226,139 @@ function CreateUserCreationForm() {
       userTypeFetch(rolesWatch?.id);
     }
   }, [rolesWatch]);
+
+  const onSubmit = (data) => {
+    userTypeFetch(rolesWatch?.id);
+    const {
+      mobileNumber,
+      email,
+      startDate,
+      endDate,
+      active,
+      roleSelect = {},
+      firstName,
+      lastName,
+      groupIds,
+      parentCode,
+      producerCode,
+      loginType = [],
+      employeeId,
+      location = [],
+      ntloginId,
+      product = [],
+      vertical,
+      subVertical,
+      solId,
+      gcStatus,
+      typeOfProducer,
+      channelType,
+      bankingLimit,
+      sendEmail,
+      domain,
+      paymentType = [],
+      neftDefaultBank = {},
+      chequeOCRScanning,
+      cKyc,
+      partnerName,
+      masterPolicy = [],
+      brokerType,
+      brokerRoleName,
+      branchCode,
+      dataEntryUserName,
+      employeeCodeUserLoginId,
+      pospAadhar,
+      pospPAN,
+      transactionType,
+      producerStatus,
+      revalidation,
+      roleAssignment,
+      externalPosp,
+      plan,
+      zone
+    } = data;
+    
+    const { id: roleId, roleName } = roleSelect;
+    const { id: houseBankId } = neftDefaultBank;
+    
+    const [userTypeObj = {}] = userType || [];
+    const { userType: userTypeStr, id: userTypeId } = userTypeObj;
+    
+    const childIds = Array.isArray(producerCode)
+      ? producerCode.map(code => code.id)
+      : [];
+    
+    const loginTypeIds = loginType.map(type => type.id);
+    const locationIds = location.map(loc => loc.id);
+    const productIds = product.map(prod => prod.id);
+    const paymentTypeNames = paymentType.map(payment => payment.name);
+    const masterPolicyIds = masterPolicy.map(policy => policy.id);
+    
+    const roleHierarchyId = roleHierarchy && (parentCode || childIds.length)
+      ? roleHierarchy.id
+      : '';
+    
+    const payload = {
+      mobileNo: mobileNumber,
+      email,
+      startDate,
+      endDate,
+      status: active === "yes",
+      roleId,
+      roleName,
+      firstName,
+      lastName,
+      groupIds,
+      parentId: parentCode,
+      childIds,
+      password: "123456",
+      userType: userTypeStr || '',
+      userTypeId: userTypeId || '',
+      loginTypeIds,
+      roleHierarchyId,
+      employeeId,
+      locationIds,
+      ntId: ntloginId,
+      productIds,
+      vertical,
+      subVertical,
+      solId,
+      gcStatus,
+      producerCode: typeof producerCode === "string" ? producerCode : '',
+      producerType: typeOfProducer,
+      channelId: channelType,
+      bankingLimit,
+      sendEmail,
+      domain,
+      paymentType: paymentTypeNames,
+      houseBankId,
+      ocrChequeScanning : chequeOCRScanning,
+      ckyc: cKyc,
+      partnerName,
+      masterPolicyIds,
+      brokerType,
+      brokerRoleName,
+      branchCode,
+      dataEntryUserName,
+      employeeCode: employeeCodeUserLoginId,
+      pospAadhar,
+      pospPAN,
+      transactionType,
+      producerStatus,
+      revalidation,
+      roleAssigned: roleAssignment,
+      externalPosp,
+      planIds: plan,
+      zoneIds: zone
+    };
+    
+    const filteredData = Object.fromEntries(
+      Object.entries(payload).filter(
+        ([key, value]) =>
+          value !== "" && !(Array.isArray(value) && value.length === 0)
+      )
+    );
+    postData(filteredData);
+  };
 
   return (
     <form
@@ -321,14 +381,14 @@ function CreateUserCreationForm() {
         </div>
         <div className="grid grid-cols-1">
           <AutocompleteMultipleField
-            key="roleSelect"
+            key={ROLE_SELECT}
             control={control}
-            name="roleSelect"
+            name={ROLE_SELECT}
             label="Role"
             required
             disabled={false}
             options={role || []}
-            validation={{ required: "Role is required" }}
+            validation={{ required: REQUIRED_MSG }}
             errors={errors}
             multiple={false}
             resetClicked={resetClicked}
@@ -336,14 +396,14 @@ function CreateUserCreationForm() {
             classes="w-full sm:w-3/4 md:w-3/4 xl:w-7/12"
           />
           <AutocompleteMultipleField
-            key="loginType"
+            key={LOGIN_TYPE}
             control={control}
-            name="loginType"
+            name={LOGIN_TYPE}
             label="Login Type"
             required
             disabled={false}
             options={loginType || []}
-            validation={{ required: "It is a required field" }}
+            validation={{ required: REQUIRED_MSG }}
             errors={errors}
             multiple={true}
             roleChanged={roleChanged}

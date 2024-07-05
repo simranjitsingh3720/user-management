@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axiosInstance from "./../utils/axiosInstance"
+import apiUrls from "../utils/apiUrls";
 
 export const getLobs = createAsyncThunk("lobUserCreation/getLobs", async (_, { getState, rejectWithValue }) => {
     try {
@@ -8,7 +9,7 @@ export const getLobs = createAsyncThunk("lobUserCreation/getLobs", async (_, { g
             return lobUserCreation.lob; 
         }
 
-        let url = `/api/lob?isAll=${true}&status=true`;
+        const url = `${apiUrls.getLob}?isAll=${true}&status=true`;
         const response = await axiosInstance.get(url);
         const formattedArray = response?.data?.data?.map(obj => ({
             ...obj,

@@ -1,14 +1,15 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axiosInstance from "../utils/axiosInstance"
+import apiUrls from "../utils/apiUrls";
 
 export const getHouseBanks = createAsyncThunk("houseBank/getHouseBanks", async (_, { getState, rejectWithValue }) => {
     try {
-        // const { lobUserCreation } = getState();
-        // if (lobUserCreation?.lob?.length > 0) {
-        //     return lobUserCreation.lob; 
-        // }
+        const { houseBank } = getState();
+        if (houseBank?.houseBank?.length > 0) {
+            return houseBank.houseBank; 
+        }
 
-        let url = `/api/house-bank?isAll=${true}&status=true`;
+        const url = `${apiUrls.getHouseBank}?isAll=${true}&status=true`;
         const response = await axiosInstance.get(url);
         const formattedArray = response?.data?.data?.map(obj => ({
             ...obj,
