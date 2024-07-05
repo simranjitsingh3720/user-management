@@ -10,6 +10,7 @@ import SignInImg from "../../assets/SignInImg";
 import Loader from "../../components/Loader";
 import usePostLogin from "./hooks/usePostLogin";
 import backgroundImage from "../../assets/loginPageBackground.png";
+import FullPageLoader from "../../components/FullPageLoader";
 
 function SignInPage() {
   const { postData, loading } = usePostLogin();
@@ -33,8 +34,9 @@ function SignInPage() {
   });
 
   return (
+    <>
+    {loading && <FullPageLoader/>}
     <Box className="flex w-full h-screen">
-      {loading && <Loader></Loader>}
       <div
         className="invisible w-0 md:visible md:w-1/2 h-full bg-cornFlower flex justify-center items-center overflow-hidden bg-cover bg-center"
         style={{ backgroundImage: `url(${backgroundImage})` }}
@@ -113,6 +115,7 @@ function SignInPage() {
         </div>
       </div>
     </Box>
+    </>
   );
 }
 
