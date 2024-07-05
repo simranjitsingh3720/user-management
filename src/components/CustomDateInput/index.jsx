@@ -25,6 +25,9 @@ const DateField = ({
       }
       const start = dayjs(startDate, "YYYY-MM-DD");
       const end = dayjs(value, "YYYY-MM-DD");
+      if (end.isBefore(start)) {
+        return "End date must be greater than or equal to the start date";
+      }
       return end.isBefore(start.add(300, "day"))
         ? true
         : "End date must be within 300 days from the start date";
