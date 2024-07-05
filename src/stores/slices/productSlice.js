@@ -7,7 +7,7 @@ export const fetchAllProductData = createAsyncThunk(
   async ({ lobId } = {}, { rejectWithValue }) => {
     try {
       const url = lobId
-        ? `${API_END_POINTS.PRODUCTAPI}?lobs=${lobId}`
+        ? `${API_END_POINTS.PRODUCTAPI}?ids=${lobId}&edge=hasLob&isExclusive=true`
         : `${API_END_POINTS.PRODUCTAPI}?isAll=true`;
       const response = await axiosInstance.get(url);
       return response.data;

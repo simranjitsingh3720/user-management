@@ -16,7 +16,7 @@ function useGetProduct(pageChange, rowsPage) {
         sort.sortKey
       }&sortOrder=${sort.sortOrder}&pageSize=${rowsPage}`;
       if (resultIds) {
-        url += `&lobs=${resultIds}`;
+        url += `&ids=${resultIds}&edge=hasProduct&isExclusive=true`;
       }
       const response = await axiosInstance.get(url);
       setData(response.data);
