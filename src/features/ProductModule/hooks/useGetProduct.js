@@ -14,9 +14,9 @@ function useGetProduct(pageChange, rowsPage) {
       setLoading(true);
       let url = `/api/product?pageNo=${pageChange - 1}&sortKey=${
         sort.sortKey
-      }&sortOrder=${sort.sortOrder}&pageSize=${rowsPage}`;
+      }&sortOrder=${sort.sortOrder}&pageSize=${rowsPage}&childFieldsToFetch=lob&childFieldsEdge=hasLob`;
       if (resultIds) {
-        url += `&ids=${resultIds}&edge=hasProduct&isExclusive=true`;
+        url += `&ids=${resultIds}&edge=hasLob&isExclusive=true`;
       }
       const response = await axiosInstance.get(url);
       setData(response.data);

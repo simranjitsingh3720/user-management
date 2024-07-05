@@ -16,7 +16,7 @@ import CustomButton from "../../../../components/CustomButton";
 function List({ item, fetchData: fetchGroupList }) {
   const [changeStatusOpen, setChangeStatusOpen] = useState(false);
 
-  const [checked] = useState(item?.status);
+  const [checked] = useState(item?.product.status);
 
   const handleChange = () => {
     setChangeStatusOpen(true);
@@ -33,9 +33,9 @@ function List({ item, fetchData: fetchGroupList }) {
 
   const handleClickYes = () => {
     const payload = {
-      id: item.id,
+      id: item.product.id,
       properties: {
-        status: !item.status,
+        status: !item.product.status,
       },
     };
     UpdateDataFun(payload);
@@ -44,11 +44,11 @@ function List({ item, fetchData: fetchGroupList }) {
   return (
     <div>
       <div className={styles.listHeader}>
-        <div className={styles.nameCell}>{item?.product || "-"}</div>
-        <div className={styles.productValue}>{item?.product_value || "-"}</div>
-        <div className={styles.lobName}>{item?.lob?.lob || "-"}</div>
-        <div className={styles.productCode}>{item?.product_code || "-"}</div>
-        <div className={styles.createdAt}> {item?.createdAt || "-"}</div>
+        <div className={styles.nameCell}>{item?.product.product || "-"}</div>
+        <div className={styles.productValue}>{item?.product.product_value || "-"}</div>
+        <div className={styles.lobName}>{item?.lob[0]?.lob || "-"}</div>
+        <div className={styles.productCode}>{item?.product.product_code || "-"}</div>
+        <div className={styles.createdAt}> {item?.product.createdAt || "-"}</div>
         <div className={styles.productStatus}>
           <div>
             <Switch
@@ -58,7 +58,7 @@ function List({ item, fetchData: fetchGroupList }) {
             />
           </div>
           <div className={styles.styledActiveSelect}>
-            {item?.status ? "Active" : "Inactive"}
+            {item?.product.status ? "Active" : "Inactive"}
           </div>
         </div>
       </div>{" "}
