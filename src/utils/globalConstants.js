@@ -14,6 +14,7 @@ export const REGEX = {
   mobileRegex: "^[0-9]*$",
   // passwordRegex: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{5,}$/,
   passwordRegex: /^\d{5,10}$/,
+  fullNameRegex: /^[A-Za-z]+ [A-Za-z]+$/
 };
 
 export const BUTTON_TEXT = {

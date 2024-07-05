@@ -7,7 +7,7 @@ function useGetLoginType() {
 
   const fetchData = async () => {
     try {
-      let url = `/api/login-type?isAll=${true}`;
+      let url = `/api/login-type?isAll=${true}&status=true`;
       const response = await axiosInstance.get(url);
       if(response?.data){
         const formattedArray = response?.data?.data?.map((obj) => ({

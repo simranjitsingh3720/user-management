@@ -8,7 +8,7 @@ export const getLobs = createAsyncThunk("lobUserCreation/getLobs", async (_, { g
             return lobUserCreation.lob; 
         }
 
-        let url = `/api/lob?isAll=${true}`;
+        let url = `/api/lob?isAll=${true}&status=true`;
         const response = await axiosInstance.get(url);
         const formattedArray = response?.data?.data?.map(obj => ({
             ...obj,

@@ -15,8 +15,9 @@ export default function usePostUser() {
       toast.success(response?.data?.message || "User created successfully");
       navigate("/dashboard");
     } catch (error) {
+      console.log(error);
       toast.error(
-        error?.response?.data?.error?.message ||
+        error?.response?.data?.error?.message || error?.response?.data?.details ||
           "An error occurred. Please try again."
       );
     } finally {

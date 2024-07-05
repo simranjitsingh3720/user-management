@@ -8,7 +8,7 @@ export const getHouseBanks = createAsyncThunk("houseBank/getHouseBanks", async (
         //     return lobUserCreation.lob; 
         // }
 
-        let url = `/api/house-bank?isAll=${true}`;
+        let url = `/api/house-bank?isAll=${true}&status=true`;
         const response = await axiosInstance.get(url);
         const formattedArray = response?.data?.data?.map(obj => ({
             ...obj,

@@ -8,7 +8,7 @@ export const getRoles = createAsyncThunk("role/getRoles", async (_, { getState, 
             return role.role; 
         }
 
-        let url = `/api/role?isAll=${true}`;
+        let url = `/api/role?isAll=${true}&status=true`;
         const response = await axiosInstance.get(url);
         const formattedArray = response?.data?.data?.map(obj => ({
             ...obj,

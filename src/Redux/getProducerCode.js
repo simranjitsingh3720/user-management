@@ -4,12 +4,14 @@ import axiosInstance from "../utils/axiosInstance"
 export const getProducerCodes = createAsyncThunk("producerCode/getProducerCodes", async (roleName, { rejectWithValue }) => {
     try {
        if(roleName){
-        let url = `/api/user?ids=${roleName?.id}&edge=hasRole&isExclusive=true`;
+        let producerUrl = `/api/user-type?searchKey=userType&searchString=producer&status=true`;
+        const responseProducerCode = await axiosInstance.get(producerUrl);
+        let url = `/api/user?ids=${responseProducerCode?.data?.data[0]?.id}&edge=hasUserType&isExclusive=true`;
         const response = await axiosInstance.get(url);
         const formattedArray = response?.data?.data?.map(obj => ({
             ...obj,
-            label: obj?.ntId,
-            value: obj?.ntId
+            label: obj?.producerCode,
+            value: obj?.producerCode
         }));
         return formattedArray;
        }

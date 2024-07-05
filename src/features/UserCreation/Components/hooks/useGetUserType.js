@@ -8,9 +8,9 @@ function useGetUserType() {
   const fetchData = async (roleId) => {
     try {
      if(roleId){
-      let url = `/api/user-type?ids=${roleId}&edge=hasRole&isExclusive=true`;
+      let url = `/api/user-type?ids=${roleId}&edge=hasRole&isExclusive=true&status=true`;
       const response = await axiosInstance.get(url);
-      setData(response?.data);
+      setData(response?.data?.data);
      }
     } catch (error) {
       setData([]);

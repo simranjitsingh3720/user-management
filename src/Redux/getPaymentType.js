@@ -8,7 +8,7 @@ export const getPaymentTypes = createAsyncThunk("paymentType/getPaymentTypes",  
             return paymentType.paymentType;
         }
     
-        let url = `/api/payment-type?isAll=${true}`;
+        let url = `/api/payment-type?isAll=${true}&status=true`;
         const response = await axiosInstance.get(url);
         const formattedArray = response?.data?.data?.map(obj => ({
             ...obj,

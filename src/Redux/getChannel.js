@@ -8,7 +8,7 @@ export const getChannels = createAsyncThunk("channelType/getChannels", async (_,
         //     return lobUserCreation.lob; 
         // }
 
-        let url = `/api/channel?isAll=${true}`;
+        let url = `/api/channel?isAll=${true}&status=true`;
         const response = await axiosInstance.get(url);
         const formattedArray = response?.data?.data?.map(obj => ({
             ...obj,

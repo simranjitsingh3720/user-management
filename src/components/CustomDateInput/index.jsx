@@ -84,7 +84,7 @@ const DateField = ({
                     },
                   },
                 }}
-                minDate={labelVisible ? undefined : dayjs()}
+                minDate={dayjs()}
                 onChange={(date) => {
                   const formattedDate = dayjs(date).format("YYYY-MM-DD");
                   setValue(name, formattedDate);

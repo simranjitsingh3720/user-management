@@ -8,7 +8,7 @@ export const getLocations = createAsyncThunk("location/getLocations", async (_, 
             return location.location; 
         }
 
-        let url = `/api/location?isAll=${true}`;
+        let url = `/api/location?isAll=${true}&status=true`;
         const response = await axiosInstance.get(url);
         const formattedArray = response?.data?.data?.map(obj => ({
             ...obj,

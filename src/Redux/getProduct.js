@@ -8,7 +8,7 @@ export const getProducts = createAsyncThunk(
       if (lob) {
         const lobids = lob.map((item) => item.id);
         const idsString = lobids.join(",");
-        let url = `/api/product?ids=${idsString}&edge=hasLob&isExclusive=true`;
+        let url = `/api/product?ids=${idsString}&edge=hasLob&isExclusive=true&status=true`;
         const response = await axiosInstance.get(url);
         const formattedArray = response?.data?.data?.map((obj) => ({
           ...obj,

@@ -38,7 +38,7 @@ function SignInPage() {
     {loading && <FullPageLoader/>}
     <Box className="flex w-full h-screen">
       <div
-        className="invisible w-0 md:visible md:w-1/2 h-full bg-cornFlower flex justify-center items-center overflow-hidden bg-cover bg-center"
+        className="invisible w-0 md:visible md:w-1/2 h-full bg-cornFlower flex justify-center items-center bg-cover bg-center"
         style={{ backgroundImage: `url(${backgroundImage})` }}
       >
         <SignInImg></SignInImg>

@@ -47,7 +47,7 @@ function CreateUserCreationForm() {
     producerCode: producerCode,
     parentCode: parentCode,
     channelType: channelType,
-    neftDefaultBank: neftDefaultBank
+    neftDefaultBank: neftDefaultBank,
   });
   const navigate = useNavigate();
   const { loading, postData } = usePostUser();
@@ -65,10 +65,10 @@ function CreateUserCreationForm() {
   } = useForm({
     defaultValues: {
       active: "yes",
-      gcStatus: "no",
-      producerStatus: "Active",
-      neftDefaultBank: "yes",
-      paymentType: [],
+      // gcStatus: "no",
+      // producerStatus: "Active",
+      // neftDefaultBank: "yes",
+      // paymentType: [],
       roleSelect: "",
     },
   });
@@ -109,7 +109,7 @@ function CreateUserCreationForm() {
     if (channelType) {
       updatedApiDataMap.channelType = channelType;
     }
-    if(neftDefaultBank) {
+    if (neftDefaultBank) {
       updatedApiDataMap.neftDefaultBank = neftDefaultBank;
     }
     setApiDataMap(updatedApiDataMap);
@@ -122,7 +122,7 @@ function CreateUserCreationForm() {
     parentCode,
     loginType,
     channelType,
-    neftDefaultBank
+    neftDefaultBank,
   ]);
 
   useEffect(() => {
@@ -140,61 +140,78 @@ function CreateUserCreationForm() {
   }, []);
 
   const onSubmit = (data) => {
+    userTypeFetch(rolesWatch?.id);
     const payload = {
-      mobileNo: data?.mobileNumber || '',
-      email: data?.email || '',
-      startDate: data?.startDate || '',
-      endDate: data?.endDate || '',
-      status: data?.status || false,
-      roleId: data?.roleSelect?.id || '',
-      roleName: data?.roleSelect?.roleName || '',
-      firstName: data?.firstName || '',
-      lastName: data?.lastName || '',
-      groupIds: data?.groupIds || [],
-      parentId: data?.parentCode || 'hjhj',
-      childIds: data?.childIds || [],
-      password: data?.password || 'jghh',
-      userType: userType && userType[0]?.userType,
-      userTypeId: userType && userType[0]?.id ,
-      loginTypeIds: data?.loginType?.map((type)=> type.id) || [],
-      roleHierarchyId: roleHierarchy && roleHierarchy?.id,
-      employeeId: data?.employeeId || '',
-      locationIds: data?.location?.map((location)=> location.id) || '',
-      ntId: data?.ntloginId || '',
-      productIds: data?.product?.map((product)=> product.id) || '',
-      vertical: data?.vertical || '',
-      subVertical: data?.subVertical || '',
-      solId: data?.solId || '',
-      gcStatus: data?.gcStatus || '',
-      producerCode: typeof(data?.producerCode) === "string" ? data?.producerCode : data?.producerCode?.map((code)=> code.id),
-      producerType: data?.typeOfProducer || '',
-      channelId: data?.channelType || '',
-      bankingLimit: data?.bankingLimit || '',
-      sendEmail: data?.sendEmail || '',
-      domain: data?.domain || '',
-      paymentType: data?.paymentType?.map((payment)=> payment.id) || '',
-      houseBankId: data?.neftDefaultBank?.id || '',
-      ocrChequeScanning: data?.chequeOCRScanning || '',
-      ckyc: data?.cKyc || '',
-      partnerName: data?.partnerName || '',
-      masterPolicyIds: data?.masterPolicy || '',
-      brokerType: data?.brokerType || '',
-      brokerRoleName: data?.brokerRoleName || '',
-      branchCode: data?.branchCode || '',
-      dataEntryUserName: data?.dataEntryUserName || '',
-      employeeCode: data?.employeeCodeUserLoginId || '',
-      pospAadhar: data?.pospAadhar || '',
-      pospPAN: data?.pospPAN || '',
-      transactionType: data?.transactionType || '',
-      producerStatus: data?.producerStatus || '',
-      revalidation: data?.revalidation || '',
-      roleAssigned: data?.roleAssignment || '',
-      externalPosp: data?.externalPosp || '',
-      planIds: data?.plan || '',
-      zoneIds: data?.zone || '',
+      mobileNo: data?.mobileNumber,
+      email: data?.email,
+      startDate: data?.startDate,
+      endDate: data?.endDate,
+      status: data?.active === "yes" ? true : false,
+      roleId: data?.roleSelect?.id,
+      roleName: data?.roleSelect?.roleName,
+      firstName: data?.firstName,
+      lastName: data?.lastName,
+      groupIds: data?.groupIds,
+      parentId: data?.parentCode,
+      childIds:
+        typeof data?.producerCode !== "string"
+          ? data?.producerCode?.map((code) => code.id)
+          : "",
+      password: "123456",
+      userType: userType && userType.length > 0 ? userType[0]?.userType : "",
+      userTypeId: userType && userType.length > 0 ? userType[0]?.id : "",
+      loginTypeIds: data?.loginType?.map((type) => type?.id),
+      roleHierarchyId:
+        roleHierarchy &&
+        (data?.parentCode ||
+          (typeof producerCode !== "string" &&
+            data?.producerCode?.map((code) => code.id)))
+          ? roleHierarchy?.id
+          : "",
+      employeeId: data?.employeeId,
+      locationIds: data?.location?.map((location) => location?.id),
+      ntId: data?.ntloginId,
+      productIds: data?.product?.map((product) => product?.id),
+      vertical: data?.vertical,
+      subVertical: data?.subVertical,
+      solId: data?.solId,
+      gcStatus: data?.gcStatus,
+      producerCode:
+        typeof data?.producerCode === "string" ? data?.producerCode : "",
+      producerType: data?.typeOfProducer,
+      channelId: data?.channelType,
+      bankingLimit: data?.bankingLimit,
+      sendEmail: data?.sendEmail,
+      domain: data?.domain,
+      paymentType: data?.paymentType?.map((payment) => payment?.name),
+      houseBankId: data?.neftDefaultBank?.id,
+      ocrChequeScanning: data?.chequeOCRScanning,
+      ckyc: data?.cKyc,
+      partnerName: data?.partnerName,
+      masterPolicyIds: data?.masterPolicy?.map((code) => code.id),
+      brokerType: data?.brokerType,
+      brokerRoleName: data?.brokerRoleName,
+      branchCode: data?.branchCode,
+      dataEntryUserName: data?.dataEntryUserName,
+      employeeCode: data?.employeeCodeUserLoginId,
+      pospAadhar: data?.pospAadhar,
+      pospPAN: data?.pospPAN,
+      transactionType: data?.transactionType,
+      producerStatus: data?.producerStatus,
+      revalidation: data?.revalidation,
+      roleAssigned: data?.roleAssignment,
+      externalPosp: data?.externalPosp,
+      planIds: data?.plan,
+      zoneIds: data?.zone,
     };
-    console.log(payload);
-    postData(payload);
+
+    const filteredData = Object.fromEntries(
+      Object.entries(payload).filter(
+        ([key, value]) =>
+          value !== "" && !(Array.isArray(value) && value.length === 0)
+      )
+    );
+    postData(filteredData);
   };
 
   useEffect(() => {
@@ -208,8 +225,8 @@ function CreateUserCreationForm() {
       let resetValues = {
         roleSelect: watch("roleSelect"),
         active: "yes",
-        gcStatus: "no",
-        producerStatus: "Active",
+        //gcStatus: "no",
+        //producerStatus: "Active",
         // neftDefaultBank: "yes",
       };
 
@@ -278,8 +295,8 @@ function CreateUserCreationForm() {
     if (rolesWatch) {
       dispatch(getProducerCodes(rolesWatch));
       dispatch(getParentCode(rolesWatch));
+      roleHierarchyFetch(rolesWatch?.id);
       userTypeFetch(rolesWatch?.id);
-      roleHierarchyFetch(rolesWatch?.id)
     }
   }, [rolesWatch]);
 
@@ -407,7 +424,10 @@ function CreateUserCreationForm() {
                       label={item?.subFields["neft"][0]?.label}
                       required={item?.subFields["neft"][0]?.required}
                       disabled={item?.subFields["neft"][0]?.disabled}
-                      menuItem={item?.subFields["neft"][0]?.menuItem || apiDataMap["neftDefaultBank"]}
+                      menuItem={
+                        item?.subFields["neft"][0]?.menuItem ||
+                        apiDataMap["neftDefaultBank"]
+                      }
                       placeholder="Select"
                       errors={errors}
                       setValue={setValue}

@@ -25,7 +25,7 @@ const SelectField = ({
       <Controller
         name={name}
         control={control}
-        defaultValue={(menuItem.length > 0 && menuItem[0]?.value) || 'yes'}
+        // defaultValue={(menuItem.length > 0 && menuItem[0]?.value) || 'yes'}
         render={({ field }) => (
           <Select
             {...field}
@@ -33,7 +33,7 @@ const SelectField = ({
             labelId={name}
             id={name}
             placeholder={placeholder || label}
-            value={field.value ||
+            value={field.value || name === "gcStatus" ? 'no' : 
               (menuItem.length > 0 && menuItem[0]?.value) || 'yes'}
             onChange={field.onChange}
             className={`${styles.customizeSelect} ${classes}`}

@@ -10,7 +10,7 @@ function useGetRoleHierarchy() {
      if(roleId){
       let url = `/api/role-hierarchy?roleId=${roleId}&productName=sales`;
       const response = await axiosInstance.get(url);
-      setData(response?.data);
+      setData(response?.data?.data);
      }
     } catch (error) {
       setData([]);
