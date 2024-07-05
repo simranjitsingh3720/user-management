@@ -27,3 +27,10 @@ export const buildQueryString = (params) => {
     )
     .join("&");
 };
+
+/**
+  * Return a string for placeholder
+ */
+export const getPlaceHolder = (key) => {
+  return `Search by ${key} Name`;
+}

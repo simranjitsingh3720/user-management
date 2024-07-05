@@ -15,7 +15,7 @@ function useGetRole(pageChange = 1, rowsPage) {
       setLoading(true);
       let url = `/api/role?pageNo=${pageChange - 1}&sortKey=${
         sort.sortKey
-      }&sortOrder=${sort.sortOrder}&pageSize=${rowsPage}`;
+      }&sortOrder=${sort.sortOrder}&pageSize=${rowsPage}&childFieldsToFetch=group&childFieldsEdge=hasGroup`;
       if (key === "roleName" && query) {
         url += `&searchKey=${key}&searchString=${query}`;
       } else if (key === "groupName" && resultGroupId) {

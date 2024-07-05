@@ -12,6 +12,7 @@ export const COMMON_WORDS = {
   LOGOUT: "Logout",
   HAS_PRODUCER: "hasProducer",
   SELECT: "Select",
+  USER: "user",
 };
 
 export const API_END_POINTS = {

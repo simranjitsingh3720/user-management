@@ -23,12 +23,6 @@ export const BUTTON_TEXT = {
   PARTNER_NEFT: "Create New NEFT Flag",
 };
 
-export const PLACEHOLDER_TEXT = {
-  product: "Search by Product Name",
-  lob: "Search by Lob Name",
-  user: "Search by User Name",
-};
-
 export const ProductPayment = [
   {
     label: "Product",

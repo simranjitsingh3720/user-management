@@ -19,6 +19,22 @@ export const COMMON_FIELDS = {
   childFieldsToFetch: "product,lob,producer",
   childFieldsEdge: "hasProduct,hasLob,hasProducer",
   hasProduct: "hasProduct",
+  hasProducer: "hasProducer",
   hasLob: "hasLob",
   createdAt: "createdAt"
 }
+
+export const SEARCH_OPTIONS = [
+  {
+    label: "Product",
+    value: "product",
+  },
+  {
+    label: "LOB",
+    value: "lob",
+  },
+  {
+    label: "Producer Name",
+    value: "producer",
+  }
+];
