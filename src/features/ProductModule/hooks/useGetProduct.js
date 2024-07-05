@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
+import { buildQueryString } from "../../../utils/globalizationFunction"; 
+import { COMMON_WORDS } from "../../../utils/constants";
 
 function useGetProduct(pageChange, rowsPage) {
   const [data, setData] = useState(null);
@@ -11,13 +13,14 @@ function useGetProduct(pageChange, rowsPage) {
 
   const fetchData = async (resultIds) => {
     try {
-      setLoading(true);
-      let url = `/api/product?pageNo=${pageChange - 1}&sortKey=${
-        sort.sortKey
-      }&sortOrder=${sort.sortOrder}&pageSize=${rowsPage}&childFieldsToFetch=lob&childFieldsEdge=hasLob`;
-      if (resultIds) {
-        url += `&ids=${resultIds}&edge=hasLob&isExclusive=true`;
+      let queryParams = buildQueryString({pageNo: pageChange-1, pageSize: rowsPage, sortKey: sort.sortKey, sortOrder: sort.sortOrder,childFieldsToFetch: COMMON_WORDS.LOB, childFieldsEdge: COMMON_WORDS.HAS_LOB});
+
+      if(resultIds) {
+        queryParams += `&ids=${resultIds}&edge=hasLob&isExclusive=true`;
       }
+
+      setLoading(true);
+      let url = `/api/product?${queryParams}`;
       const response = await axiosInstance.get(url);
       setData(response.data);
     } catch (error) {
