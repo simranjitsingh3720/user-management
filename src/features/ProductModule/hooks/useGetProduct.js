@@ -16,7 +16,7 @@ function useGetProduct(pageChange, rowsPage) {
       let queryParams = buildQueryString({pageNo: pageChange-1, pageSize: rowsPage, sortKey: sort.sortKey, sortOrder: sort.sortOrder,childFieldsToFetch: COMMON_WORDS.LOB, childFieldsEdge: COMMON_WORDS.HAS_LOB});
 
       if(resultIds) {
-        queryParams += `&ids=${resultIds}&edge=hasLob&isExclusive=true`;
+        queryParams = buildQueryString({pageNo: pageChange-1, pageSize: rowsPage, sortKey: sort.sortKey, sortOrder: sort.sortOrder,childFieldsToFetch: COMMON_WORDS.LOB, childFieldsEdge: COMMON_WORDS.HAS_LOB, isExclusive: true, ids: resultIds, edge: COMMON_WORDS.HAS_LOB});
       }
 
       setLoading(true);
