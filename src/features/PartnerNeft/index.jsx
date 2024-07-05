@@ -6,12 +6,13 @@ import SearchComponent from "../../components/SearchComponent";
 import CustomTable from "../../components/CustomTable";
 import useGetPartnerNeft from "./hooks/useGetPartnerNeft";
 import { Header } from "./utils/header";
-import { BUTTON_TEXT, PLACEHOLDER_TEXT } from "../../utils/globalConstants";
+import { BUTTON_TEXT } from "../../utils/globalConstants";
 import { fetchLobData } from "../../stores/slices/lobSlice";
 import { fetchAllProductData } from "../../stores/slices/productSlice";
 import { COMMON_FIELDS, SEARCH_OPTIONS } from "./utils/constant";
 import { COMMON_WORDS } from "../../utils/constants";
 import { fetchUser } from "../../stores/slices/userSlice";
+import { getPlaceHolder } from "../../utils/globalizationFunction";
 
 const PartnerNeft = () => {
   const navigate = useNavigate();
@@ -178,7 +179,7 @@ const PartnerNeft = () => {
         option={getOption()}
         setOption={setOption}
         optionLabel={(option) => optionLabel(option, COMMON_WORDS[searched.toUpperCase()])}
-        placeholder={PLACEHOLDER_TEXT[searched]}
+        placeholder={getPlaceHolder(searched)}
         renderOptionFunction={(props, option) => renderOptionFunction(props, option, COMMON_WORDS[searched.toUpperCase()])}
         buttonText={BUTTON_TEXT.PARTNER_NEFT}
         navigateRoute="/partner-neft/form"

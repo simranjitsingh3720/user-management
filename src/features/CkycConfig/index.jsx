@@ -9,10 +9,10 @@ import useGetAllProduct from "../../hooks/useGetAllProduct";
 import useGetLobData from "../../hooks/useGetLobData";
 import {
   BUTTON_TEXT,
-  ProductPayment,
-  PLACEHOLDER_TEXT,
+  ProductPayment
 } from "../../utils/globalConstants";
 import { COMMON_WORDS } from "../../utils/constants";
+import { getPlaceHolder } from "../../utils/globalizationFunction";
 
 function CkycConfig() {
   const [tableData, setTableData] = useState([]);
@@ -124,11 +124,7 @@ function CkycConfig() {
             ? optionLabelProduct
             : optionLabelLob
         }
-        placeholder={
-          searched === COMMON_WORDS.PRODUCT
-            ? PLACEHOLDER_TEXT.product
-            : PLACEHOLDER_TEXT.lob
-        }
+        placeholder={ getPlaceHolder(searched) }
         renderOptionFunction={
           searched === COMMON_WORDS.PRODUCT
             ? renderOptionProductFunction
