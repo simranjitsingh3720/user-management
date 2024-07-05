@@ -26,7 +26,7 @@ export const PLACEHOLDER_TEXT = {
   product: "Search by Product Name",
   lob: "Search by Lob Name",
   user: "Search by User Name",
-  producerName: "Search by Producer Name"
+  producer: "Search by Producer Name"
 };
 
 export const ProductPayment = [

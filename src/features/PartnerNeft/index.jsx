@@ -177,9 +177,9 @@ const PartnerNeft = () => {
         optionsData={getOptionsData()}
         option={getOption()}
         setOption={setOption}
-        optionLabel={(option) => optionLabel(option, searched === COMMON_WORDS.PRODUCT ? COMMON_WORDS.PRODUCT : (searched === COMMON_WORDS.LOB ? COMMON_WORDS.LOB : COMMON_WORDS.PRODUCER))}
-        placeholder={searched === COMMON_WORDS.PRODUCT ? PLACEHOLDER_TEXT.product : (searched === COMMON_WORDS.LOB ? PLACEHOLDER_TEXT.lob : PLACEHOLDER_TEXT.producerName)}
-        renderOptionFunction={(props, option) => renderOptionFunction(props, option, searched === COMMON_WORDS.PRODUCT ? COMMON_WORDS.PRODUCT : (searched === COMMON_WORDS.LOB ? COMMON_WORDS.LOB : COMMON_WORDS.PRODUCER))}
+        optionLabel={(option) => optionLabel(option, COMMON_WORDS[searched.toUpperCase()])}
+        placeholder={PLACEHOLDER_TEXT[searched]}
+        renderOptionFunction={(props, option) => renderOptionFunction(props, option, COMMON_WORDS[searched.toUpperCase()])}
         buttonText={BUTTON_TEXT.PARTNER_NEFT}
         navigateRoute="/partner-neft/form"
         searched={searched}
