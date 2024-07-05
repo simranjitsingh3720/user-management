@@ -16,17 +16,17 @@ function TableHeader({ sort, setSort, setLoading }) {
   };
   return (
     <div className={styles.tableHeader}>
-      <div className={styles.name} onClick={() => handleSort("lob")}>
-        LOB Name {renderSortIcon("lob")}
+      <div className={styles.name}>
+        LOB Name
       </div>
-      <div className={styles.lobValue} onClick={() => handleSort("lob_value")}>
-        LOB Value {renderSortIcon("lob_value")}
+      <div className={styles.lobValue}>
+        LOB Value
       </div>
-      <div className={styles.lobLevel} onClick={() => handleSort("lob_value")}>
-        LOB Level {renderSortIcon("lob_level")}
+      <div className={styles.lobLevel} >
+        LOB Level
       </div>
-      <div className={styles.lobCode} onClick={() => handleSort("lob_code")}>
-        LOB Code{renderSortIcon("lob_code")}
+      <div className={styles.lobCode}>
+        LOB Code
       </div>
       <div className={styles.createdAt} onClick={() => handleSort("createdAt")}>
         Created At
