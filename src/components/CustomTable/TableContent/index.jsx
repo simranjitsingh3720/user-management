@@ -8,6 +8,7 @@ import {
   Switch,
 } from "@mui/material";
 import ListLoader from "../../ListLoader";
+import { capitalizeWords } from "../../../utils/globalizationFunction";
 
 const TableContent = ({ columns, data, loading }) => {
   if (loading) {
@@ -43,7 +44,9 @@ const TableContent = ({ columns, data, loading }) => {
               {col.action ? (
                 col.action.map((action, index) => (
                   <React.Fragment key={index}>
-                    {row[action.id] && <span>{row[action.id]}</span>}
+                    {row[action.id] && (
+                      <span>{capitalizeWords(row[action.id])}</span>
+                    )}
                     <span key={`${col.id}-${index}`}>
                       {action.component === "checkbox" ? (
                         <Checkbox
@@ -64,7 +67,7 @@ const TableContent = ({ columns, data, loading }) => {
                   </React.Fragment>
                 ))
               ) : row[col.id] ? (
-                <span>{row[col.id]}</span>
+                <span>{capitalizeWords(row[col.id])}</span>
               ) : (
                 "-"
               )}

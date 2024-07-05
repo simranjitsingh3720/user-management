@@ -7,10 +7,7 @@ import { Box } from "@mui/material";
 import useGetCkycData from "./hooks/useGetCkycData";
 import useGetAllProduct from "../../hooks/useGetAllProduct";
 import useGetLobData from "../../hooks/useGetLobData";
-import {
-  BUTTON_TEXT,
-  ProductPayment
-} from "../../utils/globalConstants";
+import { BUTTON_TEXT, ProductPayment } from "../../utils/globalConstants";
 import { COMMON_WORDS } from "../../utils/constants";
 import { getPlaceHolder } from "../../utils/globalizationFunction";
 
@@ -34,18 +31,20 @@ function CkycConfig() {
     orderBy
   );
 
+  console.log("data", data);
+
   useEffect(() => {
     if (data && data?.data) {
       const refactorData = data?.data.map((item) => ({
-        id: item.id,
-        lob: item.lob.lob,
-        product: item.product.product,
-        CKYCApplicable: item.isCKYCApplicable
+        id: item?.cKYC?.id,
+        lob: item?.lobs[0]?.lob,
+        product: item?.products[0]?.product,
+        CKYCApplicable: item?.cKYC?.isCKYCApplicable
           ? COMMON_WORDS.ENABLE
           : COMMON_WORDS.DISABLE,
-        forWhom: item.forWhom,
-        createdAt: item.createdAt,
-        updatedAt: item.updatedAt,
+        forWhom: item?.cKYC?.forWhom,
+        createdAt: item?.cKYC?.createdAt,
+        updatedAt: item?.cKYC?.updatedAt,
       }));
       setTableData(refactorData);
     }
@@ -124,7 +123,7 @@ function CkycConfig() {
             ? optionLabelProduct
             : optionLabelLob
         }
-        placeholder={ getPlaceHolder(searched) }
+        placeholder={getPlaceHolder(searched)}
         renderOptionFunction={
           searched === COMMON_WORDS.PRODUCT
             ? renderOptionProductFunction

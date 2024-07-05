@@ -13,6 +13,10 @@ export const COMMON_WORDS = {
   HAS_PRODUCER: "hasProducer",
   SELECT: "Select",
   USER: "user",
+  PRODUCTS: "products",
+  LOBS: "lobs",
+  HASPRODUCT: "hasProduct",
+  HASLOB: "hasLob",
 };
 
 export const API_END_POINTS = {
