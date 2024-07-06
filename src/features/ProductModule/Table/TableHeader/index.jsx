@@ -15,21 +15,19 @@ function TableHeader({ sort, setSort }) {
   };
   return (
     <div className={styles.tableHeader}>
-      <div className={styles.name} onClick={() => handleSort("product")}>
-        Product Name {renderSortIcon("product")}
+      <div className={styles.name}>
+        Product Name
       </div>
       <div
         className={styles.productValue}
-        onClick={() => handleSort("product_value")}
       >
-        Product Value {renderSortIcon("product_value")}
+        Product Value
       </div>
       <div className={styles.lobName}>LOB Name</div>
       <div
         className={styles.productCode}
-        onClick={() => handleSort("product_code")}
       >
-        Product Code {renderSortIcon("product_code")}
+        Product Code
       </div>
       <div className={styles.createdAt} onClick={() => handleSort("createdAt")}>
         Created At

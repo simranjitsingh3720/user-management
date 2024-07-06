@@ -14,7 +14,7 @@ const useRevalidationList = () => {
     setLoading(true);
     const queryParams = buildQueryString({
       ids: userId,
-      edge: COMMON_WORDS.HASPRODUCER,
+      edge: COMMON_WORDS.HAS_PRODUCER,
       isExclusive: true,
       pageNo: page,
       pageSize: pageSize,

@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
-import { API_END_POINTS, COMMON_WORDS } from "../../../utils/constants";
+import { COMMON_WORDS } from "../../../utils/constants";
 import { buildQueryString } from "../../../utils/globalizationFunction";
+import apiUrls from "../../../utils/apiUrls";
 
 function useGetPaymentConfig(pageChange, rowsPage) {
   const [data, setData] = useState(null);
@@ -20,13 +21,13 @@ function useGetPaymentConfig(pageChange, rowsPage) {
         sortOrder: sort.sortOrder,
         pageSize: rowsPage,
         childFieldsToFetch: `${COMMON_WORDS.PAYMENTS},${COMMON_WORDS.LOBS},${COMMON_WORDS.PRODUCTS}`,
-        childFieldsEdge: `${COMMON_WORDS.HASPAYMENTTYPE},${COMMON_WORDS.HASLOB},${COMMON_WORDS.HASPRODUCT}`,
+        childFieldsEdge: `${COMMON_WORDS.HAS_PAYMENT_TYPE},${COMMON_WORDS.HAS_LOB},${COMMON_WORDS.HAS_PRODUCT}`,
       };
 
-      let url = `/${API_END_POINTS.PRODUCTPAYMENT}?${buildQueryString(params)}`;
+      let url = `/${apiUrls.paymentProduct}?${buildQueryString(params)}`;
       if (searched === COMMON_WORDS.PRODUCT && resultProductString) {
         const params = {
-          edge: COMMON_WORDS.HASPRODUCT,
+          edge: COMMON_WORDS.HAS_PRODUCT,
           ids: resultProductString,
           isExclusive: true,
         };
@@ -34,7 +35,7 @@ function useGetPaymentConfig(pageChange, rowsPage) {
       }
       if (searched === COMMON_WORDS.LOB && resultProductString) {
         const params = {
-          edge: COMMON_WORDS.HASLOB,
+          edge: COMMON_WORDS.HAS_LOB,
           ids: resultProductString,
           isExclusive: true,
         };

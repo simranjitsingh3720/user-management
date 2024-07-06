@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
 import { toast } from "react-toastify";
 import { COMMON_ERROR } from "../../../utils/globalConstants";
+import { COMMON_WORDS } from "../../../utils/constants";
+import { buildQueryString } from "../../../utils/globalizationFunction";
 
 function useGetEODBypass(pageChange, rowsPage, query, searched, date) {
   const [data, setData] = useState(null);
@@ -14,17 +16,25 @@ function useGetEODBypass(pageChange, rowsPage, query, searched, date) {
   const fetchData = async (data = null, resultProducersId = null) => {
     try {
       setLoading(true);
-      let url = `/api/producer-eod-bypass?pageNo=${pageChange - 1}&sortKey=${
-        sort.sortKey
-      }&sortOrder=${sort.sortOrder}&pageSize=${rowsPage}`;
+      let params = buildQueryString({
+        pageNo: pageChange - 1,
+        sortKey: sort.sortKey,
+        sortOrder: sort.sortOrder,
+        pageSize: rowsPage,
+        childFieldsToFetch: COMMON_WORDS.PRODUCER +","+ COMMON_WORDS.LOB + "," + COMMON_WORDS.PRODUCT,
+        childFieldsEdge: COMMON_WORDS.HAS_PRODUCER +","+ COMMON_WORDS.HAS_LOB + "," + COMMON_WORDS.HAS_PRODUCT,
+      });
 
       if (query && searched) {
-        url += `&searchKey=${searched}&searchString=${query}`;
+        params += '&searchKey=' + searched + '&searchString=' + query;
       } else if (searched === "producers" && resultProducersId) {
-        url += `&producers=${resultProducersId}`;
+        params += `&ids=${resultProducersId}&isExclusive=true&edge=${COMMON_WORDS.HAS_PRODUCER}`;
       }
-      if (date?.startDate && date?.endDate)
-        url += `&startDate=${date.startDate}&endDate=${date.endDate}`;
+      if (date?.startDate && date?.endDate) {
+        params += `&startDate=${date.startDate}&endDate=${date.endDate}`;
+      }
+
+      let url = `/api/producer-eod-bypass?${params}`;
       const response = await axiosInstance.get(url);
       setData(response.data);
     } catch (error) {

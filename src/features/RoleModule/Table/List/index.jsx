@@ -30,7 +30,7 @@ function List({
   const [open, setOpen] = useState(false);
   const [changeStatusOpen, setChangeStatusOpen] = useState(false);
 
-  const [checked, setChecked] = useState(item?.status);
+  const [checked, setChecked] = useState(item?.role?.status);
 
   const handleChange = () => {
     setChangeStatusOpen(true);
@@ -39,7 +39,7 @@ function List({
   const { data, loading, fetchData, setLoading } = useGetGroupById();
 
   const handleClickOpen = () => {
-    fetchData(item.groupId);
+    fetchData(item.role.groupId);
     setOpen(true);
   };
   const handleClose = () => {
@@ -53,20 +53,20 @@ function List({
   const navigate = useNavigate();
 
   const handleEditClick = () => {
-    fetchData(item.id);
-    navigate(`/roles/role-form/${item.id}`);
+    fetchData(item.role.id);
+    navigate(`/roles/role-form/${item.role.id}`);
   };
 
   const { UpdateDataFun, updateLoading } = useUpdateRole(
-    item.id,
+    item.role.id,
     setChangeStatusOpen,
     fetchGroupList
   );
 
   const handleClickYes = () => {
     const payload = {
-      status: !item.status,
-      groupId: item.groupId,
+      status: !item.role.status,
+      groupId: item.role.groupId,
     };
     UpdateDataFun(payload);
     setChecked((prev) => !prev);
@@ -77,9 +77,9 @@ function List({
   return (
     <div>
       <div className={styles.listHeader}>
-        <div className={styles.nameCell}>{item?.roleName || "-"}</div>
+        <div className={styles.nameCell}>{item?.role.roleName || "-"}</div>
         <div className={styles.groupNameCell}>
-          {item?.group?.groupName || "-"}
+          {item?.group[0]?.groupName || "-"}
           <Tooltip title="View permissions">
             <IconButton
               aria-label="back"
@@ -91,7 +91,7 @@ function List({
           </Tooltip>
         </div>
 
-        <div className={styles.createdAt}> {item?.createdAt || "-"}</div>
+        <div className={styles.createdAt}> {item?.role.createdAt || "-"}</div>
 
         <div className={styles.groupStatusCell}>
           <div>
@@ -102,7 +102,7 @@ function List({
             />
           </div>
           <div className={styles.styledActiveSelect}>
-            {item?.status ? "Active" : "Inactive"}
+            {item?.role.status ? "Active" : "Inactive"}
           </div>
         </div>
         <div className={styles.actionCell}>

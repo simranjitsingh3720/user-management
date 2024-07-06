@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axiosInstance from "../utils/axiosInstance"
+import apiUrls from "../utils/apiUrls";
 
 export const getPaymentTypes = createAsyncThunk("paymentType/getPaymentTypes",  async (_, { getState, rejectWithValue }) => {
     try {
@@ -8,7 +9,7 @@ export const getPaymentTypes = createAsyncThunk("paymentType/getPaymentTypes",  
             return paymentType.paymentType;
         }
     
-        let url = `/api/payment-type?isAll=${true}`;
+        const url = `${apiUrls.getPaymentType}?isAll=${true}&status=true`;
         const response = await axiosInstance.get(url);
         const formattedArray = response?.data?.data?.map(obj => ({
             ...obj,

@@ -653,7 +653,7 @@
             {
                 "id": "parentCode",
                 "label": "Parent Code",
-                "type": "autocomplete",
+                "type": "dropdown",
                 "required": true,
                 "validation": {
                     "required": "This field is required"
@@ -1003,7 +1003,7 @@
             {
                 "id": "parentCode",
                 "label": "Parent Code",
-                "type": "autocomplete",
+                "type": "dropdown",
                 "required": true,
                 "validation": {
                     "required": "This field is required"
@@ -1353,7 +1353,7 @@
             {
                 "id": "parentCode",
                 "label": "Parent Code",
-                "type": "autocomplete",
+                "type": "dropdown",
                 "required": true,
                 "validation": {
                     "required": "This field is required"
@@ -1791,8 +1791,8 @@
                         "message": "It should not exceed 10 characters"
                     },
                     "pattern": {
-                        "value": "^[A-Za-z]+$",
-                        "message": "It should contain only letters"
+                        "value": "^[A-Za-z]+ [A-Za-z]+$",
+                        "message": "Please enter a valid name"
                     }
                 }
             },
@@ -3004,12 +3004,13 @@
                 }
             }
         ],
-        "dataEntryOperatorPartnerEmployee": [
+        "partneremployee": [
             {
                 "id": "producerCode",
                 "label": "Producer Code",
                 "type": "autocomplete",
                 "required": true,
+                "multiple": false,
                 "validation": {
                     "required": "This field is required"
                 }
@@ -3186,7 +3187,7 @@
                 }
             },
             {
-                "id": "paymentMode",
+                "id": "paymentType",
                 "label": "Payment Mode",
                 "type": "autocomplete",
                 "all": true,
@@ -3305,7 +3306,7 @@
                 }
             }
         ],
-        "dataEntryOperatorExternalPOSP": [
+        "externalposp": [
             {
                 "id": "producerCode",
                 "label": "Producer Code",
@@ -3453,7 +3454,7 @@
                 }
             },
             {
-                "id": "paymentMode",
+                "id": "paymentType",
                 "label": "Payment Mode",
                 "type": "autocomplete",
                 "required": true,
@@ -3560,7 +3561,7 @@
                 }
             }
         ],
-        "dataEntryOperatorSingleSignOn": [
+        "sso": [
             {
                 "id": "producerCode",
                 "label": "Producer Code",
@@ -3742,7 +3743,7 @@
                 }
             },
             {
-                "id": "paymentMode",
+                "id": "paymentType",
                 "label": "Payment Mode",
                 "type": "autocomplete",
                 "required": true,

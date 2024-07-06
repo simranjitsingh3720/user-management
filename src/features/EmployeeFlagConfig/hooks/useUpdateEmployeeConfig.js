@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../../utils/axiosInstance";
 import { toast } from "react-toastify";
 import { COMMON_ERROR } from "../../../utils/globalConstants";
-import { API_END_POINTS } from "../../../utils/constants";
+import apiUrls from "../../../utils/apiUrls";
 
 function useUpdateEmployeeConfig(listFetchFun) {
   const [loading, setLoading] = useState(false);
@@ -14,7 +14,7 @@ function useUpdateEmployeeConfig(listFetchFun) {
     setLoading(true);
     try {
       const response = await axiosInstance.put(
-        `/${API_END_POINTS.EMPLOYEEFLAG}`,
+        `/${apiUrls.employeeFlag}`,
         data
       );
       toast.success(

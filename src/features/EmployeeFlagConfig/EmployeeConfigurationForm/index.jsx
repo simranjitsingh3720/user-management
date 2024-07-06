@@ -39,7 +39,7 @@ function EmployeeConfigurationForm({ fetchData: listFetchFun }) {
     if (
       producerList &&
       producerList?.data &&
-      !EmployeeProducerData?.data.length
+      !EmployeeProducerData?.data?.length
     )
       setDataList(
         (producerList?.data || []).map((item) => ({
@@ -66,7 +66,7 @@ function EmployeeConfigurationForm({ fetchData: listFetchFun }) {
     useUpdateEmployeeConfig(listFetchFun);
 
   const onSubmit = (data) => {
-    if (EmployeeProducerData && EmployeeProducerData?.data.length) {
+    if (EmployeeProducerData && EmployeeProducerData?.data?.length) {
       const field = dataList.map((item) => ({
         productId: item.productId,
         isEmployee: item.isEmployee,

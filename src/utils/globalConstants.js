@@ -14,6 +14,7 @@ export const REGEX = {
   mobileRegex: "^[0-9]*$",
   // passwordRegex: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{5,}$/,
   passwordRegex: /^\d{5,10}$/,
+  fullNameRegex: /^[A-Za-z]+ [A-Za-z]+$/,
 };
 
 export const BUTTON_TEXT = {
@@ -36,7 +37,8 @@ export const ProductPayment = [
 ];
 
 export const COMMON_ERROR = "An error occurred. Please try again.";
-
 export const TOKEN = "user-token";
 export const USER_DETAILS = "user-details";
 export const TOKEN_EXPIRATION = "token-expiration";
+export const TOKEN_EXPIRATION_ERROR =
+  "Your session has expired. Please log in again!";

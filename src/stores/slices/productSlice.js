@@ -1,14 +1,14 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axiosInstance from './../../utils/axiosInstance';
-import { API_END_POINTS } from './../../utils/constants';
+import apiUrls from '../../utils/apiUrls';
 
 export const fetchAllProductData = createAsyncThunk(
   'lob/fetchAllProduct',
   async ({ lobId } = {}, { rejectWithValue }) => {
     try {
       const url = lobId
-        ? `${API_END_POINTS.PRODUCTAPI}?ids=${lobId}&edge=hasLob&isExclusive=true`
-        : `${API_END_POINTS.PRODUCTAPI}?isAll=true`;
+        ? `${apiUrls.getProduct}?ids=${lobId}&edge=hasLob&isExclusive=true`
+        : `${apiUrls.getProduct}?isAll=true`;
       const response = await axiosInstance.get(url);
       return response.data;
     } catch (error) {

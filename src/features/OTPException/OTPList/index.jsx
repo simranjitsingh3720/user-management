@@ -63,7 +63,7 @@ function OTPList({
                 <TableHeader />
                 <ListLoader />
               </>
-            ) : data?.data && data?.data.length ? (
+            ) : data?.data && data?.data?.length ? (
               <>
                 <Table
                   ListData={data?.data}

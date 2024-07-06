@@ -1,12 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axiosInstance from './../../utils/axiosInstance';
-import { API_END_POINTS } from './../../utils/constants';
+import apiUrls from './../../utils/apiUrls';
 
 export const fetchLobData = createAsyncThunk(
   'lob/fetchLobData',
   async (_, { rejectWithValue }) => {
     try {
-      const url = `${API_END_POINTS.LOBAPI}?isAll=true&status=true`;
+      const url = `${apiUrls.getLob}?isAll=true&status=true`;
       const response = await axiosInstance.get(url);
       return response.data;
     } catch (error) {

@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
-import { API_END_POINTS, COMMON_WORDS } from "../../../utils/constants";
+import { COMMON_WORDS } from "../../../utils/constants";
 import { buildQueryString } from "../../../utils/globalizationFunction";
+import apiUrls from "../../../utils/apiUrls";
 
 function useGetHealthConfig(page, pageSize, order, orderBy) {
   const [data, setData] = useState(null);
@@ -17,14 +18,14 @@ function useGetHealthConfig(page, pageSize, order, orderBy) {
         sortOrder: order,
         pageSize: pageSize,
         childFieldsToFetch: `${COMMON_WORDS.PRODUCER}`,
-        childFieldsEdge: `${COMMON_WORDS.HASPRODUCER}`,
+        childFieldsEdge: `${COMMON_WORDS.HAS_PRODUCER}`,
       };
 
-      let url = `/${API_END_POINTS.HEALTHCONFIG}?${buildQueryString(params)}`;
+      let url = `/${apiUrls.healthConfig}?${buildQueryString(params)}`;
 
       if (resultProducersId) {
         const params = {
-          edge: COMMON_WORDS.HASPRODUCER,
+          edge: COMMON_WORDS.HAS_PRODUCER,
           ids: resultProducersId,
           isExclusive: true,
         };

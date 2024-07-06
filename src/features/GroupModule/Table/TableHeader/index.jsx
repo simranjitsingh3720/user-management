@@ -17,8 +17,8 @@ function TableHeader({ sort, setSort, setLoading }) {
 
   return (
     <div className={styles.tableHeader}>
-      <div className={styles.nameCell} onClick={() => handleSort("groupName")}>
-        Group Name {renderSortIcon("groupName")}
+      <div className={styles.nameCell}>
+        Group Name
       </div>
       <div className={styles.createdAt} onClick={() => handleSort("createdAt")}>
         Created At

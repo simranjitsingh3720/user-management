@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../utils/axiosInstance";
-import { API_END_POINTS } from "../utils/constants";
+import apiUrls from "../utils/apiUrls";
 
 function useGetLobData() {
   const [data, setData] = useState(null);
@@ -9,7 +9,7 @@ function useGetLobData() {
   const fetchData = async () => {
     try {
       setLoading(true);
-      let url = `${API_END_POINTS.LOBAPI}?isAll=${true}&status=${true}`;
+      let url = `${apiUrls.getLob}?isAll=${true}&status=${true}`;
       const response = await axiosInstance.get(url);
       setData(response.data);
     } catch (error) {

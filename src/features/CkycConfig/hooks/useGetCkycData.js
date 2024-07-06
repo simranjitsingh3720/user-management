@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
-import { API_END_POINTS, COMMON_WORDS } from "../../../utils/constants";
+import apiUrls from "../../../utils/apiUrls";
+import { COMMON_WORDS } from "../../../utils/constants";
 import { buildQueryString } from "../../../utils/globalizationFunction";
 
 function useGetCkycData(page, pageSize, order, orderBy) {
@@ -16,14 +17,14 @@ function useGetCkycData(page, pageSize, order, orderBy) {
         sortOrder: order,
         pageSize: pageSize,
         childFieldsToFetch: `${COMMON_WORDS.PRODUCTS},${COMMON_WORDS.LOBS}`,
-        childFieldsEdge: `${COMMON_WORDS.HASPRODUCT},${COMMON_WORDS.HASLOB}`,
+        childFieldsEdge: `${COMMON_WORDS.HAS_PRODUCT},${COMMON_WORDS.HAS_LOB}`,
       };
 
-      let url = `/${API_END_POINTS.CKYC}?${buildQueryString(params)}`;
+      let url = `/${apiUrls.ckyc}?${buildQueryString(params)}`;
 
       if (searched === COMMON_WORDS.PRODUCT && resultProductString) {
         const params = {
-          edge: COMMON_WORDS.HASPRODUCT,
+          edge: COMMON_WORDS.HAS_PRODUCT,
           ids: resultProductString,
           isExclusive: true,
         };

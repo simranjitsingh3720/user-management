@@ -3,18 +3,17 @@ import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../../utils/axiosInstance";
 import { toast } from "react-toastify";
 import { COMMON_ERROR } from "../../../utils/globalConstants";
-import { API_END_POINTS } from "../../../utils/constants";
+import apiUrls from "../../../utils/apiUrls";
 
 function useCreateEmployeeConfig(listFetchFun) {
   const [loading, setLoading] = useState(false);
-
   const navigate = useNavigate();
 
   async function postData(data) {
     setLoading(true);
     try {
       const response = await axiosInstance.post(
-        `/${API_END_POINTS.EMPLOYEEFLAG}`,
+        `/${apiUrls.employeeFlag}`,
         data
       );
       toast.success(

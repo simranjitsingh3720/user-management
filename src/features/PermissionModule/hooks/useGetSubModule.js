@@ -1,7 +1,7 @@
 import axiosInstance from "../../../utils/axiosInstance"; 
 
 import { useState } from "react";
-import { API_END_POINTS } from "../../../utils/constants";
+import apiUrls from "../../../utils/apiUrls";
 
 function useGetSubModule() {
   const [data, setData] = useState(null);
@@ -11,7 +11,7 @@ function useGetSubModule() {
     try {
       setLoading(true);
       const response = await axiosInstance.get(
-        `${API_END_POINTS.MODULE}/submodule?id=${id}`
+        `${apiUrls.module}/submodule?id=${id}`
       );
       setData(response.data);
     } catch (error) {

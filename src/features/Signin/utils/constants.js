@@ -1,7 +1,8 @@
 import { REGEX } from "../../../utils/globalConstants";
+export const REQUIRED_MSG = "This field is required";
 
 export const emailValidation =  {
-    required: "This field is required",
+    required: REQUIRED_MSG,
     pattern: {
       value: REGEX.emailRegex,
       message: "Please enter a valid username",
@@ -9,9 +10,11 @@ export const emailValidation =  {
 };
 
 export const passwordValidation =  {
-    required: "This field is required",
+    required: REQUIRED_MSG,
     pattern: {
       value: REGEX.passwordRegex,
       message: "Please enter a valid password",
     },
 };
+
+export const DASHBOARD = "/dashboard";

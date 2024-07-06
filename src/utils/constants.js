@@ -10,27 +10,15 @@ export const COMMON_WORDS = {
   DISABLE: "Disable",
   CHANGE_STATUS: "Change Status",
   LOGOUT: "Logout",
-  HASPRODUCER: "hasProducer",
+  HAS_PRODUCER: "hasProducer",
+  HAS_PRODUCT: "hasProduct",
+  HAS_LOB: "hasLob",
   SELECT: "Select",
   USER: "user",
   PRODUCTS: "products",
   LOBS: "lobs",
-  HASPRODUCT: "hasProduct",
-  HASLOB: "hasLob",
-  HASPAYMENTTYPE: "hasPaymentType",
+  HAS_PAYMENT_TYPE: "hasPaymentType",
   PAYMENTS: "payments",
-};
-
-export const API_END_POINTS = {
-  USERAPI: "api/user",
-  LOBAPI: "api/lob",
-  PRODUCTAPI: "api/product",
-  CKYC: "api/ckyc",
-  PERMISSION: "api/permission",
-  MODULE: "api/module",
-  EMPLOYEEFLAG: "api/employee-flag-config",
-  HEALTHCONFIG: "api/health-configuration",
-  PRODUCTPAYMENT: "api/product-wise-payment-method",
 };
 
 export const HEADER = {
