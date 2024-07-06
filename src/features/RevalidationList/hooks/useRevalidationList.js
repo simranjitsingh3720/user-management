@@ -10,11 +10,11 @@ const useRevalidationList = () => {
   const [loading, setLoading] = useState(true);
   const [totalCount, setTotalCount] = useState(0);
 
-  const fetchData = useCallback(async ({userId, page, pageSize}) => {
+  const fetchData = useCallback(async ({ userId, page, pageSize }) => {
     setLoading(true);
     const queryParams = buildQueryString({
       ids: userId,
-      edge: COMMON_WORDS.HAS_PRODUCER,
+      edge: COMMON_WORDS.HASPRODUCER,
       isExclusive: true,
       pageNo: page,
       pageSize: pageSize,

@@ -5,13 +5,17 @@ import { useNavigate } from "react-router-dom";
 import SearchComponenet from "../../components/SearchComponent";
 import { Box } from "@mui/material";
 import useGetCkycData from "./hooks/useGetCkycData";
-import useGetAllProduct from "../../hooks/useGetAllProduct";
-import useGetLobData from "../../hooks/useGetLobData";
 import { BUTTON_TEXT, ProductPayment } from "../../utils/globalConstants";
 import { COMMON_WORDS } from "../../utils/constants";
 import { getPlaceHolder } from "../../utils/globalizationFunction";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchLobData } from "../../stores/slices/lobSlice";
+import { fetchAllProductData } from "../../stores/slices/productSlice";
 
 function CkycConfig() {
+  const dispatch = useDispatch();
+  const { allLob } = useSelector((state) => state.lob);
+  const { products } = useSelector((state) => state.product);
   const [tableData, setTableData] = useState([]);
 
   const [searched, setSearched] = useState(COMMON_WORDS.PRODUCT);
@@ -24,14 +28,16 @@ function CkycConfig() {
   const [productValue, setProductValue] = useState([]);
   const [lobValue, setLobValue] = useState([]);
 
+  useEffect(() => {
+    dispatch(fetchLobData());
+    dispatch(fetchAllProductData());
+  }, [dispatch]);
   const { data, loading, fetchData } = useGetCkycData(
     page,
     pageSize,
     order,
     orderBy
   );
-
-  console.log("data", data);
 
   useEffect(() => {
     if (data && data?.data) {
@@ -55,10 +61,6 @@ function CkycConfig() {
   const handleEditClick = (row) => {
     navigate(`/ckyc-config/form/${row.id}`);
   };
-
-  const { data: productData } = useGetAllProduct();
-
-  const { data: lobData } = useGetLobData();
 
   const HEADER_COLUMNS = generateTableHeaders(handleEditClick);
 
@@ -110,8 +112,8 @@ function CkycConfig() {
       <SearchComponenet
         optionsData={
           searched === COMMON_WORDS.PRODUCT
-            ? productData?.data ?? []
-            : lobData?.data ?? []
+            ? products?.data ?? []
+            : allLob?.data ?? []
         }
         option={searched === COMMON_WORDS.PRODUCT ? productValue : lobValue}
         setOption={

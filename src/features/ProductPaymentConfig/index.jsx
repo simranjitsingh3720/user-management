@@ -6,12 +6,15 @@ import ListLoader from "../../components/ListLoader";
 import Table from "./Table";
 import NoDataFound from "../../components/NoDataCard";
 import { MenuItem, Pagination, Select } from "@mui/material";
-import { selectRowsData } from "../../utils/globalConstants";
+import { BUTTON_TEXT, selectRowsData } from "../../utils/globalConstants";
 import useGetPaymentConfig from "./hooks/useGetPaymentConfig";
 import useGetPayment from "./hooks/useGetPayment";
 import { ProductPayment } from "./constants";
-import useGetAllProduct from "../../hooks/useGetAllProduct";
-import useGetLobData from "../../hooks/useGetLobData";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchLobData } from "../../stores/slices/lobSlice";
+import { fetchAllProductData } from "../../stores/slices/productSlice";
+import { COMMON_WORDS } from "../../utils/constants";
+import { getPlaceHolder } from "../../utils/globalizationFunction";
 
 function getSelectedRowData(count) {
   let selectedRowData = [];
@@ -26,8 +29,10 @@ function getSelectedRowData(count) {
 }
 
 function ProductPaymentConfig() {
-  const [query, setQuery] = useState("");
-  const [searched, setSearched] = useState("product");
+  const dispatch = useDispatch();
+  const { allLob } = useSelector((state) => state.lob);
+  const { products } = useSelector((state) => state.product);
+  const [searched, setSearched] = useState(COMMON_WORDS.PRODUCT);
   const [productValue, setProductValue] = useState([]);
   const [lobValue, setLobValue] = useState([]);
 
@@ -39,11 +44,14 @@ function ProductPaymentConfig() {
     setPageChange(page);
   };
 
+  useEffect(() => {
+    dispatch(fetchLobData());
+    dispatch(fetchAllProductData());
+  }, [dispatch]);
+
   const { data, loading, sort, setSort, fetchData } = useGetPaymentConfig(
     pageChange,
-    rowsPage,
-    query,
-    searched
+    rowsPage
   );
 
   const { data: paymentData } = useGetPayment();
@@ -53,12 +61,7 @@ function ProductPaymentConfig() {
     setRowsPage(event.target.value);
   };
 
-  const { data: productData } = useGetAllProduct();
-
-  const { data: lobData } = useGetLobData();
-
   const optionLabelProduct = (option) => {
-    console.log("option", option);
     return option?.product ? option.product.toUpperCase() : "";
   };
 
@@ -69,7 +72,6 @@ function ProductPaymentConfig() {
   );
 
   const optionLabelLob = (option) => {
-    console.log("optionLob", option);
     return option?.lob ? option?.lob?.toUpperCase() : "";
   };
 
@@ -80,7 +82,7 @@ function ProductPaymentConfig() {
   );
 
   useEffect(() => {
-    if (searched === "product") {
+    if (searched === COMMON_WORDS.PRODUCT) {
       setLobValue([]);
     } else {
       setProductValue([]);
@@ -88,7 +90,7 @@ function ProductPaymentConfig() {
   }, [searched]);
 
   const handleGo = () => {
-    if (searched === "product") {
+    if (searched === COMMON_WORDS.PRODUCT) {
       const resultProductString = fetchIdsAndConvert(productValue);
       fetchData(searched, resultProductString);
     } else {
@@ -106,25 +108,31 @@ function ProductPaymentConfig() {
     <div>
       <SearchComponenet
         optionsData={
-          searched === "product" ? productData?.data ?? [] : lobData?.data ?? []
+          searched === COMMON_WORDS.PRODUCT
+            ? products?.data ?? []
+            : allLob?.data ?? []
         }
-        option={searched === "product" ? productValue : lobValue}
-        setOption={searched === "product" ? setProductValue : setLobValue}
+        option={searched === COMMON_WORDS.PRODUCT ? productValue : lobValue}
+        setOption={
+          searched === COMMON_WORDS.PRODUCT ? setProductValue : setLobValue
+        }
         fetchData={fetchData}
         optionLabel={
-          searched === "product" ? optionLabelProduct : optionLabelLob
+          searched === COMMON_WORDS.PRODUCT
+            ? optionLabelProduct
+            : optionLabelLob
         }
         placeholder={
-          searched === "product"
-            ? "Search by Producer Name"
-            : "Search by Lob Name"
+          searched === COMMON_WORDS.PRODUCT
+            ? getPlaceHolder(COMMON_WORDS.PRODUCER)
+            : getPlaceHolder(COMMON_WORDS.LOB)
         }
         renderOptionFunction={
-          searched === "product"
+          searched === COMMON_WORDS.PRODUCT
             ? renderOptionProductFunction
             : renderOptionLobFunction
         }
-        buttonText={"Create New Payment Configuration"}
+        buttonText={BUTTON_TEXT.PRODUCT_PAYMENT}
         navigateRoute={"/product-payment-config/form"}
         searched={searched}
         setSearched={setSearched}

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
 
 function useGetPayment() {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const fetchData = async (lobId) => {

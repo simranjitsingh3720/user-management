@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axiosInstance from '../../../utils/axiosInstance';
+import axiosInstance from "../../../utils/axiosInstance";
 import { toast } from "react-toastify";
 import { TOKEN, TOKEN_EXPIRATION } from "../../../utils/globalConstants";
 import { expirationTime } from "../../../utils/auth";

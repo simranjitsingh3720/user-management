@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../../utils/axiosInstance";
 import { toast } from "react-toastify";
 import { COMMON_ERROR } from "../../../utils/globalConstants";
+import { API_END_POINTS } from "../../../utils/constants";
 
 function useUpdateHealthConfig() {
   const [loading, setLoading] = useState(false);
@@ -13,7 +14,7 @@ function useUpdateHealthConfig() {
     setLoading(true);
     try {
       const response = await axiosInstance.put(
-        "/api/health-configuration",
+        `/${API_END_POINTS.HEALTHCONFIG}`,
         data
       );
       toast.success(
@@ -21,13 +22,9 @@ function useUpdateHealthConfig() {
       );
       navigate("/health-config");
     } catch (error) {
-      toast.error(
-        error?.response?.data?.error?.message || COMMON_ERROR
-      );
-
-      
+      toast.error(error?.response?.data?.error?.message || COMMON_ERROR);
     } finally {
-      setLoading(false); 
+      setLoading(false);
     }
   }
   return { UpdateDataFun, updateLoading: loading };

@@ -1,48 +1,40 @@
-import React, { useState } from "react";
-import styles from "./styles.module.scss";
-import TableHeader from "./Table/TableHeader";
-import ListLoader from "../../components/ListLoader";
-import Table from "./Table";
-import NoDataFound from "../../components/NoDataCard";
-import { MenuItem, Pagination, Select } from "@mui/material";
-import { selectRowsData } from "../../utils/globalConstants";
+import React, { useEffect, useState } from "react";
 import useGetHouseBank from "./hooks/useGetHealthConfig";
-import useGetUserData from "../../hooks/useGetUserData";
 import SearchComponenet from "../../components/SearchComponent";
-
-function getSelectedRowData(count) {
-  let selectedRowData = [];
-
-  for (let i = 0; i < selectRowsData.length; i++) {
-    if (selectRowsData[i] <= count) {
-      selectedRowData.push(selectRowsData[i]);
-    }
-  }
-
-  return selectedRowData;
-}
+import CustomTable from "../../components/CustomTable";
+import { useNavigate } from "react-router-dom";
+import generateTableHeaders from "./utils/generateTableHeaders";
+import { COMMON_WORDS } from "../../utils/constants";
+import { BUTTON_TEXT } from "../../utils/globalConstants";
+import { getPlaceHolder } from "../../utils/globalizationFunction";
+import { fetchUser } from "../../stores/slices/userSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 function HealthConfiguration() {
-  const [rowsPage, setRowsPage] = useState(10);
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.user);
 
-  const [pageChange, setPageChange] = useState(1);
   const [producers, setProducers] = useState([]);
+  const [page, setPage] = useState(0);
+  const [pageSize, setPageSize] = useState(5);
+  const [order, setOrder] = useState(COMMON_WORDS.ASC);
+  const [orderBy, setOrderBy] = useState(COMMON_WORDS.CREATED_AT);
 
-  const handlePaginationChange = (event, page) => {
-    setPageChange(page);
-  };
-
-  const { data, loading, sort, setSort, fetchData } = useGetHouseBank(
-    pageChange,
-    rowsPage
+  const { data, loading, fetchData, totalCount } = useGetHouseBank(
+    page,
+    pageSize,
+    order,
+    orderBy
   );
 
-  const handleRowsChange = (event) => {
-    setPageChange(1);
-    setRowsPage(event.target.value);
-  };
-
-  const { userData } = useGetUserData();
+  useEffect(() => {
+    dispatch(
+      fetchUser({
+        userType: COMMON_WORDS.PRODUCER,
+        searchKey: COMMON_WORDS.ROLE_NAME,
+      })
+    );
+  }, [dispatch]);
 
   const optionLabel = (option) => {
     return `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`;
@@ -64,68 +56,44 @@ function HealthConfiguration() {
     return ids.join();
   };
 
+  const navigate = useNavigate();
+
+  const handleEditClick = (row) => {
+    navigate(`/health-config/form/${row.id}`);
+  };
+
+  const HEADER_COLUMNS = generateTableHeaders(handleEditClick);
+
   return (
     <div>
       <SearchComponenet
-        optionsData={userData || []}
+        optionsData={user?.data || []}
         option={producers}
         setOption={setProducers}
         fetchData={fetchData}
         optionLabel={optionLabel}
-        placeholder={"Search by Producer Name"}
+        placeholder={getPlaceHolder(COMMON_WORDS.PRODUCER)}
         renderOptionFunction={renderOptionFunction}
-        buttonText={"Create Health Configuration"}
+        buttonText={BUTTON_TEXT.HEALTH_CONFIG}
         navigateRoute={"/health-config/form"}
         handleGo={handleGo}
         showButton
       />
-      <div className={styles.tableContainerStyle}>
-        <div className={styles.tableStyled}>
-          {loading ? (
-            <>
-              <TableHeader />
-              <ListLoader />
-            </>
-          ) : data?.data && data?.data.length ? (
-            <Table
-              ListData={data?.data}
-              loading={loading}
-              fetchData={fetchData}
-              sort={sort}
-              setSort={setSort}
-            />
-          ) : (
-            <NoDataFound />
-          )}
-        </div>
-        <div className={styles.pageFooter}>
-          <div className={styles.rowsPerPage}>
-            <p className={styles.totalRecordStyle}>Showing Results:</p>
-            <Select
-              labelId="rows-per-page"
-              id="rows-per-page"
-              value={rowsPage}
-              onChange={handleRowsChange}
-              size="small"
-              className={styles.customizeRowsSelect}
-            >
-              {getSelectedRowData(data?.totalCount).map((item) => (
-                <MenuItem value={item} className={styles.styledOptionText}>
-                  {item}
-                </MenuItem>
-              ))}
-            </Select>
-            <p className={styles.totalRecordStyle}>of {data?.totalCount}</p>
-          </div>
-          <Pagination
-            count={data?.totalPageSize}
-            color="primary"
-            size="small"
-            onChange={handlePaginationChange}
-            page={pageChange}
-            className={styles.marginFotter}
-          />
-        </div>
+      <div className="mt-4">
+        <CustomTable
+          columns={HEADER_COLUMNS}
+          rows={data || []}
+          loading={loading}
+          totalCount={totalCount || 0}
+          page={page}
+          setPage={setPage}
+          rowsPerPage={pageSize}
+          setRowsPerPage={setPageSize}
+          order={order}
+          setOrder={setOrder}
+          orderBy={orderBy}
+          setOrderBy={setOrderBy}
+        />
       </div>
     </div>
   );

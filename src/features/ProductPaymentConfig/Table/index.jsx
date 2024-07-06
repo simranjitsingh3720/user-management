@@ -7,13 +7,14 @@ import { capitalizeWords } from "../../../utils/globalizationFunction";
 
 function Table({ ListData, fetchData, sort, setSort, paymentData }) {
   const resultFun = (item) => {
+    const { payments } = item;
     const isSelected = (payment, selected) => {
       return selected.some((sel) => sel.id === payment.id);
     };
     const result = (paymentData?.data || []).map((payment) => {
       return {
         ...payment,
-        selected: isSelected(payment, item?.paymentTypes) ? "Yes" : "No",
+        selected: isSelected(payment, payments) ? "Yes" : "No",
       };
     });
 
@@ -23,7 +24,9 @@ function Table({ ListData, fetchData, sort, setSort, paymentData }) {
   const navigate = useNavigate();
 
   const handleEditClick = (item) => {
-    navigate(`/product-payment-config/form/${item.id}`);
+    navigate(
+      `/product-payment-config/form/${item.productWisePaymentMethod.id}`
+    );
   };
 
   return (
@@ -36,9 +39,9 @@ function Table({ ListData, fetchData, sort, setSort, paymentData }) {
         {ListData.map((item) => (
           <div className={styles.listHeader}>
             <div className={styles.productList}>
-              {item?.product?.product || "-"}
+              {item?.products[0]?.product || "-"}
             </div>
-            <div className={styles.lobList}>{item?.lob?.lob}</div>
+            <div className={styles.lobList}>{item?.lobs[0]?.lob}</div>
           </div>
         ))}
       </div>
@@ -72,8 +75,12 @@ function Table({ ListData, fetchData, sort, setSort, paymentData }) {
         </div>
         {ListData.map((item) => (
           <div className={styles.listHeader}>
-            <div className={styles.createdAt}>{item.createdAt}</div>
-            <div className={styles.createdAt}>{item.updatedAt}</div>
+            <div className={styles.createdAt}>
+              {item?.productWisePaymentMethod?.createdAt}
+            </div>
+            <div className={styles.createdAt}>
+              {item?.productWisePaymentMethod?.updatedAt}
+            </div>
             <div className={styles.productStatus}>
               <Tooltip title="Edit Payment Modes">
                 <IconButton

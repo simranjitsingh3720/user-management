@@ -1,111 +1,126 @@
-import React, { useState } from "react";
-import SearchComponenet from "./SearchComponent";
-import styles from "./styles.module.scss";
-import TableHeader from "./Table/TableHeader";
-import ListLoader from "../../components/ListLoader";
-import Table from "./Table";
-import NoDataFound from "../../components/NoDataCard";
-import { MenuItem, Pagination, Select } from "@mui/material";
-import { selectRowsData } from "../../utils/globalConstants";
+import React, { useEffect, useState } from "react";
 import useGetEmployeeFlag from "./hooks/useGetEmployeeFlag";
 import EmployeeConfigurationForm from "./EmployeeConfigurationForm";
-
-function getSelectedRowData(count) {
-  
-  let selectedRowData = [];
-
-  
-  for (let i = 0; i < selectRowsData.length; i++) {
-    if (selectRowsData[i] <= count) {
-      selectedRowData.push(selectRowsData[i]);
-    }
-  }
-
-  return selectedRowData;
-}
+import CustomTable from "../../components/CustomTable";
+import { generateTableHeaders } from "./utils/generateTableHeaders";
+import { COMMON_WORDS } from "../../utils/constants";
+import CustomDialog from "../../components/CustomDialog";
+import SearchComponent from "../../components/SearchComponent";
+import { getPlaceHolder } from "../../utils/globalizationFunction";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUser } from "../../stores/slices/userSlice";
+import { showDialog } from "../../stores/slices/dialogSlice";
+import Content from "./Dialog/Content";
+import Actions from "./Dialog/Action";
 
 function EmployeeFlagConfig() {
-  const [query, setQuery] = useState("");
-  const [searched, setSearched] = useState("producers");
+  const [producers, setProducers] = useState();
 
-  const [rowsPage, setRowsPage] = useState(10);
+  const [page, setPage] = useState(0);
+  const [pageSize, setPageSize] = useState(5);
+  const [order, setOrder] = useState(COMMON_WORDS.ASC);
+  const [orderBy, setOrderBy] = useState(COMMON_WORDS.CREATED_AT);
+  const [tableData, setTableData] = useState([]);
+  const { user } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
-  const [pageChange, setPageChange] = useState(1);
-  const [producers, setProducers] = useState("");
+  useEffect(() => {
+    dispatch(
+      fetchUser({
+        userType: COMMON_WORDS.PRODUCER,
+        searchKey: COMMON_WORDS.ROLE_NAME,
+      })
+    );
+  }, [dispatch]);
 
-  const handlePaginationChange = (event, page) => {
-    setPageChange(page);
-  };
-
-  const { data, loading, sort, setSort, fetchData } = useGetEmployeeFlag(
-    pageChange,
-    rowsPage,
-    query,
-    searched
+  const { data, loading, fetchData } = useGetEmployeeFlag(
+    page,
+    pageSize,
+    order,
+    orderBy
   );
 
-  const handleRowsChange = (event) => {
-    setPageChange(1);
-    setRowsPage(event.target.value);
+  useEffect(() => {
+    if (data && data?.data) {
+      const refactorData = data?.data.map((item) => ({
+        id: item?.employeeFlagConfig?.id,
+        producerCode: item?.producer[0]?.producerCode,
+        producerName: `${item?.producer[0]?.firstName} ${item?.producer[0]?.lastName}`,
+        productDetails: item?.products,
+        createdAt: item?.employeeFlagConfig?.createdAt,
+        updatedAt: item?.employeeFlagConfig?.updatedAt,
+      }));
+      setTableData(refactorData);
+    }
+  }, [data]);
+
+  const fetchIdsAndConvert = (inputData) => {
+    const ids = (inputData || []).map((producer) => producer.id);
+    return ids.join();
   };
+
+  const handleGo = () => {
+    const resultProducersId = fetchIdsAndConvert(producers);
+    fetchData(resultProducersId);
+  };
+
+  const optionLabelUser = (option) => {
+    return option?.firstName
+      ? `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`
+      : "";
+  };
+
+  const renderOptionUserFunction = (props, option) => (
+    <li {...props} key={option?.id}>
+      {option?.firstName?.toUpperCase()} {""}
+      {option?.lastName?.toUpperCase()}
+    </li>
+  );
+
+  const handleClicked = (row) => {
+    dispatch(
+      showDialog({
+        title: COMMON_WORDS.CHANGE_STATUS,
+        content: <Content row={row} />,
+        actions: <Actions row={row} fetchData={fetchData} />,
+      })
+    );
+  };
+
+  const HEADER_COLUMNS = generateTableHeaders(handleClicked);
 
   return (
     <div>
       <EmployeeConfigurationForm fetchData={fetchData} />
-      <SearchComponenet
-        fetchData={fetchData}
-        producers={producers}
-        setProducers={setProducers}
-        setPageChange={setPageChange}
-      />
-      <div className={styles.tableContainerStyle}>
-        <div className={styles.tableStyled}>
-          {loading ? (
-            <>
-              <TableHeader />
-              <ListLoader />
-            </>
-          ) : data?.data && data?.data.length ? (
-            <Table
-              ListData={data?.data}
-              loading={loading}
-              fetchData={fetchData}
-              sort={sort}
-              setSort={setSort}
-            />
-          ) : (
-            <NoDataFound />
-          )}
-        </div>
-        <div className={styles.pageFooter}>
-          <div className={styles.rowsPerPage}>
-            <p className={styles.totalRecordStyle}>Showing Results:</p>
-            <Select
-              labelId="rows-per-page"
-              id="rows-per-page"
-              value={rowsPage}
-              onChange={handleRowsChange}
-              size="small"
-              className={styles.customizeRowsSelect}
-            >
-              {getSelectedRowData(data?.totalCount).map((item) => (
-                <MenuItem value={item} className={styles.styledOptionText}>
-                  {item}
-                </MenuItem>
-              ))}
-            </Select>
-            <p className={styles.totalRecordStyle}>of {data?.totalCount}</p>
-          </div>
-          <Pagination
-            count={data?.totalPageSize}
-            color="primary"
-            size="small"
-            onChange={handlePaginationChange}
-            page={pageChange}
-            className={styles.marginFotter}
-          />
-        </div>
+      <div className="mt-4">
+        <SearchComponent
+          optionsData={user?.data || []}
+          option={producers}
+          setOption={setProducers}
+          optionLabel={optionLabelUser}
+          placeholder={getPlaceHolder(COMMON_WORDS.USER)}
+          renderOptionFunction={renderOptionUserFunction}
+          handleGo={handleGo}
+          showButton={false}
+        />
       </div>
+      <div className="mt-4">
+        <CustomTable
+          columns={HEADER_COLUMNS}
+          rows={tableData || []}
+          loading={loading}
+          totalCount={data?.totalCount || 0}
+          page={page}
+          setPage={setPage}
+          rowsPerPage={pageSize}
+          setRowsPerPage={setPageSize}
+          order={order}
+          setOrder={setOrder}
+          orderBy={orderBy}
+          setOrderBy={setOrderBy}
+        />
+      </div>
+      <CustomDialog />
     </div>
   );
 }

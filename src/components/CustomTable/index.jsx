@@ -20,6 +20,7 @@ const CustomTable = ({
   setOrder,
   orderBy,
   setOrderBy,
+  hideFooter,
 }) => {
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -53,15 +54,17 @@ const CustomTable = ({
           columns={columns}
           loading={loading}
         />
-        <TableFooter
-          footerContent={footerContent}
-          customStyles={customStyles}
-          count={totalCount}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          handleChangePage={handleChangePage}
-          handleChangeRowsPerPage={handleChangeRowsPerPage}
-        />
+        {!hideFooter && (
+          <TableFooter
+            footerContent={footerContent}
+            customStyles={customStyles}
+            count={totalCount}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            handleChangePage={handleChangePage}
+            handleChangeRowsPerPage={handleChangeRowsPerPage}
+          />
+        )}
       </Table>
     </TableContainer>
   );

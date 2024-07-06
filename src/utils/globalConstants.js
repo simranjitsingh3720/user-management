@@ -20,6 +20,8 @@ export const BUTTON_TEXT = {
   CKYC_CONFIG: "Create New CKYC Config",
   Permission: "Create New Permission",
   PARTNER_NEFT: "Create New NEFT Flag",
+  HEALTH_CONFIG: "Create Health Configuration",
+  PRODUCT_PAYMENT: "Create New Payment Configuration",
 };
 
 export const ProductPayment = [
@@ -35,6 +37,6 @@ export const ProductPayment = [
 
 export const COMMON_ERROR = "An error occurred. Please try again.";
 
-export const TOKEN = 'user-token';
-export const USER_DETAILS = 'user-details';
-export const TOKEN_EXPIRATION = "token-expiration"
+export const TOKEN = "user-token";
+export const USER_DETAILS = "user-details";
+export const TOKEN_EXPIRATION = "token-expiration";

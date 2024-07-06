@@ -10,13 +10,15 @@ export const COMMON_WORDS = {
   DISABLE: "Disable",
   CHANGE_STATUS: "Change Status",
   LOGOUT: "Logout",
-  HAS_PRODUCER: "hasProducer",
+  HASPRODUCER: "hasProducer",
   SELECT: "Select",
   USER: "user",
   PRODUCTS: "products",
   LOBS: "lobs",
   HASPRODUCT: "hasProduct",
   HASLOB: "hasLob",
+  HASPAYMENTTYPE: "hasPaymentType",
+  PAYMENTS: "payments",
 };
 
 export const API_END_POINTS = {
@@ -26,6 +28,9 @@ export const API_END_POINTS = {
   CKYC: "api/ckyc",
   PERMISSION: "api/permission",
   MODULE: "api/module",
+  EMPLOYEEFLAG: "api/employee-flag-config",
+  HEALTHCONFIG: "api/health-configuration",
+  PRODUCTPAYMENT: "api/product-wise-payment-method",
 };
 
 export const HEADER = {

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
+import { API_END_POINTS } from "../../../utils/constants";
 
 function useGetPaymentConfigByID() {
   const [data, setData] = useState(null);
@@ -7,7 +8,7 @@ function useGetPaymentConfigByID() {
 
   const fetchData = async (paymentId) => {
     try {
-      let url = `/api/product-wise-payment-method/${paymentId}`;
+      let url = `/${API_END_POINTS.PRODUCTPAYMENT}/${paymentId}`;
 
       const response = await axiosInstance.get(url);
       setData(response.data);
