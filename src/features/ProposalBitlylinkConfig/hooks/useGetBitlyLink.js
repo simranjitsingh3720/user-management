@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
+import { buildQueryString } from "../../../utils/globalizationFunction";
+import { COMMON_WORDS } from "../../../utils/constants";
 
 function useGetBitlyLink(pageChange, rowsPage, query, searched) {
   const [data, setData] = useState(null);
@@ -12,12 +14,29 @@ function useGetBitlyLink(pageChange, rowsPage, query, searched) {
   const fetchData = async () => {
     try {
       setLoading(true);
-      let url = `/api/proposal-bitly-config?pageNo=${pageChange - 1}&sortKey=${
-        sort.sortKey
-      }&sortOrder=${sort.sortOrder}&pageSize=${rowsPage}`;
+      let queryParams = buildQueryString({
+        pageNo: pageChange - 1,
+        pageSize: rowsPage,
+        sortKey: sort.sortKey,
+        sortOrder: sort.sortOrder,
+        childFieldsToFetch: COMMON_WORDS.PRODUCER,
+        childFieldsEdge: COMMON_WORDS.HAS_PRODUCER,
+      });
+
       if (query && searched) {
-        url += `&searchKey=${searched}&searchString=${query}`;
+        queryParams = buildQueryString({
+          pageNo: pageChange - 1,
+          pageSize: rowsPage,
+          sortKey: sort.sortKey,
+          sortOrder: sort.sortOrder,
+          childFieldsToFetch: COMMON_WORDS.PRODUCER,
+          childFieldsEdge: COMMON_WORDS.HAS_PRODUCER,
+          searchKey: searched,
+          searchString: query
+        });
       }
+
+      let url = `/api/proposal-bitly-config?${queryParams}`;
 
       const response = await axiosInstance.get(url);
       setData(response.data);
