@@ -28,7 +28,7 @@ function useGetEODBypass(pageChange, rowsPage, query, searched, date) {
       if (query && searched) {
         params += '&searchKey=' + searched + '&searchString=' + query;
       } else if (searched === "producers" && resultProducersId) {
-        params += `&producers=${resultProducersId}`;
+        params += `&ids=${resultProducersId}&isExclusive=true&edge=${COMMON_WORDS.HAS_PRODUCER}`;
       }
       if (date?.startDate && date?.endDate) {
         params += `&startDate=${date.startDate}&endDate=${date.endDate}`;
