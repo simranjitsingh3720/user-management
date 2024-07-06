@@ -11,6 +11,7 @@ export const COMMON_WORDS = {
   CHANGE_STATUS: "Change Status",
   LOGOUT: "Logout",
   HAS_PRODUCER: "hasProducer",
+  HAS_PRODUCT: "hasProduct",
   HAS_LOB: "hasLob",
   SELECT: "Select",
   USER: "user",
