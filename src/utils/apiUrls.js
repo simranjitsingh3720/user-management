@@ -14,6 +14,10 @@ const apiUrls = {
   getUser: "/api/user",
   getProduct: "/api/product",
   getRole: "/api/role",
+  getPermission: "/api/permission",
+  module: "/api/module",
+  channel: "/api/channel",
+  ckyc: "/api/ckyc",
 };
 
 export default apiUrls;

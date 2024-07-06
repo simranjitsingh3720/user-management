@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../utils/axiosInstance";
-import { API_END_POINTS } from "../utils/constants";
+import apiUrls from "../utils/apiUrls";
 
 function useGetAllProduct() {
   const [data, setData] = useState(null);
@@ -9,7 +9,7 @@ function useGetAllProduct() {
   const fetchData = async () => {
     try {
       setLoading(true);
-      let url = `${API_END_POINTS.PRODUCTAPI}?isAll=${true}`;
+      let url = `${apiUrls.getProduct}?isAll=${true}`;
       const response = await axiosInstance.get(url);
       setData(response.data);
     } catch (error) {

@@ -16,15 +16,6 @@ export const COMMON_WORDS = {
   USER: "user",
 };
 
-export const API_END_POINTS = {
-  USERAPI: "api/user",
-  LOBAPI: "api/lob",
-  PRODUCTAPI: "api/product",
-  CKYC: "api/ckyc",
-  PERMISSION: "api/permission",
-  MODULE: "api/module",
-};
-
 export const HEADER = {
   DRAWER_WIDTH: 240,
   HEADER_BACKGROUND_COLOR: "#FFFFFF",

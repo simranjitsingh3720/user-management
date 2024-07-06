@@ -1,7 +1,7 @@
 import axiosInstance from "../../../utils/axiosInstance"; 
 
 import { useEffect, useState } from "react";
-import { API_END_POINTS } from "../../../utils/constants";
+import apiUrls from "../../../utils/apiUrls";
 
 function useGetPrivilege(page, pageSize, query, order, orderBy) {
   const [data, setData] = useState(null);
@@ -10,7 +10,7 @@ function useGetPrivilege(page, pageSize, query, order, orderBy) {
   const fetchData = async (searched, query) => {
     try {
       setLoading(true);
-      let url = `${API_END_POINTS.PERMISSION}?pageNo=${page}&sortKey=${orderBy}&sortOrder=${order}&pageSize=${pageSize}`;
+      let url = `${apiUrls.getPermission}?pageNo=${page}&sortKey=${orderBy}&sortOrder=${order}&pageSize=${pageSize}`;
       if (query) {
         url += `&searchKey=${searched}&searchString=${query}`;
       }

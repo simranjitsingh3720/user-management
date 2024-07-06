@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
-import { API_END_POINTS } from "../../../utils/constants";
+import apiUrls from "../../../utils/apiUrls";
 
 function useGetCkycData(page, pageSize, order, orderBy) {
   const [data, setData] = useState(null);
@@ -9,7 +9,7 @@ function useGetCkycData(page, pageSize, order, orderBy) {
   const fetchData = async (searched, resultProductString) => {
     try {
       setLoading(true);
-      let url = `/${API_END_POINTS.CKYC}?pageNo=${page}&sortKey=${orderBy}&sortOrder=${order}&pageSize=${pageSize}`;
+      let url = `/${apiUrls.ckyc}?pageNo=${page}&sortKey=${orderBy}&sortOrder=${order}&pageSize=${pageSize}`;
 
       if (searched === "product" && resultProductString) {
         url += `&edge=hasProduct&ids=${resultProductString}`;

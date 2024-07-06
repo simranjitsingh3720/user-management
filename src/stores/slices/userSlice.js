@@ -1,14 +1,14 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "./../../utils/axiosInstance";
-import { API_END_POINTS } from "./../../utils/constants";
+import apiUrls from "../../utils/apiUrls";
 
 export const fetchUser = createAsyncThunk(
   "lob/fetchUser",
   async ({ userType, searchKey } = {}, { rejectWithValue }) => {
     try {
       const url = userType
-        ? `${API_END_POINTS.USERAPI}?searchString=${userType}&searchKey=${searchKey}`
-        : `${API_END_POINTS.USERAPI}`;
+        ? `${apiUrls.getUser}?searchString=${userType}&searchKey=${searchKey}`
+        : `${apiUrls.getUser}`;
       const response = await axiosInstance.get(url);
       return response.data;
     } catch (error) {
