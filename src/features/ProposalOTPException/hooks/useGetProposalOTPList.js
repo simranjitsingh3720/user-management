@@ -24,31 +24,11 @@ function useGetProposalOTPList(pageChange, rowsPage, query, searched, date) {
         childFieldsToFetch: COMMON_WORDS.PRODUCER +","+ COMMON_WORDS.LOB + "," + COMMON_WORDS.PRODUCT,
         childFieldsEdge: COMMON_WORDS.HAS_PRODUCER +","+ COMMON_WORDS.HAS_LOB + "," + COMMON_WORDS.HAS_PRODUCT,
       });
-
       if (query && searched) {
-        params = buildQueryString({
-          pageNo: pageChange - 1,
-          sortKey: sort.sortKey,
-          sortOrder: sort.sortOrder,
-          pageSize: rowsPage,
-          ids: query,
-          isExclusive: true,
-          edge: COMMON_WORDS.HAS_PRODUCER,
-          childFieldsToFetch: COMMON_WORDS.PRODUCER +","+ COMMON_WORDS.LOB + "," + COMMON_WORDS.PRODUCT,
-          childFieldsEdge: COMMON_WORDS.HAS_PRODUCER +","+ COMMON_WORDS.HAS_LOB + "," + COMMON_WORDS.HAS_PRODUCT,
-        });
-      }
+        params += '&searchKey=' + searched + '&searchString=' + query;
+      } 
       if (date?.startDate && date?.endDate) {
-        params = buildQueryString({
-          pageNo: pageChange - 1,
-          sortKey: sort.sortKey,
-          sortOrder: sort.sortOrder,
-          pageSize: rowsPage,
-          startDate: date.startDate,
-          endDate: date.endDate,
-          childFieldsToFetch: COMMON_WORDS.PRODUCER +","+ COMMON_WORDS.LOB + "," + COMMON_WORDS.PRODUCT,
-        childFieldsEdge: COMMON_WORDS.HAS_PRODUCER +","+ COMMON_WORDS.HAS_LOB + "," + COMMON_WORDS.HAS_PRODUCT,
-        });
+        params += `&startDate=${date.startDate}&endDate=${date.endDate}`;
       }
 
       let url = `/api/otp-exception?${params}`;

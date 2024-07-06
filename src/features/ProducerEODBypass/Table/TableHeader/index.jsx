@@ -24,8 +24,8 @@ function TableHeader({ sort, setSort }) {
       <div className={styles.endDate} onClick={() => handleSort("endDate")}>
         End Date {renderSortIcon("endDate")}
       </div>
-      <div className={styles.reason} onClick={() => handleSort("reason")}>
-        Reason {renderSortIcon("reason")}
+      <div className={styles.reason}>
+        Reason 
       </div>
       <div className={styles.createdAt} onClick={() => handleSort("createdAt")}>
         Created At
