@@ -17,7 +17,6 @@ import { HEADER } from "../../utils/constants";
 import { TOKEN, TOKEN_EXPIRATION } from "../../utils/globalConstants";
 import { COMMON_WORDS } from "../../utils/constants";
 import { useDispatch } from "react-redux";
-import { setLoginDetails } from "../../Redux/loginSlice";
 
 function stringToColor(string) {
   let hash = 0;
@@ -55,8 +54,7 @@ function Header({ handleDrawerToggle, selectedNavbar, selectedParentIndex }) {
   const handleLogout = () => {
     localStorage.removeItem(TOKEN);
     localStorage.removeItem(TOKEN_EXPIRATION);
-    dispatch(setLoginDetails({}));
-    navigate("/sign-in");
+    navigate("/");
   };
 
   const handleOpenUserMenu = (event) => {

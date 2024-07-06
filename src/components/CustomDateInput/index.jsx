@@ -4,6 +4,7 @@ import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import styles from "./styles.module.scss";
+import { DATE_FORMAT, EMPTY_START_DATE_ERR, END_DATE, END_DATE_LESS_ERR, END_DATE_WITHIN_300_DAYS, REQUIRED_MSG, START_DATE } from "./utils/constants";
 
 const DateField = ({
   control,
@@ -18,22 +19,25 @@ const DateField = ({
   labelVisible,
 }) => {
   const validateDate = (value) => {
-    if (name === "endDate") {
-      const startDate = watch("startDate");
+    if (name === END_DATE) {
+      const startDate = watch(START_DATE);
       if (!startDate) {
-        return "Start date must be set before setting end date";
+        return EMPTY_START_DATE_ERR;
       }
-      const start = dayjs(startDate, "YYYY-MM-DD");
-      const end = dayjs(value, "YYYY-MM-DD");
+      const start = dayjs(startDate, DATE_FORMAT);
+      const end = dayjs(value, DATE_FORMAT);
+      if (end.isBefore(start)) {
+        return END_DATE_LESS_ERR;
+      }
       return end.isBefore(start.add(300, "day"))
         ? true
-        : "End date must be within 300 days from the start date";
+        : END_DATE_WITHIN_300_DAYS;
     }
   };
 
   useEffect(() => {
     if (!labelVisible) {
-      const today = dayjs().format("YYYY-MM-DD");
+      const today = dayjs().format(DATE_FORMAT);
       setValue(name, today);
     }
   }, [labelVisible]);
@@ -56,7 +60,7 @@ const DateField = ({
         <Controller
           name={name}
           control={control}
-          rules={{ validate: validateDate, required: required ? "This field is required": "" }}
+          rules={{ validate: validateDate, required: required ? REQUIRED_MSG: "" }}
           render={({ field }) => (
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
@@ -81,9 +85,9 @@ const DateField = ({
                     },
                   },
                 }}
-                minDate={labelVisible ? undefined : dayjs()}
+                minDate={dayjs()}
                 onChange={(date) => {
-                  const formattedDate = dayjs(date).format("YYYY-MM-DD");
+                  const formattedDate = dayjs(date).format(DATE_FORMAT);
                   setValue(name, formattedDate);
                 }}
               />

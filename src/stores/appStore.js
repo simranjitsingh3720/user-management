@@ -11,7 +11,6 @@ import exportReducer from './slices/exportSlice';
 import lobReducer from './slices/lobSlice';
 import productReducer from './slices/productSlice';
 import userReducer from './slices/userSlice';
-import loginSlice from "../Redux/loginSlice";
 import channelSlice from '../Redux/getChannel';
 import houseBankSlice from '../Redux/getHouseBank';
 
@@ -28,7 +27,6 @@ const appStore = configureStore({
     role: roleSlice,
     paymentType: paymentTypeSlice,
     producerCode: producerCodeSlice,
-    login: loginSlice,
     parentCode: parentCodeSlice,
     channelType: channelSlice,
     houseBank: houseBankSlice,

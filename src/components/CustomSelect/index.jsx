@@ -3,6 +3,7 @@ import { Controller } from 'react-hook-form';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import styles from './styles.module.scss';
+import { GC_STATUS, NO, YES } from './utils/constants';
 
 const SelectField = ({
   control,
@@ -25,7 +26,6 @@ const SelectField = ({
       <Controller
         name={name}
         control={control}
-        defaultValue={(menuItem.length > 0 && menuItem[0]?.value) || 'yes'}
         render={({ field }) => (
           <Select
             {...field}
@@ -33,8 +33,8 @@ const SelectField = ({
             labelId={name}
             id={name}
             placeholder={placeholder || label}
-            value={field.value ||
-              (menuItem.length > 0 && menuItem[0]?.value) || 'yes'}
+            value={field.value || name === GC_STATUS ? NO : 
+              (menuItem.length > 0 && menuItem[0]?.value) || YES}
             onChange={field.onChange}
             className={`${styles.customizeSelect} ${classes}`}
             size="small"

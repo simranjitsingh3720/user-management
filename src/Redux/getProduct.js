@@ -1,14 +1,15 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axiosInstance from "./../utils/axiosInstance";
+import apiUrls from "../utils/apiUrls";
 
 export const getProducts = createAsyncThunk(
   "productUserCreation/getProducts",
   async (lob, { rejectWithValue }) => {
     try {
       if (lob) {
-        const lobids = lob.map((item) => item.id);
+        const lobids = lob.map((item) => item?.id);
         const idsString = lobids.join(",");
-        let url = `/api/product?ids=${idsString}&edge=hasLob&isExclusive=true`;
+        const url = `${apiUrls.getProduct}?ids=${idsString}&edge=hasLob&isExclusive=true&status=true`;
         const response = await axiosInstance.get(url);
         const formattedArray = response?.data?.data?.map((obj) => ({
           ...obj,
