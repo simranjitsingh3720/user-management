@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 const Lob = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { allLob, lobLoading } = useSelector((state) => state.lob);
+  const { lob, lobLoading } = useSelector((state) => state.lob);
 
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(5);
@@ -41,15 +41,15 @@ const Lob = () => {
   );
 
   useEffect(() => {
-    if (allLob.length === 0) return;
+    if (lob.length === 0) return;
 
     const transformedData =
-      allLob?.data?.map((item) => ({
+      lob?.data?.map((item) => ({
         ...item,
         checked: item.status,
       })) || [];
     setLobData(transformedData);
-  }, [allLob]);
+  }, [lob]);
 
   const header = useMemo(() => Header(handleUpdate), [handleUpdate]);
 
@@ -69,7 +69,7 @@ const Lob = () => {
           rows={lobData || []}
           columns={header}
           loading={lobLoading}
-          totalCount={allLob?.totalCount || 0}
+          totalCount={lob?.totalCount || 0}
           page={page}
           setPage={setPage}
           rowsPerPage={pageSize}

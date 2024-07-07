@@ -30,7 +30,7 @@ function getSelectedRowData(count) {
 
 function ProductPaymentConfig() {
   const dispatch = useDispatch();
-  const { allLob } = useSelector((state) => state.lob);
+  const { lob } = useSelector((state) => state.lob);
   const { products } = useSelector((state) => state.product);
   const [searched, setSearched] = useState(COMMON_WORDS.PRODUCT);
   const [productValue, setProductValue] = useState([]);
@@ -115,7 +115,7 @@ function ProductPaymentConfig() {
         optionsData={
           searched === COMMON_WORDS.PRODUCT
             ? products?.data ?? []
-            : allLob?.data ?? []
+            : lob?.data ?? []
         }
         option={searched === COMMON_WORDS.PRODUCT ? productValue : lobValue}
         setOption={

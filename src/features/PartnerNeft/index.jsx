@@ -17,7 +17,7 @@ import { getPlaceHolder } from "../../utils/globalizationFunction";
 const PartnerNeft = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { allLob } = useSelector((state) => state.lob);
+  const { lob } = useSelector((state) => state.lob);
   const { products } = useSelector((state) => state.product);
   const { user } = useSelector((state) => state.user);
 
@@ -138,7 +138,7 @@ const PartnerNeft = () => {
       case COMMON_WORDS.PRODUCT:
         return products?.data ?? [];
       case COMMON_WORDS.LOB:
-        return allLob?.data ?? [];
+        return lob?.data ?? [];
       case COMMON_WORDS.PRODUCER:
         return user?.data ?? [];
       default:

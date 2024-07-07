@@ -24,7 +24,7 @@ function Product() {
   const [productData, setProductData] = useState([]);
   const [lobValue, setLobValue] = useState([]);
   const { products, productLoading } = useSelector((state) => state.product);
-  const { allLob } = useSelector((state) => state.lob);
+  const { lob } = useSelector((state) => state.lob);
 
   const [searched, setSearched] = useState(COMMON_WORDS.LOB);
 
@@ -87,7 +87,7 @@ function Product() {
   const getOptionsData = () => {
     switch (searched) {
       case COMMON_WORDS.LOB:
-        return allLob?.data ?? [];
+        return lob?.data ?? [];
       default:
         return [];
     }

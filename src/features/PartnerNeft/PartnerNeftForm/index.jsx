@@ -27,7 +27,7 @@ const PartnerNeftForm = () => {
   const navigate = useNavigate();
   const params = useParams();
 
-  const { allLob, lobLoading } = useSelector((state) => state.lob);
+  const { lob, lobLoading } = useSelector((state) => state.lob);
   const { products, productLoading } = useSelector((state) => state.product);
   const { user, userLoading } = useSelector((state) => state.user);
   const { createPartnerNeft, getPartnerNeft, updatePartnerNeft } = useSubmit();
@@ -165,7 +165,7 @@ const PartnerNeftForm = () => {
                 label="LOB"
                 required={true}
                 loading={lobLoading}
-                options={allLob.data || []}
+                options={lob.data || []}
                 getOptionLabel={(option) => option?.lob?.toUpperCase()}
                 isOptionEqualToValue={(option, value) => option.id === value.id}
                 control={control}
