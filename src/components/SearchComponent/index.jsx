@@ -8,7 +8,6 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import ExportDropdown from '../../features/ExportDropdown';
-import CustomDialog from '../CustomDialog';
 
 function SearchComponent({
   option,
@@ -199,10 +198,7 @@ function SearchComponent({
 
         <Grid item xs={12} md={4} container justifyContent="flex-end">
           {showExportButton && (
-            <>
               <ExportDropdown />
-              <CustomDialog />
-            </>
           )}
           {showButton && (
             <CustomButton variant="contained" onClick={handleCreateNewForm}>

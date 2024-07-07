@@ -17,27 +17,23 @@ function TableHeader({ sort, setSort }) {
     <div className={styles.tableHeader}>
       <div
         className={styles.houseBankCode}
-        onClick={() => handleSort("houseBankCode")}
       >
-        House Bank Code {renderSortIcon("houseBankCode")}
+        House Bank Code
       </div>
       <div
         className={styles.bankCode}
-        onClick={() => handleSort("houseBankCode")}
       >
         Bank Code
       </div>
       <div
         className={styles.branchName}
-        onClick={() => handleSort("branchName")}
       >
-        Branch Name {renderSortIcon("branchName")}
+        Branch Name
       </div>
       <div
         className={styles.accountNumber}
-        onClick={() => handleSort("accountNumber")}
       >
-        Account Number {renderSortIcon("accountNumber")}
+        Account Number
       </div>
       <div className={styles.createdAt} onClick={() => handleSort("createdAt")}>
         Created At

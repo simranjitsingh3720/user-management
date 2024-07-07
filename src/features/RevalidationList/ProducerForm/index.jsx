@@ -7,7 +7,6 @@ import CustomAutoCompleteWithoutCheckbox from '../../../components/CustomAutoCom
 import { COMMON_WORDS } from '../../../utils/constants';
 import { fetchUser } from '../../../stores/slices/userSlice';
 import ExportDropdown from '../../ExportDropdown';
-import CustomDialog from '../../../components/CustomDialog';
 
 const ProducerForm = ({ onFormSubmit }) => {
   const dispatch = useDispatch();
@@ -72,7 +71,6 @@ const ProducerForm = ({ onFormSubmit }) => {
 
           <Grid item xs={12} sm={6} lg={4} alignItems="flex-end" display="flex" justifyContent="end">
             <ExportDropdown />
-            <CustomDialog />
           </Grid>
         </Grid>
       </form>
