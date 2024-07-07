@@ -1,11 +1,13 @@
-import { Grid } from "@mui/material";
-import React, { useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
-import CustomButton from "../../../components/CustomButton";
-import CustomAutoCompleteWithoutCheckbox from "../../../components/CustomAutoCompleteWithoutCheckbox";
-import { COMMON_WORDS } from "../../../utils/constants";
-import { fetchUser } from "../../../stores/slices/userSlice";
+import { Grid } from '@mui/material';
+import React, { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
+import CustomButton from '../../../components/CustomButton';
+import CustomAutoCompleteWithoutCheckbox from '../../../components/CustomAutoCompleteWithoutCheckbox';
+import { COMMON_WORDS } from '../../../utils/constants';
+import { fetchUser } from '../../../stores/slices/userSlice';
+import ExportDropdown from '../../ExportDropdown';
+import CustomDialog from '../../../components/CustomDialog';
 
 const ProducerForm = ({ onFormSubmit }) => {
   const dispatch = useDispatch();
@@ -32,45 +34,45 @@ const ProducerForm = ({ onFormSubmit }) => {
       })
     );
   }, [dispatch]);
+
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
           <Grid item xs={12} sm={6} lg={4}>
-          <CustomAutoCompleteWithoutCheckbox
-                name="producer"
-                label="Select Producer"
-                required={true}
-                loading={userLoading}
-                options={user.data || []}
-                getOptionLabel={(option) => {
-                  return `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`;
-                }}
-                isOptionEqualToValue={(option, value) => option.id === value.id}
-                control={control}
-                rules={{ required: "Producer is required" }}
-                error={Boolean(errors.producer)}
-                helperText={errors.producer?.message}
-                disableClearable={true}
-                placeholder={COMMON_WORDS.SELECT}
-                renderOption={(props, option) => (
-                  <li {...props} key={option.id}>
-                    {option?.firstName?.toUpperCase()}{" "}
-                    {option?.lastName?.toUpperCase()}
-                  </li>
-                )}
-              />
+            <CustomAutoCompleteWithoutCheckbox
+              name="producer"
+              label="Select Producer"
+              required={true}
+              loading={userLoading}
+              options={user.data || []}
+              getOptionLabel={(option) => {
+                return `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`;
+              }}
+              isOptionEqualToValue={(option, value) => option.id === value.id}
+              control={control}
+              rules={{ required: 'Producer is required' }}
+              error={Boolean(errors.producer)}
+              helperText={errors.producer?.message}
+              disableClearable={true}
+              placeholder={COMMON_WORDS.SELECT}
+              renderOption={(props, option) => (
+                <li {...props} key={option.id}>
+                  {option?.firstName?.toUpperCase()} {option?.lastName?.toUpperCase()}
+                </li>
+              )}
+            />
           </Grid>
 
           <Grid item xs={12} sm={6} lg={4} alignItems="flex-end" display="flex">
-            <CustomButton
-              type="submit"
-              variant="contained"
-              color="primary"
-              className="w-full md:w-auto"
-            >
+            <CustomButton type="submit" variant="contained" color="primary" className="w-full md:w-auto">
               Submit
             </CustomButton>
+          </Grid>
+
+          <Grid item xs={12} sm={6} lg={4} alignItems="flex-end" display="flex" justifyContent="end">
+            <ExportDropdown />
+            <CustomDialog />
           </Grid>
         </Grid>
       </form>
