@@ -36,7 +36,7 @@ export const createLobData = createAsyncThunk(
   'lob/createLobData',
   async ({ data, navigate }, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.post('/api/lob', data);
+      const response = await axiosInstance.post(apiUrls.getLob, data);
       toast.success(response?.data?.message || 'LOB created successfully');
       navigate("/lob");
       return response.data;
