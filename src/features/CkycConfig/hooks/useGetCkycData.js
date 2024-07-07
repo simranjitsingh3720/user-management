@@ -20,7 +20,7 @@ function useGetCkycData(page, pageSize, order, orderBy) {
         childFieldsEdge: `${COMMON_WORDS.HAS_PRODUCT},${COMMON_WORDS.HAS_LOB}`,
       };
 
-      let url = `/${apiUrls.ckyc}?${buildQueryString(params)}`;
+      let url = `${apiUrls.ckyc}?${buildQueryString(params)}`;
 
       if (searched === COMMON_WORDS.PRODUCT && resultProductString) {
         const params = {

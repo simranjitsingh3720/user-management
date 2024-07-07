@@ -11,6 +11,7 @@ import { getPlaceHolder } from "../../utils/globalizationFunction";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchLobData } from "../../stores/slices/lobSlice";
 import { fetchAllProductData } from "../../stores/slices/productSlice";
+import { setTableName } from "../../stores/slices/exportSlice";
 
 function CkycConfig() {
   const dispatch = useDispatch();
@@ -43,6 +44,7 @@ function CkycConfig() {
     if (data && data?.data) {
       const refactorData = data?.data.map((item) => ({
         id: item?.cKYC?.id,
+        label: item?.cKYC?.label,
         lob: item?.lobs[0]?.lob,
         product: item?.products[0]?.product,
         CKYCApplicable: item?.cKYC?.isCKYCApplicable
@@ -53,6 +55,7 @@ function CkycConfig() {
         updatedAt: item?.cKYC?.updatedAt,
       }));
       setTableData(refactorData);
+      dispatch(setTableName(refactorData[0]?.label));
     }
   }, [data]);
 
@@ -138,6 +141,7 @@ function CkycConfig() {
         selectOptions={ProductPayment}
         handleGo={handleGo}
         showButton
+        showExportButton={true}
       />
       <div className="mt-4">
         <CustomTable
