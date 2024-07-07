@@ -37,6 +37,7 @@ function useGetHealthConfig(page, pageSize, order, orderBy) {
         const { healthConfiguration, producer } = item;
         return {
           id: healthConfiguration.id,
+          label: healthConfiguration.label,
           producerName: `${producer[0].firstName} ${producer[0].lastName}`,
           medicare: healthConfiguration.isExistingCustomer ? "yes" : "No",
           producerCode: producer[0].producerCode,
@@ -45,7 +46,6 @@ function useGetHealthConfig(page, pageSize, order, orderBy) {
         };
       });
       setTotalCount(response.data.totalCount);
-
       setData(healthConfigData);
     } catch (error) {
       setData([]);

@@ -9,6 +9,7 @@ import { BUTTON_TEXT } from "../../utils/globalConstants";
 import { getPlaceHolder } from "../../utils/globalizationFunction";
 import { fetchUser } from "../../stores/slices/userSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { setTableName } from "../../stores/slices/exportSlice";
 
 function HealthConfiguration() {
   const dispatch = useDispatch();
@@ -64,6 +65,13 @@ function HealthConfiguration() {
 
   const HEADER_COLUMNS = generateTableHeaders(handleEditClick);
 
+  useEffect(() => {
+    if(data) {
+      dispatch(setTableName(data[0]?.label));
+    }
+    
+  }, [dispatch, data]);
+
   return (
     <div>
       <SearchComponenet
@@ -78,6 +86,7 @@ function HealthConfiguration() {
         navigateRoute={"/health-config/form"}
         handleGo={handleGo}
         showButton
+        showExportButton={true}
       />
       <div className="mt-4">
         <CustomTable
