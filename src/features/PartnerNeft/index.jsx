@@ -67,7 +67,10 @@ const PartnerNeft = () => {
   }, [searched]);
 
   useEffect(() => {
-    dispatch(fetchLobData());
+    dispatch(fetchLobData({
+      isAll: true,
+      status: true,
+    }));
     dispatch(fetchAllProductData());
     dispatch(
       fetchUser({

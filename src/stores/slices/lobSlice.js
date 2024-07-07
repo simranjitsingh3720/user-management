@@ -6,10 +6,12 @@ import { COMMON_ERROR } from './../../utils/globalConstants';
 
 export const fetchLobData = createAsyncThunk(
   'lob/fetchLobData',
-  async ({ isAll = true, status = true }, { rejectWithValue }) => {
+  async ({ isAll, status }, { rejectWithValue }) => {
     try {
-      const url = `${apiUrls.getLob}?isAll=${isAll}&status=${status}`;
-      const response = await axiosInstance.get(url);
+      const response = await axiosInstance.get(apiUrls.getLob, {
+        params: { isAll: isAll, status: status },
+      });
+
       return response.data;
     } catch (error) {
       return rejectWithValue([]);
@@ -19,12 +21,10 @@ export const fetchLobData = createAsyncThunk(
 
 export const updateLobData = createAsyncThunk(
   'lob/updateLobData',
-  async ({ data, setChangeStatusOpen, fetchGroupList }, { rejectWithValue }) => {
+  async ({ data }, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.put(apiUrls.getLob, data);
       toast.success(response?.data?.message || 'LOB updated successfully');
-      setChangeStatusOpen(false);
-      fetchGroupList();
       return response.data;
     } catch (error) {
       toast.error(error?.response?.data?.error?.message || COMMON_ERROR);

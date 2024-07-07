@@ -29,7 +29,7 @@ function CkycConfig() {
   const [lobValue, setLobValue] = useState([]);
 
   useEffect(() => {
-    dispatch(fetchLobData());
+    dispatch(fetchLobData({ isAll: true, status: true}));
     dispatch(fetchAllProductData());
   }, [dispatch]);
   const { data, loading, fetchData } = useGetCkycData(

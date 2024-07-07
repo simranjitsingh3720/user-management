@@ -1,30 +1,69 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { Box } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import CustomTable from "../../components/CustomTable";
 import { Header } from "./utils/header";
-import { fetchLobData } from "../../stores/slices/lobSlice";
+import { fetchLobData, updateLobData } from "../../stores/slices/lobSlice";
+import CustomButton from "../../components/CustomButton";
+import { useNavigate } from "react-router-dom";
 
 const Lob = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { allLob, lobLoading } = useSelector((state) => state.lob);
-  
+
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(5);
   const [order, setOrder] = useState("");
   const [orderBy, setOrderBy] = useState("");
+  const [lobData, setLobData] = useState([]);
+
+  const createNewLob = () => {
+    navigate("/lob/lob-form");
+  };
 
   useEffect(() => {
-    dispatch(fetchLobData(true, false));
+    dispatch(
+      fetchLobData({
+        isAll: true,
+      })
+    );
   }, [dispatch]);
 
-  const header = useMemo(() => Header(), []);
+  const handleUpdate = useCallback(
+    async (data) => {
+      dispatch(updateLobData({ data: data }));
+    },
+    [dispatch]
+  );
+
+  useEffect(() => {
+    if (allLob.length === 0) return;
+
+    const transformedData =
+      allLob?.data?.map((item) => ({
+        ...item,
+        checked: item.status,
+      })) || [];
+    setLobData(transformedData);
+  }, [allLob]);
+
+  const header = useMemo(() => Header(handleUpdate), [handleUpdate]);
 
   return (
     <Box>
+      <div className="flex justify-end">
+        <CustomButton
+          variant="contained"
+          onClick={createNewLob}
+          sx={{ textTransform: "none" }}
+        >
+          Create New LOB
+        </CustomButton>
+      </div>
       <div className="mt-4">
         <CustomTable
-          rows={allLob?.data || []}
+          rows={lobData || []}
           columns={header}
           loading={lobLoading}
           totalCount={allLob?.totalCount || 0}

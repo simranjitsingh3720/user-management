@@ -45,7 +45,12 @@ function ProductPaymentConfig() {
   };
 
   useEffect(() => {
-    dispatch(fetchLobData());
+    dispatch(fetchLobData(
+      {
+        isAll: true,
+        status: true,
+      }
+    ));
     dispatch(fetchAllProductData());
   }, [dispatch]);
 

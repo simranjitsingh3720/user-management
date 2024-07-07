@@ -1,4 +1,4 @@
-export const Header = () => {
+export const Header = (updateLobData) => {
   return [
     { value: "Lob Name", id: "lob" },
     { value: "Lob Value", id: "lob_value" },
@@ -17,8 +17,15 @@ export const Header = () => {
                 if (item.id === row.id) {
                   return (row.checked = !row.checked);
                 }
-  
+                
                 return row.checked;
+              });
+
+              updateLobData({
+                id: row.id,
+                properties: {
+                  status: row.checked,
+                },
               });
               
             },
