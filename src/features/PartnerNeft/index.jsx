@@ -1,18 +1,19 @@
-import React, { useState, useEffect, useCallback, useMemo } from "react";
-import { Box } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import SearchComponent from "../../components/SearchComponent";
-import CustomTable from "../../components/CustomTable";
-import useGetPartnerNeft from "./hooks/useGetPartnerNeft";
-import { Header } from "./utils/header";
-import { BUTTON_TEXT } from "../../utils/globalConstants";
-import { fetchLobData } from "../../stores/slices/lobSlice";
-import { fetchAllProductData } from "../../stores/slices/productSlice";
-import { COMMON_FIELDS, SEARCH_OPTIONS } from "./utils/constant";
-import { COMMON_WORDS } from "../../utils/constants";
-import { fetchUser } from "../../stores/slices/userSlice";
-import { getPlaceHolder } from "../../utils/globalizationFunction";
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { Box } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import SearchComponent from '../../components/SearchComponent';
+import CustomTable from '../../components/CustomTable';
+import useGetPartnerNeft from './hooks/useGetPartnerNeft';
+import { Header } from './utils/header';
+import { BUTTON_TEXT } from '../../utils/globalConstants';
+import { fetchLobData } from '../../stores/slices/lobSlice';
+import { fetchAllProductData } from '../../stores/slices/productSlice';
+import { COMMON_FIELDS, SEARCH_OPTIONS } from './utils/constant';
+import { COMMON_WORDS } from '../../utils/constants';
+import { fetchUser } from '../../stores/slices/userSlice';
+import { getPlaceHolder } from '../../utils/globalizationFunction';
+import { setTableName } from '../../stores/slices/exportSlice';
 
 const PartnerNeft = () => {
   const navigate = useNavigate();
@@ -23,8 +24,8 @@ const PartnerNeft = () => {
 
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(5);
-  const [order, setOrder] = useState("");
-  const [orderBy, setOrderBy] = useState("");
+  const [order, setOrder] = useState('');
+  const [orderBy, setOrderBy] = useState('');
   const [searched, setSearched] = useState(COMMON_WORDS.PRODUCT);
   const [productValue, setProductValue] = useState([]);
   const [lobValue, setLobValue] = useState([]);
@@ -67,11 +68,13 @@ const PartnerNeft = () => {
   }, [searched]);
 
   useEffect(() => {
-    dispatch(fetchLobData({
-      isAll: true,
-      status: true,
-    }));
-    dispatch(fetchAllProductData());
+    dispatch(
+      fetchLobData({
+        isAll: true,
+        status: true,
+      })
+    );
+    dispatch(fetchAllProductData({ isAll: true }));
     dispatch(
       fetchUser({
         userType: COMMON_WORDS.PRODUCER,
@@ -80,11 +83,15 @@ const PartnerNeft = () => {
     );
   }, [dispatch]);
 
+  useEffect(() => {
+    dispatch(setTableName(partnerNeftData[0]?.label));
+  }, [dispatch, partnerNeftData]);
+
   const fetchIdsAndConvert = (inputData) => inputData.map((item) => item.id).join();
 
   const handleGo = useCallback(() => {
-    let searchString = "";
-    let edge = "";
+    let searchString = '';
+    let edge = '';
 
     switch (searched) {
       case COMMON_WORDS.PRODUCT:
@@ -116,14 +123,17 @@ const PartnerNeft = () => {
     }
   }, [searched, productValue, lobValue, userValue, getPartnerNeft, loadData]);
 
-  const updateNeftForm = useCallback((row) => {
-    navigate("/partner-neft/form/" + row.id);
-  }, [navigate]);
+  const updateNeftForm = useCallback(
+    (row) => {
+      navigate('/partner-neft/form/' + row.id);
+    },
+    [navigate]
+  );
 
   const optionLabel = (option, type) => {
-    if(type === COMMON_WORDS.PRODUCER) return option['firstName'] + " " + option['lastName'];
+    if (type === COMMON_WORDS.PRODUCER) return option['firstName'] + ' ' + option['lastName'];
 
-    return option[type]?.toUpperCase() || ""
+    return option[type]?.toUpperCase() || '';
   };
   const renderOptionFunction = (props, option, type) => (
     <li {...props} key={option?.id}>
@@ -183,7 +193,9 @@ const PartnerNeft = () => {
         setOption={setOption}
         optionLabel={(option) => optionLabel(option, COMMON_WORDS[searched.toUpperCase()])}
         placeholder={getPlaceHolder(searched)}
-        renderOptionFunction={(props, option) => renderOptionFunction(props, option, COMMON_WORDS[searched.toUpperCase()])}
+        renderOptionFunction={(props, option) =>
+          renderOptionFunction(props, option, COMMON_WORDS[searched.toUpperCase()])
+        }
         buttonText={BUTTON_TEXT.PARTNER_NEFT}
         navigateRoute="/partner-neft/form"
         searched={searched}
@@ -191,6 +203,7 @@ const PartnerNeft = () => {
         selectOptions={SEARCH_OPTIONS}
         handleGo={handleGo}
         showButton
+        showExportButton={true}
       />
       <div className="mt-4">
         <CustomTable
