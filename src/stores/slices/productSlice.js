@@ -1,46 +1,75 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { toast } from 'react-toastify';
 import axiosInstance from './../../utils/axiosInstance';
-import apiUrls from '../../utils/apiUrls';
+import apiUrls from './../../utils/apiUrls';
+import { COMMON_ERROR } from './../../utils/globalConstants';
+import { buildParams } from './../../utils/buildParams';
+import { addAsyncReducers } from './../../utils/addAsyncReducers';
 
 export const fetchAllProductData = createAsyncThunk(
-  'lob/fetchAllProduct',
-  async ({ lobId } = {}, { rejectWithValue }) => {
+  'product/fetchAllProductData',
+  async ({ isAll, page, pageSize, order, orderBy, lobId, childFieldsToFetch, ids, edge } = {}, { rejectWithValue }) => {
     try {
-      const url = lobId
-        ? `${apiUrls.getProduct}?ids=${lobId}&edge=hasLob&isExclusive=true`
-        : `${apiUrls.getProduct}?isAll=true`;
-      const response = await axiosInstance.get(url);
+      const params = buildParams({ isAll, page, pageSize, order, orderBy, lobId, childFieldsToFetch, ids, edge });
+      const response = await axiosInstance.get(apiUrls.getProduct, { params });
       return response.data;
     } catch (error) {
+      toast.error(error?.response?.data?.error?.message || COMMON_ERROR);
       return rejectWithValue([]);
     }
   }
 );
 
+export const updateProductData = createAsyncThunk(
+  'product/updateProductData',
+  async ({ data }, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.put(apiUrls.getProduct, data);
+      toast.success(response?.data?.message || 'Product updated successfully');
+      return response.data;
+    } catch (error) {
+      toast.error(error?.response?.data?.error?.message || COMMON_ERROR);
+      return rejectWithValue(error?.response?.data || {});
+    }
+  }
+);
+
+export const createProductData = createAsyncThunk(
+  'product/createProductData',
+  async ({ data, navigate }, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.post(apiUrls.getProduct, data);
+      toast.success(response?.data?.message || 'Product created successfully');
+      navigate("/product");
+      return response.data;
+    } catch (error) {
+      toast.error(error?.response?.data?.error?.message || COMMON_ERROR);
+      return rejectWithValue(error?.response?.data || {});
+    }
+  }
+);
+
+const initialState = {
+  products: [],
+  productLoading: false,
+  updateLoading: false,
+  createLoading: false,
+};
+
 const productSlice = createSlice({
   name: 'product',
-  initialState: {
-    products: [],
-    productLoading: false,
-  },
+  initialState,
   reducers: {
-    clearProducts: (state, action) => {
-        state.products = [];
-    } 
+    clearProducts: (state) => {
+      state.products = [];
+    },
   },
   extraReducers: (builder) => {
-    builder
-      .addCase(fetchAllProductData.pending, (state) => {
-        state.productLoading = true;
-      })
-      .addCase(fetchAllProductData.fulfilled, (state, action) => {
-        state.products = action.payload;
-        state.productLoading = false;
-      })
-      .addCase(fetchAllProductData.rejected, (state) => {
-        state.products = [];
-        state.productLoading = false;
-      });
+    addAsyncReducers(builder, [
+      { asyncThunk: fetchAllProductData, stateKey: 'products' },
+      { asyncThunk: updateProductData, stateKey: 'update' },
+      { asyncThunk: createProductData, stateKey: 'create' },
+    ]);
   },
 });
 

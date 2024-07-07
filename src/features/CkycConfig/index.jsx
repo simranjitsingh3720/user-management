@@ -30,7 +30,7 @@ function CkycConfig() {
 
   useEffect(() => {
     dispatch(fetchLobData({ isAll: true, status: true}));
-    dispatch(fetchAllProductData());
+    dispatch(fetchAllProductData({isAll: true}));
   }, [dispatch]);
   const { data, loading, fetchData } = useGetCkycData(
     page,

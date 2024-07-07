@@ -51,7 +51,7 @@ function ProductPaymentConfig() {
         status: true,
       }
     ));
-    dispatch(fetchAllProductData());
+    dispatch(fetchAllProductData({isAll: true}));
   }, [dispatch]);
 
   const { data, loading, sort, setSort, fetchData } = useGetPaymentConfig(

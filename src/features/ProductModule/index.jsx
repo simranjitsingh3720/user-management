@@ -1,109 +1,190 @@
-import React, { useState } from "react";
-import SearchComponent from "./SearchComponent";
-import useGetLobListData from "./hooks/useGetLobListData";
-import styles from "./styles.module.scss";
-import TableHeader from "./Table/TableHeader";
-import ListLoader from "../../components/ListLoader";
-import Table from "./Table";
-import NoDataFound from "../../components/NoDataCard";
-import { MenuItem, Pagination, Select } from "@mui/material";
-import useGetProduct from "./hooks/useGetProduct";
-import { selectRowsData } from "../../utils/globalConstants";
-
-function getSelectedRowData(count) {
-  
-  let selectedRowData = [];
-
-  
-  for (let i = 0; i < selectRowsData.length; i++) {
-    if (selectRowsData[i] <= count) {
-      selectedRowData.push(selectRowsData[i]);
-    }
-  }
-
-  return selectedRowData;
-}
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Header } from "./utils/header";
+import CustomTable from "../../components/CustomTable";
+import {
+  fetchAllProductData,
+  updateProductData,
+} from "../../stores/slices/productSlice";
+import { COMMON_WORDS } from "../../utils/constants";
+import { BUTTON_TEXT } from "../../utils/globalConstants";
+import { SEARCH_OPTIONS } from "./utils/constant";
+import { getPlaceHolder } from "../../utils/globalizationFunction";
+import { fetchLobData } from "../../stores/slices/lobSlice";
+import SearchComponent from "../../components/SearchComponent";
+import { COMMON_FIELDS } from "../PartnerNeft/utils/constant";
 
 function Product() {
-  const [rowsPage, setRowsPage] = useState(10);
+  const dispatch = useDispatch();
 
-  const [value, setValue] = useState([]);
-  const [pageChange, setPageChange] = useState(1);
+  const [page, setPage] = useState(0);
+  const [pageSize, setPageSize] = useState(5);
+  const [order, setOrder] = useState(null);
+  const [orderBy, setOrderBy] = useState(null);
+  const [productData, setProductData] = useState([]);
+  const [lobValue, setLobValue] = useState([]);
+  const { products, productLoading } = useSelector((state) => state.product);
+  const { allLob } = useSelector((state) => state.lob);
 
-  const { data: lobListData } = useGetLobListData();
+  const [searched, setSearched] = useState(COMMON_WORDS.LOB);
 
-  const { data, loading, fetchData, setSort, sort } = useGetProduct(
-    pageChange,
-    rowsPage
+  useEffect(() => {
+    dispatch(fetchLobData({ isAll: true }));
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(
+      fetchAllProductData({
+        page,
+        pageSize,
+        order,
+        orderBy,
+        childFieldsToFetch: COMMON_WORDS.LOB,
+      })
+    );
+  }, [dispatch, page, pageSize, order, orderBy]);
+
+  useEffect(() => {
+    if (products?.length === 0) return;
+
+    const transformedData =
+      products?.data?.map((item) => {
+        const { lob, product } = item;
+        return {
+          id: product.id,
+          product: product.product,
+          product_value: product.product_value,
+          lob_name: lob[0]?.lob,
+          product_code: product.product_code,
+          createdAt: product.createdAt,
+          updatedAt: product.updatedAt,
+          checked: product.status,
+          status: product.status,
+        };
+      }) || [];
+
+    setProductData(transformedData);
+  }, [products]);
+
+  const handleUpdate = useCallback(
+    async (data) => {
+      dispatch(updateProductData({ data }));
+    },
+    [dispatch]
   );
 
-  const handlePaginationChange = (event, page) => {
-    setPageChange(page);
+  const header = useMemo(() => Header(handleUpdate), [handleUpdate]);
+
+  const optionLabel = (option, type) => {
+    return option[type]?.toUpperCase() || "";
+  };
+  const renderOptionFunction = (props, option, type) => (
+    <li {...props} key={option?.id}>
+      {optionLabel(option, type)}
+    </li>
+  );
+
+  const getOptionsData = () => {
+    switch (searched) {
+      case COMMON_WORDS.LOB:
+        return allLob?.data ?? [];
+      default:
+        return [];
+    }
   };
 
-  const handleRowsChange = (event) => {
-    setPageChange(1);
-    setRowsPage(event.target.value);
+  const getOption = () => {
+    switch (searched) {
+      case COMMON_WORDS.LOB:
+        return lobValue;
+      default:
+        return [];
+    }
   };
+
+  const setOption = (option) => {
+    switch (searched) {
+      case COMMON_WORDS.LOB:
+        setLobValue(option);
+        break;
+      default:
+        break;
+    }
+  };
+
+  const fetchIdsAndConvert = (inputData) => inputData.map((item) => item.id).join();
+  const handleGo = useCallback(() => {
+    setPage(0);
+    let searchString = "";
+    let edge = "";
+
+    switch (searched) {
+      case COMMON_WORDS.LOB:
+        searchString = fetchIdsAndConvert(lobValue);
+        edge = COMMON_FIELDS.hasLob;
+        break;
+      default:
+        break;
+    }
+
+    if(searchString) {
+      dispatch(
+        fetchAllProductData({
+          page,
+          pageSize,
+          order,
+          orderBy,
+          childFieldsToFetch: COMMON_WORDS.LOB,
+          ids: searchString,
+          edge: edge,
+        })
+      );
+    }
+
+  }, [searched, lobValue, dispatch, page, pageSize, order, orderBy]);
 
   return (
-    <div>
-      <SearchComponent
-        value={value}
-        setValue={setValue}
-        lobListData={lobListData}
-        fetchData={fetchData}
-      />
-
-      <div className={styles.tableContainerStyle}>
-        <div className={styles.tableStyled}>
-          {loading ? (
-            <>
-              <TableHeader />
-              <ListLoader />
-            </>
-          ) : data?.data && data?.data.length ? (
-            <Table
-              ListData={data?.data}
-              loading={loading}
-              fetchData={fetchData}
-              sort={sort}
-              setSort={setSort}
-            />
-          ) : (
-            <NoDataFound />
-          )}
-        </div>
-        <div className={styles.pageFooter}>
-          <div className={styles.rowsPerPage}>
-            <p className={styles.totalRecordStyle}>Showing Results:</p>
-            <Select
-              labelId="rows-per-page"
-              id="rows-per-page"
-              value={rowsPage}
-              onChange={handleRowsChange}
-              size="small"
-              className={styles.customizeRowsSelect}
-            >
-              {getSelectedRowData(data?.totalCount).map((item) => (
-                <MenuItem value={item} className={styles.styledOptionText}>
-                  {item}
-                </MenuItem>
-              ))}
-            </Select>
-            <p className={styles.totalRecordStyle}>of {data?.totalCount}</p>
-          </div>
-          <Pagination
-            count={data?.totalPageSize}
-            color="primary"
-            size="small"
-            onChange={handlePaginationChange}
-            page={pageChange}
-            className={styles.marginFotter}
-          />
-        </div>
+    <>
+      <div className="mb-4">
+        <SearchComponent
+          optionsData={getOptionsData()}
+          option={getOption()}
+          setOption={setOption}
+          optionLabel={(option) =>
+            optionLabel(option, COMMON_WORDS[searched.toUpperCase()])
+          }
+          placeholder={getPlaceHolder(searched)}
+          renderOptionFunction={(props, option) =>
+            renderOptionFunction(
+              props,
+              option,
+              COMMON_WORDS[searched.toUpperCase()]
+            )
+          }
+          buttonText={BUTTON_TEXT.PRODUCT}
+          navigateRoute="/product/product-form"
+          searched={searched}
+          setSearched={setSearched}
+          selectOptions={SEARCH_OPTIONS}
+          handleGo={handleGo}
+          showButton
+        />
       </div>
-    </div>
+      <CustomTable
+        rows={productData || []}
+        columns={header}
+        loading={productLoading}
+        totalCount={products?.totalCount || 0}
+        page={page}
+        setPage={setPage}
+        rowsPerPage={pageSize}
+        setRowsPerPage={setPageSize}
+        order={order}
+        setOrder={setOrder}
+        orderBy={orderBy}
+        setOrderBy={setOrderBy}
+      />
+    </>
   );
 }
 
