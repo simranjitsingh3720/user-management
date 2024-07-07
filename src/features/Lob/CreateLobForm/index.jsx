@@ -22,7 +22,7 @@ function CreateLobForm() {
   const dispatch = useDispatch();
   const createLoading = useSelector((state) => state.lob.createLoading);
 
-  const { handleSubmit, control, setValue, formState } = useForm();
+  const { handleSubmit, control, formState } = useForm();
   const { errors } = formState;
 
   const onSubmit = (data) => {
