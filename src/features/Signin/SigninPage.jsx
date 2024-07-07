@@ -48,30 +48,35 @@ function SignInPage() {
               Please sign in to your account with your username.
             </div>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <div className="mt-8 px-2 grid grid-cols-1">
-                <InputField
-                  key="emailId"
-                  id="emailId"
-                  required
-                  label="Username"
-                  validation={emailValidation}
-                  control={control}
-                  errors={errors}
-                  disabled={false}
-                  classes="w-full text-left"
-                />
-                <InputField
-                  key="password"
-                  id="password"
-                  type="password"
-                  required
-                  label="Password"
-                  validation={passwordValidation}
-                  control={control}
-                  errors={errors}
-                  disabled={false}
-                  classes="w-full text-left"
-                />
+              <div className="mt-8 px-2 grid grid-cols-1 text-left">
+                <div className="mb-4">
+                  <InputField
+                    key="emailId"
+                    id="emailId"
+                    required
+                    label="Username"
+                    validation={emailValidation}
+                    control={control}
+                    errors={errors}
+                    disabled={false}
+                    classes="w-full text-left"
+                  />
+                </div>
+                <div className="mb-4">
+                  <InputField
+                    key="password"
+                    id="password"
+                    type="password"
+                    required
+                    label="Password"
+                    validation={passwordValidation}
+                    control={control}
+                    errors={errors}
+                    disabled={false}
+                    classes="w-full text-left"
+                  />
+
+                </div>
               </div>
               <div className="mx-7 mt-5">
                 <CustomButton

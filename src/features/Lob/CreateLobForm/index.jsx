@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import {
   Grid,
   IconButton,
-  TextField,
   FormControlLabel,
   Radio,
   RadioGroup,
@@ -16,6 +15,7 @@ import {
 import { createLobData } from "../../../stores/slices/lobSlice";
 import LeftArrow from "../../../assets/LeftArrow";
 import CustomButton from "../../../components/CustomButton";
+import InputField from "../../../components/CustomTextfield";
 
 function CreateLobForm() {
   const navigate = useNavigate();
@@ -32,12 +32,22 @@ function CreateLobForm() {
 
   const formField = [
     {
+      id: "lob",
       label: "LOB Name",
       value: "lob",
+      required: true,
+      validation: {
+        required: "LOB Name is required",
+      },
     },
     {
+      id: "lob_value",
       label: "LOB Value",
       value: "lob_value",
+      required: true,
+      validation: {
+        required: "LOB Value is required",
+      },
     },
   ];
 
@@ -49,45 +59,27 @@ function CreateLobForm() {
             <Grid
               item
               xs={12}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                marginBottom: "20px",
-              }}
+              className="flex items-center"
             >
               <IconButton aria-label="back" onClick={() => navigate("/lob")}>
                 <LeftArrow />
               </IconButton>
-              <h2 style={{ marginLeft: "10px" }}>Create New Lob</h2>
+              <h2 className="ml-3">Create New Lob</h2>
             </Grid>
 
             {formField.map((item) => (
               <Grid item xs={12} sm={6} key={item.value}>
-                <label style={{ display: "block", marginBottom: "5px" }} className="required-field">
-                  {item.label}
-                </label>
-                <Controller
-                  name={item.value}
-                  control={control}
-                  defaultValue=""
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <TextField
-                      id={item.value}
-                      variant="outlined"
-                      placeholder="Enter Name"
-                      size="small"
-                      fullWidth
-                      {...field}
-                      onChange={(e) => setValue(item.value, e.target.value)}
-                    />
-                  )}
-                />
-                {errors[item?.value] && (
-                  <span style={{ color: "red", fontSize: "12px" }}>
-                    This field is required
-                  </span>
-                )}
+                 <InputField
+                    key={item?.id}
+                    id={item?.id}
+                    required={item?.required}
+                    label={item?.label}
+                    validation={item?.validation}
+                    control={control}
+                    errors={errors}
+                    disabled={item?.disabled}
+                    classes="w-full"
+                  />
               </Grid>
             ))}
 

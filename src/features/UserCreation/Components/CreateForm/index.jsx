@@ -379,7 +379,7 @@ function CreateUserCreationForm() {
             <span className={styles.headerTextStyle}>Create User</span>
           </div>
         </div>
-        <div className="grid grid-cols-1">
+        <div className="grid grid-cols-1 px-8">
           <AutocompleteMultipleField
             key={ROLE_SELECT}
             control={control}

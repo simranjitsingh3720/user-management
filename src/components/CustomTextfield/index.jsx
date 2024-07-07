@@ -1,14 +1,13 @@
 import React from "react";
-import styles from "./styles.module.scss";
 import { TextField } from "@mui/material";
 import { Controller } from "react-hook-form";
 import { ACTIVE, PRODUCER_STATUS } from "./utils/constants";
 
-const InputField = ({ id, required,label, validation, control, errors, disabled, classes, placeholder, type='text' }) => {
+const InputField = ({ id, required, label, validation, control, errors, disabled, classes, placeholder, type = 'text' }) => {
   return (
-    <div className={styles.fieldContainerStyle}>
-      <label className={styles.labelText}>
-        {label} {required && <span className={styles.styledRequired}>*</span>}
+    <div className="flex flex-col">
+      <label className="text-gray-600 text-sm">
+        {label} {required && <span className="text-red-600">*</span>}
       </label>
       <Controller
         name={id}
@@ -30,7 +29,7 @@ const InputField = ({ id, required,label, validation, control, errors, disabled,
             placeholder={`Enter ${label}`}
             helperText={errors[id] && errors[id]?.message}
             size="small"
-            className={`${styles.customizeSelect} ${classes}`}
+            className={`bg-white text-sm ${classes}`}
             error={Boolean(errors[id])}
             {...field}
           />
