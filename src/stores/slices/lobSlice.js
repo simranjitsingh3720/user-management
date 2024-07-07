@@ -9,9 +9,8 @@ export const fetchLobData = createAsyncThunk(
   async ({ isAll, status }, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.get(apiUrls.getLob, {
-        params: { isAll: isAll, status: status },
+        params: { isAll, status },
       });
-
       return response.data;
     } catch (error) {
       return rejectWithValue([]);
@@ -33,12 +32,28 @@ export const updateLobData = createAsyncThunk(
   }
 );
 
+export const createLobData = createAsyncThunk(
+  'lob/createLobData',
+  async ({ data, navigate }, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.post('/api/lob', data);
+      toast.success(response?.data?.message || 'LOB created successfully');
+      navigate("/lob");
+      return response.data;
+    } catch (error) {
+      toast.error(error?.response?.data?.error?.message || COMMON_ERROR);
+      return rejectWithValue(error?.response?.data || {});
+    }
+  }
+);
+
 const lobSlice = createSlice({
   name: 'lob',
   initialState: {
     allLob: [],
     lobLoading: false,
     updateLoading: false,
+    createLoading: false,
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -64,6 +79,16 @@ const lobSlice = createSlice({
       })
       .addCase(updateLobData.rejected, (state) => {
         state.updateLoading = false;
+      })
+      // Create Lob reducers
+      .addCase(createLobData.pending, (state) => {
+        state.createLoading = true;
+      })
+      .addCase(createLobData.fulfilled, (state, action) => {
+        state.createLoading = false;
+      })
+      .addCase(createLobData.rejected, (state) => {
+        state.createLoading = false;
       });
   },
 });
