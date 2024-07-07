@@ -15,6 +15,7 @@ import { fetchLobData } from "../../stores/slices/lobSlice";
 import { fetchAllProductData } from "../../stores/slices/productSlice";
 import { COMMON_WORDS } from "../../utils/constants";
 import { getPlaceHolder } from "../../utils/globalizationFunction";
+import { setTableName } from "../../stores/slices/exportSlice";
 
 function getSelectedRowData(count) {
   let selectedRowData = [];
@@ -109,6 +110,12 @@ function ProductPaymentConfig() {
     return ids.join();
   };
 
+  useEffect(() => {
+    if(data && data?.data) {
+      dispatch(setTableName(data?.data[0]?.productWisePaymentMethod.label));
+    }
+  }, [data, dispatch]);
+
   return (
     <div>
       <SearchComponenet
@@ -144,6 +151,7 @@ function ProductPaymentConfig() {
         selectOptions={ProductPayment}
         handleGo={handleGo}
         showButton
+        showExportButton={true}
       />
       <div className={styles.tableContainerStyle}>
         <div className={styles.tableStyled}>
