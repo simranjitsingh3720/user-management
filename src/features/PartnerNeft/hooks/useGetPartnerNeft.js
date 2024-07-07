@@ -65,8 +65,6 @@ const useGetPartnerNeft = () => {
             updatedAt: partnerNeft.updatedAt,
           })
         });
-
-        console.log(partnerNeftData);
         setData(partnerNeftData);
         setTotalCount(response.data.totalCount);
       } catch (e) {
