@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SearchComponenet from "./SearchComponenet";
 import styles from "./styles.module.scss";
 import TableHeader from "./Table/TableHeader";
@@ -8,6 +8,8 @@ import NoDataFound from "../../components/NoDataCard";
 import { MenuItem, Pagination, Select } from "@mui/material";
 import { selectRowsData } from "../../utils/globalConstants";
 import useGetProposalOTPList from "./hooks/useGetProposalOTPList";
+import { useDispatch } from "react-redux";
+import { setTableName } from "../../stores/slices/exportSlice";
 
 function getSelectedRowData(count) {
   let selectedRowData = [];
@@ -24,6 +26,7 @@ function ProposalOTPException() {
   const [query, setQuery] = useState("");
   const [searched, setSearched] = useState("type");
   const [date, setDate] = useState({ startDate: "", endDate: "" });
+  const dispatch = useDispatch();
 
   const [rowsPage, setRowsPage] = useState(10);
 
@@ -46,6 +49,11 @@ function ProposalOTPException() {
     setPageChange(1);
     setRowsPage(event.target.value);
   };
+
+  useEffect(() => {
+    dispatch(setTableName(data?.data[0]?.otpException.label));
+  }, [dispatch, data]);
+
   return (
     <div>
       <SearchComponenet
