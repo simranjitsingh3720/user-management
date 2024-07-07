@@ -14,8 +14,8 @@ const Lob = () => {
 
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(5);
-  const [order, setOrder] = useState("");
-  const [orderBy, setOrderBy] = useState("");
+  const [order, setOrder] = useState(null);
+  const [orderBy, setOrderBy] = useState(null);
   const [lobData, setLobData] = useState([]);
 
   const createNewLob = () => {
@@ -25,10 +25,13 @@ const Lob = () => {
   useEffect(() => {
     dispatch(
       fetchLobData({
-        isAll: true,
+        page,
+        pageSize,
+        order,
+        orderBy,
       })
     );
-  }, [dispatch]);
+  }, [dispatch, page, pageSize, order, orderBy]);
 
   const handleUpdate = useCallback(
     async (data) => {

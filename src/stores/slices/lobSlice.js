@@ -6,10 +6,10 @@ import { COMMON_ERROR } from './../../utils/globalConstants';
 
 export const fetchLobData = createAsyncThunk(
   'lob/fetchLobData',
-  async ({ isAll, status }, { rejectWithValue }) => {
+  async ({ page, pageSize, order, orderBy }, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.get(apiUrls.getLob, {
-        params: { isAll, status },
+        params: { pageNo: page, pageSize: pageSize, sortOrder: order, sortKey: orderBy },
       });
       return response.data;
     } catch (error) {
