@@ -7,7 +7,7 @@ import { fetchLobData } from "../../stores/slices/lobSlice";
 
 const Lob = () => {
   const dispatch = useDispatch();
-  const { allLob } = useSelector((state) => state.lob);
+  const { allLob, lobLoading } = useSelector((state) => state.lob);
   
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(5);
@@ -26,6 +26,7 @@ const Lob = () => {
         <CustomTable
           rows={allLob?.data || []}
           columns={header}
+          loading={lobLoading}
           totalCount={allLob?.totalCount || 0}
           page={page}
           setPage={setPage}
