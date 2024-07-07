@@ -12,6 +12,7 @@ import { fetchUser } from "../../stores/slices/userSlice";
 import { showDialog } from "../../stores/slices/dialogSlice";
 import Content from "./Dialog/Content";
 import Actions from "./Dialog/Action";
+import { setTableName } from "../../stores/slices/exportSlice";
 
 function EmployeeFlagConfig() {
   const [producers, setProducers] = useState();
@@ -44,6 +45,7 @@ function EmployeeFlagConfig() {
     if (data && data?.data) {
       const refactorData = data?.data.map((item) => ({
         id: item?.employeeFlagConfig?.id,
+        label: item?.employeeFlagConfig?.label,
         producerCode: item?.producer[0]?.producerCode,
         producerName: `${item?.producer[0]?.firstName} ${item?.producer[0]?.lastName}`,
         productDetails: item?.products,
@@ -51,8 +53,9 @@ function EmployeeFlagConfig() {
         updatedAt: item?.employeeFlagConfig?.updatedAt,
       }));
       setTableData(refactorData);
+      dispatch(setTableName(refactorData[0]?.label));
     }
-  }, [data]);
+  }, [data, dispatch]);
 
   const fetchIdsAndConvert = (inputData) => {
     const ids = (inputData || []).map((producer) => producer.id);
@@ -102,6 +105,7 @@ function EmployeeFlagConfig() {
           renderOptionFunction={renderOptionUserFunction}
           handleGo={handleGo}
           showButton={false}
+          showExportButton={true}
         />
       </div>
       <div className="mt-4">
