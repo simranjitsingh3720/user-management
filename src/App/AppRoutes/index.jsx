@@ -27,6 +27,7 @@ const CreateRoleForm = lazy(() =>
 );
 const Form = lazy(() => import("../../features/PermissionModule/Form"));
 const LOBModule = lazy(() => import("../../features/LOBModule"));
+const Lob = lazy(() => import("../../features/Lob"));
 const LobForm = lazy(() => import("../../features/LOBModule/LobForm"));
 const Product = lazy(() => import("../../features/ProductModule"));
 const ProductForm = lazy(() =>
@@ -210,6 +211,14 @@ const AppRoutes = () => {
           element={
             <ResponsiveDrawer showSidebarAndHeader={true}>
               {<PrivateRoute component={LOBModule} />}
+            </ResponsiveDrawer>
+          }
+        />
+        <Route
+          path="/lob-new"
+          element={
+            <ResponsiveDrawer showSidebarAndHeader={true}>
+              {<PrivateRoute component={Lob} />}
             </ResponsiveDrawer>
           }
         />

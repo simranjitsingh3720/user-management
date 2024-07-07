@@ -4,9 +4,9 @@ import apiUrls from './../../utils/apiUrls';
 
 export const fetchLobData = createAsyncThunk(
   'lob/fetchLobData',
-  async (_, { rejectWithValue }) => {
+  async ({isAll=true, status = true}, { rejectWithValue }) => {
     try {
-      const url = `${apiUrls.getLob}?isAll=true&status=true`;
+      const url = `${apiUrls.getLob}?isAll=${isAll}&status=${status}`;
       const response = await axiosInstance.get(url);
       return response.data;
     } catch (error) {
