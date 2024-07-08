@@ -23,7 +23,7 @@ function Product() {
   const [orderBy, setOrderBy] = useState(null);
   const [productData, setProductData] = useState([]);
   const [lobValue, setLobValue] = useState([]);
-  const { products, productLoading } = useSelector((state) => state.product);
+  const { products, productsLoading } = useSelector((state) => state.product);
   const { lob } = useSelector((state) => state.lob);
 
   const [searched, setSearched] = useState(COMMON_WORDS.LOB);
@@ -171,9 +171,9 @@ function Product() {
         />
       </div>
       <CustomTable
-        rows={productData || []}
+        rows={productData}
         columns={header}
-        loading={productLoading}
+        loading={productsLoading}
         totalCount={products?.totalCount || 0}
         page={page}
         setPage={setPage}

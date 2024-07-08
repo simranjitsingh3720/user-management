@@ -51,7 +51,7 @@ export const createProductData = createAsyncThunk(
 
 const initialState = {
   products: [],
-  productLoading: false,
+  productsLoading: false,
   updateLoading: false,
   createLoading: false,
 };

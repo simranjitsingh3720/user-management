@@ -31,7 +31,7 @@ const CkycForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
-  const { products, productLoading } = useSelector((state) => state.product);
+  const { products, productsLoading } = useSelector((state) => state.product);
 
   const {
     handleSubmit,
@@ -206,7 +206,7 @@ const CkycForm = () => {
                       option?.product?.toUpperCase() || ""
                     }
                     disabled={id}
-                    loading={productLoading}
+                    loading={productsLoading}
                     className="customize-select"
                     size="small"
                     isOptionEqualToValue={(option, value) =>
