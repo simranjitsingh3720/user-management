@@ -21,7 +21,8 @@ export const COMMON_FIELDS = {
   hasProduct: "hasProduct",
   hasProducer: "hasProducer",
   hasLob: "hasLob",
-  createdAt: "createdAt"
+  createdAt: "createdAt",
+  hasPermission: "hasPermission",
 }
 
 export const SEARCH_OPTIONS = [
