@@ -76,7 +76,7 @@ function GroupModule() {
     (data) => {
       dispatch(
         showDialog({
-          title: COMMON_WORDS.CHANGE_STATUS,
+          title: COMMON_WORDS.PERMISSION,
           content: <PermissionContent data={data} />,
         })
       );
