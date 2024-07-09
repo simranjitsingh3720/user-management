@@ -165,7 +165,7 @@ function Product() {
           navigateRoute="/product/product-form"
           searched={searched}
           setSearched={setSearched}
-          selectOptions={SEARCH_OPTIONS}
+          // selectOptions={SEARCH_OPTIONS}
           handleGo={handleGo}
           showButton
         />
