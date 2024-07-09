@@ -13,11 +13,13 @@ import productReducer from './slices/productSlice';
 import userReducer from './slices/userSlice';
 import channelSlice from '../Redux/getChannel';
 import houseBankSlice from '../Redux/getHouseBank';
+import groupSlice from "./slices/groupSlice";
 
 const appStore = configureStore({
   reducer: {
     dialog: dialogReducer,
     export: exportReducer,
+    group: groupSlice,
     lobUserCreation: lobSlice,
     productUserCreation: productSlice,
     user: userReducer,

@@ -23,6 +23,7 @@ export const BUTTON_TEXT = {
   HEALTH_CONFIG: "Create Health Configuration",
   PRODUCT_PAYMENT: "Create New Payment Configuration",
   PRODUCT: "Create New Product",
+  GROUP: "Create New Group",
 };
 
 export const ProductPayment = [

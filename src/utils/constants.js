@@ -19,6 +19,7 @@ export const COMMON_WORDS = {
   LOBS: "lobs",
   HAS_PAYMENT_TYPE: "hasPaymentType",
   PAYMENTS: "payments",
+  PERMISSION: "Permission",
 };
 
 export const HEADER = {
