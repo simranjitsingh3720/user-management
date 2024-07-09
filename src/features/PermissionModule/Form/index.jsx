@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import CreateNewUserContainer from "../CreateNewPrivilegeForm";
-import { IconButton } from "@mui/material";
+import { IconButton, Typography } from "@mui/material";
 import styles from "./styles.module.scss";
 import { useNavigate } from "react-router-dom";
 import LeftArrow from "../../../assets/LeftArrow";
@@ -77,9 +77,9 @@ function Form() {
               >
                 <LeftArrow />
               </IconButton>
-              <span className={styles.headerTextStyle}>
+              <Typography variant="h5" className="ml-3 font-semibold">
                 Create New Permission
-              </span>
+              </Typography>
             </div>
           </div>
 
