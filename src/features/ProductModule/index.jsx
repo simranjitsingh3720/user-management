@@ -18,7 +18,7 @@ function Product() {
   const dispatch = useDispatch();
 
   const [page, setPage] = useState(0);
-  const [pageSize, setPageSize] = useState(5);
+  const [pageSize, setPageSize] = useState(10);
   const [order, setOrder] = useState(null);
   const [orderBy, setOrderBy] = useState(null);
   const [productData, setProductData] = useState([]);

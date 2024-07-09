@@ -19,7 +19,7 @@ import useGetPermission from './hooks/useGetPermission';
 
 function GroupModule() {
   const [page, setPage] = useState(0);
-  const [pageSize, setPageSize] = useState(5);
+  const [pageSize, setPageSize] = useState(10);
   const [order, setOrder] = useState(null);
   const [orderBy, setOrderBy] = useState(null);
 
@@ -143,7 +143,7 @@ function GroupModule() {
   };
 
   const fetchIdsAndConvert = (inputData) => inputData.map((item) => item.id).join();
-  
+
   const handleGo = useCallback(() => {
     setPage(0);
     let searchString = '';
