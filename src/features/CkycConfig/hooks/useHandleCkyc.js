@@ -1,9 +1,9 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import axiosInstance from "../../../utils/axiosInstance";
-import { toast } from "react-toastify";
-import apiUrls from "../../../utils/apiUrls";
-import { COMMON_ERROR } from "../../../utils/globalConstants";
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axiosInstance from '../../../utils/axiosInstance';
+import { toast } from 'react-toastify';
+import apiUrls from '../../../utils/apiUrls';
+import { COMMON_ERROR } from '../../../utils/globalConstants';
 
 function useHandleCkyc() {
   const [loading, setLoading] = useState(false);
@@ -16,22 +16,19 @@ function useHandleCkyc() {
       const payload = {
         lobId: data.lob.id,
         productId: data.product.id,
-        isCKYCApplicable: data.cykc === "enable" ? true : false,
+        isCKYCApplicable: data.cykc === 'enable' ? true : false,
       };
 
       if (payload.isCKYCApplicable) {
         payload.forWhom = data.forWhom;
       }
-      const response = await axiosInstance.post(
-        `${apiUrls.ckyc}`,
-        payload
-      );
-      toast.success(response?.data?.message || "CKYC Created successfully");
-      navigate("/ckyc-config");
+      const response = await axiosInstance.post(`${apiUrls.ckyc}`, payload);
+      toast.success(response?.data?.message || 'CKYC Created successfully');
+      navigate('/ckyc-config');
     } catch (error) {
       toast.error(error?.response?.data?.error?.message || COMMON_ERROR);
     } finally {
-      setLoading(false); 
+      setLoading(false);
     }
   }
 
@@ -41,21 +38,16 @@ function useHandleCkyc() {
       const payload = {
         id: id,
         properties: {
-          isCKYCApplicable: data.cykc === "enable" ? true : false,
+          isCKYCApplicable: data.cykc === 'enable' ? true : false,
         },
       };
 
       if (payload.properties.isCKYCApplicable) {
         payload.properties.forWhom = data.forWhom;
       }
-      const response = await axiosInstance.put(
-        `${apiUrls.CKYC}`,
-        payload
-      );
-      toast.success(
-        response?.data?.message || "House Bank updated successfully"
-      );
-      navigate("/ckyc-config");
+      const response = await axiosInstance.put(`${apiUrls.ckyc}`, payload);
+      toast.success(response?.data?.message || 'House Bank updated successfully');
+      navigate('/ckyc-config');
     } catch (error) {
       toast.error(error?.response?.data?.error?.message || COMMON_ERROR);
     } finally {

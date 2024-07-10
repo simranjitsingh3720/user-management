@@ -1,21 +1,15 @@
-import React, { useEffect, useState } from "react";
-import styles from "./styles.module.scss";
-import {
-  Autocomplete,
-  Checkbox,
-  TextField,
-  Tooltip,
-  Skeleton,
-} from "@mui/material";
-import { Controller } from "react-hook-form";
-import { CrudSelect } from "../constants";
-import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
-import CheckBoxIcon from "@mui/icons-material/CheckBox";
-import useGetAllModule from "../hooks/useGetAllModule";
-import capitalizeFirstLetter from "../../../utils/globalizationFunction";
-import useGetSubModule from "../hooks/useGetSubModule";
-import DeleteIcon from "@mui/icons-material/Delete";
-import CustomButton from "../../../components/CustomButton";
+import React, { useEffect, useState } from 'react';
+import styles from './styles.module.scss';
+import { Autocomplete, Checkbox, TextField, Tooltip, Skeleton } from '@mui/material';
+import { Controller } from 'react-hook-form';
+import { CrudSelect } from '../constants';
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import useGetAllModule from '../hooks/useGetAllModule';
+import capitalizeFirstLetter from '../../../utils/globalizationFunction';
+import useGetSubModule from '../hooks/useGetSubModule';
+import DeleteIcon from '@mui/icons-material/Delete';
+import CustomButton from '../../../components/CustomButton';
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -41,8 +35,7 @@ function CreateNewUserContainer({
 
   const [array, setArray] = useState([]);
 
-  const { SubModuleData, SubModuleLoading, SubModuleFetchData } =
-    useGetSubModule();
+  const { SubModuleData, SubModuleLoading, SubModuleFetchData } = useGetSubModule();
 
   useEffect(() => {
     if (SubModuleData && SubModuleData.data) {
@@ -63,22 +56,15 @@ function CreateNewUserContainer({
       setSelectedSubmodules((prev) => {
         const updatedSubmodules = { ...prev };
         const previousData = updatedSubmodules[uniqueIdentifier] || [];
-        updatedSubmodules[uniqueIdentifier] = [
-          ...previousData.slice(0, index + 1),
-        ];
+        updatedSubmodules[uniqueIdentifier] = [...previousData.slice(0, index + 1)];
         return updatedSubmodules;
       });
     } else {
       setSelectedSubmodules((prev) => {
         const updatedSubmodules = { ...prev };
         const previousData = updatedSubmodules[uniqueIdentifier] || [];
-        const newData = newValue
-          ? [{ id: newValue.id, label: newValue.label }]
-          : [];
-        updatedSubmodules[uniqueIdentifier] = [
-          ...previousData.slice(0, index + 1),
-          ...newData,
-        ];
+        const newData = newValue ? [{ id: newValue.id, label: newValue.label }] : [];
+        updatedSubmodules[uniqueIdentifier] = [...previousData.slice(0, index + 1), ...newData];
         return updatedSubmodules;
       });
     }
@@ -105,7 +91,7 @@ function CreateNewUserContainer({
                   disablePortal
                   id={`module-${index}`}
                   options={(AllModuleData?.data || []).map((obj) => ({
-                    label: capitalizeFirstLetter(obj?.moduleName || ""),
+                    label: capitalizeFirstLetter(obj?.moduleName || ''),
                     id: obj.id,
                   }))}
                   className={styles.customizeSelect}
@@ -128,21 +114,17 @@ function CreateNewUserContainer({
                     SubModuleFetchData(newValue?.id);
                     field.onChange(newValue);
                   }}
-                  renderInput={(params) => (
-                    <TextField {...params} placeholder="Select" />
-                  )}
+                  renderInput={(params) => <TextField {...params} placeholder="Select" />}
                   ListboxProps={{
                     style: {
-                      maxHeight: "200px",
+                      maxHeight: '200px',
                     },
                   }}
                 />
               )}
             />
 
-            <div className={styles.styledError}>
-              {errors[`module-${index}`] && <span>This field is required</span>}{" "}
-            </div>
+            <div className={styles.styledError}>{errors[`module-${index}`] && <span>Module is required</span>} </div>
           </div>
 
           {array.map((item, index) => (
@@ -156,21 +138,19 @@ function CreateNewUserContainer({
                     disablePortal
                     id={`subModule-${index}`}
                     options={(item?.SubModuleData || []).map((obj) => ({
-                      label: capitalizeFirstLetter(obj?.moduleName || ""),
+                      label: capitalizeFirstLetter(obj?.moduleName || ''),
                       id: obj.id,
                     }))}
                     className={styles.customizeSelect}
                     size="small"
-                    renderInput={(params) => (
-                      <TextField {...params} placeholder="Select" />
-                    )}
+                    renderInput={(params) => <TextField {...params} placeholder="Select" />}
                     onChange={(event, newValue) => {
                       handleSubmoduleChange(newValue, index);
                       field.onChange(newValue);
                     }}
                     ListboxProps={{
                       style: {
-                        maxHeight: "200px",
+                        maxHeight: '200px',
                       },
                     }}
                   />
@@ -212,28 +192,19 @@ function CreateNewUserContainer({
                   }}
                   renderOption={(props, option, { selected }) => (
                     <li {...props}>
-                      <Checkbox
-                        icon={icon}
-                        checkedIcon={checkedIcon}
-                        style={{ marginRight: 8 }}
-                        checked={selected}
-                      />
+                      <Checkbox icon={icon} checkedIcon={checkedIcon} style={{ marginRight: 8 }} checked={selected} />
                       {option.label}
                     </li>
                   )}
                   size="small"
                   className={styles.customizeCrudSelect}
-                  renderInput={(params) => (
-                    <TextField {...params} placeholder="Select" />
-                  )}
+                  renderInput={(params) => <TextField {...params} placeholder="Select" />}
                 />
               )}
             />
 
             <div className={styles.styledError}>
-              {errors[`permissionType-${index}`] && (
-                <span>This field is required</span>
-              )}{" "}
+              {errors[`permissionType-${index}`] && <span>Permission Types is required</span>}{' '}
             </div>
           </div>
         </div>
@@ -241,12 +212,7 @@ function CreateNewUserContainer({
         <div className={styles.buttonWrapper}>
           {(index > 0 || itemLength > 1) && (
             <Tooltip title="Remove permission">
-              <CustomButton
-                type="button"
-                variant="text"
-                startIcon={<DeleteIcon />}
-                onClick={() => remove()}
-              >
+              <CustomButton type="button" variant="text" startIcon={<DeleteIcon />} onClick={() => remove()}>
                 Remove
               </CustomButton>
             </Tooltip>

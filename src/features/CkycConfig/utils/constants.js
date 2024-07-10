@@ -1,25 +1,38 @@
 export const forWhomEnable = [
   {
-    label: "Both",
-    value: "both",
+    label: 'Both',
+    value: 'both',
   },
   {
-    label: "Producer",
-    value: "producer",
+    label: 'Producer',
+    value: 'producer',
   },
   {
-    label: "Customer",
-    value: "customer",
+    label: 'Customer',
+    value: 'customer',
   },
 ];
 
 export const forWhomDisable = [
   {
-    label: "Producer",
-    value: "producer",
+    label: 'Producer',
+    value: 'producer',
   },
   {
-    label: "Customer",
-    value: "customer",
+    label: 'Customer',
+    value: 'customer',
+  },
+];
+
+export const STATUS = [
+  {
+    id: 'enable',
+    label: 'Enable',
+    value: 'enable',
+  },
+  {
+    id: 'disable',
+    label: 'Disable',
+    value: 'disable',
   },
 ];

@@ -1,34 +1,28 @@
-import React, { useState } from "react";
-import useGetPrivilege from "./hooks/useGetPrivilege";
-import { BUTTON_TEXT } from "../../utils/globalConstants";
-import CustomTable from "../../components/CustomTable";
-import generateTableHeaders from "./utils/generateTableHeaders";
-import { COMMON_WORDS } from "../../utils/constants";
-import { useDispatch } from "react-redux";
-import { showDialog } from "../../stores/slices/dialogSlice";
-import SearchComponent from "../../components/SearchComponent";
-import { PrivilegeSearch } from "./constants";
-import Content from "./Dialog/Content";
-import Actions from "./Dialog/Action";
-import CustomDialog from "../../components/CustomDialog";
+import React, { useState } from 'react';
+import useGetPrivilege from './hooks/useGetPrivilege';
+import { BUTTON_TEXT } from '../../utils/globalConstants';
+import CustomTable from '../../components/CustomTable';
+import generateTableHeaders from './utils/generateTableHeaders';
+import { COMMON_WORDS } from '../../utils/constants';
+import { useDispatch } from 'react-redux';
+import { showDialog } from '../../stores/slices/dialogSlice';
+import SearchComponent from '../../components/SearchComponent';
+import { PrivilegeSearch } from './constants';
+import Content from './Dialog/Content';
+import Actions from './Dialog/Action';
+import CustomDialog from '../../components/CustomDialog';
 
 function PermissionModule() {
   const dispatch = useDispatch();
 
-  const [query, setQuery] = useState("");
-  const [searched, setSearched] = useState("permissionName");
+  const [query, setQuery] = useState('');
+  const [searched, setSearched] = useState('permissionName');
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(10);
   const [order, setOrder] = useState(COMMON_WORDS.ASC);
   const [orderBy, setOrderBy] = useState(COMMON_WORDS.CREATED_AT);
 
-  const { fetchData, data, loading } = useGetPrivilege(
-    page,
-    pageSize,
-    query,
-    order,
-    orderBy
-  );
+  const { fetchData, data, loading } = useGetPrivilege(page, pageSize, order, orderBy);
 
   const handleClicked = (data, row) => {
     dispatch(
@@ -56,7 +50,7 @@ function PermissionModule() {
         textFieldPlaceholder="Search"
         setQuery={setQuery}
         buttonText={BUTTON_TEXT.Permission}
-        navigateRoute={"/permission/permission-form"}
+        navigateRoute={'/permission/permission-form'}
         handleGo={handleGo}
         showButton
       />
