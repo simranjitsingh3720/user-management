@@ -4,19 +4,18 @@ import CssBaseline from "@mui/material/CssBaseline";
 import NavbarDrawer from "../NavbarDrawer";
 import Header from "../Header";
 import { drawerWidth } from "../../utils/globalConstants";
-import { useLocation } from "react-router-dom";
 import useSideNavData from "../NavbarDrawer/hooks/useSideNavData";
 
 const HEADER_HEIGHT = 64;
 
 export const getLabelFromPath = (pathData, sideNavData) => {
   for (const item of sideNavData) {
-    if (item.navigateRoute && item.navigateRoute === pathData) {
+    if (item.route && item.route === pathData) {
       return item.label;
     }
     if (item.child) {
       for (const childItem of item.child) {
-        if (childItem.navigateRoute && childItem.navigateRoute === pathData) {
+        if (childItem.route && childItem.route === pathData) {
           return childItem.label;
         }
       }
@@ -26,18 +25,12 @@ export const getLabelFromPath = (pathData, sideNavData) => {
 };
 
 function ResponsiveDrawer({ showSidebarAndHeader, children }) {
-  const location = useLocation();
-  const path = location.pathname;
-  const parts = path.split("/");
-  const defaultRoute = parts[1];
-
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
-  const sideNavData = useSideNavData();
-  const [selectedNavbar, setSelectedNavbar] = useState(
-    getLabelFromPath(defaultRoute, sideNavData) || "dashboard"
-  );
+  const [selectedNavbar, setSelectedNavbar] = useState("dashboard");
   const [selectedParentIndex, setSelectedParentIndex] = useState(null);
+  
+  const sideNavData = useSideNavData();
 
   const handleDrawerToggle = () => {
     if (!isClosing) {
