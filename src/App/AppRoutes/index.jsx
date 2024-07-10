@@ -375,13 +375,13 @@ const AppRoutes = () => {
         }
       />
       <Route
-        path="UWLevelMappingEmployee/:employeeId"
+        path="uwlevelmappingemployee/:employeeId"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>{<PrivateRoute component={UWLevelMapping} />}</ResponsiveDrawer>
         }
       />
       <Route
-        path="UWLevelMappingEmployee/:employeeId/form/:id?"
+        path="uwlevelmappingemployee/:employeeId/form/:id?"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
             {<PrivateRoute component={UWLevelMappingForm} />}
@@ -389,7 +389,7 @@ const AppRoutes = () => {
         }
       />
       <Route
-        path="/UWLevelMappingEmployee"
+        path="/uwlevelmappingemployee"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
             {<PrivateRoute component={UWLevelMappingEmployee} />}

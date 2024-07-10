@@ -121,7 +121,7 @@ function LevelMappingForm() {
                     <IconButton
                       aria-label="back"
                       onClick={() => {
-                        navigate(`/UWLevelMappingEmployee/${employeeId}`);
+                        navigate(`/uwlevelmappingemployee/${employeeId}`);
                       }}
                     >
                       <LeftArrow />

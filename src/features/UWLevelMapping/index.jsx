@@ -47,7 +47,7 @@ function UWLevelMapping() {
       <IconButton
         aria-label="back"
         onClick={() => {
-          navigate('/UWLevelMappingEmployee');
+          navigate('/uwlevelmappingemployee');
         }}
       >
         <LeftArrow />

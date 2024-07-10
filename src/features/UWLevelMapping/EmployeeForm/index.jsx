@@ -17,7 +17,7 @@ function EmployeeForm() {
   const navigate = useNavigate();
 
   const handleEditClick = (row) => {
-    navigate(`/UWLevelMappingEmployee/${row.id}`);
+    navigate(`/uwlevelmappingemployee/${row.id}`);
   };
   const HEADER_COLUMNS = employeeTableHeaders(handleEditClick);
 
