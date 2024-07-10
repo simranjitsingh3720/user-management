@@ -129,7 +129,7 @@ export const SideNavData = [
     navigateRoute: 'tc-report',
   },
   {
-    label: 'Product Location Level Mapping',
+    label: 'Underwriter Location Level Mapping',
     icon: GridViewIcon,
     navigateRoute: 'UWLevelMappingEmployee',
   },
