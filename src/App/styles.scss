@@ -73,3 +73,7 @@ $breakpoint-xl: 1536px;
   color: #465465;
   font-size: 0.75rem;
 }
+
+.selected {
+  filter: invert(88%) sepia(58%) saturate(920%) hue-rotate(180deg) brightness(100%) contrast(66%) 
+}
