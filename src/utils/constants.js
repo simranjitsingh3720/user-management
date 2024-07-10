@@ -24,6 +24,7 @@ export const COMMON_WORDS = {
   UNDERWRITER: 'underWriter',
   PERMISSION: 'permission',
   PERMISSIONNAME: 'permissionName',
+  GROUP: 'group',
 };
 
 export const HEADER = {
@@ -32,4 +33,8 @@ export const HEADER = {
   ICON_COLOR: '#465465',
   TEXT_COLOR: '#465465',
   HEADING_FONT_WEIGHT: 600,
+};
+
+export const CHANGE_STATUS_LABEL = {
+  UNDERWRITER_LEVEL: 'Underwriter Level Mapping',
 };

@@ -14,7 +14,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import LeftArrow from '../../../assets/LeftArrow';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import useCreateProductLevel from '../hooks/useCreateProductLevel';
-import { capitalizeWords } from '../../../utils/globalizationFunction';
 
 function LevelMappingForm() {
   const dispatch = useDispatch();
@@ -66,7 +65,7 @@ function LevelMappingForm() {
 
       if (data?.data?.level) {
         const createLevel = {
-          label: LEVEl_LABEL_ENUM[capitalizeWords(data?.data?.level)],
+          label: LEVEl_LABEL_ENUM[data?.data?.level],
           value: data?.data?.level,
         };
         setValue('level', createLevel);

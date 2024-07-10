@@ -1,23 +1,23 @@
 export const LEVEL_ENUM = [
-  { value: 'One', label: 'Level One' },
-  { value: 'Two', label: 'Level Two' },
-  { value: 'Three', label: 'Level Three' },
-  { value: 'Four', label: 'Underwriter Level 4' },
-  { value: 'Co_Insurance_Referral', label: 'Co_Insurance_Referral' },
-  { value: 'FAC', label: 'Reinsurance FAC' },
-  { value: 'SAF', label: 'Reinsurance SAF' },
-  { value: 'Risk Engineering', label: 'Risk Engineering' },
+  { value: 'one', label: 'Level One' },
+  { value: 'two', label: 'Level Two' },
+  { value: 'three', label: 'Level Three' },
+  { value: 'underwriter level 4', label: 'Underwriter Level 4' },
+  { value: 'co_insurance_referra', label: 'Co Insurance Referral' },
+  { value: 'reinsurance fac', label: 'Reinsurance FAC' },
+  { value: 'reinsurance saf', label: 'Reinsurance SAF' },
+  { value: 'risk engineering', label: 'Risk Engineering' },
 ];
 
 export const LEVEl_LABEL_ENUM = Object.freeze({
-  One: 'Level One',
-  Two: 'Level Two',
-  Three: 'Level Three',
-  Four: 'Underwriter Level 4',
-  Co_Insurance_Referral: 'Co_Insurance_Referral',
-  FAC: 'Reinsurance FAC',
-  SAF: 'Reinsurance SAF',
-  'Risk Engineering': 'Risk Engineering',
+  one: 'Level One',
+  two: 'Level Two',
+  three: 'Level Three',
+  'underwriter level 4': 'Underwriter Level 4',
+  co_insurance_referra: 'Co Insurance Referral',
+  'reinsurance fac': 'Reinsurance FAC',
+  'reinsurance saf': 'Reinsurance SAF',
+  'risk engineering': 'Risk Engineering',
 });
 
 export const STATUS = [

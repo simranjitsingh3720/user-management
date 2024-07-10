@@ -5,22 +5,18 @@ export function tableHeaders(handleEditClick, handleStatusClicked) {
     {
       id: 'lob',
       value: 'LOB',
-      sortable: false,
     },
     {
       id: 'product',
       value: 'Product',
-      sortable: false,
     },
     {
       id: 'location',
       value: 'Locations',
-      sortable: false,
     },
     {
       id: 'level',
       value: 'Level',
-      sortable: false,
     },
     {
       id: 'createdAt',
@@ -59,17 +55,14 @@ export function employeeTableHeaders(handleEditClick) {
     {
       id: 'employeeId',
       value: 'Employee Id',
-      sortable: false,
     },
     {
       id: 'name',
       value: 'Name',
-      sortable: false,
     },
     {
       id: 'email',
       value: 'Email',
-      sortable: false,
     },
     {
       id: 'createdAt',
