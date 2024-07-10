@@ -10,10 +10,10 @@ export const getParentCode = createAsyncThunk(
         const response = await axiosInstance.get(url);
         const formattedArray = response?.data?.data?.map((obj) => ({
           ...obj,
-          label:  obj?.firstName
-          ? obj.firstName.charAt(0).toUpperCase() + obj.firstName.slice(1) +
+          label:  
+           obj?.firstName.charAt(0).toUpperCase() + obj?.firstName.slice(1) +
             (obj?.lastName ? " " + obj.lastName.charAt(0).toUpperCase() + obj.lastName.slice(1) : "")
-          : '',
+          ,
           value: obj?.id,
         }));
         return formattedArray;
