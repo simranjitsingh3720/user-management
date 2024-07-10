@@ -26,6 +26,21 @@ export const BUTTON_TEXT = {
   GROUP: "Create New Group",
 };
 
+
+export const STATUS = [
+  {
+    id: 'active',
+    label: 'Active',
+    value: 'active',
+  },
+  {
+    id: 'inactive',
+    label: 'Inactive',
+    value: 'inactive',
+  },
+];
+
+
 export const ProductPayment = [
   {
     label: "Product",
