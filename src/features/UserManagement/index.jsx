@@ -1,100 +1,98 @@
-import { Box, MenuItem, Pagination, Select } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import styles from "./styles.module.scss";
-import Table from "./Components/Table";
-import SearchComponent from "./Components/SearchComponent";
-import useGetUser from "./Components/hooks/useGetUser";
-import NoDataFound from "../../components/NoDataCard";
-import TableHeader from "./Components/Table/TableHeader";
-import ListLoader from "../../components/ListLoader";
+import { Box } from '@mui/material';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import CustomTable from '../../components/CustomTable';
+import useGetUser from './Components/hooks/useGetUser';
+import { BUTTON_TEXT, Header, NAVIGATE_TO_FORM, SEARCH_OPTIONS } from './Components/utils/constants';
+import { useNavigate } from 'react-router-dom';
+import { COMMON_WORDS } from '../../utils/constants';
+import Content from './Components/Dialog/Content';
+import Actions from './Components/Dialog/Action';
+import { showDialog } from '../../stores/slices/dialogSlice';
+import { useDispatch } from 'react-redux';
+import CustomDialog from '../../components/CustomDialog';
+import SearchComponent from '../../components/SearchComponent';
+import { setTableName } from '../../stores/slices/exportSlice';
 
 function UserManagement() {
-  const [searched, setSearched] = useState("");
-  const [query, setQuery] = useState("");
-  const [fromDate, setFromDate] = useState();
-  const [toDate, setToDate] = useState();
-  const [pageChange, setPageChange] = useState(1);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [query, setQuery] = useState('');
+  const [searched, setSearched] = useState('userId');
+  const [page, setPage] = useState(0);
+  const [pageSize, setPageSize] = useState(10);
+  const [order, setOrder] = useState(COMMON_WORDS.ASC);
+  const [orderBy, setOrderBy] = useState(COMMON_WORDS.CREATED_AT);
+  const { data, loading, fetchData, setLoading } = useGetUser(page, pageSize, query, order, orderBy);
+  const [userData, setUserData] = useState([]);
 
-  const [rowsPage, setRowsPage] = useState(10);
-
-  const handleRowsChange = (event) => {
-    setRowsPage(event.target.value);
-  };
-
-  const handlePaginationChange = (event, page) => {
-    setPageChange(page);
-  };
-
-  const { data, loading, fetchData, setLoading, setSort, sort } = useGetUser();
-
-  const selectRowsData = [5, 10, 15, 20];
+  const updateUserForm = useCallback((row) => {
+    navigate(NAVIGATE_TO_FORM + '/'+ row.id);
+  }, []);
 
   useEffect(() => {
-    setQuery("");
-  }, [searched]);
+    if (data?.data?.length === 0) return;
+    const transformedData =
+      data?.data?.map((item) => {
+        return {
+          ...item,
+          checked: item.status,
+        };
+      }) || [];
+    setUserData(transformedData);
+    dispatch(setTableName(transformedData[0]?.label));
+  }, [data]);
+
+  const handleInsillionStatus = useCallback((data, row) => {
+    console.log(row);
+    dispatch(
+      showDialog({
+        title: COMMON_WORDS.CHANGE_STATUS,
+        content: <Content />,
+        actions: <Actions row={row} fetchData={fetchData} />,
+      })
+    );
+  }, []);
+
+  const header = useMemo(() => Header(updateUserForm, handleInsillionStatus), [updateUserForm, handleInsillionStatus]);
+
+  const handleGo = () => {
+    setUserData([]);
+    fetchData(searched, query);
+    console.log(data);
+  };
 
   return (
     <Box>
-      <div>
-        <SearchComponent
-          searched={searched}
-          setSearched={setSearched}
-          fromDate={fromDate}
-          setFromDate={setFromDate}
-          toDate={toDate}
-          setToDate={setToDate}
-          query={query}
-          setQuery={setQuery}
-          fetchData={fetchData}
+      <SearchComponent
+         selectOptions={SEARCH_OPTIONS}
+         searched={searched}
+         setSearched={setSearched}
+         textField
+         textFieldPlaceholder="Search"
+         setQuery={setQuery}
+         buttonText={BUTTON_TEXT}
+         navigateRoute={NAVIGATE_TO_FORM}
+         handleGo={handleGo}
+         showExportButton={true}
+         showButton
+      />
+      <div className="mt-4">
+        <CustomTable
+          rows={userData || []}
+          columns={header}
+          loading={loading}
+          totalCount={data?.totalCount || 0}
+          page={page}
+          setPage={setPage}
+          rowsPerPage={pageSize}
+          setRowsPerPage={setPageSize}
+          order={order}
+          setOrder={setOrder}
+          orderBy={orderBy}
+          setOrderBy={setOrderBy}
         />
-        <div className={styles.tableStyled}>
-          {loading ? (
-            <>
-              <TableHeader />
-              <ListLoader />
-            </>
-          ) : data?.data && data?.data.length ? (
-            <Table
-              ListData={data?.data}
-              loading={loading}
-              fetchData={fetchData}
-              setLoading={setLoading}
-              sort={sort}
-              setSort={setSort}
-            />
-          ) : (
-            <NoDataFound />
-          )}
-
-          <div className={styles.pageFooter}>
-            <div className={styles.rowsPerPage}>
-              <p className={styles.totalRecordStyle}>Showing Results:</p>
-              <Select
-                labelId="rows-per-page"
-                id="rows-per-page"
-                value={rowsPage}
-                onChange={handleRowsChange}
-                size="small"
-                className={styles.customizeRowsSelect}
-              >
-                {selectRowsData.map((item, index) => (
-                  <MenuItem key={index} value={item} className={styles.styledOptionText}>
-                    {item}
-                  </MenuItem>
-                ))}
-              </Select>
-              <p className={styles.totalRecordStyle}>of 141</p>
-            </div>
-            <Pagination
-              count={10}
-              color="primary"
-              size="small"
-              onChange={handlePaginationChange}
-              page={pageChange}
-            />
-          </div>
-        </div>
       </div>
+      <CustomDialog />
     </Box>
   );
 }

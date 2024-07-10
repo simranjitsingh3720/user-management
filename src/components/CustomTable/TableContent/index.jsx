@@ -1,13 +1,6 @@
-import React from "react";
-import {
-  TableBody,
-  TableRow,
-  TableCell,
-  IconButton,
-  Checkbox,
-  Switch,
-} from "@mui/material";
-import ListLoader from "../../ListLoader";
+import React from 'react';
+import { TableBody, TableRow, TableCell, IconButton, Checkbox, Switch } from '@mui/material';
+import ListLoader from '../../ListLoader';
 
 const TableContent = ({ columns, data, loading }) => {
   if (loading) {
@@ -22,7 +15,7 @@ const TableContent = ({ columns, data, loading }) => {
     );
   }
 
-  if (data.length === 0) {
+  if (data?.length === 0) {
     return (
       <TableBody>
         <TableRow>
@@ -36,7 +29,7 @@ const TableContent = ({ columns, data, loading }) => {
 
   return (
     <TableBody>
-      {data.map((row) => (
+      {data?.map((row) => (
         <TableRow key={row.id}>
           {columns.map((col) => (
             <TableCell key={`${row.id}-${col.id}`} className="py-2 capitalize">
@@ -45,28 +38,23 @@ const TableContent = ({ columns, data, loading }) => {
                   <React.Fragment key={index}>
                     {action?.id ? <span>{row[action?.id]}</span> : null}
                     <span key={`${col.id}-${index}`}>
-                      {action.component === "checkbox" ? (
-                        <Checkbox
-                          checked={row.checked || false}
-                          onChange={() => action.onClick(row)}
-                        />
-                      ) : action.component === "switch" ? (
-                        <Switch
-                          checked={row.checked || false}
-                          onChange={() => action.onClick(data, row)}
-                        />
+                      {action.component === 'checkbox' ? (
+                        <Checkbox checked={row.checked || false} onChange={() => action.onClick(row)} />
+                      ) : action.component === 'switch' ? (
+                        console.log(row,row.checked, col.id),
+                        <Switch checked={row.checked || false} onChange={() => action.onClick(data, row)} />
                       ) : action.showIcon ? (
-                        <IconButton onClick={() => action.onClick(row)}>
-                          {action.iconName}
-                        </IconButton>
+                        <IconButton onClick={() => action.onClick(row)}>{action.iconName}</IconButton>
                       ) : null}
                     </span>
                   </React.Fragment>
                 ))
+              ) : col.id === 'name' ? (
+                <span> {row['firstName'] + (row['lastName'] ? ' ' + row['lastName'] : '')}</span>
               ) : row[col.id] ? (
                 <span>{row[col.id]}</span>
               ) : (
-                "-"
+                '-'
               )}
             </TableCell>
           ))}

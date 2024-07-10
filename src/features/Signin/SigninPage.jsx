@@ -9,10 +9,13 @@ import SignInImg from "../../assets/SignInImg";
 import usePostLogin from "./hooks/usePostLogin";
 import backgroundImage from "../../assets/loginPageBackground.png";
 import FullPageLoader from "../../components/FullPageLoader";
+import { encodeString } from "../../utils/globalizationFunction";
 
 function SignInPage() {
   const { postData, loading } = usePostLogin();
   const onSubmit = (data) => {
+    const encryptedPassword = encodeString(data?.password);
+    console.log("encrypted", encryptedPassword);
     const payload = { email: data?.emailId, password: data?.password };
     postData(payload);
   };

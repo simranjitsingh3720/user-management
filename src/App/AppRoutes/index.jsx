@@ -92,7 +92,7 @@ const AppRoutes = () => {
       />
       <Route path="/sign-in" element={<PublicRoute component={SignInPage} />} />
       <Route
-        path="/user-management/user-management-form/:id?"
+        path="/user-management/form/:id?"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
             <PrivateRoute component={CreateUserManagementForm} />

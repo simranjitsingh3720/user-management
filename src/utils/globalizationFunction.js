@@ -37,3 +37,15 @@ export const buildQueryString = (params) => {
 export const getPlaceHolder = (key) => {
   return `Search by ${key} name`;
 };
+
+export const getPlaceHolderUserCreation = (key) => {
+  return `Search by ${key}`;
+};
+
+export function encodeString(input) {
+  const startChars = "AA";
+  const endChars = "ZZ";
+  const modifiedString = startChars + input + endChars;
+  const encodedString = btoa(modifiedString);
+  return encodedString;
+}
