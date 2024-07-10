@@ -84,9 +84,9 @@ function NavbarDrawer({
                 <img
                   src={"/icons/" + obj.icon || "/icons/dashboard.svg"}
                   alt={obj.moduleName}
-                  className="w-6 h-6 mr-2"
+                  className={(selectedNavbar === obj.moduleName ? "selected" : "") + " w-6 h-6 mr-2"}
                 />
-                <div className="text-sm">{obj?.moduleName}</div>
+                <div className="text-sm capitalize">{obj?.moduleName}</div>
               </ListItemButton>
             </ListItem>
           ) : (
