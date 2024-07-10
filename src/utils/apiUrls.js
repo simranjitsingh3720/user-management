@@ -22,6 +22,7 @@ const apiUrls = {
   healthConfig: 'api/health-configuration',
   paymentProduct: 'api/product-wise-payment-method',
   productLocationLevelMapping: 'api/product-location-level-mapping',
+  getGroup: '/api/group',
 };
 
 export default apiUrls;

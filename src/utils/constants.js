@@ -22,6 +22,8 @@ export const COMMON_WORDS = {
   LOCATIONS: 'locations',
   HAS_LOCATION: 'hasLocation',
   UNDERWRITER: 'underWriter',
+  PERMISSION: 'permission',
+  PERMISSIONNAME: 'permissionName',
 };
 
 export const HEADER = {

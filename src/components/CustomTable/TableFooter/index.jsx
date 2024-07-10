@@ -31,7 +31,7 @@ const TableFooter = ({
       </TableRow>
       <TableRow>
         <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
+          rowsPerPageOptions={[10, 25, 50, 100]}
           colSpan={footerContent.length}
           count={count}
           rowsPerPage={rowsPerPage}

@@ -4,6 +4,7 @@ import {
   CardContent,
   Grid,
   IconButton,
+  Typography,
 } from "@mui/material";
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -17,7 +18,7 @@ import { COMMON_WORDS } from "../../../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchLobData } from "../../../stores/slices/lobSlice";
 import UserTypeToggle from "../../../components/CustomRadioButtonGroup";
-import { STATUS } from "../utils/constant";
+import { STATUS } from "../../../utils/globalConstants";
 
 function ProductForm() {
   const navigate = useNavigate();
@@ -95,7 +96,9 @@ function ProductForm() {
                   >
                     <LeftArrow />
                   </IconButton>
-                  <span>Create new product</span>
+                  <Typography variant="h5" className="ml-3 font-semibold">
+                    Create New Product
+                  </Typography>
                 </Grid>
               </Grid>
             </Grid>

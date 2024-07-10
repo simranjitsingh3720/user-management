@@ -40,6 +40,6 @@ export const EMPLOYEE_SEARCH = [
   },
   {
     label: 'Email Id',
-    value: 'emailId',
+    value: 'email',
   },
 ];

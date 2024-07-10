@@ -1,10 +1,6 @@
-export const GroupSearchBy = [
+export const SEARCH_OPTIONS = [
   {
-    label: "Name",
-    value: "groupName",
-  },
-  {
-    label: "Permission Name",
+    label: "Permission",
     value: "permissionName",
   },
-];
+]

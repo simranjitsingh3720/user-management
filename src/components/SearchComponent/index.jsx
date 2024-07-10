@@ -190,7 +190,7 @@ function SearchComponent({
                   />
                 )}
               </Grid>
-              <Grid item xs={12} sm={2} md={2}>
+              <Grid item>
                 <CustomButton variant="outlined" onClick={handleGo} fullWidth>
                   Go
                 </CustomButton>

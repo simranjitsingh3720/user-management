@@ -23,8 +23,22 @@ export const BUTTON_TEXT = {
   HEALTH_CONFIG: 'Create Health Configuration',
   PRODUCT_PAYMENT: 'Create New Payment Configuration',
   PRODUCT: 'Create New Product',
+  GROUP: 'Create New Group',
   PRODUCT_LOCATION_LEVEL: 'Create Product Location Level',
 };
+
+export const STATUS = [
+  {
+    id: 'active',
+    label: 'Active',
+    value: 'active',
+  },
+  {
+    id: 'inactive',
+    label: 'Inactive',
+    value: 'inactive',
+  },
+];
 
 export const ProductPayment = [
   {

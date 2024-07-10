@@ -10,6 +10,7 @@ function useGetEmployeeData(page, pageSize, order, orderBy) {
   const [count, setCount] = useState(0);
 
   const fetchData = async (searched, resultProductString) => {
+    console.log(searched, resultProductString);
     try {
       setLoading(true);
       let params = {
@@ -17,8 +18,10 @@ function useGetEmployeeData(page, pageSize, order, orderBy) {
         sortKey: orderBy,
         sortOrder: order,
         pageSize: pageSize,
-        searchString: COMMON_WORDS.UNDERWRITER,
-        searchKey: COMMON_WORDS.ROLE_NAME,
+        searchString: resultProductString
+          ? `${COMMON_WORDS.UNDERWRITER},${resultProductString}`
+          : COMMON_WORDS.UNDERWRITER,
+        searchKey: searched ? `${COMMON_WORDS.ROLE_NAME},${searched}` : COMMON_WORDS.ROLE_NAME,
       };
 
       let url = `${apiUrls.getUser}?${buildQueryString(params)}`;
