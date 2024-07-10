@@ -6,7 +6,6 @@ import { Collapse, List, ListItem, ListItemButton } from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { drawerWidth } from "../../utils/globalConstants";
-import useSideNavData from "./hooks/useSideNavData";
 
 function NavbarDrawer({
   setIsClosing,
@@ -16,6 +15,7 @@ function NavbarDrawer({
   setSelectedNavbar,
   selectedParentIndex,
   setSelectedParentIndex,
+  sideNavData
 }) {
   const [open, setOpen] = useState(false);
   const [filteredNavData, setFilteredNavData] = useState([]);
@@ -47,8 +47,6 @@ function NavbarDrawer({
   const handleDrawerTransitionEnd = () => {
     setIsClosing(false);
   };
-
-  const sideNavData = useSideNavData();
 
   useEffect(() => {
     const filteredData = sideNavData.filter((item) =>

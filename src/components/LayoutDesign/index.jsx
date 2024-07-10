@@ -5,12 +5,12 @@ import NavbarDrawer from "../NavbarDrawer";
 import Header from "../Header";
 import { drawerWidth } from "../../utils/globalConstants";
 import { useLocation } from "react-router-dom";
-import { SideNavData } from "../../utils/Navbar Data/navbar";
+import useSideNavData from "../NavbarDrawer/hooks/useSideNavData";
 
 const HEADER_HEIGHT = 64;
 
-export const getLabelFromPath = (pathData) => {
-  for (const item of SideNavData) {
+export const getLabelFromPath = (pathData, sideNavData) => {
+  for (const item of sideNavData) {
     if (item.navigateRoute && item.navigateRoute === pathData) {
       return item.label;
     }
@@ -33,8 +33,9 @@ function ResponsiveDrawer({ showSidebarAndHeader, children }) {
 
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
+  const sideNavData = useSideNavData();
   const [selectedNavbar, setSelectedNavbar] = useState(
-    getLabelFromPath(defaultRoute) || "dashboard"
+    getLabelFromPath(defaultRoute, sideNavData) || "dashboard"
   );
   const [selectedParentIndex, setSelectedParentIndex] = useState(null);
 
@@ -65,6 +66,7 @@ function ResponsiveDrawer({ showSidebarAndHeader, children }) {
               setSelectedNavbar={setSelectedNavbar}
               selectedParentIndex={selectedParentIndex}
               setSelectedParentIndex={setSelectedParentIndex}
+              sideNavData={sideNavData}
             />
           </Box>
           <Box
