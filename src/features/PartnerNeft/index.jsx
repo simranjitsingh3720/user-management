@@ -23,7 +23,7 @@ const PartnerNeft = () => {
   const { user } = useSelector((state) => state.user);
 
   const [page, setPage] = useState(0);
-  const [pageSize, setPageSize] = useState(5);
+  const [pageSize, setPageSize] = useState(10);
   const [order, setOrder] = useState('');
   const [orderBy, setOrderBy] = useState('');
   const [searched, setSearched] = useState(COMMON_WORDS.PRODUCT);

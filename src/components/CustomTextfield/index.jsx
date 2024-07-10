@@ -1,9 +1,20 @@
-import React from "react";
-import { TextField } from "@mui/material";
-import { Controller } from "react-hook-form";
-import { ACTIVE, PRODUCER_STATUS } from "./utils/constants";
+import React from 'react';
+import { TextField } from '@mui/material';
+import { Controller } from 'react-hook-form';
+import { ACTIVE, PRODUCER_STATUS } from './utils/constants';
 
-const InputField = ({ id, required, label, validation, control, errors, disabled, classes, placeholder, type = 'text' }) => {
+const InputField = ({
+  id,
+  required,
+  label,
+  validation,
+  control,
+  errors,
+  disabled,
+  classes,
+  placeholder,
+  type = 'text',
+}) => {
   return (
     <div className="flex flex-col">
       <label className="text-gray-600 text-sm">
@@ -31,6 +42,7 @@ const InputField = ({ id, required, label, validation, control, errors, disabled
             size="small"
             className={`bg-white text-sm ${classes}`}
             error={Boolean(errors[id])}
+            FormHelperTextProps={{ classes: { root: 'ml-0' } }}
             {...field}
           />
         )}

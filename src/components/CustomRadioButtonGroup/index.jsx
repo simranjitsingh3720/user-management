@@ -17,7 +17,7 @@ const UserTypeToggle = ({ control, menuItem, name, required, label, defaultValue
       rules={{ required: required ? `${label} is required` : false }}
       render={({ field: { onChange, value }, fieldState: { error } }) => (
         <FormControl className="w-full" error={!!error}>
-          <label className="text-gray-600 text-sm mb-1">
+          <label className="text-gray-600 text-sm">
             {label} {required && <span className="text-red-600">*</span>}
           </label>
           <RadioGroup value={value} onChange={(e) => onChange(e.target.value)}>

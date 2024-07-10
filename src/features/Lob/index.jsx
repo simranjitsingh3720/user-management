@@ -13,7 +13,7 @@ const Lob = () => {
   const { lob, lobLoading } = useSelector((state) => state.lob);
 
   const [page, setPage] = useState(0);
-  const [pageSize, setPageSize] = useState(5);
+  const [pageSize, setPageSize] = useState(10);
   const [order, setOrder] = useState(null);
   const [orderBy, setOrderBy] = useState(null);
   const [lobData, setLobData] = useState([]);

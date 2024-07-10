@@ -35,5 +35,5 @@ export const buildQueryString = (params) => {
  * Return a string for placeholder
  */
 export const getPlaceHolder = (key) => {
-  return `Search by ${key} Name`;
+  return `Search by ${key} name`;
 };

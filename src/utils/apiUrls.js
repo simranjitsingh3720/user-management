@@ -21,6 +21,8 @@ const apiUrls = {
   employeeFlag: "api/employee-flag-config",
   healthConfig: "api/health-configuration",
   paymentProduct: "api/product-wise-payment-method",
+  getGroup: "/api/group",
+
 };
 
 export default apiUrls;
