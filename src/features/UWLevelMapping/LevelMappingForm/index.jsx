@@ -126,7 +126,7 @@ function LevelMappingForm() {
                     >
                       <LeftArrow />
                     </IconButton>
-                    <Typography variant="h6" noWrap fontWeight={600} color="#465465">
+                    <Typography variant="h5" className="ml-3 font-semibold">
                       {params.id ? 'Update Product Location Leve' : 'Create New Product Location Level'}
                     </Typography>
                   </div>
