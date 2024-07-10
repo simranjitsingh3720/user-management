@@ -78,7 +78,7 @@ function SignInPage() {
 
                 </div>
               </div>
-              <div className="mx-7 mt-5">
+              <div className="px-2 mt-5">
                 <CustomButton
                   type="submit"
                   variant="contained"

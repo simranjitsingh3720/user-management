@@ -13,9 +13,6 @@ const SignInPage = lazy(() => import("../../features/Signin/SigninPage"));
 const CreateUserManagementForm = lazy(() =>
   import("../../features/UserManagement/Components/CreateForm")
 );
-const CreateUserCreationForm = lazy(() =>
-  import("../../features/UserCreation/Components/CreateForm")
-);
 const PermissionModule = lazy(() => import("../../features/PermissionModule"));
 const RoleModule = lazy(() => import("../../features/RoleModule"));
 const GroupModule = lazy(() => import("../../features/GroupModule"));
@@ -109,14 +106,6 @@ const AppRoutes = () => {
           element={
             <ResponsiveDrawer showSidebarAndHeader={true}>
               {<PrivateRoute component={UserManagement} />}
-            </ResponsiveDrawer>
-          }
-        />
-        <Route
-          path="/user-creation"
-          element={
-            <ResponsiveDrawer showSidebarAndHeader={true}>
-              {<PrivateRoute component={CreateUserCreationForm} />}
             </ResponsiveDrawer>
           }
         />

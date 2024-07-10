@@ -21,7 +21,7 @@ const UserTypeToggle = ({ control, menuItem, name, required, label, defaultValue
             {label} {required && <span className="text-red-600">*</span>}
           </label>
           <RadioGroup value={value} onChange={(e) => onChange(e.target.value)}>
-            <div className="flex flex-col sm:flex-row space-y-5 sm:space-y-0 sm:space-x-5 sm:w-49">
+            <div className="flex flex-col sm:flex-row space-y-5 sm:space-y-0 sm:space-x-5">
               {menuItem.map((item) => (
                 <div
                   key={item.id}

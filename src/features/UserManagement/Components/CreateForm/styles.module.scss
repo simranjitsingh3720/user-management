@@ -48,6 +48,12 @@
   flex-direction: column;
 }
 
+.subFieldContainerStyle {
+  margin: 10px 0px;
+  display: flex;
+  flex-direction: column;
+}
+
 .formContainer {
   padding-top: 12px;
   display: flex;
@@ -64,8 +70,17 @@
 }
 
 .dateStyle {
-  width: 250px;
+  width: 500px;
   background-color: #ffffff;
+}
+
+.btnContainer {
+  width: 500px !important;
+  display: flex;
+}
+
+.styledButton {
+  width: 15%;
 }
 
 .formMainContainer {
@@ -77,3 +92,22 @@
   margin-left: 12px;
   font-size: 12px;
 }
+
+.dateContainer {
+  display: flex;
+  align-items: center;
+}
+
+.startDateStyle {
+  margin-right: 4px;
+}
+
+.labelText {
+  color: #566475;
+  font-size: 14px;
+}
+
+.styledRequired {
+  color: #ff6262;
+}
+

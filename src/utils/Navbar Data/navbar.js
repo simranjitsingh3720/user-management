@@ -24,11 +24,6 @@ export const SideNavData = [
     navigateRoute: "communication-restrictions",
   },
   {
-    label: "User Creation",
-    icon: ManageAccountsIcon,
-    navigateRoute: "user-creation",
-  },
-  {
     label: "Permission",
     icon: ManageAccountsIcon,
     navigateRoute: "permission",

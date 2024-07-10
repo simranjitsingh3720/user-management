@@ -13,6 +13,7 @@ import productReducer from './slices/productSlice';
 import userReducer from './slices/userSlice';
 import channelSlice from '../Redux/getChannel';
 import houseBankSlice from '../Redux/getHouseBank';
+import loginTypeSlice from '../Redux/getLoginType';
 
 const appStore = configureStore({
   reducer: {
@@ -30,6 +31,7 @@ const appStore = configureStore({
     parentCode: parentCodeSlice,
     channelType: channelSlice,
     houseBank: houseBankSlice,
+    loginType: loginTypeSlice
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

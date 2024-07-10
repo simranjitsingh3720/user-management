@@ -17,6 +17,7 @@ const DateField = ({
   errors = {},
   classes,
   labelVisible,
+  isEdit=false
 }) => {
   const validateDate = (value) => {
     if (name === END_DATE) {
@@ -85,7 +86,7 @@ const DateField = ({
                     },
                   },
                 }}
-                minDate={dayjs()}
+                minDate={!isEdit ? dayjs(): {}}
                 onChange={(date) => {
                   const formattedDate = dayjs(date).format(DATE_FORMAT);
                   setValue(name, formattedDate);

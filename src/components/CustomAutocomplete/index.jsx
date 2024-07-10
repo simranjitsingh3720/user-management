@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import { Controller } from "react-hook-form";
-import Autocomplete from "@mui/material/Autocomplete";
-import Checkbox from "@mui/material/Checkbox";
-import TextField from "@mui/material/TextField";
-import styles from "./styles.module.scss";
-import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
-import CheckBoxIcon from "@mui/icons-material/CheckBox";
-import { useEffect } from "react";
-import { PLACEHOLDER, REQUIRED_MSG, ROLE_SELECT } from "./constants";
+import React, { useState } from 'react';
+import { Controller, useWatch } from 'react-hook-form';
+import Autocomplete from '@mui/material/Autocomplete';
+import Checkbox from '@mui/material/Checkbox';
+import TextField from '@mui/material/TextField';
+import styles from './styles.module.scss';
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import { useEffect } from 'react';
+import { PLACEHOLDER, REQUIRED_MSG, ROLE_SELECT } from './constants';
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -25,10 +25,20 @@ const AutocompleteField = ({
   multiple = false,
   resetClicked,
   roleChanged,
+  isEdit,
 }) => {
-  const [selectedValues, setSelectedValues] = useState(
-    name === ROLE_SELECT ? null : []
-  );
+  const [selectedValues, setSelectedValues] = useState(name === ROLE_SELECT ? null : []);
+
+  const watchedValues = useWatch({
+    control,
+    name,
+  });
+
+  useEffect(() => {
+    if (isEdit) {
+      setSelectedValues(watchedValues);
+    }
+  }, [watchedValues]);
 
   useEffect(() => {
     if (multiple) {
@@ -41,7 +51,7 @@ const AutocompleteField = ({
   }, [resetClicked]);
 
   useEffect(() => {
-    if (name !== ROLE_SELECT) {
+    if (name !== ROLE_SELECT && !isEdit) {
       setSelectedValues([]);
     }
   }, [roleChanged]);
@@ -56,9 +66,9 @@ const AutocompleteField = ({
 
   const isSelected = (option) => {
     if (multiple) {
-      return selectedValues.some(
-        (selectedOption) => selectedOption?.value === option?.value
-      );
+      if (selectedValues?.length > 0) {
+        return selectedValues?.some((selectedOption) => selectedOption?.value === option?.value);
+      }
     } else {
       if (name === ROLE_SELECT) {
         return selectedValues?.roleName === option?.roleName;
@@ -85,10 +95,11 @@ const AutocompleteField = ({
             disabled={disabled}
             disableCloseOnSelect={multiple}
             options={options.length > 0 ? options : []}
+            value={name === ROLE_SELECT && !selectedValues ? null : selectedValues || []}
             getOptionLabel={(option) => option?.label}
-            {...(multiple || name === ROLE_SELECT
-              ? { value: selectedValues }
-              : {})}
+            // {...(multiple || name === ROLE_SELECT
+            //   ? { value: selectedValues }
+            //   : {})}
             onChange={(event, newValue) => {
               if (multiple) {
                 handleAutocompleteChangeMultiple(event, newValue);
@@ -108,10 +119,7 @@ const AutocompleteField = ({
                     let newValue;
                     if (multiple) {
                       if (isSelected(option)) {
-                        newValue = selectedValues.filter(
-                          (selectedOption) =>
-                            selectedOption?.value !== option?.value
-                        );
+                        newValue = selectedValues.filter((selectedOption) => selectedOption?.value !== option?.value);
                       } else {
                         newValue = [...selectedValues, option];
                       }
@@ -132,7 +140,7 @@ const AutocompleteField = ({
                 {...params}
                 placeholder={PLACEHOLDER}
                 error={Boolean(errors[name])}
-                helperText={errors[name] ? REQUIRED_MSG : ""}
+                helperText={errors[name] ? REQUIRED_MSG : ''}
               />
             )}
           />
