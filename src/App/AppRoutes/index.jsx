@@ -1,50 +1,53 @@
-import React from "react";
-import { Navigate, Route, Routes } from "react-router-dom";
-import ResponsiveDrawer from "../../components/LayoutDesign";
-import PartnerNeftForm from "../../features/PartnerNeft/PartnerNeftForm";
-import PrivateRoute from "../../components/PrivateRoute";
-import PublicRoute from "../../components/PublicRoute";
-import TermCondition from "../../features/TermCondition";
-import Dashboard from "../../features/Dashboard";
-import UserManagement from "../../features/UserManagement";
-import SignInPage from "../../features/Signin/SigninPage";
-import CreateUserManagementForm from "../../features/UserManagement/Components/CreateForm";
-import PermissionModule from "../../features/PermissionModule";
-import RoleModule from "../../features/RoleModule";
-import GroupModule from "../../features/GroupModule";
-import CreateGroupForm from "../../features/GroupModule/CreateGroupForm copy";
-import CreateRoleForm from "../../features/RoleModule/CreateRoleForm";
-import Form from "../../features/PermissionModule/Form";
-import Lob from "../../features/Lob";
-import LobForm from "../../features/Lob/CreateLobForm";
-import Product from "../../features/ProductModule";
-import ProductForm from "../../features/ProductModule/ProductForm";
-import ProposalBitlyLinkConfig from "../../features/ProposalBitlylinkConfig";
-import ChannelForm from "../../features/ProposalBitlylinkConfig/Channel/ChannelForm";
-import OTPException from "../../features/OTPException";
-import ProposalOTPException from "../../features/ProposalOTPException";
-import BANCALogin from "../../features/BANCALogin";
-import ProposalForm from "../../features/ProposalOTPException/ProposalForm";
-import ProducerEODBypass from "../../features/ProducerEODBypass";
-import ProducerEODFrom from "../../features/ProducerEODBypass/ProducerEODForm";
-import ProductPaymentConfig from "../../features/ProductPaymentConfig";
-import ProductPaymentConfigForm from "../../features/ProductPaymentConfig/ProductPaymentConfigForm";
-import HouseBankMaster from "../../features/HouseBankMaster";
-import HouseBankMasterForm from "../../features/HouseBankMaster/HouseBankMasterForm";
-import HealthConfiguration from "../../features/HealthConfiguration";
-import HealthConfigurationForm from "../../features/HealthConfiguration/HealthConfigurationForm";
-import EmployeeFlagConfig from "../../features/EmployeeFlagConfig";
-import SyncedProducers from "../../features/SyncedProducer";
-import AliasUser from "../../features/AliasUser";
-import NotFoundPage from "../../components/NotFoundPage";
-import EmployeeConfigurationForm from "../../features/EmployeeFlagConfig/EmployeeConfigurationForm";
-import RevalidationList from "../../features/RevalidationList";
-import PartnerNeft from "../../features/PartnerNeft";
-import CkycConfig from "../../features/CkycConfig";
-import CkycForm from "../../features/CkycConfig/CykcForm";
-import CommunicationRestrictions from "../../features/CommunicationRestrictions";
-import CommunicationRestrictionsForm from "../../features/CommunicationRestrictions/CreateForm";
-import BulkUpload from "../../features/BulkUpload/UploadForm";
+import React from 'react';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import ResponsiveDrawer from '../../components/LayoutDesign';
+import PartnerNeftForm from '../../features/PartnerNeft/PartnerNeftForm';
+import PrivateRoute from '../../components/PrivateRoute';
+import PublicRoute from '../../components/PublicRoute';
+import TermCondition from '../../features/TermCondition';
+import Dashboard from '../../features/Dashboard';
+import UserManagement from '../../features/UserManagement';
+import SignInPage from '../../features/Signin/SigninPage';
+import CreateUserManagementForm from '../../features/UserManagement/Components/CreateForm';
+import PermissionModule from '../../features/PermissionModule';
+import RoleModule from '../../features/RoleModule';
+import GroupModule from '../../features/GroupModule';
+import CreateGroupForm from '../../features/GroupModule/CreateGroupForm copy';
+import CreateRoleForm from '../../features/RoleModule/CreateRoleForm';
+import Form from '../../features/PermissionModule/Form';
+import Lob from '../../features/Lob';
+import LobForm from '../../features/Lob/CreateLobForm';
+import Product from '../../features/ProductModule';
+import ProductForm from '../../features/ProductModule/ProductForm';
+import ProposalBitlyLinkConfig from '../../features/ProposalBitlylinkConfig';
+import ChannelForm from '../../features/ProposalBitlylinkConfig/Channel/ChannelForm';
+import OTPException from '../../features/OTPException';
+import ProposalOTPException from '../../features/ProposalOTPException';
+import BANCALogin from '../../features/BANCALogin';
+import ProposalForm from '../../features/ProposalOTPException/ProposalForm';
+import ProducerEODBypass from '../../features/ProducerEODBypass';
+import ProducerEODFrom from '../../features/ProducerEODBypass/ProducerEODForm';
+import ProductPaymentConfig from '../../features/ProductPaymentConfig';
+import ProductPaymentConfigForm from '../../features/ProductPaymentConfig/ProductPaymentConfigForm';
+import HouseBankMaster from '../../features/HouseBankMaster';
+import HouseBankMasterForm from '../../features/HouseBankMaster/HouseBankMasterForm';
+import HealthConfiguration from '../../features/HealthConfiguration';
+import HealthConfigurationForm from '../../features/HealthConfiguration/HealthConfigurationForm';
+import EmployeeFlagConfig from '../../features/EmployeeFlagConfig';
+import SyncedProducers from '../../features/SyncedProducer';
+import AliasUser from '../../features/AliasUser';
+import NotFoundPage from '../../components/NotFoundPage';
+import EmployeeConfigurationForm from '../../features/EmployeeFlagConfig/EmployeeConfigurationForm';
+import RevalidationList from '../../features/RevalidationList';
+import PartnerNeft from '../../features/PartnerNeft';
+import CkycConfig from '../../features/CkycConfig';
+import CkycForm from '../../features/CkycConfig/CykcForm';
+import CommunicationRestrictions from '../../features/CommunicationRestrictions';
+import CommunicationRestrictionsForm from '../../features/CommunicationRestrictions/CreateForm';
+import BulkUpload from '../../features/BulkUpload/UploadForm';
+import UWLevelMapping from '../../features/UWLevelMapping';
+import UWLevelMappingEmployee from '../../features/UWLevelMapping/EmployeeForm';
+import UWLevelMappingForm from '../../features/UWLevelMapping/LevelMappingForm';
 
 const AppRoutes = () => {
   return (
@@ -368,6 +371,28 @@ const AppRoutes = () => {
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
             <TermCondition />
+          </ResponsiveDrawer>
+        }
+      />
+      <Route
+        path="UWLevelMappingEmployee/:employeeId"
+        element={
+          <ResponsiveDrawer showSidebarAndHeader={true}>{<PrivateRoute component={UWLevelMapping} />}</ResponsiveDrawer>
+        }
+      />
+      <Route
+        path="UWLevelMappingEmployee/:employeeId/form/:id?"
+        element={
+          <ResponsiveDrawer showSidebarAndHeader={true}>
+            {<PrivateRoute component={UWLevelMappingForm} />}
+          </ResponsiveDrawer>
+        }
+      />
+      <Route
+        path="/UWLevelMappingEmployee"
+        element={
+          <ResponsiveDrawer showSidebarAndHeader={true}>
+            {<PrivateRoute component={UWLevelMappingEmployee} />}
           </ResponsiveDrawer>
         }
       />

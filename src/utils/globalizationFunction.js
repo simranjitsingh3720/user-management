@@ -4,14 +4,12 @@ function capitalizeFirstLetter(str) {
 
 export default capitalizeFirstLetter;
 
-export function capitalizeWords(str = "") {
-  let words = str.split(" ");
+export function capitalizeWords(str = '') {
+  let words = str.split(' ');
 
-  let capitalizedWords = words.map(
-    (word) => word.charAt(0).toUpperCase() + word.slice(1)
-  );
+  let capitalizedWords = words.map((word) => word.charAt(0).toUpperCase() + word.slice(1));
 
-  return capitalizedWords.join(" ");
+  return capitalizedWords.join(' ');
 }
 
 /**
@@ -21,14 +19,9 @@ export function capitalizeWords(str = "") {
  */
 export const buildQueryString = (params) => {
   return Object.keys(params)
-    .filter(
-      (key) =>
-        params[key] != null && params[key] !== "" && params[key] !== undefined
-    )
-    .map(
-      (key) => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`
-    )
-    .join("&");
+    .filter((key) => params[key] != null && params[key] !== '' && params[key] !== undefined)
+    .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
+    .join('&');
 };
 
 /**
@@ -36,4 +29,8 @@ export const buildQueryString = (params) => {
  */
 export const getPlaceHolder = (key) => {
   return `Search by ${key} name`;
+};
+
+export const getDialogContent = (label) => {
+  return `Are you sure you want to change the ${label} status?`;
 };
