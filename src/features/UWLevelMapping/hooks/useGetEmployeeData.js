@@ -10,7 +10,6 @@ function useGetEmployeeData(page, pageSize, order, orderBy) {
   const [count, setCount] = useState(0);
 
   const fetchData = async (searched, resultProductString) => {
-    console.log(searched, resultProductString);
     try {
       setLoading(true);
       let params = {

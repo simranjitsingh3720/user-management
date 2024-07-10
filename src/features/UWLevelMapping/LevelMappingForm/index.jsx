@@ -25,8 +25,6 @@ function LevelMappingForm() {
   const { lob, lobLoading } = useSelector((state) => state.lob);
   const locations = useSelector((state) => state.location.location);
 
-  console.log('employeeId', employeeId);
-
   useEffect(() => {
     dispatch(fetchLobData({ isAll: true, status: true }));
     dispatch(getLocations());
