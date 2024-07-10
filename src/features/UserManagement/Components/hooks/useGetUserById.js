@@ -8,9 +8,7 @@ export default function useGetUserById() {
   const fetchData = async (userId) => {
     try {
       let url = `/api/user/${userId}`;
-
       const response = await axiosInstance.get(url);
-
       setData(response.data);
     } catch (error) {
       setData([]);

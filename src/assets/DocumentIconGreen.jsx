@@ -4,10 +4,10 @@ function DocumentIconGreen() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      className="h-12"
+
       viewBox="0 0 24 24"
       fill="#149C72"
-      class="size-6"
+      class="size-14"
     >
       <path
         fill-rule="evenodd"

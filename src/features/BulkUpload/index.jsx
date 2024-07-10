@@ -4,7 +4,6 @@ const BulkUpload = () => {
     return (
         <UploadForm></UploadForm>
     )
-}
-
+};
 
 export default BulkUpload;

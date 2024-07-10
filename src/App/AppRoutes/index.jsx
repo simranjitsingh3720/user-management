@@ -9,7 +9,6 @@ import Dashboard from '../../features/Dashboard';
 import UserManagement from '../../features/UserManagement';
 import SignInPage from '../../features/Signin/SigninPage';
 import CreateUserManagementForm from '../../features/UserManagement/Components/CreateForm';
-import CreateUserCreationForm from '../../features/UserCreation/Components/CreateForm';
 import PermissionModule from '../../features/PermissionModule';
 import RoleModule from '../../features/RoleModule';
 import GroupModule from '../../features/GroupModule';
@@ -67,14 +66,6 @@ const AppRoutes = () => {
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
             <PrivateRoute component={UserManagement} />
-          </ResponsiveDrawer>
-        }
-      />
-      <Route
-        path="/user-creation"
-        element={
-          <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PrivateRoute component={CreateUserCreationForm} />
           </ResponsiveDrawer>
         }
       />
