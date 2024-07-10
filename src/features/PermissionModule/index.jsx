@@ -8,9 +8,9 @@ import { useDispatch } from 'react-redux';
 import { showDialog } from '../../stores/slices/dialogSlice';
 import SearchComponent from '../../components/SearchComponent';
 import { PrivilegeSearch } from './constants';
-import Content from './Dialog/Content';
 import Actions from './Dialog/Action';
 import CustomDialog from '../../components/CustomDialog';
+import Content from '../../components/CustomDialogContent';
 
 function PermissionModule() {
   const dispatch = useDispatch();
@@ -28,7 +28,7 @@ function PermissionModule() {
     dispatch(
       showDialog({
         title: COMMON_WORDS.CHANGE_STATUS,
-        content: <Content />,
+        content: <Content label={COMMON_WORDS.PERMISSION} />,
         actions: <Actions row={row} fetchData={fetchData} />,
       })
     );

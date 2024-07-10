@@ -29,6 +29,7 @@ function SearchComponent({
   dateField,
   showButton,
   showExportButton,
+  hideSearch,
 }) {
   const navigate = useNavigate();
 
@@ -134,72 +135,72 @@ function SearchComponent({
 
       <Grid container spacing={2} justifyContent="space-between" alignItems="center">
         <Grid item xs={12} md={8}>
-          <Grid container spacing={2} alignItems="center">
-            {selectOptions && (
-              <Grid item xs={12} sm={4} md={3}>
-                <Select
-                  labelId="search-select"
-                  id="search-select"
-                  value={searched}
-                  onChange={(event) => setSearched(event.target.value)}
-                  fullWidth
-                  displayEmpty
-                  className="customize-select"
-                  size="small"
-                  renderValue={searched !== '' ? undefined : () => <span>Select</span>}
-                >
-                  {selectOptions.map((item) => (
-                    <MenuItem key={item.value} value={item.value}>
-                      {item.label}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </Grid>
-            )}
-            <Grid item xs={12} sm={6} md={6}>
-              {textField ? (
-                <TextField
-                  id="search"
-                  variant="outlined"
-                  placeholder={textFieldPlaceholder}
-                  size="small"
-                  className="customize-select"
-                  onChange={(e) => {
-                    setQuery(e.target.value);
-                  }}
-                  fullWidth
-                />
-              ) : (
-                <Autocomplete
-                  id="producer"
-                  options={optionsData || []}
-                  getOptionLabel={optionLabel}
-                  multiple
-                  size="small"
-                  renderInput={(params) => <TextField {...params} placeholder={placeholder} />}
-                  className="customize-select"
-                  value={option}
-                  onChange={(event, newValue) => setOption(newValue)}
-                  renderOption={renderOptionFunction}
-                  ListboxProps={{
-                    style: { maxHeight: '200px' },
-                  }}
-                  fullWidth
-                />
+          {!hideSearch && (
+            <Grid container spacing={2} alignItems="center">
+              {selectOptions && (
+                <Grid item xs={12} sm={4} md={3}>
+                  <Select
+                    labelId="search-select"
+                    id="search-select"
+                    value={searched}
+                    onChange={(event) => setSearched(event.target.value)}
+                    fullWidth
+                    displayEmpty
+                    className="customize-select"
+                    size="small"
+                    renderValue={searched !== '' ? undefined : () => <span>Select</span>}
+                  >
+                    {selectOptions.map((item) => (
+                      <MenuItem key={item.value} value={item.value}>
+                        {item.label}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </Grid>
               )}
+              <Grid item xs={12} sm={6} md={6}>
+                {textField ? (
+                  <TextField
+                    id="search"
+                    variant="outlined"
+                    placeholder={textFieldPlaceholder}
+                    size="small"
+                    className="customize-select"
+                    onChange={(e) => {
+                      setQuery(e.target.value);
+                    }}
+                    fullWidth
+                  />
+                ) : (
+                  <Autocomplete
+                    id="producer"
+                    options={optionsData || []}
+                    getOptionLabel={optionLabel}
+                    multiple
+                    size="small"
+                    renderInput={(params) => <TextField {...params} placeholder={placeholder} />}
+                    className="customize-select"
+                    value={option}
+                    onChange={(event, newValue) => setOption(newValue)}
+                    renderOption={renderOptionFunction}
+                    ListboxProps={{
+                      style: { maxHeight: '200px' },
+                    }}
+                    fullWidth
+                  />
+                )}
+              </Grid>
+              <Grid item>
+                <CustomButton variant="outlined" onClick={handleGo} fullWidth>
+                  Go
+                </CustomButton>
+              </Grid>
             </Grid>
-            <Grid item >
-              <CustomButton variant="outlined" onClick={handleGo} fullWidth>
-                Go
-              </CustomButton>
-            </Grid>
-          </Grid>
+          )}
         </Grid>
 
         <Grid item xs={12} md={4} container justifyContent="flex-end">
-          {showExportButton && (
-              <ExportDropdown />
-          )}
+          {showExportButton && <ExportDropdown />}
           {showButton && (
             <CustomButton variant="contained" onClick={handleCreateNewForm}>
               {buttonText}
