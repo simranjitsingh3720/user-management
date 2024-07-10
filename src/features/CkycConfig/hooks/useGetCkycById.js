@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
-import { API_END_POINTS } from "../../../utils/constants";
+import apiUrls from "../../../utils/apiUrls";
 
 function useGetCkycById() {
   const [data, setData] = useState(null);
@@ -8,7 +8,7 @@ function useGetCkycById() {
 
   const fetchData = async (ckycId) => {
     try {
-      let url = `${API_END_POINTS.CKYC}/${ckycId}`;
+      let url = `${apiUrls.ckyc}/${ckycId}`;
 
       const response = await axiosInstance.get(url);
       setData(response.data);

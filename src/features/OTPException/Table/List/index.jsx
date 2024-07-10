@@ -16,7 +16,7 @@ import CustomButton from "../../../../components/CustomButton";
 function List({ item, fetchData: fetchGroupList }) {
   const [changeStatusOpen, setChangeStatusOpen] = useState(false);
 
-  const [checked] = useState(item?.status);
+  const [checked] = useState(item?.otpException.status);
 
   const handleChange = () => {
     setChangeStatusOpen(true);
@@ -33,16 +33,16 @@ function List({ item, fetchData: fetchGroupList }) {
 
   const handleClickYes = () => {
     const payload = {
-      id: item.id,
+      id: item.otpException.id,
       properties: {
-        status: !item.status,
+        status: !item.otpException.status,
       },
     };
     UpdateDataFun(payload);
   };
   return (
     <div className={styles.listHeader}>
-      <div className={styles.nameCell}>{item?.type || "-"}</div>
+      <div className={styles.nameCell}>{item?.otpException.type || "-"}</div>
       <div className={styles.nameCell}>
         {`${item?.producer[0]?.firstName} ${item?.producer[0]?.lastName}` ||
           "-"}
@@ -60,7 +60,7 @@ function List({ item, fetchData: fetchGroupList }) {
           />
         </div>
         <div className={styles.styledActiveSelect}>
-          {item?.status ? "Active" : "Inactive"}
+          {item?.otpException?.status ? "Active" : "Inactive"}
         </div>
       </div>
 

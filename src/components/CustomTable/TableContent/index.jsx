@@ -39,11 +39,11 @@ const TableContent = ({ columns, data, loading }) => {
       {data.map((row) => (
         <TableRow key={row.id}>
           {columns.map((col) => (
-            <TableCell key={`${row.id}-${col.id}`} className="py-2">
+            <TableCell key={`${row.id}-${col.id}`} className="py-2 capitalize">
               {col.action ? (
                 col.action.map((action, index) => (
                   <React.Fragment key={index}>
-                    {row[action.id] && <span>{row[action.id]}</span>}
+                    {action?.id ? <span>{row[action?.id]}</span> : null}
                     <span key={`${col.id}-${index}`}>
                       {action.component === "checkbox" ? (
                         <Checkbox

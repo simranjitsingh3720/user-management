@@ -10,6 +10,7 @@ import { ProposalOTPSearch } from "../constants";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import "dayjs/locale/en-gb";
 import CustomButton from "../../../components/CustomButton";
+import ExportDropdown from "../../ExportDropdown";
 
 function SearchComponenet({
   fetchData,
@@ -142,6 +143,7 @@ function SearchComponenet({
               </div>
             </div>
             <div>
+              <ExportDropdown />
               <CustomButton
                 variant="contained"
                 onClick={handleCreateNewForm}

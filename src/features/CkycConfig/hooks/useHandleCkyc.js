@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../../utils/axiosInstance";
 import { toast } from "react-toastify";
-import { API_END_POINTS } from "../../../utils/constants";
+import apiUrls from "../../../utils/apiUrls";
 import { COMMON_ERROR } from "../../../utils/globalConstants";
 
 function useHandleCkyc() {
@@ -23,7 +23,7 @@ function useHandleCkyc() {
         payload.forWhom = data.forWhom;
       }
       const response = await axiosInstance.post(
-        `${API_END_POINTS.CKYC}`,
+        `${apiUrls.ckyc}`,
         payload
       );
       toast.success(response?.data?.message || "CKYC Created successfully");
@@ -49,7 +49,7 @@ function useHandleCkyc() {
         payload.properties.forWhom = data.forWhom;
       }
       const response = await axiosInstance.put(
-        `${API_END_POINTS.CKYC}`,
+        `${apiUrls.CKYC}`,
         payload
       );
       toast.success(

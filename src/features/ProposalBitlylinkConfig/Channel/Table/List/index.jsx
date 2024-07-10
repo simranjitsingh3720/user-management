@@ -29,7 +29,7 @@ function List({ item, fetchData: fetchGroupList }) {
     setOpen(false);
   };
 
-  const [checked] = useState(item?.status);
+  const [checked] = useState(item?.proposalBitlyConfig.status);
 
   const handleChange = () => {
     setChangeStatusOpen(true);
@@ -46,9 +46,9 @@ function List({ item, fetchData: fetchGroupList }) {
 
   const handleClickYes = () => {
     const payload = {
-      id: item.id,
+      id: item.proposalBitlyConfig.id,
       properties: {
-        status: !item.status,
+        status: !item.proposalBitlyConfig.status,
       },
     };
     UpdateDataFun(payload);
@@ -57,13 +57,13 @@ function List({ item, fetchData: fetchGroupList }) {
     <div>
       <div className={styles.listHeader}>
         <div className={styles.nameCell}>
-          {item?.producer ? "Producer" : "Channel" || "-"}
+          {item?.proposalBitlyConfig.producer ? "Producer" : "Channel" || "-"}
         </div>
         <div className={styles.nameCell}>
-          {`${item?.producer.firstName} ${item?.producer.lastName}` || "-"}
+          {`${item?.producer[0]?.firstName} ${item?.producer[0]?.lastName}` || "-"}
         </div>
         <div className={styles.nameCell}>
-          {item?.producer?.producerCode || "-"}
+          {item?.producer[0]?.producerCode || "-"}
         </div>
         <div className={styles.nameCell}>
           <Tooltip title="View Bitly Link">
@@ -76,7 +76,7 @@ function List({ item, fetchData: fetchGroupList }) {
             </IconButton>{" "}
           </Tooltip>
         </div>
-        <div className={styles.createdAt}> {item?.createdAt || "-"}</div>
+        <div className={styles.createdAt}> {item?.proposalBitlyConfig?.createdAt || "-"}</div>
         <div className={styles.actionCell}>
           <div>
             <Switch
@@ -86,7 +86,7 @@ function List({ item, fetchData: fetchGroupList }) {
             />
           </div>
           <div className={styles.styledActiveSelect}>
-            {item?.status ? "Active" : "Inactive"}
+            {item?.proposalBitlyConfig.status ? "Active" : "Inactive"}
           </div>
         </div>
       </div>
@@ -162,8 +162,8 @@ function List({ item, fetchData: fetchGroupList }) {
         </IconButton>
         <DialogContent dividers>
           <div>
-            {item?.products ? (
-              <Table ListData={item?.products} />
+            {item?.proposalBitlyConfig.products ? (
+              <Table ListData={item?.proposalBitlyConfig?.products} />
             ) : (
               <NoDataFound />
             )}

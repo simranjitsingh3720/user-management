@@ -18,6 +18,7 @@ import useGetUserData from "../../BANCALogin/hooks/useGetUserData";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import "dayjs/locale/en-gb";
 import CustomButton from "../../../components/CustomButton";
+import ExportDropdown from "../../ExportDropdown";
 
 const fetchIdsAndConvert = (inputData) => {
   const ids = (inputData || []).map((producer) => producer.id);
@@ -163,6 +164,7 @@ function SearchComponenet({
               </div>
             </div>
             <div>
+              <ExportDropdown />
               <CustomButton
                 variant="contained"
                 onClick={handleCreateNewForm}

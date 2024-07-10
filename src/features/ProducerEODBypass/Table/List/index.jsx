@@ -19,36 +19,36 @@ function List({ item, fetchData: fetchGroupList }) {
   const navigate = useNavigate();
 
   const handleEditClick = () => {
-    navigate(`/producer-eod-bypass-list/form/${item.id}`);
+    navigate(`/producer-eod-bypass-list/form/${item?.producerEodByPass?.id}`);
   };
   return (
     <div>
       <div className={styles.listHeader}>
-        <div className={styles.code}>{item?.producer?.producerCode || "-"}</div>
+        <div className={styles.code}>{item?.producer[0]?.producerCode || "-"}</div>
         <div className={styles.producerName}>
-          {`${item?.producer?.firstName} ${item?.producer?.lastName} ` || "-"}
+          {`${item?.producer[0]?.firstName} ${item?.producer[0]?.lastName} ` || "-"}
         </div>
 
         <div className={styles.unlockedDays}>
-          {calculateUnlockedDays(item?.startDate, item?.endDate) || "-"}
+          {calculateUnlockedDays(item?.producerEodByPass?.startDate, item?.producerEodByPass?.endDate) || "-"}
         </div>
-        <div className={styles.startDate}> {item?.startDate || "-"}</div>
+        <div className={styles.startDate}> {item?.producerEodByPass?.startDate || "-"}</div>
 
-        <div className={styles.endDate}> {item?.endDate || "-"}</div>
+        <div className={styles.endDate}> {item?.producerEodByPass?.endDate || "-"}</div>
 
-        {item.reason.length > 20 ? (
+        {item?.producerEodByPass?.reason.length > 20 ? (
           <Tooltip title={item.reason}>
-            <span className={styles.reason}>{`${item.reason.substring(
+            <span className={styles.reason}>{`${item?.producerEodByPass?.reason.substring(
               0,
               25
             )}...`}</span>
           </Tooltip>
         ) : (
-          <span className={styles.reason}>{item.reason || ""}</span>
+          <span className={styles.reason}>{item?.producerEodByPass?.reason || ""}</span>
         )}
 
-        <div className={styles.createdAt}> {item?.createdAt || "-"}</div>
-        <div className={styles.createdAt}> {item?.updatedAt || "-"}</div>
+        <div className={styles.createdAt}> {item?.producerEodByPass?.createdAt || "-"}</div>
+        <div className={styles.createdAt}> {item?.producerEodByPass?.updatedAt || "-"}</div>
 
         <div className={styles.productStatus}>
           <Tooltip title="Edit EOD Lock Bypass">

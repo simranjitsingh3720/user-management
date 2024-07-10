@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
-import { API_END_POINTS } from "../../../utils/constants";
+import apiUrls from "../../../utils/apiUrls";
+import { COMMON_WORDS } from "../../../utils/constants";
+import { buildQueryString } from "../../../utils/globalizationFunction";
 
 function useGetCkycData(page, pageSize, order, orderBy) {
   const [data, setData] = useState(null);
@@ -9,13 +11,27 @@ function useGetCkycData(page, pageSize, order, orderBy) {
   const fetchData = async (searched, resultProductString) => {
     try {
       setLoading(true);
-      let url = `/${API_END_POINTS.CKYC}?pageNo=${page}&sortKey=${orderBy}&sortOrder=${order}&pageSize=${pageSize}`;
+      let params = {
+        pageNo: page,
+        sortKey: orderBy,
+        sortOrder: order,
+        pageSize: pageSize,
+        childFieldsToFetch: `${COMMON_WORDS.PRODUCTS},${COMMON_WORDS.LOBS}`,
+        childFieldsEdge: `${COMMON_WORDS.HAS_PRODUCT},${COMMON_WORDS.HAS_LOB}`,
+      };
 
-      if (searched === "product" && resultProductString) {
-        url += `&edge=hasProduct&ids=${resultProductString}`;
+      let url = `${apiUrls.ckyc}?${buildQueryString(params)}`;
+
+      if (searched === COMMON_WORDS.PRODUCT && resultProductString) {
+        const params = {
+          edge: COMMON_WORDS.HAS_PRODUCT,
+          ids: resultProductString,
+          isExclusive: true,
+        };
+        url += `&${buildQueryString(params)}`;
       }
-      if (searched === "lob" && resultProductString) {
-        url += `&edge=hasLob&ids=${resultProductString}`;
+      if (searched === COMMON_WORDS.LOB && resultProductString) {
+        url += `&${buildQueryString(params)}`;
       }
       const response = await axiosInstance.get(url);
       setData(response.data);

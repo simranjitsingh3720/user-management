@@ -11,16 +11,16 @@ export const COMMON_WORDS = {
   CHANGE_STATUS: "Change Status",
   LOGOUT: "Logout",
   HAS_PRODUCER: "hasProducer",
+  HAS_PRODUCT: "hasProduct",
+  HAS_LOB: "hasLob",
   SELECT: "Select",
-};
-
-export const API_END_POINTS = {
-  USERAPI: "api/user",
-  LOBAPI: "api/lob",
-  PRODUCTAPI: "api/product",
-  CKYC: "api/ckyc",
-  PERMISSION: "api/permission",
-  MODULE: "api/module",
+  USER: "user",
+  PRODUCTS: "products",
+  LOBS: "lobs",
+  HAS_PAYMENT_TYPE: "hasPaymentType",
+  PAYMENTS: "payments",
+  PERMISSION: "permission",
+  PERMISSIONNAME: "permissionName",
 };
 
 export const HEADER = {

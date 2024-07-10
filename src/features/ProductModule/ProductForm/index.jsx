@@ -1,187 +1,164 @@
 import {
-  Autocomplete,
-  
-  FormControlLabel,
+  Box,
+  Card,
+  CardContent,
+  Grid,
   IconButton,
-  Radio,
-  RadioGroup,
-  TextField,
 } from "@mui/material";
-import React from "react";
-import { Controller, useForm } from "react-hook-form";
+import React, { useEffect } from "react";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import styles from "./styles.module.scss";
 import LeftArrow from "../../../assets/LeftArrow";
-import useGetLobListData from "../hooks/useGetLobListData";
 import useCreateProduct from "../hooks/useCreateProduct";
 import CustomButton from "../../../components/CustomButton";
+import InputField from "../../../components/CustomTextfield";
+import CustomAutoCompleteWithoutCheckbox from "../../../components/CustomAutoCompleteWithoutCheckbox";
+import { COMMON_WORDS } from "../../../utils/constants";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchLobData } from "../../../stores/slices/lobSlice";
+import UserTypeToggle from "../../../components/CustomRadioButtonGroup";
+import { STATUS } from "../utils/constant";
 
 function ProductForm() {
   const navigate = useNavigate();
-
-  const { handleSubmit, control, setValue, formState } = useForm();
+  const dispatch = useDispatch();
+  const { handleSubmit, control, formState } = useForm({
+    defaultValues: {
+      lob: null,
+    },
+  });
   const { errors } = formState;
 
-  const { data } = useGetLobListData();
-
   const { postData, loading } = useCreateProduct();
+  const { lob, lobLoading } = useSelector((state) => state.lob);
 
-  const onSubmit = (data) => {
+  useEffect(() => {
+    dispatch(fetchLobData({ isAll: true, status: true }));
+  }, [dispatch]);
+
+  const onSubmit = (formData) => {
     const payload = {
-      product: data.product,
-      product_code: data.product_code,
-      product_value: data.product_value,
-      lob_id: data.lob.id,
-      status: data.status === "active" ? true : false,
+      product: formData.product,
+      product_code: formData.product_code,
+      product_value: formData.product_value,
+      lob_id: formData.lob.id,
+      status: formData.status === "active" ? true : false,
     };
     postData(payload);
   };
 
-  const formField1 = [
+  const FormFields = [
     {
+      id: "product",
       label: "Product",
       value: "product",
+      required: true,
+      validation: {
+        required: "Product is required",
+      },
     },
     {
+      id: "product_code",
       label: "Product Code",
       value: "product_code",
+      required: true,
+      validation: {
+        required: "Product Code is required",
+      },
     },
     {
+      id: "product_value",
       label: "Product Value",
       value: "product_value",
+      required: true,
+      validation: {
+        required: "Product Value is required",
+      },
     },
   ];
 
   return (
-    <div>
-      {" "}
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className={styles.createNewUserContainer}>
-          <div className={styles.formHeaderStyle}>
-            <div className={styles.subHeader}>
-              <IconButton
-                aria-label="back"
-                onClick={() => {
-                  navigate("/product");
-                }}
+    <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+      <Card>
+        <CardContent>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <Grid
+                container
+                alignItems="center"
+                justifyContent="space-between"
               >
-                <LeftArrow />
-              </IconButton>
-              <span className={styles.headerTextStyle}>Create new product</span>
-            </div>
-          </div>{" "}
-          <div className={styles.containerStyle}>
-            {formField1.map((item) => (
-              <div className={styles.fieldContainerStyle}>
-                <span className={styles.labelText}>
-                  {item.label} <span className={styles.styledRequired}>*</span>
-                </span>
-                <Controller
-                  name={item.value}
+                <Grid item>
+                  <IconButton
+                    aria-label="back"
+                    onClick={() => navigate("/product")}
+                  >
+                    <LeftArrow />
+                  </IconButton>
+                  <span>Create new product</span>
+                </Grid>
+              </Grid>
+            </Grid>
+
+            {FormFields.map((item) => (
+              <Grid item xs={12} sm={6} key={item.value}>
+                <InputField
+                  key={item?.id}
+                  id={item?.id}
+                  required={item?.required}
+                  label={item?.label}
+                  validation={item?.validation}
                   control={control}
-                  defaultValue=""
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <TextField
-                      id={item.value}
-                      variant="outlined"
-                      placeholder="Enter Name"
-                      size="small"
-                      className={styles.customizeSelect}
-                      {...field}
-                      onChange={(e) => {
-                        setValue(item.value, e.target.value);
-                      }}
-                    />
-                  )}
+                  errors={errors}
+                  disabled={item?.disabled}
+                  classes="w-full"
                 />
-                <div className={styles.styledError}>
-                  {errors[item?.value] && <span>This field is required</span>}{" "}
-                </div>
-              </div>
+              </Grid>
             ))}
 
-            <div className={styles.fieldContainerStyle}>
-              <span className={styles.labelText}>
-                Lob Name <span className={styles.styledRequired}>*</span>
-              </span>
-              <Controller
-                name="lob" 
+            <Grid item xs={12} sm={6}>
+              <CustomAutoCompleteWithoutCheckbox
+                name="lob"
+                label="LOB"
+                required={true}
+                loading={lobLoading}
+                options={lob?.data || []}
+                getOptionLabel={(option) => option?.lob?.toUpperCase()}
+                isOptionEqualToValue={(option, value) => option.id === value.id}
                 control={control}
-                rules={{ required: true }}
-                render={({ field }) => (
-                  <Autocomplete
-                    id="groups"
-                    options={data?.data || []}
-                    getOptionLabel={(option) =>
-                      option?.lob?.toUpperCase() || ""
-                    }
-                    className={styles.customizeSelect}
-                    size="small"
-                    renderInput={(params) => (
-                      <TextField {...params} placeholder="Select" />
-                    )}
-                    onChange={(event, newValue) => {
-                      field.onChange(newValue);
-                    }}
-                    ListboxProps={{
-                      style: {
-                        maxHeight: "200px",
-                      },
-                    }}
-                  />
+                rules={{ required: "LOB is required" }}
+                error={Boolean(errors.lob)}
+                helperText={errors.lob?.message}
+                disableClearable={true}
+                placeholder={COMMON_WORDS.SELECT}
+                renderOption={(props, option) => (
+                  <li {...props} key={option.id}>
+                    {option?.lob?.toUpperCase()}
+                  </li>
                 )}
               />
-              <div className={styles.styledError}>
-                {errors.lob && <span>This field is required</span>}
-              </div>
-            </div>
-            <div className={styles.fieldContainerStyle}>
-              <span className={styles.labelText}>
-                Status <span className={styles.styledRequired}>*</span>
-              </span>
-              <Controller
-                name="status" 
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+              <UserTypeToggle
+                menuItem={STATUS}
+                label="Status"
+                required={true}
                 control={control}
-                rules={{ required: "Status is required" }}
+                name="status"
                 defaultValue="active"
-                render={({ field }) => (
-                  <RadioGroup
-                    row
-                    aria-labelledby="status-row-radio-buttons-group-label"
-                    name="status"
-                    {...field}
-                  >
-                    <FormControlLabel
-                      value="active"
-                      control={<Radio />}
-                      label="Active"
-                      className={styles.radioStyle}
-                    />
-                    <FormControlLabel
-                      value="inactive"
-                      control={<Radio />}
-                      label="Inactive"
-                    />
-                  </RadioGroup>
-                )}
               />
-              <div className={styles.styledError}>
-                {errors.status && <span>{errors.status.message}</span>}
-              </div>
-            </div>
-          </div>
-        </div>
-        <CustomButton
-          type="submit"
-          variant="contained"
-          
-          disabled={loading}
-        >
+            </Grid>
+          </Grid>
+        </CardContent>
+      </Card>
+
+      <div className="mt-4">
+        <CustomButton type="submit" variant="contained" disabled={loading}>
           Submit
         </CustomButton>
-      </form>
-    </div>
+      </div>
+    </Box>
   );
 }
 

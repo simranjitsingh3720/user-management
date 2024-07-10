@@ -11,14 +11,15 @@ import exportReducer from './slices/exportSlice';
 import lobReducer from './slices/lobSlice';
 import productReducer from './slices/productSlice';
 import userReducer from './slices/userSlice';
-import loginSlice from "../Redux/loginSlice";
 import channelSlice from '../Redux/getChannel';
 import houseBankSlice from '../Redux/getHouseBank';
+import groupSlice from "./slices/groupSlice";
 
 const appStore = configureStore({
   reducer: {
     dialog: dialogReducer,
     export: exportReducer,
+    group: groupSlice,
     lobUserCreation: lobSlice,
     productUserCreation: productSlice,
     user: userReducer,
@@ -28,7 +29,6 @@ const appStore = configureStore({
     role: roleSlice,
     paymentType: paymentTypeSlice,
     producerCode: producerCodeSlice,
-    login: loginSlice,
     parentCode: parentCodeSlice,
     channelType: channelSlice,
     houseBank: houseBankSlice,

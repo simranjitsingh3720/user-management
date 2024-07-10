@@ -3,17 +3,17 @@ import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../../utils/axiosInstance";
 import { toast } from "react-toastify";
 import { COMMON_ERROR } from "../../../utils/globalConstants";
+import apiUrls from "../../../utils/apiUrls";
 
 function useCreateEmployeeConfig(listFetchFun) {
   const [loading, setLoading] = useState(false);
-
   const navigate = useNavigate();
 
   async function postData(data) {
     setLoading(true);
     try {
       const response = await axiosInstance.post(
-        "/api/employee-flag-config",
+        `/${apiUrls.employeeFlag}`,
         data
       );
       toast.success(
@@ -25,11 +25,9 @@ function useCreateEmployeeConfig(listFetchFun) {
       }
       navigate("/employee-flag-config");
     } catch (error) {
-      toast.error(
-        error?.response?.data?.error?.message || COMMON_ERROR
-      );
+      toast.error(error?.response?.data?.error?.message || COMMON_ERROR);
     } finally {
-      setLoading(false); 
+      setLoading(false);
     }
   }
   return { postData, loading };

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SearchComponent from "./SearchComponent";
 import styles from "./styles.module.scss";
 import TableHeader from "./Table/TableHeader";
@@ -8,6 +8,8 @@ import NoDataFound from "../../../components/NoDataCard";
 import { MenuItem, Pagination, Select } from "@mui/material";
 import useGetBitlyLink from "../hooks/useGetBitlyLink";
 import { selectRowsData } from "../../../utils/globalConstants";
+import { useDispatch } from "react-redux";
+import { setTableName } from "../../../stores/slices/exportSlice";
 
 function getSelectedRowData(count) {
   
@@ -28,6 +30,7 @@ function Channel() {
   const [searched, setSearched] = useState("type");
   const [rowsPage, setRowsPage] = useState(10);
   const [pageChange, setPageChange] = useState(1);
+  const dispatch = useDispatch();
 
   const handlePaginationChange = (event, page) => {
     setPageChange(page);
@@ -44,6 +47,11 @@ function Channel() {
     setPageChange(1);
     setRowsPage(event.target.value);
   };
+
+  useEffect(() => {
+    dispatch(setTableName(data?.data[0]?.proposalBitlyConfig.label));
+  }, [dispatch, data]);
+
   return (
     <div>
       {" "}

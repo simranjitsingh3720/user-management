@@ -4,6 +4,7 @@ import styles from "./styles.module.scss";
 import { SearchKey } from "../constants";
 import { useNavigate } from "react-router-dom";
 import CustomButton from "../../../components/CustomButton";
+import ExportDropdown from "../../ExportDropdown";
 
 function SearchComponenet({ setPageChange, setQuery, searched, setSearched }) {
   const handleChange = (event) => {
@@ -52,6 +53,8 @@ function SearchComponenet({ setPageChange, setQuery, searched, setSearched }) {
           }}
         />
       </div>
+      <ExportDropdown />
+      
       <CustomButton variant="contained" onClick={handleCreateNewForm}>
         <Typography nowrap="true" className={styles.buttonTextStyle}>
           Create House Bank Master Configuration

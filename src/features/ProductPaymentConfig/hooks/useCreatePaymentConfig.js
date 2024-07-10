@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../../utils/axiosInstance";
 import { toast } from "react-toastify";
 import { COMMON_ERROR } from "../../../utils/globalConstants";
+import apiUrls from "../../../utils/apiUrls";
 
 function useCreatePaymentConfig() {
   const [loading, setLoading] = useState(false);
@@ -13,7 +14,7 @@ function useCreatePaymentConfig() {
     setLoading(true);
     try {
       const response = await axiosInstance.post(
-        "/api/product-wise-payment-method",
+        `/${apiUrls.paymentProduct}`,
         data
       );
       toast.success(
@@ -22,11 +23,9 @@ function useCreatePaymentConfig() {
       );
       navigate("/product-payment-config");
     } catch (error) {
-      toast.error(
-        error?.response?.data?.error?.message || COMMON_ERROR
-      );
+      toast.error(error?.response?.data?.error?.message || COMMON_ERROR);
     } finally {
-      setLoading(false); 
+      setLoading(false);
     }
   }
   return { postData, loading };

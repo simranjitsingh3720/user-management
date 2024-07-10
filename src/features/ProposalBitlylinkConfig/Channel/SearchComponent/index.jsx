@@ -4,6 +4,7 @@ import styles from "./styles.module.scss";
 import { useNavigate } from "react-router-dom";
 import { BitlyLink } from "../../constants";
 import CustomButton from "../../../../components/CustomButton";
+import ExportDropdown from "../../../ExportDropdown";
 
 function SearchComponent({ setQuery, setPageChange, searched, setSearched }) {
   const handleChange = (event) => {
@@ -55,6 +56,7 @@ function SearchComponent({ setQuery, setPageChange, searched, setSearched }) {
           />
         </div>
         <div>
+          <ExportDropdown />
           <CustomButton
             variant="contained"
             onClick={handleCreateNewForm}

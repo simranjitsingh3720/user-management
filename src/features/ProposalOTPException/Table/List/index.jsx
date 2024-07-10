@@ -18,7 +18,7 @@ import CustomButton from "../../../../components/CustomButton";
 
 function List({ item, fetchData: fetchGroupList }) {
   const [changeStatusOpen, setChangeStatusOpen] = useState(false);
-  const [checked] = useState(item?.status);
+  const [checked] = useState(item?.otpException.status);
 
   const handleChange = () => {
     setChangeStatusOpen(true);
@@ -35,9 +35,9 @@ function List({ item, fetchData: fetchGroupList }) {
 
   const handleClickYes = () => {
     const payload = {
-      id: item.id,
+      id: item.otpException.id,
       properties: {
-        status: !item.status,
+        status: !item.otpException.status,
       },
     };
     UpdateDataFun(payload);
@@ -54,16 +54,16 @@ function List({ item, fetchData: fetchGroupList }) {
           {item?.producer ? "Producer" : "Channel"}
         </div>
         <div className={styles.type}>
-          {`${item?.producer?.firstName} ${item?.producer?.lastName}` || "-"}
+          {`${item?.producer[0]?.firstName} ${item?.producer[0]?.lastName}` || "-"}
         </div>
         <div className={styles.value}>
-          {item?.producer?.producerCode || "-"}
+          {item?.producer[0]?.producerCode || "-"}
         </div>
-        <div className={styles.lobName}>{item?.lob?.lob || "-"}</div>
-        <div className={styles.product}>{item?.product?.product || "-"}</div>
-        <div className={styles.startDate}> {item?.startDate || "-"}</div>
-        <div className={styles.endDate}> {item?.endDate || "-"}</div>
-        <div className={styles.createdAt}> {item?.createdAt || "-"}</div>
+        <div className={styles.lobName}>{item?.lob[0]?.lob || "-"}</div>
+        <div className={styles.product}>{item?.product[0]?.product || "-"}</div>
+        <div className={styles.startDate}> {item?.otpException.startDate || "-"}</div>
+        <div className={styles.endDate}> {item?.otpException.endDate || "-"}</div>
+        <div className={styles.createdAt}> {item?.otpException.createdAt || "-"}</div>
         <div className={styles.productStatus}>
           <div>
             <Switch
@@ -73,7 +73,7 @@ function List({ item, fetchData: fetchGroupList }) {
             />
           </div>
           <div className={styles.styledActiveSelect}>
-            {item?.status ? "Active" : "Inactive"}
+            {item?.otpException.status ? "Active" : "Inactive"}
           </div>
         </div>
         <div className={styles.editIcon}>

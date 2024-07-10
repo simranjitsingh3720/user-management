@@ -1,13 +1,27 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axiosInstance from './../../utils/axiosInstance';
-import { API_END_POINTS } from './../../utils/constants';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
+import axiosInstance from "./../../utils/axiosInstance";
+import apiUrls from "./../../utils/apiUrls";
+import { COMMON_ERROR } from "./../../utils/globalConstants";
+import { addAsyncReducers } from "../../utils/addAsyncReducers";
 
 export const fetchLobData = createAsyncThunk(
-  'lob/fetchLobData',
-  async (_, { rejectWithValue }) => {
+  "lob/fetchLobData",
+  async (
+    { isAll, page, pageSize, order, orderBy, status },
+    { rejectWithValue }
+  ) => {
     try {
-      const url = `${API_END_POINTS.LOBAPI}?isAll=true&status=true`;
-      const response = await axiosInstance.get(url);
+      const response = await axiosInstance.get(apiUrls.getLob, {
+        params: {
+          isAll,
+          pageNo: page,
+          pageSize: pageSize,
+          sortOrder: order,
+          sortKey: orderBy,
+          status: status,
+        },
+      });
       return response.data;
     } catch (error) {
       return rejectWithValue([]);
@@ -15,26 +29,50 @@ export const fetchLobData = createAsyncThunk(
   }
 );
 
+export const updateLobData = createAsyncThunk(
+  "lob/updateLobData",
+  async ({ data }, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.put(apiUrls.getLob, data);
+      toast.success(response?.data?.message || "LOB updated successfully");
+      return response.data;
+    } catch (error) {
+      toast.error(error?.response?.data?.error?.message || COMMON_ERROR);
+      return rejectWithValue(error?.response?.data || {});
+    }
+  }
+);
+
+export const createLobData = createAsyncThunk(
+  "lob/createLobData",
+  async ({ data, navigate }, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.post(apiUrls.getLob, data);
+      toast.success(response?.data?.message || "LOB created successfully");
+      navigate("/lob");
+      return response.data;
+    } catch (error) {
+      toast.error(error?.response?.data?.error?.message || COMMON_ERROR);
+      return rejectWithValue(error?.response?.data || {});
+    }
+  }
+);
+
 const lobSlice = createSlice({
-  name: 'lob',
+  name: "lob",
   initialState: {
-    allLob: [],
+    lob: [],
     lobLoading: false,
+    updateLoading: false,
+    createLoading: false,
   },
   reducers: {},
   extraReducers: (builder) => {
-    builder
-      .addCase(fetchLobData.pending, (state) => {
-        state.lobLoading = true;
-      })
-      .addCase(fetchLobData.fulfilled, (state, action) => {
-        state.allLob = action.payload;
-        state.lobLoading = false;
-      })
-      .addCase(fetchLobData.rejected, (state) => {
-        state.allLob = [];
-        state.lobLoading = false;
-      });
+    addAsyncReducers(builder, [
+      { asyncThunk: fetchLobData, stateKey: "lob" },
+      { asyncThunk: updateLobData, stateKey: "update" },
+      { asyncThunk: createLobData, stateKey: "create" },
+    ]);
   },
 });
 

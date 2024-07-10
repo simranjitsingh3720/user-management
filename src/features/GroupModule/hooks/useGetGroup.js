@@ -19,7 +19,7 @@ function useGetGroup(pageChange = 1, rowsPage) {
       if (key === "groupName" && query) {
         url += `&searchKey=${key}&searchString=${query}`;
       } else if (key === "permissionName" && resultPermissionString) {
-        url += `&searchKey=${key}&permissions=${resultPermissionString}`;
+        url += `&ids=${resultPermissionString}&isExclusive=${true}&edge=hasPermission`;
       }
       const response = await axiosInstance.get(url);
       setData(response.data);

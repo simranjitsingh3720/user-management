@@ -3,7 +3,6 @@ export const drawerWidth = 240;
 export const BASE_URL = "https://dev-usermgmt.tataaig.com";
 
 export const selectRowsData = [5, 10, 15, 20];
-export const alphaNumericRegex = /^[a-zA-Z0-9\s]*$/;
 
 export const REGEX = {
   alphaNumericRegex: /^[a-zA-Z0-9\s]*$/,
@@ -14,18 +13,17 @@ export const REGEX = {
   mobileRegex: "^[0-9]*$",
   // passwordRegex: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{5,}$/,
   passwordRegex: /^\d{5,10}$/,
+  fullNameRegex: /^[A-Za-z]+ [A-Za-z]+$/,
 };
 
 export const BUTTON_TEXT = {
   CKYC_CONFIG: "Create New CKYC Config",
   Permission: "Create New Permission",
   PARTNER_NEFT: "Create New NEFT Flag",
-};
-
-export const PLACEHOLDER_TEXT = {
-  product: "Search by Product Name",
-  lob: "Search by Lob Name",
-  user: "Search by User Name",
+  HEALTH_CONFIG: "Create Health Configuration",
+  PRODUCT_PAYMENT: "Create New Payment Configuration",
+  PRODUCT: "Create New Product",
+  GROUP: "Create New Group",
 };
 
 export const ProductPayment = [
@@ -40,7 +38,8 @@ export const ProductPayment = [
 ];
 
 export const COMMON_ERROR = "An error occurred. Please try again.";
-
-export const TOKEN = 'user-token';
-export const USER_DETAILS = 'user-details';
-export const TOKEN_EXPIRATION = "token-expiration"
+export const TOKEN = "user-token";
+export const USER_DETAILS = "user-details";
+export const TOKEN_EXPIRATION = "token-expiration";
+export const TOKEN_EXPIRATION_ERROR =
+  "Your session has expired. Please log in again!";

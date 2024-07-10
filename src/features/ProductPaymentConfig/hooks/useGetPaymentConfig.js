@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
+import { COMMON_WORDS } from "../../../utils/constants";
+import { buildQueryString } from "../../../utils/globalizationFunction";
+import apiUrls from "../../../utils/apiUrls";
 
-function useGetPaymentConfig(pageChange, rowsPage, query, searched) {
+function useGetPaymentConfig(pageChange, rowsPage) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [sort, setSort] = useState({
@@ -12,16 +15,31 @@ function useGetPaymentConfig(pageChange, rowsPage, query, searched) {
   const fetchData = async (searched, resultProductString) => {
     try {
       setLoading(true);
-      let url = `/api/product-wise-payment-method?pageNo=${
-        pageChange - 1
-      }&sortKey=${sort.sortKey}&sortOrder=${
-        sort.sortOrder
-      }&pageSize=${rowsPage}`;
-      if (searched === "product" && resultProductString) {
-        url += `&edge=hasProduct&ids=${resultProductString}`;
+      let params = {
+        pageNo: pageChange - 1,
+        sortKey: sort.sortKey,
+        sortOrder: sort.sortOrder,
+        pageSize: rowsPage,
+        childFieldsToFetch: `${COMMON_WORDS.PAYMENTS},${COMMON_WORDS.LOBS},${COMMON_WORDS.PRODUCTS}`,
+        childFieldsEdge: `${COMMON_WORDS.HAS_PAYMENT_TYPE},${COMMON_WORDS.HAS_LOB},${COMMON_WORDS.HAS_PRODUCT}`,
+      };
+
+      let url = `/${apiUrls.paymentProduct}?${buildQueryString(params)}`;
+      if (searched === COMMON_WORDS.PRODUCT && resultProductString) {
+        const params = {
+          edge: COMMON_WORDS.HAS_PRODUCT,
+          ids: resultProductString,
+          isExclusive: true,
+        };
+        url += `&${buildQueryString(params)}`;
       }
-      if (searched === "lob" && resultProductString) {
-        url += `&edge=hasLob&ids=${resultProductString}`;
+      if (searched === COMMON_WORDS.LOB && resultProductString) {
+        const params = {
+          edge: COMMON_WORDS.HAS_LOB,
+          ids: resultProductString,
+          isExclusive: true,
+        };
+        url += `&${buildQueryString(params)}`;
       }
       const response = await axiosInstance.get(url);
       setData(response.data);

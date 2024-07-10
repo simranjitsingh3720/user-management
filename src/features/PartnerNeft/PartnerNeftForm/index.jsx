@@ -27,8 +27,8 @@ const PartnerNeftForm = () => {
   const navigate = useNavigate();
   const params = useParams();
 
-  const { allLob, lobLoading } = useSelector((state) => state.lob);
-  const { products, productLoading } = useSelector((state) => state.product);
+  const { lob, lobLoading } = useSelector((state) => state.lob);
+  const { products, productsLoading } = useSelector((state) => state.product);
   const { user, userLoading } = useSelector((state) => state.user);
   const { createPartnerNeft, getPartnerNeft, updatePartnerNeft } = useSubmit();
 
@@ -90,7 +90,9 @@ const PartnerNeftForm = () => {
   }, [params.id]);
 
   useEffect(() => {
-    dispatch(fetchLobData());
+    dispatch(fetchLobData(
+      { isAll: true, status: true }
+    ));
     dispatch(
       fetchUser({
         userType: COMMON_WORDS.PRODUCER,
@@ -163,7 +165,7 @@ const PartnerNeftForm = () => {
                 label="LOB"
                 required={true}
                 loading={lobLoading}
-                options={allLob.data || []}
+                options={lob.data || []}
                 getOptionLabel={(option) => option?.lob?.toUpperCase()}
                 isOptionEqualToValue={(option, value) => option.id === value.id}
                 control={control}
@@ -192,7 +194,7 @@ const PartnerNeftForm = () => {
                   name="product"
                   label="Product"
                   required={true}
-                  loading={productLoading}
+                  loading={productsLoading}
                   options={products.data || []}
                   getOptionLabel={(option) => option?.product?.toUpperCase()}
                   isOptionEqualToValue={(option, value) => option.id === value.id}

@@ -15,8 +15,8 @@ function TableHeader({ sort, setSort }) {
   };
   return (
     <div className={styles.tableHeader}>
-      <div className={styles.nameCell} onClick={() => handleSort("type")}>
-        Type{renderSortIcon("type")}
+      <div className={styles.nameCell}>
+        Type
       </div>
       <div className={styles.nameCell}> Name</div>
       <div className={styles.nameCell}>Value</div>

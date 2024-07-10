@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { COMMON_ERROR } from "../../../utils/globalConstants";
 import { useDispatch } from "react-redux";
 import { hideDialog } from "../../../stores/slices/dialogSlice";
-import { API_END_POINTS } from "../../../utils/constants";
+import apiUrls from "../../../utils/apiUrls";
 
 function useUpdatePrivilege(fetchData) {
   const dispatch = useDispatch();
@@ -21,7 +21,7 @@ function useUpdatePrivilege(fetchData) {
     };
     try {
       const response = await axiosInstance.put(
-        `${API_END_POINTS.PERMISSION}`,
+        `${apiUrls.getPermission}`,
         payload
       );
       toast.success(

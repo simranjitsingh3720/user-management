@@ -4,7 +4,7 @@ function capitalizeFirstLetter(str) {
 
 export default capitalizeFirstLetter;
 
-export function capitalizeWords(str) {
+export function capitalizeWords(str = "") {
   let words = str.split(" ");
 
   let capitalizedWords = words.map(
@@ -21,9 +21,19 @@ export function capitalizeWords(str) {
  */
 export const buildQueryString = (params) => {
   return Object.keys(params)
-    .filter((key) => params[key] != null && params[key] !== "" && params[key] !== undefined) 
+    .filter(
+      (key) =>
+        params[key] != null && params[key] !== "" && params[key] !== undefined
+    )
     .map(
       (key) => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`
     )
     .join("&");
+};
+
+/**
+ * Return a string for placeholder
+ */
+export const getPlaceHolder = (key) => {
+  return `Search by ${key} name`;
 };

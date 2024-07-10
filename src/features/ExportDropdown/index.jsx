@@ -20,6 +20,7 @@ import Content from "./Dialog/Content";
 import DownloadIcon from "../../assets/DownloadLogo";
 import Actions from "./Dialog/Action";
 import { EXPORT_DROPDOWN_VALUES, EXPORT_CONSTANTS } from "./utils/constants";
+import CustomDialog from "../../components/CustomDialog";
 
 const ExportDropdown = () => {
   const [open, setOpen] = useState(false);
@@ -114,6 +115,7 @@ const ExportDropdown = () => {
           </Grow>
         )}
       </Popper>
+      <CustomDialog />
     </React.Fragment>
   );
 };

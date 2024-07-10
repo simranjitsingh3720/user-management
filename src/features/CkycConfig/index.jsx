@@ -5,28 +5,34 @@ import { useNavigate } from "react-router-dom";
 import SearchComponenet from "../../components/SearchComponent";
 import { Box } from "@mui/material";
 import useGetCkycData from "./hooks/useGetCkycData";
-import useGetAllProduct from "../../hooks/useGetAllProduct";
-import useGetLobData from "../../hooks/useGetLobData";
-import {
-  BUTTON_TEXT,
-  ProductPayment,
-  PLACEHOLDER_TEXT,
-} from "../../utils/globalConstants";
+import { BUTTON_TEXT, ProductPayment } from "../../utils/globalConstants";
 import { COMMON_WORDS } from "../../utils/constants";
+import { getPlaceHolder } from "../../utils/globalizationFunction";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchLobData } from "../../stores/slices/lobSlice";
+import { fetchAllProductData } from "../../stores/slices/productSlice";
+import { setTableName } from "../../stores/slices/exportSlice";
 
 function CkycConfig() {
+  const dispatch = useDispatch();
+  const { lob } = useSelector((state) => state.lob);
+  const { products } = useSelector((state) => state.product);
   const [tableData, setTableData] = useState([]);
 
   const [searched, setSearched] = useState(COMMON_WORDS.PRODUCT);
 
   const [page, setPage] = useState(0);
-  const [pageSize, setPageSize] = useState(5);
+  const [pageSize, setPageSize] = useState(10);
   const [order, setOrder] = useState(COMMON_WORDS.ASC);
   const [orderBy, setOrderBy] = useState(COMMON_WORDS.CREATED_AT);
 
   const [productValue, setProductValue] = useState([]);
   const [lobValue, setLobValue] = useState([]);
 
+  useEffect(() => {
+    dispatch(fetchLobData({ isAll: true, status: true}));
+    dispatch(fetchAllProductData({isAll: true}));
+  }, [dispatch]);
   const { data, loading, fetchData } = useGetCkycData(
     page,
     pageSize,
@@ -37,17 +43,19 @@ function CkycConfig() {
   useEffect(() => {
     if (data && data?.data) {
       const refactorData = data?.data.map((item) => ({
-        id: item.id,
-        lob: item.lob.lob,
-        product: item.product.product,
-        CKYCApplicable: item.isCKYCApplicable
+        id: item?.cKYC?.id,
+        label: item?.cKYC?.label,
+        lob: item?.lobs[0]?.lob,
+        product: item?.products[0]?.product,
+        CKYCApplicable: item?.cKYC?.isCKYCApplicable
           ? COMMON_WORDS.ENABLE
           : COMMON_WORDS.DISABLE,
-        forWhom: item.forWhom,
-        createdAt: item.createdAt,
-        updatedAt: item.updatedAt,
+        forWhom: item?.cKYC?.forWhom,
+        createdAt: item?.cKYC?.createdAt,
+        updatedAt: item?.cKYC?.updatedAt,
       }));
       setTableData(refactorData);
+      dispatch(setTableName(refactorData[0]?.label));
     }
   }, [data]);
 
@@ -56,10 +64,6 @@ function CkycConfig() {
   const handleEditClick = (row) => {
     navigate(`/ckyc-config/form/${row.id}`);
   };
-
-  const { data: productData } = useGetAllProduct();
-
-  const { data: lobData } = useGetLobData();
 
   const HEADER_COLUMNS = generateTableHeaders(handleEditClick);
 
@@ -111,8 +115,8 @@ function CkycConfig() {
       <SearchComponenet
         optionsData={
           searched === COMMON_WORDS.PRODUCT
-            ? productData?.data ?? []
-            : lobData?.data ?? []
+            ? products?.data ?? []
+            : lob?.data ?? []
         }
         option={searched === COMMON_WORDS.PRODUCT ? productValue : lobValue}
         setOption={
@@ -124,11 +128,7 @@ function CkycConfig() {
             ? optionLabelProduct
             : optionLabelLob
         }
-        placeholder={
-          searched === COMMON_WORDS.PRODUCT
-            ? PLACEHOLDER_TEXT.product
-            : PLACEHOLDER_TEXT.lob
-        }
+        placeholder={getPlaceHolder(searched)}
         renderOptionFunction={
           searched === COMMON_WORDS.PRODUCT
             ? renderOptionProductFunction
@@ -141,6 +141,7 @@ function CkycConfig() {
         selectOptions={ProductPayment}
         handleGo={handleGo}
         showButton
+        showExportButton={true}
       />
       <div className="mt-4">
         <CustomTable

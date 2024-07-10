@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SearchComponenet from "./SearchComponenet";
 import useGetEODBypass from "./hooks/useGetEODBypass";
 import styles from "./styles.module.scss";
@@ -8,6 +8,8 @@ import Table from "./Table";
 import NoDataFound from "../../components/NoDataCard";
 import { MenuItem, Pagination, Select } from "@mui/material";
 import { selectRowsData } from "../../utils/globalConstants";
+import { useDispatch } from "react-redux";
+import { setTableName } from "../../stores/slices/exportSlice";
 
 function getSelectedRowData(count) {
   
@@ -27,7 +29,7 @@ function ProducerEODBypass() {
   const [query, setQuery] = useState("");
   const [searched, setSearched] = useState("producers");
   const [date, setDate] = useState({ startDate: "", endDate: "" });
-
+  const dispatch = useDispatch();
   const [producers, setProducers] = useState("");
 
   const [rowsPage, setRowsPage] = useState(10);
@@ -50,6 +52,10 @@ function ProducerEODBypass() {
     setPageChange(1);
     setRowsPage(event.target.value);
   };
+
+  useEffect(() => {
+    dispatch(setTableName(data?.data[0]?.producerEodByPass.label));
+  }, [dispatch, data]);
 
   return (
     <div>

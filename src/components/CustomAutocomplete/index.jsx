@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import { Controller } from 'react-hook-form';
-import Autocomplete from '@mui/material/Autocomplete';
-import Checkbox from '@mui/material/Checkbox';
-import TextField from '@mui/material/TextField';
-import styles from './styles.module.scss';
+import React, { useState } from "react";
+import { Controller } from "react-hook-form";
+import Autocomplete from "@mui/material/Autocomplete";
+import Checkbox from "@mui/material/Checkbox";
+import TextField from "@mui/material/TextField";
+import styles from "./styles.module.scss";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
-import { useEffect } from 'react';
-import { Role_Select } from './constants';
+import { useEffect } from "react";
+import { PLACEHOLDER, REQUIRED_MSG, ROLE_SELECT } from "./constants";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -24,27 +24,27 @@ const AutocompleteField = ({
   classes,
   multiple = false,
   resetClicked,
-  roleChanged
+  roleChanged,
 }) => {
-  const [selectedValues, setSelectedValues] = useState(name === Role_Select ? null:[]);
+  const [selectedValues, setSelectedValues] = useState(
+    name === ROLE_SELECT ? null : []
+  );
 
   useEffect(() => {
-    if( multiple){
+    if (multiple) {
       setSelectedValues([]);
-    }
-    else if(name === Role_Select){
+    } else if (name === ROLE_SELECT) {
       setSelectedValues(null);
-    }
-    else{
+    } else {
       setSelectedValues([]);
     }
   }, [resetClicked]);
 
-  useEffect(()=> {
-    if(name !== Role_Select){
-      setSelectedValues([])
+  useEffect(() => {
+    if (name !== ROLE_SELECT) {
+      setSelectedValues([]);
     }
-  },[roleChanged]);
+  }, [roleChanged]);
 
   const handleAutocompleteChangeMultiple = (event, newValue) => {
     setSelectedValues(newValue);
@@ -56,12 +56,13 @@ const AutocompleteField = ({
 
   const isSelected = (option) => {
     if (multiple) {
-      return selectedValues.some(selectedOption => selectedOption?.value === option?.value);
+      return selectedValues.some(
+        (selectedOption) => selectedOption?.value === option?.value
+      );
     } else {
-      if(name === Role_Select){
+      if (name === ROLE_SELECT) {
         return selectedValues?.roleName === option?.roleName;
-      }
-      else{
+      } else {
         return selectedValues?.value === option?.value;
       }
     }
@@ -85,14 +86,16 @@ const AutocompleteField = ({
             disableCloseOnSelect={multiple}
             options={options.length > 0 ? options : []}
             getOptionLabel={(option) => option?.label}
-            {...(multiple || name === Role_Select ? { value: selectedValues } : {})} 
+            {...(multiple || name === ROLE_SELECT
+              ? { value: selectedValues }
+              : {})}
             onChange={(event, newValue) => {
               if (multiple) {
                 handleAutocompleteChangeMultiple(event, newValue);
               } else {
                 handleAutocompleteChangeSingle(event, newValue);
               }
-              field.onChange( newValue);
+              field.onChange(newValue);
             }}
             renderOption={(props, option, { selected }) => (
               <li {...props} key={option?.value || option?.roleName}>
@@ -105,7 +108,10 @@ const AutocompleteField = ({
                     let newValue;
                     if (multiple) {
                       if (isSelected(option)) {
-                        newValue = selectedValues.filter(selectedOption => selectedOption?.value !== option?.value);
+                        newValue = selectedValues.filter(
+                          (selectedOption) =>
+                            selectedOption?.value !== option?.value
+                        );
                       } else {
                         newValue = [...selectedValues, option];
                       }
@@ -124,9 +130,9 @@ const AutocompleteField = ({
             renderInput={(params) => (
               <TextField
                 {...params}
-                placeholder="Select"
+                placeholder={PLACEHOLDER}
                 error={Boolean(errors[name])}
-                helperText={errors[name] ? 'This field is required' : ''}
+                helperText={errors[name] ? REQUIRED_MSG : ""}
               />
             )}
           />
@@ -134,6 +140,6 @@ const AutocompleteField = ({
       />
     </div>
   );
-}
+};
 
 export default AutocompleteField;

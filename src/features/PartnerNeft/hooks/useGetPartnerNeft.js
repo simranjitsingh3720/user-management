@@ -1,9 +1,9 @@
-import { useCallback, useState } from "react";
-import { toast } from "react-toastify";
-import { API_END_POINTS, VERFICATION_ENUM } from "../utils/constant";
-import axiosInstance from "./../../../utils/axiosInstance";
-import { COMMON_ERROR } from "../../../utils/globalConstants";
-import { buildQueryString } from "../../../utils/globalizationFunction";
+import { useCallback, useState } from 'react';
+import { toast } from 'react-toastify';
+import { API_END_POINTS, VERFICATION_ENUM } from '../utils/constant';
+import axiosInstance from './../../../utils/axiosInstance';
+import { COMMON_ERROR } from '../../../utils/globalConstants';
+import { buildQueryString } from '../../../utils/globalizationFunction';
 
 const useGetPartnerNeft = () => {
   const [data, setData] = useState([]);
@@ -25,8 +25,8 @@ const useGetPartnerNeft = () => {
       childFieldsToFetch,
       childFieldsEdge,
       endDate,
-      startDate,	
-      isExclusive
+      startDate,
+      isExclusive,
     } = {}) => {
       setLoading(true);
       try {
@@ -45,34 +45,29 @@ const useGetPartnerNeft = () => {
           childFieldsEdge,
           endDate,
           startDate,
-          isExclusive
+          isExclusive,
         });
 
-        const response = await axiosInstance.get(
-          `${API_END_POINTS.GET_API}?${queryParams}`
-        );
+        const response = await axiosInstance.get(`${API_END_POINTS.GET_API}?${queryParams}`);
 
         const partnerNeftData = response.data.data.map((item) => {
           const { partnerNeft, product, lob, producer } = item;
-          return ({
+          return {
             id: partnerNeft.id,
+            label: partnerNeft.label,
             lobId: lob[0].lob,
             product: product[0].product,
-            producerName: producer[0].firstName + " " + producer[0].lastName,
+            producerName: producer[0].firstName + ' ' + producer[0].lastName,
             producerCode: producer[0].producerCode,
             verificationMethod: VERFICATION_ENUM[partnerNeft.verificationMethod],
             createdAt: partnerNeft.createdAt,
             updatedAt: partnerNeft.updatedAt,
-          })
+          };
         });
-
-        console.log(partnerNeftData);
         setData(partnerNeftData);
         setTotalCount(response.data.totalCount);
       } catch (e) {
-        toast.error(
-          e?.response?.data?.error?.message || COMMON_ERROR
-        );
+        toast.error(e?.response?.data?.error?.message || COMMON_ERROR);
         setData([]);
       } finally {
         setLoading(false);

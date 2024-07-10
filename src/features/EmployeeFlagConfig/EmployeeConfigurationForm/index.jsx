@@ -2,11 +2,7 @@ import { Autocomplete, TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import styles from "./styles.module.scss";
 import { Controller, useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
-
-// import useUpdatePaymentConfig from "../hooks/useUpdateHealthConfig";
-// import { BitlyLinkMandatory } from "../constants";
 import useGetUserData from "../../BANCALogin/hooks/useGetUserData";
 import useGetProducerData from "../../BANCALogin/hooks/useGetProducerData";
 import Loader from "./Loader";
@@ -15,8 +11,6 @@ import useCreateEmployeeConfig from "../hooks/useCreateEmployeeConfig";
 import useGetEmployeeByProducer from "../hooks/useGetEmployeeById";
 import useUpdateEmployeeConfig from "../hooks/useUpdateEmployeeConfig";
 import CustomButton from "../../../components/CustomButton";
-// import useCreateHealthConfig from "../hooks/useCreateHealthConfig";
-// import useGetHealthConfigByID from "../hooks/useGetHealthConfigById";
 
 function EmployeeConfigurationForm({ fetchData: listFetchFun }) {
   const {
@@ -34,8 +28,8 @@ function EmployeeConfigurationForm({ fetchData: listFetchFun }) {
       setDataList(
         (EmployeeProducerData?.data[0]?.products || []).map((item) => ({
           name: item.product,
-          productId: item.productId,
-          isEmployee: item.isEmployee,
+          productId: item.id,
+          isEmployee: item?.isEmployee || false,
         }))
       );
     }
@@ -45,7 +39,7 @@ function EmployeeConfigurationForm({ fetchData: listFetchFun }) {
     if (
       producerList &&
       producerList?.data &&
-      !EmployeeProducerData?.data.length
+      !EmployeeProducerData?.data?.length
     )
       setDataList(
         (producerList?.data || []).map((item) => ({
@@ -62,32 +56,9 @@ function EmployeeConfigurationForm({ fetchData: listFetchFun }) {
     },
   });
 
-  // const { data: healthConfigData, fetchData: fetchHealthConfigByID } =
-  //   useGetHealthConfigByID();
-
   const { userData } = useGetUserData();
 
-  // useEffect(() => {
-  //   if (id) fetchHealthConfigByID(id);
-  // }, [id]);
-
-  const navigate = useNavigate();
-
-  // const { postData, loading: createPaymentLoading } = useCreateHealthConfig();
-
-  // const { UpdateDataFun, updateLoading } = useUpdatePaymentConfig();
-
   const { errors } = formState;
-
-  // useEffect(() => {
-  //   if (healthConfigData && healthConfigData?.data) {
-  //     setValue("producerCode", healthConfigData?.data?.producer || null);
-  //     setValue(
-  //       "medicare",
-  //       healthConfigData?.data?.isExistingCustomer ? "yes" : "no" || null
-  //     );
-  //   }
-  // }, [healthConfigData]);
 
   const { postData, loading } = useCreateEmployeeConfig(listFetchFun);
 
@@ -95,16 +66,16 @@ function EmployeeConfigurationForm({ fetchData: listFetchFun }) {
     useUpdateEmployeeConfig(listFetchFun);
 
   const onSubmit = (data) => {
-    if (EmployeeProducerData && EmployeeProducerData?.data.length) {
+    if (EmployeeProducerData && EmployeeProducerData?.data?.length) {
       const field = dataList.map((item) => ({
         productId: item.productId,
         isEmployee: item.isEmployee,
       }));
       const payload = {
-        id: EmployeeProducerData.data[0].id,
+        id: EmployeeProducerData.data[0].employeeFlagConfig.id,
         properties: {
           fields: field,
-          status: EmployeeProducerData.data[0].status,
+          status: EmployeeProducerData.data[0].employeeFlagConfig.status,
         },
       };
       UpdateDataFun(payload);

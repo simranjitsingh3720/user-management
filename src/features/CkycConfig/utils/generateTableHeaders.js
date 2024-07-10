@@ -20,7 +20,7 @@ function generateTableHeaders(handleEditClick) {
     {
       id: "forWhom",
       value: "For Whom",
-      sortable: true,
+      sortable: false,
     },
     {
       id: "createdAt",

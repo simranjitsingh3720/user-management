@@ -128,45 +128,20 @@ export const SideNavData = [
     icon: GridViewIcon,
     navigateRoute: "tc-report",
   },
-  {
-    label: "Producer Management",
-    icon: ManageAccountsIcon,
-  },
-  {
-    label: "Data Entry User",
-    icon: DataArrayIcon,
-    child: [
-      {
-        label: "BANCA Login-1",
-        icon: DataArrayIcon,
-      },
-      {
-        label: "BANCA Login-2",
-        icon: DataArrayIcon,
-      },
-    ],
-  },
-  {
-    label: "Client UserManagement",
-    icon: GridViewIcon,
-  },
-
-  {
-    label: "Masters",
-    icon: GridViewIcon,
-  },
-  {
-    label: "Privilege",
-    icon: GridViewIcon,
-  },
-  {
-    label: "Marine Management",
-    icon: GridViewIcon,
-  },
-  {
-    label: "GC Data",
-    icon: GridViewIcon,
-  },
+  // {
+  //   label: "Data Entry User",
+  //   icon: DataArrayIcon,
+  //   child: [
+  //     {
+  //       label: "BANCA Login-1",
+  //       icon: DataArrayIcon,
+  //     },
+  //     {
+  //       label: "BANCA Login-2",
+  //       icon: DataArrayIcon,
+  //     },
+  //   ],
+  // }
 ];
 
 /////// To be added

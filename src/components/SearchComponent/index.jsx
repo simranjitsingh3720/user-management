@@ -1,19 +1,13 @@
-import React from "react";
-import {
-  Autocomplete,
-  Box,
-  Grid,
-  MenuItem,
-  Select,
-  TextField,
-} from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import CustomButton from "../CustomButton";
-import { Controller, useForm } from "react-hook-form";
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import dayjs from "dayjs";
-import RestartAltIcon from "@mui/icons-material/RestartAlt";
+import React from 'react';
+import { Autocomplete, Box, Grid, MenuItem, Select, TextField } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import CustomButton from '../CustomButton';
+import { Controller, useForm } from 'react-hook-form';
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import dayjs from 'dayjs';
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
+import ExportDropdown from '../../features/ExportDropdown';
 
 function SearchComponent({
   option,
@@ -34,6 +28,7 @@ function SearchComponent({
   setDate,
   dateField,
   showButton,
+  showExportButton,
 }) {
   const navigate = useNavigate();
 
@@ -59,8 +54,8 @@ function SearchComponent({
 
   const handleResetButton = () => {
     setDate({});
-    setValue("startDate", null);
-    setValue("endDate", null);
+    setValue('startDate', null);
+    setValue('endDate', null);
   };
 
   return (
@@ -74,33 +69,25 @@ function SearchComponent({
                 <Controller
                   name="startDate"
                   control={control}
-                  rules={{ required: "Start date is required" }}
+                  rules={{ required: 'Start date is required' }}
                   render={({ field }) => (
-                    <LocalizationProvider
-                      dateAdapter={AdapterDayjs}
-                      adapterLocale="en-gb"
-                    >
+                    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
                       <DatePicker
                         className="customize-select"
                         slotProps={{
-                          textField: { size: "small" },
+                          textField: { size: 'small' },
                         }}
-                        value={
-                          field.value ? dayjs(field.value, "DD/MM/YYYY") : null
-                        }
+                        value={field.value ? dayjs(field.value, 'DD/MM/YYYY') : null}
                         onChange={(date) => {
-                          const formattedDate =
-                            dayjs(date).format("DD/MM/YYYY");
-                          setValue("startDate", formattedDate);
+                          const formattedDate = dayjs(date).format('DD/MM/YYYY');
+                          setValue('startDate', formattedDate);
                         }}
                         fullWidth
                       />
                     </LocalizationProvider>
                   )}
                 />
-                <div className="error-msg">
-                  {errors.startDate && <span>This field is required</span>}
-                </div>
+                <div className="error-msg">{errors.startDate && <span>This field is required</span>}</div>
               </div>
             </Grid>
             <Grid item xs={12} md={8} lg={2.5}>
@@ -111,29 +98,21 @@ function SearchComponent({
                   control={control}
                   rules={{ required: true }}
                   render={({ field }) => (
-                    <LocalizationProvider
-                      dateAdapter={AdapterDayjs}
-                      adapterLocale="en-gb"
-                    >
+                    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
                       <DatePicker
                         className="customize-select"
-                        slotProps={{ textField: { size: "small" } }}
-                        value={
-                          field.value ? dayjs(field.value, "DD/MM/YYYY") : null
-                        }
+                        slotProps={{ textField: { size: 'small' } }}
+                        value={field.value ? dayjs(field.value, 'DD/MM/YYYY') : null}
                         onChange={(date) => {
-                          const formattedDate =
-                            dayjs(date).format("DD/MM/YYYY");
-                          setValue("endDate", formattedDate);
+                          const formattedDate = dayjs(date).format('DD/MM/YYYY');
+                          setValue('endDate', formattedDate);
                         }}
                         fullWidth
                       />
                     </LocalizationProvider>
                   )}
                 />
-                <div className="error-msg">
-                  {errors.endDate && <span>This field is required</span>}
-                </div>
+                <div className="error-msg">{errors.endDate && <span>This field is required</span>}</div>
               </div>
             </Grid>
             <Grid item xs={12} md={8} lg={3}>
@@ -143,7 +122,7 @@ function SearchComponent({
               <CustomButton
                 variant="outlined"
                 startIcon={<RestartAltIcon />}
-                sx={{ textTransform: "none" }}
+                sx={{ textTransform: 'none' }}
                 onClick={handleResetButton}
               >
                 Reset
@@ -153,12 +132,7 @@ function SearchComponent({
         </form>
       )}
 
-      <Grid
-        container
-        spacing={2}
-        justifyContent="space-between"
-        alignItems="center"
-      >
+      <Grid container spacing={2} justifyContent="space-between" alignItems="center">
         <Grid item xs={12} md={8}>
           <Grid container spacing={2} alignItems="center">
             {selectOptions && (
@@ -172,9 +146,7 @@ function SearchComponent({
                   displayEmpty
                   className="customize-select"
                   size="small"
-                  renderValue={
-                    searched !== "" ? undefined : () => <span>Select</span>
-                  }
+                  renderValue={searched !== '' ? undefined : () => <span>Select</span>}
                 >
                   {selectOptions.map((item) => (
                     <MenuItem key={item.value} value={item.value}>
@@ -204,34 +176,36 @@ function SearchComponent({
                   getOptionLabel={optionLabel}
                   multiple
                   size="small"
-                  renderInput={(params) => (
-                    <TextField {...params} placeholder={placeholder} />
-                  )}
+                  renderInput={(params) => <TextField {...params} placeholder={placeholder} />}
                   className="customize-select"
                   value={option}
                   onChange={(event, newValue) => setOption(newValue)}
                   renderOption={renderOptionFunction}
                   ListboxProps={{
-                    style: { maxHeight: "200px" },
+                    style: { maxHeight: '200px' },
                   }}
                   fullWidth
                 />
               )}
             </Grid>
-            <Grid item xs={12} sm={2} md={2}>
+            <Grid item >
               <CustomButton variant="outlined" onClick={handleGo} fullWidth>
                 Go
               </CustomButton>
             </Grid>
           </Grid>
         </Grid>
-        {showButton && (
-          <Grid item xs={12} md={4} container justifyContent="flex-end">
+
+        <Grid item xs={12} md={4} container justifyContent="flex-end">
+          {showExportButton && (
+              <ExportDropdown />
+          )}
+          {showButton && (
             <CustomButton variant="contained" onClick={handleCreateNewForm}>
               {buttonText}
             </CustomButton>
-          </Grid>
-        )}
+          )}
+        </Grid>
       </Grid>
     </Box>
   );

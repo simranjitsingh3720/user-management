@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
+import apiUrls from "../../../utils/apiUrls";
 
 function useGetHealthConfigByID() {
   const [data, setData] = useState(null);
@@ -7,7 +8,7 @@ function useGetHealthConfigByID() {
 
   const fetchData = async (healthConfigId) => {
     try {
-      let url = `/api/health-configuration/${healthConfigId}`;
+      let url = `/${apiUrls.healthConfig}/${healthConfigId}`;
 
       const response = await axiosInstance.get(url);
       setData(response.data);
