@@ -4,10 +4,10 @@ function DocumentIconGray() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      className="h-12"
+      className=""
       viewBox="0 0 24 24"
       fill="#c9cccf"
-      class="size-6"
+      class="size-14"
     >
       <path
         fill-rule="evenodd"
