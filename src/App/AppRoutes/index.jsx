@@ -1,95 +1,57 @@
-import React, { Suspense, lazy } from "react";
-import { Navigate, Route, Routes } from "react-router-dom";
-import ResponsiveDrawer from "../../components/LayoutDesign";
-import PartnerNeftForm from "../../features/PartnerNeft/PartnerNeftForm";
-import FullPageLoader from "../../components/FullPageLoader";
-import PrivateRoute from "../../components/PrivateRoute";
-import PublicRoute from "../../components/PublicRoute";
-import TermCondition from "../../features/TermCondition";
+import React, { Suspense, lazy } from 'react';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import ResponsiveDrawer from '../../components/LayoutDesign';
+import PartnerNeftForm from '../../features/PartnerNeft/PartnerNeftForm';
+import FullPageLoader from '../../components/FullPageLoader';
+import PrivateRoute from '../../components/PrivateRoute';
+import PublicRoute from '../../components/PublicRoute';
 
-const Dashboard = lazy(() => import("../../features/Dashboard"));
-const UserManagement = lazy(() => import("../../features/UserManagement"));
-const SignInPage = lazy(() => import("../../features/Signin/SigninPage"));
-const CreateUserManagementForm = lazy(() =>
-  import("../../features/UserManagement/Components/CreateForm")
-);
-const CreateUserCreationForm = lazy(() =>
-  import("../../features/UserCreation/Components/CreateForm")
-);
-const PermissionModule = lazy(() => import("../../features/PermissionModule"));
-const RoleModule = lazy(() => import("../../features/RoleModule"));
-const GroupModule = lazy(() => import("../../features/GroupModule"));
-const CreateGroupForm = lazy(() =>
-  import("../../features/GroupModule/CreateGroupForm copy")
-);
-const CreateRoleForm = lazy(() =>
-  import("../../features/RoleModule/CreateRoleForm")
-);
-const Form = lazy(() => import("../../features/PermissionModule/Form"));
-const Lob = lazy(() => import("../../features/Lob"));
-const LobForm = lazy(() => import("../../features/Lob/CreateLobForm"));
-const Product = lazy(() => import("../../features/ProductModule"));
-const ProductForm = lazy(() =>
-  import("../../features/ProductModule/ProductForm")
-);
-const ProposalBitlyLinkConfig = lazy(() =>
-  import("../../features/ProposalBitlylinkConfig")
-);
-const ChannelForm = lazy(() =>
-  import("../../features/ProposalBitlylinkConfig/Channel/ChannelForm")
-);
-const OTPException = lazy(() => import("../../features/OTPException"));
-const ProposalOTPException = lazy(() =>
-  import("../../features/ProposalOTPException")
-);
-const BANCALogin = lazy(() => import("../../features/BANCALogin"));
-const ProposalForm = lazy(() =>
-  import("../../features/ProposalOTPException/ProposalForm")
-);
-const ProducerEODBypass = lazy(() =>
-  import("../../features/ProducerEODBypass")
-);
-const ProducerEODFrom = lazy(() =>
-  import("../../features/ProducerEODBypass/ProducerEODForm")
-);
-const ProductPaymentConfig = lazy(() =>
-  import("../../features/ProductPaymentConfig")
-);
-const ProductPaymentConfigForm = lazy(() =>
-  import("../../features/ProductPaymentConfig/ProductPaymentConfigForm")
-);
-const HouseBankMaster = lazy(() => import("../../features/HouseBankMaster"));
-const HouseBankMasterForm = lazy(() =>
-  import("../../features/HouseBankMaster/HouseBankMasterForm")
-);
-const HealthConfiguration = lazy(() =>
-  import("../../features/HealthConfiguration")
-);
-const HealthConfigurationForm = lazy(() =>
-  import("../../features/HealthConfiguration/HealthConfigurationForm")
-);
-const EmployeeFlagConfig = lazy(() =>
-  import("../../features/EmployeeFlagConfig")
-);
-const SyncedProducers = lazy(() => import("../../features/SyncedProducer"));
-const AliasUser = lazy(() => import("../../features/AliasUser"));
-const NotFoundPage = lazy(() => import("../../components/NotFoundPage"));
-const EmployeeConfigurationForm = lazy(() =>
-  import("../../features/EmployeeFlagConfig/EmployeeConfigurationForm")
-);
-const RevalidationList = lazy(() => import("../../features/RevalidationList"));
-const PartnerNeft = lazy(() => import("../../features/PartnerNeft"));
-const CkycConfig = lazy(() => import("../../features/CkycConfig"));
-const CkycForm = lazy(() => import("../../features/CkycConfig/CykcForm"));
-const CommunicationRestrictions = lazy(() =>
-  import("../../features/CommunicationRestrictions")
-);
-const CommunicationRestrictionsForm = lazy(() =>
-  import("../../features/CommunicationRestrictions/CreateForm")
-);
-const BulkUpload = lazy(() =>
-  import("../../features/BulkUpload/UploadForm")
-);
+const Dashboard = lazy(() => import('../../features/Dashboard'));
+const UserManagement = lazy(() => import('../../features/UserManagement'));
+const SignInPage = lazy(() => import('../../features/Signin/SigninPage'));
+const CreateUserManagementForm = lazy(() => import('../../features/UserManagement/Components/CreateForm'));
+const CreateUserCreationForm = lazy(() => import('../../features/UserCreation/Components/CreateForm'));
+const PermissionModule = lazy(() => import('../../features/PermissionModule'));
+const RoleModule = lazy(() => import('../../features/RoleModule'));
+const GroupModule = lazy(() => import('../../features/GroupModule'));
+const CreateGroupForm = lazy(() => import('../../features/GroupModule/CreateGroupForm copy'));
+const CreateRoleForm = lazy(() => import('../../features/RoleModule/CreateRoleForm'));
+const Form = lazy(() => import('../../features/PermissionModule/Form'));
+const Lob = lazy(() => import('../../features/Lob'));
+const LobForm = lazy(() => import('../../features/Lob/CreateLobForm'));
+const Product = lazy(() => import('../../features/ProductModule'));
+const ProductForm = lazy(() => import('../../features/ProductModule/ProductForm'));
+const ProposalBitlyLinkConfig = lazy(() => import('../../features/ProposalBitlylinkConfig'));
+const ChannelForm = lazy(() => import('../../features/ProposalBitlylinkConfig/Channel/ChannelForm'));
+const OTPException = lazy(() => import('../../features/OTPException'));
+const ProposalOTPException = lazy(() => import('../../features/ProposalOTPException'));
+const BANCALogin = lazy(() => import('../../features/BANCALogin'));
+const ProposalForm = lazy(() => import('../../features/ProposalOTPException/ProposalForm'));
+const ProducerEODBypass = lazy(() => import('../../features/ProducerEODBypass'));
+const ProducerEODFrom = lazy(() => import('../../features/ProducerEODBypass/ProducerEODForm'));
+const ProductPaymentConfig = lazy(() => import('../../features/ProductPaymentConfig'));
+const ProductPaymentConfigForm = lazy(() => import('../../features/ProductPaymentConfig/ProductPaymentConfigForm'));
+const HouseBankMaster = lazy(() => import('../../features/HouseBankMaster'));
+const HouseBankMasterForm = lazy(() => import('../../features/HouseBankMaster/HouseBankMasterForm'));
+const HealthConfiguration = lazy(() => import('../../features/HealthConfiguration'));
+const HealthConfigurationForm = lazy(() => import('../../features/HealthConfiguration/HealthConfigurationForm'));
+const EmployeeFlagConfig = lazy(() => import('../../features/EmployeeFlagConfig'));
+const SyncedProducers = lazy(() => import('../../features/SyncedProducer'));
+const AliasUser = lazy(() => import('../../features/AliasUser'));
+const NotFoundPage = lazy(() => import('../../components/NotFoundPage'));
+const EmployeeConfigurationForm = lazy(() => import('../../features/EmployeeFlagConfig/EmployeeConfigurationForm'));
+const RevalidationList = lazy(() => import('../../features/RevalidationList'));
+const PartnerNeft = lazy(() => import('../../features/PartnerNeft'));
+const CkycConfig = lazy(() => import('../../features/CkycConfig'));
+const CkycForm = lazy(() => import('../../features/CkycConfig/CykcForm'));
+const CommunicationRestrictions = lazy(() => import('../../features/CommunicationRestrictions'));
+const CommunicationRestrictionsForm = lazy(() => import('../../features/CommunicationRestrictions/CreateForm'));
+const BulkUpload = lazy(() => import('../../features/BulkUpload/UploadForm'));
+const UWLevelMapping = lazy(() => import('../../features/UWLevelMapping'));
+const UWLevelMappingForm = lazy(() => import('../../features/UWLevelMapping/LevelMappingForm'));
+const UWLevelMappingEmployee = lazy(() => import('../../features/UWLevelMapping/EmployeeForm'));
+
+const TermCondition = lazy(() => import('../../features/TermCondition'));
 
 const AppRoutes = () => {
   return (
@@ -99,9 +61,7 @@ const AppRoutes = () => {
         <Route
           path="/dashboard"
           element={
-            <ResponsiveDrawer showSidebarAndHeader={true}>
-              {<PrivateRoute component={Dashboard} />}
-            </ResponsiveDrawer>
+            <ResponsiveDrawer showSidebarAndHeader={true}>{<PrivateRoute component={Dashboard} />}</ResponsiveDrawer>
           }
         />
         <Route
@@ -131,9 +91,7 @@ const AppRoutes = () => {
         <Route
           path="/bulk-upload"
           element={
-            <ResponsiveDrawer showSidebarAndHeader={true}>
-              {<PrivateRoute component={BulkUpload} />}
-            </ResponsiveDrawer>
+            <ResponsiveDrawer showSidebarAndHeader={true}>{<PrivateRoute component={BulkUpload} />}</ResponsiveDrawer>
           }
         />
         <Route
@@ -144,10 +102,7 @@ const AppRoutes = () => {
             </ResponsiveDrawer>
           }
         />
-        <Route
-          path="/sign-in"
-          element={<PublicRoute component={SignInPage} />}
-        />
+        <Route path="/sign-in" element={<PublicRoute component={SignInPage} />} />
         <Route
           path="/user-management/user-management-form/:id?"
           element={
@@ -167,18 +122,12 @@ const AppRoutes = () => {
 
         <Route
           path="/permission/permission-form"
-          element={
-            <ResponsiveDrawer showSidebarAndHeader={true}>
-              {<PrivateRoute component={Form} />}
-            </ResponsiveDrawer>
-          }
+          element={<ResponsiveDrawer showSidebarAndHeader={true}>{<PrivateRoute component={Form} />}</ResponsiveDrawer>}
         />
         <Route
           path="/roles"
           element={
-            <ResponsiveDrawer showSidebarAndHeader={true}>
-              {<PrivateRoute component={RoleModule} />}
-            </ResponsiveDrawer>
+            <ResponsiveDrawer showSidebarAndHeader={true}>{<PrivateRoute component={RoleModule} />}</ResponsiveDrawer>
           }
         />
         <Route
@@ -192,9 +141,7 @@ const AppRoutes = () => {
         <Route
           path="/group"
           element={
-            <ResponsiveDrawer showSidebarAndHeader={true}>
-              {<PrivateRoute component={GroupModule} />}
-            </ResponsiveDrawer>
+            <ResponsiveDrawer showSidebarAndHeader={true}>{<PrivateRoute component={GroupModule} />}</ResponsiveDrawer>
           }
         />
         <Route
@@ -207,42 +154,30 @@ const AppRoutes = () => {
         />
         <Route
           path="/lob"
-          element={
-            <ResponsiveDrawer showSidebarAndHeader={true}>
-              {<PrivateRoute component={Lob} />}
-            </ResponsiveDrawer>
-          }
+          element={<ResponsiveDrawer showSidebarAndHeader={true}>{<PrivateRoute component={Lob} />}</ResponsiveDrawer>}
         />
         <Route
           path="/lob/lob-form"
           element={
-            <ResponsiveDrawer showSidebarAndHeader={true}>
-              {<PrivateRoute component={LobForm} />}
-            </ResponsiveDrawer>
+            <ResponsiveDrawer showSidebarAndHeader={true}>{<PrivateRoute component={LobForm} />}</ResponsiveDrawer>
           }
         />
         <Route
           path="/product"
           element={
-            <ResponsiveDrawer showSidebarAndHeader={true}>
-              {<PrivateRoute component={Product} />}
-            </ResponsiveDrawer>
+            <ResponsiveDrawer showSidebarAndHeader={true}>{<PrivateRoute component={Product} />}</ResponsiveDrawer>
           }
         />
         <Route
           path="/product/product-form"
           element={
-            <ResponsiveDrawer showSidebarAndHeader={true}>
-              {<PrivateRoute component={ProductForm} />}
-            </ResponsiveDrawer>
+            <ResponsiveDrawer showSidebarAndHeader={true}>{<PrivateRoute component={ProductForm} />}</ResponsiveDrawer>
           }
         />
         <Route
           path="/banca"
           element={
-            <ResponsiveDrawer showSidebarAndHeader={true}>
-              {<PrivateRoute component={BANCALogin} />}
-            </ResponsiveDrawer>
+            <ResponsiveDrawer showSidebarAndHeader={true}>{<PrivateRoute component={BANCALogin} />}</ResponsiveDrawer>
           }
         />
         <Route
@@ -256,17 +191,13 @@ const AppRoutes = () => {
         <Route
           path="/proposal-bitly-config/channel-form"
           element={
-            <ResponsiveDrawer showSidebarAndHeader={true}>
-              {<PrivateRoute component={ChannelForm} />}
-            </ResponsiveDrawer>
+            <ResponsiveDrawer showSidebarAndHeader={true}>{<PrivateRoute component={ChannelForm} />}</ResponsiveDrawer>
           }
         />
         <Route
           path="/otpException"
           element={
-            <ResponsiveDrawer showSidebarAndHeader={true}>
-              {<PrivateRoute component={OTPException} />}
-            </ResponsiveDrawer>
+            <ResponsiveDrawer showSidebarAndHeader={true}>{<PrivateRoute component={OTPException} />}</ResponsiveDrawer>
           }
         />
         <Route
@@ -280,9 +211,7 @@ const AppRoutes = () => {
         <Route
           path="/proposalOtpException/form/:id?"
           element={
-            <ResponsiveDrawer showSidebarAndHeader={true}>
-              {<PrivateRoute component={ProposalForm} />}
-            </ResponsiveDrawer>
+            <ResponsiveDrawer showSidebarAndHeader={true}>{<PrivateRoute component={ProposalForm} />}</ResponsiveDrawer>
           }
         />
         <Route
@@ -360,9 +289,7 @@ const AppRoutes = () => {
         <Route
           path="/partner-neft"
           element={
-            <ResponsiveDrawer showSidebarAndHeader={true}>
-              {<PrivateRoute component={PartnerNeft} />}
-            </ResponsiveDrawer>
+            <ResponsiveDrawer showSidebarAndHeader={true}>{<PrivateRoute component={PartnerNeft} />}</ResponsiveDrawer>
           }
         />
         <Route
@@ -400,32 +327,50 @@ const AppRoutes = () => {
         <Route
           path="/alias-users"
           element={
-            <ResponsiveDrawer showSidebarAndHeader={true}>
-              {<PrivateRoute component={AliasUser} />}
-            </ResponsiveDrawer>
+            <ResponsiveDrawer showSidebarAndHeader={true}>{<PrivateRoute component={AliasUser} />}</ResponsiveDrawer>
           }
         />
         <Route
           path="/ckyc-config"
           element={
-            <ResponsiveDrawer showSidebarAndHeader={true}>
-              {<PrivateRoute component={CkycConfig} />}
-            </ResponsiveDrawer>
+            <ResponsiveDrawer showSidebarAndHeader={true}>{<PrivateRoute component={CkycConfig} />}</ResponsiveDrawer>
           }
         />
         <Route
           path="/ckyc-config/form/:id?"
           element={
-            <ResponsiveDrawer showSidebarAndHeader={true}>
-              {<PrivateRoute component={CkycForm} />}
-            </ResponsiveDrawer>
+            <ResponsiveDrawer showSidebarAndHeader={true}>{<PrivateRoute component={CkycForm} />}</ResponsiveDrawer>
           }
         />
         <Route
           path="/tc-report"
           element={
             <ResponsiveDrawer showSidebarAndHeader={true}>
-              <TermCondition />
+              {<PrivateRoute component={TermCondition} />}
+            </ResponsiveDrawer>
+          }
+        />
+        <Route
+          path="UWLevelMappingEmployee/:employeeId"
+          element={
+            <ResponsiveDrawer showSidebarAndHeader={true}>
+              {<PrivateRoute component={UWLevelMapping} />}
+            </ResponsiveDrawer>
+          }
+        />
+        <Route
+          path="UWLevelMappingEmployee/:employeeId/form/:id?"
+          element={
+            <ResponsiveDrawer showSidebarAndHeader={true}>
+              {<PrivateRoute component={UWLevelMappingForm} />}
+            </ResponsiveDrawer>
+          }
+        />
+        <Route
+          path="/UWLevelMappingEmployee"
+          element={
+            <ResponsiveDrawer showSidebarAndHeader={true}>
+              {<PrivateRoute component={UWLevelMappingEmployee} />}
             </ResponsiveDrawer>
           }
         />
