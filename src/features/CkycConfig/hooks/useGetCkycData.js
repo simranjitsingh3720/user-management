@@ -1,14 +1,15 @@
-import { useEffect, useState } from "react";
-import axiosInstance from "../../../utils/axiosInstance";
-import apiUrls from "../../../utils/apiUrls";
-import { COMMON_WORDS } from "../../../utils/constants";
-import { buildQueryString } from "../../../utils/globalizationFunction";
+import { useEffect, useState } from 'react';
+import axiosInstance from '../../../utils/axiosInstance';
+import apiUrls from '../../../utils/apiUrls';
+import { COMMON_WORDS } from '../../../utils/constants';
+import { buildQueryString } from '../../../utils/globalizationFunction';
 
 function useGetCkycData(page, pageSize, order, orderBy) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const fetchData = async (searched, resultProductString) => {
+  const fetchData = async (searched, resultProductString, query) => {
+    console.log('query', query);
     try {
       setLoading(true);
       let params = {
@@ -31,6 +32,18 @@ function useGetCkycData(page, pageSize, order, orderBy) {
         url += `&${buildQueryString(params)}`;
       }
       if (searched === COMMON_WORDS.LOB && resultProductString) {
+        const params = {
+          edge: COMMON_WORDS.HAS_LOB,
+          ids: resultProductString,
+          isExclusive: true,
+        };
+        url += `&${buildQueryString(params)}`;
+      }
+      if (query) {
+        const params = {
+          searchKey: searched,
+          searchString: query,
+        };
         url += `&${buildQueryString(params)}`;
       }
       const response = await axiosInstance.get(url);

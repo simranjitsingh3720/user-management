@@ -36,3 +36,18 @@ export const STATUS = [
     value: 'disable',
   },
 ];
+
+export const CKYC_DROPDOWN = [
+  {
+    label: 'Product',
+    value: 'product',
+  },
+  {
+    label: 'LOB',
+    value: 'lob',
+  },
+  {
+    label: 'For Whom',
+    value: 'forWhom',
+  },
+];

@@ -25,6 +25,8 @@ export const COMMON_WORDS = {
   PERMISSION: 'permission',
   PERMISSIONNAME: 'permissionName',
   GROUP: 'group',
+  SEARCH: 'search',
+  STATUS: 'status',
 };
 
 export const HEADER = {

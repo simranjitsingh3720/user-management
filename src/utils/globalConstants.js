@@ -49,6 +49,14 @@ export const ProductPayment = [
     label: 'LOB',
     value: 'lob',
   },
+  {
+    label: 'Status',
+    value: 'status',
+  },
+  {
+    label: 'For Whom',
+    value: 'forWhom',
+  },
 ];
 
 export const COMMON_ERROR = 'An error occurred. Please try again.';
