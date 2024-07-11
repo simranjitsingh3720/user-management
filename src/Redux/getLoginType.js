@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axiosInstance from '../utils/axiosInstance';
 import apiUrls from '../utils/apiUrls';
-import { toCapitalize } from '../utils/globalizationFunction';
+import { buildQueryString, toCapitalize } from '../utils/globalizationFunction';
 
 export const getLoginType = createAsyncThunk('loginType/getLoginType', async (_, { getState, rejectWithValue }) => {
   try {
@@ -9,7 +9,8 @@ export const getLoginType = createAsyncThunk('loginType/getLoginType', async (_,
     if (loginType?.loginType?.length > 0) {
       return loginType.loginType;
     }
-    const url = `${apiUrls.getLoginType}?isAll=${true}&status=true`;
+    const params = buildQueryString({ isAll: true, status: true });
+    const url = `${apiUrls.getLoginType}?${params}`;
     const response = await axiosInstance.get(url);
     const formattedArray = response?.data?.data?.map((obj) => ({
       ...obj,

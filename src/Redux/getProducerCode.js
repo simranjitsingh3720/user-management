@@ -1,17 +1,24 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axiosInstance from '../utils/axiosInstance';
 import apiUrls from '../utils/apiUrls';
-import { getFullName } from '../utils/globalizationFunction';
+import { buildQueryString, getFullName } from '../utils/globalizationFunction';
 
 export const getProducerCodes = createAsyncThunk(
   'producerCode/getProducerCodes',
   async (roleName, { rejectWithValue }) => {
     try {
       if (roleName) {
-        const userType = `${apiUrls.getUserType}?searchKey=userType&searchString=producer&status=true`;
+        const params = buildQueryString({ searchKey: 'userType', searchString: 'producer', status: true });
+        const userType = `${apiUrls.getUserType}?${params}`;
         const responseUserType = await axiosInstance.get(userType);
         const userTypeID = responseUserType?.data?.data[0]?.id;
-        const url = `${apiUrls.getUser}?ids=${userTypeID}&edge=hasUserType&isExclusive=true`;
+        const userIdParams = buildQueryString({
+          ids: userTypeID,
+          edge: 'hasUserType',
+          isExclusive: true,
+          status: true,
+        });
+        const url = `${apiUrls.getUser}?${userIdParams}`;
         const response = await axiosInstance.get(url);
         const formattedArray = response?.data?.data?.map((obj) => ({
           ...obj,

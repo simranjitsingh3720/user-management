@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axiosInstance from '../utils/axiosInstance';
 import apiUrls from '../utils/apiUrls';
-import { toCapitalize } from '../utils/globalizationFunction';
+import { buildQueryString, toCapitalize } from '../utils/globalizationFunction';
 
 export const getRoles = createAsyncThunk('role/getRoles', async (_, { getState, rejectWithValue }) => {
   try {
@@ -9,7 +9,8 @@ export const getRoles = createAsyncThunk('role/getRoles', async (_, { getState, 
     if (role?.role?.length > 0) {
       return role.role;
     }
-    const url = `${apiUrls.getRole}?isAll=${true}&status=true`;
+    const params = buildQueryString({ isAll: true, status: true });
+    const url = `${apiUrls.getRole}?${params}`;
     const response = await axiosInstance.get(url);
     const formattedArray = response?.data?.data?.map((obj) => ({
       ...obj,

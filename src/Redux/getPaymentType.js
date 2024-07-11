@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axiosInstance from '../utils/axiosInstance';
 import apiUrls from '../utils/apiUrls';
+import { buildQueryString } from '../utils/globalizationFunction';
 
 export const getPaymentTypes = createAsyncThunk(
   'paymentType/getPaymentTypes',
@@ -10,8 +11,8 @@ export const getPaymentTypes = createAsyncThunk(
       if (paymentType?.paymentType?.length > 0) {
         return paymentType.paymentType;
       }
-
-      const url = `${apiUrls.getPaymentType}?isAll=${true}&status=true`;
+      const params = buildQueryString({ isAll: true, status: true });
+      const url = `${apiUrls.getPaymentType}?${params}`;
       const response = await axiosInstance.get(url);
       const formattedArray = response?.data?.data?.map((obj) => ({
         ...obj,

@@ -591,6 +591,7 @@ function CreateUserCreationForm() {
                         placeholder="Select"
                         errors={errors}
                         classes="w-full"
+                        setValue={setValue}
                       />
                     </div>
                   )}

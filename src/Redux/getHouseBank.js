@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axiosInstance from '../utils/axiosInstance';
 import apiUrls from '../utils/apiUrls';
+import { buildQueryString } from '../utils/globalizationFunction';
 
 export const getHouseBanks = createAsyncThunk('houseBank/getHouseBanks', async (_, { getState, rejectWithValue }) => {
   try {
@@ -8,8 +9,8 @@ export const getHouseBanks = createAsyncThunk('houseBank/getHouseBanks', async (
     if (houseBank?.houseBank?.length > 0) {
       return houseBank.houseBank;
     }
-
-    const url = `${apiUrls.getHouseBank}?isAll=${true}&status=true`;
+    const params = buildQueryString({ isAll: true, status: true });
+    const url = `${apiUrls.getHouseBank}?${params}`;
     const response = await axiosInstance.get(url);
     const formattedArray = response?.data?.data?.map((obj) => ({
       ...obj,
