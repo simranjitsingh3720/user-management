@@ -5,9 +5,7 @@ import { toast } from "react-toastify";
 import {
   COMMON_ERROR,
   TOKEN,
-  TOKEN_EXPIRATION,
 } from "../../../utils/globalConstants";
-import { expirationTime } from "../../../utils/auth";
 import apiUrls from "../../../utils/apiUrls";
 import { DASHBOARD } from "../utils/constants";
 
@@ -21,8 +19,8 @@ export default function usePostLogin() {
     try {
       const response = await axiosInstance.post(apiUrls.postLogin, data);
       if (response) {
-        localStorage.setItem(TOKEN, "test token");
-        localStorage.setItem(TOKEN_EXPIRATION, expirationTime());
+        debugger
+        localStorage.setItem(TOKEN, response.data.data.token);
         navigate(DASHBOARD);
       }
     } catch (error) {
