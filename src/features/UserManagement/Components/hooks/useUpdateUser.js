@@ -1,52 +1,33 @@
-import { useState } from "react";
-import { toast } from "react-toastify";
-import axiosInstance from "../../../../utils/axiosInstance";
-import { COMMON_ERROR } from "../../../../utils/globalConstants";
+import { useState } from 'react';
+import { toast } from 'react-toastify';
+import axiosInstance from '../../../../utils/axiosInstance';
+import { COMMON_ERROR } from '../../../../utils/globalConstants';
+import apiUrls from '../../../../utils/apiUrls';
+import { useDispatch } from 'react-redux';
+import { hideDialog } from '../../../../stores/slices/dialogSlice';
+import { USER_UPDATED_SUCCESS } from '../utils/constants';
 
-export default function useUpdateUser(setOpen, fetchData) {
+export default function useUpdateUser(fetchData) {
   const [loading, setLoading] = useState(false);
-
-  async function updateData(id, data, userStatus) {
+  const dispatch = useDispatch();
+  async function updateData(id, data) {
     setLoading(true);
 
     let payload;
-    if (userStatus) {
-      payload = {
-        id: id,
-        fields: {
-          status: data.status,
-        },
-      };
-    } else {
-      payload = {
-        id: id,
-        roleId: data.roleSelect.id,
-        groupId: data.groupSelect.id,
-        fields: {
-          firstName: data.firstName,
-          lastName: data.lastName,
-          email: data.emailId,
-          mobileNo: data.mobileNumber,
-          userId: data.userId,
-          ntId: data.ntLogin,
-          producerCode: data.producerCode,
-          roleName: data.roleSelect.roleName,
-          password: "asd",
-          status: data.status,
-        },
-      };
-    }
+    payload = {
+      id: id,
+      fields: {
+        status: !data,
+      },
+    };
     try {
-      const response = await axiosInstance.put("/api/user", payload);
-      toast.success(
-        response?.data?.message || "Permission updated successfully"
-      );
-      if (setOpen) setOpen(false);
-      if (fetchData) fetchData();
+      const response = await axiosInstance.put(`${apiUrls.getUser}`, payload);
+      toast.success(response?.data?.message || USER_UPDATED_SUCCESS);
+      dispatch(hideDialog());
+      fetchData();
     } catch (error) {
-      toast.error(
-        error?.response?.data?.error?.message || COMMON_ERROR
-      );
+      toast.error(error?.response?.data?.error?.message || COMMON_ERROR);
+      dispatch(hideDialog());
     } finally {
       setLoading(false);
     }

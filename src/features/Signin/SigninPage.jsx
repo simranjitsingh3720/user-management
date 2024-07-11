@@ -9,11 +9,13 @@ import SignInImg from "../../assets/SignInImg";
 import usePostLogin from "./hooks/usePostLogin";
 import backgroundImage from "../../assets/loginPageBackground.png";
 import FullPageLoader from "../../components/FullPageLoader";
+import { encodeString } from "../../utils/globalizationFunction";
 
 function SignInPage() {
   const { postData, loading } = usePostLogin();
   const onSubmit = (data) => {
-    const payload = { email: data?.emailId, password: data?.password };
+    const encryptedPassword = encodeString(data?.password);
+    const payload = { email: data?.emailId, password: encryptedPassword };
     postData(payload);
   };
 
@@ -26,7 +28,8 @@ function SignInPage() {
   return (
     <>
       {loading && <FullPageLoader />}
-      <Box className="flex w-full h-screen">
+      {
+        !loading && <Box className="flex w-full h-screen overflow-hidden">
         <div
           className="invisible w-0 md:visible md:w-1/2 h-full bg-cornFlower flex justify-center items-center bg-cover bg-center"
           style={{ backgroundImage: `url(${backgroundImage})` }}
@@ -91,6 +94,7 @@ function SignInPage() {
           </div>
         </div>
       </Box>
+      }
     </>
   );
 }

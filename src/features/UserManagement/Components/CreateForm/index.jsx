@@ -153,7 +153,7 @@ function CreateUserCreationForm() {
   }, []);
 
   useEffect(() => {
-    if (roleValue) {
+    if (roleValue && !isEdit) {
       let resetValues = {
         roleSelect: watch(ROLE_SELECT),
       };
@@ -205,6 +205,13 @@ function CreateUserCreationForm() {
     setResetClicked(!resetClicked);
     console.log('reset', resultObject);
     reset(resultObject);
+    if(isEdit){
+      if (params?.id) {
+        setIsEdit(true);
+        getUserDetails(params?.id);
+      }
+
+    }
   };
 
   useEffect(() => {
@@ -233,7 +240,6 @@ function CreateUserCreationForm() {
   }, [rolesWatch]);
 
   const onSubmit = (data) => {
-    userTypeFetch(rolesWatch?.id);
     const {
       mobileNumber,
       email,
@@ -361,9 +367,15 @@ function CreateUserCreationForm() {
     }
   }, [params?.id, role]);
 
-  const formatDate = (dateStr) => {
-    const [day, month, year] = dateStr.split(/[/, ]+/);
-    return `${month}/${day}/${year}`;
+  const formatDate = (dateString) => {
+    if (dateString.includes('/')) {
+      const [day, month, year] = dateString.split('/');
+      return `${month}/${day}/${year}`;
+    }
+    if (dateString.includes('-')) {
+      const [year, month, day] = dateString.split('-');
+      return `${month}/${day}/${year}`;
+    }
   };
 
   const processKey = (key, value) => {
@@ -443,7 +455,7 @@ function CreateUserCreationForm() {
             name={ROLE_SELECT}
             label="Role"
             required
-            disabled={false}
+            disabled={isEdit}
             options={role || []}
             validation={{ required: REQUIRED_MSG }}
             errors={errors}
