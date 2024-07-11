@@ -2,7 +2,7 @@ import { Box } from '@mui/material';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import CustomTable from '../../components/CustomTable';
 import useGetUser from './Components/hooks/useGetUser';
-import { BUTTON_TEXT, Header, NAVIGATE_TO_FORM, SEARCH_OPTIONS } from './Components/utils/constants';
+import { BUTTON_TEXT, Header, NAVIGATE_TO_FORM, SEARCH_OPTIONS, SEARCH_PLACEHOLDER } from './Components/utils/constants';
 import { useNavigate } from 'react-router-dom';
 import { COMMON_WORDS } from '../../utils/constants';
 import Content from './Components/Dialog/Content';
@@ -17,7 +17,7 @@ function UserManagement() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [query, setQuery] = useState('');
-  const [searched, setSearched] = useState('userId');
+  const [searched, setSearched] = useState(SEARCH_OPTIONS[0].value);
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(10);
   const [order, setOrder] = useState(COMMON_WORDS.ASC);
@@ -35,7 +35,7 @@ function UserManagement() {
       data?.data?.map((item) => {
         return {
           ...item,
-          checked: item.status,
+          checked: item?.status,
         };
       }) || [];
     setUserData(transformedData);
@@ -68,7 +68,7 @@ function UserManagement() {
          searched={searched}
          setSearched={setSearched}
          textField
-         textFieldPlaceholder="Search"
+         textFieldPlaceholder={SEARCH_PLACEHOLDER}
          setQuery={setQuery}
          buttonText={BUTTON_TEXT}
          navigateRoute={NAVIGATE_TO_FORM}

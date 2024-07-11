@@ -20,8 +20,8 @@ export default function usePostLogin() {
     setLoading(true);
     try {
       const response = await axiosInstance.post(apiUrls.postLogin, data);
-      if (response) {
-        localStorage.setItem(TOKEN, "test token");
+      if (response.data) {
+        localStorage.setItem(TOKEN, response?.data?.data?.token);
         localStorage.setItem(TOKEN_EXPIRATION, expirationTime());
         navigate(DASHBOARD);
       }

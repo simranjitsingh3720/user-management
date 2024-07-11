@@ -15,7 +15,8 @@ export const REQUIRED_MSG = 'This field is required';
 export const PRODUCER_ARR = ['producer', 'subproducer', 'dealer'];
 export const PAYMENT_CALL = ['producer', 'subproducer', 'dealer', 'partner', 'partneremployee', 'externalposp', 'sso'];
 export const PRODUCER_CODE_CALL = ['csm', 'offlineuser', 'commercialuw', 'producer', 'subproducer', 'dealer', 'partner', 'partneremployee', 'externalposp', 'sso'];
-export const BUTTON_TEXT = "Create User"
+export const BUTTON_TEXT = "Create User";
+export const SEARCH_PLACEHOLDER = "Search";
 export const FORM_LABEL = {
   START_DATE: 'startDate',
   END_DATE: 'endDate',
