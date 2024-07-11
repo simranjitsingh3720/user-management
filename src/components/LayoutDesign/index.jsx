@@ -30,7 +30,7 @@ function ResponsiveDrawer({ showSidebarAndHeader, children }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const location = useLocation();
-  let pathname = location?.pathname?.split('/')[1];
+  let pathname = location?.pathname?.split('/')[1]?.replace("-",' ') || '';
   const [selectedNavbar, setSelectedNavbar] = useState(pathname ? pathname : DASHBOARD);
   const [selectedParentIndex, setSelectedParentIndex] = useState(null);
   
