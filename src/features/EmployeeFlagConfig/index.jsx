@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import useGetEmployeeFlag from "./hooks/useGetEmployeeFlag";
-import EmployeeConfigurationForm from "./EmployeeConfigurationForm";
 import CustomTable from "../../components/CustomTable";
 import { generateTableHeaders } from "./utils/generateTableHeaders";
 import { COMMON_WORDS } from "../../utils/constants";
@@ -13,6 +12,7 @@ import { showDialog } from "../../stores/slices/dialogSlice";
 import Content from "./Dialog/Content";
 import Actions from "./Dialog/Action";
 import { setTableName } from "../../stores/slices/exportSlice";
+import { BUTTON_TEXT } from "../../utils/globalConstants";
 
 function EmployeeFlagConfig() {
   const [producers, setProducers] = useState();
@@ -94,7 +94,6 @@ function EmployeeFlagConfig() {
 
   return (
     <div>
-      <EmployeeConfigurationForm fetchData={fetchData} />
       <div className="mt-4">
         <SearchComponent
           optionsData={user?.data || []}
@@ -104,8 +103,10 @@ function EmployeeFlagConfig() {
           placeholder={getPlaceHolder(COMMON_WORDS.USER)}
           renderOptionFunction={renderOptionUserFunction}
           handleGo={handleGo}
-          showButton={false}
           showExportButton={true}
+          buttonText={BUTTON_TEXT.EMPLOYEE_FLAG_CONFIG}
+          navigateRoute="/employee-flag-config/form"
+          showButton
         />
       </div>
       <div className="mt-4">

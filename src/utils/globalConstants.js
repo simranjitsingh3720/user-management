@@ -25,6 +25,7 @@ export const BUTTON_TEXT = {
   PRODUCT: 'Create New Product',
   GROUP: 'Create New Group',
   PRODUCT_LOCATION_LEVEL: 'Create Product Location Level',
+  EMPLOYEE_FLAG_CONFIG: 'Create New Employee Flag Config',
 };
 
 export const STATUS = [
