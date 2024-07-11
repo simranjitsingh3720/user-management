@@ -1,23 +1,21 @@
 import React, { useMemo, useRef, useState } from 'react';
 import styles from './styles.module.scss';
-import { Box, IconButton } from '@mui/material';
+import { Box } from '@mui/material';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
-import LeftArrow from '../../../assets/LeftArrow';
 import CustomButton from '../../../components/CustomButton';
 import DownloadLogo from '../../../assets/DownloadLogo';
 import DocumentIconGray from '../../../assets/DocumentIconGray';
 import DocumentIconGreen from '../../../assets/DocumentIconGreen';
 import { toast } from 'react-toastify';
-import { COMMON_WORDS, HEADER } from '../../../utils/constants';
+import { COMMON_WORDS } from '../../../utils/constants';
 import SearchComponent from '../../../components/SearchComponent';
 import { getPlaceHolder } from '../../../utils/globalizationFunction';
 import { CONTENT, SEARCH_BY, SEARCH_OPTIONS } from './utils/constants';
 import CustomTable from '../../../components/CustomTable';
 import { Header } from './utils/header';
+import CustomFormHeader from '../../../components/CustomFormHeader';
 
 function UploadForm() {
-  const navigate = useNavigate();
   const {
     handleSubmit,
     control,
@@ -30,10 +28,6 @@ function UploadForm() {
 
   const onSubmit = (data) => {
     console.log(data);
-  };
-
-  const back = () => {
-    navigate('/communication-restrictions');
   };
 
   const downloadTemplate = () => {
@@ -122,16 +116,12 @@ function UploadForm() {
     <>
       <form onSubmit={handleSubmit(onSubmit)} className={`${styles.formMainContainer}`}>
         <div className={styles.createContainer}>
-          <div className={styles.borderBottom}>
-            <div className={`${styles.formHeaderStyle} flex flex-col`}>
-              <div className={styles.subHeader}>
-                <IconButton aria-label="back" onClick={back}>
-                  <LeftArrow />
-                </IconButton>
-                <span className={styles.headerTextStyle}>{CONTENT.TITLE}</span>
-              </div>
-              <div className={styles.headerPara}>{CONTENT.HEADER}</div>
-            </div>
+          <div className="p-5">
+            <CustomFormHeader
+              navigateRoute="/communication-restrictions"
+              headerText={CONTENT.TITLE}
+              subHeading={CONTENT.HEADER}
+            />
           </div>
           <div className="p-7">
             <div className="border border-blueHaze rounded-lg w-full">

@@ -1,16 +1,13 @@
 import React from 'react';
 import styles from './styles.module.scss';
-import { Divider, Grid, IconButton, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
-import LeftArrow from '../../../assets/LeftArrow';
 import CustomButton from '../../../components/CustomButton';
 import UserTypeToggle from '../../../components/CustomRadioButtonGroup';
 import InputField from '../../../components/CustomTextfield';
 import SelectField from '../../../components/CustomSelect';
 import NotificationTable from '../Table';
 import { customerArr, userArray } from '../utils/constants';
-import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import CustomFormHeader from '../../../components/CustomFormHeader';
 import { FORM_HEADER_TEXT } from '../../../utils/constants';
 
@@ -46,7 +43,6 @@ function CreateCommunicationRestrictionForm() {
       <div className={styles.createContainer}>
         <CustomFormHeader
           id={id}
-          hideReset
           navigateRoute="/communication-restrictions"
           headerText={FORM_HEADER_TEXT.COMMUNICATION_RESTRICTION}
         />

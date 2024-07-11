@@ -21,16 +21,22 @@ function useGetPrivilege(page, pageSize, order, orderBy) {
 
       let url = `${apiUrls.getPermission}?${buildQueryString(params)}`;
       if (query) {
-        url += `&searchKey=${searched}&searchString=${query}`;
+        let params = {
+          searchKey: searched,
+          searchString: query,
+        };
+        url += `&${buildQueryString(params)}`;
       }
       const response = await axiosInstance.get(url);
+      const { data = {} } = response;
+      const { totalCount = 0 } = data;
       const transformedData =
         response?.data?.data.map((item) => ({
           ...item,
           checked: item.status,
         })) || [];
       setData(transformedData);
-      setCount(response?.data?.totalCount);
+      setCount(totalCount);
     } catch (error) {
       setData([]);
     } finally {

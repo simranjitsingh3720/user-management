@@ -9,7 +9,6 @@ function useGetCkycData(page, pageSize, order, orderBy) {
   const [loading, setLoading] = useState(true);
 
   const fetchData = async (searched, resultProductString, query) => {
-    console.log('query', query);
     try {
       setLoading(true);
       let params = {

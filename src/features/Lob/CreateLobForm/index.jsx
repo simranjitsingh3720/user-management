@@ -2,13 +2,14 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { Grid, IconButton, CardContent, Card, Box, Typography } from '@mui/material';
+import { Grid, CardContent, Card, Box } from '@mui/material';
 import { createLobData } from '../../../stores/slices/lobSlice';
-import LeftArrow from '../../../assets/LeftArrow';
 import CustomButton from '../../../components/CustomButton';
 import InputField from '../../../components/CustomTextfield';
 import UserTypeToggle from '../../../components/CustomRadioButtonGroup';
 import { STATUS } from '../../../utils/globalConstants';
+import CustomFormHeader from '../../../components/CustomFormHeader';
+import { FORM_HEADER_TEXT } from '../../../utils/constants';
 
 function CreateLobForm() {
   const navigate = useNavigate();
@@ -49,13 +50,8 @@ function CreateLobForm() {
       <Card>
         <CardContent>
           <Grid container spacing={3}>
-            <Grid item xs={12} className="flex items-center">
-              <IconButton aria-label="back" onClick={() => navigate('/lob')}>
-                <LeftArrow />
-              </IconButton>
-              <Typography variant="h5" className="ml-3 font-semibold">
-                Create New Lob
-              </Typography>
+            <Grid item xs={12}>
+              <CustomFormHeader headerText={FORM_HEADER_TEXT.LOB} navigateRoute="/lob" />
             </Grid>
 
             {formField.map((item) => (

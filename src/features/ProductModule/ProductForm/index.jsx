@@ -1,24 +1,18 @@
-import {
-  Box,
-  Card,
-  CardContent,
-  Grid,
-  IconButton,
-  Typography,
-} from "@mui/material";
-import React, { useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import LeftArrow from "../../../assets/LeftArrow";
-import useCreateProduct from "../hooks/useCreateProduct";
-import CustomButton from "../../../components/CustomButton";
-import InputField from "../../../components/CustomTextfield";
-import CustomAutoCompleteWithoutCheckbox from "../../../components/CustomAutoCompleteWithoutCheckbox";
-import { COMMON_WORDS } from "../../../utils/constants";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchLobData } from "../../../stores/slices/lobSlice";
-import UserTypeToggle from "../../../components/CustomRadioButtonGroup";
-import { STATUS } from "../../../utils/globalConstants";
+import { Box, Card, CardContent, Grid, IconButton, Typography } from '@mui/material';
+import React, { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import LeftArrow from '../../../assets/LeftArrow';
+import useCreateProduct from '../hooks/useCreateProduct';
+import CustomButton from '../../../components/CustomButton';
+import InputField from '../../../components/CustomTextfield';
+import CustomAutoCompleteWithoutCheckbox from '../../../components/CustomAutoCompleteWithoutCheckbox';
+import { COMMON_WORDS, FORM_HEADER_TEXT } from '../../../utils/constants';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchLobData } from '../../../stores/slices/lobSlice';
+import UserTypeToggle from '../../../components/CustomRadioButtonGroup';
+import { STATUS } from '../../../utils/globalConstants';
+import CustomFormHeader from '../../../components/CustomFormHeader';
 
 function ProductForm() {
   const navigate = useNavigate();
@@ -43,37 +37,37 @@ function ProductForm() {
       product_code: formData.product_code,
       product_value: formData.product_value,
       lob_id: formData.lob.id,
-      status: formData.status === "active" ? true : false,
+      status: formData.status === 'active' ? true : false,
     };
     postData(payload);
   };
 
   const FormFields = [
     {
-      id: "product",
-      label: "Product",
-      value: "product",
+      id: 'product',
+      label: 'Product',
+      value: 'product',
       required: true,
       validation: {
-        required: "Product is required",
+        required: 'Product is required',
       },
     },
     {
-      id: "product_code",
-      label: "Product Code",
-      value: "product_code",
+      id: 'product_code',
+      label: 'Product Code',
+      value: 'product_code',
       required: true,
       validation: {
-        required: "Product Code is required",
+        required: 'Product Code is required',
       },
     },
     {
-      id: "product_value",
-      label: "Product Value",
-      value: "product_value",
+      id: 'product_value',
+      label: 'Product Value',
+      value: 'product_value',
       required: true,
       validation: {
-        required: "Product Value is required",
+        required: 'Product Value is required',
       },
     },
   ];
@@ -84,23 +78,7 @@ function ProductForm() {
         <CardContent>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <Grid
-                container
-                alignItems="center"
-                justifyContent="space-between"
-              >
-                <Grid item>
-                  <IconButton
-                    aria-label="back"
-                    onClick={() => navigate("/product")}
-                  >
-                    <LeftArrow />
-                  </IconButton>
-                  <Typography variant="h5" className="ml-3 font-semibold">
-                    Create New Product
-                  </Typography>
-                </Grid>
-              </Grid>
+              <CustomFormHeader headerText={FORM_HEADER_TEXT.PRODUCT} navigateRoute="/product" />
             </Grid>
 
             {FormFields.map((item) => (
@@ -129,7 +107,7 @@ function ProductForm() {
                 getOptionLabel={(option) => option?.lob?.toUpperCase()}
                 isOptionEqualToValue={(option, value) => option.id === value.id}
                 control={control}
-                rules={{ required: "LOB is required" }}
+                rules={{ required: 'LOB is required' }}
                 error={Boolean(errors.lob)}
                 helperText={errors.lob?.message}
                 disableClearable={true}

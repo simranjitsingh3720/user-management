@@ -1,5 +1,5 @@
-import axios from "axios";
-import { BASE_URL, TOKEN } from "../utils/globalConstants";
+import axios from 'axios';
+import { BASE_URL, TOKEN } from '../utils/globalConstants';
 
 const instance = axios.create({
   baseURL: BASE_URL,
@@ -34,7 +34,7 @@ instance.interceptors.response.use(
 
       if (isTokenExpired()) {
         localStorage.removeItem(TOKEN);
-        window.location.href = "/";
+        // window.location.href = "/";
         return Promise.reject(error);
       }
 

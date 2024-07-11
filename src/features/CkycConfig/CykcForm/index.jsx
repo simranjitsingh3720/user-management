@@ -1,21 +1,8 @@
 import React, { useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import {
-  Autocomplete,
-  TextField,
-  Box,
-  Card,
-  CardContent,
-  Grid,
-  IconButton,
-  Divider,
-  Select,
-  MenuItem,
-} from '@mui/material';
+import { Autocomplete, TextField, Box, Card, CardContent, Grid, Select, MenuItem } from '@mui/material';
 import styles from './styles.module.scss';
-import LeftArrow from '../../../assets/LeftArrow';
-import RestartAltIcon from '@mui/icons-material/RestartAlt';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import CustomButton from '../../../components/CustomButton';
 import { forWhomDisable, forWhomEnable, STATUS } from '../utils/constants';
 import useGetLobData from '../../../hooks/useGetLobData';
@@ -24,10 +11,11 @@ import useHandleCkyc from '../hooks/useHandleCkyc';
 import { fetchAllProductData } from '../../../stores/slices/productSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import UserTypeToggle from '../../../components/CustomRadioButtonGroup';
+import CustomFormHeader from '../../../components/CustomFormHeader';
+import { FORM_HEADER_TEXT } from '../../../utils/constants';
 
 const CkycForm = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { id } = useParams();
   const { products, productsLoading } = useSelector((state) => state.product);
 
@@ -92,42 +80,12 @@ const CkycForm = () => {
       <Card>
         <CardContent>
           <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-            <Grid item xs={12}>
-              <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-                <Grid item xs={8}>
-                  <div className={styles.headerContainer}>
-                    <IconButton
-                      aria-label="back"
-                      onClick={() => {
-                        navigate('/ckyc-config');
-                      }}
-                    >
-                      <LeftArrow />
-                    </IconButton>
-                    <span className={styles.headerTextStyle}>
-                      {id ? 'Update CKYC Config' : 'Create New CKYC Config'}
-                    </span>
-                  </div>
-                </Grid>
-                {!id && (
-                  <Grid
-                    item
-                    xs={4}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'flex-end',
-                    }}
-                  >
-                    <CustomButton variant="outlined" startIcon={<RestartAltIcon />} onClick={() => handleResetButton()}>
-                      Reset
-                    </CustomButton>
-                  </Grid>
-                )}
-              </Grid>
-              <Divider style={{ margin: '1rem 0' }} />
-            </Grid>
-
+            <CustomFormHeader
+              id={id}
+              headerText={FORM_HEADER_TEXT.CKYC_CONFIG}
+              handleReset={handleResetButton}
+              navigateRoute="/ckyc-config"
+            />
             <Grid item xs={12} sm={6} lg={4}>
               <span className="label-text required-field">LOB</span>
               <Controller

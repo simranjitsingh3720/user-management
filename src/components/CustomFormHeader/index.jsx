@@ -5,7 +5,7 @@ import LeftArrow from '../../assets/LeftArrow';
 import CustomButton from '../CustomButton';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 
-function CustomFormHeader({ id, handleReset, navigateRoute, headerText, hideReset, subHeading }) {
+function CustomFormHeader({ id, handleReset, navigateRoute, headerText, subHeading }) {
   const navigate = useNavigate();
 
   return (
@@ -35,7 +35,7 @@ function CustomFormHeader({ id, handleReset, navigateRoute, headerText, hideRese
             </div>
           </div>
         </Grid>
-        {!hideReset && (
+        {handleReset && (
           <Grid
             item
             xs={4}
