@@ -58,8 +58,8 @@ function Product() {
           product_code: product.product_code,
           createdAt: product.createdAt,
           updatedAt: product.updatedAt,
-          checked: product.status,
-          status: product.status,
+          checked: product?.status,
+          status: product?.status,
         };
       }) || [];
 
