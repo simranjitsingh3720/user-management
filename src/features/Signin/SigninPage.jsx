@@ -15,8 +15,7 @@ function SignInPage() {
   const { postData, loading } = usePostLogin();
   const onSubmit = (data) => {
     const encryptedPassword = encodeString(data?.password);
-    console.log("encrypted", encryptedPassword);
-    const payload = { email: data?.emailId, password: data?.password };
+    const payload = { email: data?.emailId, password: encryptedPassword };
     postData(payload);
   };
 
