@@ -55,8 +55,10 @@ function UserManagement() {
   const header = useMemo(() => Header(updateUserForm, handleInsillionStatus), [updateUserForm, handleInsillionStatus]);
 
   const handleGo = () => {
-    setUserData([]);
-    fetchData(searched, query);
+    if(query){
+      setUserData([]);
+      fetchData(searched, query);
+    }
   };
 
   return (

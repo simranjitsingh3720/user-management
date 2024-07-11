@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axiosInstance from "./../utils/axiosInstance"
 import apiUrls from "../utils/apiUrls";
+import { toCapitalize } from "../utils/globalizationFunction";
 
 export const getLobs = createAsyncThunk("lobUserCreation/getLobs", async (_, { getState, rejectWithValue }) => {
     try {
@@ -13,7 +14,7 @@ export const getLobs = createAsyncThunk("lobUserCreation/getLobs", async (_, { g
         const response = await axiosInstance.get(url);
         const formattedArray = response?.data?.data?.map(obj => ({
             ...obj,
-            label: obj?.lob?.charAt(0)?.toUpperCase() + obj?.lob?.slice(1),
+            label: toCapitalize(obj, 'lob'),
             value: obj?.lob_value,
         }));
         return formattedArray;
