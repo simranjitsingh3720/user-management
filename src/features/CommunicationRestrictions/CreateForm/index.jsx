@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './styles.module.scss';
-import { IconButton } from '@mui/material';
+import { Divider, Grid, IconButton, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import LeftArrow from '../../../assets/LeftArrow';
@@ -10,6 +10,7 @@ import InputField from '../../../components/CustomTextfield';
 import SelectField from '../../../components/CustomSelect';
 import NotificationTable from '../Table';
 import { customerArr, userArray } from '../utils/constants';
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
 
 function CreateCommunicationRestrictionForm() {
   const navigate = useNavigate();
@@ -38,7 +39,7 @@ function CreateCommunicationRestrictionForm() {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles.formMainContainer}>
       <div className={styles.createContainer}>
-        <div className={`flex items-center justify-between ${styles.borderBottom}`}>
+        {/* <div className={`flex items-center justify-between ${styles.borderBottom}`}>
           <div className={`${styles.formHeaderStyle} flex flex-col`}>
             <div className={styles.subHeader}>
               <IconButton aria-label="back" onClick={back}>
@@ -56,7 +57,41 @@ function CreateCommunicationRestrictionForm() {
               Cancel
             </CustomButton>
           </div>
-        </div>
+        </div> */}
+
+        <Grid item xs={12}>
+          <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+            <Grid item xs={8}>
+              <div className="flex items-center">
+                <IconButton
+                  aria-label="back"
+                  onClick={() => {
+                    navigate('/partner-neft');
+                  }}
+                >
+                  <LeftArrow />
+                </IconButton>
+                <Typography variant="h6" noWrap fontWeight={600} color="#465465">
+                  'Update Partner NEFT Flag' 'Create New Partner NEFT Flag'
+                </Typography>
+              </div>
+            </Grid>
+            <Grid
+              item
+              xs={4}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'flex-end',
+              }}
+            >
+              <CustomButton variant="outlined" startIcon={<RestartAltIcon />}>
+                Reset
+              </CustomButton>
+            </Grid>
+          </Grid>
+          <Divider style={{ margin: '1rem 0' }} />
+        </Grid>
         <div className="m-5 grid grid-cols-2 gap-4">
           <UserTypeToggle menuItem={userArray} label="Type Of User" required control={control} name="typeOfUser" />
         </div>
