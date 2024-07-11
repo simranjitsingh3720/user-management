@@ -13,7 +13,6 @@ import React, { useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useNavigate } from "react-router-dom";
 import { HEADER } from "../../utils/constants";
-import { TOKEN } from "../../utils/globalConstants";
 import { COMMON_WORDS } from "../../utils/constants";
 
 function stringToColor(string) {
