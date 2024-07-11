@@ -57,7 +57,7 @@ const AppRoutes = () => {
         path="/dashboard"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PublicRoute component={Dashboard} />
+            <PrivateRoute component={Dashboard} />
           </ResponsiveDrawer>
         }
       />
@@ -65,7 +65,7 @@ const AppRoutes = () => {
         path="/user-management"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PublicRoute component={UserManagement} />
+            <PrivateRoute component={UserManagement} />
           </ResponsiveDrawer>
         }
       />
@@ -73,7 +73,7 @@ const AppRoutes = () => {
         path="/communication-restrictions"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PublicRoute component={CommunicationRestrictions} />
+            <PrivateRoute component={CommunicationRestrictions} />
           </ResponsiveDrawer>
         }
       />
@@ -81,7 +81,7 @@ const AppRoutes = () => {
         path="/bulk-upload"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PublicRoute component={BulkUpload} />
+            <PrivateRoute component={BulkUpload} />
           </ResponsiveDrawer>
         }
       />
@@ -89,16 +89,16 @@ const AppRoutes = () => {
         path="/communication-restrictions/communication-restrictions-form"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PublicRoute component={CommunicationRestrictionsForm} />
+            <PrivateRoute component={CommunicationRestrictionsForm} />
           </ResponsiveDrawer>
         }
       />
       <Route path="/sign-in" element={<PublicRoute component={SignInPage} />} />
       <Route
-        path="/user-management/form/:id?"
+        path="/user-management/user-management-form/:id?"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PublicRoute component={CreateUserManagementForm} />
+            <PrivateRoute component={CreateUserManagementForm} />
           </ResponsiveDrawer>
         }
       />
@@ -106,7 +106,7 @@ const AppRoutes = () => {
         path="/permission"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PublicRoute component={PermissionModule} />
+            <PrivateRoute component={PermissionModule} />
           </ResponsiveDrawer>
         }
       />
@@ -114,7 +114,7 @@ const AppRoutes = () => {
         path="/permission/permission-form"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PublicRoute component={Form} />
+            <PrivateRoute component={Form} />
           </ResponsiveDrawer>
         }
       />
@@ -122,7 +122,7 @@ const AppRoutes = () => {
         path="/roles"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PublicRoute component={RoleModule} />
+            <PrivateRoute component={RoleModule} />
           </ResponsiveDrawer>
         }
       />
@@ -130,7 +130,7 @@ const AppRoutes = () => {
         path="/roles/role-form/:id?"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PublicRoute component={CreateRoleForm} />
+            <PrivateRoute component={CreateRoleForm} />
           </ResponsiveDrawer>
         }
       />
@@ -138,7 +138,7 @@ const AppRoutes = () => {
         path="/group"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PublicRoute component={GroupModule} />
+            <PrivateRoute component={GroupModule} />
           </ResponsiveDrawer>
         }
       />
@@ -146,7 +146,7 @@ const AppRoutes = () => {
         path="/group/group-form/:id?"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PublicRoute component={CreateGroupForm} />
+            <PrivateRoute component={CreateGroupForm} />
           </ResponsiveDrawer>
         }
       />
@@ -154,7 +154,7 @@ const AppRoutes = () => {
         path="/lob"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PublicRoute component={Lob} />
+            <PrivateRoute component={Lob} />
           </ResponsiveDrawer>
         }
       />
@@ -162,7 +162,7 @@ const AppRoutes = () => {
         path="/lob/lob-form"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PublicRoute component={LobForm} />
+            <PrivateRoute component={LobForm} />
           </ResponsiveDrawer>
         }
       />
@@ -170,7 +170,7 @@ const AppRoutes = () => {
         path="/product"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PublicRoute component={Product} />
+            <PrivateRoute component={Product} />
           </ResponsiveDrawer>
         }
       />
@@ -178,7 +178,7 @@ const AppRoutes = () => {
         path="/product/product-form"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PublicRoute component={ProductForm} />
+            <PrivateRoute component={ProductForm} />
           </ResponsiveDrawer>
         }
       />
@@ -186,7 +186,7 @@ const AppRoutes = () => {
         path="/banca"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PublicRoute component={BANCALogin} />
+            <PrivateRoute component={BANCALogin} />
           </ResponsiveDrawer>
         }
       />
@@ -194,7 +194,7 @@ const AppRoutes = () => {
         path="/proposal-bitly-config"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PublicRoute component={ProposalBitlyLinkConfig} />
+            <PrivateRoute component={ProposalBitlyLinkConfig} />
           </ResponsiveDrawer>
         }
       />
@@ -202,7 +202,7 @@ const AppRoutes = () => {
         path="/proposal-bitly-config/channel-form"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PublicRoute component={ChannelForm} />
+            <PrivateRoute component={ChannelForm} />
           </ResponsiveDrawer>
         }
       />
@@ -210,7 +210,7 @@ const AppRoutes = () => {
         path="/otpException"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PublicRoute component={OTPException} />
+            <PrivateRoute component={OTPException} />
           </ResponsiveDrawer>
         }
       />
@@ -218,7 +218,7 @@ const AppRoutes = () => {
         path="/proposalOtpException"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PublicRoute component={ProposalOTPException} />
+            <PrivateRoute component={ProposalOTPException} />
           </ResponsiveDrawer>
         }
       />
@@ -226,7 +226,7 @@ const AppRoutes = () => {
         path="/proposalOtpException/form/:id?"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PublicRoute component={ProposalForm} />
+            <PrivateRoute component={ProposalForm} />
           </ResponsiveDrawer>
         }
       />
@@ -234,7 +234,7 @@ const AppRoutes = () => {
         path="/producer-eod-bypass-list"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PublicRoute component={ProducerEODBypass} />
+            <PrivateRoute component={ProducerEODBypass} />
           </ResponsiveDrawer>
         }
       />
@@ -242,7 +242,7 @@ const AppRoutes = () => {
         path="/producer-eod-bypass-list/form/:id?"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PublicRoute component={ProducerEODFrom} />
+            <PrivateRoute component={ProducerEODFrom} />
           </ResponsiveDrawer>
         }
       />
@@ -250,7 +250,7 @@ const AppRoutes = () => {
         path="/product-payment-config"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PublicRoute component={ProductPaymentConfig} />
+            <PrivateRoute component={ProductPaymentConfig} />
           </ResponsiveDrawer>
         }
       />
@@ -258,7 +258,7 @@ const AppRoutes = () => {
         path="/product-payment-config/form/:id?"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PublicRoute component={ProductPaymentConfigForm} />
+            <PrivateRoute component={ProductPaymentConfigForm} />
           </ResponsiveDrawer>
         }
       />
@@ -266,7 +266,7 @@ const AppRoutes = () => {
         path="/house-bank-master"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PublicRoute component={HouseBankMaster} />
+            <PrivateRoute component={HouseBankMaster} />
           </ResponsiveDrawer>
         }
       />
@@ -274,7 +274,7 @@ const AppRoutes = () => {
         path="/house-bank-master/form/:id?"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PublicRoute component={HouseBankMasterForm} />
+            <PrivateRoute component={HouseBankMasterForm} />
           </ResponsiveDrawer>
         }
       />
@@ -282,7 +282,7 @@ const AppRoutes = () => {
         path="/health-config"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PublicRoute component={HealthConfiguration} />
+            <PrivateRoute component={HealthConfiguration} />
           </ResponsiveDrawer>
         }
       />
@@ -290,7 +290,7 @@ const AppRoutes = () => {
         path="/health-config/form/:id?"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PublicRoute component={HealthConfigurationForm} />
+            <PrivateRoute component={HealthConfigurationForm} />
           </ResponsiveDrawer>
         }
       />
@@ -298,7 +298,7 @@ const AppRoutes = () => {
         path="/revalidation-list"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PublicRoute component={RevalidationList} />
+            <PrivateRoute component={RevalidationList} />
           </ResponsiveDrawer>
         }
       />
@@ -306,7 +306,7 @@ const AppRoutes = () => {
         path="/partner-neft"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PublicRoute component={PartnerNeft} />
+            <PrivateRoute component={PartnerNeft} />
           </ResponsiveDrawer>
         }
       />
@@ -314,7 +314,7 @@ const AppRoutes = () => {
         path="partner-neft/form/:id?"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PublicRoute component={PartnerNeftForm} />
+            <PrivateRoute component={PartnerNeftForm} />
           </ResponsiveDrawer>
         }
       />
@@ -322,7 +322,7 @@ const AppRoutes = () => {
         path="/employee-flag-config"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PublicRoute component={EmployeeFlagConfig} />
+            <PrivateRoute component={EmployeeFlagConfig} />
           </ResponsiveDrawer>
         }
       />
@@ -330,7 +330,7 @@ const AppRoutes = () => {
         path="/employee-flag-config/form"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PublicRoute component={EmployeeConfigurationForm} />
+            <PrivateRoute component={EmployeeConfigurationForm} />
           </ResponsiveDrawer>
         }
       />
@@ -338,7 +338,7 @@ const AppRoutes = () => {
         path="/gc-sync-updation"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PublicRoute component={SyncedProducers} />
+            <PrivateRoute component={SyncedProducers} />
           </ResponsiveDrawer>
         }
       />
@@ -346,7 +346,7 @@ const AppRoutes = () => {
         path="/alias-users"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PublicRoute component={AliasUser} />
+            <PrivateRoute component={AliasUser} />
           </ResponsiveDrawer>
         }
       />
@@ -354,7 +354,7 @@ const AppRoutes = () => {
         path="/ckyc-config"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PublicRoute component={CkycConfig} />
+            <PrivateRoute component={CkycConfig} />
           </ResponsiveDrawer>
         }
       />
@@ -362,7 +362,7 @@ const AppRoutes = () => {
         path="/ckyc-config/form/:id?"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PublicRoute component={CkycForm} />
+            <PrivateRoute component={CkycForm} />
           </ResponsiveDrawer>
         }
       />
@@ -377,14 +377,14 @@ const AppRoutes = () => {
       <Route
         path="uwlevelmappingemployee/:employeeId"
         element={
-          <ResponsiveDrawer showSidebarAndHeader={true}>{<PublicRoute component={UWLevelMapping} />}</ResponsiveDrawer>
+          <ResponsiveDrawer showSidebarAndHeader={true}>{<PrivateRoute component={UWLevelMapping} />}</ResponsiveDrawer>
         }
       />
       <Route
         path="uwlevelmappingemployee/:employeeId/form/:id?"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
-            {<PublicRoute component={UWLevelMappingForm} />}
+            {<PrivateRoute component={UWLevelMappingForm} />}
           </ResponsiveDrawer>
         }
       />
@@ -392,7 +392,7 @@ const AppRoutes = () => {
         path="/uwlevelmappingemployee"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
-            {<PublicRoute component={UWLevelMappingEmployee} />}
+            {<PrivateRoute component={UWLevelMappingEmployee} />}
           </ResponsiveDrawer>
         }
       />

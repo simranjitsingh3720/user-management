@@ -34,7 +34,7 @@ instance.interceptors.response.use(
 
       if (isTokenExpired()) {
         localStorage.removeItem(TOKEN);
-        // window.location.href = "/";
+        window.location.href = '/';
         return Promise.reject(error);
       }
 
