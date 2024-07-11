@@ -6,7 +6,6 @@ import { getGroup, getGroupById } from './../../stores/slices/groupSlice';
 import { COMMON_WORDS } from '../../utils/constants';
 import { BUTTON_TEXT } from '../../utils/globalConstants';
 import { showDialog } from '../../stores/slices/dialogSlice';
-import ConfirmContent from './Dialog/ConfirmContent';
 import ConfirmAction from './Dialog/ConfirmAction';
 import CustomDialog from '../../components/CustomDialog';
 import { useNavigate } from 'react-router-dom';
@@ -16,6 +15,7 @@ import { COMMON_FIELDS } from '../PartnerNeft/utils/constant';
 import { getPlaceHolder } from '../../utils/globalizationFunction';
 import { SEARCH_OPTIONS } from './constants';
 import useGetPermission from './hooks/useGetPermission';
+import Content from '../../components/CustomDialogContent';
 
 function GroupModule() {
   const [page, setPage] = useState(0);
@@ -71,7 +71,7 @@ function GroupModule() {
       dispatch(
         showDialog({
           title: COMMON_WORDS.CHANGE_STATUS,
-          content: <ConfirmContent />,
+          content: <Content label={COMMON_WORDS.GROUP} />,
           actions: <ConfirmAction row={data} />,
         })
       );

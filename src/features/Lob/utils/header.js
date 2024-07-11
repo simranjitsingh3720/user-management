@@ -4,6 +4,7 @@ export const Header = (updateLobData) => {
     { value: "Lob Value", id: "lob_value" },
     { value: "Lob Level", id: "lob_level" },
     { value: "Lob Code", id: "lob_code" },
+    { value: "Created At", id: "createdAt", sortable: true},
     { value: "Updated At", id: "updatedAt", sortable: true},
     {
         id: "action",

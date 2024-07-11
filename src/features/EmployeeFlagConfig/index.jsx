@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from "react";
-import useGetEmployeeFlag from "./hooks/useGetEmployeeFlag";
-import EmployeeConfigurationForm from "./EmployeeConfigurationForm";
-import CustomTable from "../../components/CustomTable";
-import { generateTableHeaders } from "./utils/generateTableHeaders";
-import { COMMON_WORDS } from "../../utils/constants";
-import CustomDialog from "../../components/CustomDialog";
-import SearchComponent from "../../components/SearchComponent";
-import { getPlaceHolder } from "../../utils/globalizationFunction";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchUser } from "../../stores/slices/userSlice";
-import { showDialog } from "../../stores/slices/dialogSlice";
-import Content from "./Dialog/Content";
-import Actions from "./Dialog/Action";
-import { setTableName } from "../../stores/slices/exportSlice";
+import React, { useEffect, useState } from 'react';
+import useGetEmployeeFlag from './hooks/useGetEmployeeFlag';
+import CustomTable from '../../components/CustomTable';
+import { generateTableHeaders } from './utils/generateTableHeaders';
+import { COMMON_WORDS } from '../../utils/constants';
+import CustomDialog from '../../components/CustomDialog';
+import SearchComponent from '../../components/SearchComponent';
+import { getPlaceHolder } from '../../utils/globalizationFunction';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchUser } from '../../stores/slices/userSlice';
+import { showDialog } from '../../stores/slices/dialogSlice';
+import Content from './Dialog/Content';
+import Actions from './Dialog/Action';
+import { setTableName } from '../../stores/slices/exportSlice';
+import { BUTTON_TEXT } from '../../utils/globalConstants';
 
 function EmployeeFlagConfig() {
   const [producers, setProducers] = useState();
@@ -34,12 +34,7 @@ function EmployeeFlagConfig() {
     );
   }, [dispatch]);
 
-  const { data, loading, fetchData } = useGetEmployeeFlag(
-    page,
-    pageSize,
-    order,
-    orderBy
-  );
+  const { data, loading, fetchData } = useGetEmployeeFlag(page, pageSize, order, orderBy);
 
   useEffect(() => {
     if (data && data?.data) {
@@ -68,14 +63,12 @@ function EmployeeFlagConfig() {
   };
 
   const optionLabelUser = (option) => {
-    return option?.firstName
-      ? `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`
-      : "";
+    return option?.firstName ? `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}` : '';
   };
 
   const renderOptionUserFunction = (props, option) => (
     <li {...props} key={option?.id}>
-      {option?.firstName?.toUpperCase()} {""}
+      {option?.firstName?.toUpperCase()} {''}
       {option?.lastName?.toUpperCase()}
     </li>
   );
@@ -94,8 +87,7 @@ function EmployeeFlagConfig() {
 
   return (
     <div>
-      <EmployeeConfigurationForm fetchData={fetchData} />
-      <div className="mt-4">
+      <div className="mb-4">
         <SearchComponent
           optionsData={user?.data || []}
           option={producers}
@@ -104,26 +96,26 @@ function EmployeeFlagConfig() {
           placeholder={getPlaceHolder(COMMON_WORDS.USER)}
           renderOptionFunction={renderOptionUserFunction}
           handleGo={handleGo}
-          showButton={false}
           showExportButton={true}
+          buttonText={BUTTON_TEXT.EMPLOYEE_FLAG_CONFIG}
+          navigateRoute="/employee-flag-config/form"
+          showButton
         />
       </div>
-      <div className="mt-4">
-        <CustomTable
-          columns={HEADER_COLUMNS}
-          rows={tableData || []}
-          loading={loading}
-          totalCount={data?.totalCount || 0}
-          page={page}
-          setPage={setPage}
-          rowsPerPage={pageSize}
-          setRowsPerPage={setPageSize}
-          order={order}
-          setOrder={setOrder}
-          orderBy={orderBy}
-          setOrderBy={setOrderBy}
-        />
-      </div>
+      <CustomTable
+        columns={HEADER_COLUMNS}
+        rows={tableData || []}
+        loading={loading}
+        totalCount={data?.totalCount || 0}
+        page={page}
+        setPage={setPage}
+        rowsPerPage={pageSize}
+        setRowsPerPage={setPageSize}
+        order={order}
+        setOrder={setOrder}
+        orderBy={orderBy}
+        setOrderBy={setOrderBy}
+      />
       <CustomDialog />
     </div>
   );

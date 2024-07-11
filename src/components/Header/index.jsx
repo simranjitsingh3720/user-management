@@ -12,11 +12,9 @@ import {
 import React, { useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useNavigate } from "react-router-dom";
-import CustomButton from "../CustomButton";
 import { HEADER } from "../../utils/constants";
-import { TOKEN, TOKEN_EXPIRATION } from "../../utils/globalConstants";
+import { TOKEN } from "../../utils/globalConstants";
 import { COMMON_WORDS } from "../../utils/constants";
-import { useDispatch } from "react-redux";
 
 function stringToColor(string) {
   let hash = 0;
@@ -49,11 +47,9 @@ function Header({ handleDrawerToggle, selectedNavbar, selectedParentIndex }) {
   const navigate = useNavigate();
   const [anchorElUser, setAnchorElUser] = useState(null);
   const settings = ['Logout'];
-  const dispatch = useDispatch();
 
   const handleLogout = () => {
     localStorage.removeItem(TOKEN);
-    localStorage.removeItem(TOKEN_EXPIRATION);
     navigate("/");
   };
 
@@ -77,10 +73,9 @@ function Header({ handleDrawerToggle, selectedNavbar, selectedParentIndex }) {
       position="fixed"
       sx={{
         width: { md: `calc(100% - ${HEADER.DRAWER_WIDTH}px)` },
-        ml: { md: `${HEADER.DRAWER_WIDTH}px` },
-        backgroundColor: HEADER.HEADER_BACKGROUND_COLOR,
-        color: HEADER.TEXT_COLOR,
+        ml: { md: `${HEADER.DRAWER_WIDTH}px` },  
       }}
+      className="bg-white text-slate-600"
     >
       <Toolbar className="flex items-center justify-between">
         <Box display="flex" alignItems="center">
@@ -89,7 +84,7 @@ function Header({ handleDrawerToggle, selectedNavbar, selectedParentIndex }) {
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { md: "none" }, color: HEADER.ICON_COLOR }}
+            sx={{ mr: 2, display: { md: "none" } }}
           >
             <MenuIcon />
           </IconButton>
@@ -101,6 +96,7 @@ function Header({ handleDrawerToggle, selectedNavbar, selectedParentIndex }) {
             sx={{
               maxWidth: { sm: '100%', xs: "200px" }
             }}
+            textTransform="capitalize"
           >
             {selectedNavbar}
             {selectedParentIndex}

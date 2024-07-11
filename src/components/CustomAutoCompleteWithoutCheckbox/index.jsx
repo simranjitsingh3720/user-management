@@ -1,6 +1,6 @@
-import { Autocomplete, TextField } from "@mui/material";
-import React from "react";
-import { Controller } from "react-hook-form";
+import { Autocomplete, TextField } from '@mui/material';
+import React from 'react';
+import { Controller } from 'react-hook-form';
 
 const CustomAutoCompleteWithoutCheckbox = ({
   name,
@@ -11,7 +11,7 @@ const CustomAutoCompleteWithoutCheckbox = ({
   getOptionLabel,
   className,
   loading,
-  size='small',
+  size = 'small',
   isOptionEqualToValue,
   placeholder,
   disableClearable,
@@ -20,13 +20,12 @@ const CustomAutoCompleteWithoutCheckbox = ({
   required,
   error,
   helperText,
-  onChangeCallback
+  onChangeCallback,
+  disabled,
 }) => {
   return (
     <>
-      <span className={required ? "required-field label-text" : "label-text"}>
-        {label}
-      </span>
+      <span className={required ? 'required-field label-text' : 'label-text'}>{label}</span>
       <Controller
         name={name}
         control={control}
@@ -36,12 +35,11 @@ const CustomAutoCompleteWithoutCheckbox = ({
             loading={loading}
             options={options || []}
             getOptionLabel={getOptionLabel}
-            className={className +  "customize-select"}
+            disabled={disabled}
+            className={className + 'customize-select bg-white'}
             size={size}
             isOptionEqualToValue={isOptionEqualToValue}
-            renderInput={(params) => (
-              <TextField {...params} placeholder={placeholder} />
-            )}
+            renderInput={(params) => <TextField {...params} error={error} placeholder={placeholder} />}
             value={field.value}
             onChange={(event, newValue) => {
               field.onChange(newValue);
@@ -53,9 +51,7 @@ const CustomAutoCompleteWithoutCheckbox = ({
           />
         )}
       />
-      <div className="error-msg">
-        {error && <span>{helperText}</span>}
-      </div>
+      <div className="error-msg">{error && <span>{helperText}</span>}</div>
     </>
   );
 };

@@ -1,0 +1,14 @@
+<svg id="Producer_Management" data-name="Producer Management" xmlns="http://www.w3.org/2000/svg" width="21.871" height="21.252" viewBox="0 0 21.871 21.252">
+  <g id="Group_31568" data-name="Group 31568" transform="translate(0 0)">
+    <g id="user_3917688" transform="translate(0 0)">
+      <path id="Path_17754" data-name="Path 17754" d="M11.268,10.535A5.268,5.268,0,1,0,6,5.268a5.268,5.268,0,0,0,5.268,5.268Zm0-8.779A3.512,3.512,0,1,1,7.756,5.268a3.512,3.512,0,0,1,3.512-3.512Z" transform="translate(-3.366)" fill="#7e84a3"/>
+      <path id="Path_17755" data-name="Path 17755" d="M10.9,14A7.91,7.91,0,0,0,3,21.9a.878.878,0,0,0,1.756,0,6.146,6.146,0,1,1,12.291,0,.878.878,0,0,0,1.756,0A7.91,7.91,0,0,0,10.9,14Z" transform="translate(-3 -1.709)" fill="#7e84a3"/>
+    </g>
+    <g id="Group_31565" data-name="Group 31565" transform="translate(9.733 9.113)">
+      <circle id="Ellipse_505" data-name="Ellipse 505" cx="4.983" cy="4.983" r="4.983" transform="translate(1.151 1.798)" fill="#fff"/>
+      <path id="circle-u_10489632" d="M6.108.02a6.069,6.069,0,1,0,6.069,6.069A6.075,6.075,0,0,0,6.108.02Zm0,11.126ZM8.636,3.813V6.847a2.529,2.529,0,1,1-5.057,0V3.813a.506.506,0,0,1,1.011,0V6.847a1.517,1.517,0,1,0,3.034,0V3.813a.506.506,0,0,1,1.011,0Z" transform="translate(-0.039 -0.02)" fill="#7e84a3"/>
+    </g>
+  </g>
+  <circle id="Ellipse_506" data-name="Ellipse 506" cx="6.069" cy="6.069" r="6.069" transform="translate(9.733 9.114)" fill="#7e84a3"/>
+  <path id="rupiah-sign_9795453" d="M18.621,13h-.874A1.752,1.752,0,0,0,16,14.747v4.077a.582.582,0,1,0,1.165,0V17.077h1.456a2.038,2.038,0,0,0,0-4.077Zm0,2.912H17.165V14.747a.584.584,0,0,1,.582-.582h.874a.874.874,0,0,1,0,1.747Z" transform="translate(-2.527 -0.776)" fill="#fff"/>
+</svg>
