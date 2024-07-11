@@ -10,6 +10,7 @@ export const LOGIN_TYPE = 'loginType';
 export const USER_CREATION_SUCCESS = 'User created successfully';
 export const USER_UPDATED_SUCCESS = 'User updated successfully';
 export const NAVIGATE_TO_DASHBOARD = '/dashboard';
+export const NAVIGATE_TO_USER_MANAGEMENT = '/user-management';
 export const NAVIGATE_TO_FORM = '/user-management/form'
 export const REQUIRED_MSG = 'This field is required';
 export const PRODUCER_ARR = ['producer', 'subproducer', 'dealer'];
