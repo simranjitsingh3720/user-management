@@ -1,9 +1,18 @@
-import { Card, CardContent, Box, Grid, IconButton, Typography } from '@mui/material';
+import {
+  Card,
+  CardContent,
+  Box,
+  Grid,
+  IconButton,
+  Typography,
+  Switch,
+  FormLabel,
+  FormControlLabel,
+} from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
-import TableList from './TableList';
 import useGetUserData from '../../BANCALogin/hooks/useGetUserData';
 import useGetProducerData from '../../BANCALogin/hooks/useGetProducerData';
 import useCreateEmployeeConfig from '../hooks/useCreateEmployeeConfig';
@@ -87,6 +96,20 @@ function EmployeeConfigurationForm({ fetchData: listFetchFun }) {
     setValue('producer', null);
   };
 
+  const handleChange = (productId) => {
+    const newDataList = [...dataList];
+    const newUpdatedDataList = newDataList.map((item) => {
+      if (item.productId === productId) {
+        return {
+          ...item,
+          isEmployee: !item.isEmployee,
+        };
+      }
+      return item;
+    });
+    setDataList(newUpdatedDataList);
+  };
+
   return (
     <div>
       <Box component="form" onSubmit={handleSubmit(onSubmit)}>
@@ -139,14 +162,27 @@ function EmployeeConfigurationForm({ fetchData: listFetchFun }) {
               </Grid>
               <Grid item xs={12}>
                 {producerLoading ? (
-                  <div>
-                    <ListLoader rows={3} column={3} />
-                  </div>
+                  <ListLoader rows={3} column={3} />
                 ) : (
                   producerList?.data?.length && (
-                    <div>
-                      <TableList dataList={dataList} setDataList={setDataList} />
-                    </div>
+                    <Grid container spacing={2}>
+                      {dataList.map((item) => (
+                        <Grid item xs={12} md={6} lg={4}>
+                          <FormLabel component="legend">{item.name}</FormLabel>
+                          <FormControlLabel
+                            control={
+                              <Switch
+                                checked={item.isEmployee}
+                                onChange={() => handleChange(item.productId)}
+                                inputProps={{ 'aria-label': 'toggle button' }}
+                                label={item.isEmployee ? 'Yes' : 'No'}
+                              />
+                            }
+                            label={item.isEmployee ? 'Yes' : 'No'}
+                          />
+                        </Grid>
+                      ))}
+                    </Grid>
                   )
                 )}
               </Grid>
