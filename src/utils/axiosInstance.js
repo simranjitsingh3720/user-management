@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { BASE_URL, TOKEN } from '../utils/globalConstants';
+import axios from "axios";
+import { BASE_URL, TOKEN, TOKEN_EXPIRATION } from "../utils/globalConstants";
 
 const instance = axios.create({
   baseURL: BASE_URL,
@@ -7,9 +7,9 @@ const instance = axios.create({
 });
 
 const isTokenExpired = () => {
-  const token = localStorage.getItem(TOKEN);
-  if (!token) return true;
-  return false;
+  const expirationTime = localStorage.getItem(TOKEN_EXPIRATION);
+  if (!expirationTime) return true;
+  return new Date().getTime() > parseInt(expirationTime);
 };
 
 // Axios request interceptor to add token to requests
@@ -34,7 +34,8 @@ instance.interceptors.response.use(
 
       if (isTokenExpired()) {
         localStorage.removeItem(TOKEN);
-        window.location.href = '/';
+        localStorage.removeItem(TOKEN_EXPIRATION);
+        window.location.href = "/";
         return Promise.reject(error);
       }
 
