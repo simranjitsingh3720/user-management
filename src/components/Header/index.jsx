@@ -50,7 +50,6 @@ function Header({ handleDrawerToggle, selectedNavbar, selectedParentIndex }) {
 
   const handleLogout = () => {
     localStorage.removeItem(TOKEN);
-    localStorage.removeItem(TOKEN_EXPIRATION);
     navigate("/");
   };
 
