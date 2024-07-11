@@ -14,12 +14,14 @@ export default function usePostLogin() {
 
   const navigate = useNavigate();
 
-  async function postData(data) {
+  async function postData(loginData) {
     setLoading(true);
     try {
-      const response = await axiosInstance.post(apiUrls.postLogin, data);
-      if (response && response?.data) {
-        localStorage.setItem(TOKEN, response?.data?.data?.token);
+      const response = await axiosInstance.post(apiUrls.postLogin, loginData);
+      const { data }  = response.data;
+      if (data) {
+        localStorage.setItem(TOKEN, data.token);
+        localStorage.setItem("scopes", JSON.stringify(data.scopes));
         navigate(DASHBOARD);
       }
     } catch (error) {
