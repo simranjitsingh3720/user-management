@@ -5,8 +5,10 @@ import NavbarDrawer from "../NavbarDrawer";
 import Header from "../Header";
 import { drawerWidth } from "../../utils/globalConstants";
 import useSideNavData from "../NavbarDrawer/hooks/useSideNavData";
+import { useLocation } from "react-router-dom";
 
 const HEADER_HEIGHT = 64;
+const DASHBOARD = "dashboard";
 
 export const getLabelFromPath = (pathData, sideNavData) => {
   for (const item of sideNavData) {
@@ -27,7 +29,9 @@ export const getLabelFromPath = (pathData, sideNavData) => {
 function ResponsiveDrawer({ showSidebarAndHeader, children }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
-  const [selectedNavbar, setSelectedNavbar] = useState("dashboard");
+  const location = useLocation();
+  let pathname = location?.pathname?.split('/')[1];
+  const [selectedNavbar, setSelectedNavbar] = useState(pathname ? pathname : DASHBOARD);
   const [selectedParentIndex, setSelectedParentIndex] = useState(null);
   
   const sideNavData = useSideNavData();
