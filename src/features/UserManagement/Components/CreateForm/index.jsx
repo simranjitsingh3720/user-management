@@ -154,7 +154,7 @@ function CreateUserCreationForm() {
   }, []);
 
   useEffect(() => {
-    if (roleValue) {
+    if (roleValue && !isEdit) {
       let resetValues = {
         roleSelect: watch(ROLE_SELECT),
       };
@@ -460,7 +460,7 @@ function CreateUserCreationForm() {
             name={ROLE_SELECT}
             label="Role"
             required
-            disabled={false}
+            disabled={isEdit}
             options={role || []}
             validation={{ required: REQUIRED_MSG }}
             errors={errors}
