@@ -19,7 +19,6 @@ export default function usePostUser() {
       toast.success(response?.data?.message || USER_CREATION_SUCCESS);
       navigate(NAVIGATE_TO_USER_MANAGEMENT);
     } catch (error) {
-      console.log(error);
       toast.error(error?.response?.data?.error?.message || error?.response?.data?.details || COMMON_ERROR);
     } finally {
       setLoading(false);

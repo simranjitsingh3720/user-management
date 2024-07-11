@@ -43,7 +43,6 @@ function UserManagement() {
   }, [data]);
 
   const handleInsillionStatus = useCallback((data, row) => {
-    console.log(row);
     dispatch(
       showDialog({
         title: COMMON_WORDS.CHANGE_STATUS,
@@ -58,7 +57,6 @@ function UserManagement() {
   const handleGo = () => {
     setUserData([]);
     fetchData(searched, query);
-    console.log(data);
   };
 
   return (

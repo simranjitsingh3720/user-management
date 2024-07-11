@@ -41,7 +41,6 @@ const TableContent = ({ columns, data, loading }) => {
                       {action.component === 'checkbox' ? (
                         <Checkbox checked={row.checked || false} onChange={() => action.onClick(row)} />
                       ) : action.component === 'switch' ? (
-                        console.log(row,row.checked, col.id),
                         <Switch checked={row.checked || false} onChange={() => action.onClick(data, row)} />
                       ) : action.showIcon ? (
                         <IconButton onClick={() => action.onClick(row)}>{action.iconName}</IconButton>

@@ -91,7 +91,6 @@ export const Header = (editAction, handleInsillionStatus) => {  return[
       {
         component: 'switch',
         onClick: (data, row) => {
-          console.log(data, row);
           handleInsillionStatus(data, row)
         }
           

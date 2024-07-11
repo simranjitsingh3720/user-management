@@ -60,7 +60,6 @@ function UploadForm() {
         } else {
           console.log(`File size: ${fileSize} bytes`);
           setFileUploaded(true);
-          console.log(file);
           setFileName(file.name);
         }
       } else {

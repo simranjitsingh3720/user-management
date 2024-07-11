@@ -14,7 +14,6 @@ export default function useGetUser(page, pageSize, query, order, orderBy) {
         url += `&searchKey=${searched}&searchString=${query}`;
       }
       const response = await axiosInstance.get(url);
-      console.log(response.data);
       setData(response.data);
     } catch (error) {
       setData([]);
