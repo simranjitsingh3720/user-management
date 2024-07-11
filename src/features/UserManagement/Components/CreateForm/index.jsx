@@ -206,6 +206,13 @@ function CreateUserCreationForm() {
     setResetClicked(!resetClicked);
     console.log('reset', resultObject);
     reset(resultObject);
+    if(isEdit){
+      if (params?.id) {
+        setIsEdit(true);
+        getUserDetails(params?.id);
+      }
+
+    }
   };
 
   useEffect(() => {
@@ -234,7 +241,6 @@ function CreateUserCreationForm() {
   }, [rolesWatch]);
 
   const onSubmit = (data) => {
-    userTypeFetch(rolesWatch?.id);
     const {
       mobileNumber,
       email,
