@@ -1,18 +1,18 @@
 import React, { useEffect } from "react";
 import { Navigate } from "react-router-dom";
-import { isAuthenticated } from "../../utils/auth";
 import { toast } from "react-toastify";
-import { TOKEN_EXPIRATION_ERROR } from "../../utils/globalConstants";
+import { TOKEN, TOKEN_EXPIRATION_ERROR } from "../../utils/globalConstants";
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
+  const token = localStorage.getItem(TOKEN);
    useEffect(() => {
-     if (!isAuthenticated()) {
+     if (!token) {
       toast.error(TOKEN_EXPIRATION_ERROR)
      }
    });
  
  return (
-    isAuthenticated() ? <Component {...rest} /> : <Navigate to="/" />
+    token ? <Component {...rest} /> : <Navigate to="/" />
  )
 };
 

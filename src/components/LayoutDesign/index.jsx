@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import Box from "@mui/material/Box";
-import CssBaseline from "@mui/material/CssBaseline";
-import NavbarDrawer from "../NavbarDrawer";
-import Header from "../Header";
-import { drawerWidth } from "../../utils/globalConstants";
-import useSideNavData from "../NavbarDrawer/hooks/useSideNavData";
-import { useLocation } from "react-router-dom";
+import React, { useState } from 'react';
+import Box from '@mui/material/Box';
+import CssBaseline from '@mui/material/CssBaseline';
+import NavbarDrawer from '../NavbarDrawer';
+import Header from '../Header';
+import { drawerWidth } from '../../utils/globalConstants';
+import useSideNavData from '../NavbarDrawer/hooks/useSideNavData';
+import { useLocation } from 'react-router-dom';
 
 const HEADER_HEIGHT = 64;
-const DASHBOARD = "dashboard";
+const DASHBOARD = 'dashboard';
 
 export const getLabelFromPath = (pathData, sideNavData) => {
   for (const item of sideNavData) {
@@ -30,11 +30,13 @@ function ResponsiveDrawer({ showSidebarAndHeader, children }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const location = useLocation();
-  let pathname = location?.pathname?.split('/')[1]?.replace("-",' ') || '';
+  let pathname = location?.pathname?.split('/')[1]?.replace('-', ' ') || '';
   const [selectedNavbar, setSelectedNavbar] = useState(pathname ? pathname : DASHBOARD);
   const [selectedParentIndex, setSelectedParentIndex] = useState(null);
-  
-  const sideNavData = useSideNavData();
+
+  const sideNav = useSideNavData();
+  const scopes = JSON.parse(localStorage.getItem('scopes'))?.read || [];
+  const sideNavData = sideNav.filter(item => scopes.some(scope => scope.id === item.id));
 
   const handleDrawerToggle = () => {
     if (!isClosing) {
@@ -43,7 +45,7 @@ function ResponsiveDrawer({ showSidebarAndHeader, children }) {
   };
 
   return (
-    <Box sx={{ display: "flex", height: "100vh" }}>
+    <Box sx={{ display: 'flex', height: '100vh' }}>
       <CssBaseline />
       {showSidebarAndHeader && (
         <>
@@ -69,11 +71,11 @@ function ResponsiveDrawer({ showSidebarAndHeader, children }) {
           <Box
             sx={{
               flexGrow: 1,
-              display: "flex",
-              flexDirection: "column",
-              height: "100vh",
-              overflow: "hidden",
-              paddingTop: `${HEADER_HEIGHT}px`, 
+              display: 'flex',
+              flexDirection: 'column',
+              height: '100vh',
+              overflow: 'hidden',
+              paddingTop: `${HEADER_HEIGHT}px`,
             }}
           >
             <Header
@@ -85,7 +87,7 @@ function ResponsiveDrawer({ showSidebarAndHeader, children }) {
               component="main"
               sx={{
                 flexGrow: 1,
-                overflowY: "auto",
+                overflowY: 'auto',
                 padding: 3,
               }}
             >

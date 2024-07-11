@@ -1,23 +1,21 @@
-import { Box, Card, CardContent, Divider, Grid, IconButton, Typography } from '@mui/material';
+import { Box, Card, CardContent, Grid } from '@mui/material';
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { getLocations } from '../../../Redux/getLocation';
-import { COMMON_WORDS } from '../../../utils/constants';
+import { COMMON_WORDS, FORM_HEADER_TEXT } from '../../../utils/constants';
 import { fetchLobData } from '../../../stores/slices/lobSlice';
 import CustomAutoCompleteWithoutCheckbox from '../../../components/CustomAutoCompleteWithoutCheckbox';
 import { fetchAllProductData } from '../../../stores/slices/productSlice';
 import CustomButton from '../../../components/CustomButton';
 import { LEVEL_ENUM, LEVEl_LABEL_ENUM, STATUS } from '../utils/constants';
 import UserTypeToggle from '../../../components/CustomRadioButtonGroup';
-import { useNavigate, useParams } from 'react-router-dom';
-import LeftArrow from '../../../assets/LeftArrow';
-import RestartAltIcon from '@mui/icons-material/RestartAlt';
+import { useParams } from 'react-router-dom';
 import useCreateProductLevel from '../hooks/useCreateProductLevel';
+import CustomFormHeader from '../../../components/CustomFormHeader';
 
 function LevelMappingForm() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const params = useParams();
   const { employeeId, id } = params;
   const { products, productLoading } = useSelector((state) => state.product);
@@ -115,39 +113,13 @@ function LevelMappingForm() {
         <CardContent>
           <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
             <Grid item xs={12}>
-              <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-                <Grid item xs={8}>
-                  <div className="flex items-center">
-                    <IconButton
-                      aria-label="back"
-                      onClick={() => {
-                        navigate(`/uwlevelmappingemployee/${employeeId}`);
-                      }}
-                    >
-                      <LeftArrow />
-                    </IconButton>
-                    <Typography variant="h5" className="ml-3 font-semibold">
-                      {params.id ? 'Update Product Location Leve' : 'Create New Product Location Level'}
-                    </Typography>
-                  </div>
-                </Grid>
-                <Grid
-                  item
-                  xs={4}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'flex-end',
-                  }}
-                >
-                  <CustomButton variant="outlined" startIcon={<RestartAltIcon />} onClick={handleReset}>
-                    Reset
-                  </CustomButton>
-                </Grid>
-              </Grid>
-              <Divider style={{ margin: '1rem 0' }} />
+              <CustomFormHeader
+                id={params.id}
+                headerText={FORM_HEADER_TEXT.PRODUCT_LOCATION}
+                navigateRoute={`/uwlevelmappingemployee/${employeeId}`}
+                handleReset={handleReset}
+              />
             </Grid>
-
             <Grid item xs={12} sm={6} lg={4}>
               <CustomAutoCompleteWithoutCheckbox
                 name="lob"

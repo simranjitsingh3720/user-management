@@ -1,9 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import styles from './styles.module.scss';
-import { IconButton } from '@mui/material';
 import { useForm } from 'react-hook-form';
-import LeftArrow from '../../../../assets/LeftArrow';
 import { useNavigate, useParams } from 'react-router-dom';
 import usePostUser from '../hooks/usePostUser';
 import axios from 'axios';
@@ -42,6 +40,8 @@ import {
 import apiUrls from '../../../../utils/apiUrls';
 import useSubmit from '../hooks/useSubmit';
 import { getLoginType } from '../../../../Redux/getLoginType';
+import CustomFormHeader from '../../../../components/CustomFormHeader';
+import { FORM_HEADER_TEXT } from '../../../../utils/constants';
 
 function CreateUserCreationForm() {
   const dispatch = useDispatch();
@@ -65,7 +65,6 @@ function CreateUserCreationForm() {
     channelType: channelType,
     neftDefaultBank: neftDefaultBank,
   });
-  const navigate = useNavigate();
   const { loading, postData } = usePostUser();
   const [roleConfig, setRoleConfig] = useState([]);
   const [resetClicked, setResetClicked] = useState(false);
@@ -446,18 +445,8 @@ function CreateUserCreationForm() {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles.formMainContainer}>
       <div className={styles.createNewUserContainer}>
-        <div className={styles.formHeaderStyle}>
-          <div className={styles.subHeader}>
-            <IconButton
-              aria-label="back"
-              onClick={() => {
-                navigate('/user-management');
-              }}
-            >
-              <LeftArrow />
-            </IconButton>
-            <span className={styles.headerTextStyle}>Create New User</span>
-          </div>
+        <div className="p-4">
+          <CustomFormHeader headerText={FORM_HEADER_TEXT.USER} navigateRoute="/user-management" />
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 px-8 gap-5 py-5">
           <AutocompleteMultipleField

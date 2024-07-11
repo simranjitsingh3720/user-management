@@ -22,7 +22,7 @@ function PermissionModule() {
   const [order, setOrder] = useState(COMMON_WORDS.ASC);
   const [orderBy, setOrderBy] = useState(COMMON_WORDS.CREATED_AT);
 
-  const { fetchData, data, loading } = useGetPrivilege(page, pageSize, query, order, orderBy);
+  const { fetchData, data, loading } = useGetPrivilege(page, pageSize, order, orderBy);
 
   const handleClicked = (data, row) => {
     dispatch(

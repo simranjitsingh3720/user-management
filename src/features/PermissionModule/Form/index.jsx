@@ -1,19 +1,16 @@
-import React, { useState } from "react";
-import { useFieldArray, useForm } from "react-hook-form";
-import CreateNewUserContainer from "../CreateNewPrivilegeForm";
-import { IconButton, Typography } from "@mui/material";
-import styles from "./styles.module.scss";
-import { useNavigate } from "react-router-dom";
-import LeftArrow from "../../../assets/LeftArrow";
-import AddIcon from "@mui/icons-material/Add";
-import useCreatePrivilege from "../hooks/useCreatePrivilege";
-import CustomButton from "../../../components/CustomButton";
+import React, { useState } from 'react';
+import { useFieldArray, useForm } from 'react-hook-form';
+import CreateNewUserContainer from '../CreateNewPrivilegeForm';
+import styles from './styles.module.scss';
+import AddIcon from '@mui/icons-material/Add';
+import useCreatePrivilege from '../hooks/useCreatePrivilege';
+import CustomButton from '../../../components/CustomButton';
+import CustomFormHeader from '../../../components/CustomFormHeader';
+import { FORM_HEADER_TEXT } from '../../../utils/constants';
 
 function Form() {
   const [selectedSubmodules, setSelectedSubmodules] = useState({});
   const [permissionType, setPermissionType] = useState({});
-
-  const navigate = useNavigate();
 
   const {
     handleSubmit,
@@ -27,7 +24,7 @@ function Form() {
   });
   const { fields, append, remove } = useFieldArray({
     control,
-    name: "items",
+    name: 'items',
   });
 
   const handleRemoveRow = (indexToRemove, id) => {
@@ -50,14 +47,11 @@ function Form() {
   const onSubmit = () => {
     const formattedData = [];
 
-   
     for (const moduleId in selectedSubmodules) {
       const subModules = selectedSubmodules[moduleId];
-      const lastSubModule = subModules[subModules.length - 1]; 
+      const lastSubModule = subModules[subModules.length - 1];
       const subModuleId = lastSubModule.id;
-      const permissionTypes = permissionType[moduleId].map(
-        (permission) => permission.value
-      );
+      const permissionTypes = permissionType[moduleId].map((permission) => permission.value);
       formattedData.push({ subModuleId, permissionTypes });
     }
     postData(formattedData);
@@ -67,22 +61,9 @@ function Form() {
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.createNewUserContainer}>
-          <div className={styles.formHeaderStyle}>
-            <div className={styles.subHeader}>
-              <IconButton
-                aria-label="back"
-                onClick={() => {
-                  navigate("/permission");
-                }}
-              >
-                <LeftArrow />
-              </IconButton>
-              <Typography variant="h5" className="ml-3 font-semibold">
-                Create New Permission
-              </Typography>
-            </div>
+          <div className="p-4">
+            <CustomFormHeader headerText={FORM_HEADER_TEXT.PERMISSION} navigateRoute="/permission" />
           </div>
-
           {fields.map((item, index) => (
             <CreateNewUserContainer
               key={item.id}
@@ -101,12 +82,12 @@ function Form() {
 
           <CustomButton
             type="button"
-            variant="outlined"
-            sx={{ "margin-left": "2rem" }}
+            variant="text"
+            sx={{ 'margin-left': '2rem', 'margin-bottom': '16px' }}
             startIcon={<AddIcon />}
             onClick={() => append({})}
           >
-            Add New Permission
+            <span className="underline">Add New Permission</span>
           </CustomButton>
         </div>
         <CustomButton type="submit" variant="contained" disabled={loading}>

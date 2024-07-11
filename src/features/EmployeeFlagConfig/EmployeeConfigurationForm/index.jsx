@@ -1,31 +1,21 @@
-import {
-  Card,
-  CardContent,
-  Box,
-  Grid,
-  IconButton,
-  Typography,
-  Switch,
-  FormLabel,
-  FormControlLabel,
-} from '@mui/material';
+import { Card, CardContent, Box, Grid, Switch, FormLabel, FormControlLabel } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import useGetUserData from '../../BANCALogin/hooks/useGetUserData';
 import useGetProducerData from '../../BANCALogin/hooks/useGetProducerData';
 import useCreateEmployeeConfig from '../hooks/useCreateEmployeeConfig';
 import useGetEmployeeByProducer from '../hooks/useGetEmployeeById';
 import useUpdateEmployeeConfig from '../hooks/useUpdateEmployeeConfig';
 import CustomButton from '../../../components/CustomButton';
-import LeftArrow from '../../../assets/LeftArrow';
 import CustomAutoCompleteWithoutCheckbox from '../../../components/CustomAutoCompleteWithoutCheckbox';
-import { COMMON_WORDS } from '../../../utils/constants';
+import { COMMON_WORDS, FORM_HEADER_TEXT } from '../../../utils/constants';
 import ListLoader from '../../../components/ListLoader';
+import CustomFormHeader from '../../../components/CustomFormHeader';
 
 function EmployeeConfigurationForm({ fetchData: listFetchFun }) {
-  const navigate = useNavigate();
+  const params = useParams();
+  const { id } = params;
   const { producerList, fetchData, loading: producerLoading } = useGetProducerData();
   const [dataList, setDataList] = useState([]);
   const { data: EmployeeProducerData, fetchData: fetchDataByProducer } = useGetEmployeeByProducer();
@@ -116,23 +106,12 @@ function EmployeeConfigurationForm({ fetchData: listFetchFun }) {
         <Card>
           <CardContent>
             <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <Grid container alignItems="center" justifyContent="space-between">
-                  <Grid item className="flex">
-                    <IconButton aria-label="back" onClick={() => navigate('/employee-flag-config')}>
-                      <LeftArrow />
-                    </IconButton>
-                    <Typography variant="h5" className="ml-3 font-semibold">
-                      Create Employee Flag Configuration
-                    </Typography>
-                  </Grid>
-                  <Grid item>
-                    <CustomButton variant="outlined" startIcon={<RestartAltIcon />} onClick={() => handleResetButton()}>
-                      Reset
-                    </CustomButton>
-                  </Grid>
-                </Grid>
-              </Grid>
+              <CustomFormHeader
+                id={id}
+                headerText={FORM_HEADER_TEXT.EMPLOYEE_FLAG}
+                handleReset={handleResetButton}
+                navigateRoute="/employee-flag-config"
+              />
               <Grid item xs={12} md={6} lg={4}>
                 <CustomAutoCompleteWithoutCheckbox
                   name="producer"

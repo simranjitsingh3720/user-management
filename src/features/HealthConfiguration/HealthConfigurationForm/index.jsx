@@ -1,22 +1,17 @@
-import {
-  Autocomplete,
-  IconButton,
-  MenuItem,
-  Select,
-  TextField,
-} from "@mui/material";
-import React, { useEffect } from "react";
-import LeftArrow from "../../../assets/LeftArrow";
-import styles from "./styles.module.scss";
-import { Controller, useForm } from "react-hook-form";
-import { useNavigate, useParams } from "react-router-dom";
+import { Autocomplete, MenuItem, Select, TextField } from '@mui/material';
+import React, { useEffect } from 'react';
+import styles from './styles.module.scss';
+import { Controller, useForm } from 'react-hook-form';
+import { useParams } from 'react-router-dom';
 
-import useUpdatePaymentConfig from "../hooks/useUpdateHealthConfig";
-import { BitlyLinkMandatory } from "../constants";
-import useGetUserData from "../../BANCALogin/hooks/useGetUserData";
-import useCreateHealthConfig from "../hooks/useCreateHealthConfig";
-import useGetHealthConfigByID from "../hooks/useGetHealthConfigById";
-import CustomButton from "../../../components/CustomButton";
+import useUpdatePaymentConfig from '../hooks/useUpdateHealthConfig';
+import { BitlyLinkMandatory } from '../constants';
+import useGetUserData from '../../BANCALogin/hooks/useGetUserData';
+import useCreateHealthConfig from '../hooks/useCreateHealthConfig';
+import useGetHealthConfigByID from '../hooks/useGetHealthConfigById';
+import CustomButton from '../../../components/CustomButton';
+import CustomFormHeader from '../../../components/CustomFormHeader';
+import { FORM_HEADER_TEXT } from '../../../utils/constants';
 
 function HealthConfigurationForm() {
   const { id } = useParams();
@@ -28,16 +23,13 @@ function HealthConfigurationForm() {
     },
   });
 
-  const { data: healthConfigData, fetchData: fetchHealthConfigByID } =
-    useGetHealthConfigByID();
+  const { data: healthConfigData, fetchData: fetchHealthConfigByID } = useGetHealthConfigByID();
 
   const { userData } = useGetUserData();
 
   useEffect(() => {
     if (id) fetchHealthConfigByID(id);
   }, [id]);
-
-  const navigate = useNavigate();
 
   const { postData, loading: createPaymentLoading } = useCreateHealthConfig();
 
@@ -47,11 +39,8 @@ function HealthConfigurationForm() {
 
   useEffect(() => {
     if (healthConfigData && healthConfigData?.data) {
-      setValue("producer", healthConfigData?.data?.producer || null);
-      setValue(
-        "medicare",
-        healthConfigData?.data?.isExistingCustomer ? "yes" : "no" || null
-      );
+      setValue('producer', healthConfigData?.data?.producer || null);
+      setValue('medicare', healthConfigData?.data?.isExistingCustomer ? 'yes' : 'no' || null);
     }
   }, [healthConfigData]);
 
@@ -61,14 +50,14 @@ function HealthConfigurationForm() {
         id: id,
         properties: {
           status: true,
-          isExistingCustomer: data?.medicare === "yes" ? true : false,
+          isExistingCustomer: data?.medicare === 'yes' ? true : false,
         },
       };
       UpdateDataFun(payload);
     } else {
       const payload = {
         producerId: data?.producer?.id,
-        isExistingCustomer: data?.medicare === "yes" ? true : false,
+        isExistingCustomer: data?.medicare === 'yes' ? true : false,
       };
       postData(payload);
     }
@@ -78,25 +67,9 @@ function HealthConfigurationForm() {
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.createNewUserContainer}>
-          <div className={styles.formHeaderStyle}>
-            <div className={styles.subHeader}>
-              <IconButton
-                aria-label="back"
-                onClick={() => {
-                  navigate("/health-config");
-                }}
-              >
-                <LeftArrow />
-              </IconButton>
-              <span className={styles.headerTextStyle}>
-                <div className={styles.setOTPHeaderOTP}>
-                  {id
-                    ? "Update Health Configuration"
-                    : "Create Health Configuration"}
-                </div>
-              </span>
-            </div>
-          </div>{" "}
+          <div className="p-5">
+            <CustomFormHeader id={id} headerText={FORM_HEADER_TEXT.HEALTH_CONFIG} navigateRoute="/health-config" />
+          </div>
           <div className={styles.containerStyle}>
             <div className={styles.fieldContainerStyle}>
               <span className={styles.labelText}>
@@ -108,7 +81,7 @@ function HealthConfigurationForm() {
                 name="producer"
                 id="producer"
                 control={control}
-                rules={{ required: "Producer is required" }}
+                rules={{ required: 'Producer is required' }}
                 render={({ field }) => (
                   <Autocomplete
                     id="producer"
@@ -119,33 +92,26 @@ function HealthConfigurationForm() {
                     disabled={id}
                     className={styles.customizeSelect}
                     size="small"
-                    isOptionEqualToValue={(option, value) =>
-                      option.id === value.id
-                    }
-                    renderInput={(params) => (
-                      <TextField {...params} placeholder="Select" />
-                    )}
+                    isOptionEqualToValue={(option, value) => option.id === value.id}
+                    renderInput={(params) => <TextField {...params} placeholder="Select" />}
                     value={field.value}
                     onChange={(event, newValue) => {
                       field.onChange(newValue);
                     }}
                     renderOption={(props, option) => (
                       <li {...props} key={option.id}>
-                        {option?.firstName?.toUpperCase()}{" "}
-                        {option?.lastName?.toUpperCase()}
+                        {option?.firstName?.toUpperCase()} {option?.lastName?.toUpperCase()}
                       </li>
                     )}
                     ListboxProps={{
                       style: {
-                        maxHeight: "200px",
+                        maxHeight: '200px',
                       },
                     }}
                   />
                 )}
               />
-              <div className={styles.styledError}>
-                {errors.producer && <span>This field is required</span>}{" "}
-              </div>
+              <div className={styles.styledError}>{errors.producer && <span>This field is required</span>} </div>
             </div>
             <div className={styles.fieldContainerStyle}>
               <span className={styles.labelText}>
@@ -153,9 +119,9 @@ function HealthConfigurationForm() {
                 <span className={styles.styledRequired}>*</span>
               </span>
               <Controller
-                name="medicare" 
+                name="medicare"
                 control={control}
-                rules={{ required: "This field is required" }}
+                rules={{ required: 'This field is required' }}
                 render={({ field }) => (
                   <Select
                     labelId="search-select"
@@ -169,39 +135,26 @@ function HealthConfigurationForm() {
                     className={styles.customizeSelect}
                     renderValue={(selected) => {
                       if (selected === null) {
-                        return (
-                          <div className={styles.placeholderStyle}>Select</div>
-                        );
+                        return <div className={styles.placeholderStyle}>Select</div>;
                       }
-                      const selectedItem = BitlyLinkMandatory.find(
-                        (item) => item.value === selected
-                      );
-                      return selectedItem ? selectedItem.label : "";
+                      const selectedItem = BitlyLinkMandatory.find((item) => item.value === selected);
+                      return selectedItem ? selectedItem.label : '';
                     }}
                   >
                     {BitlyLinkMandatory.map((item) => (
-                      <MenuItem
-                        value={item.value}
-                        className={styles.styledOptionText}
-                      >
+                      <MenuItem value={item.value} className={styles.styledOptionText}>
                         {item.label}
                       </MenuItem>
                     ))}
                   </Select>
                 )}
               />
-              <div className={styles.styledError}>
-                {errors.medicare && <span>{errors.medicare.message}</span>}
-              </div>
+              <div className={styles.styledError}>{errors.medicare && <span>{errors.medicare.message}</span>}</div>
             </div>
           </div>
         </div>
-        <CustomButton
-          type="submit"
-          variant="contained"
-          disabled={updateLoading || createPaymentLoading}
-        >
-          {id ? "Update" : "Submit"}
+        <CustomButton type="submit" variant="contained" disabled={updateLoading || createPaymentLoading}>
+          {id ? 'Update' : 'Submit'}
         </CustomButton>
       </form>
     </div>

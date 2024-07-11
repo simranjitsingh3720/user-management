@@ -1,20 +1,15 @@
-import React, { useState } from "react";
-import styles from "./styles.module.scss";
-import {
-  Autocomplete,
-  
-  FormControlLabel,
-  Radio,
-  RadioGroup,
-  TextField,
-} from "@mui/material";
-import { Controller, useForm } from "react-hook-form";
-import useGetUserData from "../../BANCALogin/hooks/useGetUserData";
-import useCreateOTPException from "../hooks/useCreateOTPException";
-import CustomButton from "../../../components/CustomButton";
+import React, { useState } from 'react';
+import styles from './styles.module.scss';
+import { Autocomplete, FormControlLabel, Radio, RadioGroup, TextField } from '@mui/material';
+import { Controller, useForm } from 'react-hook-form';
+import useGetUserData from '../../BANCALogin/hooks/useGetUserData';
+import useCreateOTPException from '../hooks/useCreateOTPException';
+import CustomButton from '../../../components/CustomButton';
+import CustomFormHeader from '../../../components/CustomFormHeader';
+import { FORM_HEADER_TEXT } from '../../../utils/constants';
 
 function SetOTPException({ fetchData }) {
-  const [OTPValue, setOTPValue] = useState("byChannnel");
+  const [OTPValue, setOTPValue] = useState('byChannnel');
 
   const handleChange = (event) => {
     setOTPValue(event.target.value);
@@ -37,12 +32,11 @@ function SetOTPException({ fetchData }) {
 
   return (
     <div className={styles.otpException}>
-      <div className={styles.headerTextStyle}>
-        <div className={styles.setOTPHeader}>Set OTP Exception By</div>
-        <div className={styles.headerText}>
-          Please select a channel or producer code from below and add it to the
-          given list for OTP Exception.
-        </div>
+      <div className="p-5">
+        <CustomFormHeader
+          headerText={FORM_HEADER_TEXT.OTP_EXCEPTION}
+          subHeading="Please select a channel or producer code from below and add it to the given list for OTP Exception."
+        />
       </div>
       <div className={styles.OTPSelectStyle}>
         <span className={styles.labelText}>
@@ -61,32 +55,24 @@ function SetOTPException({ fetchData }) {
               value="byChannnel"
               control={<Radio />}
               label="By Channel"
-              className={
-                OTPValue === "byChannnel"
-                  ? styles.radioSelectStyle
-                  : styles.radioNotSelectStyle
-              }
+              className={OTPValue === 'byChannnel' ? styles.radioSelectStyle : styles.radioNotSelectStyle}
             />
             <FormControlLabel
               value="byProducerCode"
               control={<Radio />}
               label="By Producer Code"
-              className={
-                OTPValue === "byProducerCode"
-                  ? styles.radioSelectStyle
-                  : styles.radioNotSelectStyle
-              }
+              className={OTPValue === 'byProducerCode' ? styles.radioSelectStyle : styles.radioNotSelectStyle}
             />
           </RadioGroup>
         </div>
         <form onSubmit={handleSubmit(onSubmit)}>
-          {OTPValue === "byChannnel" ? (
+          {OTPValue === 'byChannnel' ? (
             <div className={styles.fieldContainerStyle}>
               <span className={styles.labelText}>
                 Channel <span className={styles.styledRequired}>*</span>
               </span>
               <Controller
-                name="channel" 
+                name="channel"
                 control={control}
                 rules={{ required: true }}
                 render={({ field }) => (
@@ -98,18 +84,14 @@ function SetOTPException({ fetchData }) {
                     }}
                     className={styles.customizeSelect}
                     size="small"
-                    isOptionEqualToValue={(option, value) =>
-                      option.id === value.id
-                    }
-                    renderInput={(params) => (
-                      <TextField {...params} placeholder="Select" />
-                    )}
+                    isOptionEqualToValue={(option, value) => option.id === value.id}
+                    renderInput={(params) => <TextField {...params} placeholder="Select" />}
                     onChange={(event, newValue) => {
                       field.onChange(newValue);
                     }}
                     ListboxProps={{
                       style: {
-                        maxHeight: "200px",
+                        maxHeight: '200px',
                       },
                     }}
                     // onInputChange={(event, val, reason) => {
@@ -118,9 +100,7 @@ function SetOTPException({ fetchData }) {
                   />
                 )}
               />
-              <div className={styles.styledError}>
-                {errors.channel && <span>This field is required</span>}{" "}
-              </div>
+              <div className={styles.styledError}>{errors.channel && <span>This field is required</span>} </div>
             </div>
           ) : (
             <div className={styles.fieldContainerStyle}>
@@ -128,7 +108,7 @@ function SetOTPException({ fetchData }) {
                 Producer Code <span className={styles.styledRequired}>*</span>
               </span>
               <Controller
-                name="producerCode" 
+                name="producerCode"
                 control={control}
                 rules={{ required: true }}
                 render={({ field }) => (
@@ -140,18 +120,14 @@ function SetOTPException({ fetchData }) {
                     }}
                     className={styles.customizeSelect}
                     size="small"
-                    isOptionEqualToValue={(option, value) =>
-                      option.id === value.id
-                    }
-                    renderInput={(params) => (
-                      <TextField {...params} placeholder="Select" />
-                    )}
+                    isOptionEqualToValue={(option, value) => option.id === value.id}
+                    renderInput={(params) => <TextField {...params} placeholder="Select" />}
                     onChange={(event, newValue) => {
                       field.onChange(newValue);
                     }}
                     ListboxProps={{
                       style: {
-                        maxHeight: "200px",
+                        maxHeight: '200px',
                       },
                     }}
                     // onInputChange={(event, val, reason) => {
@@ -160,17 +136,10 @@ function SetOTPException({ fetchData }) {
                   />
                 )}
               />
-              <div className={styles.styledError}>
-                {errors.producerCode && <span>This field is required</span>}{" "}
-              </div>
+              <div className={styles.styledError}>{errors.producerCode && <span>This field is required</span>} </div>
             </div>
           )}
-          <CustomButton
-            type="submit"
-            variant="contained"
-            
-            loading={loading}
-          >
+          <CustomButton type="submit" variant="contained" loading={loading}>
             Add
           </CustomButton>
         </form>

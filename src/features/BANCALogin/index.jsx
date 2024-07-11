@@ -1,37 +1,28 @@
-import React, { useEffect, useRef, useState } from "react";
-import useGetBancaLoginData from "./hooks/useGetBancaLoginData";
-import styles from "./styles.module.scss";
-import {
-  Autocomplete,
-  Switch,
-  TextField,
-} from "@mui/material";
-import { Controller, useForm } from "react-hook-form";
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import dayjs from "dayjs";
-import useGetUserData from "./hooks/useGetUserData";
-import useGetProducerData from "./hooks/useGetProducerData";
-import RestartAltIcon from "@mui/icons-material/RestartAlt";
-import { FieldDataList, labels } from "./constants";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import useCreateBancaField from "./hooks/useCreateBancaField";
-import useUpdateBancaField from "./hooks/useUpdateBancaField";
-import "dayjs/locale/en-gb";
-import CustomButton from "../../components/CustomButton";
+import React, { useEffect, useRef, useState } from 'react';
+import useGetBancaLoginData from './hooks/useGetBancaLoginData';
+import styles from './styles.module.scss';
+import { Autocomplete, Switch, TextField } from '@mui/material';
+import { Controller, useForm } from 'react-hook-form';
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import dayjs from 'dayjs';
+import useGetUserData from './hooks/useGetUserData';
+import useGetProducerData from './hooks/useGetProducerData';
+import { FieldDataList, labels } from './constants';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import useCreateBancaField from './hooks/useCreateBancaField';
+import useUpdateBancaField from './hooks/useUpdateBancaField';
+import 'dayjs/locale/en-gb';
+import CustomButton from '../../components/CustomButton';
+import CustomFormHeader from '../../components/CustomFormHeader';
+import { FORM_HEADER_TEXT } from '../../utils/constants';
 
 function BANCALogin() {
-  const [fileName, setFileName] = useState("");
+  const [fileName, setFileName] = useState('');
 
-  const {
-    data: bancaData,
-    loading: bancaLoading,
-    fetchData: bancaFetchData,
-  } = useGetBancaLoginData();
+  const { data: bancaData, loading: bancaLoading, fetchData: bancaFetchData } = useGetBancaLoginData();
 
-  const [fieldData, setFieldData] = useState(
-    Object.values(FieldDataList).flat()
-  );
+  const [fieldData, setFieldData] = useState(Object.values(FieldDataList).flat());
 
   const inputFileRef = useRef(null);
 
@@ -65,15 +56,14 @@ function BANCALogin() {
     });
   };
 
-  const { handleSubmit, control, setValue, watch, formState, getValues } =
-    useForm({
-      defaultValues: {
-        producerCode: null,
-        product: null,
-        startDate: null,
-        endDate: null,
-      },
-    });
+  const { handleSubmit, control, setValue, watch, formState, getValues } = useForm({
+    defaultValues: {
+      producerCode: null,
+      product: null,
+      startDate: null,
+      endDate: null,
+    },
+  });
 
   const { userData } = useGetUserData();
 
@@ -88,23 +78,17 @@ function BANCALogin() {
         Mandatory: bancaData?.data?.fields[key].mandatory,
       }));
       setFieldData(result);
-      setValue(
-        "startDate",
-        dayjs(bancaData?.data?.startDate, "DD/MM/YYYY").format("DD/MM/YYYY")
-      );
-      setValue(
-        "endDate",
-        dayjs(bancaData?.data?.endDate, "DD/MM/YYYY").format("DD/MM/YYYY")
-      );
+      setValue('startDate', dayjs(bancaData?.data?.startDate, 'DD/MM/YYYY').format('DD/MM/YYYY'));
+      setValue('endDate', dayjs(bancaData?.data?.endDate, 'DD/MM/YYYY').format('DD/MM/YYYY'));
     }
   }, [bancaData]);
 
   const { errors } = formState;
 
   const resetFields = () => {
-    setValue("product", null);
-    setValue("startDate", null);
-    setValue("endDate", null);
+    setValue('product', null);
+    setValue('startDate', null);
+    setValue('endDate', null);
     setFieldData((prevFieldData) =>
       prevFieldData.map((field) => ({
         ...field,
@@ -159,10 +143,10 @@ function BANCALogin() {
   };
 
   const handleResetButton = () => {
-    setValue("producerCode", null);
-    setValue("product", null);
-    setValue("startDate", null);
-    setValue("endDate", null);
+    setValue('producerCode', null);
+    setValue('product', null);
+    setValue('startDate', null);
+    setValue('endDate', null);
     setFieldData((prevFieldData) =>
       prevFieldData.map((field) => ({
         ...field,
@@ -176,22 +160,12 @@ function BANCALogin() {
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.bancaForm}>
-          <div className={styles.headerTextStyle}>
-            <div>
-              <div className={styles.setOTPHeader}>Banca Fields</div>
-              <div className={styles.headerText}>
-                Fill in the mandatory information to modify the Banca fields.
-              </div>
-            </div>
-            <div>
-              <CustomButton
-                variant="outlined"
-                startIcon={<RestartAltIcon />}
-                onClick={() => handleResetButton()}
-              >
-                Reset
-              </CustomButton>
-            </div>
+          <div className="p-5">
+            <CustomFormHeader
+              handleReset={handleResetButton}
+              headerText={FORM_HEADER_TEXT.BANCA_FIELDS}
+              subHeading="Fill in the mandatory information to modify the Banca fields."
+            />
           </div>
           <div className={styles.fieldStyle}>
             <div className={styles.mainContainerField}>
@@ -200,7 +174,7 @@ function BANCALogin() {
                   Producer Code <span className={styles.styledRequired}>*</span>
                 </span>
                 <Controller
-                  name="producerCode" 
+                  name="producerCode"
                   control={control}
                   rules={{ required: true }}
                   render={({ field }) => (
@@ -212,9 +186,7 @@ function BANCALogin() {
                       }}
                       className={styles.customizeSelect}
                       size="small"
-                      renderInput={(params) => (
-                        <TextField {...params} placeholder="Select" />
-                      )}
+                      renderInput={(params) => <TextField {...params} placeholder="Select" />}
                       value={field.value}
                       onChange={(event, newValue) => {
                         field.onChange(newValue);
@@ -225,24 +197,22 @@ function BANCALogin() {
                       }}
                       ListboxProps={{
                         style: {
-                          maxHeight: "200px",
+                          maxHeight: '200px',
                         },
                       }}
                     />
                   )}
                 />
-                <div className={styles.styledError}>
-                  {errors.producerCode && <span>This field is required</span>}{" "}
-                </div>
+                <div className={styles.styledError}>{errors.producerCode && <span>This field is required</span>} </div>
               </div>
               <div className={styles.fieldContainerStyle}>
                 <span className={styles.labelText}>
                   Products <span className={styles.styledRequired}>*</span>
                 </span>
                 <Controller
-                  name="product" 
+                  name="product"
                   control={control}
-                  value={getValues("product")}
+                  value={getValues('product')}
                   rules={{ required: true }}
                   render={({ field }) => (
                     <Autocomplete
@@ -254,29 +224,22 @@ function BANCALogin() {
                       value={field.value}
                       className={styles.customizeSelect}
                       size="small"
-                      renderInput={(params) => (
-                        <TextField {...params} placeholder="Select" />
-                      )}
+                      renderInput={(params) => <TextField {...params} placeholder="Select" />}
                       onChange={(event, newValue) => {
                         field.onChange(newValue);
-                        if (watch("producerCode") && watch("product")) {
-                          bancaFetchData(
-                            watch("producerCode").id,
-                            watch("product").id
-                          );
+                        if (watch('producerCode') && watch('product')) {
+                          bancaFetchData(watch('producerCode').id, watch('product').id);
                         }
                       }}
                       ListboxProps={{
                         style: {
-                          maxHeight: "200px",
+                          maxHeight: '200px',
                         },
                       }}
                     />
                   )}
                 />
-                <div className={styles.styledError}>
-                  {errors.product && <span>This field is required</span>}{" "}
-                </div>
+                <div className={styles.styledError}>{errors.product && <span>This field is required</span>} </div>
               </div>
               <div className={styles.fieldContainerStyle}>
                 <div className={styles.startDateStyle}>
@@ -284,37 +247,27 @@ function BANCALogin() {
                     Start Date <span className={styles.styledRequired}>*</span>
                   </div>
                   <Controller
-                    name="startDate" 
+                    name="startDate"
                     control={control}
                     rules={{ required: true }}
                     render={({ field }) => (
-                      <LocalizationProvider
-                        dateAdapter={AdapterDayjs}
-                        adapterLocale="en-gb"
-                      >
+                      <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
                         <DatePicker
                           className={styles.dateStyle}
                           // {...register("startDate", { required: true })}
-                          slotProps={{ textField: { size: "small" } }}
-                          value={
-                            field.value
-                              ? dayjs(field.value, "DD/MM/YYYY")
-                              : null
-                          }
+                          slotProps={{ textField: { size: 'small' } }}
+                          value={field.value ? dayjs(field.value, 'DD/MM/YYYY') : null}
                           minDate={dayjs()}
                           onChange={(date) => {
-                            const formattedDate =
-                              dayjs(date).format("DD/MM/YYYY");
-                            setValue("startDate", formattedDate);
+                            const formattedDate = dayjs(date).format('DD/MM/YYYY');
+                            setValue('startDate', formattedDate);
                           }}
                         />
                       </LocalizationProvider>
                     )}
                   />
                 </div>
-                <div className={styles.styledError}>
-                  {errors.startDate && <span>This field is required</span>}
-                </div>
+                <div className={styles.styledError}>{errors.startDate && <span>This field is required</span>}</div>
               </div>
               <div className={styles.fieldContainerStyle}>
                 <div>
@@ -322,37 +275,27 @@ function BANCALogin() {
                     End Date <span className={styles.styledRequired}>*</span>
                   </div>
                   <Controller
-                    name="endDate" 
+                    name="endDate"
                     control={control}
                     rules={{ required: true }}
                     render={({ field }) => (
-                      <LocalizationProvider
-                        dateAdapter={AdapterDayjs}
-                        adapterLocale="en-gb"
-                      >
+                      <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
                         <DatePicker
                           className={styles.dateStyle}
                           // {...register("expiryDate", { required: true })}
                           // value={watch("expiryDate")}
-                          value={
-                            field.value
-                              ? dayjs(field.value, "DD/MM/YYYY")
-                              : null
-                          }
+                          value={field.value ? dayjs(field.value, 'DD/MM/YYYY') : null}
                           minDate={dayjs()}
                           onChange={(date) => {
-                            const formattedDate =
-                              dayjs(date).format("DD/MM/YYYY");
-                            setValue("endDate", formattedDate);
+                            const formattedDate = dayjs(date).format('DD/MM/YYYY');
+                            setValue('endDate', formattedDate);
                           }}
-                          slotProps={{ textField: { size: "small" } }}
+                          slotProps={{ textField: { size: 'small' } }}
                         />
                       </LocalizationProvider>
                     )}
                   />
-                  <div className={styles.styledError}>
-                    {errors.endDate && <span>This field is required</span>}
-                  </div>
+                  <div className={styles.styledError}>{errors.endDate && <span>This field is required</span>}</div>
                 </div>
               </div>
             </div>
@@ -365,27 +308,23 @@ function BANCALogin() {
               <div className={styles.fieldDiv}>
                 <div className={styles.lableStyle}>{obj.label}</div>
                 <div className={styles.switchContainer}>
-                  {" "}
+                  {' '}
                   <div className={styles.enableSwitchStyle}>
                     <Switch
                       checked={obj.Enable}
                       onChange={() => handleEnableChange(obj.value)}
-                      inputProps={{ "aria-label": "toggle button" }}
+                      inputProps={{ 'aria-label': 'toggle button' }}
                     />
-                    <span className={styles.enableStyle}>
-                      {obj.Enable ? "Enabled" : "Non Enabled"}
-                    </span>
+                    <span className={styles.enableStyle}>{obj.Enable ? 'Enabled' : 'Non Enabled'}</span>
                   </div>
                   <div className={styles.mandatorySwitchStyle}>
                     <Switch
                       checked={obj.Mandatory}
                       onChange={() => handleMandatoryChange(obj.value)}
-                      inputProps={{ "aria-label": "toggle button" }}
+                      inputProps={{ 'aria-label': 'toggle button' }}
                       disabled={!obj.Enable}
                     />
-                    <span className={styles.enableStyle}>
-                      {obj.Mandatory ? "Mandatory" : "Non Mandatory"}
-                    </span>
+                    <span className={styles.enableStyle}>{obj.Mandatory ? 'Mandatory' : 'Non Mandatory'}</span>
                   </div>
                 </div>
               </div>
@@ -393,14 +332,12 @@ function BANCALogin() {
           </div>
 
           <div className={styles.uploadContainer}>
-            <div className={styles.lableStyle}>
-              Partner Employee Code Master
-            </div>
+            <div className={styles.lableStyle}>Partner Employee Code Master</div>
             <div className={styles.uploadStyle}>
               <input
                 type="file"
                 ref={inputFileRef}
-                style={{ display: "none" }}
+                style={{ display: 'none' }}
                 // Optionally, you can handle file change event here
                 onChange={(event) => {
                   const file = event.target.files[0];
@@ -416,27 +353,17 @@ function BANCALogin() {
                 variant="contained"
                 tabIndex={-1}
                 startIcon={<CloudUploadIcon />}
-                disabled={
-                  !fieldData.filter(
-                    (item) => item.value === "partnerEmployeeCode"
-                  )[0].Enable
-                }
+                disabled={!fieldData.filter((item) => item.value === 'partnerEmployeeCode')[0].Enable}
                 onClick={() => handleButtonClick()}
               >
                 Upload file
               </CustomButton>
-              {fileName && (
-                <div className={styles.fileNameStyle}>{fileName}</div>
-              )}
+              {fileName && <div className={styles.fileNameStyle}>{fileName}</div>}
             </div>
           </div>
         </div>
         <div>
-          <CustomButton
-            type="submit"
-            variant="contained"
-            disabled={updateBancaLoding || createBancaLoding}
-          >
+          <CustomButton type="submit" variant="contained" disabled={updateBancaLoding || createBancaLoding}>
             Submit
           </CustomButton>
         </div>

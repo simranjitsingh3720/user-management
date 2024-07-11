@@ -7,27 +7,28 @@ import {
   Checkbox,
   Tooltip,
   Autocomplete,
-} from "@mui/material";
-import React, { useEffect, useState } from "react";
-import LeftArrow from "../../../assets/LeftArrow";
-import styles from "./styles.module.scss";
-import { Controller, useForm } from "react-hook-form";
-import { useNavigate, useParams } from "react-router-dom";
+} from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import styles from './styles.module.scss';
+import { Controller, useForm } from 'react-hook-form';
+import { useParams } from 'react-router-dom';
 
-import useGetPermission from "../hooks/useGetPermission";
-import useCreateGroup from "../hooks/useCreateGroup";
-import useGetGroupById from "../hooks/useGetGroupByID";
-import useUpdateGroup from "../hooks/useUpdateGroup";
-import CloseIcon from "@mui/icons-material/Close";
-import ListLoader from "../../../components/ListLoader";
-import NoDataFound from "../../../components/NoDataCard";
-import useGetUser from "../hooks/useGetUser";
-import useUpdateUser from "../hooks/useUpdateUser";
-import CustomButton from "../../../components/CustomButton";
+import useGetPermission from '../hooks/useGetPermission';
+import useCreateGroup from '../hooks/useCreateGroup';
+import useGetGroupById from '../hooks/useGetGroupByID';
+import useUpdateGroup from '../hooks/useUpdateGroup';
+import CloseIcon from '@mui/icons-material/Close';
+import ListLoader from '../../../components/ListLoader';
+import NoDataFound from '../../../components/NoDataCard';
+import useGetUser from '../hooks/useGetUser';
+import useUpdateUser from '../hooks/useUpdateUser';
+import CustomButton from '../../../components/CustomButton';
+import CustomFormHeader from '../../../components/CustomFormHeader';
+import { FORM_HEADER_TEXT } from '../../../utils/constants';
 
 const convertToDesiredFormat = (data, groupName, groupStatus) => {
   const permissions = data?.map((permission) => permission.id);
-  const status = groupStatus === "active" ? true : false;
+  const status = groupStatus === 'active' ? true : false;
   return { permissions, groupName, status };
 };
 
@@ -46,8 +47,8 @@ const convertUpdateFormat = (newData, oldData) => {
 };
 
 function CreateGroupForm() {
-  const [input, setInput] = useState("");
-  const [query, setQuery] = useState("");
+  const [input, setInput] = useState('');
+  const [query, setQuery] = useState('');
   const [filteredPermission, setFilteredPermission] = useState([]);
 
   const { permissionData, permissionLoading } = useGetPermission();
@@ -66,13 +67,7 @@ function CreateGroupForm() {
 
   const { id } = useParams();
 
-  const {
-    loading: GroupUpdateLoading,
-    data: groupData,
-    fetchData,
-  } = useGetGroupById();
-
-  const navigate = useNavigate();
+  const { loading: GroupUpdateLoading, data: groupData, fetchData } = useGetGroupById();
 
   const { UpdateDataFun, updateLoading } = useUpdateGroup();
 
@@ -82,18 +77,10 @@ function CreateGroupForm() {
 
   const onSubmit = (data) => {
     if (id) {
-      const selectPermissions = checkedPermission.filter(
-        (item) => item.checked === true
-      );
-      const result = convertUpdateFormat(
-        selectPermissions,
-        groupData?.data?.permissions
-      );
+      const selectPermissions = checkedPermission.filter((item) => item.checked === true);
+      const result = convertUpdateFormat(selectPermissions, groupData?.data?.permissions);
 
-      const resultUser = convertUpdateFormat(
-        data?.groupUser,
-        groupData?.data?.users
-      );
+      const resultUser = convertUpdateFormat(data?.groupUser, groupData?.data?.users);
 
       const userUpdatePayload = {
         addUsers: resultUser.add,
@@ -106,27 +93,21 @@ function CreateGroupForm() {
         removePermissions: result.remove,
         properties: {
           groupName: data.groupName,
-          status: data.groupStatus === "active" ? true : false,
+          status: data.groupStatus === 'active' ? true : false,
         },
         id: id,
       };
       userPostData(userUpdatePayload);
       UpdateDataFun(payload);
     } else {
-      const selectPermissions = checkedPermission.filter(
-        (item) => item.checked === true
-      );
+      const selectPermissions = checkedPermission.filter((item) => item.checked === true);
 
-      const result = convertToDesiredFormat(
-        selectPermissions,
-        data.groupName,
-        data.groupStatus
-      );
+      const result = convertToDesiredFormat(selectPermissions, data.groupName, data.groupStatus);
       postData(result, data.groupUser);
     }
   };
   const { handleSubmit, control, setValue, formState, getValues } = useForm({
-    defaultValues: { groupName: "", groupStatus: "active", groupUser: [] },
+    defaultValues: { groupName: '', groupStatus: 'active', groupUser: [] },
   });
 
   const { errors } = formState;
@@ -139,9 +120,9 @@ function CreateGroupForm() {
 
   useEffect(() => {
     if (groupData) {
-      setValue("groupName", groupData?.data?.groupName);
-      setValue("groupUser", groupData?.data?.users || []);
-      setValue("groupStatus", groupData?.data?.status ? "active" : "inactive");
+      setValue('groupName', groupData?.data?.groupName);
+      setValue('groupUser', groupData?.data?.users || []);
+      setValue('groupStatus', groupData?.data?.status ? 'active' : 'inactive');
       if (permissionData && permissionData?.data) {
         setCheckedPermission((prev) => {
           const newCheckedPermission = [...prev];
@@ -186,7 +167,7 @@ function CreateGroupForm() {
   };
 
   useEffect(() => {
-    if (query === "") {
+    if (query === '') {
       setFilteredPermission(checkedPermission);
     } else {
       const filteredData = checkedPermission.filter((item) =>
@@ -198,24 +179,12 @@ function CreateGroupForm() {
 
   return (
     <div>
-      {" "}
+      {' '}
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.createNewUserContainer}>
-          <div className={styles.formHeaderStyle}>
-            <div className={styles.subHeader}>
-              <IconButton
-                aria-label="back"
-                onClick={() => {
-                  navigate("/group");
-                }}
-              >
-                <LeftArrow />
-              </IconButton>
-              <span className={styles.headerTextStyle}>
-                {id ? "Edit Group" : "Create New Group"}
-              </span>
-            </div>
-          </div>{" "}
+          <div className="p-5">
+            <CustomFormHeader id={id} headerText={FORM_HEADER_TEXT.GROUP} navigateRoute="/group" />
+          </div>
           <div className={styles.containerStyle}>
             <div className={styles.fieldContainerStyle}>
               <span className={styles.labelText}>
@@ -235,14 +204,12 @@ function CreateGroupForm() {
                     className={styles.customizeSelect}
                     {...field}
                     onChange={(e) => {
-                      setValue("groupName", e.target.value);
+                      setValue('groupName', e.target.value);
                     }}
                   />
                 )}
               />
-              <div className={styles.styledError}>
-                {errors.groupName && <span>This field is required</span>}{" "}
-              </div>
+              <div className={styles.styledError}>{errors.groupName && <span>This field is required</span>} </div>
             </div>
             <div className={styles.fieldContainerStyle}>
               <span className={styles.labelText}>
@@ -251,13 +218,7 @@ function CreateGroupForm() {
               <Controller
                 name="groupStatus"
                 control={control}
-                defaultValue={
-                  id
-                    ? groupData?.data?.status
-                      ? "active"
-                      : "inactive"
-                    : "active"
-                }
+                defaultValue={id ? (groupData?.data?.status ? 'active' : 'inactive') : 'active'}
                 rules={{ required: true }}
                 render={({ field }) => (
                   <RadioGroup
@@ -266,35 +227,24 @@ function CreateGroupForm() {
                     name="groupStatus"
                     {...field}
                   >
-                    <FormControlLabel
-                      value="active"
-                      control={<Radio />}
-                      label="Active"
-                      className={styles.radioStyle}
-                    />
-                    <FormControlLabel
-                      value="inactive"
-                      control={<Radio />}
-                      label="Inactive"
-                    />
+                    <FormControlLabel value="active" control={<Radio />} label="Active" className={styles.radioStyle} />
+                    <FormControlLabel value="inactive" control={<Radio />} label="Inactive" />
                   </RadioGroup>
                 )}
               />
-              <div className={styles.styledError}>
-                {errors.groupName && <span>This field is required</span>}{" "}
-              </div>
+              <div className={styles.styledError}>{errors.groupName && <span>This field is required</span>} </div>
             </div>
           </div>
           <div className={styles.fieldContainerStyle}>
             <span className={styles.labelText}>Group User</span>
             <Controller
-              name="groupUser" 
+              name="groupUser"
               control={control}
               render={({ field }) => (
                 <Autocomplete
                   multiple
                   id="groupUser"
-                  value={getValues("groupUser")}
+                  value={getValues('groupUser')}
                   options={userData || []}
                   // open={open}
                   // onOpen={() => {
@@ -313,18 +263,14 @@ function CreateGroupForm() {
                   limitTags={5}
                   className={styles.customizePrivilegeSelect}
                   size="small"
-                  isOptionEqualToValue={(option, value) =>
-                    option.id === value.id
-                  }
-                  renderInput={(params) => (
-                    <TextField {...params} placeholder="Select" />
-                  )}
+                  isOptionEqualToValue={(option, value) => option.id === value.id}
+                  renderInput={(params) => <TextField {...params} placeholder="Select" />}
                   onChange={(event, newValue) => {
                     field.onChange(newValue);
                   }}
                   ListboxProps={{
                     style: {
-                      maxHeight: "200px",
+                      maxHeight: '200px',
                     },
                   }}
                   onInputChange={(event, val) => {
@@ -341,24 +287,20 @@ function CreateGroupForm() {
             <div className={styles.permissionContainer}>
               <div className={styles.permissionSelect}>
                 <div className={styles.permissionInnerSelect}>
-                  {" "}
+                  {' '}
                   {(checkedPermission || []).map((item) => {
                     return (
                       item.checked && (
                         <div className={styles.permissionSelectButton}>
                           {item.permissionName.length > 25 ? (
                             <Tooltip title={item.permissionName}>
-                              <span
-                                className={styles.permissionNameStyle}
-                              >{`${item.permissionName.substring(
+                              <span className={styles.permissionNameStyle}>{`${item.permissionName.substring(
                                 0,
                                 25
                               )}...`}</span>
                             </Tooltip>
                           ) : (
-                            <span className={styles.permissionNameStyle}>
-                              {item.permissionName || ""}
-                            </span>
+                            <span className={styles.permissionNameStyle}>{item.permissionName || ''}</span>
                           )}
                           <div className={styles.crossIconStyle}>
                             <IconButton
@@ -394,25 +336,18 @@ function CreateGroupForm() {
                   ) : filteredPermission.length ? (
                     (filteredPermission || []).map((item) => (
                       <div className={styles.checkboxStyle} key={item.id}>
-                        {" "}
+                        {' '}
                         <Checkbox
                           checked={!!item.checked}
                           onChange={() => handleChange(item)}
-                          inputProps={{ "aria-label": "controlled" }}
+                          inputProps={{ 'aria-label': 'controlled' }}
                         />
                         {item.permissionName.length > 25 ? (
                           <Tooltip title={item.permissionName}>
-                            <span
-                              className={styles.checkBoxlabel}
-                            >{`${item.permissionName.substring(
-                              0,
-                              25
-                            )}...`}</span>
+                            <span className={styles.checkBoxlabel}>{`${item.permissionName.substring(0, 25)}...`}</span>
                           </Tooltip>
                         ) : (
-                          <span className={styles.checkBoxlabel}>
-                            {item.permissionName || ""}
-                          </span>
+                          <span className={styles.checkBoxlabel}>{item.permissionName || ''}</span>
                         )}
                       </div>
                     ))
@@ -429,7 +364,7 @@ function CreateGroupForm() {
           variant="contained"
           disabled={loading || (id && GroupUpdateLoading) || updateLoading}
         >
-          {id ? "Update" : "Submit"}
+          {id ? 'Update' : 'Submit'}
         </CustomButton>
       </form>
     </div>

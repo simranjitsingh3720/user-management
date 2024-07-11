@@ -25,12 +25,36 @@ export const COMMON_WORDS = {
   PERMISSION: 'permission',
   PERMISSIONNAME: 'permissionName',
   GROUP: 'group',
+  SEARCH: 'search',
+  STATUS: 'status',
 };
 
 export const HEADER = {
-  DRAWER_WIDTH: 240
+  DRAWER_WIDTH: 240,
 };
 
 export const CHANGE_STATUS_LABEL = {
   UNDERWRITER_LEVEL: 'Underwriter Level Mapping',
+};
+
+export const FORM_HEADER_TEXT = {
+  COMMUNICATION_RESTRICTION: 'Communication Restriction',
+  PARTNER_NEFT_FLAG: 'Partner NEFT Flag',
+  BANCA_FIELDS: 'Banca Fields',
+  CKYC_CONFIG: 'CKYC Config',
+  EMPLOYEE_FLAG: 'Employee Flag Configuration',
+  GROUP: 'Group',
+  HEALTH_CONFIG: 'Health Configuration',
+  HOUSE_BANK: 'House Bank Configuration',
+  LOB: 'Lob',
+  OTP_EXCEPTION: 'Set OTP Exception By',
+  PERMISSION: 'Permission',
+  PRODUCER_EOD: 'Producer EOD Bypass',
+  PRODUCT: 'Product',
+  PAYMENT_CONFIG: 'Payment Configuration',
+  CONFIG: 'Config',
+  PROPOSAL_OTP: 'Proposal OTP Exception',
+  ROLE: 'Role',
+  USER: 'User',
+  PRODUCT_LOCATION: 'Product Location Level',
 };

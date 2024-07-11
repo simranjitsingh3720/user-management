@@ -1,15 +1,16 @@
-import { IconButton, TextField } from "@mui/material";
-import React, { useEffect } from "react";
-import LeftArrow from "../../../assets/LeftArrow";
-import styles from "./styles.module.scss";
-import { Controller, useForm } from "react-hook-form";
-import { useNavigate, useParams } from "react-router-dom";
+import { TextField } from '@mui/material';
+import React, { useEffect } from 'react';
+import styles from './styles.module.scss';
+import { Controller, useForm } from 'react-hook-form';
+import { useParams } from 'react-router-dom';
 
-import useUpdatePaymentConfig from "../hooks/useUpdateHouseBank";
-import useCreateHouseBank from "../hooks/useCreateHouseBank";
-import useGetHouseBankByID from "../hooks/useGetHouseBankById";
-import CustomButton from "../../../components/CustomButton";
-import { REGEX } from "../../../utils/globalConstants";
+import useUpdatePaymentConfig from '../hooks/useUpdateHouseBank';
+import useCreateHouseBank from '../hooks/useCreateHouseBank';
+import useGetHouseBankByID from '../hooks/useGetHouseBankById';
+import CustomButton from '../../../components/CustomButton';
+import { REGEX } from '../../../utils/globalConstants';
+import CustomFormHeader from '../../../components/CustomFormHeader';
+import { FORM_HEADER_TEXT } from '../../../utils/constants';
 
 function HouseBankMasterForm() {
   const { id } = useParams();
@@ -23,14 +24,11 @@ function HouseBankMasterForm() {
     },
   });
 
-  const { data: houseBankByID, fetchData: fetchHouseBankByID } =
-    useGetHouseBankByID();
+  const { data: houseBankByID, fetchData: fetchHouseBankByID } = useGetHouseBankByID();
 
   useEffect(() => {
     if (id) fetchHouseBankByID(id);
   }, [id]);
-
-  const navigate = useNavigate();
 
   const { postData, loading: createPaymentLoading } = useCreateHouseBank();
 
@@ -40,10 +38,10 @@ function HouseBankMasterForm() {
 
   useEffect(() => {
     if (houseBankByID && houseBankByID?.data) {
-      setValue("houseBankCode", houseBankByID?.data?.houseBankCode || null);
-      setValue("bankCode", houseBankByID?.data?.bankCode || null);
-      setValue("branchName", houseBankByID?.data?.branchName || null);
-      setValue("accountNumber", houseBankByID?.data?.accountNumber || null);
+      setValue('houseBankCode', houseBankByID?.data?.houseBankCode || null);
+      setValue('bankCode', houseBankByID?.data?.bankCode || null);
+      setValue('branchName', houseBankByID?.data?.branchName || null);
+      setValue('accountNumber', houseBankByID?.data?.accountNumber || null);
     }
   }, [houseBankByID]);
 
@@ -73,25 +71,9 @@ function HouseBankMasterForm() {
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.createNewUserContainer}>
-          <div className={styles.formHeaderStyle}>
-            <div className={styles.subHeader}>
-              <IconButton
-                aria-label="back"
-                onClick={() => {
-                  navigate("/house-bank-master");
-                }}
-              >
-                <LeftArrow />
-              </IconButton>
-              <span className={styles.headerTextStyle}>
-                <div className={styles.setOTPHeaderOTP}>
-                  {id
-                    ? "Update House Bank Configuration"
-                    : "Create House Bank Configuration"}
-                </div>
-              </span>
-            </div>
-          </div>{" "}
+          <div className="p-5">
+            <CustomFormHeader id={id} headerText={FORM_HEADER_TEXT.HOUSE_BANK} navigateRoute="/house-bank-master" />
+          </div>
           <div className={styles.containerStyle}>
             <div className={styles.fieldContainerStyle}>
               <span className={styles.labelText}>
@@ -102,10 +84,10 @@ function HouseBankMasterForm() {
                 control={control}
                 defaultValue=""
                 rules={{
-                  required: "House Bank Code is required",
+                  required: 'House Bank Code is required',
                   pattern: {
                     value: REGEX.numericRegex,
-                    message: "Only numeric values are allowed",
+                    message: 'Only numeric values are allowed',
                   },
                 }}
                 render={({ field }) => (
@@ -116,12 +98,10 @@ function HouseBankMasterForm() {
                     size="small"
                     className={styles.customizeSelect}
                     error={!!errors.houseBankCode}
-                    helperText={
-                      errors.houseBankCode ? errors.houseBankCode.message : ""
-                    }
+                    helperText={errors.houseBankCode ? errors.houseBankCode.message : ''}
                     {...field}
                     onChange={(e) => {
-                      setValue("houseBankCode", e.target.value);
+                      setValue('houseBankCode', e.target.value);
                     }}
                   />
                 )}
@@ -136,10 +116,10 @@ function HouseBankMasterForm() {
                 control={control}
                 defaultValue=""
                 rules={{
-                  required: "Bank Code is required",
+                  required: 'Bank Code is required',
                   pattern: {
                     value: REGEX.alphaNumericRegex,
-                    message: "Invalid Bank Code format",
+                    message: 'Invalid Bank Code format',
                   },
                 }}
                 render={({ field }) => (
@@ -149,11 +129,11 @@ function HouseBankMasterForm() {
                     placeholder="Enter Bank Code"
                     size="small"
                     error={!!errors.bankCode}
-                    helperText={errors.bankCode ? errors.bankCode.message : ""}
+                    helperText={errors.bankCode ? errors.bankCode.message : ''}
                     className={styles.customizeSelect}
                     {...field}
                     onChange={(e) => {
-                      setValue("bankCode", e.target.value);
+                      setValue('bankCode', e.target.value);
                     }}
                   />
                 )}
@@ -167,7 +147,7 @@ function HouseBankMasterForm() {
                 name="branchName"
                 control={control}
                 defaultValue=""
-                rules={{ required: "Branch Name is required" }}
+                rules={{ required: 'Branch Name is required' }}
                 render={({ field }) => (
                   <TextField
                     id="branchName"
@@ -175,13 +155,11 @@ function HouseBankMasterForm() {
                     placeholder="Enter Branch Name"
                     size="small"
                     error={!!errors.branchName}
-                    helperText={
-                      errors.branchName ? errors.branchName.message : ""
-                    }
+                    helperText={errors.branchName ? errors.branchName.message : ''}
                     className={styles.customizeSelect}
                     {...field}
                     onChange={(e) => {
-                      setValue("branchName", e.target.value);
+                      setValue('branchName', e.target.value);
                     }}
                   />
                 )}
@@ -196,10 +174,10 @@ function HouseBankMasterForm() {
                 control={control}
                 defaultValue=""
                 rules={{
-                  required: "Account Number is required",
+                  required: 'Account Number is required',
                   pattern: {
                     value: REGEX.numericRegex,
-                    message: "Only numeric values are allowed",
+                    message: 'Only numeric values are allowed',
                   },
                 }}
                 render={({ field }) => (
@@ -210,13 +188,11 @@ function HouseBankMasterForm() {
                     placeholder="Enter Account Number"
                     size="small"
                     error={!!errors.accountNumber}
-                    helperText={
-                      errors.accountNumber ? errors.accountNumber.message : ""
-                    }
+                    helperText={errors.accountNumber ? errors.accountNumber.message : ''}
                     className={styles.customizeSelect}
                     {...field}
                     onChange={(e) => {
-                      setValue("accountNumber", e.target.value);
+                      setValue('accountNumber', e.target.value);
                     }}
                   />
                 )}
@@ -224,12 +200,8 @@ function HouseBankMasterForm() {
             </div>
           </div>
         </div>
-        <CustomButton
-          type="submit"
-          variant="contained"
-          disabled={updateLoading || createPaymentLoading}
-        >
-          {id ? "Update" : "Submit"}
+        <CustomButton type="submit" variant="contained" disabled={updateLoading || createPaymentLoading}>
+          {id ? 'Update' : 'Submit'}
         </CustomButton>
       </form>
     </div>

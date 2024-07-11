@@ -25,7 +25,7 @@ export const BUTTON_TEXT = {
   PRODUCT: 'Create New Product',
   GROUP: 'Create New Group',
   PRODUCT_LOCATION_LEVEL: 'Create Product Location Level',
-  EMPLOYEE_FLAG_CONFIG: 'Create New Employee Flag Config',
+  EMPLOYEE_FLAG_CONFIG: 'Create Employee Flag Config',
 };
 
 export const STATUS = [
@@ -53,6 +53,6 @@ export const ProductPayment = [
 ];
 
 export const COMMON_ERROR = 'An error occurred. Please try again.';
+export const TOKEN = 'user-token';
 export const USER_DETAILS = 'user-details';
 export const TOKEN_EXPIRATION_ERROR = 'Your session has expired. Please log in again!';
-export const TOKEN = 'token';
