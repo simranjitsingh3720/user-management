@@ -36,10 +36,10 @@ const CustomAutoCompleteWithoutCheckbox = ({
             options={options || []}
             getOptionLabel={getOptionLabel}
             disabled={disabled}
-            className={className + 'customize-select'}
+            className={className + 'customize-select bg-white'}
             size={size}
             isOptionEqualToValue={isOptionEqualToValue}
-            renderInput={(params) => <TextField {...params} placeholder={placeholder} />}
+            renderInput={(params) => <TextField {...params} error={error} placeholder={placeholder} />}
             value={field.value}
             onChange={(event, newValue) => {
               field.onChange(newValue);

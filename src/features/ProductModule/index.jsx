@@ -8,7 +8,6 @@ import {
 } from "../../stores/slices/productSlice";
 import { COMMON_WORDS } from "../../utils/constants";
 import { BUTTON_TEXT } from "../../utils/globalConstants";
-import { SEARCH_OPTIONS } from "./utils/constant";
 import { getPlaceHolder } from "../../utils/globalizationFunction";
 import { fetchLobData } from "../../stores/slices/lobSlice";
 import SearchComponent from "../../components/SearchComponent";
@@ -58,8 +57,8 @@ function Product() {
           product_code: product.product_code,
           createdAt: product.createdAt,
           updatedAt: product.updatedAt,
-          checked: product.status,
-          status: product.status,
+          checked: product?.status,
+          status: product?.status,
         };
       }) || [];
 

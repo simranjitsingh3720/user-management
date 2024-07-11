@@ -64,7 +64,7 @@ function SearchComponent({
       {dateField && (
         <form onSubmit={handleSubmit(onSubmit)}>
           <Grid container spacing={2} alignItems="center" className="mb-4">
-            <Grid item xs={12} md={8} lg={2.5}>
+            <Grid item>
               <div>
                 <div className="label-text required-field">Start Date</div>
                 <Controller
@@ -91,7 +91,7 @@ function SearchComponent({
                 <div className="error-msg">{errors.startDate && <span>This field is required</span>}</div>
               </div>
             </Grid>
-            <Grid item xs={12} md={8} lg={2.5}>
+            <Grid item>
               <div>
                 <div className="label-text required-field">End Date</div>
                 <Controller
@@ -116,7 +116,7 @@ function SearchComponent({
                 <div className="error-msg">{errors.endDate && <span>This field is required</span>}</div>
               </div>
             </Grid>
-            <Grid item xs={12} md={8} lg={3}>
+            <Grid item>
               <CustomButton variant="outlined" type="submit">
                 Go
               </CustomButton>
@@ -134,7 +134,7 @@ function SearchComponent({
       )}
 
       <Grid container spacing={2} justifyContent="space-between" alignItems="center">
-        <Grid item xs={12} md={8}>
+        <Grid item lg={6} xs={12}>
           {!hideSearch && (
             <Grid container spacing={2} alignItems="center">
               {selectOptions && (
@@ -199,7 +199,7 @@ function SearchComponent({
           )}
         </Grid>
 
-        <Grid item xs={12} md={4} container justifyContent="flex-end">
+        <Grid item lg={6} xs={12} className='flex justify-end'>
           {showExportButton && <ExportDropdown />}
           {showButton && (
             <CustomButton variant="contained" onClick={handleCreateNewForm}>

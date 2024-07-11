@@ -21,7 +21,7 @@ function useCreateProductLevel(fetchData) {
     try {
       const response = await axiosInstance.post(`${apiUrls.productLocationLevelMapping}`, data);
       toast.success(response?.data?.message || 'Product Level Mapping Created successfully');
-      navigate(`/UWLevelMappingEmployee/${employeeId}`);
+      navigate(`/uwlevelmappingemployee/${employeeId}`);
     } catch (error) {
       toast.error(error?.response?.data?.error?.message || COMMON_ERROR);
     } finally {
