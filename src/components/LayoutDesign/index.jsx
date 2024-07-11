@@ -35,11 +35,8 @@ function ResponsiveDrawer({ showSidebarAndHeader, children }) {
   const [selectedParentIndex, setSelectedParentIndex] = useState(null);
 
   let sideNav = useSideNavData();
-  let scopes = JSON.parse(localStorage.getItem('scopes'));
-  scopes = scopes.read;
-  
+  let scopes = JSON.parse(localStorage.getItem('scopes'))?.read || [];
   let sideNavData = [];
-  
   for(let i = 0; i < sideNav.length; i++) {
     for(let j = 0; j < scopes.length; j++) {
       if(sideNav[i].id === scopes[j].id) {
