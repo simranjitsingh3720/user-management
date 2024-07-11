@@ -19,7 +19,6 @@ export default function usePostLogin() {
     try {
       const response = await axiosInstance.post(apiUrls.postLogin, data);
       if (response) {
-        debugger
         localStorage.setItem(TOKEN, response.data.data.token);
         navigate(DASHBOARD);
       }
