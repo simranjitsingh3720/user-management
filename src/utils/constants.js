@@ -30,9 +30,15 @@ export const COMMON_WORDS = {
 };
 
 export const HEADER = {
-  DRAWER_WIDTH: 240
+  DRAWER_WIDTH: 240,
 };
 
 export const CHANGE_STATUS_LABEL = {
   UNDERWRITER_LEVEL: 'Underwriter Level Mapping',
+};
+
+export const FORM_HEADER_TEXT = {
+  COMMUNICATION_RESTRICTION: 'Communication Restriction',
+  PARTNER_NEFT_FLAG: 'Partner NEFT Flag',
+  BANCA_FIELDS: 'Banca Fields',
 };

@@ -1,23 +1,20 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { Box, Card, CardContent, Grid, IconButton, Divider, Typography } from '@mui/material';
-import RestartAltIcon from '@mui/icons-material/RestartAlt';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Box, Card, CardContent, Grid } from '@mui/material';
+import { useParams } from 'react-router-dom';
 import CustomButton from '../../../components/CustomButton';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchLobData } from '../../../stores/slices/lobSlice';
 import { fetchAllProductData } from '../../../stores/slices/productSlice';
 import { fetchUser } from '../../../stores/slices/userSlice';
-import { COMMON_WORDS } from '../../../utils/constants';
+import { COMMON_WORDS, FORM_HEADER_TEXT } from '../../../utils/constants';
 import { VERIFICATION_METHOD } from '../utils/constant';
-import LeftArrow from '../../../assets/LeftArrow';
 import useSubmit from '../hooks/useSubmit';
 import CustomAutoCompleteWithoutCheckbox from '../../../components/CustomAutoCompleteWithoutCheckbox';
 import CustomFormHeader from '../../../components/CustomFormHeader';
 
 const PartnerNeftForm = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const params = useParams();
 
   const { lob, lobLoading } = useSelector((state) => state.lob);
@@ -95,44 +92,11 @@ const PartnerNeftForm = () => {
       <Card>
         <CardContent>
           <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-            {/* <Grid item xs={12}>
-              <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-                <Grid item xs={8}>
-                  <div className="flex items-center">
-                    <IconButton
-                      aria-label="back"
-                      onClick={() => {
-                        navigate('/partner-neft');
-                      }}
-                    >
-                      <LeftArrow />
-                    </IconButton>
-                    <Typography variant="h6" noWrap fontWeight={600} color="#465465">
-                      {params.id ? 'Update Partner NEFT Flag' : 'Create New Partner NEFT Flag'}
-                    </Typography>
-                  </div>
-                </Grid>
-                <Grid
-                  item
-                  xs={4}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'flex-end',
-                  }}
-                >
-                  <CustomButton variant="outlined" startIcon={<RestartAltIcon />} onClick={handleReset}>
-                    Reset
-                  </CustomButton>
-                </Grid>
-              </Grid>
-              <Divider style={{ margin: '1rem 0' }} />
-            </Grid> */}
             <CustomFormHeader
               id={params.id}
               navigateRoute="/partner-neft"
               handleReset={handleReset}
-              headerText="Partner NEFT Flag"
+              headerText={FORM_HEADER_TEXT.PARTNER_NEFT_FLAG}
             />
             <Grid item xs={12} sm={6} lg={4}>
               <CustomAutoCompleteWithoutCheckbox
