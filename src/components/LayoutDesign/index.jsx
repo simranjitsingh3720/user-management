@@ -34,16 +34,9 @@ function ResponsiveDrawer({ showSidebarAndHeader, children }) {
   const [selectedNavbar, setSelectedNavbar] = useState(pathname ? pathname : DASHBOARD);
   const [selectedParentIndex, setSelectedParentIndex] = useState(null);
 
-  let sideNav = useSideNavData();
-  let scopes = JSON.parse(localStorage.getItem('scopes'))?.read || [];
-  let sideNavData = [];
-  for(let i = 0; i < sideNav.length; i++) {
-    for(let j = 0; j < scopes.length; j++) {
-      if(sideNav[i].id === scopes[j].id) {
-        sideNavData.push(sideNav[i])
-      }
-    }
-  }
+  const sideNav = useSideNavData();
+  const scopes = JSON.parse(localStorage.getItem('scopes'))?.read || [];
+  const sideNavData = sideNav.filter(item => scopes.some(scope => scope.id === item.id));
 
   const handleDrawerToggle = () => {
     if (!isClosing) {
