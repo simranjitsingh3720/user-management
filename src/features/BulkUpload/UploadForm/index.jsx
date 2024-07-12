@@ -27,11 +27,9 @@ function UploadForm() {
   });
 
   const onSubmit = (data) => {
-    console.log(data);
   };
 
   const downloadTemplate = () => {
-    console.log('Download template clicked');
   };
 
   const fileInputRef = useRef(null);
@@ -41,10 +39,8 @@ function UploadForm() {
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
-    console.log(file);
     if (file) {
       const fileType = file.name.split('.').pop().toLowerCase();
-      console.log(fileType);
       if (fileType === 'xls' || fileType === 'xlsx') {
         const fileSize = file.size;
         const maxSize = 5 * 1024 * 1024; // 5 MB in bytes
@@ -52,7 +48,6 @@ function UploadForm() {
           toast.error('File size exceeds 5 MB limit.');
           event.target.value = null;
         } else {
-          console.log(`File size: ${fileSize} bytes`);
           setFileUploaded(true);
           setFileName(file.name);
         }
