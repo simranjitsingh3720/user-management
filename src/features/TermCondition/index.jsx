@@ -29,8 +29,6 @@ function TermCondition() {
 
   const HEADER_COLUMNS = generateTableHeaders();
 
-  console.log("user", user);
-
   const optionLabelUser = (option) => {
     return option?.firstName
       ? `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`
@@ -45,9 +43,6 @@ function TermCondition() {
   );
 
   const handleGo = () => {
-    console.log("hello");
-
-    console.log("userData", userData);
   };
 
   return (

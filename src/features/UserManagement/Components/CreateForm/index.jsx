@@ -203,7 +203,6 @@ function CreateUserCreationForm() {
     }, {});
     resultObject.roleSelect = '';
     setResetClicked(!resetClicked);
-    console.log('reset', resultObject);
     reset(resultObject);
     if(isEdit){
       if (params?.id) {
