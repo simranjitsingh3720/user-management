@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import CustomTable from '../../components/CustomTable';
 import useGetUser from './Components/hooks/useGetUser';
 import { BUTTON_TEXT, Header, NAVIGATE_TO_FORM, SEARCH_OPTIONS, SEARCH_PLACEHOLDER } from './Components/utils/constants';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { COMMON_WORDS } from '../../utils/constants';
 import Content from './Components/Dialog/Content';
 import Actions from './Components/Dialog/Action';
@@ -13,6 +13,7 @@ import CustomDialog from '../../components/CustomDialog';
 import SearchComponent from '../../components/SearchComponent';
 import { setTableName } from '../../stores/slices/exportSlice';
 import { PAGECOUNT } from '../../utils/globalConstants';
+import usePermissions from '../../hooks/usePermission';
 
 function UserManagement() {
   const navigate = useNavigate();
@@ -26,6 +27,13 @@ function UserManagement() {
   const { data, loading, fetchData, setLoading } = useGetUser(page, pageSize, query, order, orderBy);
   const [userData, setUserData] = useState([]);
 
+    // Check Permission 
+    const { hasPermission } = usePermissions();
+    const location = useLocation();
+    const path = location.pathname.split('/')[1];
+    const canCreate = hasPermission(COMMON_WORDS.CREATE, path);
+    const canUpdate = hasPermission(COMMON_WORDS.UPDATE, path);
+
   const updateUserForm = useCallback((row) => {
     navigate(NAVIGATE_TO_FORM + '/'+ row.id);
   }, []);
@@ -37,11 +45,12 @@ function UserManagement() {
         return {
           ...item,
           checked: item?.status,
+          disabled: canUpdate ? false : true,
         };
       }) || [];
     setUserData(transformedData);
     dispatch(setTableName(transformedData[0]?.label));
-  }, [data]);
+  }, [data, canUpdate, dispatch]);
 
   const handleInsillionStatus = useCallback((data, row) => {
     dispatch(
@@ -76,6 +85,7 @@ function UserManagement() {
          handleGo={handleGo}
          showExportButton={true}
          showButton
+         canCreate={canCreate}
       />
       <div className="mt-4">
         <CustomTable
