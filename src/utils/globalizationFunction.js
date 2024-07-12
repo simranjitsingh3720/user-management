@@ -45,3 +45,11 @@ export function encodeString(input) {
 export const getDialogContent = (label) => {
   return `Are you sure you want to change the ${label} status?`;
 };
+
+export const getFullName = (firstName, lastName) => {
+  return firstName?.charAt(0)?.toUpperCase() + firstName?.slice(1) + (lastName ? ' '+ lastName?.charAt(0)?.toUpperCase() + lastName?.slice(1) : '')
+}
+
+export const toCapitalize= (obj, key) => {
+  return obj?.[key]?.charAt(0)?.toUpperCase() + obj?.[key]?.slice(1)
+}

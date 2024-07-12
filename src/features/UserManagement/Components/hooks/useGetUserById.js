@@ -1,3 +1,4 @@
+import apiUrls from "../../../../utils/apiUrls";
 import axiosInstance from "../../../../utils/axiosInstance"; 
 import { useState } from "react";
 
@@ -7,7 +8,7 @@ export default function useGetUserById() {
 
   const fetchData = async (userId) => {
     try {
-      let url = `/api/user/${userId}`;
+      let url = `${apiUrls.getUser}/${userId}`;
       const response = await axiosInstance.get(url);
       setData(response.data);
     } catch (error) {
