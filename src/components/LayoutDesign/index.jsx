@@ -6,6 +6,7 @@ import Header from '../Header';
 import { drawerWidth, MODULE_TYPE } from '../../utils/globalConstants';
 import useSideNavData from '../NavbarDrawer/hooks/useSideNavData';
 import { useLocation } from 'react-router-dom';
+import { COMMON_WORDS } from '../../utils/constants';
 
 const HEADER_HEIGHT = 64;
 const DASHBOARD = 'dashboard';
@@ -35,7 +36,7 @@ function ResponsiveDrawer({ showSidebarAndHeader, children }) {
   const [selectedParentIndex, setSelectedParentIndex] = useState(null);
 
   const sideNav = useSideNavData();
-  const scopes = JSON.parse(localStorage.getItem('scopes'))?.read || [];
+  const scopes = JSON.parse(localStorage.getItem(COMMON_WORDS.SCOPES))?.read || [];
   const sideNavData = sideNav.filter(item => scopes.some(scope => ((scope.id === item.id) && (scope.moduleType === MODULE_TYPE))));
 
   const handleDrawerToggle = () => {

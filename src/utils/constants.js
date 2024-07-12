@@ -27,6 +27,7 @@ export const COMMON_WORDS = {
   GROUP: 'group',
   SEARCH: 'search',
   STATUS: 'status',
+  SCOPES: 'scopes',
 };
 
 export const HEADER = {
