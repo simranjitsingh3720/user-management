@@ -10,7 +10,7 @@ const useSideNavData = () => {
   useEffect(() => {
     const fetchSideNavData = async () => {
       try {
-        const response = await axiosInstance.get(apiUrls.module);
+        const response = await axiosInstance.get(apiUrls.navData);
         setSideNavData(response.data.data);
       } catch (error) {
         toast.error(error?.response?.data?.error?.message || COMMON_ERROR);
