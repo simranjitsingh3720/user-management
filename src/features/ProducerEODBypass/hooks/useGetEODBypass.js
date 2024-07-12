@@ -4,25 +4,33 @@ import { toast } from 'react-toastify';
 import { COMMON_ERROR } from '../../../utils/globalConstants';
 import { COMMON_WORDS } from '../../../utils/constants';
 import { buildQueryString } from '../../../utils/globalizationFunction';
+import moment from 'moment';
+import apiUrls from '../../../utils/apiUrls';
 
-function useGetEODBypass(pageChange, rowsPage, date) {
+const calculateUnlockedDays = (startDateString, endDateString) => {
+  const startMoment = moment(startDateString, 'DD/MM/YYYY');
+  const endMoment = moment(endDateString, 'DD/MM/YYYY');
+
+  const differenceInDays = endMoment.diff(startMoment, 'days');
+
+  return differenceInDays;
+};
+
+function useGetEODBypass(page, pageSize, date, order, orderBy) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [sort, setSort] = useState({
-    sortKey: 'createdAt',
-    sortOrder: 'asc',
-  });
+  const [count, setCount] = useState(0);
 
   const fetchData = async (resultProducersId = null) => {
     try {
       setLoading(true);
       let params = buildQueryString({
-        pageNo: pageChange - 1,
-        sortKey: sort.sortKey,
-        sortOrder: sort.sortOrder,
-        pageSize: rowsPage,
-        childFieldsToFetch: COMMON_WORDS.PRODUCER + ',' + COMMON_WORDS.LOB + ',' + COMMON_WORDS.PRODUCT,
-        childFieldsEdge: COMMON_WORDS.HAS_PRODUCER + ',' + COMMON_WORDS.HAS_LOB + ',' + COMMON_WORDS.HAS_PRODUCT,
+        pageNo: page,
+        sortKey: orderBy,
+        sortOrder: order,
+        pageSize: pageSize,
+        childFieldsToFetch: COMMON_WORDS.PRODUCER,
+        childFieldsEdge: COMMON_WORDS.HAS_PRODUCER,
       });
 
       if (resultProducersId) {
@@ -32,9 +40,26 @@ function useGetEODBypass(pageChange, rowsPage, date) {
         params += `&startDate=${date.startDate}&endDate=${date.endDate}`;
       }
 
-      let url = `/api/producer-eod-bypass?${params}`;
+      let url = `${apiUrls.getEodByPass}?${params}`;
       const response = await axiosInstance.get(url);
-      setData(response.data);
+      console.log('response', response);
+      const producerEodByPass = response?.data?.data?.map((item) => {
+        const { producerEodByPass = {}, producer = [] } = item;
+        return {
+          id: producerEodByPass.id,
+          label: producerEodByPass.label,
+          producerName: producer[0].firstName + ' ' + producer[0].lastName,
+          producerCode: producer[0].producerCode,
+          unlockedDays: calculateUnlockedDays(producerEodByPass.startDate, producerEodByPass.endDate),
+          reason: producerEodByPass.reason,
+          startDate: producerEodByPass.startDate,
+          endDate: producerEodByPass.endDate,
+          createdAt: producerEodByPass.createdAt,
+          updatedAt: producerEodByPass.updatedAt,
+        };
+      });
+      setData(producerEodByPass);
+      setCount(response?.data?.totalCount);
     } catch (error) {
       toast.error(error?.response?.data?.details || COMMON_ERROR);
     } finally {
@@ -43,9 +68,9 @@ function useGetEODBypass(pageChange, rowsPage, date) {
   };
   useEffect(() => {
     fetchData();
-  }, [pageChange, sort, rowsPage, date]);
+  }, [page, pageSize, date, order, orderBy]);
 
-  return { data, loading, sort, setSort, fetchData };
+  return { data, loading, fetchData, count };
 }
 
 export default useGetEODBypass;

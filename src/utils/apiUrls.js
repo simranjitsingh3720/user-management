@@ -23,6 +23,7 @@ const apiUrls = {
   paymentProduct: 'api/product-wise-payment-method',
   productLocationLevelMapping: 'api/product-location-level-mapping',
   getGroup: '/api/group',
+  getEodByPass: '/api/producer-eod-bypass',
 };
 
 export default apiUrls;

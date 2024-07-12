@@ -205,12 +205,11 @@ function CreateUserCreationForm() {
     setResetClicked(!resetClicked);
     console.log('reset', resultObject);
     reset(resultObject);
-    if(isEdit){
+    if (isEdit) {
       if (params?.id) {
         setIsEdit(true);
         getUserDetails(params?.id);
       }
-
     }
   };
 

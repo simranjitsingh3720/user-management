@@ -1,27 +1,38 @@
-import { Autocomplete, TextField } from '@mui/material';
+import { Box, Card, CardContent, Grid } from '@mui/material';
 import React, { useEffect } from 'react';
-import styles from './styles.module.scss';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
-import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
-import useGetUserData from '../../BANCALogin/hooks/useGetUserData';
 import useCreateEODBypass from '../hooks/useCreateEODBypass';
 import useGetDataById from '../hooks/useGetDataById';
-import useUpdateEODBypass from '../hooks/useUpdateEODBypass';
-import { REGEX } from '../../../utils/globalConstants';
 import 'dayjs/locale/en-gb';
 import CustomButton from '../../../components/CustomButton';
 import CustomFormHeader from '../../../components/CustomFormHeader';
-import { FORM_HEADER_TEXT } from '../../../utils/constants';
+import { COMMON_WORDS, FORM_HEADER_TEXT } from '../../../utils/constants';
+import DateField from '../../../components/CustomDateInput';
+import CustomAutoCompleteWithoutCheckbox from '../../../components/CustomAutoCompleteWithoutCheckbox';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchUser } from '../../../stores/slices/userSlice';
+import InputField from '../../../components/CustomTextfield';
+import { textFieldValidation } from '../utils/constants';
 
 function ProducerEODFrom() {
   const { id } = useParams();
+  const { user } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(
+      fetchUser({
+        userType: COMMON_WORDS.PRODUCER,
+        searchKey: COMMON_WORDS.ROLE_NAME,
+      })
+    );
+  }, [dispatch]);
 
   const { data, fetchData } = useGetDataById();
 
-  const { handleSubmit, control, setValue, formState } = useForm({
+  const { handleSubmit, control, setValue, formState, watch } = useForm({
     defaultValues: {
       producerCode: null,
       startDate: null,
@@ -32,11 +43,7 @@ function ProducerEODFrom() {
 
   const { errors } = formState;
 
-  const { userData } = useGetUserData();
-
-  const { postData, loading: createLoading } = useCreateEODBypass();
-
-  const { UpdateDataFun, updateLoading } = useUpdateEODBypass();
+  const { postData, loading, UpdateDataFun } = useCreateEODBypass();
 
   const onSubmit = (data) => {
     if (id) {
@@ -74,149 +81,94 @@ function ProducerEODFrom() {
     }
   }, [data]);
 
+  console.log('user', user);
+
   return (
     <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className={styles.createNewUserContainer}>
-          <div className="p-4">
-            <CustomFormHeader
-              id={id}
-              headerText={FORM_HEADER_TEXT.PRODUCER_EOD}
-              navigateRoute="/producer-eod-bypass-list"
-            />
-          </div>
-          <div className={styles.containerStyle}>
-            <div className={styles.fieldContainerStyle}>
-              <span className={styles.labelText}>
-                Producer <span className={styles.styledRequired}>*</span>
-              </span>
-              <Controller
-                name="producerCode"
-                control={control}
-                rules={{ required: true }}
-                render={({ field }) => (
-                  <Autocomplete
-                    id="producerCode"
-                    // value={getValues("producerCode")}
-                    value={field.value}
-                    options={userData || []}
-                    getOptionLabel={(option) => {
-                      return `${option?.firstName?.toUpperCase() || ''} ${option?.lastName?.toUpperCase() || ''}`;
-                    }}
-                    disabled={id}
-                    className={styles.customizeSelect}
-                    size="small"
-                    isOptionEqualToValue={(option, value) => option.id === value.id}
-                    renderInput={(params) => <TextField {...params} placeholder="Select" />}
-                    onChange={(event, newValue) => {
-                      field.onChange(newValue);
-                    }}
-                    ListboxProps={{
-                      style: {
-                        maxHeight: '200px',
-                      },
-                    }}
-                  />
-                )}
-              />
-              <div className={styles.styledError}>{errors.producerCode && <span>This field is required</span>} </div>
-            </div>
-
-            <div className={styles.fieldStyle}>
-              <div className={styles.fieldContainerStyle}>
-                <div className={styles.startDateStyle}>
-                  <div className={styles.labelText}>
-                    Start Date <span className={styles.styledRequired}>*</span>
-                  </div>
-                  <Controller
-                    name="startDate"
-                    control={control}
-                    rules={{ required: true }}
-                    render={({ field }) => (
-                      <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
-                        <DatePicker
-                          className={styles.dateStyle}
-                          // {...register("startDate", { required: true })}
-                          slotProps={{ textField: { size: 'small' } }}
-                          minDate={dayjs()}
-                          value={field.value ? dayjs(field.value, 'DD/MM/YYYY') : null}
-                          onChange={(date) => {
-                            const formattedDate = dayjs(date).format('DD/MM/YYYY');
-                            setValue('startDate', formattedDate);
-                          }}
-                        />
-                      </LocalizationProvider>
-                    )}
-                  />
-                </div>
-                <div className={styles.styledError}>{errors.startDate && <span>This field is required</span>}</div>
-              </div>
-              <div className={styles.fieldContainerStyle}>
-                <div>
-                  <div className={styles.labelText}>
-                    End Date <span className={styles.styledRequired}>*</span>
-                  </div>
-                  <Controller
-                    name="endDate"
-                    control={control}
-                    rules={{ required: true }}
-                    render={({ field }) => (
-                      <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
-                        <DatePicker
-                          className={styles.dateStyle}
-                          minDate={dayjs()}
-                          // {...register("expiryDate", { required: true })}
-                          // value={watch("expiryDate")}
-                          value={field.value ? dayjs(field.value, 'DD/MM/YYYY') : null}
-                          onChange={(date) => {
-                            const formattedDate = dayjs(date).format('DD/MM/YYYY');
-                            setValue('endDate', formattedDate);
-                          }}
-                          slotProps={{ textField: { size: 'small' } }}
-                        />
-                      </LocalizationProvider>
-                    )}
-                  />
-                  <div className={styles.styledError}>{errors.endDate && <span>This field is required</span>}</div>
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <div className={styles.fieldContainerStyle}>
-                <div className={styles.labelText}>
-                  Reason <span className={styles.styledRequired}>*</span>
-                </div>
-                <Controller
-                  name="reason"
-                  control={control}
-                  defaultValue=""
-                  rules={{
-                    required: 'Reason is required',
-                    minLength: {
-                      value: 2,
-                      message: 'Reason must be at least 2 characters',
-                    },
-                    maxLength: {
-                      value: 1000,
-                      message: 'Reason cannot exceed 1000 characters',
-                    },
-                    pattern: {
-                      value: REGEX.alphaNumericRegex,
-                      message: 'Reason must be alphanumeric',
-                    },
-                  }}
-                  render={({ field }) => <TextField {...field} variant="outlined" fullWidth />}
+      <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+        <Card>
+          <CardContent>
+            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+              <Grid item xs={12}>
+                <CustomFormHeader
+                  id={id}
+                  headerText={FORM_HEADER_TEXT.PRODUCER_EOD}
+                  navigateRoute={`/producer-eod-bypass-list`}
                 />
-                <div className={styles.styledError}>{errors.reason && <span>{errors.reason.message}</span>}</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <CustomButton type="submit" variant="contained" disabled={updateLoading || createLoading}>
-          {id ? 'Update' : 'Submit'}
-        </CustomButton>
-      </form>
+              </Grid>
+              <Grid item xs={12} sm={6} lg={4}>
+                <CustomAutoCompleteWithoutCheckbox
+                  name="producerCode"
+                  label="Producer Code"
+                  required={true}
+                  options={user?.data || []}
+                  getOptionLabel={(option) => `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`}
+                  isOptionEqualToValue={(option, value) => option.id === value.id}
+                  control={control}
+                  rules={{ required: 'Producer Code is required' }}
+                  error={Boolean(errors.producerCode)}
+                  helperText={errors.producerCode?.message}
+                  disableClearable={true}
+                  disabled={id ? true : false}
+                  placeholder={COMMON_WORDS.SELECT}
+                  renderOption={(props, option) => (
+                    <li {...props} key={option.id}>
+                      {`${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`}
+                    </li>
+                  )}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6} lg={4}>
+                <DateField
+                  key="startDate"
+                  control={control}
+                  name="startDate"
+                  labelVisible={true}
+                  label="Start Date"
+                  required
+                  classes="w-full text-red-600"
+                  setValue={setValue}
+                  watch={watch}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6} lg={4}>
+                <DateField
+                  key="endDate"
+                  control={control}
+                  name="endDate"
+                  labelVisible={true}
+                  label="End Date"
+                  required
+                  classes="w-full text-red-600"
+                  setValue={setValue}
+                  watch={watch}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6} lg={8}>
+                <InputField
+                  key="reason"
+                  id="reason"
+                  required
+                  label="Reason"
+                  validation={textFieldValidation}
+                  control={control}
+                  errors={errors}
+                  disabled={false}
+                  classes="w-full text-left"
+                />
+              </Grid>
+            </Grid>
+          </CardContent>
+        </Card>
+
+        <Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }} className="mt-4">
+          <Grid item xs={12} sm={6} lg={2}>
+            <CustomButton type="submit" variant="contained" sx={{ width: '100%' }} disabled={loading}>
+              {id ? 'Update' : 'Submit'}
+            </CustomButton>
+          </Grid>
+        </Grid>
+      </Box>
     </div>
   );
 }
