@@ -15,7 +15,6 @@ const apiUrls = {
   getProduct: '/api/product',
   getRole: '/api/role',
   getPermission: '/api/permission',
-  module: '/api/module',
   channel: '/api/channel',
   ckyc: '/api/ckyc',
   employeeFlag: 'api/employee-flag-config',
@@ -23,6 +22,7 @@ const apiUrls = {
   paymentProduct: 'api/product-wise-payment-method',
   productLocationLevelMapping: 'api/product-location-level-mapping',
   getGroup: '/api/group',
+  module: '/api/module/all?status=true'
 };
 
 export default apiUrls;

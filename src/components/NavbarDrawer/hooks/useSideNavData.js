@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axiosInstance from './../../../utils/axiosInstance'
 import { toast } from "react-toastify";
 import { COMMON_ERROR } from "../../../utils/globalConstants";
+import apiUrls from "../../../utils/apiUrls";
 
 const useSideNavData = () => {
   const [sideNavData, setSideNavData] = useState([]);
@@ -9,7 +10,7 @@ const useSideNavData = () => {
   useEffect(() => {
     const fetchSideNavData = async () => {
       try {
-        const response = await axiosInstance.get("/api/module/all");
+        const response = await axiosInstance.get(apiUrls.module);
         setSideNavData(response.data.data);
       } catch (error) {
         toast.error(error?.response?.data?.error?.message || COMMON_ERROR);
