@@ -12,6 +12,8 @@ import { getPlaceHolder } from "../../utils/globalizationFunction";
 import { fetchLobData } from "../../stores/slices/lobSlice";
 import SearchComponent from "../../components/SearchComponent";
 import { COMMON_FIELDS } from "../PartnerNeft/utils/constant";
+import usePermissions from "../../hooks/usePermission";
+import { useLocation } from "react-router-dom";
 
 function Product() {
   const dispatch = useDispatch();
@@ -26,6 +28,13 @@ function Product() {
   const { lob } = useSelector((state) => state.lob);
 
   const [searched, setSearched] = useState(COMMON_WORDS.LOB);
+
+  // Check Permission 
+  const { hasPermission } = usePermissions();
+  const location = useLocation();
+  const path = location.pathname.split('/')[1];
+  const canCreate = hasPermission(COMMON_WORDS.CREATE, path);
+  const canUpdate = hasPermission(COMMON_WORDS.UPDATE, path);
 
   useEffect(() => {
     dispatch(fetchLobData({ isAll: true }));
@@ -59,11 +68,12 @@ function Product() {
           updatedAt: product.updatedAt,
           checked: product?.status,
           status: product?.status,
+          disabled: canUpdate ? false : true,
         };
       }) || [];
 
     setProductData(transformedData);
-  }, [products]);
+  }, [products, canUpdate]);
 
   const handleUpdate = useCallback(
     async (data) => {
@@ -167,6 +177,7 @@ function Product() {
           // selectOptions={SEARCH_OPTIONS}
           handleGo={handleGo}
           showButton
+          canCreate={canCreate}
         />
       </div>
       <CustomTable
