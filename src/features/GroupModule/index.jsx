@@ -4,7 +4,7 @@ import { Header } from './utils/Header';
 import CustomTable from './../../components/CustomTable';
 import { getGroup, getGroupById } from './../../stores/slices/groupSlice';
 import { COMMON_WORDS } from '../../utils/constants';
-import { BUTTON_TEXT } from '../../utils/globalConstants';
+import { BUTTON_TEXT, PAGECOUNT } from '../../utils/globalConstants';
 import { showDialog } from '../../stores/slices/dialogSlice';
 import ConfirmAction from './Dialog/ConfirmAction';
 import CustomDialog from '../../components/CustomDialog';
@@ -19,7 +19,7 @@ import Content from '../../components/CustomDialogContent';
 
 function GroupModule() {
   const [page, setPage] = useState(0);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(PAGECOUNT);
   const [order, setOrder] = useState(null);
   const [orderBy, setOrderBy] = useState(null);
 

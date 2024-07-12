@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import SetOTPException from "./SetOTPException";
 import OTPList from "./OTPList";
 import useGetOTPException from "./hooks/useGetOTPException";
+import { PAGECOUNT } from "../../utils/globalConstants";
 
 function OTPException() {
-  const [rowsPage, setRowsPage] = useState(10);
+  const [rowsPage, setRowsPage] = useState(PAGECOUNT);
   const [pageChange, setPageChange] = useState(1);
   const [query, setQuery] = useState("");
   const [searched, setSearched] = useState("type");

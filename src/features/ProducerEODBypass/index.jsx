@@ -7,7 +7,7 @@ import ListLoader from "../../components/ListLoader";
 import Table from "./Table";
 import NoDataFound from "../../components/NoDataCard";
 import { MenuItem, Pagination, Select } from "@mui/material";
-import { selectRowsData } from "../../utils/globalConstants";
+import { PAGECOUNT, selectRowsData } from "../../utils/globalConstants";
 import { useDispatch } from "react-redux";
 import { setTableName } from "../../stores/slices/exportSlice";
 
@@ -32,7 +32,7 @@ function ProducerEODBypass() {
   const dispatch = useDispatch();
   const [producers, setProducers] = useState("");
 
-  const [rowsPage, setRowsPage] = useState(10);
+  const [rowsPage, setRowsPage] = useState(PAGECOUNT);
 
   const [pageChange, setPageChange] = useState(1);
 

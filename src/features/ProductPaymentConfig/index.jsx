@@ -6,7 +6,7 @@ import ListLoader from "../../components/ListLoader";
 import Table from "./Table";
 import NoDataFound from "../../components/NoDataCard";
 import { MenuItem, Pagination, Select } from "@mui/material";
-import { BUTTON_TEXT, selectRowsData } from "../../utils/globalConstants";
+import { BUTTON_TEXT, PAGECOUNT, selectRowsData } from "../../utils/globalConstants";
 import useGetPaymentConfig from "./hooks/useGetPaymentConfig";
 import useGetPayment from "./hooks/useGetPayment";
 import { ProductPayment } from "./constants";
@@ -37,7 +37,7 @@ function ProductPaymentConfig() {
   const [productValue, setProductValue] = useState([]);
   const [lobValue, setLobValue] = useState([]);
 
-  const [rowsPage, setRowsPage] = useState(10);
+  const [rowsPage, setRowsPage] = useState(PAGECOUNT);
 
   const [pageChange, setPageChange] = useState(1);
 

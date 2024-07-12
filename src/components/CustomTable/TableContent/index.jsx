@@ -39,9 +39,9 @@ const TableContent = ({ columns, data, loading }) => {
                     {action?.id ? <span>{row[action?.id]}</span> : null}
                     <span key={`${col.id}-${index}`}>
                       {action.component === 'checkbox' ? (
-                        <Checkbox checked={row.checked || false} onChange={() => action.onClick(row)} />
+                        <Checkbox checked={row.checked || false} onChange={() => action.onClick(row)} disabled={row.disabled} />
                       ) : action.component === 'switch' ? (
-                        <Switch checked={row.checked || false} onChange={() => action.onClick(data, row)} />
+                        <Switch checked={row.checked || false} onChange={() => action.onClick(data, row)} disabled={row.disabled} />
                       ) : action.showIcon ? (
                         <IconButton onClick={() => action.onClick(row)}>{action.iconName}</IconButton>
                       ) : null}

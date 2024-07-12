@@ -12,6 +12,7 @@ import { useDispatch } from 'react-redux';
 import CustomDialog from '../../components/CustomDialog';
 import SearchComponent from '../../components/SearchComponent';
 import { setTableName } from '../../stores/slices/exportSlice';
+import { PAGECOUNT } from '../../utils/globalConstants';
 
 function UserManagement() {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ function UserManagement() {
   const [query, setQuery] = useState('');
   const [searched, setSearched] = useState(SEARCH_OPTIONS[0].value);
   const [page, setPage] = useState(0);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(PAGECOUNT);
   const [order, setOrder] = useState(COMMON_WORDS.ASC);
   const [orderBy, setOrderBy] = useState(COMMON_WORDS.CREATED_AT);
   const { data, loading, fetchData, setLoading } = useGetUser(page, pageSize, query, order, orderBy);
