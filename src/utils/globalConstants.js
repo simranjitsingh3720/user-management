@@ -26,6 +26,7 @@ export const BUTTON_TEXT = {
   GROUP: 'Create New Group',
   PRODUCT_LOCATION_LEVEL: 'Create Product Location Level',
   EMPLOYEE_FLAG_CONFIG: 'Create Employee Flag Config',
+  PRODUCER_EOD: 'Create New Producer EOD Bypass',
 };
 
 export const STATUS = [
