@@ -7,7 +7,7 @@ import {
   updateProductData,
 } from "../../stores/slices/productSlice";
 import { COMMON_WORDS } from "../../utils/constants";
-import { BUTTON_TEXT } from "../../utils/globalConstants";
+import { BUTTON_TEXT, PAGECOUNT } from "../../utils/globalConstants";
 import { getPlaceHolder } from "../../utils/globalizationFunction";
 import { fetchLobData } from "../../stores/slices/lobSlice";
 import SearchComponent from "../../components/SearchComponent";
@@ -17,7 +17,7 @@ function Product() {
   const dispatch = useDispatch();
 
   const [page, setPage] = useState(0);
-  const [pageSize, setPageSize] = useState;
+  const [pageSize, setPageSize] = useState(PAGECOUNT);
   const [order, setOrder] = useState(null);
   const [orderBy, setOrderBy] = useState(null);
   const [productData, setProductData] = useState([]);
