@@ -49,7 +49,7 @@ function Header({ handleDrawerToggle, selectedNavbar, selectedParentIndex }) {
   const settings = ['Logout'];
 
   const handleLogout = () => {
-    localStorage.removeItem(TOKEN);
+    localStorage.clear();
     navigate("/");
   };
 
