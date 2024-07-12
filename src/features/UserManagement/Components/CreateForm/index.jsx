@@ -222,7 +222,6 @@ function CreateUserCreationForm() {
 
   useEffect(() => {
     if (rolesWatch) {
-      roleHierarchyFetch(rolesWatch?.id);
       userTypeFetch(rolesWatch?.id);
 
       if (PRODUCER_CODE_CALL.some((role) => rolesWatch?.roleName?.includes(role))) {
@@ -230,6 +229,7 @@ function CreateUserCreationForm() {
       }
       if (PRODUCER_ARR.some((role) => rolesWatch?.roleName?.includes(role))) {
         dispatch(getParentCode(rolesWatch));
+        roleHierarchyFetch(rolesWatch?.id);
         dispatch(getChannels());
         dispatch(getHouseBanks());
       }

@@ -105,7 +105,7 @@
                 "label": "Location",
                 "type": "autocomplete",
                 "required": true,
-                "multiple": true,
+                "all": true,
                 "validation": {
                     "required": "This field is required"
                 }
@@ -321,7 +321,7 @@
                 "label": "Location",
                 "type": "autocomplete",
                 "required": true,
-                "multiple": true,
+                "all": true,
                 "validation": {
                     "required": "This field is required"
                 }
@@ -537,7 +537,7 @@
                 "label": "Location",
                 "type": "autocomplete",
                 "required": true,
-                "multiple": true,
+                "all": true,
                 "validation": {
                     "required": "This field is required"
                 }
@@ -2353,7 +2353,7 @@
                 "id": "location",
                 "label": "Location",
                 "type": "autocomplete",
-                "multiple": true,
+                "all": true,
                 "required": true,
                 "validation": {
                     "required": "This field is required"
@@ -2539,7 +2539,7 @@
                 "id": "location",
                 "label": "Location",
                 "type": "autocomplete",
-                "multiple": true,
+                "all": true,
                 "required": true,
                 "validation": {
                     "required": "This field is required"
@@ -2725,7 +2725,7 @@
                 "id": "location",
                 "label": "Location",
                 "type": "autocomplete",
-                "multiple": true,
+                "all": true,
                 "required": true,
                 "validation": {
                     "required": "This field is required"
@@ -2911,7 +2911,7 @@
                 "id": "location",
                 "label": "Location",
                 "type": "autocomplete",
-                "multiple": true,
+                "all": true,
                 "required": true,
                 "validation": {
                     "required": "This field is required"
@@ -3952,7 +3952,7 @@
                 "id": "location",
                 "label": "Location",
                 "type": "autocomplete",
-                "multiple": true,
+                "all": true,
                 "required": true,
                 "validation": {
                     "required": "This field is required"
