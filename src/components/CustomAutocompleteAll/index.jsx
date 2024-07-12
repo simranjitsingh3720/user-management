@@ -72,7 +72,7 @@ const AutocompleteFieldAll = ({
             {...field}
             multiple
             id={name}
-            options={[{ label: 'All', value: 'all' }, ...(options || [])]}
+            options={options?.length > 0 ? [{ label: 'All', value: 'all' }, ...(options || [])] : []}
             disableCloseOnSelect
             getOptionLabel={(option) => option?.label}
             value={selectedValues || []}
@@ -83,22 +83,23 @@ const AutocompleteFieldAll = ({
                 field.onChange(apiDataMap[name])
               }
             }}
-            renderOption={(props, option) => (
+            renderOption={(props, option, {selected}) => (
               <li {...props} key={option?.value}>
                 <Checkbox
                   icon={icon}
                   checkedIcon={checkedIcon}
-                  style={{ marginRight: 8 }}
-                  checked={option?.value === All ? isCheckedAll() : isSelected(option)}
+                  checked={option?.value === All ? isCheckedAll() : selected}
                 />
                 {option.label}
               </li>
             )}
             size="small"
             className={`${styles.customizeSelect} ${classes}`}
+            limitTags={2}
             renderInput={(params) => (
               <TextField
                 {...params}
+                sx={{height:'40px', overflowY:'auto' }}
                 placeholder={PLACEHOLDER}
                 error={Boolean(errors[name])}
                 helperText={Boolean(errors[name]) ? REQUIRED_MSG : ''}

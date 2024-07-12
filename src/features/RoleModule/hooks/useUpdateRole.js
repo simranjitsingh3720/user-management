@@ -21,8 +21,6 @@ function useUpdateRole(id, setChangeStatusOpen, fetchGroupList) {
       toast.error(
         error?.response?.data?.error?.message || COMMON_ERROR
       );
-
-      
     } finally {
       setLoading(false); 
     }
