@@ -11,6 +11,8 @@ import { PrivilegeSearch } from './constants';
 import Actions from './Dialog/Action';
 import CustomDialog from '../../components/CustomDialog';
 import Content from '../../components/CustomDialogContent';
+import usePermissions from '../../hooks/usePermission';
+import { useLocation } from 'react-router-dom';
 
 function PermissionModule() {
   const dispatch = useDispatch();
@@ -23,6 +25,12 @@ function PermissionModule() {
   const [orderBy, setOrderBy] = useState(COMMON_WORDS.CREATED_AT);
 
   const { fetchData, data, loading, count } = useGetPrivilege(page, pageSize, order, orderBy);
+  // Check Permission 
+  const { hasPermission } = usePermissions();
+  const location = useLocation();
+  const path = location.pathname.split('/')[1];
+  const canCreate = hasPermission(COMMON_WORDS.CREATE, path);
+  const canUpdate = hasPermission(COMMON_WORDS.UPDATE, path);
 
   const handleClicked = (data, row) => {
     dispatch(
@@ -53,6 +61,7 @@ function PermissionModule() {
         navigateRoute={'/permission/permission-form'}
         handleGo={handleGo}
         showButton
+        canCreate={canCreate}
       />
       <div className="mt-4">
         <CustomTable
@@ -68,6 +77,7 @@ function PermissionModule() {
           setOrder={setOrder}
           orderBy={orderBy}
           setOrderBy={setOrderBy}
+          canUpdate={canUpdate}
         />
       </div>
       <CustomDialog />

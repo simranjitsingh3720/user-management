@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { Box } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import SearchComponent from '../../components/SearchComponent';
 import CustomTable from '../../components/CustomTable';
@@ -14,6 +14,7 @@ import { COMMON_WORDS } from '../../utils/constants';
 import { fetchUser } from '../../stores/slices/userSlice';
 import { getPlaceHolder } from '../../utils/globalizationFunction';
 import { setTableName } from '../../stores/slices/exportSlice';
+import usePermissions from '../../hooks/usePermission';
 
 const PartnerNeft = () => {
   const navigate = useNavigate();
@@ -32,6 +33,13 @@ const PartnerNeft = () => {
   const [userValue, setUserValue] = useState([]);
 
   const { getPartnerNeft, partnerNeftData, partnerNeftLoading, totalCount } = useGetPartnerNeft();
+
+  // Check Permission
+  const { hasPermission } = usePermissions();
+  const location = useLocation();
+  const path = location.pathname.split('/')[1];
+  const canCreate = hasPermission(COMMON_WORDS.CREATE, path);
+  const canUpdate = hasPermission(COMMON_WORDS.UPDATE, path);
 
   const loadData = useCallback(() => {
     getPartnerNeft({
@@ -204,6 +212,7 @@ const PartnerNeft = () => {
         handleGo={handleGo}
         showButton
         showExportButton={true}
+        canCreate={canCreate}
       />
       <div className="mt-4">
         <CustomTable
@@ -219,6 +228,7 @@ const PartnerNeft = () => {
           setOrder={setOrder}
           orderBy={orderBy}
           setOrderBy={setOrderBy}
+          canUpdate={canUpdate}
         />
       </div>
     </Box>
