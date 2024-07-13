@@ -56,7 +56,6 @@ function CreateGroupForm() {
   const [selectAll, setSelectAll] = useState(false);
 
   const { permissionData, permissionLoading } = useGetPermission();
-  // const userVariable = useContext(GetUserContext);
 
   const [checkedPermission, setCheckedPermission] = useState([]);
 
@@ -341,7 +340,7 @@ function CreateGroupForm() {
                     setQuery(e.target.value);
                   }}
                 />
-                <div className="flex content-start w-full items-center">
+                <div className="flex content-start w-full items-center px-3 pb-3">
                   <Checkbox
                     checked={selectAll}
                     onChange={handleSelectAll}

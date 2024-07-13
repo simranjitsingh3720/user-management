@@ -1,10 +1,10 @@
-import { useState } from "react";
-import axiosInstance from "../../../utils/axiosInstance"; 
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import { COMMON_ERROR } from "../../../utils/globalConstants";
+import { useState } from 'react';
+import axiosInstance from '../../../utils/axiosInstance';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { COMMON_ERROR } from '../../../utils/globalConstants';
 
-function useUpdateRole(id, setChangeStatusOpen, fetchGroupList) {
+function useUpdateRole(id, setChangeStatusOpen) {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
@@ -13,16 +13,13 @@ function useUpdateRole(id, setChangeStatusOpen, fetchGroupList) {
     setLoading(true);
     try {
       const response = await axiosInstance.put(`/api/role/${id}`, data);
-      toast.success(response?.data?.message || "Role updated successfully");
-      navigate("/roles");
+      toast.success(response?.data?.message || 'Role updated successfully');
+      navigate('/roles');
       if (setChangeStatusOpen) setChangeStatusOpen(false);
-      if (fetchGroupList) fetchGroupList();
     } catch (error) {
-      toast.error(
-        error?.response?.data?.error?.message || COMMON_ERROR
-      );
+      toast.error(error?.response?.data?.error?.message || COMMON_ERROR);
     } finally {
-      setLoading(false); 
+      setLoading(false);
     }
   }
   return { UpdateDataFun, updateLoading: loading };

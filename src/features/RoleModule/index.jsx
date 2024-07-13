@@ -1,21 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
-import SearchComponenet from "./SearchComponent";
-import Table from "./Table";
-import styles from "./styles.module.scss";
-import { MenuItem, Pagination, Select } from "@mui/material";
-import TableHeader from "./Table/TableHeader";
-import NoDataFound from "../../components/NoDataCard";
-import ListLoader from "../../components/ListLoader";
-import useGetRole from "./hooks/useGetRole";
-import useGetGroup from "./hooks/useGetGroup";
-import { PAGECOUNT, selectRowsData } from "../../utils/globalConstants";
+import SearchComponenet from './SearchComponent';
+import Table from './Table';
+import styles from './styles.module.scss';
+import { MenuItem, Pagination, Select } from '@mui/material';
+import TableHeader from './Table/TableHeader';
+import NoDataFound from '../../components/NoDataCard';
+import ListLoader from '../../components/ListLoader';
+import useGetRole from './hooks/useGetRole';
+import { PAGECOUNT, selectRowsData } from '../../utils/globalConstants';
 
 function getSelectedRowData(count) {
-  
   let selectedRowData = [];
 
-  
   for (let i = 0; i < selectRowsData.length; i++) {
     if (selectRowsData[i] <= count) {
       selectedRowData.push(selectRowsData[i]);
@@ -27,25 +24,20 @@ function getSelectedRowData(count) {
 
 function RoleModule() {
   const [rowsPage, setRowsPage] = useState(PAGECOUNT);
-  const [searched, setSearched] = useState("roleName");
-  const [query, setQuery] = useState("");
+  const [searched, setSearched] = useState('roleName');
+  const [query, setQuery] = useState('');
   const [pageChange, setPageChange] = useState(1);
   const [value, setValue] = useState([]);
 
-  const { data, loading, fetchData, setLoading, setSort, sort } = useGetRole(
-    pageChange,
-    rowsPage
-  );
+  const { data, loading, fetchData, setLoading, setSort, sort } = useGetRole(pageChange, rowsPage);
 
   const handlePaginationChange = (event, page) => {
     setLoading(true);
     setPageChange(page);
   };
 
-  const { data: groupData } = useGetGroup();
-
   useEffect(() => {
-    if (query) setQuery("");
+    if (query) setQuery('');
     else setValue([]);
   }, [searched]);
 
@@ -62,7 +54,6 @@ function RoleModule() {
         query={query}
         setQuery={setQuery}
         fetchData={fetchData}
-        groupData={groupData?.data || []}
         value={value}
         setValue={setValue}
         setLoading={setLoading}

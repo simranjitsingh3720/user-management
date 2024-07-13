@@ -32,7 +32,7 @@ function GroupModule() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // Check Permission 
+  // Check Permission
   const { canCreate, canUpdate } = usePermissions();
 
   useEffect(() => {
