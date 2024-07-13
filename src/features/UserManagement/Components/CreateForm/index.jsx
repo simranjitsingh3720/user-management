@@ -227,10 +227,10 @@ function CreateUserCreationForm() {
 
       if (PRODUCER_CODE_CALL.some((role) => rolesWatch?.roleName?.includes(role))) {
         dispatch(getProducerCodes(rolesWatch));
+        roleHierarchyFetch(rolesWatch?.id);
       }
       if (PRODUCER_ARR.some((role) => rolesWatch?.roleName?.includes(role))) {
         dispatch(getParentCode(rolesWatch));
-        roleHierarchyFetch(rolesWatch?.id);
         dispatch(getChannels());
         dispatch(getHouseBanks());
       }
