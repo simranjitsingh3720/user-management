@@ -87,7 +87,7 @@ const DateField = ({
                 onChange={(date) => {
                   const formattedDate = dayjs(date).format(DATE_FORMAT);
                   setValue(name, formattedDate);
-                  field.onChange(date)
+                  field.onChange(formattedDate)
                 }}
               />
             </LocalizationProvider>
