@@ -6,7 +6,7 @@ import ListLoader from "../../components/ListLoader";
 import Table from "./Table";
 import NoDataFound from "../../components/NoDataCard";
 import { MenuItem, Pagination, Select } from "@mui/material";
-import { selectRowsData } from "../../utils/globalConstants";
+import { PAGECOUNT, selectRowsData } from "../../utils/globalConstants";
 import useGetProposalOTPList from "./hooks/useGetProposalOTPList";
 import { useDispatch } from "react-redux";
 import { setTableName } from "../../stores/slices/exportSlice";
@@ -28,7 +28,7 @@ function ProposalOTPException() {
   const [date, setDate] = useState({ startDate: "", endDate: "" });
   const dispatch = useDispatch();
 
-  const [rowsPage, setRowsPage] = useState(10);
+  const [rowsPage, setRowsPage] = useState(PAGECOUNT);
 
   const [pageChange, setPageChange] = useState(1);
 

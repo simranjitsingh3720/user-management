@@ -8,6 +8,7 @@ function List({
   item,
   fetchData: fetchGroupList,
   setLoading: setGroupLoading,
+  canUpdate,
 }) {
   // const [open, setOpen] = useState(false);
   // const [changeStatusOpen, setChangeStatusOpen] = useState(false);
@@ -49,7 +50,7 @@ function List({
         <div className={styles.createdAt}> {item?.createdAt || "-"}</div>
         <div className={styles.updatedAt}> {item?.updatedAt || "-"}</div>
 
-        <div className={styles.actionCell}>
+        {canUpdate && (<div className={styles.actionCell}>
           <Tooltip title="Edit House Bank">
             <IconButton
               aria-label="back"
@@ -61,7 +62,7 @@ function List({
               <EditIcon color="primary" />
             </IconButton>
           </Tooltip>
-        </div>
+        </div>)}
       </div>
     </div>
   );

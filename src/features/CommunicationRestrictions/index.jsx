@@ -6,12 +6,13 @@ import { useState } from "react";
 import { Header } from "./utils/header";
 import DownloadIcon from "../../assets/DownloadLogo";
 import CustomSearchField from "../../components/CustomSearchField";
+import { PAGECOUNT } from "../../utils/globalConstants";
 
 function CommunicationRestrictions() {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const [page, setPage] = useState(0);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(PAGECOUNT);
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('');
 

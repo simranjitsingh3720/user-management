@@ -12,18 +12,22 @@ import { showDialog } from '../../stores/slices/dialogSlice';
 import Content from './Dialog/Content';
 import Actions from './Dialog/Action';
 import { setTableName } from '../../stores/slices/exportSlice';
-import { BUTTON_TEXT } from '../../utils/globalConstants';
+import { BUTTON_TEXT, PAGECOUNT } from '../../utils/globalConstants';
+import usePermissions from '../../hooks/usePermission';
 
 function EmployeeFlagConfig() {
   const [producers, setProducers] = useState();
 
   const [page, setPage] = useState(0);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(PAGECOUNT);
   const [order, setOrder] = useState(COMMON_WORDS.ASC);
   const [orderBy, setOrderBy] = useState(COMMON_WORDS.CREATED_AT);
   const [tableData, setTableData] = useState([]);
   const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+
+  // Check Permission
+  const { canCreate } = usePermissions();
 
   useEffect(() => {
     dispatch(
@@ -100,6 +104,7 @@ function EmployeeFlagConfig() {
           buttonText={BUTTON_TEXT.EMPLOYEE_FLAG_CONFIG}
           navigateRoute="/employee-flag-config/form"
           showButton
+          canCreate={canCreate}
         />
       </div>
       <CustomTable

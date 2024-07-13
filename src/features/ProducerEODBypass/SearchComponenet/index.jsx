@@ -35,6 +35,7 @@ function SearchComponenet({
   setProducers,
   date,
   setDate,
+  canCreate
 }) {
   const navigate = useNavigate();
 
@@ -165,7 +166,8 @@ function SearchComponenet({
             </div>
             <div>
               <ExportDropdown />
-              <CustomButton
+              { canCreate && 
+              (<CustomButton
                 variant="contained"
                 onClick={handleCreateNewForm}
                 sx={{ textTransform: "none" }}
@@ -173,7 +175,9 @@ function SearchComponenet({
                 <Typography nowrap="true" className={styles.buttonTextStyle}>
                   Create New Producer EOD Bypass
                 </Typography>
-              </CustomButton>
+              </CustomButton>)
+              }
+
             </div>
           </div>
           <div>

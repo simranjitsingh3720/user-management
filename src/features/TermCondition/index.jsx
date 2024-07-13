@@ -6,6 +6,7 @@ import { COMMON_WORDS } from "../../utils/constants";
 import CustomTable from "../../components/CustomTable";
 import generateTableHeaders from "./utils/generateTableHeaders";
 import { getPlaceHolder } from "../../utils/globalizationFunction";
+import { PAGECOUNT } from "../../utils/globalConstants";
 
 function TermCondition() {
   const [date, setDate] = useState({ startDate: "", endDate: "" });
@@ -14,7 +15,7 @@ function TermCondition() {
   const [userData, setUserData] = useState();
 
   const [page, setPage] = useState(0);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(PAGECOUNT);
   const [order, setOrder] = useState(COMMON_WORDS.ASC);
   const [orderBy, setOrderBy] = useState(COMMON_WORDS.CREATED_AT);
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { TableBody, TableRow, TableCell, IconButton, Checkbox, Switch } from '@mui/material';
 import ListLoader from '../../ListLoader';
 
-const TableContent = ({ columns, data, loading }) => {
+const TableContent = ({ columns, data, loading, canUpdate }) => {
   if (loading) {
     return (
       <TableBody>
@@ -39,11 +39,11 @@ const TableContent = ({ columns, data, loading }) => {
                     {action?.id ? <span>{row[action?.id]}</span> : null}
                     <span key={`${col.id}-${index}`}>
                       {action.component === 'checkbox' ? (
-                        <Checkbox checked={row.checked || false} onChange={() => action.onClick(row)} />
+                        <Checkbox checked={row.checked || false} onChange={() => action.onClick(row)} disabled={row.disabled || !canUpdate} />
                       ) : action.component === 'switch' ? (
-                        <Switch checked={row.checked || false} onChange={() => action.onClick(data, row)} />
+                        <Switch checked={row.checked || false} onChange={() => action.onClick(data, row)} disabled={row.disabled || !canUpdate} />
                       ) : action.showIcon ? (
-                        <IconButton onClick={() => action.onClick(row)}>{action.iconName}</IconButton>
+                        <IconButton onClick={() => action.onClick(row)} disabled={row.disabled || !canUpdate}>{action.iconName}</IconButton>
                       ) : null}
                     </span>
                   </React.Fragment>

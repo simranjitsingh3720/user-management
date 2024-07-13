@@ -6,12 +6,13 @@ import useGetEmployeeData from '../hooks/useGetEmployeeData';
 import { COMMON_WORDS } from '../../../utils/constants';
 import { useNavigate } from 'react-router-dom';
 import { EMPLOYEE_SEARCH } from '../utils/constants';
+import { PAGECOUNT } from '../../../utils/globalConstants';
 
 function EmployeeForm() {
   const [searched, setSearched] = useState('employeeId');
   const [query, setQuery] = useState('');
   const [page, setPage] = useState(0);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(PAGECOUNT);
   const [order, setOrder] = useState(COMMON_WORDS.ASC);
   const [orderBy, setOrderBy] = useState(COMMON_WORDS.CREATED_AT);
   const navigate = useNavigate();

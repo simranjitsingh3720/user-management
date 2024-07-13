@@ -15,7 +15,7 @@ const calculateUnlockedDays = (startDateString, endDateString) => {
   return differenceInDays;
 };
 
-function List({ item, fetchData: fetchGroupList }) {
+function List({ item, fetchData: fetchGroupList, canUpdate }) {
   const navigate = useNavigate();
 
   const handleEditClick = () => {
@@ -58,6 +58,7 @@ function List({ item, fetchData: fetchGroupList }) {
               onClick={() => {
                 handleEditClick();
               }}
+              disabled={!canUpdate}
             >
               <EditIcon color="primary" />
             </IconButton>

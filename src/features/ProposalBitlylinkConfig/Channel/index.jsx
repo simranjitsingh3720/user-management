@@ -7,7 +7,7 @@ import Table from "./Table";
 import NoDataFound from "../../../components/NoDataCard";
 import { MenuItem, Pagination, Select } from "@mui/material";
 import useGetBitlyLink from "../hooks/useGetBitlyLink";
-import { selectRowsData } from "../../../utils/globalConstants";
+import { PAGECOUNT, selectRowsData } from "../../../utils/globalConstants";
 import { useDispatch } from "react-redux";
 import { setTableName } from "../../../stores/slices/exportSlice";
 
@@ -28,7 +28,7 @@ function getSelectedRowData(count) {
 function Channel() {
   const [query, setQuery] = useState("");
   const [searched, setSearched] = useState("type");
-  const [rowsPage, setRowsPage] = useState(10);
+  const [rowsPage, setRowsPage] = useState(PAGECOUNT);
   const [pageChange, setPageChange] = useState(1);
   const dispatch = useDispatch();
 

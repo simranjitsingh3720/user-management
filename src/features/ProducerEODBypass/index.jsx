@@ -7,9 +7,10 @@ import ListLoader from "../../components/ListLoader";
 import Table from "./Table";
 import NoDataFound from "../../components/NoDataCard";
 import { MenuItem, Pagination, Select } from "@mui/material";
-import { selectRowsData } from "../../utils/globalConstants";
+import { PAGECOUNT, selectRowsData } from "../../utils/globalConstants";
 import { useDispatch } from "react-redux";
 import { setTableName } from "../../stores/slices/exportSlice";
+import usePermissions from "../../hooks/usePermission";
 
 function getSelectedRowData(count) {
   
@@ -32,10 +33,11 @@ function ProducerEODBypass() {
   const dispatch = useDispatch();
   const [producers, setProducers] = useState("");
 
-  const [rowsPage, setRowsPage] = useState(10);
+  const [rowsPage, setRowsPage] = useState(PAGECOUNT);
 
   const [pageChange, setPageChange] = useState(1);
-
+  // Check Permission
+  const { canCreate, canUpdate } = usePermissions();
   const { data, loading, fetchData, setSort, sort } = useGetEODBypass(
     pageChange,
     rowsPage,
@@ -69,6 +71,7 @@ function ProducerEODBypass() {
         setProducers={setProducers}
         date={date}
         setDate={setDate}
+        canCreate={canCreate}
       />
 
       <div className={styles.tableContainerStyle}>
@@ -85,6 +88,7 @@ function ProducerEODBypass() {
               fetchData={fetchData}
               sort={sort}
               setSort={setSort}
+              canUpdate={canUpdate}
             />
           ) : (
             <NoDataFound />
