@@ -34,8 +34,9 @@ function ResponsiveDrawer({ showSidebarAndHeader, children }) {
   let pathname = location?.pathname?.split('/')[1]?.replace('-', ' ') || '';
   const [selectedNavbar, setSelectedNavbar] = useState(pathname ? pathname : DASHBOARD);
   const [selectedParentIndex, setSelectedParentIndex] = useState(null);
-  
-  const sideNavData = JSON.parse(localStorage.getItem(COMMON_WORDS.SCOPES))?.read || [];
+
+  const scopes = JSON.parse(localStorage.getItem(COMMON_WORDS.SCOPES))?.read || [];
+  const sideNavData = scopes && scopes.length > 0 && scopes.filter(item => item.moduleType === MODULE_TYPE);
 
   const handleDrawerToggle = () => {
     if (!isClosing) {
