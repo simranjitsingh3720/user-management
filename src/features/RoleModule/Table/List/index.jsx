@@ -26,6 +26,7 @@ function List({
   item,
   fetchData: fetchGroupList,
   setLoading: setGroupLoading,
+  canUpdate
 }) {
   const [open, setOpen] = useState(false);
   const [changeStatusOpen, setChangeStatusOpen] = useState(false);
@@ -99,13 +100,14 @@ function List({
               checked={checked}
               onChange={handleChange}
               inputProps={{ "aria-label": "toggle button" }}
+              disabled={!canUpdate}
             />
           </div>
           <div className={styles.styledActiveSelect}>
             {item?.role.status ? "Active" : "Inactive"}
           </div>
         </div>
-        <div className={styles.actionCell}>
+        {canUpdate && (<div className={styles.actionCell}>
           <Tooltip title="Edit Role">
             <IconButton
               aria-label="back"
@@ -115,7 +117,7 @@ function List({
               <EditIcon color="primary" />
             </IconButton>
           </Tooltip>
-        </div>
+        </div>)}
       </div>{" "}
       <Dialog
         onClose={handleClose}

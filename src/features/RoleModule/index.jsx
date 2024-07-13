@@ -10,6 +10,7 @@ import ListLoader from "../../components/ListLoader";
 import useGetRole from "./hooks/useGetRole";
 import useGetGroup from "./hooks/useGetGroup";
 import { PAGECOUNT, selectRowsData } from "../../utils/globalConstants";
+import usePermissions from "../../hooks/usePermission";
 
 function getSelectedRowData(count) {
   
@@ -31,6 +32,8 @@ function RoleModule() {
   const [query, setQuery] = useState("");
   const [pageChange, setPageChange] = useState(1);
   const [value, setValue] = useState([]);
+
+  const { canCreate, canUpdate } = usePermissions();
 
   const { data, loading, fetchData, setLoading, setSort, sort } = useGetRole(
     pageChange,
@@ -66,6 +69,7 @@ function RoleModule() {
         value={value}
         setValue={setValue}
         setLoading={setLoading}
+        canCreate={canCreate}
       />
       <div className={styles.tableContainerStyle}>
         <div className={styles.tableStyled}>
@@ -83,6 +87,7 @@ function RoleModule() {
                 setLoading={setLoading}
                 sort={sort}
                 setSort={setSort}
+                canUpdate={canUpdate}
               />
             </>
           ) : (
