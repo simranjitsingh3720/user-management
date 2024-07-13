@@ -30,9 +30,6 @@ const DateField = ({
       if (end.isBefore(start)) {
         return END_DATE_LESS_ERR;
       }
-      return end.isBefore(start.add(300, "day"))
-        ? true
-        : END_DATE_WITHIN_300_DAYS;
     }
   };
 
@@ -90,6 +87,7 @@ const DateField = ({
                 onChange={(date) => {
                   const formattedDate = dayjs(date).format(DATE_FORMAT);
                   setValue(name, formattedDate);
+                  field.onChange(formattedDate)
                 }}
               />
             </LocalizationProvider>

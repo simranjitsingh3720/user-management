@@ -4,7 +4,7 @@ import { Header } from './utils/Header';
 import CustomTable from './../../components/CustomTable';
 import { getGroup, getGroupById } from './../../stores/slices/groupSlice';
 import { COMMON_WORDS } from '../../utils/constants';
-import { BUTTON_TEXT } from '../../utils/globalConstants';
+import { BUTTON_TEXT, PAGECOUNT } from '../../utils/globalConstants';
 import { showDialog } from '../../stores/slices/dialogSlice';
 import ConfirmAction from './Dialog/ConfirmAction';
 import CustomDialog from '../../components/CustomDialog';
@@ -16,10 +16,11 @@ import { getPlaceHolder } from '../../utils/globalizationFunction';
 import { SEARCH_OPTIONS } from './constants';
 import useGetPermission from './hooks/useGetPermission';
 import Content from '../../components/CustomDialogContent';
+import usePermissions from '../../hooks/usePermission';
 
 function GroupModule() {
   const [page, setPage] = useState(0);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(PAGECOUNT);
   const [order, setOrder] = useState(null);
   const [orderBy, setOrderBy] = useState(null);
 
@@ -31,6 +32,8 @@ function GroupModule() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  // Check Permission 
+  const { canCreate, canUpdate } = usePermissions();
 
   useEffect(() => {
     dispatch(getGroup({ isAll: true }));
@@ -191,6 +194,7 @@ function GroupModule() {
           selectOptions={SEARCH_OPTIONS}
           handleGo={handleGo}
           showButton
+          canCreate={canCreate}
         />
       </div>
       <div>
@@ -207,6 +211,7 @@ function GroupModule() {
           setOrder={setOrder}
           orderBy={orderBy}
           setOrderBy={setOrderBy}
+          canUpdate={canUpdate}
         />
 
         <CustomDialog />

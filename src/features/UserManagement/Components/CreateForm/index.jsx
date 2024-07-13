@@ -25,6 +25,7 @@ import useGetUserType from '../hooks/useGetUserType';
 import useGetRoleHierarchy from '../hooks/useRoleHierarchy';
 import {
   AUTOCOMPLETE,
+  DATE_FORMAT,
   DROPDOWN,
   FORM_LABEL,
   FORM_VALUE,
@@ -42,6 +43,7 @@ import useSubmit from '../hooks/useSubmit';
 import { getLoginType } from '../../../../Redux/getLoginType';
 import CustomFormHeader from '../../../../components/CustomFormHeader';
 import { FORM_HEADER_TEXT } from '../../../../utils/constants';
+import dayjs from 'dayjs';
 
 function CreateUserCreationForm() {
   const dispatch = useDispatch();
@@ -221,11 +223,11 @@ function CreateUserCreationForm() {
 
   useEffect(() => {
     if (rolesWatch) {
-      roleHierarchyFetch(rolesWatch?.id);
       userTypeFetch(rolesWatch?.id);
 
       if (PRODUCER_CODE_CALL.some((role) => rolesWatch?.roleName?.includes(role))) {
         dispatch(getProducerCodes(rolesWatch));
+        roleHierarchyFetch(rolesWatch?.id);
       }
       if (PRODUCER_ARR.some((role) => rolesWatch?.roleName?.includes(role))) {
         dispatch(getParentCode(rolesWatch));
@@ -298,12 +300,13 @@ function CreateUserCreationForm() {
     const paymentTypeNames = paymentType.map((payment) => payment.name);
     const masterPolicyIds = masterPolicy.map((policy) => policy.id);
     const roleHierarchyId = roleHierarchy && (parentCode || childIds.length) ? roleHierarchy.id : '';
-
+    const sDate = dayjs(startDate).format(DATE_FORMAT);
+    const eDate = dayjs(endDate).format(DATE_FORMAT);
     const payload = {
       mobileNo: mobileNumber,
       email,
-      startDate,
-      endDate,
+      startDate: sDate,
+      endDate: eDate,
       status: active === FORM_VALUE.YES,
       roleId,
       roleName,

@@ -1,8 +1,9 @@
 export const drawerWidth = 240;
-
 export const BASE_URL = 'https://dev-usermgmt.tataaig.com';
+export const MODULE_TYPE = 'um';
 
 export const selectRowsData = [5, 10, 15, 20];
+export const PAGECOUNT = 10;
 
 export const REGEX = {
   alphaNumericRegex: /^[a-zA-Z0-9\s]*$/,

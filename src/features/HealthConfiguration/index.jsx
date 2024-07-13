@@ -5,7 +5,7 @@ import CustomTable from "../../components/CustomTable";
 import { useNavigate } from "react-router-dom";
 import generateTableHeaders from "./utils/generateTableHeaders";
 import { COMMON_WORDS } from "../../utils/constants";
-import { BUTTON_TEXT } from "../../utils/globalConstants";
+import { BUTTON_TEXT, PAGECOUNT } from "../../utils/globalConstants";
 import { getPlaceHolder } from "../../utils/globalizationFunction";
 import { fetchUser } from "../../stores/slices/userSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,7 +17,7 @@ function HealthConfiguration() {
 
   const [producers, setProducers] = useState([]);
   const [page, setPage] = useState(0);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(PAGECOUNT);
   const [order, setOrder] = useState(COMMON_WORDS.ASC);
   const [orderBy, setOrderBy] = useState(COMMON_WORDS.CREATED_AT);
 

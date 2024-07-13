@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import useGetPrivilege from './hooks/useGetPrivilege';
-import { BUTTON_TEXT } from '../../utils/globalConstants';
+import { BUTTON_TEXT, PAGECOUNT } from '../../utils/globalConstants';
 import CustomTable from '../../components/CustomTable';
 import generateTableHeaders from './utils/generateTableHeaders';
 import { COMMON_WORDS } from '../../utils/constants';
@@ -11,6 +11,7 @@ import { PrivilegeSearch } from './constants';
 import Actions from './Dialog/Action';
 import CustomDialog from '../../components/CustomDialog';
 import Content from '../../components/CustomDialogContent';
+import usePermissions from '../../hooks/usePermission';
 
 function PermissionModule() {
   const dispatch = useDispatch();
@@ -18,11 +19,13 @@ function PermissionModule() {
   const [query, setQuery] = useState('');
   const [searched, setSearched] = useState('permissionName');
   const [page, setPage] = useState(0);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(PAGECOUNT);
   const [order, setOrder] = useState(COMMON_WORDS.ASC);
   const [orderBy, setOrderBy] = useState(COMMON_WORDS.CREATED_AT);
 
   const { fetchData, data, loading, count } = useGetPrivilege(page, pageSize, order, orderBy);
+  // Check Permission 
+  const { canCreate, canUpdate } = usePermissions();
 
   const handleClicked = (data, row) => {
     dispatch(
@@ -53,6 +56,7 @@ function PermissionModule() {
         navigateRoute={'/permission/permission-form'}
         handleGo={handleGo}
         showButton
+        canCreate={canCreate}
       />
       <div className="mt-4">
         <CustomTable
@@ -68,6 +72,7 @@ function PermissionModule() {
           setOrder={setOrder}
           orderBy={orderBy}
           setOrderBy={setOrderBy}
+          canUpdate={canUpdate}
         />
       </div>
       <CustomDialog />

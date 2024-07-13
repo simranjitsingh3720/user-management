@@ -9,7 +9,7 @@ import NoDataFound from "../../components/NoDataCard";
 import ListLoader from "../../components/ListLoader";
 import useGetRole from "./hooks/useGetRole";
 import useGetGroup from "./hooks/useGetGroup";
-import { selectRowsData } from "../../utils/globalConstants";
+import { PAGECOUNT, selectRowsData } from "../../utils/globalConstants";
 
 function getSelectedRowData(count) {
   
@@ -26,7 +26,7 @@ function getSelectedRowData(count) {
 }
 
 function RoleModule() {
-  const [rowsPage, setRowsPage] = useState(10);
+  const [rowsPage, setRowsPage] = useState(PAGECOUNT);
   const [searched, setSearched] = useState("roleName");
   const [query, setQuery] = useState("");
   const [pageChange, setPageChange] = useState(1);

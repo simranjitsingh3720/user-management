@@ -7,7 +7,7 @@ import ListLoader from "../../components/ListLoader";
 import Table from "./Table";
 import NoDataFound from "../../components/NoDataCard";
 import { MenuItem, Pagination, Select } from "@mui/material";
-import { selectRowsData } from "../../utils/globalConstants";
+import { PAGECOUNT, selectRowsData } from "../../utils/globalConstants";
 
 function getSelectedRowData(count) {
   
@@ -29,7 +29,7 @@ function SyncedProducers() {
 
   const [producers, setProducers] = useState("");
 
-  const [rowsPage, setRowsPage] = useState(10);
+  const [rowsPage, setRowsPage] = useState(PAGECOUNT);
 
   const [pageChange, setPageChange] = useState(1);
 

@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import CustomButton from "../../../components/CustomButton";
 import ExportDropdown from "../../ExportDropdown";
 
-function SearchComponenet({ setPageChange, setQuery, searched, setSearched }) {
+function SearchComponenet({ setPageChange, setQuery, searched, setSearched, canCreate }) {
   const handleChange = (event) => {
     setSearched(event.target.value);
   };
@@ -34,8 +34,8 @@ function SearchComponenet({ setPageChange, setQuery, searched, setSearched }) {
               : () => <div className={styles.placeholderStyle}>Select</div>
           }
         >
-          {SearchKey.map((item) => (
-            <MenuItem value={item.value} className={styles.styledOptionText}>
+          {SearchKey.map((item, index) => (
+            <MenuItem key={index} value={item.value} className={styles.styledOptionText}>
               {item.label}
             </MenuItem>
           ))}
@@ -55,11 +55,11 @@ function SearchComponenet({ setPageChange, setQuery, searched, setSearched }) {
       </div>
       <ExportDropdown />
       
-      <CustomButton variant="contained" onClick={handleCreateNewForm}>
+      {canCreate && (<CustomButton variant="contained" onClick={handleCreateNewForm}>
         <Typography nowrap="true" className={styles.buttonTextStyle}>
           Create House Bank Master Configuration
         </Typography>
-      </CustomButton>
+      </CustomButton>)}
     </div>
   );
 }

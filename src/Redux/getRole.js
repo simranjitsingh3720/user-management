@@ -5,10 +5,6 @@ import { buildQueryString, toCapitalize } from '../utils/globalizationFunction';
 
 export const getRoles = createAsyncThunk('role/getRoles', async (_, { getState, rejectWithValue }) => {
   try {
-    const { role } = getState();
-    if (role?.role?.length > 0) {
-      return role.role;
-    }
     const params = buildQueryString({ isAll: true, status: true });
     const url = `${apiUrls.getRole}?${params}`;
     const response = await axiosInstance.get(url);

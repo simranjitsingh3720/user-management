@@ -12,6 +12,8 @@ import { useDispatch } from 'react-redux';
 import CustomDialog from '../../components/CustomDialog';
 import SearchComponent from '../../components/SearchComponent';
 import { setTableName } from '../../stores/slices/exportSlice';
+import { PAGECOUNT } from '../../utils/globalConstants';
+import usePermissions from '../../hooks/usePermission';
 
 function UserManagement() {
   const navigate = useNavigate();
@@ -19,11 +21,14 @@ function UserManagement() {
   const [query, setQuery] = useState('');
   const [searched, setSearched] = useState(SEARCH_OPTIONS[0].value);
   const [page, setPage] = useState(0);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(PAGECOUNT);
   const [order, setOrder] = useState(COMMON_WORDS.ASC);
   const [orderBy, setOrderBy] = useState(COMMON_WORDS.CREATED_AT);
   const { data, loading, fetchData, setLoading } = useGetUser(page, pageSize, query, order, orderBy);
   const [userData, setUserData] = useState([]);
+
+    // Check Permission 
+    const { canCreate, canUpdate } = usePermissions();
 
   const updateUserForm = useCallback((row) => {
     navigate(NAVIGATE_TO_FORM + '/'+ row.id);
@@ -36,11 +41,12 @@ function UserManagement() {
         return {
           ...item,
           checked: item?.status,
+          disabled: !canUpdate
         };
       }) || [];
     setUserData(transformedData);
     dispatch(setTableName(transformedData[0]?.label));
-  }, [data]);
+  }, [data, canUpdate, dispatch]);
 
   const handleInsillionStatus = useCallback((data, row) => {
     dispatch(
@@ -75,6 +81,7 @@ function UserManagement() {
          handleGo={handleGo}
          showExportButton={true}
          showButton
+         canCreate={canCreate}
       />
       <div className="mt-4">
         <CustomTable

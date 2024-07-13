@@ -46,6 +46,8 @@ function Header({ handleDrawerToggle, selectedNavbar, selectedParentIndex }) {
   const navigate = useNavigate();
   const [anchorElUser, setAnchorElUser] = useState(null);
   const settings = ['Logout'];
+  const user = JSON.parse(localStorage.getItem(COMMON_WORDS.USER));
+  const name = (`${user?.firstName} ${user?.lastName}`).toUpperCase();
 
   const handleLogout = () => {
     localStorage.clear();
@@ -104,7 +106,7 @@ function Header({ handleDrawerToggle, selectedNavbar, selectedParentIndex }) {
         <Box sx={{ flexGrow: 0 }}>
           <Tooltip title="Open Menu">
             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-              <Avatar {...stringAvatar('KRUTIKA SAWANT')} />
+              <Avatar {...stringAvatar(name)} />
             </IconButton>
           </Tooltip>
           <Menu
