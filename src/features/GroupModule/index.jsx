@@ -34,11 +34,7 @@ function GroupModule() {
   const navigate = useNavigate();
   // Check Permission 
   const { canCreate, canUpdate } = usePermissions();
-
-  useEffect(() => {
-    dispatch(getGroup({ isAll: true }));
-  }, [dispatch]);
-
+  
   useEffect(() => {
     dispatch(
       getGroup({
