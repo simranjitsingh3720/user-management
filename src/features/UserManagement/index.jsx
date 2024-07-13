@@ -34,7 +34,6 @@ function UserManagement() {
 
   useEffect(() => {
     if (data?.data?.length === 0) return;
-    debugger
     const transformedData =
       data?.data?.map((item) => {
         return {
