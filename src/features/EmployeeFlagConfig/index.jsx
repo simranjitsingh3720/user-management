@@ -121,7 +121,7 @@ function EmployeeFlagConfig() {
         orderBy={orderBy}
         setOrderBy={setOrderBy}
       />
-      <CustomDialog />
+      <CustomDialog size='md' />
     </div>
   );
 }

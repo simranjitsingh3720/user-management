@@ -14,7 +14,7 @@ import useUpdateRole from '../../hooks/useUpdateRole';
 import useGetGroupById from '../../hooks/useGetGroupById';
 import CustomButton from '../../../../components/CustomButton';
 
-function List({ item, setLoading: setGroupLoading }) {
+function List({ item, canUpdate, fetchData: fetchList }) {
   const [open, setOpen] = useState(false);
   const [changeStatusOpen, setChangeStatusOpen] = useState(false);
 
@@ -44,7 +44,7 @@ function List({ item, setLoading: setGroupLoading }) {
     navigate(`/roles/role-form/${item.role.id}`);
   };
 
-  const { UpdateDataFun, updateLoading } = useUpdateRole(item.role.id, setChangeStatusOpen);
+  const { UpdateDataFun, updateLoading } = useUpdateRole(item.role.id, setChangeStatusOpen, fetchList);
 
   const handleClickYes = () => {
     const payload = {
@@ -54,7 +54,6 @@ function List({ item, setLoading: setGroupLoading }) {
     UpdateDataFun(payload);
     setChecked((prev) => !prev);
     setChangeStatusOpen(false);
-    setGroupLoading(true);
   };
 
   return (
@@ -74,17 +73,24 @@ function List({ item, setLoading: setGroupLoading }) {
 
         <div className={styles.groupStatusCell}>
           <div>
-            <Switch checked={checked} onChange={handleChange} inputProps={{ 'aria-label': 'toggle button' }} />
+            <Switch
+              checked={checked}
+              onChange={handleChange}
+              inputProps={{ 'aria-label': 'toggle button' }}
+              disabled={!canUpdate}
+            />
           </div>
           <div className={styles.styledActiveSelect}>{item?.role.status ? 'Active' : 'Inactive'}</div>
         </div>
-        <div className={styles.actionCell}>
-          <Tooltip title="Edit Role">
-            <IconButton aria-label="back" type="button" onClick={() => handleEditClick()}>
-              <EditIcon color="primary" />
-            </IconButton>
-          </Tooltip>
-        </div>
+        {canUpdate && (
+          <div className={styles.actionCell}>
+            <Tooltip title="Edit Role">
+              <IconButton aria-label="back" type="button" onClick={() => handleEditClick()}>
+                <EditIcon color="primary" />
+              </IconButton>
+            </Tooltip>
+          </div>
+        )}
       </div>{' '}
       <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open} fullWidth maxWidth="sm">
         <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">

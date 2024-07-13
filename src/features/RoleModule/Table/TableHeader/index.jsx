@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./styles.module.scss";
 
-function TableHeader({ sort, setSort, setLoading }) {
+function TableHeader({ sort, setSort, setLoading, canUpdate }) {
   const handleSort = (sortKey) => {
     const newSortOrder = sort.sortOrder === "asc" ? "desc" : "asc";
     setSort({ sortKey, sortOrder: newSortOrder });
@@ -25,7 +25,7 @@ function TableHeader({ sort, setSort, setLoading }) {
         {renderSortIcon("createdAt")}
       </div>{" "}
       <div className={styles.groupStatusCell}>Role Status</div>
-      <div className={styles.actionCell}>Action</div>
+      {canUpdate && (<div className={styles.actionCell}>Action</div>)}
     </div>
   );
 }

@@ -115,7 +115,7 @@ const ExportDropdown = () => {
           </Grow>
         )}
       </Popper>
-      <CustomDialog />
+      <CustomDialog size='md' />
     </React.Fragment>
   );
 };

@@ -8,24 +8,26 @@ export const getProducerCodes = createAsyncThunk(
   async (roleName, { rejectWithValue }) => {
     try {
       if (roleName) {
-        const params = buildQueryString({ searchKey: 'userType', searchString: 'producer', status: true });
+        const params = buildQueryString({ searchKey: 'userType', searchString: 'external', status: true });
         const userType = `${apiUrls.getUserType}?${params}`;
         const responseUserType = await axiosInstance.get(userType);
         const userTypeID = responseUserType?.data?.data[0]?.id;
-        const userIdParams = buildQueryString({
-          ids: userTypeID,
-          edge: 'hasUserType',
-          isExclusive: true,
-          status: true,
-        });
-        const url = `${apiUrls.getUser}?${userIdParams}`;
-        const response = await axiosInstance.get(url);
-        const formattedArray = response?.data?.data?.map((obj) => ({
-          ...obj,
-          label: obj?.producerCode + ' - ' + getFullName(obj?.firstName, obj?.lastName),
-          value: obj?.producerCode,
-        }));
-        return formattedArray;
+        if (userTypeID) {
+          const userIdParams = buildQueryString({
+            ids: userTypeID,
+            edge: 'hasUserType',
+            isExclusive: true,
+            status: true,
+          });
+          const url = `${apiUrls.getUser}?${userIdParams}`;
+          const response = await axiosInstance.get(url);
+          const formattedArray = response?.data?.data?.map((obj) => ({
+            ...obj,
+            label: obj?.producerCode + ' - ' + getFullName(obj?.firstName, obj?.lastName),
+            value: obj?.producerCode,
+          }));
+          return formattedArray;
+        }
       }
     } catch (error) {
       console.error(error);

@@ -17,7 +17,7 @@ import Table from "./Table";
 import NoDataFound from "../../../../../components/NoDataCard";
 import CustomButton from "../../../../../components/CustomButton";
 
-function List({ item, fetchData: fetchGroupList }) {
+function List({ item, fetchData: fetchGroupList, canUpdate }) {
   const [changeStatusOpen, setChangeStatusOpen] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -83,6 +83,7 @@ function List({ item, fetchData: fetchGroupList }) {
               checked={checked}
               onChange={handleChange}
               inputProps={{ "aria-label": "toggle button" }}
+              disabled={!canUpdate}
             />
           </div>
           <div className={styles.styledActiveSelect}>

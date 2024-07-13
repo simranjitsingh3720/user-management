@@ -4,6 +4,7 @@ export const COMMON_WORDS = {
   ROLE_NAME: 'roleName',
   PRODUCT: 'product',
   ASC: 'asc',
+  DESC: 'desc',
   LOB: 'lob',
   CREATED_AT: 'createdAt',
   ENABLE: 'Enable',

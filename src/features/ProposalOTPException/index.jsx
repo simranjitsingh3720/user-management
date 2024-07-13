@@ -10,6 +10,7 @@ import { PAGECOUNT, selectRowsData } from "../../utils/globalConstants";
 import useGetProposalOTPList from "./hooks/useGetProposalOTPList";
 import { useDispatch } from "react-redux";
 import { setTableName } from "../../stores/slices/exportSlice";
+import usePermissions from "../../hooks/usePermission";
 
 function getSelectedRowData(count) {
   let selectedRowData = [];
@@ -27,6 +28,9 @@ function ProposalOTPException() {
   const [searched, setSearched] = useState("type");
   const [date, setDate] = useState({ startDate: "", endDate: "" });
   const dispatch = useDispatch();
+
+  // Check permission
+  const { canCreate, canUpdate } = usePermissions();
 
   const [rowsPage, setRowsPage] = useState(PAGECOUNT);
 
@@ -64,6 +68,7 @@ function ProposalOTPException() {
         setSearched={setSearched}
         date={date}
         setDate={setDate}
+        canCreate={canCreate}
       />
       <div className={styles.tableContainerStyle}>
         <div className={styles.tableStyled}>
@@ -79,6 +84,7 @@ function ProposalOTPException() {
               fetchData={fetchData}
               sort={sort}
               setSort={setSort}
+              canUpdate={canUpdate}
             />
           ) : (
             <NoDataFound />
