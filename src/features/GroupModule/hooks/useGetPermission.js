@@ -1,6 +1,8 @@
-import axiosInstance from "../../../utils/axiosInstance"; 
+import apiUrls from '../../../utils/apiUrls';
+import axiosInstance from '../../../utils/axiosInstance';
 
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
+import { buildQueryString } from '../../../utils/globalizationFunction';
 
 function useGetPermission() {
   const [data, setData] = useState(null);
@@ -8,7 +10,11 @@ function useGetPermission() {
 
   const fetchData = async () => {
     try {
-      let url = `/api/permission?isAll=${true}`;
+      const params = {
+        isAll: true,
+        status: true,
+      };
+      let url = `${apiUrls.getPermission}?${buildQueryString(params)}`;
 
       const response = await axiosInstance.get(url);
       setData(response.data);
