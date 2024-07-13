@@ -4,7 +4,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import NavbarDrawer from '../NavbarDrawer';
 import Header from '../Header';
 import { drawerWidth, MODULE_TYPE } from '../../utils/globalConstants';
-import useSideNavData from '../NavbarDrawer/hooks/useSideNavData';
 import { useLocation } from 'react-router-dom';
 import { COMMON_WORDS } from '../../utils/constants';
 
