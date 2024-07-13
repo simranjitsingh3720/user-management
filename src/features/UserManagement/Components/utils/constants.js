@@ -62,7 +62,7 @@ export const FORM_VALUE = {
 export const Header = (editAction, handleInsillionStatus) => {  return[
   {
     value: "User ID",
-    id: "userId",
+    id: "employeeId",
   },
   {
     value: 'Name',
@@ -86,7 +86,7 @@ export const Header = (editAction, handleInsillionStatus) => {  return[
     sortable: true
   },
   {
-    value: "Insillion Status",
+    value: "Status",
     id: "status",
     action: [
       {
@@ -98,26 +98,26 @@ export const Header = (editAction, handleInsillionStatus) => {  return[
       },
     ],
   },
-  {
-    id: "action",
-    value: "Action",
-    sortable: false,
-    action: [
-      {
-        showIcon: true,
-        iconName: <EditIcon />,
-        onClick: (row) => {
-            editAction(row)
-        },
-      }
-    ],
-  },
+  // {
+  //   id: "action",
+  //   value: "Action",
+  //   sortable: false,
+  //   action: [
+  //     {
+  //       showIcon: true,
+  //       iconName: <EditIcon />,
+  //       onClick: (row) => {
+  //           editAction(row)
+  //       },
+  //     }
+  //   ],
+  // },
 ]};
 
 export const SEARCH_OPTIONS = [
   {
     label: "User ID",
-    value: "userId",
+    value: "employeeId",
   },
   {
     label: "Name",

@@ -82,8 +82,8 @@
                         "message": "It should not exceed 10 digits"
                     },
                     "pattern": {
-                        "value": "^[0-9]*$",
-                        "message": "It should contain only digits"
+                        "value": "^[6-9][0-9]{9}$",
+                        "message": "It should contains digits starting with [6-9]"
                     }
                 }
             },
@@ -298,8 +298,8 @@
                         "message": "It should not exceed 10 digits"
                     },
                     "pattern": {
-                        "value": "^[0-9]*$",
-                        "message": "It should contain only digits"
+                        "value": "^[6-9][0-9]{9}$",
+                        "message": "It should contains digits starting with [6-9]"
                     }
                 }
             },
@@ -514,8 +514,8 @@
                         "message": "It should not exceed 10 digits"
                     },
                     "pattern": {
-                        "value": "^[0-9]*$",
-                        "message": "It should contain only digits"
+                        "value": "^[6-9][0-9]{9}$",
+                        "message": "It should contains digits starting with [6-9]"
                     }
                 }
             },
@@ -716,8 +716,8 @@
                         "message": "It should not exceed 10 digits"
                     },
                     "pattern": {
-                        "value": "^[0-9]*$",
-                        "message": "It should contain only digits"
+                        "value": "^[6-9][0-9]{9}$",
+                        "message": "It should contains digits starting with [6-9]"
                     }
                 }
             },
@@ -1066,8 +1066,8 @@
                         "message": "It should not exceed 10 digits"
                     },
                     "pattern": {
-                        "value": "^[0-9]*$",
-                        "message": "It should contain only digits"
+                        "value": "^[6-9][0-9]{9}$",
+                        "message": "It should contains digits starting with [6-9]"
                     }
                 }
             },
@@ -1416,8 +1416,8 @@
                         "message": "It should not exceed 10 digits"
                     },
                     "pattern": {
-                        "value": "^[0-9]*$",
-                        "message": "It should contain only digits"
+                        "value": "^[6-9][0-9]{9}$",
+                        "message": "It should contains digits starting with [6-9]"
                     }
                 }
             },
@@ -1757,8 +1757,8 @@
                         "message": "It should not exceed 10 digits"
                     },
                     "pattern": {
-                        "value": "^[0-9]*$",
-                        "message": "It should contain only digits"
+                        "value": "^[6-9][0-9]{9}$",
+                        "message": "It should contains digits starting with [6-9]"
                     }
                 }
             },
@@ -1986,8 +1986,8 @@
                         "message": "It should not exceed 10 digits"
                     },
                     "pattern": {
-                        "value": "^[0-9]*$",
-                        "message": "It should contain only digits"
+                        "value": "^[6-9][0-9]{9}$",
+                        "message": "It should contains digits starting with [6-9]"
                     }
                 }
             },
@@ -2155,8 +2155,8 @@
                         "message": "It should not exceed 10 digits"
                     },
                     "pattern": {
-                        "value": "^[0-9]*$",
-                        "message": "It should contain only digits"
+                        "value": "^[6-9][0-9]{9}$",
+                        "message": "It should contains digits starting with [6-9]"
                     }
                 }
             },
@@ -2331,8 +2331,8 @@
                         "message": "It should not exceed 10 digits"
                     },
                     "pattern": {
-                        "value": "^[0-9]*$",
-                        "message": "It should contain only digits"
+                        "value": "^[6-9][0-9]{9}$",
+                        "message": "It should contains digits starting with [6-9]"
                     }
                 }
             },
@@ -2517,8 +2517,8 @@
                         "message": "It should not exceed 10 digits"
                     },
                     "pattern": {
-                        "value": "^[0-9]*$",
-                        "message": "It should contain only digits"
+                        "value": "^[6-9][0-9]{9}$",
+                        "message": "It should contains digits starting with [6-9]"
                     }
                 }
             },
@@ -2703,8 +2703,8 @@
                         "message": "It should not exceed 10 digits"
                     },
                     "pattern": {
-                        "value": "^[0-9]*$",
-                        "message": "It should contain only digits"
+                        "value": "^[6-9][0-9]{9}$",
+                        "message": "It should contains digits starting with [6-9]"
                     }
                 }
             },
@@ -2889,8 +2889,8 @@
                         "message": "It should not exceed 10 digits"
                     },
                     "pattern": {
-                        "value": "^[0-9]*$",
-                        "message": "It should contain only digits"
+                        "value": "^[6-9][0-9]{9}$",
+                        "message": "It should contains digits starting with [6-9]"
                     }
                 }
             },
@@ -3067,8 +3067,8 @@
                         "message": "It should not exceed 10 digits"
                     },
                     "pattern": {
-                        "value": "^[0-9]*$",
-                        "message": "It should contain only digits"
+                        "value": "^[6-9][0-9]{9}$",
+                        "message": "It should contains digits starting with [6-9]"
                     }
                 }
             },
@@ -3368,8 +3368,8 @@
                         "message": "It should not exceed 10 digits"
                     },
                     "pattern": {
-                        "value": "^[0-9]*$",
-                        "message": "It should contain only digits"
+                        "value":"^[6-9][0-9]{9}$",
+                        "message": "It should contains digits starting with [6-9]"
                     }
                 }
             },
@@ -3623,8 +3623,8 @@
                         "message": "It should not exceed 10 digits"
                     },
                     "pattern": {
-                        "value": "^[0-9]*$",
-                        "message": "It should contain only digits"
+                        "value": "^[6-9][0-9]{9}$",
+                        "message": "It should contains digits starting with [6-9]"
                     }
                 }
             },
@@ -3930,8 +3930,8 @@
                         "message": "It should not exceed 10 digits"
                     },
                     "pattern": {
-                        "value": "^[0-9]*$",
-                        "message": "It should contain only digits"
+                        "value": "^[6-9][0-9]{9}$",
+                        "message": "It should contains digits starting with [6-9]"
                     }
                 }
             },

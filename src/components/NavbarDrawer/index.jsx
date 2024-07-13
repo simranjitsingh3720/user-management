@@ -64,7 +64,7 @@ function NavbarDrawer({
         <div className="text-[#18478b] text-lg font-semibold mb-4">
           User Management Portal
         </div>
-        <SearchInput onSearch={(query) => setSearchQuery(query)} />
+       <SearchInput onSearch={(query) => setSearchQuery(query)} />
       </div>
       <List className="mr-3">
         {filteredNavData.map((obj, index) =>
@@ -165,7 +165,7 @@ function NavbarDrawer({
         }}
         sx={{
           display: { xs: "block", md: "none" },
-          "& .MuiDrawer-paper": { boxSizing: "border-box", width: drawerWidth },
+          "& .MuiDrawer-paper": { boxSizing: "border-box", width: drawerWidth, overflowX: 'hidden' },
         }}
       >
         {drawer}
@@ -178,6 +178,7 @@ function NavbarDrawer({
             boxSizing: "border-box",
             width: drawerWidth,
             boxShadow: "3px 0px 6px #00000014",
+            overflowX: 'hidden' 
           },
         }}
         open
