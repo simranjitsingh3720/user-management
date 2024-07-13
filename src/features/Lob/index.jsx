@@ -53,7 +53,7 @@ const Lob = () => {
       lob?.data?.map((item) => ({
         ...item,
         checked: item.status,
-        disabled: canUpdate ? false : true,
+        disabled: !canUpdate,
       })) || [];
     setLobData(transformedData);
   }, [lob, canUpdate]);

@@ -41,7 +41,7 @@ function UserManagement() {
         return {
           ...item,
           checked: item?.status,
-          disabled: canUpdate ? false : true,
+          disabled: !canUpdate
         };
       }) || [];
     setUserData(transformedData);
