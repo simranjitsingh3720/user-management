@@ -11,7 +11,7 @@ export const REGEX = {
   letterRegex: /^[A-Za-z]+$/,
   emailRegex: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
   nameRegex: '^[A-Za-z]+$',
-  mobileRegex: '^[0-9]*$',
+  mobileRegex: /^[6-9][0-9]{9}$/,
   // passwordRegex: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{5,}$/,
   passwordRegex: /^\d{5,10}$/,
   fullNameRegex: /^[A-Za-z]+ [A-Za-z]+$/,
