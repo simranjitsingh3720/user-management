@@ -95,11 +95,10 @@ const AutocompleteFieldAll = ({
             )}
             size="small"
             className={`${styles.customizeSelect} ${classes}`}
-            limitTags={2}
+            limitTags={1}
             renderInput={(params) => (
               <TextField
                 {...params}
-                sx={{height:'40px', overflowY:'auto' }}
                 placeholder={PLACEHOLDER}
                 error={Boolean(errors[name])}
                 helperText={Boolean(errors[name]) ? REQUIRED_MSG : ''}
