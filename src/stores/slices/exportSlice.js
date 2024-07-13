@@ -3,6 +3,7 @@ import axiosInstance from "./../../utils/axiosInstance";
 import dayjs from "dayjs";
 import { API_END_POINTS } from "../../features/ExportDropdown/utils/constants";
 import { toast } from "react-toastify";
+import { DATE_FORMAT } from "../../utils/globalConstants";
 
 const initialState = {
   selectedValue: "",
@@ -66,14 +67,14 @@ const exportSlice = createSlice({
       state.tableName = action.payload
     },
     setFromDate: (state, action) => {
-      state.fromDate = dayjs(action.payload).format("DD-MM-YYYY");
+      state.fromDate = dayjs(action.payload).format(DATE_FORMAT);
     },
     setToDate: (state, action) => {
-      state.toDate = dayjs(action.payload).format("DD-MM-YYYY");
+      state.toDate = dayjs(action.payload).format(DATE_FORMAT);
     },
     setLast30Days: (state) => {
-      state.fromDate = dayjs().subtract(30, "day").format("DD-MM-YYYY");
-      state.toDate = dayjs().format("DD-MM-YYYY");
+      state.fromDate = dayjs().subtract(30, "day").format(DATE_FORMAT);
+      state.toDate = dayjs().format(DATE_FORMAT);
     },
     toggleColumn: (state, action) => {
       const columnIndex = state.columns.findIndex(
