@@ -13,12 +13,10 @@ const usePermissions = () => {
         if (storedScopes) {
             const parsedScopes = JSON.parse(storedScopes);
             setPermissions(parsedScopes);
-            console.log(permissions)
         }
     }, []);
 
     const hasPermission = (type, route) => {
-        debugger
         return permissions[type]?.some(permission => permission.route === route);
     };
 
