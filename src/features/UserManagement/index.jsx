@@ -36,6 +36,7 @@ function UserManagement() {
 
   useEffect(() => {
     if (data?.data?.length === 0) return;
+    debugger
     const transformedData =
       data?.data?.map((item) => {
         return {
@@ -97,6 +98,7 @@ function UserManagement() {
           setOrder={setOrder}
           orderBy={orderBy}
           setOrderBy={setOrderBy}
+          canUpdate={canUpdate}
         />
       </div>
       <CustomDialog />
