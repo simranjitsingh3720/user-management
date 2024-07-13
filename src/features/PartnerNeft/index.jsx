@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { Box } from '@mui/material';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import SearchComponent from '../../components/SearchComponent';
 import CustomTable from '../../components/CustomTable';
@@ -35,11 +35,7 @@ const PartnerNeft = () => {
   const { getPartnerNeft, partnerNeftData, partnerNeftLoading, totalCount } = useGetPartnerNeft();
 
   // Check Permission
-  const { hasPermission } = usePermissions();
-  const location = useLocation();
-  const path = location.pathname.split('/')[1];
-  const canCreate = hasPermission(COMMON_WORDS.CREATE, path);
-  const canUpdate = hasPermission(COMMON_WORDS.UPDATE, path);
+  const { canCreate, canUpdate } = usePermissions();
 
   const loadData = useCallback(() => {
     getPartnerNeft({

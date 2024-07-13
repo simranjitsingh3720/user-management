@@ -12,7 +12,6 @@ import Actions from './Dialog/Action';
 import CustomDialog from '../../components/CustomDialog';
 import Content from '../../components/CustomDialogContent';
 import usePermissions from '../../hooks/usePermission';
-import { useLocation } from 'react-router-dom';
 
 function PermissionModule() {
   const dispatch = useDispatch();
@@ -26,11 +25,7 @@ function PermissionModule() {
 
   const { fetchData, data, loading, count } = useGetPrivilege(page, pageSize, order, orderBy);
   // Check Permission 
-  const { hasPermission } = usePermissions();
-  const location = useLocation();
-  const path = location.pathname.split('/')[1];
-  const canCreate = hasPermission(COMMON_WORDS.CREATE, path);
-  const canUpdate = hasPermission(COMMON_WORDS.UPDATE, path);
+  const { canCreate, canUpdate } = usePermissions();
 
   const handleClicked = (data, row) => {
     dispatch(

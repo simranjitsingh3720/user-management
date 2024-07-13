@@ -14,7 +14,6 @@ import Actions from './Dialog/Action';
 import { setTableName } from '../../stores/slices/exportSlice';
 import { BUTTON_TEXT, PAGECOUNT } from '../../utils/globalConstants';
 import usePermissions from '../../hooks/usePermission';
-import { useLocation } from 'react-router-dom';
 
 function EmployeeFlagConfig() {
   const [producers, setProducers] = useState();
@@ -28,10 +27,7 @@ function EmployeeFlagConfig() {
   const dispatch = useDispatch();
 
   // Check Permission
-  const { hasPermission } = usePermissions();
-  const location = useLocation();
-  const path = location.pathname.split('/')[1];
-  const canCreate = hasPermission(COMMON_WORDS.CREATE, path);
+  const { canCreate } = usePermissions();
 
   useEffect(() => {
     dispatch(

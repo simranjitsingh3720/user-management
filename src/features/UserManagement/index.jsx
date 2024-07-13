@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import CustomTable from '../../components/CustomTable';
 import useGetUser from './Components/hooks/useGetUser';
 import { BUTTON_TEXT, Header, NAVIGATE_TO_FORM, SEARCH_OPTIONS, SEARCH_PLACEHOLDER } from './Components/utils/constants';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { COMMON_WORDS } from '../../utils/constants';
 import Content from './Components/Dialog/Content';
 import Actions from './Components/Dialog/Action';
@@ -28,11 +28,7 @@ function UserManagement() {
   const [userData, setUserData] = useState([]);
 
     // Check Permission 
-    const { hasPermission } = usePermissions();
-    const location = useLocation();
-    const path = location.pathname.split('/')[1];
-    const canCreate = hasPermission(COMMON_WORDS.CREATE, path);
-    const canUpdate = hasPermission(COMMON_WORDS.UPDATE, path);
+    const { canCreate, canUpdate } = usePermissions();
 
   const updateUserForm = useCallback((row) => {
     navigate(NAVIGATE_TO_FORM + '/'+ row.id);

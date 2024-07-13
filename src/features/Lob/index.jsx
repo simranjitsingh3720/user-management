@@ -22,11 +22,7 @@ const Lob = () => {
   const [lobData, setLobData] = useState([]);
 
   // Check Permission 
-  const { hasPermission } = usePermissions();
-  const location = useLocation();
-  const path = location.pathname.split('/')[1];
-  const canCreate = hasPermission(COMMON_WORDS.CREATE, path);
-  const canUpdate = hasPermission(COMMON_WORDS.UPDATE, path);
+  const { canCreate, canUpdate } = usePermissions();
 
   const createNewLob = () => {
     navigate('/lob/lob-form');

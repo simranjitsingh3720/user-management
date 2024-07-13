@@ -13,7 +13,6 @@ import { fetchLobData } from "../../stores/slices/lobSlice";
 import SearchComponent from "../../components/SearchComponent";
 import { COMMON_FIELDS } from "../PartnerNeft/utils/constant";
 import usePermissions from "../../hooks/usePermission";
-import { useLocation } from "react-router-dom";
 
 function Product() {
   const dispatch = useDispatch();
@@ -29,12 +28,8 @@ function Product() {
 
   const [searched, setSearched] = useState(COMMON_WORDS.LOB);
 
-  // Check Permission 
-  const { hasPermission } = usePermissions();
-  const location = useLocation();
-  const path = location.pathname.split('/')[1];
-  const canCreate = hasPermission(COMMON_WORDS.CREATE, path);
-  const canUpdate = hasPermission(COMMON_WORDS.UPDATE, path);
+  // Check Permission
+  const { canCreate, canUpdate } = usePermissions();
 
   useEffect(() => {
     dispatch(fetchLobData({ isAll: true }));
