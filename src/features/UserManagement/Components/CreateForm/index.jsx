@@ -447,7 +447,7 @@ function CreateUserCreationForm() {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles.formMainContainer}>
       <div className={styles.createNewUserContainer}>
-        <div className="p-4">
+        <div className="p-4 pb-0">
           <CustomFormHeader headerText={FORM_HEADER_TEXT.USER} navigateRoute="/user-management" />
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 px-8 gap-5 py-5">
