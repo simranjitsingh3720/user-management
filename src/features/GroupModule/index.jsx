@@ -8,7 +8,7 @@ import { BUTTON_TEXT, PAGECOUNT } from '../../utils/globalConstants';
 import { showDialog } from '../../stores/slices/dialogSlice';
 import ConfirmAction from './Dialog/ConfirmAction';
 import CustomDialog from '../../components/CustomDialog';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import PermissionContent from './Dialog/PermissionContent';
 import SearchComponent from '../../components/SearchComponent';
 import { COMMON_FIELDS } from '../PartnerNeft/utils/constant';
@@ -16,6 +16,7 @@ import { getPlaceHolder } from '../../utils/globalizationFunction';
 import { SEARCH_OPTIONS } from './constants';
 import useGetPermission from './hooks/useGetPermission';
 import Content from '../../components/CustomDialogContent';
+import usePermissions from '../../hooks/usePermission';
 
 function GroupModule() {
   const [page, setPage] = useState(0);
@@ -31,6 +32,12 @@ function GroupModule() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  // Check Permission 
+  const { hasPermission } = usePermissions();
+  const location = useLocation();
+  const path = location.pathname.split('/')[1];
+  const canCreate = hasPermission(COMMON_WORDS.CREATE, path);
+  const canUpdate = hasPermission(COMMON_WORDS.UPDATE, path);
 
   useEffect(() => {
     dispatch(getGroup({ isAll: true }));
@@ -191,6 +198,7 @@ function GroupModule() {
           selectOptions={SEARCH_OPTIONS}
           handleGo={handleGo}
           showButton
+          canCreate={canCreate}
         />
       </div>
       <div>
@@ -207,6 +215,7 @@ function GroupModule() {
           setOrder={setOrder}
           orderBy={orderBy}
           setOrderBy={setOrderBy}
+          canUpdate={canUpdate}
         />
 
         <CustomDialog />
