@@ -1,6 +1,7 @@
 import React from 'react';
 import { TableBody, TableRow, TableCell, IconButton, Checkbox, Switch } from '@mui/material';
 import ListLoader from '../../ListLoader';
+import EditIcon from '@mui/icons-material/Edit';
 
 const TableContent = ({ columns, data, loading, canUpdate }) => {
   if (loading) {
@@ -14,6 +15,10 @@ const TableContent = ({ columns, data, loading, canUpdate }) => {
       </TableBody>
     );
   }
+
+  const isEditIcon = (icon) => {
+    return (icon && icon.type && icon.type === EditIcon) && !canUpdate;
+  };
 
   if (data?.length === 0) {
     return (
@@ -43,7 +48,7 @@ const TableContent = ({ columns, data, loading, canUpdate }) => {
                       ) : action.component === 'switch' ? (
                         <Switch checked={row.checked || false} onChange={() => action.onClick(data, row)} disabled={row.disabled || !canUpdate} />
                       ) : action.showIcon ? (
-                        <IconButton onClick={() => action.onClick(row)} disabled={row.disabled || !canUpdate}>{action.iconName}</IconButton>
+                        <IconButton onClick={() => action.onClick(row)} disabled={isEditIcon(action?.iconName)}>{action.iconName}</IconButton>
                       ) : null}
                     </span>
                   </React.Fragment>
