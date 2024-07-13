@@ -341,7 +341,7 @@ function CreateGroupForm() {
                     setQuery(e.target.value);
                   }}
                 />
-                <div className={styles.selectAll}>
+                <div className="flex content-start w-full items-center">
                   <Checkbox
                     checked={selectAll}
                     onChange={handleSelectAll}
