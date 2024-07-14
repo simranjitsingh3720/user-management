@@ -27,7 +27,6 @@ const useRevalidationList = () => {
       const transformedData =
         response?.data?.data?.map((item) => {
           const { producer, revalidationList } = item;
-          debugger
           return {
             id: revalidationList.id,
             userName: `${producer[0].firstName} ${producer[0].lastName}`,
