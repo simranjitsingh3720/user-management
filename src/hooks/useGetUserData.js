@@ -1,8 +1,8 @@
-import { useEffect, useState, useCallback } from "react";
-import axiosInstance from "../utils/axiosInstance";
-import { toast } from "react-toastify";
-import apiUrls from "../utils/apiUrls";
-import { COMMON_ERROR } from "../utils/globalConstants";
+import { useEffect, useState, useCallback } from 'react';
+import axiosInstance from '../utils/axiosInstance';
+import { toast } from 'react-toastify';
+import apiUrls from '../utils/apiUrls';
+import { COMMON_ERROR } from '../utils/globalConstants';
 
 function useGetUserData() {
   const [data, setData] = useState([]);

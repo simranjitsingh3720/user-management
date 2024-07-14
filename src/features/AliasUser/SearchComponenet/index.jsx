@@ -14,6 +14,7 @@ import { ProposalEODBypass } from "../constants";
 import useGetUserData from "../../BANCALogin/hooks/useGetUserData";
 import "dayjs/locale/en-gb";
 import CustomButton from "../../../components/CustomButton";
+import { DATE_FORMAT } from "../../../utils/globalConstants";
 
 const fetchIdsAndConvert = (inputData) => {
   const ids = (inputData || []).map((producer) => producer.id);
@@ -76,7 +77,7 @@ function SearchComponenet({
                         slotProps={{ textField: { size: "small" } }}
                         onChange={(date) => {
                           const formattedDate =
-                            dayjs(date).format("DD-MM-YYYY");
+                            dayjs(date).format(DATE_FORMAT);
                           setValue("startDate", formattedDate);
                         }}
                       />
@@ -104,7 +105,7 @@ function SearchComponenet({
                         className={styles.dateStyle}
                         onChange={(date) => {
                           const formattedDate =
-                            dayjs(date).format("DD-MM-YYYY");
+                            dayjs(date).format(DATE_FORMAT);
                           setValue("endDate", formattedDate);
                         }}
                         slotProps={{ textField: { size: "small" } }}

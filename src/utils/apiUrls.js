@@ -23,7 +23,6 @@ const apiUrls = {
   paymentProduct: 'api/product-wise-payment-method',
   productLocationLevelMapping: 'api/product-location-level-mapping',
   getGroup: '/api/group',
-  navData: '/api/module/all?status=true',
 };
 
 export default apiUrls;

@@ -4,7 +4,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import NavbarDrawer from '../NavbarDrawer';
 import Header from '../Header';
 import { drawerWidth, MODULE_TYPE } from '../../utils/globalConstants';
-import useSideNavData from '../NavbarDrawer/hooks/useSideNavData';
 import { useLocation } from 'react-router-dom';
 import { COMMON_WORDS } from '../../utils/constants';
 
@@ -35,9 +34,8 @@ function ResponsiveDrawer({ showSidebarAndHeader, children }) {
   const [selectedNavbar, setSelectedNavbar] = useState(pathname ? pathname : DASHBOARD);
   const [selectedParentIndex, setSelectedParentIndex] = useState(null);
 
-  const sideNav = useSideNavData();
   const scopes = JSON.parse(localStorage.getItem(COMMON_WORDS.SCOPES))?.read || [];
-  const sideNavData = sideNav.filter(item => scopes.some(scope => ((scope.id === item.id) && (scope.moduleType === MODULE_TYPE))));
+  const sideNavData = (scopes && scopes.length > 0 && scopes.filter(item => item.moduleType === MODULE_TYPE)) || [];
 
   const handleDrawerToggle = () => {
     if (!isClosing) {

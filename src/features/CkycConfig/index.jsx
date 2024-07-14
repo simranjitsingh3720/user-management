@@ -13,6 +13,7 @@ import { fetchLobData } from '../../stores/slices/lobSlice';
 import { fetchAllProductData } from '../../stores/slices/productSlice';
 import { setTableName } from '../../stores/slices/exportSlice';
 import { CKYC_DROPDOWN } from './utils/constants';
+import usePermissions from '../../hooks/usePermission';
 
 function CkycConfig() {
   const dispatch = useDispatch();
@@ -35,6 +36,8 @@ function CkycConfig() {
     dispatch(fetchAllProductData({ isAll: true }));
   }, [dispatch]);
   const { data, loading, fetchData } = useGetCkycData(page, pageSize, order, orderBy);
+
+  const { canCreate, canUpdate } = usePermissions();
 
   useEffect(() => {
     if (data && data?.data) {
@@ -151,6 +154,7 @@ function CkycConfig() {
         selectOptions={CKYC_DROPDOWN}
         handleGo={handleGo}
         showButton
+        canCreate={canCreate}
         showExportButton={true}
       />
       <div className="mt-4">
@@ -166,6 +170,7 @@ function CkycConfig() {
           order={order}
           setOrder={setOrder}
           orderBy={orderBy}
+          canUpdate={canUpdate}
           setOrderBy={setOrderBy}
         />
       </div>

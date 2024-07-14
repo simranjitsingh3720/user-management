@@ -99,7 +99,6 @@ const AutocompleteFieldAll = ({
             renderInput={(params) => (
               <TextField
                 {...params}
-                sx={{height:'40px', overflowY: 'auto'}}
                 placeholder={PLACEHOLDER}
                 error={Boolean(errors[name])}
                 helperText={Boolean(errors[name]) ? REQUIRED_MSG : ''}

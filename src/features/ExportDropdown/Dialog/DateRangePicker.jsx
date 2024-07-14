@@ -9,6 +9,7 @@ import { setFromDate, setToDate } from "../../../stores/slices/exportSlice";
 import dayjs from "dayjs";
 import "dayjs/locale/en-gb";
 import { EXPORT_CONSTANTS } from "../utils/constants";
+import { DATE_FORMAT } from "../../../utils/globalConstants";
 
 const DateRangePicker = () => {
   const dispatch = useDispatch();
@@ -21,7 +22,7 @@ const DateRangePicker = () => {
           <FormControl className="w-full">
             <FormLabel id="fromDate">From</FormLabel>
             <DatePicker
-              value={fromDate ? dayjs(fromDate, "DD/MM/YYYY") : null}
+              value={fromDate ? dayjs(fromDate, DATE_FORMAT) : null}
               onChange={(newValue) => dispatch(setFromDate(newValue))}
               slotProps={{ textField: { size: "medium" } }}
               disabled={selectedValue !== EXPORT_CONSTANTS.custom}
@@ -32,7 +33,7 @@ const DateRangePicker = () => {
           <FormControl className="w-full">
             <FormLabel id="toDate">To</FormLabel>
             <DatePicker
-              value={toDate ? dayjs(toDate, "DD/MM/YYYY") : null}
+              value={toDate ? dayjs(toDate, DATE_FORMAT) : null}
               onChange={(newValue) => dispatch(setToDate(newValue))}
               slotProps={{ textField: { size: "medium" } }}
               disabled={selectedValue !== EXPORT_CONSTANTS.custom}

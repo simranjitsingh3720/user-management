@@ -22,13 +22,11 @@ function UserManagement() {
   const [searched, setSearched] = useState(SEARCH_OPTIONS[0].value);
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(PAGECOUNT);
-  const [order, setOrder] = useState(COMMON_WORDS.ASC);
+  const [order, setOrder] = useState(COMMON_WORDS.DESC);
   const [orderBy, setOrderBy] = useState(COMMON_WORDS.CREATED_AT);
-  const { data, loading, fetchData, setLoading } = useGetUser(page, pageSize, query, order, orderBy);
+  const { data, loading, fetchData } = useGetUser(page, pageSize, query, order, orderBy);
   const [userData, setUserData] = useState([]);
-
-    // Check Permission 
-    const { canCreate, canUpdate } = usePermissions();
+  const { canCreate, canUpdate } = usePermissions();
 
   const updateUserForm = useCallback((row) => {
     navigate(NAVIGATE_TO_FORM + '/'+ row.id);
@@ -64,6 +62,8 @@ function UserManagement() {
     if(query){
       setUserData([]);
       fetchData(searched, query);
+    } else {
+      fetchData()
     }
   };
 
@@ -97,6 +97,7 @@ function UserManagement() {
           setOrder={setOrder}
           orderBy={orderBy}
           setOrderBy={setOrderBy}
+          canUpdate={canUpdate}
         />
       </div>
       <CustomDialog />
