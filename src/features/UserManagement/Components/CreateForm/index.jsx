@@ -83,6 +83,7 @@ function CreateUserCreationForm() {
     defaultValues: {
       roleSelect: null,
       loginType: [],
+      active: 'yes',
     },
   });
 

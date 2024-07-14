@@ -25,7 +25,6 @@ const SelectField = ({
       <Controller
         name={name}
         control={control}
-        defaultValue={''}
         render={({ field }) => {
           let value = field.value;
           if (value === '' || value === undefined) {
