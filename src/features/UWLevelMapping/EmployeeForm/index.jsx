@@ -7,6 +7,7 @@ import { COMMON_WORDS } from '../../../utils/constants';
 import { useNavigate } from 'react-router-dom';
 import { EMPLOYEE_SEARCH } from '../utils/constants';
 import { PAGECOUNT } from '../../../utils/globalConstants';
+import usePermissions from '../../../hooks/usePermission';
 
 function EmployeeForm() {
   const [searched, setSearched] = useState('employeeId');
@@ -16,6 +17,8 @@ function EmployeeForm() {
   const [order, setOrder] = useState(COMMON_WORDS.ASC);
   const [orderBy, setOrderBy] = useState(COMMON_WORDS.CREATED_AT);
   const navigate = useNavigate();
+
+  const {canUpdate} = usePermissions();
 
   const handleEditClick = (row) => {
     navigate(`/uwlevelmappingemployee/${row.id}`);
@@ -53,6 +56,7 @@ function EmployeeForm() {
           setOrder={setOrder}
           orderBy={orderBy}
           setOrderBy={setOrderBy}
+          canUpdate={canUpdate}
         />
       </div>
     </div>

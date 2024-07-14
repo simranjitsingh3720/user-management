@@ -14,6 +14,7 @@ import Actions from './Dialog/Action';
 import CustomDialog from '../../components/CustomDialog';
 import LeftArrow from '../../assets/LeftArrow';
 import Content from '../../components/CustomDialogContent';
+import usePermissions from '../../hooks/usePermission';
 
 function UWLevelMapping() {
   const navigate = useNavigate();
@@ -25,6 +26,9 @@ function UWLevelMapping() {
   const [pageSize, setPageSize] = useState(PAGECOUNT);
   const [order, setOrder] = useState(COMMON_WORDS.ASC);
   const [orderBy, setOrderBy] = useState(COMMON_WORDS.CREATED_AT);
+
+  const { canCreate, canUpdate } = usePermissions();
+
   const handleEditClick = (row) => {
     navigate(`form/${row.id}`);
   };
@@ -53,7 +57,13 @@ function UWLevelMapping() {
         <LeftArrow />
       </IconButton>
       <span>Go Back</span>
-      <SearchComponent showButton hideSearch buttonText={BUTTON_TEXT.PRODUCT_LOCATION_LEVEL} navigateRoute={'form'} />
+      <SearchComponent
+        showButton
+        hideSearch
+        buttonText={BUTTON_TEXT.PRODUCT_LOCATION_LEVEL}
+        navigateRoute={'form'}
+        canCreate={canCreate}
+      />
       <div className="mt-4">
         <CustomTable
           columns={HEADER_COLUMNS}
@@ -68,6 +78,7 @@ function UWLevelMapping() {
           setOrder={setOrder}
           orderBy={orderBy}
           setOrderBy={setOrderBy}
+          canUpdate={canUpdate}
         />
       </div>
       <CustomDialog />
