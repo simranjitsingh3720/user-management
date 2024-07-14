@@ -10,6 +10,7 @@ import { getPlaceHolder } from "../../utils/globalizationFunction";
 import { fetchUser } from "../../stores/slices/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { setTableName } from "../../stores/slices/exportSlice";
+import usePermissions from "../../hooks/usePermission";
 
 function HealthConfiguration() {
   const dispatch = useDispatch();
@@ -27,6 +28,8 @@ function HealthConfiguration() {
     order,
     orderBy
   );
+
+  const {canUpdate, canCreate} = usePermissions();
 
   useEffect(() => {
     dispatch(
@@ -87,6 +90,7 @@ function HealthConfiguration() {
         handleGo={handleGo}
         showButton
         showExportButton={true}
+        canCreate={canCreate}
       />
       <div className="mt-4">
         <CustomTable
@@ -102,6 +106,7 @@ function HealthConfiguration() {
           setOrder={setOrder}
           orderBy={orderBy}
           setOrderBy={setOrderBy}
+          canUpdate={canUpdate}
         />
       </div>
     </div>
