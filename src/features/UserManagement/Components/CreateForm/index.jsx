@@ -156,7 +156,7 @@ function CreateUserCreationForm() {
   }, []);
 
   useEffect(() => {
-    if (roleValue && !isEdit) {
+    if (roleValue && resetClicked && !isEdit) {
       let resetValues = {
         roleSelect: watch(ROLE_SELECT),
       };
