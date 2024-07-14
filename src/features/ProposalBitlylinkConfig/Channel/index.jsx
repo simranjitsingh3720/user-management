@@ -10,6 +10,7 @@ import useGetBitlyLink from "../hooks/useGetBitlyLink";
 import { PAGECOUNT, selectRowsData } from "../../../utils/globalConstants";
 import { useDispatch } from "react-redux";
 import { setTableName } from "../../../stores/slices/exportSlice";
+import usePermissions from "../../../hooks/usePermission";
 
 function getSelectedRowData(count) {
   
@@ -31,6 +32,8 @@ function Channel() {
   const [rowsPage, setRowsPage] = useState(PAGECOUNT);
   const [pageChange, setPageChange] = useState(1);
   const dispatch = useDispatch();
+
+  const { canCreate, canUpdate } = usePermissions()
 
   const handlePaginationChange = (event, page) => {
     setPageChange(page);
@@ -60,6 +63,7 @@ function Channel() {
         setPageChange={setPageChange}
         searched={searched}
         setSearched={setSearched}
+        canCreate={canCreate}
       />
       <div className={styles.tableContainerStyle}>
         <div className={styles.tableStyled}>
@@ -75,6 +79,7 @@ function Channel() {
               fetchData={fetchData}
               sort={sort}
               setSort={setSort}
+              canUpdate={canUpdate}
             />
           ) : (
             <NoDataFound />

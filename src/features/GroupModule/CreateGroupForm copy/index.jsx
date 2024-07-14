@@ -25,6 +25,7 @@ import useUpdateUser from '../hooks/useUpdateUser';
 import CustomButton from '../../../components/CustomButton';
 import CustomFormHeader from '../../../components/CustomFormHeader';
 import { FORM_HEADER_TEXT } from '../../../utils/constants';
+import useDebounce from '../../../hooks/useDebounce';
 
 const convertToDesiredFormat = (data, groupName, groupStatus) => {
   const permissions = data?.map((permission) => permission.id);
@@ -49,19 +50,20 @@ const convertUpdateFormat = (newData, oldData) => {
 function CreateGroupForm() {
   const [input, setInput] = useState('');
   const [query, setQuery] = useState('');
+  const debouncedInput = useDebounce(input, 500);
   const [filteredPermission, setFilteredPermission] = useState([]);
+  const { userData } = useGetUser(debouncedInput);
+  const [selectAll, setSelectAll] = useState(false);
 
   const { permissionData, permissionLoading } = useGetPermission();
-  // const userVariable = useContext(GetUserContext);
-
-  const { userData } = useGetUser(input);
 
   const [checkedPermission, setCheckedPermission] = useState([]);
 
   useEffect(() => {
     if (permissionData && permissionData?.data) {
-      setCheckedPermission(permissionData?.data || []);
-      setFilteredPermission(permissionData?.data || []);
+      const sortedData = permissionData.data.sort((a, b) => a.permissionName.localeCompare(b.permissionName));
+      setCheckedPermission(sortedData || []);
+      setFilteredPermission(sortedData || []);
     }
   }, [permissionData]);
 
@@ -152,19 +154,27 @@ function CreateGroupForm() {
     }
   }, [groupData, permissionData]);
 
+  const areAllPermissionsSelected = (permissions) => {
+    return permissions.length > 0 && permissions.every((permission) => permission.checked);
+  };
+
   const handleChange = (item) => {
     const newPermissions = checkedPermission.map((permission) => {
       if (permission.id === item.id) {
         const updatedItem = { ...permission, checked: !permission.checked };
         return updatedItem;
-        // return { ...permission, checked: !permission.checked };
       }
       return permission;
     });
 
     setCheckedPermission(newPermissions);
     setFilteredPermission(newPermissions);
+    setSelectAll(areAllPermissionsSelected(newPermissions));
   };
+
+  useEffect(() => {
+    setSelectAll(areAllPermissionsSelected(checkedPermission));
+  }, [checkedPermission]);
 
   useEffect(() => {
     if (query === '') {
@@ -176,6 +186,16 @@ function CreateGroupForm() {
       setFilteredPermission(filteredData);
     }
   }, [query, checkedPermission]);
+
+  const handleSelectAll = () => {
+    const newPermissions = checkedPermission.map((permission) => ({
+      ...permission,
+      checked: !selectAll,
+    }));
+    setCheckedPermission(newPermissions);
+    setFilteredPermission(newPermissions);
+    setSelectAll(!selectAll);
+  };
 
   return (
     <div>
@@ -246,20 +266,10 @@ function CreateGroupForm() {
                   id="groupUser"
                   value={getValues('groupUser')}
                   options={userData || []}
-                  // open={open}
-                  // onOpen={() => {
-                  //   setOpen(true);
-                  // }}
-                  // onClose={(event) => {
-                  //   if (event?.target?.innerHTML !== "") {
-                  //     setOpen(false);
-                  //   }
-                  // }}
                   disableCloseOnSelect
                   getOptionLabel={(option) => {
                     return `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`;
                   }}
-                  // getOptionLabel={(option) => option.permissionName}
                   limitTags={5}
                   className={styles.customizePrivilegeSelect}
                   size="small"
@@ -330,6 +340,14 @@ function CreateGroupForm() {
                     setQuery(e.target.value);
                   }}
                 />
+                <div className="flex content-start w-full items-center px-3 pb-3">
+                  <Checkbox
+                    checked={selectAll}
+                    onChange={handleSelectAll}
+                    inputProps={{ 'aria-label': 'select all permissions' }}
+                  />
+                  <span>Select All</span>
+                </div>
                 <div className={styles.permissionCheckbox}>
                   {permissionLoading ? (
                     <ListLoader rows={5} column={3} />

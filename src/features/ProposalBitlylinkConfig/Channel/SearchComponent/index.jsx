@@ -6,7 +6,7 @@ import { BitlyLink } from "../../constants";
 import CustomButton from "../../../../components/CustomButton";
 import ExportDropdown from "../../../ExportDropdown";
 
-function SearchComponent({ setQuery, setPageChange, searched, setSearched }) {
+function SearchComponent({ setQuery, setPageChange, searched, setSearched, canCreate }) {
   const handleChange = (event) => {
     setSearched(event.target.value);
   };
@@ -57,7 +57,7 @@ function SearchComponent({ setQuery, setPageChange, searched, setSearched }) {
         </div>
         <div>
           <ExportDropdown />
-          <CustomButton
+          {canCreate && (<CustomButton
             variant="contained"
             onClick={handleCreateNewForm}
             sx={{ textTransform: "none" }}
@@ -65,7 +65,7 @@ function SearchComponent({ setQuery, setPageChange, searched, setSearched }) {
             <Typography nowrap="true" className={styles.buttonTextStyle}>
               Create Config
             </Typography>
-          </CustomButton>
+          </CustomButton>)}
         </div>
       </div>
     </div>
