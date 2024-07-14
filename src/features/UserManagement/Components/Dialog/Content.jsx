@@ -12,7 +12,7 @@ const Content = () => {
       </Grid>
       <Grid item xs={12}>
         <div class="text-base text-[#465465] text-center">
-          Are you sure you want to change the insillion status?
+          Are you sure you want to change the status?
         </div>
       </Grid>
     </Grid>

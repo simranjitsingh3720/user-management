@@ -5,7 +5,7 @@ function generateTableHeaders(
 ) {
   return [
     {
-      id: "name",
+      id: "userName",
       value: "User Name",
     },
     {
