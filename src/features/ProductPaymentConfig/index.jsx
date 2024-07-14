@@ -16,6 +16,7 @@ import { fetchAllProductData } from '../../stores/slices/productSlice';
 import { COMMON_WORDS } from '../../utils/constants';
 import { getPlaceHolder } from '../../utils/globalizationFunction';
 import { setTableName } from '../../stores/slices/exportSlice';
+import usePermissions from '../../hooks/usePermission';
 
 function getSelectedRowData(count) {
   let selectedRowData = [];
@@ -38,8 +39,8 @@ function ProductPaymentConfig() {
   const [lobValue, setLobValue] = useState([]);
 
   const [rowsPage, setRowsPage] = useState(PAGECOUNT);
-
   const [pageChange, setPageChange] = useState(1);
+  const { canCreate, canUpdate } = usePermissions();
 
   const handlePaginationChange = (event, page) => {
     setPageChange(page);
@@ -133,6 +134,7 @@ function ProductPaymentConfig() {
         handleGo={handleGo}
         showButton
         showExportButton={true}
+        canCreate={canCreate}
       />
       <div className={styles.tableContainerStyle}>
         <div className={styles.tableStyled}>
@@ -149,6 +151,7 @@ function ProductPaymentConfig() {
               sort={sort}
               setSort={setSort}
               paymentData={paymentData}
+              canUpdate={canUpdate}
             />
           ) : (
             <NoDataFound />
