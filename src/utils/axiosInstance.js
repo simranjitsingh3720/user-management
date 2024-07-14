@@ -23,7 +23,7 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response.data.statusCode === 401 || error.response.statusCode === 401 || error.response.data.statusCode === 500) {
+    if (error.response.data.statusCode === 401) {
       localStorage.clear();
       const navigate = useNavigate();
       navigate('/');
