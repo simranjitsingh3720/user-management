@@ -52,7 +52,6 @@ const useGetPartnerNeft = () => {
 
         const partnerNeftData = response.data.data.map((item) => {
           const { partnerNeft, product, lob, producer } = item;
-          debugger
           return {
             id: partnerNeft?.id,
             label: partnerNeft?.label,
