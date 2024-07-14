@@ -63,7 +63,6 @@ function Product() {
           updatedAt: product.updatedAt,
           checked: product?.status,
           status: product?.status,
-          disabled: !canUpdate,
         };
       }) || [];
 
@@ -188,6 +187,7 @@ function Product() {
         setOrder={setOrder}
         orderBy={orderBy}
         setOrderBy={setOrderBy}
+        canUpdate={canUpdate}
       />
     </>
   );

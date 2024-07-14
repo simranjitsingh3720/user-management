@@ -83,6 +83,7 @@ const Lob = () => {
           setOrder={setOrder}
           orderBy={orderBy}
           setOrderBy={setOrderBy}
+          canUpdate={canUpdate}
         />
       </div>
     </Box>
