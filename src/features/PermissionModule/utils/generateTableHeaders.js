@@ -1,31 +1,31 @@
 function generateTableHeaders(handleClicked) {
   return [
     {
-      id: "permissionName",
-      value: "Permission Name",
+      id: 'permissionName',
+      value: 'Permission Name',
       sortable: false,
     },
     {
-      id: "permissionType",
-      value: "Permission Type",
+      id: 'permissionType',
+      value: 'Permission Type',
       sortable: false,
     },
     {
-      id: "createdAt",
-      value: "Created At",
+      id: 'createdAt',
+      value: 'Created At',
       sortable: true,
     },
     {
-      id: "updatedAt",
-      value: "Updated At",
+      id: 'updatedAt',
+      value: 'Updated At',
       sortable: true,
     },
     {
-      id: "action",
-      value: "Action",
+      id: 'action',
+      value: 'Status',
       action: [
         {
-          component: "switch",
+          component: 'switch',
           onClick: (data, row) => {
             handleClicked(data, row);
           },

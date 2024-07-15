@@ -13,7 +13,7 @@ import PermissionContent from './Dialog/PermissionContent';
 import SearchComponent from '../../components/SearchComponent';
 import { COMMON_FIELDS } from '../PartnerNeft/utils/constant';
 import { getPlaceHolder } from '../../utils/globalizationFunction';
-import { SEARCH_OPTIONS } from './constants';
+import { SEARCH_OPTIONS, showTextField } from './constants';
 import useGetPermission from './hooks/useGetPermission';
 import Content from '../../components/CustomDialogContent';
 import usePermissions from '../../hooks/usePermission';
@@ -23,6 +23,7 @@ function GroupModule() {
   const [pageSize, setPageSize] = useState(PAGECOUNT);
   const [order, setOrder] = useState(null);
   const [orderBy, setOrderBy] = useState(null);
+  const [query, setQuery] = useState('');
 
   const [groupData, setGroupData] = useState([]);
   const { group, groupLoading } = useSelector((state) => state.group);
@@ -34,7 +35,7 @@ function GroupModule() {
   const navigate = useNavigate();
   // Check Permission
   const { canCreate, canUpdate } = usePermissions();
-  
+
   useEffect(() => {
     dispatch(
       getGroup({
@@ -47,8 +48,6 @@ function GroupModule() {
   }, [dispatch, page, pageSize, order, orderBy]);
 
   useEffect(() => {
-    if (group?.data?.length === 0) return;
-
     const transformedData =
       group?.data?.map((item) => {
         return {
@@ -147,17 +146,22 @@ function GroupModule() {
     setPage(0);
     let searchString = '';
     let edge = '';
+    let searchKey = '';
 
     switch (searched) {
       case COMMON_WORDS.PERMISSIONNAME:
         searchString = fetchIdsAndConvert(permissionValue);
         edge = COMMON_FIELDS.hasPermission;
         break;
+      case COMMON_WORDS.GROUPNAME:
+        searchKey = searched;
+        searchString = query;
+        break;
       default:
         break;
     }
 
-    if (searchString) {
+    if (searchString && edge) {
       dispatch(
         getGroup({
           page,
@@ -169,7 +173,29 @@ function GroupModule() {
         })
       );
     }
-  }, [searched, permissionValue, dispatch, page, pageSize, order, orderBy]);
+    if (searchKey && searchString) {
+      dispatch(
+        getGroup({
+          page,
+          pageSize,
+          order,
+          orderBy,
+          searchKey: searchKey,
+          searchString: searchString,
+        })
+      );
+    }
+    if (searchString === '' || searchKey === '') {
+      dispatch(
+        getGroup({
+          page,
+          pageSize,
+          order,
+          orderBy,
+        })
+      );
+    }
+  }, [searched, permissionValue, query, dispatch, page, pageSize, order, orderBy]);
 
   return (
     <>
@@ -185,6 +211,9 @@ function GroupModule() {
           }
           buttonText={BUTTON_TEXT.GROUP}
           navigateRoute="/group/group-form"
+          textField={showTextField.includes(searched)}
+          setQuery={setQuery}
+          textFieldPlaceholder={COMMON_WORDS.SEARCH}
           searched={searched}
           setSearched={setSearched}
           selectOptions={SEARCH_OPTIONS}

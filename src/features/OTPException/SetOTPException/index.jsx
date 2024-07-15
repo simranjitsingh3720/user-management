@@ -1,34 +1,72 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './styles.module.scss';
-import { Autocomplete, FormControlLabel, Radio, RadioGroup, TextField } from '@mui/material';
-import { Controller, useForm } from 'react-hook-form';
-import useGetUserData from '../../BANCALogin/hooks/useGetUserData';
+import { FormControlLabel, Radio, RadioGroup } from '@mui/material';
+import { useForm } from 'react-hook-form';
 import useCreateOTPException from '../hooks/useCreateOTPException';
 import CustomButton from '../../../components/CustomButton';
 import CustomFormHeader from '../../../components/CustomFormHeader';
-import { FORM_HEADER_TEXT } from '../../../utils/constants';
+import { COMMON_WORDS, FORM_HEADER_TEXT } from '../../../utils/constants';
+import CustomAutoCompleteWithoutCheckbox from '../../../components/CustomAutoCompleteWithoutCheckbox';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchUser } from '../../../stores/slices/userSlice';
+import { getChannels } from '../../../Redux/getChannel';
 
 function SetOTPException({ fetchData }) {
+  const dispatch = useDispatch();
+
   const [OTPValue, setOTPValue] = useState('byChannnel');
 
   const handleChange = (event) => {
     setOTPValue(event.target.value);
   };
 
-  const { userData } = useGetUserData();
+  const { user, userLoading } = useSelector((state) => state.user);
+  const channelType = useSelector((state) => state.channelType.channelType);
 
-  const { handleSubmit, control, formState } = useForm();
+  useEffect(() => {
+    dispatch(
+      fetchUser({
+        userType: COMMON_WORDS.PRODUCER,
+        searchKey: COMMON_WORDS.ROLE_NAME,
+      })
+    );
+    dispatch(getChannels());
+  }, [dispatch]);
+
+  const { handleSubmit, control, formState, setValue } = useForm({
+    defaultValues: {
+      producerCode: null,
+      channel: null,
+    },
+  });
 
   const { errors } = formState;
 
   const { postData, loading } = useCreateOTPException({ fetchData });
 
   const onSubmit = (data) => {
-    const payload = {
-      producerId: data.producerCode.id,
-    };
-    postData(payload);
+    console.log('data', data);
+    if (OTPValue === 'byChannnel') {
+      const payload = {
+        channelId: data?.channel?.id,
+      };
+      postData(payload);
+    } else {
+      const payload = {
+        producerId: data.producerCode.id,
+      };
+      postData(payload);
+    }
   };
+
+  const handleReset = () => {
+    setValue('channel', null);
+    setValue('producerCode', null);
+  };
+  useEffect(() => {
+    setValue('channel', null);
+    setValue('producerCode', null);
+  }, [OTPValue]);
 
   return (
     <div className={styles.otpException}>
@@ -36,6 +74,7 @@ function SetOTPException({ fetchData }) {
         <CustomFormHeader
           headerText={FORM_HEADER_TEXT.OTP_EXCEPTION}
           subHeading="Please select a channel or producer code from below and add it to the given list for OTP Exception."
+          handleReset={handleReset}
         />
       </div>
       <div className={styles.OTPSelectStyle}>
@@ -67,79 +106,54 @@ function SetOTPException({ fetchData }) {
         </div>
         <form onSubmit={handleSubmit(onSubmit)}>
           {OTPValue === 'byChannnel' ? (
-            <div className={styles.fieldContainerStyle}>
-              <span className={styles.labelText}>
-                Channel <span className={styles.styledRequired}>*</span>
-              </span>
-              <Controller
+            <div className="w-full max-w-[380px] mt-4">
+              <CustomAutoCompleteWithoutCheckbox
                 name="channel"
+                label="Channel"
+                required={true}
+                options={channelType || []}
+                getOptionLabel={(option) => {
+                  return option?.label?.toUpperCase();
+                }}
                 control={control}
-                rules={{ required: true }}
-                render={({ field }) => (
-                  <Autocomplete
-                    id="channel"
-                    options={[]}
-                    getOptionLabel={(option) => {
-                      return `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`;
-                    }}
-                    className={styles.customizeSelect}
-                    size="small"
-                    isOptionEqualToValue={(option, value) => option.id === value.id}
-                    renderInput={(params) => <TextField {...params} placeholder="Select" />}
-                    onChange={(event, newValue) => {
-                      field.onChange(newValue);
-                    }}
-                    ListboxProps={{
-                      style: {
-                        maxHeight: '200px',
-                      },
-                    }}
-                    // onInputChange={(event, val, reason) => {
-                    //   if (reason === "input") setInput(val);
-                    // }}
-                  />
+                rules={{ required: 'Channel is required' }}
+                error={Boolean(errors.channel)}
+                helperText={errors.channel?.message}
+                disableClearable={true}
+                placeholder={COMMON_WORDS.SELECT}
+                renderOption={(props, option) => (
+                  <li {...props} key={option.id}>
+                    {option?.label?.toUpperCase()}
+                  </li>
                 )}
               />
-              <div className={styles.styledError}>{errors.channel && <span>This field is required</span>} </div>
             </div>
           ) : (
-            <div className={styles.fieldContainerStyle}>
-              <span className={styles.labelText}>
-                Producer Code <span className={styles.styledRequired}>*</span>
-              </span>
-              <Controller
+            <div className="w-full max-w-[380px] mt-4">
+              <CustomAutoCompleteWithoutCheckbox
                 name="producerCode"
+                label="Producer Code"
+                required={true}
+                loading={userLoading}
+                options={user.data || []}
+                getOptionLabel={(option) => {
+                  return `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`;
+                }}
                 control={control}
-                rules={{ required: true }}
-                render={({ field }) => (
-                  <Autocomplete
-                    id="producerCode"
-                    options={userData || []}
-                    getOptionLabel={(option) => {
-                      return `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`;
-                    }}
-                    className={styles.customizeSelect}
-                    size="small"
-                    isOptionEqualToValue={(option, value) => option.id === value.id}
-                    renderInput={(params) => <TextField {...params} placeholder="Select" />}
-                    onChange={(event, newValue) => {
-                      field.onChange(newValue);
-                    }}
-                    ListboxProps={{
-                      style: {
-                        maxHeight: '200px',
-                      },
-                    }}
-                    // onInputChange={(event, val, reason) => {
-                    //   if (reason === "input") setInput(val);
-                    // }}
-                  />
+                rules={{ required: 'Producer is required' }}
+                error={Boolean(errors.producerCode)}
+                helperText={errors.producerCode?.message}
+                disableClearable={true}
+                placeholder={COMMON_WORDS.SELECT}
+                renderOption={(props, option) => (
+                  <li {...props} key={option.id}>
+                    {option?.firstName?.toUpperCase()} {option?.lastName?.toUpperCase()}
+                  </li>
                 )}
               />
-              <div className={styles.styledError}>{errors.producerCode && <span>This field is required</span>} </div>
             </div>
           )}
-          <CustomButton type="submit" variant="contained" loading={loading}>
+          <CustomButton type="submit" variant="contained" loading={loading} className="mt-4">
             Add
           </CustomButton>
         </form>

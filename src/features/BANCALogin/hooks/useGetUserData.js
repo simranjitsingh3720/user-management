@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import axiosInstance from "../../../utils/axiosInstance";
+import { useEffect, useState } from 'react';
+import axiosInstance from '../../../utils/axiosInstance';
 
 function useGetUserData() {
   const [data, setData] = useState([]);
@@ -7,7 +7,7 @@ function useGetUserData() {
 
   const fetchData = async () => {
     try {
-      let url = `/api/user?pageNo=0&searchKey=roleName&searchString=Producer`;
+      let url = `/api/user?pageNo=0&searchKey=roleName&searchString=Producer&status=true`;
       // if (input) {
       //   url += `&searchKey=firstName&searchString=${input}`;
       // }

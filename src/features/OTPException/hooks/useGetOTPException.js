@@ -1,15 +1,14 @@
-import { useEffect, useState } from "react";
-import axiosInstance from "../../../utils/axiosInstance";
-import { buildQueryString } from "../../../utils/globalizationFunction";
-import { Search } from "@mui/icons-material";
-import { COMMON_WORDS } from "../../../utils/constants";
+import { useEffect, useState } from 'react';
+import axiosInstance from '../../../utils/axiosInstance';
+import { buildQueryString } from '../../../utils/globalizationFunction';
+import { COMMON_WORDS } from '../../../utils/constants';
 
 function useGetOTPException(pageChange, rowsPage, query, searched) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [sort, setSort] = useState({
-    sortKey: "createdAt",
-    sortOrder: "asc",
+    sortKey: 'createdAt',
+    sortOrder: 'asc',
   });
 
   const fetchData = async () => {
@@ -21,8 +20,8 @@ function useGetOTPException(pageChange, rowsPage, query, searched) {
         sortKey: sort.sortKey,
         sortOrder: sort.sortOrder,
         pageSize: rowsPage,
-        childFieldsToFetch: COMMON_WORDS.PRODUCER,
-        childFieldsEdge: COMMON_WORDS.HAS_PRODUCER,
+        childFieldsToFetch: `${COMMON_WORDS.PRODUCER},${COMMON_WORDS.CHANNEL}`,
+        childFieldsEdge: `${COMMON_WORDS.HAS_PRODUCER},${COMMON_WORDS.HAS_CHANNEL}`,
       });
 
       if (query && searched) {
@@ -31,11 +30,10 @@ function useGetOTPException(pageChange, rowsPage, query, searched) {
           sortKey: sort.sortKey,
           sortOrder: sort.sortOrder,
           pageSize: rowsPage,
-          ids: query,
-          isExclusive: true,
-          edge: COMMON_WORDS.HAS_PRODUCER,
-          childFieldsToFetch: COMMON_WORDS.PRODUCER,
-          childFieldsEdge: COMMON_WORDS.HAS_PRODUCER,
+          searchKey: searched,
+          searchString: query,
+          childFieldsToFetch: `${COMMON_WORDS.PRODUCER},${COMMON_WORDS.CHANNEL}`,
+          childFieldsEdge: `${COMMON_WORDS.HAS_PRODUCER},${COMMON_WORDS.HAS_CHANNEL}`,
         });
       }
 
