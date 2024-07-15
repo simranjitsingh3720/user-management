@@ -44,6 +44,7 @@ import { getLoginType } from '../../../../Redux/getLoginType';
 import CustomFormHeader from '../../../../components/CustomFormHeader';
 import { FORM_HEADER_TEXT } from '../../../../utils/constants';
 import dayjs from 'dayjs';
+import FullPageLoader from '../../../../components/FullPageLoader';
 
 function CreateUserCreationForm() {
   const dispatch = useDispatch();
@@ -156,7 +157,7 @@ function CreateUserCreationForm() {
   }, []);
 
   useEffect(() => {
-    if (roleValue && !isEdit) {
+    if (roleValue && resetClicked && !isEdit) {
       let resetValues = {
         roleSelect: watch(ROLE_SELECT),
       };
@@ -207,12 +208,11 @@ function CreateUserCreationForm() {
     resultObject.roleSelect = '';
     setResetClicked(!resetClicked);
     reset(resultObject);
-    if(isEdit){
+    if (isEdit) {
       if (params?.id) {
         setIsEdit(true);
         getUserDetails(params?.id);
       }
-
     }
   };
 
@@ -445,203 +445,208 @@ function CreateUserCreationForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={styles.formMainContainer}>
-      <div className={styles.createNewUserContainer}>
-        <div className="p-4 pb-0">
-          <CustomFormHeader headerText={FORM_HEADER_TEXT.USER} navigateRoute="/user-management" />
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 px-8 gap-5 py-5">
-          <AutocompleteMultipleField
-            key={ROLE_SELECT}
-            control={control}
-            name={ROLE_SELECT}
-            label="Role"
-            required
-            disabled={isEdit}
-            options={role || []}
-            validation={{ required: REQUIRED_MSG }}
-            errors={errors}
-            multiple={false}
-            resetClicked={resetClicked}
-            roleChanged={roleChanged}
-            classes="w-full"
-            isEdit={isEdit}
-          />
-          <AutocompleteMultipleField
-            key={LOGIN_TYPE}
-            control={control}
-            name={LOGIN_TYPE}
-            label="Login Type"
-            required
-            disabled={false}
-            options={loginType || []}
-            validation={{ required: REQUIRED_MSG }}
-            errors={errors}
-            multiple={true}
-            roleChanged={roleChanged}
-            resetClicked={resetClicked}
-            classes="w-full"
-            isEdit={isEdit}
-          />
-
-          {roleConfig?.map((item) =>
-            item?.type === 'input' ? (
-              <InputField
-                key={item?.id}
-                id={item?.id}
-                required={item?.required}
-                label={item?.label}
-                validation={item?.validation}
-                control={control}
-                errors={errors}
-                disabled={item?.disabled}
-                classes="w-full"
-              />
-            ) : item?.type === 'date' ? (
-              <DateField
-                key={item?.id}
-                control={control}
-                watch={watch}
-                setValue={setValue}
-                name={item?.id}
-                labelVisible={true}
-                label={item?.label}
-                required={item?.required}
-                errors={errors}
-                classes="w-full"
-                isEdit={isEdit}
-              />
-            ) : item?.type === 'autocomplete' && item?.multiple === true ? (
+    <>
+      {loading && <FullPageLoader></FullPageLoader>}
+      {!loading && (
+        <form onSubmit={handleSubmit(onSubmit)} className={styles.formMainContainer}>
+          <div className={styles.createNewUserContainer}>
+            <div className="p-4 pb-0">
+              <CustomFormHeader headerText={FORM_HEADER_TEXT.USER} navigateRoute="/user-management" />
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 px-8 gap-5 py-5">
               <AutocompleteMultipleField
-                key={item?.id}
+                key={ROLE_SELECT}
                 control={control}
-                roleChanged={roleChanged}
-                name={item?.id}
-                label={item?.label}
-                required={item?.required}
-                disabled={item?.disabled}
-                options={apiDataMap[item?.id]}
-                validation={item?.validation}
-                errors={errors}
-                multiple={item?.multiple}
-                resetClicked={resetClicked}
-                classes="w-full"
-                isEdit={isEdit}
-              />
-            ) : item?.type === 'autocomplete' && item?.all === true ? (
-              <div key={item?.id}>
-                <AutocompleteFieldAll
-                  control={control}
-                  name={item?.id}
-                  label={item?.label}
-                  required={item?.required}
-                  roleChanged={roleChanged}
-                  disabled={item?.disabled}
-                  options={apiDataMap[item?.id]}
-                  resetClicked={resetClicked}
-                  validation={item?.validation}
-                  errors={errors}
-                  apiDataMap={apiDataMap}
-                  classes="w-full"
-                  isEdit={isEdit}
-                />
-                {item?.subFields !== undefined &&
-                item?.subFields['neft'] &&
-                roleValue !== 'partner' &&
-                paymentsType &&
-                paymentsType?.some((item) => item?.value === 'neft' || item?.value === 'all') ? (
-                  <div key={item?.subFields['neft'][0]?.id}>
-                    <SelectField
-                      key={item?.subFields['neft'][0]?.id}
-                      control={control}
-                      name={item?.subFields['neft'][0]?.id}
-                      label={item?.subFields['neft'][0]?.label}
-                      required={item?.subFields['neft'][0]?.required}
-                      disabled={item?.subFields['neft'][0]?.disabled}
-                      menuItem={item?.subFields['neft'][0]?.menuItem || apiDataMap['neftDefaultBank']}
-                      placeholder="Select"
-                      errors={errors}
-                      setValue={setValue}
-                      classes="w-full"
-                    />
-                    <InputField
-                      id={item?.subFields['accountNumber'][0]?.id}
-                      required={item?.subFields['accountNumber'][0]?.required}
-                      label={item?.subFields['accountNumber'][0]?.label}
-                      validation={item?.subFields['accountNumber'][0]?.validation}
-                      control={control}
-                      errors={errors}
-                      disabled={item?.subFields['accountNumber'][0]?.disabled}
-                      classes="w-full"
-                    />
-                  </div>
-                ) : (
-                  <div></div>
-                )}
-                {item?.subFields &&
-                  paymentsType &&
-                  paymentsType?.some((item) => item?.value === 'cheque' || item?.value === 'all') && (
-                    <div>
-                      <SelectField
-                        key={item?.subFields['cheque'][0]?.id}
-                        control={control}
-                        name={item?.subFields['cheque'][0]?.id}
-                        label={item?.subFields['cheque'][0]?.label}
-                        required={item?.subFields['cheque'][0]?.required}
-                        disabled={item?.subFields['cheque'][0]?.disabled}
-                        menuItem={item?.subFields['cheque'][0]?.menuItem}
-                        placeholder="Select"
-                        errors={errors}
-                        classes="w-full"
-                        setValue={setValue}
-                      />
-                    </div>
-                  )}
-              </div>
-            ) : item?.type === 'autocomplete' ? (
-              <AutocompleteMultipleField
-                key={item?.id}
-                control={control}
-                name={item?.id}
-                label={item?.label}
-                required={item?.required}
-                roleChanged={roleChanged}
-                disabled={item?.disabled}
-                options={apiDataMap[item?.id]}
-                validation={item?.validation}
+                name={ROLE_SELECT}
+                label="Role"
+                required
+                disabled={isEdit}
+                options={role || []}
+                validation={{ required: REQUIRED_MSG }}
                 errors={errors}
                 multiple={false}
                 resetClicked={resetClicked}
+                roleChanged={roleChanged}
                 classes="w-full"
                 isEdit={isEdit}
               />
-            ) : (
-              <SelectField
-                key={item?.id}
+              <AutocompleteMultipleField
+                key={LOGIN_TYPE}
                 control={control}
-                name={item?.id}
-                label={item?.label}
-                required={item?.required}
-                disabled={item?.disabled}
-                menuItem={item?.menuItem || apiDataMap[item?.id]}
-                placeholder={item?.label}
+                name={LOGIN_TYPE}
+                label="Login Type"
+                required
+                disabled={false}
+                options={loginType || []}
+                validation={{ required: REQUIRED_MSG }}
                 errors={errors}
-                setValue={setValue}
+                multiple={true}
+                roleChanged={roleChanged}
+                resetClicked={resetClicked}
                 classes="w-full"
+                isEdit={isEdit}
               />
-            )
-          )}
-        </div>
-      </div>
-      <div className={styles.btnContainer}>
-        <CustomButton color="error" onClick={handleReset}>
-          Reset
-        </CustomButton>
-        <div className="ml-2">
-          <CustomButton type="submit">Submit</CustomButton>
-        </div>
-      </div>
-    </form>
+
+              {roleConfig?.map((item) =>
+                item?.type === 'input' ? (
+                  <InputField
+                    key={item?.id}
+                    id={item?.id}
+                    required={item?.required}
+                    label={item?.label}
+                    validation={item?.validation}
+                    control={control}
+                    errors={errors}
+                    disabled={item?.disabled}
+                    classes="w-full"
+                  />
+                ) : item?.type === 'date' ? (
+                  <DateField
+                    key={item?.id}
+                    control={control}
+                    watch={watch}
+                    setValue={setValue}
+                    name={item?.id}
+                    labelVisible={true}
+                    label={item?.label}
+                    required={item?.required}
+                    errors={errors}
+                    classes="w-full"
+                    isEdit={isEdit}
+                  />
+                ) : item?.type === 'autocomplete' && item?.multiple === true ? (
+                  <AutocompleteMultipleField
+                    key={item?.id}
+                    control={control}
+                    roleChanged={roleChanged}
+                    name={item?.id}
+                    label={item?.label}
+                    required={item?.required}
+                    disabled={item?.disabled}
+                    options={apiDataMap[item?.id]}
+                    validation={item?.validation}
+                    errors={errors}
+                    multiple={item?.multiple}
+                    resetClicked={resetClicked}
+                    classes="w-full"
+                    isEdit={isEdit}
+                  />
+                ) : item?.type === 'autocomplete' && item?.all === true ? (
+                  <div key={item?.id}>
+                    <AutocompleteFieldAll
+                      control={control}
+                      name={item?.id}
+                      label={item?.label}
+                      required={item?.required}
+                      roleChanged={roleChanged}
+                      disabled={item?.disabled}
+                      options={apiDataMap[item?.id]}
+                      resetClicked={resetClicked}
+                      validation={item?.validation}
+                      errors={errors}
+                      apiDataMap={apiDataMap}
+                      classes="w-full"
+                      isEdit={isEdit}
+                    />
+                    {item?.subFields !== undefined &&
+                    item?.subFields['neft'] &&
+                    roleValue !== 'partner' &&
+                    paymentsType &&
+                    paymentsType?.some((item) => item?.value === 'neft' || item?.value === 'all') ? (
+                      <div key={item?.subFields['neft'][0]?.id}>
+                        <SelectField
+                          key={item?.subFields['neft'][0]?.id}
+                          control={control}
+                          name={item?.subFields['neft'][0]?.id}
+                          label={item?.subFields['neft'][0]?.label}
+                          required={item?.subFields['neft'][0]?.required}
+                          disabled={item?.subFields['neft'][0]?.disabled}
+                          menuItem={item?.subFields['neft'][0]?.menuItem || apiDataMap['neftDefaultBank']}
+                          placeholder="Select"
+                          errors={errors}
+                          setValue={setValue}
+                          classes="w-full"
+                        />
+                        <InputField
+                          id={item?.subFields['accountNumber'][0]?.id}
+                          required={item?.subFields['accountNumber'][0]?.required}
+                          label={item?.subFields['accountNumber'][0]?.label}
+                          validation={item?.subFields['accountNumber'][0]?.validation}
+                          control={control}
+                          errors={errors}
+                          disabled={item?.subFields['accountNumber'][0]?.disabled}
+                          classes="w-full"
+                        />
+                      </div>
+                    ) : (
+                      <div></div>
+                    )}
+                    {item?.subFields &&
+                      paymentsType &&
+                      paymentsType?.some((item) => item?.value === 'cheque' || item?.value === 'all') && (
+                        <div>
+                          <SelectField
+                            key={item?.subFields['cheque'][0]?.id}
+                            control={control}
+                            name={item?.subFields['cheque'][0]?.id}
+                            label={item?.subFields['cheque'][0]?.label}
+                            required={item?.subFields['cheque'][0]?.required}
+                            disabled={item?.subFields['cheque'][0]?.disabled}
+                            menuItem={item?.subFields['cheque'][0]?.menuItem}
+                            placeholder="Select"
+                            errors={errors}
+                            classes="w-full"
+                            setValue={setValue}
+                          />
+                        </div>
+                      )}
+                  </div>
+                ) : item?.type === 'autocomplete' ? (
+                  <AutocompleteMultipleField
+                    key={item?.id}
+                    control={control}
+                    name={item?.id}
+                    label={item?.label}
+                    required={item?.required}
+                    roleChanged={roleChanged}
+                    disabled={item?.disabled}
+                    options={apiDataMap[item?.id]}
+                    validation={item?.validation}
+                    errors={errors}
+                    multiple={false}
+                    resetClicked={resetClicked}
+                    classes="w-full"
+                    isEdit={isEdit}
+                  />
+                ) : (
+                  <SelectField
+                    key={item?.id}
+                    control={control}
+                    name={item?.id}
+                    label={item?.label}
+                    required={item?.required}
+                    disabled={item?.disabled}
+                    menuItem={item?.menuItem || apiDataMap[item?.id]}
+                    placeholder={item?.label}
+                    errors={errors}
+                    setValue={setValue}
+                    classes="w-full"
+                  />
+                )
+              )}
+            </div>
+          </div>
+          <div className={styles.btnContainer}>
+            <CustomButton color="error" onClick={handleReset}>
+              Reset
+            </CustomButton>
+            <div className="ml-2">
+              <CustomButton type="submit">Submit</CustomButton>
+            </div>
+          </div>
+        </form>
+      )}
+    </>
   );
 }
 

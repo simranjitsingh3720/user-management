@@ -63,6 +63,16 @@ const AutocompleteField = ({
     setSelectedValues(newValue);
   };
 
+  const isEmptyObject = (obj) => {
+    return Object.keys(obj).length === 0 && obj.constructor === Object;
+  };
+
+  useEffect(()=> {
+    if(!options || options?.length === 0 || (options && isEmptyObject(options[0]))){
+      setSelectedValues(name === ROLE_SELECT ? null : []);
+    }
+  }, [options, name])
+
   return (
     <div className={styles.fieldContainerStyle}>
       <div className={styles.labelText}>

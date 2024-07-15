@@ -53,15 +53,15 @@ const useGetPartnerNeft = () => {
         const partnerNeftData = response.data.data.map((item) => {
           const { partnerNeft, product, lob, producer } = item;
           return {
-            id: partnerNeft.id,
-            label: partnerNeft.label,
-            lobId: lob[0].lob,
-            product: product[0].product,
-            producerName: producer[0].firstName + ' ' + producer[0].lastName,
-            producerCode: producer[0].producerCode,
-            verificationMethod: VERFICATION_ENUM[partnerNeft.verificationMethod],
-            createdAt: partnerNeft.createdAt,
-            updatedAt: partnerNeft.updatedAt,
+            id: partnerNeft?.id,
+            label: partnerNeft?.label,
+            lobId: lob[0]?.lob,
+            product: product[0]?.product,
+            producerName: producer[0]?.firstName + ' ' + producer[0]?.lastName,
+            producerCode: producer[0]?.producerCode,
+            verificationMethod: VERFICATION_ENUM[partnerNeft?.verificationMethod],
+            createdAt: partnerNeft?.createdAt,
+            updatedAt: partnerNeft?.updatedAt,
           };
         });
         setData(partnerNeftData);
