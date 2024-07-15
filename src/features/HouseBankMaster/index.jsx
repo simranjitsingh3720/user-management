@@ -15,8 +15,6 @@ import usePermissions from "../../hooks/usePermission";
 function getSelectedRowData(count) {
   
   let selectedRowData = [];
-
-  
   for (let i = 0; i < selectRowsData.length; i++) {
     if (selectRowsData[i] <= count) {
       selectedRowData.push(selectRowsData[i]);

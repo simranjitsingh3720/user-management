@@ -6,7 +6,8 @@ export const selectRowsData = [5, 10, 15, 20];
 export const PAGECOUNT = 10;
 
 export const REGEX = {
-  alphaNumericRegex: /^[a-zA-Z0-9\s]*$/,
+  alphaNumericRegex: /^[a-zA-Z0-9\s]*$/, 
+  bankCodeRegex:  /^[A-Za-z]{4}0[A-Za-z0-9]{6}$/,
   numericRegex: /^[0-9]+$/,
   letterRegex: /^[A-Za-z]+$/,
   emailRegex: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,

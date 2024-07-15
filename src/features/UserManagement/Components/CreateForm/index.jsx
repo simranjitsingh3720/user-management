@@ -23,6 +23,7 @@ import { getChannels } from '../../../../Redux/getChannel';
 import { getHouseBanks } from '../../../../Redux/getHouseBank';
 import useGetUserType from '../hooks/useGetUserType';
 import useGetRoleHierarchy from '../hooks/useRoleHierarchy';
+import Loader from './../../../../components/Loader'
 import {
   AUTOCOMPLETE,
   DATE_FORMAT,
@@ -99,6 +100,22 @@ function CreateUserCreationForm() {
   const [isEdit, setIsEdit] = useState(false);
 
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const url = apiUrls.fetchUserCreationJSON;
+        const response = await axios.get(url);
+        if (response) {
+          setJsonData(response?.data?.roles);
+          setRoleConfig(response?.data?.roles[0]);
+        }
+      } catch (error) {
+        console.error('Error fetching mock data:', error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
     dispatch(getRoles());
     dispatch(getLoginType());
     dispatch(getLobs());
@@ -133,22 +150,6 @@ function CreateUserCreationForm() {
     }
     setApiDataMap(updatedApiDataMap);
   }, [lobs, products, locations, paymentType, producerCode, parentCode, loginType, channelType, neftDefaultBank]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const url = apiUrls.fetchUserCreationJSON;
-        const response = await axios.get(url);
-        if (response) {
-          setJsonData(response?.data?.roles);
-          setRoleConfig(response?.data?.roles[0]);
-        }
-      } catch (error) {
-        console.error('Error fetching mock data:', error);
-      }
-    };
-    fetchData();
-  }, []);
 
   useEffect(() => {
     if (jsonData) {
@@ -316,7 +317,6 @@ function CreateUserCreationForm() {
       groupIds,
       parentId: parentCode,
       childIds,
-      password: '123456',
       userType: userTypeStr || '',
       userTypeId: userTypeId || '',
       loginTypeIds,
@@ -447,8 +447,7 @@ function CreateUserCreationForm() {
 
   return (
     <>
-      {loading && <FullPageLoader></FullPageLoader>}
-      {!loading && (
+      {loading && <Loader></Loader>}
         <form onSubmit={handleSubmit(onSubmit)} className={styles.formMainContainer}>
           <div className={styles.createNewUserContainer}>
             <div className="p-4 pb-0">
@@ -646,7 +645,6 @@ function CreateUserCreationForm() {
             </div>
           </div>
         </form>
-      )}
     </>
   );
 }
