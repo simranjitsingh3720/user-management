@@ -268,7 +268,9 @@ function CreateGroupForm() {
                   options={userData || []}
                   disableCloseOnSelect
                   getOptionLabel={(option) => {
-                    return `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`;
+                    return option?.lastName
+                      ? `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`
+                      : option?.firstName?.toUpperCase();
                   }}
                   limitTags={5}
                   className={styles.customizePrivilegeSelect}
@@ -340,7 +342,7 @@ function CreateGroupForm() {
                     setQuery(e.target.value);
                   }}
                 />
-                <div className="flex content-start w-full items-center px-3 pb-3">
+                <div className="flex content-start w-full items-center pl-7 pb-3">
                   <FormControlLabel
                     control={
                       <Checkbox

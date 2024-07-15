@@ -40,7 +40,7 @@ export const createProductData = createAsyncThunk(
     try {
       const response = await axiosInstance.post(apiUrls.getProduct, data);
       toast.success(response?.data?.message || 'Product created successfully');
-      navigate("/product");
+      navigate('/product');
       return response.data;
     } catch (error) {
       toast.error(error?.response?.data?.error?.message || COMMON_ERROR);

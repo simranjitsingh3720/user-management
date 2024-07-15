@@ -1,4 +1,4 @@
-import { COMMON_WORDS } from "./constants";
+import { COMMON_WORDS } from './constants';
 
 export const buildParams = ({
   isAll,
@@ -10,6 +10,8 @@ export const buildParams = ({
   childFieldsToFetch,
   ids,
   edge,
+  searchKey,
+  searchString,
 }) => {
   let params = {};
 
@@ -30,7 +32,7 @@ export const buildParams = ({
   }
 
   if (childFieldsToFetch) {
-    const childFields = childFieldsToFetch.split(",");
+    const childFields = childFieldsToFetch.split(',');
 
     params.childFieldsToFetch = childFieldsToFetch;
     if (childFields.includes(COMMON_WORDS.LOB)) {
@@ -48,6 +50,10 @@ export const buildParams = ({
     params.ids = lobId;
     params.edge = COMMON_WORDS.HAS_LOB;
     params.isExclusive = true;
+  }
+  if (searchKey) {
+    params.searchKey = searchKey;
+    params.searchString = searchString;
   }
 
   return params;
