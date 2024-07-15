@@ -116,7 +116,7 @@ function LevelMappingForm() {
               <CustomFormHeader
                 id={params.id}
                 headerText={FORM_HEADER_TEXT.PRODUCT_LOCATION}
-                navigateRoute={`/uwlevelmappingemployee/${employeeId}`}
+                navigateRoute={`/uwlevelmappingemployee`}
                 handleReset={handleReset}
               />
             </Grid>
