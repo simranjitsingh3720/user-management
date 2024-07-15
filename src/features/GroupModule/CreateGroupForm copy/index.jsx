@@ -268,7 +268,9 @@ function CreateGroupForm() {
                   options={userData || []}
                   disableCloseOnSelect
                   getOptionLabel={(option) => {
-                    return `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`;
+                    return option?.lastName
+                      ? `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`
+                      : option?.firstName?.toUpperCase();
                   }}
                   limitTags={5}
                   className={styles.customizePrivilegeSelect}
@@ -340,7 +342,7 @@ function CreateGroupForm() {
                     setQuery(e.target.value);
                   }}
                 />
-                <div className="flex content-start w-full items-center px-3 pb-3">
+                <div className="flex content-start w-full items-center pl-7 pb-3">
                   <Checkbox
                     checked={selectAll}
                     onChange={handleSelectAll}
@@ -360,9 +362,9 @@ function CreateGroupForm() {
                           onChange={() => handleChange(item)}
                           inputProps={{ 'aria-label': 'controlled' }}
                         />
-                        {item.permissionName.length > 25 ? (
+                        {item.permissionName.length > 20 ? (
                           <Tooltip title={item.permissionName}>
-                            <span className={styles.checkBoxlabel}>{`${item.permissionName.substring(0, 25)}...`}</span>
+                            <span className={styles.checkBoxlabel}>{`${item.permissionName.substring(0, 20)}...`}</span>
                           </Tooltip>
                         ) : (
                           <span className={styles.checkBoxlabel}>{item.permissionName || ''}</span>

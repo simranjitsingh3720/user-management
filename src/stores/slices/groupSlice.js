@@ -8,9 +8,24 @@ import { addAsyncReducers } from './../../utils/addAsyncReducers';
 
 export const getGroup = createAsyncThunk(
   'group/getGroup',
-  async ({ isAll, page, pageSize, order, orderBy, lobId, childFieldsToFetch, ids, edge } = {}, { rejectWithValue }) => {
+  async (
+    { isAll, page, pageSize, order, orderBy, lobId, childFieldsToFetch, ids, edge, searchKey, searchString } = {},
+    { rejectWithValue }
+  ) => {
     try {
-      const params = buildParams({ isAll, page, pageSize, order, orderBy, lobId, childFieldsToFetch, ids, edge });
+      const params = buildParams({
+        isAll,
+        page,
+        pageSize,
+        order,
+        orderBy,
+        lobId,
+        childFieldsToFetch,
+        ids,
+        edge,
+        searchKey,
+        searchString,
+      });
       const response = await axiosInstance.get(apiUrls.getGroup, { params });
       return response.data;
     } catch (error) {
@@ -20,47 +35,38 @@ export const getGroup = createAsyncThunk(
   }
 );
 
-export const getGroupById = createAsyncThunk(
-  'group/getGroupById',
-  async ({ id } = {}, { rejectWithValue }) => {
-    try {
-      const response = await axiosInstance.get(apiUrls.getGroup + `/${id}`);
-      return response.data;
-    } catch (error) {
-      toast.error(error?.response?.data?.error?.message || COMMON_ERROR);
-      return rejectWithValue([]);
-    }
+export const getGroupById = createAsyncThunk('group/getGroupById', async ({ id } = {}, { rejectWithValue }) => {
+  try {
+    const response = await axiosInstance.get(apiUrls.getGroup + `/${id}`);
+    return response.data;
+  } catch (error) {
+    toast.error(error?.response?.data?.error?.message || COMMON_ERROR);
+    return rejectWithValue([]);
   }
-);
+});
 
-export const updateGroup = createAsyncThunk(
-  'group/updateGroup',
-  async ({ data }, { rejectWithValue }) => {
-    try {
-      const response = await axiosInstance.put(apiUrls.getGroup, data);
-      toast.success(response?.data?.message || 'Group updated successfully');
-      return response.data;
-    } catch (error) {
-      toast.error(error?.response?.data?.error?.message || COMMON_ERROR);
-      return rejectWithValue(error?.response?.data || {});
-    }
+export const updateGroup = createAsyncThunk('group/updateGroup', async ({ data }, { rejectWithValue }) => {
+  try {
+    const response = await axiosInstance.put(apiUrls.getGroup, data);
+    toast.success(response?.data?.message || 'Group updated successfully');
+    return response.data;
+  } catch (error) {
+    toast.error(error?.response?.data?.error?.message || COMMON_ERROR);
+    return rejectWithValue(error?.response?.data || {});
   }
-);
+});
 
-export const createGroup = createAsyncThunk(
-  'group/createGroup',
-  async ({ data, navigate }, { rejectWithValue }) => {
-    try {
-      const response = await axiosInstance.post(apiUrls.getGroup, data);
-      toast.success(response?.data?.message || 'Group created successfully');
-      navigate("/group");
-      return response.data;
-    } catch (error) {
-      toast.error(error?.response?.data?.error?.message || COMMON_ERROR);
-      return rejectWithValue(error?.response?.data || {});
-    }
+export const createGroup = createAsyncThunk('group/createGroup', async ({ data, navigate }, { rejectWithValue }) => {
+  try {
+    const response = await axiosInstance.post(apiUrls.getGroup, data);
+    toast.success(response?.data?.message || 'Group created successfully');
+    navigate('/group');
+    return response.data;
+  } catch (error) {
+    toast.error(error?.response?.data?.error?.message || COMMON_ERROR);
+    return rejectWithValue(error?.response?.data || {});
   }
-);
+});
 
 const initialState = {
   group: [],
