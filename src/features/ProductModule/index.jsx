@@ -54,13 +54,13 @@ function Product() {
       products?.data?.map((item) => {
         const { lob, product } = item;
         return {
-          id: product.id,
-          product: product.product,
-          product_value: product.product_value,
+          id: product?.id,
+          product: product?.product,
+          product_value: product?.product_value,
           lob_name: lob[0]?.lob,
-          product_code: product.product_code,
-          createdAt: product.createdAt,
-          updatedAt: product.updatedAt,
+          product_code: product?.product_code,
+          createdAt: product?.createdAt,
+          updatedAt: product?.updatedAt,
           checked: product?.status,
           status: product?.status,
         };
