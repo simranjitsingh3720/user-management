@@ -57,7 +57,7 @@ export function employeeTableHeaders(handleEditClick) {
       value: 'Employee Id',
     },
     {
-      id: 'name',
+      id: 'userName',
       value: 'Name',
     },
     {

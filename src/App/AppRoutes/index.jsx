@@ -12,7 +12,7 @@ import CreateUserManagementForm from '../../features/UserManagement/Components/C
 import PermissionModule from '../../features/PermissionModule';
 import RoleModule from '../../features/RoleModule';
 import GroupModule from '../../features/GroupModule';
-import CreateGroupForm from '../../features/GroupModule/CreateGroupForm copy';
+import CreateGroupForm from '../../features/GroupModule/CreateGroupForm';
 import CreateRoleForm from '../../features/RoleModule/CreateRoleForm';
 import Form from '../../features/PermissionModule/Form';
 import Lob from '../../features/Lob';
