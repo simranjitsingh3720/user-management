@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Controller } from 'react-hook-form';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
@@ -17,6 +17,13 @@ const SelectField = ({
   classes,
   setValue
 }) => {
+  
+  useEffect(() => {
+    if (menuItem.length > 0) {
+      setValue(name, menuItem[0]?.value);
+    }
+  }, [menuItem, name, setValue]);
+
   return (
     <div className={styles.fieldContainerStyle}>
       <div className={styles.labelText}>
@@ -25,16 +32,13 @@ const SelectField = ({
       <Controller
         name={name}
         control={control}
+        defaultValue={menuItem[0]?.value || ''}
         render={({ field }) => {
           let value = field.value;
-          if (value === '' || value === undefined) {
-            if (name === GC_STATUS) {
-              value = NO;
-            } else if (menuItem.length > 0) {
-              value = menuItem[0].value;
-            }
+          if (name === GC_STATUS) {
+            value = NO;
           }
-
+          
           return (
             <Select
               {...field}
@@ -47,9 +51,13 @@ const SelectField = ({
                 setValue(name, e.target.value);
                 field.onChange(e);
               }}
+              displayEmpty
               className={`${styles.customizeSelect} ${classes}`}
               size="small"
             >
+              <MenuItem value="" disabled>
+                {"Select"}
+              </MenuItem>
               {menuItem.length > 0
                 ? menuItem.map((item) => (
                   <MenuItem key={item.value} value={item.value} className={styles.styledMenuText}>
