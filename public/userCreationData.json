@@ -777,6 +777,16 @@
                 }
             },
             {
+                "id": "location",
+                "label": "Location",
+                "type": "autocomplete",
+                "required": true,
+                "all": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
                 "id": "lob",
                 "label": "LOB",
                 "type": "autocomplete",
@@ -1127,6 +1137,16 @@
                 }
             },
             {
+                "id": "location",
+                "label": "Location",
+                "type": "autocomplete",
+                "required": true,
+                "all": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
                 "id": "lob",
                 "label": "LOB",
                 "type": "autocomplete",
@@ -1472,6 +1492,16 @@
                 "label": "Type Of Producer",
                 "type": "dropdown",
                 "required": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
+                "id": "location",
+                "label": "Location",
+                "type": "autocomplete",
+                "required": true,
+                "all": true,
                 "validation": {
                     "required": "This field is required"
                 }
