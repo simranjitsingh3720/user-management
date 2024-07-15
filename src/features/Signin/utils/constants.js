@@ -11,10 +11,6 @@ export const emailValidation =  {
 
 export const passwordValidation =  {
     required: REQUIRED_MSG,
-    pattern: {
-      value: REGEX.passwordRegex,
-      message: "Please enter a valid password",
-    },
 };
 
 export const DASHBOARD = "/dashboard";
