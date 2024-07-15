@@ -316,7 +316,6 @@ function CreateUserCreationForm() {
       groupIds,
       parentId: parentCode,
       childIds,
-      password: '123456',
       userType: userTypeStr || '',
       userTypeId: userTypeId || '',
       loginTypeIds,

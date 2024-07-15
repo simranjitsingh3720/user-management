@@ -35,7 +35,8 @@ function ResponsiveDrawer({ showSidebarAndHeader, children }) {
   const [selectedParentIndex, setSelectedParentIndex] = useState(null);
 
   const scopes = JSON.parse(localStorage.getItem(COMMON_WORDS.SCOPES))?.read || [];
-  const sideNavData = (scopes && scopes.length > 0 && scopes.filter(item => item.moduleType === MODULE_TYPE)) || [];
+  let sideNavData = (scopes && scopes.length > 0 && scopes.filter(item => item.moduleType === MODULE_TYPE)) || [];
+  sideNavData = sideNavData.sort((a, b) => (parseInt(a.displayOrder) || 0) - (parseInt(b.displayOrder) || 0));
 
   const handleDrawerToggle = () => {
     if (!isClosing) {
