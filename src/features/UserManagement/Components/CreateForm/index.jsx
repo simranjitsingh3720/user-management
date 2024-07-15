@@ -23,6 +23,7 @@ import { getChannels } from '../../../../Redux/getChannel';
 import { getHouseBanks } from '../../../../Redux/getHouseBank';
 import useGetUserType from '../hooks/useGetUserType';
 import useGetRoleHierarchy from '../hooks/useRoleHierarchy';
+import Loader from './../../../../components/Loader'
 import {
   AUTOCOMPLETE,
   DATE_FORMAT,
@@ -446,8 +447,7 @@ function CreateUserCreationForm() {
 
   return (
     <>
-      {loading && <FullPageLoader></FullPageLoader>}
-      {!loading && (
+      {loading && <Loader></Loader>}
         <form onSubmit={handleSubmit(onSubmit)} className={styles.formMainContainer}>
           <div className={styles.createNewUserContainer}>
             <div className="p-4 pb-0">
@@ -645,7 +645,6 @@ function CreateUserCreationForm() {
             </div>
           </div>
         </form>
-      )}
     </>
   );
 }
