@@ -45,7 +45,6 @@ function SetOTPException({ fetchData }) {
   const { postData, loading } = useCreateOTPException({ fetchData });
 
   const onSubmit = (data) => {
-    console.log('data', data);
     if (OTPValue === 'byChannnel') {
       const payload = {
         channelId: data?.channel?.id,
