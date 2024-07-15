@@ -150,8 +150,8 @@
                 "required": false,
                 "validation": {
                     "pattern": {
-                        "value": "^[a-zA-Z0-9]+$",
-                        "message": "It should contain digits and letters only"
+                        "value": "^(?! )(?=.*[^ ]$)[a-zA-Z0-9 ]+$",
+                        "message": "Please enter a valid vertical name"
                     }
                 }
             },
@@ -162,8 +162,8 @@
                 "required": false,
                 "validation": {
                     "pattern": {
-                        "value": "^[a-zA-Z0-9]+$",
-                        "message": "It should contain digits and letters only"
+                        "value": "^(?! )(?=.*[^ ]$)[a-zA-Z0-9 ]+$",
+                        "message": "Please enter a valid sub vertical name"
                     }
                 }
             },
@@ -366,8 +366,8 @@
                 "required": false,
                 "validation": {
                     "pattern": {
-                        "value": "^[a-zA-Z0-9]+$",
-                        "message": "It should contain digits and letters only"
+                        "value": "^(?! )(?=.*[^ ]$)[a-zA-Z0-9 ]+$",
+                        "message": "Please enter a valid vertical name"
                     }
                 }
             },
@@ -378,8 +378,8 @@
                 "required": false,
                 "validation": {
                     "pattern": {
-                        "value": "^[a-zA-Z0-9]+$",
-                        "message": "It should contain digits and letters only"
+                        "value": "^(?! )(?=.*[^ ]$)[a-zA-Z0-9 ]+$",
+                        "message": "Please enter a valid sub vertical name"
                     }
                 }
             },
@@ -582,8 +582,8 @@
                 "required": false,
                 "validation": {
                     "pattern": {
-                        "value": "^[a-zA-Z0-9]+$",
-                        "message": "It should contain digits and letters only"
+                        "value": "^(?! )(?=.*[^ ]$)[a-zA-Z0-9 ]+$",
+                        "message": "Please enter a valid vertical name"
                     }
                 }
             },
@@ -594,8 +594,8 @@
                 "required": false,
                 "validation": {
                     "pattern": {
-                        "value": "^[a-zA-Z0-9]+$",
-                        "message": "It should contain digits and letters only"
+                        "value": "^(?! )(?=.*[^ ]$)[a-zA-Z0-9 ]+$",
+                        "message": "Please enter a valid sub vertical name"
                     }
                 }
             },
@@ -815,8 +815,8 @@
                 "validation": {
                     "required": "This field is required",
                     "pattern": {
-                        "value": "^[a-zA-Z0-9]+$",
-                        "message": "It should contain digits and letters only"
+                        "value": "^(?! )(?=.*[^ ]$)[a-zA-Z0-9 ]+$",
+                        "message": "Please enter a valid vertical name"
                     }
                 }
             },
@@ -827,8 +827,8 @@
                 "required": false,
                 "validation": {
                     "pattern": {
-                        "value": "^[a-zA-Z0-9]+$",
-                        "message": "It should contain digits and letters only"
+                        "value": "^(?! )(?=.*[^ ]$)[a-zA-Z0-9 ]+$",
+                        "message": "Please enter a valid sub vertical name"
                     }
                 }
             },
@@ -1165,8 +1165,8 @@
                 "validation": {
                     "required": "This field is required",
                     "pattern": {
-                        "value": "^[a-zA-Z0-9]+$",
-                        "message": "It should contain digits and letters only"
+                        "value": "^(?! )(?=.*[^ ]$)[a-zA-Z0-9 ]+$",
+                        "message": "Please enter a valid vertical name"
                     }
                 }
             },
@@ -1177,8 +1177,8 @@
                 "required": false,
                 "validation": {
                     "pattern": {
-                        "value": "^[a-zA-Z0-9]+$",
-                        "message": "It should contain digits and letters only"
+                        "value": "^(?! )(?=.*[^ ]$)[a-zA-Z0-9 ]+$",
+                        "message": "Please enter a valid sub vertical name"
                     }
                 }
             },
@@ -1515,8 +1515,8 @@
                 "validation": {
                     "required": "This field is required",
                     "pattern": {
-                        "value": "^[a-zA-Z0-9]+$",
-                        "message": "It should contain digits and letters only"
+                        "value": "^(?! )(?=.*[^ ]$)[a-zA-Z0-9 ]+$",
+                        "message": "Please enter a valid vertical name"
                     }
                 }
             },
@@ -1527,8 +1527,8 @@
                 "required": false,
                 "validation": {
                     "pattern": {
-                        "value": "^[a-zA-Z0-9]+$",
-                        "message": "It should contain digits and letters only"
+                        "value": "^(?! )(?=.*[^ ]$)[a-zA-Z0-9 ]+$",
+                        "message": "Please enter a valid sub vertical name"
                     }
                 }
             },
@@ -2193,8 +2193,8 @@
                 "required": false,
                 "validation": {
                     "pattern": {
-                        "value": "^[a-zA-Z0-9]+$",
-                        "message": "It should contain digits and letters only"
+                        "value": "^(?! )(?=.*[^ ]$)[a-zA-Z0-9 ]+$",
+                        "message": "Please enter a valid vertical name"
                     }
                 }
             },
@@ -2205,8 +2205,8 @@
                 "required": false,
                 "validation": {
                     "pattern": {
-                        "value": "^[a-zA-Z0-9]+$",
-                        "message": "It should contain digits and letters only"
+                        "value": "^(?! )(?=.*[^ ]$)[a-zA-Z0-9 ]+$",
+                        "message": "Please enter a valid sub vertical name"
                     }
                 }
             },
@@ -2379,8 +2379,8 @@
                 "required": false,
                 "validation": {
                     "pattern": {
-                        "value": "^[a-zA-Z0-9]+$",
-                        "message": "It should contain digits and letters only"
+                        "value": "^(?! )(?=.*[^ ]$)[a-zA-Z0-9 ]+$",
+                        "message": "Please enter a valid vertical name"
                     }
                 }
             },
@@ -2391,8 +2391,8 @@
                 "required": false,
                 "validation": {
                     "pattern": {
-                        "value": "^[a-zA-Z0-9]+$",
-                        "message": "It should contain digits and letters only"
+                        "value": "^(?! )(?=.*[^ ]$)[a-zA-Z0-9 ]+$",
+                        "message": "Please enter a valid sub vertical name"
                     }
                 }
             },
@@ -2565,8 +2565,8 @@
                 "required": false,
                 "validation": {
                     "pattern": {
-                        "value": "^[a-zA-Z0-9]+$",
-                        "message": "It should contain digits and letters only"
+                        "value": "^(?! )(?=.*[^ ]$)[a-zA-Z0-9 ]+$",
+                        "message": "Please enter a valid vertical name"
                     }
                 }
             },
@@ -2577,8 +2577,8 @@
                 "required": false,
                 "validation": {
                     "pattern": {
-                        "value": "^[a-zA-Z0-9]+$",
-                        "message": "It should contain digits and letters only"
+                        "value": "^(?! )(?=.*[^ ]$)[a-zA-Z0-9 ]+$",
+                        "message": "Please enter a valid sub vertical name"
                     }
                 }
             },
@@ -2751,8 +2751,8 @@
                 "required": false,
                 "validation": {
                     "pattern": {
-                        "value": "^[a-zA-Z0-9]+$",
-                        "message": "It should contain digits and letters only"
+                        "value": "^(?! )(?=.*[^ ]$)[a-zA-Z0-9 ]+$",
+                        "message": "Please enter a valid vertical name"
                     }
                 }
             },
@@ -2763,8 +2763,8 @@
                 "required": false,
                 "validation": {
                     "pattern": {
-                        "value": "^[a-zA-Z0-9]+$",
-                        "message": "It should contain digits and letters only"
+                        "value": "^(?! )(?=.*[^ ]$)[a-zA-Z0-9 ]+$",
+                        "message": "Please enter a valid sub vertical name"
                     }
                 }
             },
@@ -2937,8 +2937,8 @@
                 "required": false,
                 "validation": {
                     "pattern": {
-                        "value": "^[a-zA-Z0-9]+$",
-                        "message": "It should contain digits and letters only"
+                        "value": "^(?! )(?=.*[^ ]$)[a-zA-Z0-9 ]+$",
+                        "message": "Please enter a valid vertical name"
                     }
                 }
             },
@@ -2949,8 +2949,8 @@
                 "required": false,
                 "validation": {
                     "pattern": {
-                        "value": "^[a-zA-Z0-9]+$",
-                        "message": "It should contain digits and letters only"
+                        "value": "^(?! )(?=.*[^ ]$)[a-zA-Z0-9 ]+$",
+                        "message": "Please enter a valid sub vertical name"
                     }
                 }
             },
@@ -3998,8 +3998,8 @@
                 "required": false,
                 "validation": {
                     "pattern": {
-                        "value": "^[a-zA-Z0-9]+$",
-                        "message": "It should contain digits and letters only"
+                        "value": "^(?! )(?=.*[^ ]$)[a-zA-Z0-9 ]+$",
+                        "message": "Please enter a valid vertical name"
                     }
                 }
             },
@@ -4010,8 +4010,8 @@
                 "required": false,
                 "validation": {
                     "pattern": {
-                        "value": "^[a-zA-Z0-9]+$",
-                        "message": "It should contain digits and letters only"
+                        "value": "^(?! )(?=.*[^ ]$)[a-zA-Z0-9 ]+$",
+                        "message": "Please enter a valid sub vertical name"
                     }
                 }
             },

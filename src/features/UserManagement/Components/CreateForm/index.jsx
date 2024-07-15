@@ -99,6 +99,22 @@ function CreateUserCreationForm() {
   const [isEdit, setIsEdit] = useState(false);
 
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const url = apiUrls.fetchUserCreationJSON;
+        const response = await axios.get(url);
+        if (response) {
+          setJsonData(response?.data?.roles);
+          setRoleConfig(response?.data?.roles[0]);
+        }
+      } catch (error) {
+        console.error('Error fetching mock data:', error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
     dispatch(getRoles());
     dispatch(getLoginType());
     dispatch(getLobs());
@@ -133,22 +149,6 @@ function CreateUserCreationForm() {
     }
     setApiDataMap(updatedApiDataMap);
   }, [lobs, products, locations, paymentType, producerCode, parentCode, loginType, channelType, neftDefaultBank]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const url = apiUrls.fetchUserCreationJSON;
-        const response = await axios.get(url);
-        if (response) {
-          setJsonData(response?.data?.roles);
-          setRoleConfig(response?.data?.roles[0]);
-        }
-      } catch (error) {
-        console.error('Error fetching mock data:', error);
-      }
-    };
-    fetchData();
-  }, []);
 
   useEffect(() => {
     if (jsonData) {
@@ -316,7 +316,6 @@ function CreateUserCreationForm() {
       groupIds,
       parentId: parentCode,
       childIds,
-      password: '123456',
       userType: userTypeStr || '',
       userTypeId: userTypeId || '',
       loginTypeIds,

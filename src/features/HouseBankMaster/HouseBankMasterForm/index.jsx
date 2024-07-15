@@ -3,7 +3,6 @@ import React, { useEffect } from 'react';
 import styles from './styles.module.scss';
 import { Controller, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
-
 import useUpdatePaymentConfig from '../hooks/useUpdateHouseBank';
 import useCreateHouseBank from '../hooks/useCreateHouseBank';
 import useGetHouseBankByID from '../hooks/useGetHouseBankById';
@@ -118,7 +117,7 @@ function HouseBankMasterForm() {
                 rules={{
                   required: 'Bank Code is required',
                   pattern: {
-                    value: REGEX.alphaNumericRegex,
+                    value: REGEX.bankCodeRegex,
                     message: 'Invalid Bank Code format',
                   },
                 }}
@@ -178,6 +177,14 @@ function HouseBankMasterForm() {
                   pattern: {
                     value: REGEX.numericRegex,
                     message: 'Only numeric values are allowed',
+                  },
+                  minLength: {
+                    value: 9,
+                    message: 'Account Number must be at least 9 digits long',
+                  },
+                  maxLength: {
+                    value: 18,
+                    message: 'Account Number must be at most 18 digits long',
                   },
                 }}
                 render={({ field }) => (
