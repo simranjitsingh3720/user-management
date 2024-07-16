@@ -268,7 +268,9 @@ function CreateGroupForm() {
                   options={userData || []}
                   disableCloseOnSelect
                   getOptionLabel={(option) => {
-                    return `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`;
+                    return option?.lastName
+                      ? `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`
+                      : option?.firstName?.toUpperCase();
                   }}
                   limitTags={5}
                   className={styles.customizePrivilegeSelect}
@@ -340,13 +342,17 @@ function CreateGroupForm() {
                     setQuery(e.target.value);
                   }}
                 />
-                <div className="flex content-start w-full items-center px-3 pb-3">
-                  <Checkbox
-                    checked={selectAll}
-                    onChange={handleSelectAll}
-                    inputProps={{ 'aria-label': 'select all permissions' }}
+                <div className="flex content-start w-full items-center pl-7 pb-3">
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={selectAll}
+                        onChange={handleSelectAll}
+                        inputProps={{ 'aria-label': 'select all permissions' }}
+                      />
+                    }
+                    label="Select All"
                   />
-                  <span>Select All</span>
                 </div>
                 <div className={styles.permissionCheckbox}>
                   {permissionLoading ? (
@@ -354,19 +360,17 @@ function CreateGroupForm() {
                   ) : filteredPermission.length ? (
                     (filteredPermission || []).map((item) => (
                       <div className={styles.checkboxStyle} key={item.id}>
-                        {' '}
-                        <Checkbox
-                          checked={!!item.checked}
-                          onChange={() => handleChange(item)}
-                          inputProps={{ 'aria-label': 'controlled' }}
+                        
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              checked={!!item.checked}
+                              onChange={() => handleChange(item)}
+                              inputProps={{ 'aria-label': 'controlled' }}
+                            />
+                          }
+                          label={item.permissionName || ''}
                         />
-                        {item.permissionName.length > 25 ? (
-                          <Tooltip title={item.permissionName}>
-                            <span className={styles.checkBoxlabel}>{`${item.permissionName.substring(0, 25)}...`}</span>
-                          </Tooltip>
-                        ) : (
-                          <span className={styles.checkBoxlabel}>{item.permissionName || ''}</span>
-                        )}
                       </div>
                     ))
                   ) : (

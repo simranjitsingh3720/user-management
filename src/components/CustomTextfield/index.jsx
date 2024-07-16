@@ -1,7 +1,7 @@
 import React from 'react';
 import { TextField } from '@mui/material';
 import { Controller } from 'react-hook-form';
-import { ACTIVE, PRODUCER_STATUS } from './utils/constants';
+import { ACTIVE, PRODUCER_STATUS, REQUIRED_MSG } from './utils/constants';
 
 const InputField = ({
   id,
@@ -26,6 +26,7 @@ const InputField = ({
         defaultValue={id === PRODUCER_STATUS ? ACTIVE : ''}
         rules={{
           ...validation,
+          required: required ? REQUIRED_MSG : false,
           pattern: {
             value: new RegExp(validation?.pattern?.value),
             message: validation?.pattern?.message,

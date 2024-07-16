@@ -52,17 +52,28 @@ function Product() {
 
     const transformedData =
       products?.data?.map((item) => {
-        const { lob, product } = item;
+        const { lob, product: {
+          id,
+          product,
+          product_value,
+          product_code,
+          createdAt,
+          updatedAt,
+          status
+        } } = item;
+
+        let lobValue = lob && lob[0]?.lob;
+
         return {
-          id: product.id,
-          product: product.product,
-          product_value: product.product_value,
-          lob_name: lob[0]?.lob,
-          product_code: product.product_code,
-          createdAt: product.createdAt,
-          updatedAt: product.updatedAt,
-          checked: product?.status,
-          status: product?.status,
+          id: id,
+          product: product,
+          product_value: product_value,
+          lob_name: lobValue,
+          product_code: product_code,
+          createdAt: createdAt,
+          updatedAt: updatedAt,
+          checked: status,
+          status: status,
         };
       }) || [];
 

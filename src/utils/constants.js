@@ -25,6 +25,7 @@ export const COMMON_WORDS = {
   UNDERWRITER: 'underWriter',
   PERMISSION: 'permission',
   PERMISSIONNAME: 'permissionName',
+  GROUPNAME: 'groupName',
   GROUP: 'group',
   SEARCH: 'search',
   STATUS: 'status',
@@ -32,6 +33,8 @@ export const COMMON_WORDS = {
   READ: 'read',
   CREATE: 'create',
   UPDATE: 'update',
+  CHANNEL: 'channel',
+  HAS_CHANNEL: 'hasChannel',
 };
 
 export const HEADER = {

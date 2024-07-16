@@ -120,8 +120,12 @@ export const SEARCH_OPTIONS = [
     value: "employeeId",
   },
   {
-    label: "Name",
-    value:"firstName",
+    label: "First Name",
+    value: "firstName",
+  },
+  {
+    label: "Last Name",
+    value: "lastName",
   },
   {
     label: "NT Login",
