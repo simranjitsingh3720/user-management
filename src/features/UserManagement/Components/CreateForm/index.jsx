@@ -228,6 +228,7 @@ function CreateUserCreationForm() {
       return resetValues;
     }, {});
     resultObject.roleSelect = '';
+    resultObject['startDate'] = today;
     setResetClicked(!resetClicked);
     reset(resultObject);
     if (isEdit) {
