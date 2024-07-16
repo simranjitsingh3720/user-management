@@ -63,6 +63,7 @@ const PartnerNeftForm = () => {
   };
 
   const handleReset = () => {
+    dispatch(clearProducts())
     if (params.id) {
       resetField('producer');
       resetField('verificationMethod');
