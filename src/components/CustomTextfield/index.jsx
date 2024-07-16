@@ -26,7 +26,7 @@ const InputField = ({
         defaultValue={id === PRODUCER_STATUS ? ACTIVE : ''}
         rules={{
           ...validation,
-          required: required ? REQUIRED_MSG : false,
+          required: required ? `${label} is required` : false,
           pattern: {
             value: new RegExp(validation?.pattern?.value),
             message: validation?.pattern?.message,
