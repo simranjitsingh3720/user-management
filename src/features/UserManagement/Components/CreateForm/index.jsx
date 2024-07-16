@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from './styles.module.scss';
 import { useForm } from 'react-hook-form';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import usePostUser from '../hooks/usePostUser';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
@@ -24,9 +24,11 @@ import { getHouseBanks } from '../../../../Redux/getHouseBank';
 import useGetUserType from '../hooks/useGetUserType';
 import useGetRoleHierarchy from '../hooks/useRoleHierarchy';
 import Loader from './../../../../components/Loader';
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import {
   AUTOCOMPLETE,
   DATE_FORMAT,
+  DATE_FORMAT_2,
   DROPDOWN,
   FORM_LABEL,
   FORM_VALUE,
@@ -46,7 +48,6 @@ import { getLoginType } from '../../../../Redux/getLoginType';
 import CustomFormHeader from '../../../../components/CustomFormHeader';
 import { FORM_HEADER_TEXT } from '../../../../utils/constants';
 import dayjs from 'dayjs';
-import FullPageLoader from '../../../../components/FullPageLoader';
 import { getProducerTypes } from '../../../../Redux/getProducerType';
 
 function CreateUserCreationForm() {
@@ -78,6 +79,7 @@ function CreateUserCreationForm() {
   const [resetClicked, setResetClicked] = useState(false);
   const [jsonData, setJsonData] = useState([]);
   const [roleChanged, setRoleChanged] = useState(false);
+  const today = dayjs().format(DATE_FORMAT);
   const {
     handleSubmit,
     setValue,
@@ -90,6 +92,7 @@ function CreateUserCreationForm() {
       roleSelect: null,
       loginType: [],
       active: 'yes',
+      startDate: today,
     },
   });
 
@@ -321,13 +324,11 @@ function CreateUserCreationForm() {
     const paymentTypeNames = paymentType.map((payment) => payment.name);
     const masterPolicyIds = masterPolicy.map((policy) => policy.id);
     const roleHierarchyId = roleHierarchy && (parentCode || childIds.length) ? roleHierarchy.id : '';
-    const sDate = dayjs(startDate).format(DATE_FORMAT);
-    const eDate = dayjs(endDate).format(DATE_FORMAT);
     const payload = {
       mobileNo: mobileNumber,
       email,
-      startDate: sDate,
-      endDate: eDate,
+      startDate,
+      endDate,
       status: active === FORM_VALUE.YES,
       roleId,
       roleName,
@@ -352,7 +353,7 @@ function CreateUserCreationForm() {
       producerType: typeOfProducer,
       channelId: channelType,
       bankingLimit,
-      sendEmail: PRODUCER_PARTNER_ARR.includes(roleName) ?  sendEmail === FORM_VALUE.YES : '',
+      sendEmail: PRODUCER_PARTNER_ARR.includes(roleName) ? sendEmail === FORM_VALUE.YES : '',
       domain,
       paymentType: paymentTypeNames,
       houseBankId,
@@ -470,7 +471,11 @@ function CreateUserCreationForm() {
       <form onSubmit={handleSubmit(onSubmit)} className={styles.formMainContainer}>
         <div className={styles.createNewUserContainer}>
           <div className="p-4 pb-0">
-            <CustomFormHeader headerText={FORM_HEADER_TEXT.USER} navigateRoute="/user-management" />
+            <CustomFormHeader
+              headerText={FORM_HEADER_TEXT.USER}
+              navigateRoute="/user-management"
+              handleReset={handleReset}
+            />
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 px-8 gap-5 py-5">
             <AutocompleteMultipleField
@@ -481,7 +486,7 @@ function CreateUserCreationForm() {
               required
               disabled={isEdit}
               options={role || []}
-              validation={{ required: REQUIRED_MSG }}
+              validation={{ required: 'Role is required' }}
               errors={errors}
               multiple={false}
               resetClicked={resetClicked}
@@ -497,7 +502,7 @@ function CreateUserCreationForm() {
               required
               disabled={false}
               options={loginType || []}
-              validation={{ required: REQUIRED_MSG }}
+              validation={{ required: 'Login Type is required' }}
               errors={errors}
               multiple={true}
               roleChanged={roleChanged}
@@ -660,12 +665,7 @@ function CreateUserCreationForm() {
               )
             )}
           </div>
-        </div>
-        <div className={styles.btnContainer}>
-          <CustomButton color="error" onClick={handleReset}>
-            Reset
-          </CustomButton>
-          <div className="ml-2">
+          <div className="px-8 pt-3 pb-5">
             <CustomButton type="submit">Submit</CustomButton>
           </div>
         </div>

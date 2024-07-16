@@ -124,7 +124,7 @@ const AutocompleteField = ({
                   },
                 }}
                 error={Boolean(errors[name])}
-                helperText={errors[name] ? REQUIRED_MSG : ''}
+                helperText={errors[name] ? `${label} is required` : ''}
               />
             )}
           />

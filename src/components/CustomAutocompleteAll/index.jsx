@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Controller } from 'react-hook-form';
 import Autocomplete from '@mui/material/Autocomplete';
 import Checkbox from '@mui/material/Checkbox';
@@ -6,7 +6,6 @@ import TextField from '@mui/material/TextField';
 import styles from './styles.module.scss';
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
-import { useEffect } from 'react';
 import { All, PLACEHOLDER, REQUIRED_MSG, ROLE_SELECT } from './constants';
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
@@ -32,11 +31,11 @@ const AutocompleteFieldAll = ({
     setSelectedValues([]);
   }, [resetClicked]);
 
-  useEffect(()=> {
-    if(name !== ROLE_SELECT){
-      setSelectedValues([])
+  useEffect(() => {
+    if (name !== ROLE_SELECT) {
+      setSelectedValues([]);
     }
-  },[roleChanged]);
+  }, [roleChanged]);
 
   const handleAutocompleteChangeAll = (event, newValue) => {
     if (newValue.some(option => option?.value === All)) {
@@ -62,7 +61,7 @@ const AutocompleteFieldAll = ({
       <Controller
         name={name}
         control={control}
-        rules={{ ...validation }}
+        rules={{ required: required ? `${label} is required` : false,}}
         render={({ field }) => (
           <Autocomplete
             {...field}
@@ -74,12 +73,13 @@ const AutocompleteFieldAll = ({
             value={selectedValues || []}
             onChange={(event, newValue) => {
               handleAutocompleteChangeAll(event, newValue);
-              field.onChange(newValue);
-              if (newValue?.length !== 0 && newValue[0]?.value === All) {
-                field.onChange(apiDataMap[name])
+              if (newValue.some(option => option?.value === All)) {
+                field.onChange(apiDataMap[name] || []);
+              } else {
+                field.onChange(newValue.filter(option => option?.value !== All));
               }
             }}
-            renderOption={(props, option, {selected}) => (
+            renderOption={(props, option, { selected }) => (
               <li {...props} key={option?.value}>
                 <Checkbox
                   icon={icon}
@@ -102,7 +102,7 @@ const AutocompleteFieldAll = ({
                   },
                 }}
                 error={Boolean(errors[name])}
-                helperText={Boolean(errors[name]) ? REQUIRED_MSG : ''}
+                helperText={errors[name] ? `${label} is required` : ''}
               />
             )}
           />
