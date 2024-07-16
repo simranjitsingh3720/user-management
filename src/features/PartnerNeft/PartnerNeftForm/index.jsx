@@ -145,6 +145,7 @@ const PartnerNeftForm = () => {
                 error={Boolean(errors.product)}
                 helperText={errors.product?.message}
                 disableClearable={true}
+                disabled={params.id ? true : false}
                 placeholder={COMMON_WORDS.SELECT}
                 renderOption={(props, option) => (
                   <li {...props} key={option.id}>
