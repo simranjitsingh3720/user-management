@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchUser } from '../../../stores/slices/userSlice';
 import InputField from '../../../components/CustomTextfield';
 import { textFieldValidation } from '../utils/constants';
+import moment from 'moment/moment';
 
 function ProducerEODFrom() {
   const { id } = useParams();
@@ -46,6 +47,7 @@ function ProducerEODFrom() {
   const { postData, loading, UpdateDataFun } = useCreateEODBypass();
 
   const onSubmit = (data) => {
+    console.log('data', data);
     if (id) {
       const payload = {
         id: id,
@@ -60,8 +62,8 @@ function ProducerEODFrom() {
     } else {
       const payload = {
         producerId: data.producerCode.id,
-        startDate: data.startDate,
-        endDate: data.endDate,
+        startDate: moment(data?.data?.startDate).format('DD/MM/YYYY'),
+        endDate: moment(data?.data?.endDate).format('DD/MM/YYYY'),
         reason: data.reason,
       };
       postData(payload);
@@ -126,6 +128,7 @@ function ProducerEODFrom() {
                   labelVisible={true}
                   label="Start Date"
                   required
+                  errors={errors}
                   classes="w-full text-red-600"
                   setValue={setValue}
                   watch={watch}
@@ -139,6 +142,7 @@ function ProducerEODFrom() {
                   labelVisible={true}
                   label="End Date"
                   required
+                  errors={errors}
                   classes="w-full text-red-600"
                   setValue={setValue}
                   watch={watch}
