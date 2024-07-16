@@ -15,6 +15,7 @@ export const NAVIGATE_TO_USER_MANAGEMENT = '/user-management';
 export const NAVIGATE_TO_FORM = '/user-management/form'
 export const REQUIRED_MSG = 'This field is required';
 export const PRODUCER_ARR = ['producer', 'subproducer', 'dealer'];
+export const PRODUCER_PARTNER_ARR = ['producer', 'subproducer', 'dealer', 'partner'];
 export const PAYMENT_CALL = ['producer', 'subproducer', 'dealer', 'partner', 'partneremployee', 'externalposp', 'sso'];
 export const PRODUCER_CODE_CALL = ['csm', 'offlineuser', 'commercialuw', 'producer', 'subproducer', 'dealer', 'partner', 'partneremployee', 'externalposp', 'sso'];
 export const BUTTON_TEXT = "Create User";

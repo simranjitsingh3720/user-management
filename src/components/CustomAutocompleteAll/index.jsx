@@ -54,10 +54,6 @@ const AutocompleteFieldAll = ({
     return selectedValues.length === (apiDataMap[name]?.length);
   };
 
-  const isSelected = (option) => {
-    return selectedValues.some(selectedOption => selectedOption?.value === option?.value);
-  };
-
   return (
     <div className={styles.fieldContainerStyle}>
       <div className={styles.labelText}>
@@ -100,6 +96,11 @@ const AutocompleteFieldAll = ({
               <TextField
                 {...params}
                 placeholder={PLACEHOLDER}
+                sx={{
+                  '& .MuiFormHelperText-root': {
+                    margin: 0,
+                  },
+                }}
                 error={Boolean(errors[name])}
                 helperText={Boolean(errors[name]) ? REQUIRED_MSG : ''}
               />
