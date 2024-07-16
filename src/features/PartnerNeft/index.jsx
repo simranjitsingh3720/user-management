@@ -6,7 +6,7 @@ import SearchComponent from '../../components/SearchComponent';
 import CustomTable from '../../components/CustomTable';
 import useGetPartnerNeft from './hooks/useGetPartnerNeft';
 import { Header } from './utils/header';
-import { BUTTON_TEXT } from '../../utils/globalConstants';
+import { BUTTON_TEXT, PAGECOUNT } from '../../utils/globalConstants';
 import { fetchLobData } from '../../stores/slices/lobSlice';
 import { fetchAllProductData } from '../../stores/slices/productSlice';
 import { COMMON_FIELDS, SEARCH_OPTIONS } from './utils/constant';
@@ -14,6 +14,7 @@ import { COMMON_WORDS } from '../../utils/constants';
 import { fetchUser } from '../../stores/slices/userSlice';
 import { getPlaceHolder } from '../../utils/globalizationFunction';
 import { setTableName } from '../../stores/slices/exportSlice';
+import usePermissions from '../../hooks/usePermission';
 
 const PartnerNeft = () => {
   const navigate = useNavigate();
@@ -23,7 +24,7 @@ const PartnerNeft = () => {
   const { user } = useSelector((state) => state.user);
 
   const [page, setPage] = useState(0);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(PAGECOUNT);
   const [order, setOrder] = useState('');
   const [orderBy, setOrderBy] = useState('');
   const [searched, setSearched] = useState(COMMON_WORDS.PRODUCT);
@@ -32,6 +33,9 @@ const PartnerNeft = () => {
   const [userValue, setUserValue] = useState([]);
 
   const { getPartnerNeft, partnerNeftData, partnerNeftLoading, totalCount } = useGetPartnerNeft();
+
+  // Check Permission
+  const { canCreate, canUpdate } = usePermissions();
 
   const loadData = useCallback(() => {
     getPartnerNeft({
@@ -204,6 +208,7 @@ const PartnerNeft = () => {
         handleGo={handleGo}
         showButton
         showExportButton={true}
+        canCreate={canCreate}
       />
       <div className="mt-4">
         <CustomTable
@@ -219,6 +224,7 @@ const PartnerNeft = () => {
           setOrder={setOrder}
           orderBy={orderBy}
           setOrderBy={setOrderBy}
+          canUpdate={canUpdate}
         />
       </div>
     </Box>

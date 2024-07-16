@@ -1,9 +1,9 @@
-import { useState, useCallback, useEffect } from "react";
-import axiosInstance from "../../../utils/axiosInstance";
-import { API_END_POINTS } from "../constants";
-import { toast } from "react-toastify";
-import { COMMON_WORDS } from "../../../utils/constants";
-import { buildQueryString } from "../../../utils/globalizationFunction";
+import { useState, useCallback, useEffect } from 'react';
+import axiosInstance from '../../../utils/axiosInstance';
+import { API_END_POINTS } from '../constants';
+import { toast } from 'react-toastify';
+import { COMMON_WORDS } from '../../../utils/constants';
+import { buildQueryString } from '../../../utils/globalizationFunction';
 
 const useRevalidationList = () => {
   const [data, setData] = useState([]);
@@ -18,23 +18,30 @@ const useRevalidationList = () => {
       isExclusive: true,
       pageNo: page,
       pageSize: pageSize,
+      childFieldsToFetch: COMMON_WORDS.PRODUCER,
+      childFieldsEdge: COMMON_WORDS.HAS_PRODUCER,
     });
     try {
-      const response = await axiosInstance.get(
-        API_END_POINTS.getRevalidationList + queryParams
-      );
+      const response = await axiosInstance.get(API_END_POINTS.getRevalidationList + queryParams);
+
       const transformedData =
-        response?.data?.data.map((item) => ({
-          ...item,
-          checked: item.status,
-        })) || [];
+        response?.data?.data?.map((item) => {
+          const { producer, revalidationList } = item;
+          return {
+            id: revalidationList.id,
+            userName: `${producer[0].firstName} ${producer[0].lastName}`,
+            emailId: revalidationList.emailId,
+            mobileNo: revalidationList.mobileNo,
+            createdAt: revalidationList.createdAt,
+            updatedAt: revalidationList.updatedAt,
+            checked: revalidationList.status,
+            status: revalidationList.status,
+          };
+        }) || [];
       setData(transformedData);
       setTotalCount(response?.data?.totalCount || 0);
     } catch (error) {
-      toast.error(
-        error.response?.data?.error?.message ||
-          "Failed to fetch revalidation list"
-      );
+      toast.error(error.response?.data?.error?.message || 'Failed to fetch revalidation list');
       setData([]);
     } finally {
       setLoading(false);
@@ -57,12 +64,10 @@ const useRevalidationList = () => {
 
     try {
       await axiosInstance.put(API_END_POINTS.updateRevalidationList, payload);
-      toast.success("Data updated successfully");
+      toast.success('Data updated successfully');
       setData(transformedData); // Set the updated data after successful API response
     } catch (error) {
-      toast.error(
-        error.response?.data?.error?.message || "Failed to update data"
-      );
+      toast.error(error.response?.data?.error?.message || 'Failed to update data');
     }
   }, []);
 

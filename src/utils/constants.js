@@ -4,6 +4,7 @@ export const COMMON_WORDS = {
   ROLE_NAME: 'roleName',
   PRODUCT: 'product',
   ASC: 'asc',
+  DESC: 'desc',
   LOB: 'lob',
   CREATED_AT: 'createdAt',
   ENABLE: 'Enable',
@@ -24,9 +25,16 @@ export const COMMON_WORDS = {
   UNDERWRITER: 'underWriter',
   PERMISSION: 'permission',
   PERMISSIONNAME: 'permissionName',
+  GROUPNAME: 'groupName',
   GROUP: 'group',
   SEARCH: 'search',
   STATUS: 'status',
+  SCOPES: 'scopes',
+  READ: 'read',
+  CREATE: 'create',
+  UPDATE: 'update',
+  CHANNEL: 'channel',
+  HAS_CHANNEL: 'hasChannel',
 };
 
 export const HEADER = {

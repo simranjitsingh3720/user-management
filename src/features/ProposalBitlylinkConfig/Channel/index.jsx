@@ -7,9 +7,10 @@ import Table from "./Table";
 import NoDataFound from "../../../components/NoDataCard";
 import { MenuItem, Pagination, Select } from "@mui/material";
 import useGetBitlyLink from "../hooks/useGetBitlyLink";
-import { selectRowsData } from "../../../utils/globalConstants";
+import { PAGECOUNT, selectRowsData } from "../../../utils/globalConstants";
 import { useDispatch } from "react-redux";
 import { setTableName } from "../../../stores/slices/exportSlice";
+import usePermissions from "../../../hooks/usePermission";
 
 function getSelectedRowData(count) {
   
@@ -28,9 +29,11 @@ function getSelectedRowData(count) {
 function Channel() {
   const [query, setQuery] = useState("");
   const [searched, setSearched] = useState("type");
-  const [rowsPage, setRowsPage] = useState(10);
+  const [rowsPage, setRowsPage] = useState(PAGECOUNT);
   const [pageChange, setPageChange] = useState(1);
   const dispatch = useDispatch();
+
+  const { canCreate, canUpdate } = usePermissions()
 
   const handlePaginationChange = (event, page) => {
     setPageChange(page);
@@ -60,6 +63,7 @@ function Channel() {
         setPageChange={setPageChange}
         searched={searched}
         setSearched={setSearched}
+        canCreate={canCreate}
       />
       <div className={styles.tableContainerStyle}>
         <div className={styles.tableStyled}>
@@ -75,6 +79,7 @@ function Channel() {
               fetchData={fetchData}
               sort={sort}
               setSort={setSort}
+              canUpdate={canUpdate}
             />
           ) : (
             <NoDataFound />

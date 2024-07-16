@@ -1,8 +1,9 @@
 import React from 'react';
 import { TableBody, TableRow, TableCell, IconButton, Checkbox, Switch } from '@mui/material';
 import ListLoader from '../../ListLoader';
+import EditIcon from '@mui/icons-material/Edit';
 
-const TableContent = ({ columns, data, loading }) => {
+const TableContent = ({ columns, data, loading, canUpdate }) => {
   if (loading) {
     return (
       <TableBody>
@@ -14,6 +15,10 @@ const TableContent = ({ columns, data, loading }) => {
       </TableBody>
     );
   }
+
+  const isEditIcon = (icon) => {
+    return (icon && icon.type && icon.type === EditIcon) && !canUpdate;
+  };
 
   if (data?.length === 0) {
     return (
@@ -39,11 +44,11 @@ const TableContent = ({ columns, data, loading }) => {
                     {action?.id ? <span>{row[action?.id]}</span> : null}
                     <span key={`${col.id}-${index}`}>
                       {action.component === 'checkbox' ? (
-                        <Checkbox checked={row.checked || false} onChange={() => action.onClick(row)} />
+                        <Checkbox checked={row.checked || false} onChange={() => action.onClick(row)} disabled={!canUpdate} />
                       ) : action.component === 'switch' ? (
-                        <Switch checked={row.checked || false} onChange={() => action.onClick(data, row)} />
+                        <Switch checked={row.checked || false} onChange={() => action.onClick(data, row)} disabled={!canUpdate} />
                       ) : action.showIcon ? (
-                        <IconButton onClick={() => action.onClick(row)}>{action.iconName}</IconButton>
+                        <IconButton onClick={() => action.onClick(row)} disabled={isEditIcon(action?.iconName)}>{action.iconName}</IconButton>
                       ) : null}
                     </span>
                   </React.Fragment>

@@ -3,7 +3,7 @@ import { Controller } from 'react-hook-form';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import styles from './styles.module.scss';
-import { GC_STATUS, NO, YES } from './utils/constants';
+import { GC_STATUS, NO } from './utils/constants';
 
 const SelectField = ({
   control,
@@ -17,6 +17,12 @@ const SelectField = ({
   classes,
   setValue
 }) => {
+  
+  useEffect(() => {
+    if (menuItem.length > 0) {
+      setValue(name, menuItem[0]?.value);
+    }
+  }, [menuItem, name, setValue]);
 
   return (
     <div className={styles.fieldContainerStyle}>
@@ -26,29 +32,44 @@ const SelectField = ({
       <Controller
         name={name}
         control={control}
-        defaultValue={ name === GC_STATUS ? NO : 
-          (menuItem.length > 0 && menuItem[0]?.value) || YES }
-        render={({ field }) => (
-          <Select
-            {...field}
-            disabled={disabled}
-            labelId={name}
-            id={name}
-            placeholder={placeholder || label}
-            value={field.value || (menuItem.length > 0 && menuItem[0]?.value)}
-            onChange={field.onChange}
-            className={`${styles.customizeSelect} ${classes}`}
-            size="small"
-          >
-            {menuItem.length > 0
-              ? menuItem.map((item) => (
-                <MenuItem key={item.value} value={item.value} className={styles.styledMenuText}>
-                  {item.label}
-                </MenuItem>
-              ))
-              : null}
-          </Select>
-        )}
+        defaultValue={menuItem[0]?.value || ''}
+        rules={{
+          required: required ? "This field is required" : false,}}
+        render={({ field }) => {
+          let value = field.value;
+          if (name === GC_STATUS) {
+            value = NO;
+          }
+          
+          return (
+            <Select
+              {...field}
+              disabled={disabled}
+              labelId={name}
+              id={name}
+              placeholder={placeholder || label}
+              value={value}
+              onChange={(e) => {
+                setValue(name, e.target.value);
+                field.onChange(e);
+              }}
+              displayEmpty
+              className={`${styles.customizeSelect} ${classes}`}
+              size="small"
+            >
+              <MenuItem value="" disabled>
+                {"Select"}
+              </MenuItem>
+              {menuItem.length > 0
+                ? menuItem.map((item) => (
+                  <MenuItem key={item.value} value={item.value} className={styles.styledMenuText}>
+                    {item.label}
+                  </MenuItem>
+                ))
+                : null}
+            </Select>
+          );
+        }}
       />
       <div className={styles.styledError}>
         {errors[name] && <span>{errors[name]?.message}</span>}

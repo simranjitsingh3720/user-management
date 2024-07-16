@@ -1,23 +1,23 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axiosInstance from '../utils/axiosInstance';
 import apiUrls from '../utils/apiUrls';
-import { buildQueryString } from '../utils/globalizationFunction';
+import { buildQueryString, toCapitalize } from '../utils/globalizationFunction';
 
-export const getPaymentTypes = createAsyncThunk(
-  'paymentType/getPaymentTypes',
+export const getProducerTypes = createAsyncThunk(
+  'producerType/getChannels',
   async (_, { getState, rejectWithValue }) => {
     try {
-      const { paymentType } = getState();
-      if (paymentType?.paymentType?.length > 0) {
-        return paymentType.paymentType;
+      const { producerType } = getState();
+      if (producerType?.producerType?.length > 0) {
+        return producerType.producerType;
       }
       const params = buildQueryString({ isAll: true, status: true });
-      const url = `${apiUrls.getPaymentType}?${params}`;
+      const url = `${apiUrls.getProducerType}?${params}`;
       const response = await axiosInstance.get(url);
       const formattedArray = response?.data?.data?.map((obj) => ({
         ...obj,
-        label: obj?.name,
-        value: obj?.name,
+        label: toCapitalize(obj, 'txtCategory'),
+        value: obj?.id,
       }));
       return formattedArray;
     } catch (error) {
@@ -27,30 +27,30 @@ export const getPaymentTypes = createAsyncThunk(
   }
 );
 
-export const paymentType = createSlice({
-  name: 'paymentType',
+export const producerType = createSlice({
+  name: 'producerType',
   initialState: {
-    paymentType: [],
+    producerType: [],
     loading: true,
     error: '',
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getPaymentTypes.pending, (state) => {
+      .addCase(getProducerTypes.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(getPaymentTypes.fulfilled, (state, action) => {
-        state.paymentType = action.payload;
+      .addCase(getProducerTypes.fulfilled, (state, action) => {
+        state.producerType = action.payload;
         state.loading = false;
       })
-      .addCase(getPaymentTypes.rejected, (state, action) => {
+      .addCase(getProducerTypes.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
-        state.paymentType = [];
+        state.producerType = [];
       });
   },
 });
 
-export default paymentType.reducer;
+export default producerType.reducer;

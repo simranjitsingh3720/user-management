@@ -8,6 +8,7 @@ import {
 } from "../../../utils/globalConstants";
 import apiUrls from "../../../utils/apiUrls";
 import { DASHBOARD } from "../utils/constants";
+import { COMMON_WORDS } from "../../../utils/constants";
 
 export default function usePostLogin() {
   const [loading, setLoading] = useState(false);
@@ -21,7 +22,8 @@ export default function usePostLogin() {
       const { data }  = response.data;
       if (data) {
         localStorage.setItem(TOKEN, data.token);
-        localStorage.setItem("scopes", JSON.stringify(data.scopes));
+        localStorage.setItem(COMMON_WORDS.SCOPES, JSON.stringify(data.scopes));
+        localStorage.setItem(COMMON_WORDS.USER, JSON.stringify(data.user));
         navigate(DASHBOARD);
       }
     } catch (error) {

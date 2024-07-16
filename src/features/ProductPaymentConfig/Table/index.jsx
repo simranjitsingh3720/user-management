@@ -5,7 +5,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import { useNavigate } from "react-router-dom";
 import { capitalizeWords } from "../../../utils/globalizationFunction";
 
-function Table({ ListData, fetchData, sort, setSort, paymentData }) {
+function Table({ ListData, fetchData, sort, setSort, paymentData, canUpdate }) {
   const resultFun = (item) => {
     const { payments } = item;
     const isSelected = (payment, selected) => {
@@ -71,7 +71,7 @@ function Table({ ListData, fetchData, sort, setSort, paymentData }) {
         <div className={styles.headerStyle}>
           <div className={styles.action}>Created At</div>
           <div className={styles.action}>Updated At</div>
-          <div className={styles.action}>Action</div>
+          {canUpdate && (<div className={styles.action}>Action</div>)}
         </div>
         {ListData.map((item) => (
           <div className={styles.listHeader}>
@@ -81,7 +81,7 @@ function Table({ ListData, fetchData, sort, setSort, paymentData }) {
             <div className={styles.createdAt}>
               {item?.productWisePaymentMethod?.updatedAt}
             </div>
-            <div className={styles.productStatus}>
+            {canUpdate && (<div className={styles.productStatus}>
               <Tooltip title="Edit Payment Modes">
                 <IconButton
                   aria-label="back"
@@ -93,7 +93,7 @@ function Table({ ListData, fetchData, sort, setSort, paymentData }) {
                   <EditIcon color="primary" />
                 </IconButton>
               </Tooltip>
-            </div>
+            </div>)}
           </div>
         ))}
       </div>

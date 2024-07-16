@@ -3,12 +3,12 @@ import TableHeader from "./TableHeader";
 import List from "./List";
 import styles from "./styles.module.scss";
 
-function Table({ ListData, fetchData, sort, setSort }) {
+function Table({ ListData, fetchData, sort, setSort, canUpdate }) {
   return (
     <div className={styles.tableContainer}>
-      <TableHeader sort={sort} setSort={setSort} />
-      {(ListData || []).map((item) => (
-        <List item={item} fetchData={fetchData} />
+      <TableHeader sort={sort} setSort={setSort} canUpdate={canUpdate} />
+      {(ListData || []).map((item, index) => (
+        <List key={index} item={item} fetchData={fetchData} canUpdate={canUpdate} />
       ))}
     </div>
   );

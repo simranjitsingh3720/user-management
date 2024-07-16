@@ -21,6 +21,7 @@ const CustomTable = ({
   orderBy,
   setOrderBy,
   hideFooter,
+  canUpdate
 }) => {
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -53,6 +54,7 @@ const CustomTable = ({
           customStyles={customStyles}
           columns={columns}
           loading={loading}
+          canUpdate={canUpdate}
         />
         {!hideFooter && (
           <TableFooter

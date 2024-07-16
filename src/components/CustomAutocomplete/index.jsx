@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Controller, useWatch } from 'react-hook-form';
 import Autocomplete from '@mui/material/Autocomplete';
 import Checkbox from '@mui/material/Checkbox';
@@ -6,7 +6,6 @@ import TextField from '@mui/material/TextField';
 import styles from './styles.module.scss';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
-import { useEffect } from 'react';
 import { PLACEHOLDER, REQUIRED_MSG, ROLE_SELECT } from './constants';
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
@@ -64,19 +63,15 @@ const AutocompleteField = ({
     setSelectedValues(newValue);
   };
 
-  const isSelected = (option) => {
-    if (multiple) {
-      if (selectedValues?.length > 0) {
-        return selectedValues?.some((selectedOption) => selectedOption?.value === option?.value);
-      }
-    } else {
-      if (name === ROLE_SELECT) {
-        return selectedValues?.roleName === option?.roleName;
-      } else {
-        return selectedValues?.value === option?.value;
-      }
-    }
+  const isEmptyObject = (obj) => {
+    return Object.keys(obj).length === 0 && obj.constructor === Object;
   };
+
+  useEffect(()=> {
+    if(!options || options?.length === 0 || (options && isEmptyObject(options[0]))){
+      setSelectedValues(name === ROLE_SELECT ? null : []);
+    }
+  }, [options, name])
 
   return (
     <div className={styles.fieldContainerStyle}>
@@ -97,9 +92,6 @@ const AutocompleteField = ({
             options={options.length > 0 ? options : []}
             value={name === ROLE_SELECT && !selectedValues ? null : selectedValues || []}
             getOptionLabel={(option) => option?.label}
-            // {...(multiple || name === ROLE_SELECT
-            //   ? { value: selectedValues }
-            //   : {})}
             onChange={(event, newValue) => {
               if (multiple) {
                 handleAutocompleteChangeMultiple(event, newValue);
@@ -114,31 +106,23 @@ const AutocompleteField = ({
                   icon={icon}
                   checkedIcon={checkedIcon}
                   style={{ marginRight: 8 }}
-                  checked={isSelected(option)}
-                  onChange={() => {
-                    let newValue;
-                    if (multiple) {
-                      if (isSelected(option)) {
-                        newValue = selectedValues.filter((selectedOption) => selectedOption?.value !== option?.value);
-                      } else {
-                        newValue = [...selectedValues, option];
-                      }
-                    } else {
-                      newValue = isSelected(option) ? null : option;
-                    }
-                    setSelectedValues(newValue);
-                    field.onChange(newValue);
-                  }}
+                  checked={selected}
                 />
                 {option.label}
               </li>
             )}
             size="small"
             className={`${styles.customizeSelect} ${classes}`}
+            limitTags={1}
             renderInput={(params) => (
               <TextField
                 {...params}
                 placeholder={PLACEHOLDER}
+                sx={{
+                  '& .MuiFormHelperText-root': {
+                    margin: 0,
+                  },
+                }}
                 error={Boolean(errors[name])}
                 helperText={errors[name] ? REQUIRED_MSG : ''}
               />

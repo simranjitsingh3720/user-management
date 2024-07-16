@@ -4,7 +4,7 @@ import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import styles from "./styles.module.scss";
-import { DATE_FORMAT, EMPTY_START_DATE_ERR, END_DATE, END_DATE_LESS_ERR, END_DATE_WITHIN_300_DAYS, REQUIRED_MSG, START_DATE } from "./utils/constants";
+import { DATE_FORMAT, EMPTY_START_DATE_ERR, END_DATE, END_DATE_LESS_ERR, REQUIRED_MSG, START_DATE } from "./utils/constants";
 
 const DateField = ({
   control,
@@ -17,9 +17,12 @@ const DateField = ({
   errors = {},
   classes,
   labelVisible,
-  isEdit=false
+  isEdit = false,
 }) => {
   const validateDate = (value) => {
+    if (!value) {
+      return required ? REQUIRED_MSG : true;
+    }
     if (name === END_DATE) {
       const startDate = watch(START_DATE);
       if (!startDate) {
@@ -30,10 +33,8 @@ const DateField = ({
       if (end.isBefore(start)) {
         return END_DATE_LESS_ERR;
       }
-      return end.isBefore(start.add(300, "day"))
-        ? true
-        : END_DATE_WITHIN_300_DAYS;
     }
+    return true;
   };
 
   useEffect(() => {
@@ -41,7 +42,7 @@ const DateField = ({
       const today = dayjs().format(DATE_FORMAT);
       setValue(name, today);
     }
-  }, [labelVisible]);
+  }, [labelVisible, setValue, name]);
 
   return (
     <div
@@ -61,7 +62,8 @@ const DateField = ({
         <Controller
           name={name}
           control={control}
-          rules={{ validate: validateDate, required: required ? REQUIRED_MSG: "" }}
+          defaultValue={name === START_DATE ? dayjs().format(DATE_FORMAT) : ""}
+          rules={{ validate: validateDate, required: required ? REQUIRED_MSG : "" }}
           render={({ field }) => (
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
@@ -86,10 +88,11 @@ const DateField = ({
                     },
                   },
                 }}
-                minDate={!isEdit ? dayjs(): {}}
+                minDate={!isEdit ? dayjs() : {}}
                 onChange={(date) => {
-                  const formattedDate = dayjs(date).format(DATE_FORMAT);
+                  const formattedDate = date ? dayjs(date).format(DATE_FORMAT) : "";
                   setValue(name, formattedDate);
+                  field.onChange(formattedDate);
                 }}
               />
             </LocalizationProvider>

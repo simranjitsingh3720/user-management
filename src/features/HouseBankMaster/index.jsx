@@ -6,16 +6,15 @@ import ListLoader from "../../components/ListLoader";
 import Table from "./Table";
 import NoDataFound from "../../components/NoDataCard";
 import { MenuItem, Pagination, Select } from "@mui/material";
-import { selectRowsData } from "../../utils/globalConstants";
+import { PAGECOUNT, selectRowsData } from "../../utils/globalConstants";
 import useGetHouseBank from "./hooks/useGetHouseBank";
 import { setTableName } from "../../stores/slices/exportSlice";
 import { useDispatch } from "react-redux";
+import usePermissions from "../../hooks/usePermission";
 
 function getSelectedRowData(count) {
   
   let selectedRowData = [];
-
-  
   for (let i = 0; i < selectRowsData.length; i++) {
     if (selectRowsData[i] <= count) {
       selectedRowData.push(selectRowsData[i]);
@@ -30,13 +29,14 @@ function HouseBankMaster() {
   const [searched, setSearched] = useState("houseBankCode");
   const dispatch = useDispatch();
 
-  const [rowsPage, setRowsPage] = useState(10);
-
+  const [rowsPage, setRowsPage] = useState(PAGECOUNT);
   const [pageChange, setPageChange] = useState(1);
-
   const handlePaginationChange = (event, page) => {
     setPageChange(page);
   };
+
+  // Check Permission
+  const { canCreate, canUpdate } = usePermissions();
 
   const { data, loading, sort, setSort, fetchData } = useGetHouseBank(
     pageChange,
@@ -62,6 +62,7 @@ function HouseBankMaster() {
         setQuery={setQuery}
         searched={searched}
         setSearched={setSearched}
+        canCreate={canCreate}
       />
       <div className={styles.tableContainerStyle}>
         <div className={styles.tableStyled}>
@@ -77,6 +78,7 @@ function HouseBankMaster() {
               fetchData={fetchData}
               sort={sort}
               setSort={setSort}
+              canUpdate= {canUpdate}
             />
           ) : (
             <NoDataFound />
@@ -93,8 +95,8 @@ function HouseBankMaster() {
               size="small"
               className={styles.customizeRowsSelect}
             >
-              {getSelectedRowData(data?.totalCount).map((item) => (
-                <MenuItem value={item} className={styles.styledOptionText}>
+              {getSelectedRowData(data?.totalCount).map((item, index) => (
+                <MenuItem key={index} value={item} className={styles.styledOptionText}>
                   {item}
                 </MenuItem>
               ))}

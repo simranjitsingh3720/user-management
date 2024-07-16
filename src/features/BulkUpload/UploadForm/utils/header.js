@@ -18,7 +18,6 @@ export const Header = () => {
             showIcon: true,
             iconName: <DownloadLogo />,
             onClick: (row) => {
-              console.log(row);  
             },
           }
         ],

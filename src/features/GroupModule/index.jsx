@@ -4,7 +4,7 @@ import { Header } from './utils/Header';
 import CustomTable from './../../components/CustomTable';
 import { getGroup, getGroupById } from './../../stores/slices/groupSlice';
 import { COMMON_WORDS } from '../../utils/constants';
-import { BUTTON_TEXT } from '../../utils/globalConstants';
+import { BUTTON_TEXT, PAGECOUNT } from '../../utils/globalConstants';
 import { showDialog } from '../../stores/slices/dialogSlice';
 import ConfirmAction from './Dialog/ConfirmAction';
 import CustomDialog from '../../components/CustomDialog';
@@ -13,15 +13,17 @@ import PermissionContent from './Dialog/PermissionContent';
 import SearchComponent from '../../components/SearchComponent';
 import { COMMON_FIELDS } from '../PartnerNeft/utils/constant';
 import { getPlaceHolder } from '../../utils/globalizationFunction';
-import { SEARCH_OPTIONS } from './constants';
+import { SEARCH_OPTIONS, showTextField } from './constants';
 import useGetPermission from './hooks/useGetPermission';
 import Content from '../../components/CustomDialogContent';
+import usePermissions from '../../hooks/usePermission';
 
 function GroupModule() {
   const [page, setPage] = useState(0);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(PAGECOUNT);
   const [order, setOrder] = useState(null);
   const [orderBy, setOrderBy] = useState(null);
+  const [query, setQuery] = useState('');
 
   const [groupData, setGroupData] = useState([]);
   const { group, groupLoading } = useSelector((state) => state.group);
@@ -31,10 +33,8 @@ function GroupModule() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    dispatch(getGroup({ isAll: true }));
-  }, [dispatch]);
+  // Check Permission
+  const { canCreate, canUpdate } = usePermissions();
 
   useEffect(() => {
     dispatch(
@@ -48,8 +48,6 @@ function GroupModule() {
   }, [dispatch, page, pageSize, order, orderBy]);
 
   useEffect(() => {
-    if (group?.data?.length === 0) return;
-
     const transformedData =
       group?.data?.map((item) => {
         return {
@@ -148,17 +146,22 @@ function GroupModule() {
     setPage(0);
     let searchString = '';
     let edge = '';
+    let searchKey = '';
 
     switch (searched) {
       case COMMON_WORDS.PERMISSIONNAME:
         searchString = fetchIdsAndConvert(permissionValue);
         edge = COMMON_FIELDS.hasPermission;
         break;
+      case COMMON_WORDS.GROUPNAME:
+        searchKey = searched;
+        searchString = query;
+        break;
       default:
         break;
     }
 
-    if (searchString) {
+    if (searchString && edge) {
       dispatch(
         getGroup({
           page,
@@ -170,7 +173,29 @@ function GroupModule() {
         })
       );
     }
-  }, [searched, permissionValue, dispatch, page, pageSize, order, orderBy]);
+    if (searchKey && searchString) {
+      dispatch(
+        getGroup({
+          page,
+          pageSize,
+          order,
+          orderBy,
+          searchKey: searchKey,
+          searchString: searchString,
+        })
+      );
+    }
+    if (searchString === '' || searchKey === '') {
+      dispatch(
+        getGroup({
+          page,
+          pageSize,
+          order,
+          orderBy,
+        })
+      );
+    }
+  }, [searched, permissionValue, query, dispatch, page, pageSize, order, orderBy]);
 
   return (
     <>
@@ -186,11 +211,15 @@ function GroupModule() {
           }
           buttonText={BUTTON_TEXT.GROUP}
           navigateRoute="/group/group-form"
+          textField={showTextField.includes(searched)}
+          setQuery={setQuery}
+          textFieldPlaceholder={COMMON_WORDS.SEARCH}
           searched={searched}
           setSearched={setSearched}
           selectOptions={SEARCH_OPTIONS}
           handleGo={handleGo}
           showButton
+          canCreate={canCreate}
         />
       </div>
       <div>
@@ -207,6 +236,7 @@ function GroupModule() {
           setOrder={setOrder}
           orderBy={orderBy}
           setOrderBy={setOrderBy}
+          canUpdate={canUpdate}
         />
 
         <CustomDialog />

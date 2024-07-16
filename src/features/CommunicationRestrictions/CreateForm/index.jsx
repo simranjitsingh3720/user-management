@@ -31,7 +31,6 @@ function CreateCommunicationRestrictionForm() {
   const user = watch('typeOfUser');
 
   const onSubmit = (data) => {
-    console.log(data);
   };
 
   const back = () => {

@@ -7,17 +7,18 @@ import {
   updateProductData,
 } from "../../stores/slices/productSlice";
 import { COMMON_WORDS } from "../../utils/constants";
-import { BUTTON_TEXT } from "../../utils/globalConstants";
+import { BUTTON_TEXT, PAGECOUNT } from "../../utils/globalConstants";
 import { getPlaceHolder } from "../../utils/globalizationFunction";
 import { fetchLobData } from "../../stores/slices/lobSlice";
 import SearchComponent from "../../components/SearchComponent";
 import { COMMON_FIELDS } from "../PartnerNeft/utils/constant";
+import usePermissions from "../../hooks/usePermission";
 
 function Product() {
   const dispatch = useDispatch();
 
   const [page, setPage] = useState(0);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(PAGECOUNT);
   const [order, setOrder] = useState(null);
   const [orderBy, setOrderBy] = useState(null);
   const [productData, setProductData] = useState([]);
@@ -26,6 +27,9 @@ function Product() {
   const { lob } = useSelector((state) => state.lob);
 
   const [searched, setSearched] = useState(COMMON_WORDS.LOB);
+
+  // Check Permission
+  const { canCreate, canUpdate } = usePermissions();
 
   useEffect(() => {
     dispatch(fetchLobData({ isAll: true }));
@@ -48,22 +52,33 @@ function Product() {
 
     const transformedData =
       products?.data?.map((item) => {
-        const { lob, product } = item;
+        const { lob, product: {
+          id,
+          product,
+          product_value,
+          product_code,
+          createdAt,
+          updatedAt,
+          status
+        } } = item;
+
+        let lobValue = lob && lob[0]?.lob;
+
         return {
-          id: product.id,
-          product: product.product,
-          product_value: product.product_value,
-          lob_name: lob[0]?.lob,
-          product_code: product.product_code,
-          createdAt: product.createdAt,
-          updatedAt: product.updatedAt,
-          checked: product?.status,
-          status: product?.status,
+          id: id,
+          product: product,
+          product_value: product_value,
+          lob_name: lobValue,
+          product_code: product_code,
+          createdAt: createdAt,
+          updatedAt: updatedAt,
+          checked: status,
+          status: status,
         };
       }) || [];
 
     setProductData(transformedData);
-  }, [products]);
+  }, [products, canUpdate]);
 
   const handleUpdate = useCallback(
     async (data) => {
@@ -167,6 +182,7 @@ function Product() {
           // selectOptions={SEARCH_OPTIONS}
           handleGo={handleGo}
           showButton
+          canCreate={canCreate}
         />
       </div>
       <CustomTable
@@ -182,6 +198,7 @@ function Product() {
         setOrder={setOrder}
         orderBy={orderBy}
         setOrderBy={setOrderBy}
+        canUpdate={canUpdate}
       />
     </>
   );

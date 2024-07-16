@@ -1,21 +1,22 @@
-import React, { useEffect, useState } from "react";
-import SearchComponenet from "../../components/SearchComponent";
-import styles from "./styles.module.scss";
-import TableHeader from "./Table/TableHeader";
-import ListLoader from "../../components/ListLoader";
-import Table from "./Table";
-import NoDataFound from "../../components/NoDataCard";
-import { MenuItem, Pagination, Select } from "@mui/material";
-import { BUTTON_TEXT, selectRowsData } from "../../utils/globalConstants";
-import useGetPaymentConfig from "./hooks/useGetPaymentConfig";
-import useGetPayment from "./hooks/useGetPayment";
-import { ProductPayment } from "./constants";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchLobData } from "../../stores/slices/lobSlice";
-import { fetchAllProductData } from "../../stores/slices/productSlice";
-import { COMMON_WORDS } from "../../utils/constants";
-import { getPlaceHolder } from "../../utils/globalizationFunction";
-import { setTableName } from "../../stores/slices/exportSlice";
+import React, { useEffect, useState } from 'react';
+import SearchComponenet from '../../components/SearchComponent';
+import styles from './styles.module.scss';
+import TableHeader from './Table/TableHeader';
+import ListLoader from '../../components/ListLoader';
+import Table from './Table';
+import NoDataFound from '../../components/NoDataCard';
+import { MenuItem, Pagination, Select } from '@mui/material';
+import { BUTTON_TEXT, PAGECOUNT, selectRowsData } from '../../utils/globalConstants';
+import useGetPaymentConfig from './hooks/useGetPaymentConfig';
+import useGetPayment from './hooks/useGetPayment';
+import { ProductPayment } from './constants';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchLobData } from '../../stores/slices/lobSlice';
+import { fetchAllProductData } from '../../stores/slices/productSlice';
+import { COMMON_WORDS } from '../../utils/constants';
+import { getPlaceHolder } from '../../utils/globalizationFunction';
+import { setTableName } from '../../stores/slices/exportSlice';
+import usePermissions from '../../hooks/usePermission';
 
 function getSelectedRowData(count) {
   let selectedRowData = [];
@@ -37,28 +38,25 @@ function ProductPaymentConfig() {
   const [productValue, setProductValue] = useState([]);
   const [lobValue, setLobValue] = useState([]);
 
-  const [rowsPage, setRowsPage] = useState(10);
-
+  const [rowsPage, setRowsPage] = useState(PAGECOUNT);
   const [pageChange, setPageChange] = useState(1);
+  const { canCreate, canUpdate } = usePermissions();
 
   const handlePaginationChange = (event, page) => {
     setPageChange(page);
   };
 
   useEffect(() => {
-    dispatch(fetchLobData(
-      {
+    dispatch(
+      fetchLobData({
         isAll: true,
         status: true,
-      }
-    ));
-    dispatch(fetchAllProductData({isAll: true}));
+      })
+    );
+    dispatch(fetchAllProductData({ isAll: true }));
   }, [dispatch]);
 
-  const { data, loading, sort, setSort, fetchData } = useGetPaymentConfig(
-    pageChange,
-    rowsPage
-  );
+  const { data, loading, sort, setSort, fetchData } = useGetPaymentConfig(pageChange, rowsPage);
 
   const { data: paymentData } = useGetPayment();
 
@@ -68,22 +66,22 @@ function ProductPaymentConfig() {
   };
 
   const optionLabelProduct = (option) => {
-    return option?.product ? option.product.toUpperCase() : "";
+    return option?.product ? option.product.toUpperCase() : '';
   };
 
   const renderOptionProductFunction = (props, option) => (
     <li {...props} key={option?.id}>
-      {option?.product ? option?.product?.toUpperCase() : ""}
+      {option?.product ? option?.product?.toUpperCase() : ''}
     </li>
   );
 
   const optionLabelLob = (option) => {
-    return option?.lob ? option?.lob?.toUpperCase() : "";
+    return option?.lob ? option?.lob?.toUpperCase() : '';
   };
 
   const renderOptionLobFunction = (props, option) => (
     <li {...props} key={option?.id}>
-      {option?.lob ? option?.lob?.toUpperCase() : ""}
+      {option?.lob ? option?.lob?.toUpperCase() : ''}
     </li>
   );
 
@@ -111,7 +109,7 @@ function ProductPaymentConfig() {
   };
 
   useEffect(() => {
-    if(data && data?.data) {
+    if (data && data?.data) {
       dispatch(setTableName(data?.data[0]?.productWisePaymentMethod.label));
     }
   }, [data, dispatch]);
@@ -119,39 +117,24 @@ function ProductPaymentConfig() {
   return (
     <div>
       <SearchComponenet
-        optionsData={
-          searched === COMMON_WORDS.PRODUCT
-            ? products?.data ?? []
-            : lob?.data ?? []
-        }
+        optionsData={searched === COMMON_WORDS.PRODUCT ? products?.data ?? [] : lob?.data ?? []}
         option={searched === COMMON_WORDS.PRODUCT ? productValue : lobValue}
-        setOption={
-          searched === COMMON_WORDS.PRODUCT ? setProductValue : setLobValue
-        }
+        setOption={searched === COMMON_WORDS.PRODUCT ? setProductValue : setLobValue}
         fetchData={fetchData}
-        optionLabel={
-          searched === COMMON_WORDS.PRODUCT
-            ? optionLabelProduct
-            : optionLabelLob
-        }
+        optionLabel={searched === COMMON_WORDS.PRODUCT ? optionLabelProduct : optionLabelLob}
         placeholder={
-          searched === COMMON_WORDS.PRODUCT
-            ? getPlaceHolder(COMMON_WORDS.PRODUCER)
-            : getPlaceHolder(COMMON_WORDS.LOB)
+          searched === COMMON_WORDS.PRODUCT ? getPlaceHolder(COMMON_WORDS.PRODUCT) : getPlaceHolder(COMMON_WORDS.LOB)
         }
-        renderOptionFunction={
-          searched === COMMON_WORDS.PRODUCT
-            ? renderOptionProductFunction
-            : renderOptionLobFunction
-        }
+        renderOptionFunction={searched === COMMON_WORDS.PRODUCT ? renderOptionProductFunction : renderOptionLobFunction}
         buttonText={BUTTON_TEXT.PRODUCT_PAYMENT}
-        navigateRoute={"/product-payment-config/form"}
+        navigateRoute={'/product-payment-config/form'}
         searched={searched}
         setSearched={setSearched}
         selectOptions={ProductPayment}
         handleGo={handleGo}
         showButton
         showExportButton={true}
+        canCreate={canCreate}
       />
       <div className={styles.tableContainerStyle}>
         <div className={styles.tableStyled}>
@@ -168,6 +151,7 @@ function ProductPaymentConfig() {
               sort={sort}
               setSort={setSort}
               paymentData={paymentData}
+              canUpdate={canUpdate}
             />
           ) : (
             <NoDataFound />

@@ -42,7 +42,7 @@ function useGetEmployeeData(page, pageSize, order, orderBy) {
         return {
           id: item.id,
           label: item.label,
-          name: `${item.firstName} ${item.lastName}`,
+          userName: `${item.firstName} ${item.lastName}`,
           employeeId: item.employeeId,
           email: item.email,
           createdAt: item.createdAt,

@@ -1,6 +1,7 @@
 import EditIcon from "@mui/icons-material/Edit";
 
 export const YES = 'yes';
+export const DATE_FORMAT = "DD/MM/YYYY";
 export const ROLE_SELECT = 'roleSelect';
 export const PAYMENT_TYPE = 'paymentType';
 export const AUTOCOMPLETE = 'autocomplete';
@@ -14,6 +15,7 @@ export const NAVIGATE_TO_USER_MANAGEMENT = '/user-management';
 export const NAVIGATE_TO_FORM = '/user-management/form'
 export const REQUIRED_MSG = 'This field is required';
 export const PRODUCER_ARR = ['producer', 'subproducer', 'dealer'];
+export const PRODUCER_PARTNER_ARR = ['producer', 'subproducer', 'dealer', 'partner'];
 export const PAYMENT_CALL = ['producer', 'subproducer', 'dealer', 'partner', 'partneremployee', 'externalposp', 'sso'];
 export const PRODUCER_CODE_CALL = ['csm', 'offlineuser', 'commercialuw', 'producer', 'subproducer', 'dealer', 'partner', 'partneremployee', 'externalposp', 'sso'];
 export const BUTTON_TEXT = "Create User";
@@ -61,7 +63,7 @@ export const FORM_VALUE = {
 export const Header = (editAction, handleInsillionStatus) => {  return[
   {
     value: "User ID",
-    id: "userId",
+    id: "employeeId",
   },
   {
     value: 'Name',
@@ -85,7 +87,7 @@ export const Header = (editAction, handleInsillionStatus) => {  return[
     sortable: true
   },
   {
-    value: "Insillion Status",
+    value: "Status",
     id: "status",
     action: [
       {
@@ -97,30 +99,34 @@ export const Header = (editAction, handleInsillionStatus) => {  return[
       },
     ],
   },
-  {
-    id: "action",
-    value: "Action",
-    sortable: false,
-    action: [
-      {
-        showIcon: true,
-        iconName: <EditIcon />,
-        onClick: (row) => {
-            editAction(row)
-        },
-      }
-    ],
-  },
+  // {
+  //   id: "action",
+  //   value: "Action",
+  //   sortable: false,
+  //   action: [
+  //     {
+  //       showIcon: true,
+  //       iconName: <EditIcon />,
+  //       onClick: (row) => {
+  //           editAction(row)
+  //       },
+  //     }
+  //   ],
+  // },
 ]};
 
 export const SEARCH_OPTIONS = [
   {
     label: "User ID",
-    value: "userId",
+    value: "employeeId",
   },
   {
-    label: "Name",
-    value:"firstName",
+    label: "First Name",
+    value: "firstName",
+  },
+  {
+    label: "Last Name",
+    value: "lastName",
   },
   {
     label: "NT Login",

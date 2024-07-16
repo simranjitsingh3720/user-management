@@ -54,10 +54,6 @@ const AutocompleteFieldAll = ({
     return selectedValues.length === (apiDataMap[name]?.length);
   };
 
-  const isSelected = (option) => {
-    return selectedValues.some(selectedOption => selectedOption?.value === option?.value);
-  };
-
   return (
     <div className={styles.fieldContainerStyle}>
       <div className={styles.labelText}>
@@ -72,7 +68,7 @@ const AutocompleteFieldAll = ({
             {...field}
             multiple
             id={name}
-            options={[{ label: 'All', value: 'all' }, ...(options || [])]}
+            options={options?.length > 0 ? [{ label: 'All', value: 'all' }, ...(options || [])] : []}
             disableCloseOnSelect
             getOptionLabel={(option) => option?.label}
             value={selectedValues || []}
@@ -83,23 +79,28 @@ const AutocompleteFieldAll = ({
                 field.onChange(apiDataMap[name])
               }
             }}
-            renderOption={(props, option) => (
+            renderOption={(props, option, {selected}) => (
               <li {...props} key={option?.value}>
                 <Checkbox
                   icon={icon}
                   checkedIcon={checkedIcon}
-                  style={{ marginRight: 8 }}
-                  checked={option?.value === All ? isCheckedAll() : isSelected(option)}
+                  checked={option?.value === All ? isCheckedAll() : selected}
                 />
                 {option.label}
               </li>
             )}
             size="small"
             className={`${styles.customizeSelect} ${classes}`}
+            limitTags={1}
             renderInput={(params) => (
               <TextField
                 {...params}
                 placeholder={PLACEHOLDER}
+                sx={{
+                  '& .MuiFormHelperText-root': {
+                    margin: 0,
+                  },
+                }}
                 error={Boolean(errors[name])}
                 helperText={Boolean(errors[name]) ? REQUIRED_MSG : ''}
               />

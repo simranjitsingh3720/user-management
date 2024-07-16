@@ -82,8 +82,8 @@
                         "message": "It should not exceed 10 digits"
                     },
                     "pattern": {
-                        "value": "^[0-9]*$",
-                        "message": "It should contain only digits"
+                        "value": "^[6-9][0-9]{9}$",
+                        "message": "It should contains digits starting with [6-9]"
                     }
                 }
             },
@@ -105,7 +105,7 @@
                 "label": "Location",
                 "type": "autocomplete",
                 "required": true,
-                "multiple": true,
+                "all": true,
                 "validation": {
                     "required": "This field is required"
                 }
@@ -150,8 +150,8 @@
                 "required": false,
                 "validation": {
                     "pattern": {
-                        "value": "^[a-zA-Z0-9]+$",
-                        "message": "It should contain digits and letters only"
+                        "value": "^(?! )(?=.*[^ ]$)[a-zA-Z0-9 ]+$",
+                        "message": "Please enter a valid vertical name"
                     }
                 }
             },
@@ -162,8 +162,8 @@
                 "required": false,
                 "validation": {
                     "pattern": {
-                        "value": "^[a-zA-Z0-9]+$",
-                        "message": "It should contain digits and letters only"
+                        "value": "^(?! )(?=.*[^ ]$)[a-zA-Z0-9 ]+$",
+                        "message": "Please enter a valid sub vertical name"
                     }
                 }
             },
@@ -298,8 +298,8 @@
                         "message": "It should not exceed 10 digits"
                     },
                     "pattern": {
-                        "value": "^[0-9]*$",
-                        "message": "It should contain only digits"
+                        "value": "^[6-9][0-9]{9}$",
+                        "message": "It should contains digits starting with [6-9]"
                     }
                 }
             },
@@ -321,7 +321,7 @@
                 "label": "Location",
                 "type": "autocomplete",
                 "required": true,
-                "multiple": true,
+                "all": true,
                 "validation": {
                     "required": "This field is required"
                 }
@@ -366,8 +366,8 @@
                 "required": false,
                 "validation": {
                     "pattern": {
-                        "value": "^[a-zA-Z0-9]+$",
-                        "message": "It should contain digits and letters only"
+                        "value": "^(?! )(?=.*[^ ]$)[a-zA-Z0-9 ]+$",
+                        "message": "Please enter a valid vertical name"
                     }
                 }
             },
@@ -378,8 +378,8 @@
                 "required": false,
                 "validation": {
                     "pattern": {
-                        "value": "^[a-zA-Z0-9]+$",
-                        "message": "It should contain digits and letters only"
+                        "value": "^(?! )(?=.*[^ ]$)[a-zA-Z0-9 ]+$",
+                        "message": "Please enter a valid sub vertical name"
                     }
                 }
             },
@@ -514,8 +514,8 @@
                         "message": "It should not exceed 10 digits"
                     },
                     "pattern": {
-                        "value": "^[0-9]*$",
-                        "message": "It should contain only digits"
+                        "value": "^[6-9][0-9]{9}$",
+                        "message": "It should contains digits starting with [6-9]"
                     }
                 }
             },
@@ -537,7 +537,7 @@
                 "label": "Location",
                 "type": "autocomplete",
                 "required": true,
-                "multiple": true,
+                "all": true,
                 "validation": {
                     "required": "This field is required"
                 }
@@ -582,8 +582,8 @@
                 "required": false,
                 "validation": {
                     "pattern": {
-                        "value": "^[a-zA-Z0-9]+$",
-                        "message": "It should contain digits and letters only"
+                        "value": "^(?! )(?=.*[^ ]$)[a-zA-Z0-9 ]+$",
+                        "message": "Please enter a valid vertical name"
                     }
                 }
             },
@@ -594,8 +594,8 @@
                 "required": false,
                 "validation": {
                     "pattern": {
-                        "value": "^[a-zA-Z0-9]+$",
-                        "message": "It should contain digits and letters only"
+                        "value": "^(?! )(?=.*[^ ]$)[a-zA-Z0-9 ]+$",
+                        "message": "Please enter a valid sub vertical name"
                     }
                 }
             },
@@ -716,8 +716,8 @@
                         "message": "It should not exceed 10 digits"
                     },
                     "pattern": {
-                        "value": "^[0-9]*$",
-                        "message": "It should contain only digits"
+                        "value": "^[6-9][0-9]{9}$",
+                        "message": "It should contains digits starting with [6-9]"
                     }
                 }
             },
@@ -777,12 +777,21 @@
                 }
             },
             {
+                "id": "location",
+                "label": "Location",
+                "type": "autocomplete",
+                "required": true,
+                "all": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
                 "id": "lob",
                 "label": "LOB",
                 "type": "autocomplete",
                 "required": true,
                 "multiple":true,
-                "disabled": true,
                 "validation": {
                     "required": "This field is required"
                 }
@@ -793,7 +802,6 @@
                 "type": "autocomplete",
                 "required": true,
                 "multiple":true,
-                "disabled": true,
                 "validation": {
                     "required": "This field is required"
                 }
@@ -815,8 +823,8 @@
                 "validation": {
                     "required": "This field is required",
                     "pattern": {
-                        "value": "^[a-zA-Z0-9]+$",
-                        "message": "It should contain digits and letters only"
+                        "value": "^(?! )(?=.*[^ ]$)[a-zA-Z0-9 ]+$",
+                        "message": "Please enter a valid vertical name"
                     }
                 }
             },
@@ -827,8 +835,8 @@
                 "required": false,
                 "validation": {
                     "pattern": {
-                        "value": "^[a-zA-Z0-9]+$",
-                        "message": "It should contain digits and letters only"
+                        "value": "^(?! )(?=.*[^ ]$)[a-zA-Z0-9 ]+$",
+                        "message": "Please enter a valid sub vertical name"
                     }
                 }
             },
@@ -1066,8 +1074,8 @@
                         "message": "It should not exceed 10 digits"
                     },
                     "pattern": {
-                        "value": "^[0-9]*$",
-                        "message": "It should contain only digits"
+                        "value": "^[6-9][0-9]{9}$",
+                        "message": "It should contains digits starting with [6-9]"
                     }
                 }
             },
@@ -1127,12 +1135,21 @@
                 }
             },
             {
+                "id": "location",
+                "label": "Location",
+                "type": "autocomplete",
+                "required": true,
+                "all": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
                 "id": "lob",
                 "label": "LOB",
                 "type": "autocomplete",
                 "required": true,
                 "multiple":true,
-                "disabled": true,
                 "validation": {
                     "required": "This field is required"
                 }
@@ -1143,7 +1160,6 @@
                 "type": "autocomplete",
                 "required": true,
                 "multiple":true,
-                "disabled": true,
                 "validation": {
                     "required": "This field is required"
                 }
@@ -1165,8 +1181,8 @@
                 "validation": {
                     "required": "This field is required",
                     "pattern": {
-                        "value": "^[a-zA-Z0-9]+$",
-                        "message": "It should contain digits and letters only"
+                        "value": "^(?! )(?=.*[^ ]$)[a-zA-Z0-9 ]+$",
+                        "message": "Please enter a valid vertical name"
                     }
                 }
             },
@@ -1177,8 +1193,8 @@
                 "required": false,
                 "validation": {
                     "pattern": {
-                        "value": "^[a-zA-Z0-9]+$",
-                        "message": "It should contain digits and letters only"
+                        "value": "^(?! )(?=.*[^ ]$)[a-zA-Z0-9 ]+$",
+                        "message": "Please enter a valid sub vertical name"
                     }
                 }
             },
@@ -1416,8 +1432,8 @@
                         "message": "It should not exceed 10 digits"
                     },
                     "pattern": {
-                        "value": "^[0-9]*$",
-                        "message": "It should contain only digits"
+                        "value": "^[6-9][0-9]{9}$",
+                        "message": "It should contains digits starting with [6-9]"
                     }
                 }
             },
@@ -1477,12 +1493,21 @@
                 }
             },
             {
+                "id": "location",
+                "label": "Location",
+                "type": "autocomplete",
+                "required": true,
+                "all": true,
+                "validation": {
+                    "required": "This field is required"
+                }
+            },
+            {
                 "id": "lob",
                 "label": "LOB",
                 "type": "autocomplete",
                 "required": true,
                 "multiple":true,
-                "disabled": true,
                 "validation": {
                     "required": "This field is required"
                 }
@@ -1493,7 +1518,6 @@
                 "type": "autocomplete",
                 "required": true,
                 "multiple":true,
-                "disabled": true,
                 "validation": {
                     "required": "This field is required"
                 }
@@ -1515,8 +1539,8 @@
                 "validation": {
                     "required": "This field is required",
                     "pattern": {
-                        "value": "^[a-zA-Z0-9]+$",
-                        "message": "It should contain digits and letters only"
+                        "value": "^(?! )(?=.*[^ ]$)[a-zA-Z0-9 ]+$",
+                        "message": "Please enter a valid vertical name"
                     }
                 }
             },
@@ -1527,8 +1551,8 @@
                 "required": false,
                 "validation": {
                     "pattern": {
-                        "value": "^[a-zA-Z0-9]+$",
-                        "message": "It should contain digits and letters only"
+                        "value": "^(?! )(?=.*[^ ]$)[a-zA-Z0-9 ]+$",
+                        "message": "Please enter a valid sub vertical name"
                     }
                 }
             },
@@ -1757,8 +1781,8 @@
                         "message": "It should not exceed 10 digits"
                     },
                     "pattern": {
-                        "value": "^[0-9]*$",
-                        "message": "It should contain only digits"
+                        "value": "^[6-9][0-9]{9}$",
+                        "message": "It should contains digits starting with [6-9]"
                     }
                 }
             },
@@ -1986,8 +2010,8 @@
                         "message": "It should not exceed 10 digits"
                     },
                     "pattern": {
-                        "value": "^[0-9]*$",
-                        "message": "It should contain only digits"
+                        "value": "^[6-9][0-9]{9}$",
+                        "message": "It should contains digits starting with [6-9]"
                     }
                 }
             },
@@ -2155,8 +2179,8 @@
                         "message": "It should not exceed 10 digits"
                     },
                     "pattern": {
-                        "value": "^[0-9]*$",
-                        "message": "It should contain only digits"
+                        "value": "^[6-9][0-9]{9}$",
+                        "message": "It should contains digits starting with [6-9]"
                     }
                 }
             },
@@ -2193,8 +2217,8 @@
                 "required": false,
                 "validation": {
                     "pattern": {
-                        "value": "^[a-zA-Z0-9]+$",
-                        "message": "It should contain digits and letters only"
+                        "value": "^(?! )(?=.*[^ ]$)[a-zA-Z0-9 ]+$",
+                        "message": "Please enter a valid vertical name"
                     }
                 }
             },
@@ -2205,8 +2229,8 @@
                 "required": false,
                 "validation": {
                     "pattern": {
-                        "value": "^[a-zA-Z0-9]+$",
-                        "message": "It should contain digits and letters only"
+                        "value": "^(?! )(?=.*[^ ]$)[a-zA-Z0-9 ]+$",
+                        "message": "Please enter a valid sub vertical name"
                     }
                 }
             },
@@ -2331,8 +2355,8 @@
                         "message": "It should not exceed 10 digits"
                     },
                     "pattern": {
-                        "value": "^[0-9]*$",
-                        "message": "It should contain only digits"
+                        "value": "^[6-9][0-9]{9}$",
+                        "message": "It should contains digits starting with [6-9]"
                     }
                 }
             },
@@ -2353,7 +2377,7 @@
                 "id": "location",
                 "label": "Location",
                 "type": "autocomplete",
-                "multiple": true,
+                "all": true,
                 "required": true,
                 "validation": {
                     "required": "This field is required"
@@ -2379,8 +2403,8 @@
                 "required": false,
                 "validation": {
                     "pattern": {
-                        "value": "^[a-zA-Z0-9]+$",
-                        "message": "It should contain digits and letters only"
+                        "value": "^(?! )(?=.*[^ ]$)[a-zA-Z0-9 ]+$",
+                        "message": "Please enter a valid vertical name"
                     }
                 }
             },
@@ -2391,8 +2415,8 @@
                 "required": false,
                 "validation": {
                     "pattern": {
-                        "value": "^[a-zA-Z0-9]+$",
-                        "message": "It should contain digits and letters only"
+                        "value": "^(?! )(?=.*[^ ]$)[a-zA-Z0-9 ]+$",
+                        "message": "Please enter a valid sub vertical name"
                     }
                 }
             },
@@ -2517,8 +2541,8 @@
                         "message": "It should not exceed 10 digits"
                     },
                     "pattern": {
-                        "value": "^[0-9]*$",
-                        "message": "It should contain only digits"
+                        "value": "^[6-9][0-9]{9}$",
+                        "message": "It should contains digits starting with [6-9]"
                     }
                 }
             },
@@ -2539,7 +2563,7 @@
                 "id": "location",
                 "label": "Location",
                 "type": "autocomplete",
-                "multiple": true,
+                "all": true,
                 "required": true,
                 "validation": {
                     "required": "This field is required"
@@ -2565,8 +2589,8 @@
                 "required": false,
                 "validation": {
                     "pattern": {
-                        "value": "^[a-zA-Z0-9]+$",
-                        "message": "It should contain digits and letters only"
+                        "value": "^(?! )(?=.*[^ ]$)[a-zA-Z0-9 ]+$",
+                        "message": "Please enter a valid vertical name"
                     }
                 }
             },
@@ -2577,8 +2601,8 @@
                 "required": false,
                 "validation": {
                     "pattern": {
-                        "value": "^[a-zA-Z0-9]+$",
-                        "message": "It should contain digits and letters only"
+                        "value": "^(?! )(?=.*[^ ]$)[a-zA-Z0-9 ]+$",
+                        "message": "Please enter a valid sub vertical name"
                     }
                 }
             },
@@ -2703,8 +2727,8 @@
                         "message": "It should not exceed 10 digits"
                     },
                     "pattern": {
-                        "value": "^[0-9]*$",
-                        "message": "It should contain only digits"
+                        "value": "^[6-9][0-9]{9}$",
+                        "message": "It should contains digits starting with [6-9]"
                     }
                 }
             },
@@ -2725,7 +2749,7 @@
                 "id": "location",
                 "label": "Location",
                 "type": "autocomplete",
-                "multiple": true,
+                "all": true,
                 "required": true,
                 "validation": {
                     "required": "This field is required"
@@ -2751,8 +2775,8 @@
                 "required": false,
                 "validation": {
                     "pattern": {
-                        "value": "^[a-zA-Z0-9]+$",
-                        "message": "It should contain digits and letters only"
+                        "value": "^(?! )(?=.*[^ ]$)[a-zA-Z0-9 ]+$",
+                        "message": "Please enter a valid vertical name"
                     }
                 }
             },
@@ -2763,8 +2787,8 @@
                 "required": false,
                 "validation": {
                     "pattern": {
-                        "value": "^[a-zA-Z0-9]+$",
-                        "message": "It should contain digits and letters only"
+                        "value": "^(?! )(?=.*[^ ]$)[a-zA-Z0-9 ]+$",
+                        "message": "Please enter a valid sub vertical name"
                     }
                 }
             },
@@ -2889,8 +2913,8 @@
                         "message": "It should not exceed 10 digits"
                     },
                     "pattern": {
-                        "value": "^[0-9]*$",
-                        "message": "It should contain only digits"
+                        "value": "^[6-9][0-9]{9}$",
+                        "message": "It should contains digits starting with [6-9]"
                     }
                 }
             },
@@ -2911,7 +2935,7 @@
                 "id": "location",
                 "label": "Location",
                 "type": "autocomplete",
-                "multiple": true,
+                "all": true,
                 "required": true,
                 "validation": {
                     "required": "This field is required"
@@ -2937,8 +2961,8 @@
                 "required": false,
                 "validation": {
                     "pattern": {
-                        "value": "^[a-zA-Z0-9]+$",
-                        "message": "It should contain digits and letters only"
+                        "value": "^(?! )(?=.*[^ ]$)[a-zA-Z0-9 ]+$",
+                        "message": "Please enter a valid vertical name"
                     }
                 }
             },
@@ -2949,8 +2973,8 @@
                 "required": false,
                 "validation": {
                     "pattern": {
-                        "value": "^[a-zA-Z0-9]+$",
-                        "message": "It should contain digits and letters only"
+                        "value": "^(?! )(?=.*[^ ]$)[a-zA-Z0-9 ]+$",
+                        "message": "Please enter a valid sub vertical name"
                     }
                 }
             },
@@ -3067,8 +3091,8 @@
                         "message": "It should not exceed 10 digits"
                     },
                     "pattern": {
-                        "value": "^[0-9]*$",
-                        "message": "It should contain only digits"
+                        "value": "^[6-9][0-9]{9}$",
+                        "message": "It should contains digits starting with [6-9]"
                     }
                 }
             },
@@ -3368,8 +3392,8 @@
                         "message": "It should not exceed 10 digits"
                     },
                     "pattern": {
-                        "value": "^[0-9]*$",
-                        "message": "It should contain only digits"
+                        "value":"^[6-9][0-9]{9}$",
+                        "message": "It should contains digits starting with [6-9]"
                     }
                 }
             },
@@ -3623,8 +3647,8 @@
                         "message": "It should not exceed 10 digits"
                     },
                     "pattern": {
-                        "value": "^[0-9]*$",
-                        "message": "It should contain only digits"
+                        "value": "^[6-9][0-9]{9}$",
+                        "message": "It should contains digits starting with [6-9]"
                     }
                 }
             },
@@ -3930,8 +3954,8 @@
                         "message": "It should not exceed 10 digits"
                     },
                     "pattern": {
-                        "value": "^[0-9]*$",
-                        "message": "It should contain only digits"
+                        "value": "^[6-9][0-9]{9}$",
+                        "message": "It should contains digits starting with [6-9]"
                     }
                 }
             },
@@ -3952,7 +3976,7 @@
                 "id": "location",
                 "label": "Location",
                 "type": "autocomplete",
-                "multiple": true,
+                "all": true,
                 "required": true,
                 "validation": {
                     "required": "This field is required"
@@ -3998,8 +4022,8 @@
                 "required": false,
                 "validation": {
                     "pattern": {
-                        "value": "^[a-zA-Z0-9]+$",
-                        "message": "It should contain digits and letters only"
+                        "value": "^(?! )(?=.*[^ ]$)[a-zA-Z0-9 ]+$",
+                        "message": "Please enter a valid vertical name"
                     }
                 }
             },
@@ -4010,8 +4034,8 @@
                 "required": false,
                 "validation": {
                     "pattern": {
-                        "value": "^[a-zA-Z0-9]+$",
-                        "message": "It should contain digits and letters only"
+                        "value": "^(?! )(?=.*[^ ]$)[a-zA-Z0-9 ]+$",
+                        "message": "Please enter a valid sub vertical name"
                     }
                 }
             },

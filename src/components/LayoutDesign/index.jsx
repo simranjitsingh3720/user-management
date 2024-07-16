@@ -1,42 +1,39 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import NavbarDrawer from '../NavbarDrawer';
 import Header from '../Header';
-import { drawerWidth } from '../../utils/globalConstants';
-import useSideNavData from '../NavbarDrawer/hooks/useSideNavData';
+import { drawerWidth, MODULE_TYPE } from '../../utils/globalConstants';
 import { useLocation } from 'react-router-dom';
+import { COMMON_WORDS } from '../../utils/constants';
 
 const HEADER_HEIGHT = 64;
-const DASHBOARD = 'dashboard';
-
-export const getLabelFromPath = (pathData, sideNavData) => {
-  for (const item of sideNavData) {
-    if (item.route && item.route === pathData) {
-      return item.label;
-    }
-    if (item.child) {
-      for (const childItem of item.child) {
-        if (childItem.route && childItem.route === pathData) {
-          return childItem.label;
-        }
-      }
-    }
-  }
-  return null;
-};
 
 function ResponsiveDrawer({ showSidebarAndHeader, children }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
-  const location = useLocation();
-  let pathname = location?.pathname?.split('/')[1]?.replace('-', ' ') || '';
-  const [selectedNavbar, setSelectedNavbar] = useState(pathname ? pathname : DASHBOARD);
+  const [selectedNavbar, setSelectedNavbar] = useState('');
   const [selectedParentIndex, setSelectedParentIndex] = useState(null);
+  const location = useLocation();
 
-  const sideNav = useSideNavData();
-  const scopes = JSON.parse(localStorage.getItem('scopes'))?.read || [];
-  const sideNavData = sideNav.filter(item => scopes.some(scope => scope.id === item.id));
+  const scopes = useMemo(() => JSON.parse(localStorage.getItem(COMMON_WORDS.SCOPES))?.read || [], []);
+  let sideNavData = (scopes && scopes.length > 0 && scopes.filter(item => item.moduleType === MODULE_TYPE)) || [];
+  sideNavData = sideNavData.sort((a, b) => (parseInt(a.displayOrder) || 0) - (parseInt(b.displayOrder) || 0));
+
+  const getModuleName = useCallback((pathname) => {
+    scopes.forEach((scope) => {
+      if (scope.route === pathname) {
+        setSelectedNavbar(scope.moduleName);
+      }
+    }
+    );
+  }, [scopes, setSelectedNavbar]);
+
+  useEffect(() => {
+    let pathname = location?.pathname?.split('/')[1] || '';
+    getModuleName(pathname);
+  }, [getModuleName, location]);
+ 
 
   const handleDrawerToggle = () => {
     if (!isClosing) {

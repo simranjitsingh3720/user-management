@@ -1,6 +1,8 @@
-import axiosInstance from "../../../utils/axiosInstance"; 
+import apiUrls from '../../../utils/apiUrls';
+import axiosInstance from '../../../utils/axiosInstance';
 
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
+import { buildQueryString } from '../../../utils/globalizationFunction';
 
 function useGetUser(input) {
   const [data, setData] = useState([]);
@@ -8,9 +10,18 @@ function useGetUser(input) {
 
   const fetchData = async () => {
     try {
-      let url = `/api/user?pageNo=0&pageSize=1000`;
+      const params = {
+        pageNo: 0,
+        pageSize: 1000,
+        status: true,
+      };
+      let url = `${apiUrls.getUser}?${buildQueryString(params)}`;
       if (input) {
-        url += `&searchKey=firstName&searchString=${input}`;
+        const params = {
+          searchKey: 'firstName',
+          searchString: input,
+        };
+        url += `&${buildQueryString(params)}`;
       }
       const response = await axiosInstance.get(url);
       setData(response?.data?.data);

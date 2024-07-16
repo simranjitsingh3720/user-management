@@ -1,23 +1,23 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axiosInstance from "../utils/axiosInstance";
-import apiUrls from "../utils/apiUrls";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import axiosInstance from '../utils/axiosInstance';
+import apiUrls from '../utils/apiUrls';
+import { buildQueryString, getFullName } from '../utils/globalizationFunction';
 
 export const getParentCode = createAsyncThunk(
-  "parentCode/getParentCode",
+  'parentCode/getParentCode',
   async (roleId, { getState, rejectWithValue }) => {
     try {
-        const url = `${apiUrls.getParentCode}/${roleId?.id}/parent?productName=sales&status=true`;
+      if (roleId) {
+        const params = buildQueryString({ productName: 'sales', status: true });
+        const url = `${apiUrls.getParentCode}/${roleId?.id}/parent?${params}`;
         const response = await axiosInstance.get(url);
         const formattedArray = response?.data?.data?.map((obj) => ({
           ...obj,
-          label:  
-           obj?.firstName.charAt(0).toUpperCase() + obj?.firstName.slice(1) +
-            (obj?.lastName ? " " + obj.lastName.charAt(0).toUpperCase() + obj.lastName.slice(1) : "")
-          ,
+          label: getFullName(obj?.firstName, obj?.lastName),
           value: obj?.id,
         }));
         return formattedArray;
-      
+      }
     } catch (error) {
       console.error(error);
       return rejectWithValue([]);
@@ -26,11 +26,11 @@ export const getParentCode = createAsyncThunk(
 );
 
 export const parentCode = createSlice({
-  name: "parentCode",
+  name: 'parentCode',
   initialState: {
     parentCode: [],
     loading: true,
-    error: "",
+    error: '',
   },
   reducers: {},
   extraReducers: (builder) => {

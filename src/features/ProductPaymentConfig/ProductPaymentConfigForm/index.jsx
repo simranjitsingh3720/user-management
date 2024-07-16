@@ -2,7 +2,7 @@ import { Autocomplete, TextField } from '@mui/material';
 import React, { useEffect } from 'react';
 import styles from './styles.module.scss';
 import { Controller, useForm } from 'react-hook-form';
-import { useParams } from 'react-router-dom';
+import { useFetcher, useParams } from 'react-router-dom';
 import useGetLobListData from '../../ProductModule/hooks/useGetLobListData';
 import useGetProductList from '../hooks/useGetProductList';
 import useGetPayment from '../hooks/useGetPayment';
@@ -16,7 +16,7 @@ import { FORM_HEADER_TEXT } from '../../../utils/constants';
 function ProductPaymentConfigForm() {
   const { id } = useParams();
 
-  const { handleSubmit, control, setValue, formState, getValues } = useForm({
+  const { handleSubmit, control, setValue, formState, getValues, watch } = useForm({
     defaultValues: {
       lob: null,
       product: null,
@@ -50,6 +50,12 @@ function ProductPaymentConfigForm() {
       fetchData(paymentDataByID?.data.lob?.id);
     }
   }, [paymentDataByID]);
+
+  const lobWatch = watch("lob");
+
+  useEffect(()=> {
+    setValue("product", null)
+  }, [lobWatch])
 
   const onSubmit = (data) => {
     if (id) {

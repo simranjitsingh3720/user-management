@@ -4,11 +4,12 @@ import ProducerTable from './ProducerTable/index';
 import useRevalidationList from './hooks/useRevalidationList';
 import { setTableName } from '../../stores/slices/exportSlice';
 import { useDispatch } from 'react-redux';
+import { PAGECOUNT } from '../../utils/globalConstants';
 
 const RevalidationList = () => {
   const [userId, setUserId] = useState('');
   const [page, setPage] = useState(0);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(PAGECOUNT);
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const dispatch = useDispatch();
 

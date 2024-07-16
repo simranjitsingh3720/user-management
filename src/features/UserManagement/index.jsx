@@ -12,6 +12,8 @@ import { useDispatch } from 'react-redux';
 import CustomDialog from '../../components/CustomDialog';
 import SearchComponent from '../../components/SearchComponent';
 import { setTableName } from '../../stores/slices/exportSlice';
+import { PAGECOUNT } from '../../utils/globalConstants';
+import usePermissions from '../../hooks/usePermission';
 
 function UserManagement() {
   const navigate = useNavigate();
@@ -19,11 +21,12 @@ function UserManagement() {
   const [query, setQuery] = useState('');
   const [searched, setSearched] = useState(SEARCH_OPTIONS[0].value);
   const [page, setPage] = useState(0);
-  const [pageSize, setPageSize] = useState(10);
-  const [order, setOrder] = useState(COMMON_WORDS.ASC);
+  const [pageSize, setPageSize] = useState(PAGECOUNT);
+  const [order, setOrder] = useState(COMMON_WORDS.DESC);
   const [orderBy, setOrderBy] = useState(COMMON_WORDS.CREATED_AT);
-  const { data, loading, fetchData, setLoading } = useGetUser(page, pageSize, query, order, orderBy);
+  const { data, loading, fetchData } = useGetUser(page, pageSize, query, order, orderBy);
   const [userData, setUserData] = useState([]);
+  const { canCreate, canUpdate } = usePermissions();
 
   const updateUserForm = useCallback((row) => {
     navigate(NAVIGATE_TO_FORM + '/'+ row.id);
@@ -36,11 +39,12 @@ function UserManagement() {
         return {
           ...item,
           checked: item?.status,
+          disabled: !canUpdate
         };
       }) || [];
     setUserData(transformedData);
     dispatch(setTableName(transformedData[0]?.label));
-  }, [data]);
+  }, [data, canUpdate, dispatch]);
 
   const handleInsillionStatus = useCallback((data, row) => {
     dispatch(
@@ -55,8 +59,12 @@ function UserManagement() {
   const header = useMemo(() => Header(updateUserForm, handleInsillionStatus), [updateUserForm, handleInsillionStatus]);
 
   const handleGo = () => {
-    setUserData([]);
-    fetchData(searched, query);
+    if(query){
+      setUserData([]);
+      fetchData(searched, query);
+    } else {
+      fetchData()
+    }
   };
 
   return (
@@ -73,6 +81,7 @@ function UserManagement() {
          handleGo={handleGo}
          showExportButton={true}
          showButton
+         canCreate={canCreate}
       />
       <div className="mt-4">
         <CustomTable
@@ -88,6 +97,7 @@ function UserManagement() {
           setOrder={setOrder}
           orderBy={orderBy}
           setOrderBy={setOrderBy}
+          canUpdate={canUpdate}
         />
       </div>
       <CustomDialog />

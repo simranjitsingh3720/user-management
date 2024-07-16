@@ -16,7 +16,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import { useNavigate } from "react-router-dom";
 import CustomButton from "../../../../components/CustomButton";
 
-function List({ item, fetchData: fetchGroupList }) {
+function List({ item, fetchData: fetchGroupList, canUpdate }) {
   const [changeStatusOpen, setChangeStatusOpen] = useState(false);
   const [checked] = useState(item?.otpException.status);
 
@@ -70,13 +70,14 @@ function List({ item, fetchData: fetchGroupList }) {
               checked={checked}
               onChange={handleChange}
               inputProps={{ "aria-label": "toggle button" }}
+              disabled={!canUpdate}
             />
           </div>
           <div className={styles.styledActiveSelect}>
             {item?.otpException.status ? "Active" : "Inactive"}
           </div>
         </div>
-        <div className={styles.editIcon}>
+        {canUpdate && (<div className={styles.editIcon}>
           <Tooltip title="Edit Proposal OTP">
             <IconButton
               aria-label="back"
@@ -88,7 +89,7 @@ function List({ item, fetchData: fetchGroupList }) {
               <EditIcon color="primary" />
             </IconButton>
           </Tooltip>
-        </div>
+        </div>)}
       </div>
       <Dialog
         onClose={handleChangeStatusClose}
