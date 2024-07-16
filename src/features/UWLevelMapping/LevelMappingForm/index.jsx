@@ -132,7 +132,7 @@ function LevelMappingForm({ dataById, fetchData }) {
                 helperText={errors.lob?.message}
                 disableClearable={true}
                 placeholder={COMMON_WORDS.SELECT}
-                disabled={editData?.data?.id}
+                disabled={editData?.data?.id ? true : false}
                 renderOption={(props, option) => (
                   <li {...props} key={option.id}>
                     {option?.lob?.toUpperCase()}
@@ -161,7 +161,7 @@ function LevelMappingForm({ dataById, fetchData }) {
                 helperText={errors.product?.message}
                 disableClearable={true}
                 placeholder={COMMON_WORDS.SELECT}
-                disabled={editData?.data?.id}
+                disabled={editData?.data?.id ? true : false}
                 renderOption={(props, option) => (
                   <li {...props} key={option.id}>
                     {option?.product?.toUpperCase()}
