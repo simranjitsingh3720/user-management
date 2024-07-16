@@ -118,6 +118,11 @@ const AutocompleteField = ({
               <TextField
                 {...params}
                 placeholder={PLACEHOLDER}
+                sx={{
+                  '& .MuiFormHelperText-root': {
+                    margin: 0,
+                  },
+                }}
                 error={Boolean(errors[name])}
                 helperText={errors[name] ? REQUIRED_MSG : ''}
               />

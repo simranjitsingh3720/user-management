@@ -33,6 +33,8 @@ const SelectField = ({
         name={name}
         control={control}
         defaultValue={menuItem[0]?.value || ''}
+        rules={{
+          required: required ? "This field is required" : false,}}
         render={({ field }) => {
           let value = field.value;
           if (name === GC_STATUS) {
