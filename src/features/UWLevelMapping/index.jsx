@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Box} from '@mui/material';
+import { Box } from '@mui/material';
 import CustomTable from '../../components/CustomTable';
 import { tableHeaders } from './utils/tableHeaders';
 import useGetProductLocationLevel from './hooks/useGetProductLocationLevel';
@@ -14,6 +14,7 @@ import usePermissions from '../../hooks/usePermission';
 import LevelMappingForm from './LevelMappingForm';
 import { useParams } from 'react-router-dom';
 import { PAGECOUNT } from '../../utils/globalConstants';
+import useCreateProductLevel from './hooks/useCreateProductLevel';
 
 function UWLevelMapping() {
   const dispatch = useDispatch();
@@ -26,9 +27,13 @@ function UWLevelMapping() {
   const [orderBy, setOrderBy] = useState(COMMON_WORDS.CREATED_AT);
 
   const { canCreate, canUpdate } = usePermissions();
+  const { fetchDataById, data: dataById } = useCreateProductLevel();
+
+  console.log('dataById', dataById);
 
   const handleEditClick = (row) => {
-    
+    fetchDataById(row?.id);
+    console.log('row', row);
   };
 
   const handleStatusClicked = (data, row) => {
@@ -46,8 +51,8 @@ function UWLevelMapping() {
 
   return (
     <Box>
-      {canCreate && (<LevelMappingForm />)}
-      
+      {canCreate && <LevelMappingForm dataById={dataById} />}
+
       <div className="mt-4">
         <CustomTable
           columns={HEADER_COLUMNS}

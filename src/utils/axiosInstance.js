@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 const instance = axios.create({
   baseURL: BASE_URL,
-  timeout: 5000,
+  timeout: 10000,
 });
 
 // Axios request interceptor to add token to requests

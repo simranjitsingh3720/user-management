@@ -14,7 +14,7 @@ import { useParams } from 'react-router-dom';
 import useCreateProductLevel from '../hooks/useCreateProductLevel';
 import CustomFormHeader from '../../../components/CustomFormHeader';
 
-function LevelMappingForm() {
+function LevelMappingForm({ dataById }) {
   const dispatch = useDispatch();
   const params = useParams();
   const { employeeId, id } = params;
@@ -42,38 +42,33 @@ function LevelMappingForm() {
     },
   });
 
-  const { postData, loading, fetchDataById, data, updateData } = useCreateProductLevel();
+  const { postData, loading, data, updateData } = useCreateProductLevel();
 
   useEffect(() => {
-    if (id) {
-      fetchDataById(id);
-    }
-  }, [id]);
-
-  useEffect(() => {
-    if (data && data?.data) {
-      dispatch(fetchAllProductData({ lobId: data?.data?.lob?.id }));
+    if (dataById && dataById?.data) {
+      dispatch(fetchAllProductData({ lobId: dataById?.data?.lob?.id }));
       dispatch(getLocations());
 
       const refactorLocation = {
         label:
-          data?.data?.location?.locationName?.charAt(0)?.toUpperCase() + data?.data?.location?.locationName?.slice(1),
-        value: data?.data?.location?.locationName,
+          dataById?.data?.location?.locationName?.charAt(0)?.toUpperCase() +
+          dataById?.data?.location?.locationName?.slice(1),
+        value: dataById?.data?.location?.locationName,
       };
 
-      if (data?.data?.level) {
+      if (dataById?.data?.level) {
         const createLevel = {
-          label: LEVEl_LABEL_ENUM[data?.data?.level],
-          value: data?.data?.level,
+          label: LEVEl_LABEL_ENUM[dataById?.data?.level],
+          value: dataById?.data?.level,
         };
         setValue('level', createLevel);
       }
-      setValue('lob', data?.data?.lob);
-      setValue('product', data?.data?.products || null);
+      setValue('lob', dataById?.data?.lob);
+      setValue('product', dataById?.data?.products || null);
       setValue('location', refactorLocation);
-      setValue('leader', data?.data?.isLeader ? 'yes' : 'no');
+      setValue('leader', dataById?.data?.isLeader ? 'yes' : 'no');
     }
-  }, [data]);
+  }, [dataById]);
 
   const onSubmit = (data) => {
     if (id) {
