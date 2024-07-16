@@ -9,7 +9,7 @@ import { addAsyncReducers } from './../../utils/addAsyncReducers';
 export const getGroup = createAsyncThunk(
   'group/getGroup',
   async (
-    { isAll, page, pageSize, order, orderBy, lobId, childFieldsToFetch, ids, edge, searchKey, searchString } = {},
+    { isAll, page, pageSize, order, orderBy, lobId, childFieldsToFetch, ids, edge, searchKey, searchString, status } = {},
     { rejectWithValue }
   ) => {
     try {
@@ -25,6 +25,7 @@ export const getGroup = createAsyncThunk(
         edge,
         searchKey,
         searchString,
+        status
       });
       const response = await axiosInstance.get(apiUrls.getGroup, { params });
       return response.data;
