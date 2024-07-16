@@ -4,7 +4,8 @@ import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import styles from "./styles.module.scss";
-import { DATE_FORMAT, EMPTY_START_DATE_ERR, END_DATE, END_DATE_LESS_ERR, REQUIRED_MSG, START_DATE } from "./utils/constants";
+import { EMPTY_START_DATE_ERR, END_DATE, END_DATE_LESS_ERR, REQUIRED_MSG, START_DATE } from "./utils/constants";
+import { DATE_FORMAT } from "./../../utils/globalConstants";
 
 const DateField = ({
   control,
@@ -63,11 +64,11 @@ const DateField = ({
           name={name}
           control={control}
           defaultValue={name === START_DATE ? dayjs().format(DATE_FORMAT) : ""}
-          rules={{ validate: validateDate, required: required ? REQUIRED_MSG : "" }}
+          rules={{ validate: validateDate, required: required ? `${label} is required` : false }}
           render={({ field }) => (
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
               <DatePicker
-                value={field.value ? dayjs(field.value) : null}
+                value={field.value ? dayjs(field.value, DATE_FORMAT) : null}
                 className={`${styles.dateStyle} ${classes}`}
                 slotProps={{
                   textField: {
