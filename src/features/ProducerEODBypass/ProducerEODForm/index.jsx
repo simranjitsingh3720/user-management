@@ -47,7 +47,6 @@ function ProducerEODFrom() {
   const { postData, loading, UpdateDataFun } = useCreateEODBypass();
 
   const onSubmit = (data) => {
-    console.log('data', data);
     if (id) {
       const payload = {
         id: id,
@@ -62,8 +61,8 @@ function ProducerEODFrom() {
     } else {
       const payload = {
         producerId: data.producerCode.id,
-        startDate: moment(data?.data?.startDate).format('DD/MM/YYYY'),
-        endDate: moment(data?.data?.endDate).format('DD/MM/YYYY'),
+        startDate: moment(data?.startDate).format('DD/MM/YYYY'),
+        endDate: moment(data?.endDate).format('DD/MM/YYYY'),
         reason: data.reason,
       };
       postData(payload);
