@@ -4,11 +4,15 @@ import apiUrls from "../../utils/apiUrls";
 
 export const fetchUser = createAsyncThunk(
   "lob/fetchUser",
-  async ({ userType, searchKey } = {}, { rejectWithValue }) => {
+  async ({ userType, searchKey, status } = {}, { rejectWithValue }) => {
     try {
-      const url = userType
+      let url = userType
         ? `${apiUrls.getUser}?searchString=${userType}&searchKey=${searchKey}`
         : `${apiUrls.getUser}`;
+
+      if(status) {
+        url = `${url}&status=${status}`;
+      }
       const response = await axiosInstance.get(url);
       return response.data;
     } catch (error) {

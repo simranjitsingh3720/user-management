@@ -12,6 +12,7 @@ export const buildParams = ({
   edge,
   searchKey,
   searchString,
+  status
 }) => {
   let params = {};
 
@@ -54,6 +55,10 @@ export const buildParams = ({
   if (searchKey) {
     params.searchKey = searchKey;
     params.searchString = searchString;
+  }
+
+  if (status) {
+    params.status = status;
   }
 
   return params;
