@@ -44,7 +44,7 @@ function useGetProductLocationLevel(page, pageSize, order, orderBy, employeeId) 
           label: productLocationLevelMappings.label,
           lob: lobs[0].lob,
           product: products[0].product,
-          location: locations[0].locationName,
+          location: locations[0].txtOffice,
           level: productLocationLevelMappings.level,
           status: productLocationLevelMappings.status,
           createdAt: productLocationLevelMappings.createdAt,

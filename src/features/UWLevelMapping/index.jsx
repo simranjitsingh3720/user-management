@@ -29,11 +29,8 @@ function UWLevelMapping() {
   const { canCreate, canUpdate } = usePermissions();
   const { fetchDataById, data: dataById } = useCreateProductLevel();
 
-  console.log('dataById', dataById);
-
   const handleEditClick = (row) => {
     fetchDataById(row?.id);
-    console.log('row', row);
   };
 
   const handleStatusClicked = (data, row) => {
@@ -51,7 +48,7 @@ function UWLevelMapping() {
 
   return (
     <Box>
-      {canCreate && <LevelMappingForm dataById={dataById} />}
+      {canCreate && <LevelMappingForm dataById={dataById} fetchData={fetchData} />}
 
       <div className="mt-4">
         <CustomTable
