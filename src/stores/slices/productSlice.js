@@ -8,9 +8,9 @@ import { addAsyncReducers } from './../../utils/addAsyncReducers';
 
 export const fetchAllProductData = createAsyncThunk(
   'product/fetchAllProductData',
-  async ({ isAll, page, pageSize, order, orderBy, lobId, childFieldsToFetch, ids, edge } = {}, { rejectWithValue }) => {
+  async ({ isAll, page, pageSize, order, orderBy, lobId, childFieldsToFetch, ids, edge, status } = {}, { rejectWithValue }) => {
     try {
-      const params = buildParams({ isAll, page, pageSize, order, orderBy, lobId, childFieldsToFetch, ids, edge });
+      const params = buildParams({ isAll, page, pageSize, order, orderBy, lobId, childFieldsToFetch, ids, edge, status });
       const response = await axiosInstance.get(apiUrls.getProduct, { params });
       return response.data;
     } catch (error) {
