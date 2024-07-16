@@ -10,6 +10,7 @@ import { fetchUser } from '../../stores/slices/userSlice';
 import CustomTable from '../../components/CustomTable';
 import generateTableHeaders from './utils/generateTableHeaders';
 import { useNavigate } from 'react-router-dom';
+import usePermissions from '../../hooks/usePermission';
 
 function ProducerEODBypass() {
   const navigate = useNavigate();
@@ -23,6 +24,7 @@ function ProducerEODBypass() {
   const [orderBy, setOrderBy] = useState(COMMON_WORDS.CREATED_AT);
 
   const { data, loading, fetchData, count } = useGetEODBypass(page, pageSize, date, order, orderBy);
+  const { canCreate, canUpdate } = usePermissions();
 
   useEffect(() => {
     dispatch(
@@ -78,6 +80,7 @@ function ProducerEODBypass() {
         buttonText={BUTTON_TEXT.PRODUCER_EOD}
         navigateRoute="/producer-eod-bypass-list/form"
         showExportButton
+        canCreate={canCreate}
       />
       <div className="mt-4">
         <CustomTable
@@ -93,6 +96,7 @@ function ProducerEODBypass() {
           setOrder={setOrder}
           orderBy={orderBy}
           setOrderBy={setOrderBy}
+          canUpdate={canUpdate}
         />
       </div>
     </div>
