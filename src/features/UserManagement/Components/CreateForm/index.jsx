@@ -666,11 +666,11 @@ function CreateUserCreationForm() {
               )
             )}
           </div>
-          <div className="px-8 pt-3 pb-5">
-            <CustomButton type="submit">Submit</CustomButton>
-          </div>
         </div>
       </form>
+      <div>
+        <CustomButton type="submit">Submit</CustomButton>
+      </div>
     </>
   );
 }
