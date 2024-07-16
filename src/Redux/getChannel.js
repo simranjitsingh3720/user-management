@@ -15,7 +15,7 @@ export const getChannels = createAsyncThunk('channelType/getChannels', async (_,
     const formattedArray = response?.data?.data?.map((obj) => ({
       ...obj,
       label: toCapitalize(obj, 'txtChannelName'),
-      value: obj?.txtChannelName,
+      value: obj?.id,
     }));
     return formattedArray;
   } catch (error) {

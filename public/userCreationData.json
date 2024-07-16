@@ -792,7 +792,6 @@
                 "type": "autocomplete",
                 "required": true,
                 "multiple":true,
-                "disabled": true,
                 "validation": {
                     "required": "This field is required"
                 }
@@ -803,7 +802,6 @@
                 "type": "autocomplete",
                 "required": true,
                 "multiple":true,
-                "disabled": true,
                 "validation": {
                     "required": "This field is required"
                 }
@@ -1152,7 +1150,6 @@
                 "type": "autocomplete",
                 "required": true,
                 "multiple":true,
-                "disabled": true,
                 "validation": {
                     "required": "This field is required"
                 }
@@ -1163,7 +1160,6 @@
                 "type": "autocomplete",
                 "required": true,
                 "multiple":true,
-                "disabled": true,
                 "validation": {
                     "required": "This field is required"
                 }
@@ -1512,7 +1508,6 @@
                 "type": "autocomplete",
                 "required": true,
                 "multiple":true,
-                "disabled": true,
                 "validation": {
                     "required": "This field is required"
                 }
@@ -1523,7 +1518,6 @@
                 "type": "autocomplete",
                 "required": true,
                 "multiple":true,
-                "disabled": true,
                 "validation": {
                     "required": "This field is required"
                 }
