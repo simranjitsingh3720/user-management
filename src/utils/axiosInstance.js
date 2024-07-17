@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { BASE_URL, TOKEN } from '../utils/globalConstants';
-import { useNavigate } from 'react-router-dom';
 
 const instance = axios.create({
   baseURL: BASE_URL,

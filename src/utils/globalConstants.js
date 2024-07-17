@@ -28,6 +28,7 @@ export const BUTTON_TEXT = {
   GROUP: 'Create New Group',
   PRODUCT_LOCATION_LEVEL: 'Create Product Location Level',
   EMPLOYEE_FLAG_CONFIG: 'Create Employee Flag Config',
+  HOUSE_BANK: 'Create House Bank Master Confirguration',
 };
 
 export const STATUS = [
