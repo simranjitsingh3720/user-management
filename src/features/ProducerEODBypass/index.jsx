@@ -50,8 +50,8 @@ function ProducerEODBypass() {
     </li>
   );
   const fetchIdsAndConvert = (inputData) => {
-    const ids = inputData?.map((item) => item.id);
-    return ids?.join();
+    const ids = (inputData || []).map((item) => item.id);
+    return ids.join();
   };
   const handleGo = () => {
     const resultUserString = fetchIdsAndConvert(userData);
@@ -64,13 +64,6 @@ function ProducerEODBypass() {
 
   const HEADER_COLUMNS = generateTableHeaders(handleEditClick);
 
-  const onSubmit = (data) => {
-    setDate({
-      startDate: data.startDate,
-      endDate: data.endDate,
-    });
-  };
-
   return (
     <div>
       <SearchComponenet
@@ -82,14 +75,12 @@ function ProducerEODBypass() {
         optionLabel={optionLabelUser}
         placeholder={getPlaceHolder(COMMON_WORDS.USER)}
         renderOptionFunction={renderOptionUserFunction}
-        // handleGo={handleGo}
-        selectOptions={[]}
+        handleGo={handleGo}
         showButton={true}
         buttonText={BUTTON_TEXT.PRODUCER_EOD}
         navigateRoute="/producer-eod-bypass-list/form"
-        showExportButton={true}
+        showExportButton
         canCreate={canCreate}
-        onSubmit={onSubmit}
       />
       <div className="mt-4">
         <CustomTable

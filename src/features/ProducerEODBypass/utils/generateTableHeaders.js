@@ -12,7 +12,7 @@ function generateTableHeaders(handleEditClick) {
     },
     {
       id: 'unlockedDays',
-      value: 'Unlocked days',
+      value: 'Unlocked Days',
     },
     {
       id: 'startDate',

@@ -15,7 +15,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchUser } from '../../../stores/slices/userSlice';
 import InputField from '../../../components/CustomTextfield';
 import { textFieldValidation } from '../utils/constants';
-import moment from 'moment/moment';
 
 function ProducerEODFrom() {
   const { id } = useParams();
@@ -27,13 +26,14 @@ function ProducerEODFrom() {
       fetchUser({
         userType: COMMON_WORDS.PRODUCER,
         searchKey: COMMON_WORDS.ROLE_NAME,
+        status: true,
       })
     );
   }, [dispatch]);
 
   const { data, fetchData } = useGetDataById();
 
-  const { handleSubmit, control, setValue, formState, watch } = useForm({
+  const { handleSubmit, control, setValue, formState, watch, reset } = useForm({
     defaultValues: {
       producerCode: null,
       startDate: null,
@@ -61,8 +61,8 @@ function ProducerEODFrom() {
     } else {
       const payload = {
         producerId: data.producerCode.id,
-        startDate: moment(data?.startDate).format('DD/MM/YYYY'),
-        endDate: moment(data?.endDate).format('DD/MM/YYYY'),
+        startDate: data?.startDate,
+        endDate: data?.endDate,
         reason: data.reason,
       };
       postData(payload);
@@ -82,7 +82,21 @@ function ProducerEODFrom() {
     }
   }, [data]);
 
-  console.log('user', user);
+  const handleReset = () => {
+    if (id) {
+      reset({
+        reason: '',
+        startDate: '',
+        endDate: '',
+      });
+    }
+    reset({
+      producerCode: null,
+      reason: '',
+      startDate: '',
+      endDate: '',
+    });
+  };
 
   return (
     <div>
@@ -95,6 +109,7 @@ function ProducerEODFrom() {
                   id={id}
                   headerText={FORM_HEADER_TEXT.PRODUCER_EOD}
                   navigateRoute={`/producer-eod-bypass-list`}
+                  handleReset={handleReset}
                 />
               </Grid>
               <Grid item xs={12} sm={6} lg={4}>

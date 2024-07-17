@@ -42,13 +42,12 @@ function useGetEODBypass(page, pageSize, date, order, orderBy) {
 
       let url = `${apiUrls.getEodByPass}?${params}`;
       const response = await axiosInstance.get(url);
-      console.log('response', response);
       const producerEodByPass = response?.data?.data?.map((item) => {
         const { producerEodByPass = {}, producer = [] } = item;
         return {
           id: producerEodByPass.id,
           label: producerEodByPass.label,
-          producerName: producer[0].firstName + ' ' + producer[0].lastName,
+          producerName: (producer[0].firstName || '') + ' ' + (producer[0].lastName || ''),
           producerCode: producer[0].producerCode,
           unlockedDays: calculateUnlockedDays(producerEodByPass.startDate, producerEodByPass.endDate),
           reason: producerEodByPass.reason,
