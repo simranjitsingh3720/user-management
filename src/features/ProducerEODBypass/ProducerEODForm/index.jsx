@@ -84,18 +84,17 @@ function ProducerEODFrom() {
 
   const handleReset = () => {
     if (id) {
+      setValue('reason', '');
+      setValue('startDate', '');
+      setValue('endDate', '');
+    } else {
       reset({
+        producerCode: null,
         reason: '',
         startDate: '',
         endDate: '',
       });
     }
-    reset({
-      producerCode: null,
-      reason: '',
-      startDate: '',
-      endDate: '',
-    });
   };
 
   return (
