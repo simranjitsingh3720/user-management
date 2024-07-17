@@ -1,23 +1,22 @@
 import React, { useState } from 'react';
 
-import { Box, IconButton } from '@mui/material';
+import { Box } from '@mui/material';
 import CustomTable from '../../components/CustomTable';
 import { tableHeaders } from './utils/tableHeaders';
 import useGetProductLocationLevel from './hooks/useGetProductLocationLevel';
 import { CHANGE_STATUS_LABEL, COMMON_WORDS } from '../../utils/constants';
-import SearchComponent from '../../components/SearchComponent';
-import { BUTTON_TEXT, PAGECOUNT } from '../../utils/globalConstants';
-import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { showDialog } from '../../stores/slices/dialogSlice';
 import Actions from './Dialog/Action';
 import CustomDialog from '../../components/CustomDialog';
-import LeftArrow from '../../assets/LeftArrow';
 import Content from '../../components/CustomDialogContent';
 import usePermissions from '../../hooks/usePermission';
+import LevelMappingForm from './LevelMappingForm';
+import { useParams } from 'react-router-dom';
+import { PAGECOUNT } from '../../utils/globalConstants';
+import useCreateProductLevel from './hooks/useCreateProductLevel';
 
 function UWLevelMapping() {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const params = useParams();
   const { employeeId } = params;
@@ -28,9 +27,10 @@ function UWLevelMapping() {
   const [orderBy, setOrderBy] = useState(COMMON_WORDS.CREATED_AT);
 
   const { canCreate, canUpdate } = usePermissions();
+  const { fetchDataById, data: dataById } = useCreateProductLevel();
 
   const handleEditClick = (row) => {
-    navigate(`form/${row.id}`);
+    fetchDataById(row?.id);
   };
 
   const handleStatusClicked = (data, row) => {
@@ -48,22 +48,8 @@ function UWLevelMapping() {
 
   return (
     <Box>
-      <IconButton
-        aria-label="back"
-        onClick={() => {
-          navigate('/uwlevelmappingemployee');
-        }}
-      >
-        <LeftArrow />
-      </IconButton>
-      <span>Go Back</span>
-      <SearchComponent
-        showButton
-        hideSearch
-        buttonText={BUTTON_TEXT.PRODUCT_LOCATION_LEVEL}
-        navigateRoute={'form'}
-        canCreate={canCreate}
-      />
+      {canCreate && <LevelMappingForm dataById={dataById} fetchData={fetchData} />}
+
       <div className="mt-4">
         <CustomTable
           columns={HEADER_COLUMNS}

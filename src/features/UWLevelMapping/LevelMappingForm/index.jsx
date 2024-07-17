@@ -1,5 +1,5 @@
 import { Box, Card, CardContent, Grid } from '@mui/material';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { getLocations } from '../../../Redux/getLocation';
@@ -14,10 +14,16 @@ import { useParams } from 'react-router-dom';
 import useCreateProductLevel from '../hooks/useCreateProductLevel';
 import CustomFormHeader from '../../../components/CustomFormHeader';
 
-function LevelMappingForm() {
+function LevelMappingForm({ dataById, fetchData }) {
   const dispatch = useDispatch();
   const params = useParams();
-  const { employeeId, id } = params;
+  const [editData, setEditData] = useState(dataById);
+
+  useEffect(() => {
+    if (dataById?.data?.id) setEditData(dataById);
+  }, [dataById]);
+
+  const { employeeId } = params;
   const { products, productLoading } = useSelector((state) => state.product);
   const { lob, lobLoading } = useSelector((state) => state.lob);
   const locations = useSelector((state) => state.location.location);
@@ -42,43 +48,34 @@ function LevelMappingForm() {
     },
   });
 
-  const { postData, loading, fetchDataById, data, updateData } = useCreateProductLevel();
+  const { postData, loading, updateData } = useCreateProductLevel(fetchData, setEditData);
 
   useEffect(() => {
-    if (id) {
-      fetchDataById(id);
-    }
-  }, [id]);
-
-  useEffect(() => {
-    if (data && data?.data) {
-      dispatch(fetchAllProductData({ lobId: data?.data?.lob?.id }));
+    if (dataById && dataById?.data) {
+      dispatch(fetchAllProductData({ lobId: dataById?.data?.lob?.id }));
       dispatch(getLocations());
 
-      const refactorLocation = {
-        label:
-          data?.data?.location?.locationName?.charAt(0)?.toUpperCase() + data?.data?.location?.locationName?.slice(1),
-        value: data?.data?.location?.locationName,
-      };
+      const refactorLocation = { ...dataById?.data?.location };
+      refactorLocation.label = refactorLocation.txtOffice;
 
-      if (data?.data?.level) {
+      if (dataById?.data?.level) {
         const createLevel = {
-          label: LEVEl_LABEL_ENUM[data?.data?.level],
-          value: data?.data?.level,
+          label: LEVEl_LABEL_ENUM[dataById?.data?.level],
+          value: dataById?.data?.level,
         };
         setValue('level', createLevel);
       }
-      setValue('lob', data?.data?.lob);
-      setValue('product', data?.data?.products || null);
+      setValue('lob', dataById?.data?.lob);
+      setValue('product', dataById?.data?.products || null);
       setValue('location', refactorLocation);
-      setValue('leader', data?.data?.isLeader ? 'yes' : 'no');
+      setValue('leader', dataById?.data?.isLeader ? 'yes' : 'no');
     }
-  }, [data]);
+  }, [dataById]);
 
   const onSubmit = (data) => {
-    if (id) {
+    if (editData?.data?.id) {
       const payload = {
-        id: id,
+        id: editData?.data?.id,
         properties: {
           locationId: data.location.id,
           level: data.level.value,
@@ -100,13 +97,13 @@ function LevelMappingForm() {
   };
 
   const handleReset = () => {
-    if (!id) {
-      setValue('lob', null);
-      setValue('product', null);
-    }
+    setEditData([]);
+    setValue('lob', null);
+    setValue('product', null);
     setValue('level', null);
     setValue('location', null);
   };
+
   return (
     <Box component="form" onSubmit={handleSubmit(onSubmit)}>
       <Card>
@@ -114,9 +111,9 @@ function LevelMappingForm() {
           <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
             <Grid item xs={12}>
               <CustomFormHeader
-                id={params.id}
+                id={editData?.data?.id}
                 headerText={FORM_HEADER_TEXT.PRODUCT_LOCATION}
-                navigateRoute={`/uwlevelmappingemployee/${employeeId}`}
+                navigateRoute={`/uwlevelmappingemployee`}
                 handleReset={handleReset}
               />
             </Grid>
@@ -135,16 +132,16 @@ function LevelMappingForm() {
                 helperText={errors.lob?.message}
                 disableClearable={true}
                 placeholder={COMMON_WORDS.SELECT}
+                disabled={editData?.data?.id ? true : false}
                 renderOption={(props, option) => (
                   <li {...props} key={option.id}>
                     {option?.lob?.toUpperCase()}
                   </li>
                 )}
-                disabled={params.id ? true : false}
                 onChangeCallback={(newValue) => {
                   setValue('product', null);
                   if (newValue && newValue.id) {
-                    dispatch(fetchAllProductData({ lobId: newValue.id }));
+                    dispatch(fetchAllProductData({ lobId: newValue.id, status: true }));
                   }
                 }}
               />
@@ -163,8 +160,8 @@ function LevelMappingForm() {
                 error={Boolean(errors.product)}
                 helperText={errors.product?.message}
                 disableClearable={true}
-                disabled={params.id ? true : false}
                 placeholder={COMMON_WORDS.SELECT}
+                disabled={editData?.data?.id ? true : false}
                 renderOption={(props, option) => (
                   <li {...props} key={option.id}>
                     {option?.product?.toUpperCase()}
@@ -231,7 +228,7 @@ function LevelMappingForm() {
       <Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }} className="mt-4">
         <Grid item xs={12} sm={6} lg={2}>
           <CustomButton type="submit" variant="contained" sx={{ width: '100%' }} disabled={loading}>
-            {id ? 'Update' : 'Submit'}
+            Save
           </CustomButton>
         </Grid>
       </Grid>

@@ -1,5 +1,6 @@
-import { useState } from "react";
-import axiosInstance from "../../../utils/axiosInstance";
+import { useState } from 'react';
+import axiosInstance from '../../../utils/axiosInstance';
+import apiUrls from '../../../utils/apiUrls';
 
 function useGetDataById() {
   const [data, setData] = useState(null);
@@ -7,7 +8,7 @@ function useGetDataById() {
 
   const fetchData = async (EODId) => {
     try {
-      let url = `/api/producer-eod-bypass/${EODId}`;
+      let url = `${apiUrls.getEodByPass}/${EODId}`;
 
       const response = await axiosInstance.get(url);
       setData(response.data);

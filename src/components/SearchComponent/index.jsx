@@ -30,7 +30,7 @@ function SearchComponent({
   showButton,
   showExportButton,
   hideSearch,
-  canCreate
+  canCreate,
 }) {
   const navigate = useNavigate();
 
@@ -200,9 +200,9 @@ function SearchComponent({
           )}
         </Grid>
 
-        <Grid item lg={6} xs={12} className='flex justify-end'>
+        <Grid item lg={6} xs={12} className="flex justify-end">
           {showExportButton && <ExportDropdown />}
-          {(showButton && canCreate) && (
+          {showButton && canCreate && (
             <CustomButton variant="contained" onClick={handleCreateNewForm}>
               {buttonText}
             </CustomButton>

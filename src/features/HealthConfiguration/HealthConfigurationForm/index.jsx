@@ -111,7 +111,7 @@ function HealthConfigurationForm() {
                   />
                 )}
               />
-              <div className={styles.styledError}>{errors.producer && <span>This field is required</span>} </div>
+              <div className={styles.styledError}>{errors.producer && <span>{errors.producer.message}</span>} </div>
             </div>
             <div className={styles.fieldContainerStyle}>
               <span className={styles.labelText}>
@@ -121,7 +121,7 @@ function HealthConfigurationForm() {
               <Controller
                 name="medicare"
                 control={control}
-                rules={{ required: 'This field is required' }}
+                rules={{ required: 'Medicare is required' }}
                 render={({ field }) => (
                   <Select
                     labelId="search-select"

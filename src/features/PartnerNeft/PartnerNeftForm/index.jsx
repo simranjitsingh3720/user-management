@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import CustomButton from '../../../components/CustomButton';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchLobData } from '../../../stores/slices/lobSlice';
-import { fetchAllProductData } from '../../../stores/slices/productSlice';
+import { clearProducts, fetchAllProductData } from '../../../stores/slices/productSlice';
 import { fetchUser } from '../../../stores/slices/userSlice';
 import { COMMON_WORDS, FORM_HEADER_TEXT } from '../../../utils/constants';
 import { VERIFICATION_METHOD } from '../utils/constant';
@@ -56,13 +56,14 @@ const PartnerNeftForm = () => {
       setValue('verificationMethod', VERIFICATION_METHOD[index]);
 
       if (data.lob?.id) {
-        dispatch(fetchAllProductData({ lobId: data.lob.id }));
+        dispatch(fetchAllProductData({ lobId: data.lob.id, status: true }));
         setValue('product', data.product);
       }
     }
   };
 
   const handleReset = () => {
+    dispatch(clearProducts())
     if (params.id) {
       resetField('producer');
       resetField('verificationMethod');
@@ -78,11 +79,13 @@ const PartnerNeftForm = () => {
   }, [params.id]);
 
   useEffect(() => {
+    dispatch(clearProducts());
     dispatch(fetchLobData({ isAll: true, status: true }));
     dispatch(
       fetchUser({
         userType: COMMON_WORDS.PRODUCER,
         searchKey: COMMON_WORDS.ROLE_NAME,
+        status: true,
       })
     );
   }, [dispatch]);
@@ -122,7 +125,7 @@ const PartnerNeftForm = () => {
                 onChangeCallback={(newValue) => {
                   setValue('product', null);
                   if (newValue && newValue.id) {
-                    dispatch(fetchAllProductData({ lobId: newValue.id }));
+                    dispatch(fetchAllProductData({ lobId: newValue.id, status: true }));
                   }
                 }}
               />
@@ -142,6 +145,7 @@ const PartnerNeftForm = () => {
                 error={Boolean(errors.product)}
                 helperText={errors.product?.message}
                 disableClearable={true}
+                disabled={params.id ? true : false}
                 placeholder={COMMON_WORDS.SELECT}
                 renderOption={(props, option) => (
                   <li {...props} key={option.id}>

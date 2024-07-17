@@ -1,6 +1,5 @@
-import { TextField } from '@mui/material';
+import { Box, Card, CardContent, Grid, TextField } from '@mui/material';
 import React, { useEffect } from 'react';
-import styles from './styles.module.scss';
 import { Controller, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import useUpdatePaymentConfig from '../hooks/useUpdateHouseBank';
@@ -14,12 +13,12 @@ import { FORM_HEADER_TEXT } from '../../../utils/constants';
 function HouseBankMasterForm() {
   const { id } = useParams();
 
-  const { handleSubmit, control, setValue, formState } = useForm({
+  const { handleSubmit, control, setValue, formState, trigger, reset } = useForm({
     defaultValues: {
-      houseBankCode: null,
-      bankCode: null,
-      branchName: null,
-      accountNumber: null,
+      houseBankCode: '',
+      bankCode: '',
+      branchName: '',
+      accountNumber: '',
     },
   });
 
@@ -37,10 +36,10 @@ function HouseBankMasterForm() {
 
   useEffect(() => {
     if (houseBankByID && houseBankByID?.data) {
-      setValue('houseBankCode', houseBankByID?.data?.houseBankCode || null);
-      setValue('bankCode', houseBankByID?.data?.bankCode || null);
-      setValue('branchName', houseBankByID?.data?.branchName || null);
-      setValue('accountNumber', houseBankByID?.data?.accountNumber || null);
+      setValue('houseBankCode', houseBankByID?.data?.houseBankCode || '');
+      setValue('bankCode', houseBankByID?.data?.bankCode || '');
+      setValue('branchName', houseBankByID?.data?.branchName || '');
+      setValue('accountNumber', houseBankByID?.data?.accountNumber || '');
     }
   }, [houseBankByID]);
 
@@ -66,18 +65,28 @@ function HouseBankMasterForm() {
     }
   };
 
+  const handleReset = () => {
+    reset({
+      houseBankCode: '',
+      bankCode: '',
+      branchName: '',
+      accountNumber: '',
+    });
+  };
+
   return (
-    <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className={styles.createNewUserContainer}>
-          <div className="p-5">
-            <CustomFormHeader id={id} headerText={FORM_HEADER_TEXT.HOUSE_BANK} navigateRoute="/house-bank-master" />
-          </div>
-          <div className={styles.containerStyle}>
-            <div className={styles.fieldContainerStyle}>
-              <span className={styles.labelText}>
-                House Bank Code <span className={styles.styledRequired}>*</span>
-              </span>
+    <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+      <Card>
+        <CardContent>
+          <CustomFormHeader
+            id={id}
+            headerText={FORM_HEADER_TEXT.HOUSE_BANK}
+            navigateRoute="/house-bank-master"
+            handleReset={handleReset}
+          />
+          <Grid container spacing={3} className="pb-5">
+            <Grid item xs={12} sm={6} md={6} lg={4}>
+              <span className="text-gray-600 text-sm required-field">House Bank Code</span>
               <Controller
                 name="houseBankCode"
                 control={control}
@@ -95,21 +104,22 @@ function HouseBankMasterForm() {
                     variant="outlined"
                     placeholder="Enter House Bank Code"
                     size="small"
-                    className={styles.customizeSelect}
+                    className="bg-white w-full text-sm h-10"
                     error={!!errors.houseBankCode}
                     helperText={errors.houseBankCode ? errors.houseBankCode.message : ''}
+                    FormHelperTextProps={{ className: 'ml-0' }}
                     {...field}
+                    value={field.value || ''}
                     onChange={(e) => {
-                      setValue('houseBankCode', e.target.value);
+                      field.onChange(e);
+                      trigger('houseBankCode');
                     }}
                   />
                 )}
               />
-            </div>
-            <div className={styles.fieldContainerStyle}>
-              <span className={styles.labelText}>
-                Bank Code <span className={styles.styledRequired}>*</span>
-              </span>
+            </Grid>
+            <Grid item xs={12} sm={6} md={6} lg={4}>
+              <span className="text-gray-600 text-sm required-field">Bank Code</span>
               <Controller
                 name="bankCode"
                 control={control}
@@ -127,21 +137,22 @@ function HouseBankMasterForm() {
                     variant="outlined"
                     placeholder="Enter Bank Code"
                     size="small"
+                    className="bg-white w-full text-sm h-10"
                     error={!!errors.bankCode}
                     helperText={errors.bankCode ? errors.bankCode.message : ''}
-                    className={styles.customizeSelect}
+                    FormHelperTextProps={{ className: 'ml-0' }}
                     {...field}
+                    value={field.value || ''}
                     onChange={(e) => {
-                      setValue('bankCode', e.target.value);
+                      field.onChange(e);
+                      trigger('bankCode');
                     }}
                   />
                 )}
               />
-            </div>
-            <div className={styles.fieldContainerStyle}>
-              <span className={styles.labelText}>
-                Branch Name <span className={styles.styledRequired}>*</span>
-              </span>
+            </Grid>
+            <Grid item xs={12} sm={6} md={6} lg={4}>
+              <span className="text-gray-600 text-sm required-field">Branch Name</span>
               <Controller
                 name="branchName"
                 control={control}
@@ -153,21 +164,22 @@ function HouseBankMasterForm() {
                     variant="outlined"
                     placeholder="Enter Branch Name"
                     size="small"
+                    className="bg-white w-full text-sm h-10"
                     error={!!errors.branchName}
                     helperText={errors.branchName ? errors.branchName.message : ''}
-                    className={styles.customizeSelect}
+                    FormHelperTextProps={{ className: 'ml-0' }}
                     {...field}
+                    value={field.value || ''}
                     onChange={(e) => {
-                      setValue('branchName', e.target.value);
+                      field.onChange(e);
+                      trigger('branchName');
                     }}
                   />
                 )}
               />
-            </div>
-            <div className={styles.fieldContainerStyle}>
-              <span className={styles.labelText}>
-                Account Number <span className={styles.styledRequired}>*</span>
-              </span>
+            </Grid>
+            <Grid item xs={12} sm={6} md={6} lg={4}>
+              <span className="text-gray-600 text-sm required-field">Account Number</span>
               <Controller
                 name="accountNumber"
                 control={control}
@@ -191,27 +203,32 @@ function HouseBankMasterForm() {
                   <TextField
                     id="accountNumber"
                     variant="outlined"
-                    disabled={id}
+                    disabled={!!id}
                     placeholder="Enter Account Number"
                     size="small"
+                    className="bg-white w-full text-sm h-10"
                     error={!!errors.accountNumber}
                     helperText={errors.accountNumber ? errors.accountNumber.message : ''}
-                    className={styles.customizeSelect}
+                    FormHelperTextProps={{ className: 'ml-0' }}
                     {...field}
+                    value={field.value || ''}
                     onChange={(e) => {
-                      setValue('accountNumber', e.target.value);
+                      field.onChange(e);
+                      trigger('accountNumber');
                     }}
                   />
                 )}
               />
-            </div>
-          </div>
-        </div>
+            </Grid>
+          </Grid>
+        </CardContent>
+      </Card>
+      <div className="mt-4">
         <CustomButton type="submit" variant="contained" disabled={updateLoading || createPaymentLoading}>
           {id ? 'Update' : 'Submit'}
         </CustomButton>
-      </form>
-    </div>
+      </div>
+    </Box>
   );
 }
 
