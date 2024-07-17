@@ -2,7 +2,7 @@ import { useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance"; 
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { COMMON_ERROR } from "../../../utils/globalConstants";
+
 
 function useUpdateGroup(setChangeStatusOpen, fetchGroupList) {
   const [loading, setLoading] = useState(false);
@@ -18,11 +18,7 @@ function useUpdateGroup(setChangeStatusOpen, fetchGroupList) {
       if (setChangeStatusOpen) setChangeStatusOpen(false);
       if (fetchGroupList) fetchGroupList();
     } catch (error) {
-      toast.error(
-        error?.response?.data?.error?.message || COMMON_ERROR
-      );
-
-      
+      console.error("Error updating Group", error);
     } finally {
       setLoading(false); 
     }

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
 import { toast } from "react-toastify";
-import { COMMON_ERROR } from "../../../utils/globalConstants";
 
 function useUpdateBancaField() {
   const [loading, setLoading] = useState(false);
@@ -14,10 +13,7 @@ function useUpdateBancaField() {
         response?.data?.message || "Banca Field updated successfully"
       );
     } catch (error) {
-      toast.error(
-        error?.response?.data?.error?.message || COMMON_ERROR
-      );
-      
+      console.error("Error updating Banca Field", error);
     } finally {
       setLoading(false); 
     }

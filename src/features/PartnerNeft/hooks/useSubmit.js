@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { API_END_POINTS } from "../utils/constant";
 import axiosInstance from "./../../../utils/axiosInstance";
-import { COMMON_ERROR } from "../../../utils/globalConstants";
+
 
 const useSubmit = () => {
   const navigate = useNavigate();
@@ -30,9 +30,7 @@ const useSubmit = () => {
         );
         navigate("/partner-neft");
       } catch (e) {
-        toast.error(
-          e?.response?.data?.error?.message || COMMON_ERROR
-        );
+        console.error(e);
       }
     },
     [navigate]
@@ -45,10 +43,7 @@ const useSubmit = () => {
       );
       return responseData.data;
     } catch (e) {
-      toast.error(
-        e?.response?.data?.error?.message || COMMON_ERROR
-      );
-      return null;
+      return [];
     }
   }, []);
 
@@ -74,9 +69,7 @@ const useSubmit = () => {
         );
         navigate("/partner-neft");
       } catch (e) {
-        toast.error(
-          e?.response?.data?.error?.message || COMMON_ERROR
-        );
+        console.error(e);
       }
     },
     [navigate]

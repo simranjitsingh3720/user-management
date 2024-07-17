@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import axiosInstance from '../../../utils/axiosInstance';
-import { COMMON_ERROR } from '../../../utils/globalConstants';
+
 import apiUrls from '../../../utils/apiUrls';
 
 function useUpdateEODBypass() {
@@ -17,7 +17,7 @@ function useUpdateEODBypass() {
       toast.success(response?.data?.message || 'EOD Producer updated successfully');
       navigate('/producer-eod-bypass-list');
     } catch (error) {
-      toast.error(error?.response?.data?.error?.message || COMMON_ERROR);
+      console.error("Error", error);
     } finally {
       setLoading(false);
     }

@@ -24,11 +24,9 @@ import { getHouseBanks } from '../../../../Redux/getHouseBank';
 import useGetUserType from '../hooks/useGetUserType';
 import useGetRoleHierarchy from '../hooks/useRoleHierarchy';
 import Loader from './../../../../components/Loader';
-import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import {
   AUTOCOMPLETE,
   DATE_FORMAT,
-  DATE_FORMAT_2,
   DROPDOWN,
   FORM_LABEL,
   FORM_VALUE,
@@ -39,7 +37,6 @@ import {
   PRODUCER_ARR,
   PRODUCER_CODE_CALL,
   PRODUCER_PARTNER_ARR,
-  REQUIRED_MSG,
   ROLE_SELECT,
 } from '../utils/constants';
 import apiUrls from '../../../../utils/apiUrls';

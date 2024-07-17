@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
 import { toast } from "react-toastify";
-import { COMMON_ERROR } from "../../../utils/globalConstants";
+
 
 function useCreateBancaField() {
   const [loading, setLoading] = useState(false);
@@ -14,10 +14,7 @@ function useCreateBancaField() {
         response?.data?.message || "Banca Field created successfully"
       );
     } catch (error) {
-      toast.error(
-        error?.response?.data?.details || COMMON_ERROR
-      );
-      
+      console.error("Error creating Banca Field", error);
     } finally {
       setLoading(false); 
     }

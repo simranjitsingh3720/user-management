@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../../utils/axiosInstance";
 import { toast } from "react-toastify";
-import { COMMON_ERROR } from "../../../utils/globalConstants";
+
 import apiUrls from "../../../utils/apiUrls";
 
 function useCreateHealthConfig() {
@@ -23,7 +23,7 @@ function useCreateHealthConfig() {
       );
       navigate("/health-config");
     } catch (error) {
-      toast.error(error?.response?.data?.error?.message || COMMON_ERROR);
+      console.error("Error creating Product Wise Payment Configuration", error);
     } finally {
       setLoading(false);
     }

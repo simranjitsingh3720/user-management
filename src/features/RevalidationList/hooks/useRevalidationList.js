@@ -41,7 +41,6 @@ const useRevalidationList = () => {
       setData(transformedData);
       setTotalCount(response?.data?.totalCount || 0);
     } catch (error) {
-      toast.error(error.response?.data?.error?.message || 'Failed to fetch revalidation list');
       setData([]);
     } finally {
       setLoading(false);
@@ -67,7 +66,7 @@ const useRevalidationList = () => {
       toast.success('Data updated successfully');
       setData(transformedData); // Set the updated data after successful API response
     } catch (error) {
-      toast.error(error.response?.data?.error?.message || 'Failed to update data');
+      console.error('Error updating data', error);
     }
   }, []);
 

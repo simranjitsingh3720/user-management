@@ -2,7 +2,7 @@ import { useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { COMMON_ERROR } from "../../../utils/globalConstants";
+
 import apiUrls from "../../../utils/apiUrls";
 
 function useCreatePrivilege() {
@@ -22,7 +22,7 @@ function useCreatePrivilege() {
       );
       navigate("/permission");
     } catch (error) {
-      toast.error(error?.response?.data?.error?.message || COMMON_ERROR);
+      console.error("Error", error);
     } finally {
       setLoading(false);
     }

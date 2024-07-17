@@ -3,8 +3,7 @@ import axiosInstance from '../../../../utils/axiosInstance';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import apiUrls from '../../../../utils/apiUrls';
-import { NAVIGATE_TO_DASHBOARD, NAVIGATE_TO_USER_MANAGEMENT, USER_CREATION_SUCCESS } from '../utils/constants';
-import { COMMON_ERROR } from '../../../../utils/globalConstants';
+import { NAVIGATE_TO_USER_MANAGEMENT, USER_CREATION_SUCCESS } from '../utils/constants';
 
 export default function usePostUser() {
   const [loading, setLoading] = useState(false);
@@ -19,7 +18,7 @@ export default function usePostUser() {
       toast.success(response?.data?.message || USER_CREATION_SUCCESS);
       navigate(NAVIGATE_TO_USER_MANAGEMENT);
     } catch (error) {
-      toast.error(error?.response?.data?.error?.message || error?.response?.data?.details || COMMON_ERROR);
+      console.error('Error creating User', error);
     } finally {
       setLoading(false);
     }

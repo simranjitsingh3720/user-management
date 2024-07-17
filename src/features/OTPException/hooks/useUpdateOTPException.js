@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
 import { toast } from "react-toastify";
-import { COMMON_ERROR } from "../../../utils/globalConstants";
+
 
 function useUpdateOTPException(setChangeStatusOpen, fetchGroupList) {
   const [loading, setLoading] = useState(false);
@@ -14,9 +14,7 @@ function useUpdateOTPException(setChangeStatusOpen, fetchGroupList) {
       setChangeStatusOpen(false);
       fetchGroupList();
     } catch (error) {
-      toast.error(
-        error?.response?.data?.error?.message || COMMON_ERROR
-      );
+     console.error("Error", error);
       
     } finally {
       setLoading(false); 

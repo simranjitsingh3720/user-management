@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../../../utils/axiosInstance';
 import { toast } from 'react-toastify';
 import apiUrls from '../../../utils/apiUrls';
-import { COMMON_ERROR } from '../../../utils/globalConstants';
+
 
 function useHandleCkyc() {
   const [loading, setLoading] = useState(false);
@@ -26,7 +26,7 @@ function useHandleCkyc() {
       toast.success(response?.data?.message || 'CKYC Created successfully');
       navigate('/ckyc-config');
     } catch (error) {
-      toast.error(error?.response?.data?.error?.message || COMMON_ERROR);
+      console.error('Error creating CKYC', error);
     } finally {
       setLoading(false);
     }
@@ -49,7 +49,7 @@ function useHandleCkyc() {
       toast.success(response?.data?.message || 'House Bank updated successfully');
       navigate('/ckyc-config');
     } catch (error) {
-      toast.error(error?.response?.data?.error?.message || COMMON_ERROR);
+      console.error('Error updating House Bank', error);
     } finally {
       setLoading(false);
     }

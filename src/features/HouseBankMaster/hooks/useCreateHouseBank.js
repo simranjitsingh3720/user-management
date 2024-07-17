@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../../utils/axiosInstance";
 import { toast } from "react-toastify";
-import { COMMON_ERROR } from "../../../utils/globalConstants";
+
 
 function useCreateHouseBank() {
   const [loading, setLoading] = useState(false);
@@ -19,9 +19,7 @@ function useCreateHouseBank() {
       );
       navigate("/house-bank-master");
     } catch (error) {
-      toast.error(
-        error?.response?.data?.error?.message || COMMON_ERROR
-      );
+     console.error("Error", error);
     } finally {
       setLoading(false); 
     }

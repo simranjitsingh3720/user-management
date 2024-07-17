@@ -2,7 +2,6 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
 import axiosInstance from './../../utils/axiosInstance';
 import apiUrls from './../../utils/apiUrls';
-import { COMMON_ERROR } from './../../utils/globalConstants';
 import { buildParams } from './../../utils/buildParams';
 import { addAsyncReducers } from './../../utils/addAsyncReducers';
 
@@ -30,7 +29,7 @@ export const getGroup = createAsyncThunk(
       const response = await axiosInstance.get(apiUrls.getGroup, { params });
       return response.data;
     } catch (error) {
-      toast.error(error?.response?.data?.error?.message || COMMON_ERROR);
+
       return rejectWithValue([]);
     }
   }
@@ -41,7 +40,6 @@ export const getGroupById = createAsyncThunk('group/getGroupById', async ({ id }
     const response = await axiosInstance.get(apiUrls.getGroup + `/${id}`);
     return response.data;
   } catch (error) {
-    toast.error(error?.response?.data?.error?.message || COMMON_ERROR);
     return rejectWithValue([]);
   }
 });
@@ -52,7 +50,6 @@ export const updateGroup = createAsyncThunk('group/updateGroup', async ({ data }
     toast.success(response?.data?.message || 'Group updated successfully');
     return response.data;
   } catch (error) {
-    toast.error(error?.response?.data?.error?.message || COMMON_ERROR);
     return rejectWithValue(error?.response?.data || {});
   }
 });
@@ -64,7 +61,6 @@ export const createGroup = createAsyncThunk('group/createGroup', async ({ data, 
     navigate('/group');
     return response.data;
   } catch (error) {
-    toast.error(error?.response?.data?.error?.message || COMMON_ERROR);
     return rejectWithValue(error?.response?.data || {});
   }
 });

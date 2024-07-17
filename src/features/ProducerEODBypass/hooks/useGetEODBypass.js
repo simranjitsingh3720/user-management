@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import axiosInstance from '../../../utils/axiosInstance';
-import { toast } from 'react-toastify';
-import { COMMON_ERROR } from '../../../utils/globalConstants';
+
 import { COMMON_WORDS } from '../../../utils/constants';
 import { buildQueryString } from '../../../utils/globalizationFunction';
 import moment from 'moment';
@@ -69,7 +68,7 @@ function useGetEODBypass(page, pageSize, date, order, orderBy) {
       setData(producerEodByPass);
       setCount(response?.data?.totalCount);
     } catch (error) {
-      toast.error(error?.response?.data?.details || COMMON_ERROR);
+      console.error('Error fetching data', error);
     } finally {
       setLoading(false);
     }

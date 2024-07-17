@@ -2,7 +2,6 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
 import axiosInstance from './../../utils/axiosInstance';
 import apiUrls from './../../utils/apiUrls';
-import { COMMON_ERROR } from './../../utils/globalConstants';
 import { buildParams } from './../../utils/buildParams';
 import { addAsyncReducers } from './../../utils/addAsyncReducers';
 
@@ -14,7 +13,6 @@ export const fetchAllProductData = createAsyncThunk(
       const response = await axiosInstance.get(apiUrls.getProduct, { params });
       return response.data;
     } catch (error) {
-      toast.error(error?.response?.data?.error?.message || COMMON_ERROR);
       return rejectWithValue([]);
     }
   }
@@ -28,7 +26,7 @@ export const updateProductData = createAsyncThunk(
       toast.success(response?.data?.message || 'Product updated successfully');
       return response.data;
     } catch (error) {
-      toast.error(error?.response?.data?.error?.message || COMMON_ERROR);
+      console.error("Error", error);
       return rejectWithValue(error?.response?.data || {});
     }
   }
@@ -43,7 +41,7 @@ export const createProductData = createAsyncThunk(
       navigate('/product');
       return response.data;
     } catch (error) {
-      toast.error(error?.response?.data?.error?.message || COMMON_ERROR);
+      console.error("Error", error);
       return rejectWithValue(error?.response?.data || {});
     }
   }

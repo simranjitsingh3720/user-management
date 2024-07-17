@@ -1,7 +1,6 @@
 import { useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance"; 
-import { toast } from "react-toastify";
-import { COMMON_ERROR } from "../../../utils/globalConstants";
+
 
 function useUpdateUser() {
   const [loading, setLoading] = useState(false);
@@ -11,10 +10,7 @@ function useUpdateUser() {
     try {
       await axiosInstance.put("api/group/update-users", payload);
     } catch (error) {
-      toast.error(
-        error?.response?.data?.error?.message || COMMON_ERROR
-      );
-      
+      console.error("Error updating User", error);
     } finally {
       setLoading(false); 
     }

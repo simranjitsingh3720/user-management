@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
 import { toast } from "react-toastify";
-import { COMMON_ERROR } from "../../../utils/globalConstants";
+
 
 function useCreateOTPException({ fetchData }) {
   const [loading, setLoading] = useState(false);
@@ -15,9 +15,7 @@ function useCreateOTPException({ fetchData }) {
       );
       fetchData();
     } catch (error) {
-      toast.error(
-        error?.response?.data?.error?.message || COMMON_ERROR
-      );
+     console.error("Error", error);
       
     } finally {
       setLoading(false); 

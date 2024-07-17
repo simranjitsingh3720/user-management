@@ -2,7 +2,6 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import axiosInstance from "./../../utils/axiosInstance";
 import apiUrls from "./../../utils/apiUrls";
-import { COMMON_ERROR } from "./../../utils/globalConstants";
 import { addAsyncReducers } from "../../utils/addAsyncReducers";
 
 export const fetchLobData = createAsyncThunk(
@@ -37,7 +36,7 @@ export const updateLobData = createAsyncThunk(
       toast.success(response?.data?.message || "LOB updated successfully");
       return response.data;
     } catch (error) {
-      toast.error(error?.response?.data?.error?.message || COMMON_ERROR);
+      console.error("Error", error);
       return rejectWithValue(error?.response?.data || {});
     }
   }
@@ -52,7 +51,7 @@ export const createLobData = createAsyncThunk(
       navigate("/lob");
       return response.data;
     } catch (error) {
-      toast.error(error?.response?.data?.error?.message || COMMON_ERROR);
+      console.error("Error", error);
       return rejectWithValue(error?.response?.data || {});
     }
   }
