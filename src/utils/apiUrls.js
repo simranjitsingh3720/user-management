@@ -23,7 +23,8 @@ const apiUrls = {
   paymentProduct: 'api/product-wise-payment-method',
   productLocationLevelMapping: 'api/product-location-level-mapping',
   getGroup: '/api/group',
-  getProducerType: '/api/producer-type'
+  getProducerType: '/api/producer-type',
+  houseBank: '/api/house-bank',
 };
 
 export default apiUrls;

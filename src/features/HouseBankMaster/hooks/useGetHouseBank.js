@@ -1,37 +1,65 @@
-import { useEffect, useState } from "react";
-import axiosInstance from "../../../utils/axiosInstance";
+import { useCallback, useState } from 'react';
+import { toast } from 'react-toastify';
+import axiosInstance from './../../../utils/axiosInstance';
+import { COMMON_ERROR } from '../../../utils/globalConstants';
+import { buildQueryString } from '../../../utils/globalizationFunction';
+import apiUrls from "../../../utils/apiUrls";
+import { useDispatch } from 'react-redux';
+import { setTableName } from '../../../stores/slices/exportSlice';
 
-function useGetHouseBank(pageChange, rowsPage, query, searched) {
-  const [data, setData] = useState(null);
+const useGetHouseBank = () => {
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [sort, setSort] = useState({
-    sortKey: "createdAt",
-    sortOrder: "asc",
-  });
+  const [totalCount, setTotalCount] = useState(0);
+  const dispatch = useDispatch();
 
-  const fetchData = async () => {
-    try {
+  const getHouseBank = useCallback(
+    async ({
+      isAll,
+      status,
+      searchString,
+      sortKey,
+      sortOrder,
+      searchKey,
+      pageNo,
+      pageSize,
+      isExclusive,
+    } = {}) => {
       setLoading(true);
-      let url = `/api/house-bank?pageNo=${pageChange - 1}&sortKey=${
-        sort.sortKey
-      }&sortOrder=${sort.sortOrder}&pageSize=${rowsPage}`;
+      try {
+        const queryParams = buildQueryString({
+          status,
+          pageNo,
+          pageSize,
+          searchString,
+          searchKey,
+          sortKey,
+          sortOrder,
+          isAll,
+          isExclusive,
+        });
 
-      if (query && searched) {
-        url += `&searchKey=${searched}&searchString=${query}`;
+        const {data} = await axiosInstance.get(`${apiUrls.houseBank}?${queryParams}`);
+
+        setData(data?.data);
+        dispatch(setTableName(data?.data[0]?.label));
+        setTotalCount(data.totalCount);
+      } catch (e) {
+        toast.error(e?.response?.data?.error?.message || COMMON_ERROR);
+        setData([]);
+      } finally {
+        setLoading(false);
       }
-      const response = await axiosInstance.get(url);
-      setData(response.data);
-    } catch (error) {
-      setData([]);
-    } finally {
-      setLoading(false);
-    }
-  };
-  useEffect(() => {
-    fetchData();
-  }, [pageChange, sort, rowsPage, query]);
+    },
+    [dispatch]
+  );
 
-  return { data, loading, sort, setSort, fetchData };
-}
+  return {
+    getHouseBank,
+    houseBankData: data,
+    houseBankLoading: loading,
+    totalCount,
+  };
+};
 
 export default useGetHouseBank;

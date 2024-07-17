@@ -1,118 +1,69 @@
-import React, { useEffect, useState } from "react";
-import SearchComponenet from "./SearchComponent";
-import styles from "./styles.module.scss";
-import TableHeader from "./Table/TableHeader";
-import ListLoader from "../../components/ListLoader";
-import Table from "./Table";
-import NoDataFound from "../../components/NoDataCard";
-import { MenuItem, Pagination, Select } from "@mui/material";
-import { PAGECOUNT, selectRowsData } from "../../utils/globalConstants";
-import useGetHouseBank from "./hooks/useGetHouseBank";
-import { setTableName } from "../../stores/slices/exportSlice";
-import { useDispatch } from "react-redux";
-import usePermissions from "../../hooks/usePermission";
-
-function getSelectedRowData(count) {
-  
-  let selectedRowData = [];
-  for (let i = 0; i < selectRowsData.length; i++) {
-    if (selectRowsData[i] <= count) {
-      selectedRowData.push(selectRowsData[i]);
-    }
-  }
-
-  return selectedRowData;
-}
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
+import CustomTable from '../../components/CustomTable';
+import usePermissions from '../../hooks/usePermission';
+import useGetHouseBank from './hooks/useGetHouseBank';
+import { Header } from './utils/Header';
+import { PAGECOUNT } from '../../utils/globalConstants';
 
 function HouseBankMaster() {
-  const [query, setQuery] = useState("");
-  const [searched, setSearched] = useState("houseBankCode");
-  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const [rowsPage, setRowsPage] = useState(PAGECOUNT);
-  const [pageChange, setPageChange] = useState(1);
-  const handlePaginationChange = (event, page) => {
-    setPageChange(page);
-  };
+  const [page, setPage] = useState(0);
+  const [pageSize, setPageSize] = useState(PAGECOUNT);
+  const [order, setOrder] = useState('');
+  const [orderBy, setOrderBy] = useState('');
 
-  // Check Permission
+  const { getHouseBank, houseBankLoading, totalCount, houseBankData } = useGetHouseBank();
   const { canCreate, canUpdate } = usePermissions();
 
-  const { data, loading, sort, setSort, fetchData } = useGetHouseBank(
-    pageChange,
-    rowsPage,
-    query,
-    searched
+  const handleEditClick = useCallback(
+    (item) => {
+      navigate(`/house-bank-master/form/${item.id}`);
+    },
+    [navigate]
   );
 
-  const handleRowsChange = (event) => {
-    setPageChange(1);
-    setRowsPage(event.target.value);
-  };
+  const loadData = useCallback(() => {
+    getHouseBank({
+      sortKey: orderBy,
+      sortOrder: order,
+      pageNo: page,
+      pageSize,
+    });
+  }, [orderBy, order, page, pageSize, getHouseBank]);
 
   useEffect(() => {
-    dispatch(setTableName(data?.data[0]?.label));
-  }, [dispatch, data]);
+    loadData();
+  }, [loadData]);
+
+  const header = useMemo(() => Header(handleEditClick), [handleEditClick]);
 
   return (
     <div>
-      <SearchComponenet
-        setPageChange={setPageChange}
+      {/* <SearchComponent
         query={query}
         setQuery={setQuery}
         searched={searched}
         setSearched={setSearched}
         canCreate={canCreate}
-      />
-      <div className={styles.tableContainerStyle}>
-        <div className={styles.tableStyled}>
-          {loading ? (
-            <>
-              <TableHeader />
-              <ListLoader />
-            </>
-          ) : data?.data && data?.data.length ? (
-            <Table
-              ListData={data?.data}
-              loading={loading}
-              fetchData={fetchData}
-              sort={sort}
-              setSort={setSort}
-              canUpdate= {canUpdate}
-            />
-          ) : (
-            <NoDataFound />
-          )}
-        </div>
-        <div className={styles.pageFooter}>
-          <div className={styles.rowsPerPage}>
-            <p className={styles.totalRecordStyle}>Showing Results:</p>
-            <Select
-              labelId="rows-per-page"
-              id="rows-per-page"
-              value={rowsPage}
-              onChange={handleRowsChange}
-              size="small"
-              className={styles.customizeRowsSelect}
-            >
-              {getSelectedRowData(data?.totalCount).map((item, index) => (
-                <MenuItem key={index} value={item} className={styles.styledOptionText}>
-                  {item}
-                </MenuItem>
-              ))}
-            </Select>
-            <p className={styles.totalRecordStyle}>of {data?.totalCount}</p>
-          </div>
-          <Pagination
-            count={data?.totalPageSize}
-            color="primary"
-            size="small"
-            onChange={handlePaginationChange}
-            page={pageChange}
-            className={styles.marginFotter}
-          />
-        </div>
-      </div>
+      /> */}
+
+        <CustomTable
+          rows={houseBankData}
+          columns={header}
+          loading={houseBankLoading}
+          totalCount={totalCount}
+          page={page}
+          setPage={setPage}
+          rowsPerPage={pageSize}
+          setRowsPerPage={setPageSize}
+          order={order}
+          setOrder={setOrder}
+          orderBy={orderBy}
+          setOrderBy={setOrderBy}
+          canUpdate={canUpdate}
+        />
     </div>
   );
 }
