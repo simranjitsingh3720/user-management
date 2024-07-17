@@ -667,10 +667,10 @@ function CreateUserCreationForm() {
             )}
           </div>
         </div>
+        <div>
+          <CustomButton type="submit">Submit</CustomButton>
+        </div>
       </form>
-      <div>
-        <CustomButton type="submit">Submit</CustomButton>
-      </div>
     </>
   );
 }

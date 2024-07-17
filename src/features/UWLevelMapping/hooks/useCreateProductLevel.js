@@ -7,7 +7,7 @@ import apiUrls from '../../../utils/apiUrls';
 import { hideDialog } from '../../../stores/slices/dialogSlice';
 import { useDispatch } from 'react-redux';
 
-function useCreateProductLevel(fetchData) {
+function useCreateProductLevel(fetchData, setEditData) {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   const params = useParams();
@@ -22,6 +22,9 @@ function useCreateProductLevel(fetchData) {
       const response = await axiosInstance.post(`${apiUrls.productLocationLevelMapping}`, data);
       toast.success(response?.data?.message || 'Product Level Mapping Created successfully');
       navigate(`/uwlevelmappingemployee/${employeeId}`);
+      if (fetchData) {
+        fetchData();
+      }
     } catch (error) {
       toast.error(error?.response?.data?.error?.message || COMMON_ERROR);
     } finally {
@@ -47,7 +50,12 @@ function useCreateProductLevel(fetchData) {
       const response = await axiosInstance.put(`${apiUrls.productLocationLevelMapping}`, payload);
       toast.success(response?.data?.message || 'Product Level Mapping updated successfully');
       dispatch(hideDialog());
-      fetchData();
+      if (fetchData) {
+        fetchData();
+      }
+      if (setEditData) {
+        setEditData([]);
+      }
     } catch (error) {
       toast.error(error?.response?.data?.error?.message || COMMON_ERROR);
     } finally {
