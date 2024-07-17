@@ -25,6 +25,7 @@ const apiUrls = {
   getGroup: '/api/group',
   getProducerType: '/api/producer-type',
   houseBank: '/api/house-bank',
+  getEodByPass: '/api/producer-eod-bypass',
 };
 
 export default apiUrls;
