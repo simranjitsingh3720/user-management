@@ -73,6 +73,7 @@ function CreateUserCreationForm() {
     channelType: channelType,
     neftDefaultBank: neftDefaultBank,
     typeOfProducer: producerType,
+    loginType: loginType,
   });
   const { loading, postData } = usePostUser();
   const [roleConfig, setRoleConfig] = useState([]);
@@ -158,6 +159,9 @@ function CreateUserCreationForm() {
     if (producerType) {
       updatedApiDataMap.typeOfProducer = producerType;
     }
+    if (loginType) {
+      updatedApiDataMap.loginType = loginType;
+    }
     setApiDataMap(updatedApiDataMap);
   }, [
     lobs,
@@ -170,6 +174,7 @@ function CreateUserCreationForm() {
     channelType,
     neftDefaultBank,
     producerType,
+    loginType,
   ]);
 
   useEffect(() => {
@@ -495,19 +500,18 @@ function CreateUserCreationForm() {
               classes="w-full"
               isEdit={isEdit}
             />
-            <AutocompleteMultipleField
-              key={LOGIN_TYPE}
+            <AutocompleteFieldAll
               control={control}
               name={LOGIN_TYPE}
-              label="Login Type"
+              label={'Login Type'}
               required
+              roleChanged={roleChanged}
               disabled={false}
-              options={loginType || []}
+              options={apiDataMap[LOGIN_TYPE]}
+              resetClicked={resetClicked}
               validation={{ required: 'Login Type is required' }}
               errors={errors}
-              multiple={true}
-              roleChanged={roleChanged}
-              resetClicked={resetClicked}
+              apiDataMap={apiDataMap}
               classes="w-full"
               isEdit={isEdit}
             />
