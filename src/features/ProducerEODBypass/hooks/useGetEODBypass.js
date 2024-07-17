@@ -34,10 +34,19 @@ function useGetEODBypass(page, pageSize, date, order, orderBy) {
       });
 
       if (resultProducersId) {
-        params += `&ids=${resultProducersId}&isExclusive=true&edge=${COMMON_WORDS.HAS_PRODUCER}`;
+        let moreParams = {
+          ids: resultProducersId,
+          isExclusive: true,
+          edge: COMMON_WORDS.HAS_PRODUCER,
+        };
+        params += `&${buildQueryString(moreParams)}`;
       }
       if (date?.startDate && date?.endDate) {
-        params += `&startDate=${date.startDate}&endDate=${date.endDate}`;
+        let moreParams = {
+          startDate: date.startDate,
+          endDate: date.endDate,
+        };
+        params += `&${buildQueryString(moreParams)}`;
       }
 
       let url = `${apiUrls.getEodByPass}?${params}`;
