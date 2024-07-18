@@ -30,6 +30,7 @@ export const BUTTON_TEXT = {
   EMPLOYEE_FLAG_CONFIG: 'Create Employee Flag Config',
   HOUSE_BANK: 'Create House Bank Master Confirguration',
   PRODUCER_EOD: 'Create New Producer EOD Bypass',
+  SET_OTP_EXCEPTION: 'Create New Set OTP Exception',
 };
 
 export const STATUS = [

@@ -35,6 +35,7 @@ export const COMMON_WORDS = {
   UPDATE: 'update',
   CHANNEL: 'channel',
   HAS_CHANNEL: 'hasChannel',
+  OTP_EXCEPTION: 'OTP Exception',
 };
 
 export const HEADER = {

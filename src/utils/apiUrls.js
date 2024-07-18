@@ -26,6 +26,7 @@ const apiUrls = {
   getProducerType: '/api/producer-type',
   houseBank: '/api/house-bank',
   getEodByPass: '/api/producer-eod-bypass',
+  getOTPException: '/api/otp-exception',
 };
 
 export default apiUrls;

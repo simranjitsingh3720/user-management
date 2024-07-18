@@ -1,34 +1,78 @@
-import React, { useState } from "react";
-import SetOTPException from "./SetOTPException";
-import OTPList from "./OTPList";
-import useGetOTPException from "./hooks/useGetOTPException";
-import { PAGECOUNT } from "../../utils/globalConstants";
+import React, { useState } from 'react';
+import useGetOTPException from './hooks/useGetOTPException';
+import { BUTTON_TEXT, PAGECOUNT } from '../../utils/globalConstants';
+import SearchComponent from '../../components/SearchComponent';
+import { BitlyLink } from './constants';
+import usePermissions from '../../hooks/usePermission';
+import CustomTable from '../../components/CustomTable';
+import generateTableHeaders from './utils/generateTableHeaders';
+import CustomDialog from '../../components/CustomDialog';
+import { COMMON_WORDS } from '../../utils/constants';
+import { useDispatch } from 'react-redux';
+import { showDialog } from '../../stores/slices/dialogSlice';
+import Content from '../../components/CustomDialogContent';
+import Actions from './Dialog/Action';
 
 function OTPException() {
-  const [rowsPage, setRowsPage] = useState(PAGECOUNT);
-  const [pageChange, setPageChange] = useState(1);
-  const [query, setQuery] = useState("");
-  const [searched, setSearched] = useState("type");
-  const { data, loading, fetchData, setLoading, setSort, sort } =
-    useGetOTPException(pageChange, rowsPage, query, searched);
+  const dispatch = useDispatch();
+  const [query, setQuery] = useState('');
+  const [searched, setSearched] = useState('type');
+  const [page, setPage] = useState(0);
+  const [pageSize, setPageSize] = useState(PAGECOUNT);
+  const [order, setOrder] = useState(COMMON_WORDS.ASC);
+  const [orderBy, setOrderBy] = useState(COMMON_WORDS.CREATED_AT);
+  const { data, loading, fetchData, count } = useGetOTPException(page, pageSize, order, orderBy);
+
+  const handleClicked = (data, row) => {
+    dispatch(
+      showDialog({
+        title: COMMON_WORDS.CHANGE_STATUS,
+        content: <Content label={COMMON_WORDS.OTP_EXCEPTION} />,
+        actions: <Actions row={row} fetchData={fetchData} />,
+      })
+    );
+  };
+
+  const HEADER_COLUMNS = generateTableHeaders(handleClicked);
+
+  const { canCreate, canUpdate } = usePermissions();
+
+  const handleGo = () => {
+    fetchData(searched, query);
+  };
   return (
     <div>
-      <SetOTPException fetchData={fetchData} />
-      <OTPList
-        rowsPage={rowsPage}
-        setRowsPage={setRowsPage}
-        pageChange={pageChange}
-        setPageChange={setPageChange}
-        data={data}
-        loading={loading}
-        fetchData={fetchData}
-        setLoading={setLoading}
-        setSort={setSort}
-        sort={sort}
-        setQuery={setQuery}
+      <SearchComponent
+        selectOptions={BitlyLink}
+        textField
         searched={searched}
         setSearched={setSearched}
+        textFieldPlaceholder="Search"
+        setQuery={setQuery}
+        buttonText={BUTTON_TEXT.SET_OTP_EXCEPTION}
+        navigateRoute={'/otpException/form'}
+        handleGo={handleGo}
+        showButton
+        canCreate={canCreate}
       />
+      <div className="mt-4">
+        <CustomTable
+          columns={HEADER_COLUMNS}
+          rows={data || []}
+          loading={loading}
+          totalCount={count || 0}
+          page={page}
+          setPage={setPage}
+          rowsPerPage={pageSize}
+          setRowsPerPage={setPageSize}
+          order={order}
+          setOrder={setOrder}
+          orderBy={orderBy}
+          setOrderBy={setOrderBy}
+          canUpdate={canUpdate}
+        />
+      </div>
+      <CustomDialog />
     </div>
   );
 }

@@ -3,7 +3,7 @@ import { BASE_URL, TOKEN } from '../utils/globalConstants';
 
 const instance = axios.create({
   baseURL: BASE_URL,
-  timeout: 5000,
+  timeout: 10000,
 });
 
 // Axios request interceptor to add token to requests
@@ -23,7 +23,7 @@ instance.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response.data.statusCode === 401) {
-      localStorage.clear();      
+      localStorage.clear();
       window.location.href = '/';
       return Promise.reject(error);
     }
