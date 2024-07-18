@@ -56,7 +56,7 @@ export const FORM_HEADER_TEXT = {
   HEALTH_CONFIG: 'Health Configuration',
   HOUSE_BANK: 'House Bank Configuration',
   LOB: 'Lob',
-  OTP_EXCEPTION: 'Set OTP Exception By',
+  OTP_EXCEPTION: 'OTP Exception By',
   PERMISSION: 'Permission',
   PRODUCER_EOD: 'Producer EOD Bypass',
   PRODUCT: 'Product',
