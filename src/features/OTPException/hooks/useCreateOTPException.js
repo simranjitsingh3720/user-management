@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import axiosInstance from '../../../utils/axiosInstance';
 import { toast } from 'react-toastify';
-import { COMMON_ERROR } from '../../../utils/globalConstants';
+import errorHandler from '../../../utils/errorHandler';
 import { useNavigate } from 'react-router-dom';
 import apiUrls from '../../../utils/apiUrls';
 
@@ -18,7 +18,7 @@ function useCreateOTPException({ fetchData }) {
       navigate('/otpException');
       fetchData();
     } catch (error) {
-      toast.error(error?.response?.data?.error?.message || COMMON_ERROR);
+      errorHandler.handleError(error);
     } finally {
       setLoading(false);
     }

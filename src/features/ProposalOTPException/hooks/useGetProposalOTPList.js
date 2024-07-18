@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
-import { toast } from "react-toastify";
-import { COMMON_ERROR } from "../../../utils/globalConstants";
 import { buildQueryString } from "../../../utils/globalizationFunction";
 import { COMMON_WORDS } from "../../../utils/constants";
+import errorHandler from "../../../utils/errorHandler";
 
 function useGetProposalOTPList(pageChange, rowsPage, query, searched, date) {
   const [data, setData] = useState(null);
@@ -36,9 +35,7 @@ function useGetProposalOTPList(pageChange, rowsPage, query, searched, date) {
       const response = await axiosInstance.get(url);
       setData(response.data);
     } catch (error) {
-      toast.error(
-        error?.response?.data?.details || COMMON_ERROR
-      );
+      errorHandler.handleError(error);
     } finally {
       setLoading(false);
     }

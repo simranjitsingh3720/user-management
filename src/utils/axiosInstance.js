@@ -1,12 +1,14 @@
 import axios from 'axios';
-import { BASE_URL, TOKEN } from '../utils/globalConstants';
+import { toast } from 'react-toastify';
+import { BASE_URL, COMMON_ERROR, TOKEN } from './globalConstants';
+import errorHandler from './errorHandler';
 
 const instance = axios.create({
   baseURL: BASE_URL,
   timeout: 10000,
 });
 
-// Axios request interceptor to add token to requests
+// Request interceptor
 instance.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem(TOKEN);
@@ -15,18 +17,41 @@ instance.interceptors.request.use(
     }
     return config;
   },
-  (error) => Promise.reject(error)
+  (error) => {
+    return Promise.reject(error);
+  }
 );
 
-// Axios response interceptor to handle token expiration
+// Response interceptor
 instance.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    return response;
+  },
   (error) => {
-    if (error.response.data.statusCode === 401) {
-      localStorage.clear();
-      window.location.href = '/';
-      return Promise.reject(error);
+    let errorMessage = '';
+    if (error.response) {
+      switch (error.response.status) {
+        case 400:
+        case 403:
+        case 404:
+        case 500:
+          errorMessage = error?.response?.data?.error?.message;
+          break;
+        case 401:
+          localStorage.clear();
+          toast.error('Session expired. Please login again');
+          window.location.href = '/';
+          break;
+        default:
+          errorMessage = COMMON_ERROR;
+      }
+    } else if (error.request) {
+      errorMessage = 'No response received';
+    } else {
+      errorMessage = error.message;
+      errorHandler.handleError(error);
     }
+    toast.error(errorMessage);
     return Promise.reject(error);
   }
 );

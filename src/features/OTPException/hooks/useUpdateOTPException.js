@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import axiosInstance from '../../../utils/axiosInstance';
 import { toast } from 'react-toastify';
-import { COMMON_ERROR } from '../../../utils/globalConstants';
-import { useDispatch } from 'react-redux';
+import errorHandler from '../../../utils/errorHandler';
 import { hideDialog } from '../../../stores/slices/dialogSlice';
 import apiUrls from '../../../utils/apiUrls';
+import { useDispatch } from 'react-redux';
 
 function useUpdateOTPException(fetchData) {
   const dispatch = useDispatch();
@@ -18,7 +18,7 @@ function useUpdateOTPException(fetchData) {
       fetchData();
       dispatch(hideDialog());
     } catch (error) {
-      toast.error(error?.response?.data?.error?.message || COMMON_ERROR);
+      errorHandler.handleError(error);
     } finally {
       setLoading(false);
     }

@@ -4,6 +4,7 @@ import { API_END_POINTS } from '../constants';
 import { toast } from 'react-toastify';
 import { COMMON_WORDS } from '../../../utils/constants';
 import { buildQueryString } from '../../../utils/globalizationFunction';
+import errorHandler from '../../../utils/errorHandler';
 
 const useRevalidationList = () => {
   const [data, setData] = useState([]);
@@ -41,7 +42,6 @@ const useRevalidationList = () => {
       setData(transformedData);
       setTotalCount(response?.data?.totalCount || 0);
     } catch (error) {
-      toast.error(error.response?.data?.error?.message || 'Failed to fetch revalidation list');
       setData([]);
     } finally {
       setLoading(false);
@@ -67,7 +67,7 @@ const useRevalidationList = () => {
       toast.success('Data updated successfully');
       setData(transformedData); // Set the updated data after successful API response
     } catch (error) {
-      toast.error(error.response?.data?.error?.message || 'Failed to update data');
+      errorHandler.handleError(error);
     }
   }, []);
 

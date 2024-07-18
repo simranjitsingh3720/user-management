@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import axiosInstance from '../../../../utils/axiosInstance';
-import { COMMON_ERROR } from '../../../../utils/globalConstants';
 import apiUrls from '../../../../utils/apiUrls';
 import { useDispatch } from 'react-redux';
 import { hideDialog } from '../../../../stores/slices/dialogSlice';
@@ -26,7 +25,6 @@ export default function useUpdateUser(fetchData) {
       dispatch(hideDialog());
       fetchData();
     } catch (error) {
-      toast.error(error?.response?.data?.error?.message || COMMON_ERROR);
       dispatch(hideDialog());
     } finally {
       setLoading(false);

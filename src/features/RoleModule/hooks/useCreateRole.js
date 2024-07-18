@@ -2,7 +2,8 @@ import { useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance"; 
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { COMMON_ERROR } from "../../../utils/globalConstants";
+import errorHandler from "../../../utils/errorHandler";
+
 
 function useCreateRole() {
   const [loading, setLoading] = useState(false);
@@ -16,9 +17,7 @@ function useCreateRole() {
       toast.success(response?.data?.message || "Role created successfully");
       navigate("/roles");
     } catch (error) {
-      toast.error(
-        error?.response?.data?.error?.message || COMMON_ERROR
-      );
+     errorHandler.handleError(error);
 
       
     } finally {

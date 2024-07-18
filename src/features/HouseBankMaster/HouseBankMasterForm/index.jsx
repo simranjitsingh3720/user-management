@@ -36,10 +36,11 @@ function HouseBankMasterForm() {
 
   useEffect(() => {
     if (houseBankByID && houseBankByID?.data) {
-      setValue('houseBankCode', houseBankByID?.data?.houseBankCode || '');
-      setValue('bankCode', houseBankByID?.data?.bankCode || '');
-      setValue('branchName', houseBankByID?.data?.branchName || '');
-      setValue('accountNumber', houseBankByID?.data?.accountNumber || '');
+      const { houseBankCode, bankCode, branchName, accountNumber } = houseBankByID?.data;
+      setValue('houseBankCode', houseBankCode || '');
+      setValue('bankCode', bankCode || '');
+      setValue('branchName', branchName || '');
+      setValue('accountNumber', accountNumber || '');
     }
   }, [houseBankByID]);
 

@@ -2,7 +2,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../../utils/axiosInstance";
 import { toast } from "react-toastify";
-import { COMMON_ERROR } from "../../../utils/globalConstants";
+import errorHandler from "../../../utils/errorHandler";
+
 
 function useUpdateHouseBank(setChangeStatusOpen, fetchGroupList) {
   const [loading, setLoading] = useState(false);
@@ -24,11 +25,7 @@ function useUpdateHouseBank(setChangeStatusOpen, fetchGroupList) {
       }
       navigate("/house-bank-master");
     } catch (error) {
-      toast.error(
-        error?.response?.data?.error?.message || COMMON_ERROR
-      );
-
-      
+      errorHandler.handleError(error);
     } finally {
       setLoading(false); 
     }

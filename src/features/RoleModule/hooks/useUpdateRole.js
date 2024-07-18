@@ -2,7 +2,8 @@ import { useState } from 'react';
 import axiosInstance from '../../../utils/axiosInstance';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { COMMON_ERROR } from '../../../utils/globalConstants';
+import errorHandler from '../../../utils/errorHandler';
+
 
 function useUpdateRole(id, setChangeStatusOpen, fetchList) {
   const [loading, setLoading] = useState(false);
@@ -18,7 +19,7 @@ function useUpdateRole(id, setChangeStatusOpen, fetchList) {
       if (setChangeStatusOpen) setChangeStatusOpen(false);
       if (fetchList) fetchList();
     } catch (error) {
-      toast.error(error?.response?.data?.error?.message || COMMON_ERROR);
+      errorHandler.handleError(error);
     } finally {
       setLoading(false);
     }

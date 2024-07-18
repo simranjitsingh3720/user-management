@@ -1,5 +1,3 @@
-import EditIcon from "@mui/icons-material/Edit";
-
 export const YES = 'yes';
 export const DATE_FORMAT = "DD/MM/YYYY";
 export const DATE_FORMAT_2 = "MM/DD/YYYY";
