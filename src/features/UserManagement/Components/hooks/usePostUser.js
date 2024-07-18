@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import apiUrls from '../../../../utils/apiUrls';
 import { NAVIGATE_TO_USER_MANAGEMENT, USER_CREATION_SUCCESS } from '../utils/constants';
+import errorHandler from '../../../../utils/errorHandler';
 
 export default function usePostUser() {
   const [loading, setLoading] = useState(false);
@@ -18,7 +19,7 @@ export default function usePostUser() {
       toast.success(response?.data?.message || USER_CREATION_SUCCESS);
       navigate(NAVIGATE_TO_USER_MANAGEMENT);
     } catch (error) {
-      console.error('Error creating User', error);
+      errorHandler.handleError(error);
     } finally {
       setLoading(false);
     }

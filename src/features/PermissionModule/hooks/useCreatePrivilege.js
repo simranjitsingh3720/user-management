@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import apiUrls from "../../../utils/apiUrls";
+import errorHandler from "../../../utils/errorHandler";
 
 function useCreatePrivilege() {
   const [loading, setLoading] = useState(false);
@@ -22,7 +23,7 @@ function useCreatePrivilege() {
       );
       navigate("/permission");
     } catch (error) {
-      console.error("Error", error);
+      errorHandler.handleError(error);
     } finally {
       setLoading(false);
     }

@@ -4,6 +4,7 @@ import axiosInstance from '../../../utils/axiosInstance';
 import { toast } from 'react-toastify';
 
 import apiUrls from '../../../utils/apiUrls';
+import errorHandler from '../../../utils/errorHandler';
 
 function useCreateEODBypass() {
   const [loading, setLoading] = useState(false);
@@ -17,7 +18,7 @@ function useCreateEODBypass() {
       toast.success(response?.data?.message || 'Producer EOD Created successfully');
       navigate('/producer-eod-bypass-list');
     } catch (error) {
-      console.error("Error", error);
+      errorHandler.handleError(error);
     } finally {
       setLoading(false);
     }
@@ -29,7 +30,7 @@ function useCreateEODBypass() {
       toast.success(response?.data?.message || 'EOD Producer updated successfully');
       navigate('/producer-eod-bypass-list');
     } catch (error) {
-      console.error("Error", error);
+      errorHandler.handleError(error);
     } finally {
       setLoading(false);
     }

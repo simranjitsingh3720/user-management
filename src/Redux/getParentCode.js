@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axiosInstance from '../utils/axiosInstance';
 import apiUrls from '../utils/apiUrls';
 import { buildQueryString, getFullName } from '../utils/globalizationFunction';
+import errorHandler from '../utils/errorHandler';
 
 export const getParentCode = createAsyncThunk(
   'parentCode/getParentCode',
@@ -19,7 +20,7 @@ export const getParentCode = createAsyncThunk(
         return formattedArray;
       }
     } catch (error) {
-      console.error(error);
+      errorHandler.handleError(error);
       return rejectWithValue([]);
     }
   }

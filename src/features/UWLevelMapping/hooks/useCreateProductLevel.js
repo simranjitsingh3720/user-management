@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import apiUrls from '../../../utils/apiUrls';
 import { hideDialog } from '../../../stores/slices/dialogSlice';
 import { useDispatch } from 'react-redux';
+import errorHandler from '../../../utils/errorHandler';
 
 function useCreateProductLevel(fetchData, setEditData) {
   const [loading, setLoading] = useState(false);
@@ -26,7 +27,7 @@ function useCreateProductLevel(fetchData, setEditData) {
         fetchData();
       }
     } catch (error) {
-      console.error("Error", error);
+      errorHandler.handleError(error);
     } finally {
       setLoading(false);
     }
@@ -57,7 +58,7 @@ function useCreateProductLevel(fetchData, setEditData) {
         setEditData([]);
       }
     } catch (error) {
-      console.error("Error", error);
+      errorHandler.handleError(error);
     } finally {
       setLoading(false);
     }

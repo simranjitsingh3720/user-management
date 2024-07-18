@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance"; 
+import errorHandler from "../../../utils/errorHandler";
 
 
 function useUpdateUser() {
@@ -10,7 +11,7 @@ function useUpdateUser() {
     try {
       await axiosInstance.put("api/group/update-users", payload);
     } catch (error) {
-      console.error("Error updating User", error);
+      errorHandler.handleError(error);
     } finally {
       setLoading(false); 
     }

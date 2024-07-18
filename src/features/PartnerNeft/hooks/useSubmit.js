@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { API_END_POINTS } from "../utils/constant";
 import axiosInstance from "./../../../utils/axiosInstance";
+import errorHandler from "../../../utils/errorHandler";
 
 
 const useSubmit = () => {
@@ -29,8 +30,8 @@ const useSubmit = () => {
           responseData?.message || "Partner NEFT created successfully"
         );
         navigate("/partner-neft");
-      } catch (e) {
-        console.error(e);
+      } catch (error) {
+        errorHandler.handleError(error);
       }
     },
     [navigate]
@@ -68,8 +69,8 @@ const useSubmit = () => {
           responseData?.message || "Partner NEFT updated successfully"
         );
         navigate("/partner-neft");
-      } catch (e) {
-        console.error(e);
+      } catch (error) {
+        errorHandler.handleError(error);
       }
     },
     [navigate]

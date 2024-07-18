@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axiosInstance from './../utils/axiosInstance';
 import apiUrls from '../utils/apiUrls';
 import { buildQueryString, toCapitalize } from '../utils/globalizationFunction';
+import errorHandler from '../utils/errorHandler';
 
 export const getLobs = createAsyncThunk('lobUserCreation/getLobs', async (_, { getState, rejectWithValue }) => {
   try {
@@ -19,7 +20,7 @@ export const getLobs = createAsyncThunk('lobUserCreation/getLobs', async (_, { g
     }));
     return formattedArray;
   } catch (error) {
-    console.error(error);
+    errorHandler.handleError(error);
     return rejectWithValue([]);
   }
 });

@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import axiosInstance from "./../../utils/axiosInstance";
 import apiUrls from "./../../utils/apiUrls";
 import { addAsyncReducers } from "../../utils/addAsyncReducers";
+import errorHandler from "../../utils/errorHandler";
 
 export const fetchLobData = createAsyncThunk(
   "lob/fetchLobData",
@@ -36,7 +37,7 @@ export const updateLobData = createAsyncThunk(
       toast.success(response?.data?.message || "LOB updated successfully");
       return response.data;
     } catch (error) {
-      console.error("Error", error);
+      errorHandler.handleError(error);
       return rejectWithValue(error?.response?.data || {});
     }
   }
@@ -51,7 +52,7 @@ export const createLobData = createAsyncThunk(
       navigate("/lob");
       return response.data;
     } catch (error) {
-      console.error("Error", error);
+      errorHandler.handleError(error);
       return rejectWithValue(error?.response?.data || {});
     }
   }

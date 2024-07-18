@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
 import { toast } from "react-toastify";
+import errorHandler from "../../../utils/errorHandler";
 
 
 function useCreateOTPException({ fetchData }) {
@@ -15,8 +16,7 @@ function useCreateOTPException({ fetchData }) {
       );
       fetchData();
     } catch (error) {
-     console.error("Error", error);
-      
+      errorHandler.handleError(error);
     } finally {
       setLoading(false); 
     }

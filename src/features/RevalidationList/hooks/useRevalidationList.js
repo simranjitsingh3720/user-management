@@ -4,6 +4,7 @@ import { API_END_POINTS } from '../constants';
 import { toast } from 'react-toastify';
 import { COMMON_WORDS } from '../../../utils/constants';
 import { buildQueryString } from '../../../utils/globalizationFunction';
+import errorHandler from '../../../utils/errorHandler';
 
 const useRevalidationList = () => {
   const [data, setData] = useState([]);
@@ -66,7 +67,7 @@ const useRevalidationList = () => {
       toast.success('Data updated successfully');
       setData(transformedData); // Set the updated data after successful API response
     } catch (error) {
-      console.error('Error updating data', error);
+      errorHandler.handleError(error);
     }
   }, []);
 

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
+import errorHandler from "../../../utils/errorHandler";
 
 function useGetSyncedProducer(pageChange, rowsPage, query, searched) {
   const [data, setData] = useState(null);
@@ -24,7 +25,7 @@ function useGetSyncedProducer(pageChange, rowsPage, query, searched) {
       const response = await axiosInstance.get(url);
       setData(response.data);
     } catch (error) {
-      console.error("Error fetching data", error);
+      errorHandler.handleError(error);
     } finally {
       setLoading(false);
     }

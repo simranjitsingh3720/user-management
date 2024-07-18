@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { BASE_URL, COMMON_ERROR, TOKEN } from './globalConstants';
+import errorHandler from './errorHandler';
 
 const instance = axios.create({
   baseURL: BASE_URL,
@@ -48,7 +49,7 @@ instance.interceptors.response.use(
       errorMessage = 'No response received';
     } else {
       errorMessage = error.message;
-      console.error('Error Message:', error);
+      errorHandler.handleError(error);
     }
     toast.error(errorMessage);
     return Promise.reject(error);

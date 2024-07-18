@@ -2,6 +2,7 @@ import { useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance"; 
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import errorHandler from "../../../utils/errorHandler";
 
 
 function useUpdateGroup(setChangeStatusOpen, fetchGroupList) {
@@ -18,7 +19,7 @@ function useUpdateGroup(setChangeStatusOpen, fetchGroupList) {
       if (setChangeStatusOpen) setChangeStatusOpen(false);
       if (fetchGroupList) fetchGroupList();
     } catch (error) {
-      console.error("Error updating Group", error);
+      errorHandler.handleError(error);
     } finally {
       setLoading(false); 
     }

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
 import { toast } from "react-toastify";
+import errorHandler from "../../../utils/errorHandler";
 
 
 function useUpdateOTPException(setChangeStatusOpen, fetchGroupList) {
@@ -14,7 +15,7 @@ function useUpdateOTPException(setChangeStatusOpen, fetchGroupList) {
       setChangeStatusOpen(false);
       fetchGroupList();
     } catch (error) {
-     console.error("Error", error);
+      errorHandler.handleError(error);
       
     } finally {
       setLoading(false); 

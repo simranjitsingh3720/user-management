@@ -4,6 +4,7 @@ import axiosInstance from "../../../utils/axiosInstance";
 import { toast } from "react-toastify";
 
 import apiUrls from "../../../utils/apiUrls";
+import errorHandler from "../../../utils/errorHandler";
 
 function useUpdateEmployeeConfig(listFetchFun) {
   const [loading, setLoading] = useState(false);
@@ -25,7 +26,7 @@ function useUpdateEmployeeConfig(listFetchFun) {
         listFetchFun();
       }
     } catch (error) {
-      console.error("Error updating Employee Config", error);
+      errorHandler.handleError(error);
     } finally {
       setLoading(false);
     }

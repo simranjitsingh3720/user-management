@@ -4,6 +4,7 @@ import axiosInstance from "../../../utils/axiosInstance";
 import { toast } from "react-toastify";
 
 import apiUrls from "../../../utils/apiUrls";
+import errorHandler from "../../../utils/errorHandler";
 
 function useCreateHealthConfig() {
   const [loading, setLoading] = useState(false);
@@ -23,7 +24,7 @@ function useCreateHealthConfig() {
       );
       navigate("/health-config");
     } catch (error) {
-      console.error("Error creating Product Wise Payment Configuration", error);
+      errorHandler.handleError(error);
     } finally {
       setLoading(false);
     }

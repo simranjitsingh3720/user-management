@@ -2,6 +2,7 @@ import { useState } from 'react';
 import axiosInstance from '../../../utils/axiosInstance';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import errorHandler from '../../../utils/errorHandler';
 
 
 function useUpdateRole(id, setChangeStatusOpen, fetchList) {
@@ -18,7 +19,7 @@ function useUpdateRole(id, setChangeStatusOpen, fetchList) {
       if (setChangeStatusOpen) setChangeStatusOpen(false);
       if (fetchList) fetchList();
     } catch (error) {
-      console.error("Error", error);
+      errorHandler.handleError(error);
     } finally {
       setLoading(false);
     }

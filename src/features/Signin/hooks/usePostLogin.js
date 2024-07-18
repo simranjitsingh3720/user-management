@@ -7,6 +7,7 @@ import {
 import apiUrls from "../../../utils/apiUrls";
 import { DASHBOARD } from "../utils/constants";
 import { COMMON_WORDS } from "../../../utils/constants";
+import errorHandler from "../../../utils/errorHandler";
 
 export default function usePostLogin() {
   const [loading, setLoading] = useState(false);
@@ -25,7 +26,7 @@ export default function usePostLogin() {
         navigate(DASHBOARD);
       }
     } catch (error) {
-      console.error("Error", error);
+      errorHandler.handleError(error);
     } finally {
       setLoading(false);
     }

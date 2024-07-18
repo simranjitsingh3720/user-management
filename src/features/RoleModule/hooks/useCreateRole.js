@@ -2,6 +2,7 @@ import { useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance"; 
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import errorHandler from "../../../utils/errorHandler";
 
 
 function useCreateRole() {
@@ -16,7 +17,7 @@ function useCreateRole() {
       toast.success(response?.data?.message || "Role created successfully");
       navigate("/roles");
     } catch (error) {
-     console.error("Error", error);
+     errorHandler.handleError(error);
 
       
     } finally {

@@ -4,6 +4,7 @@ import axiosInstance from './../../utils/axiosInstance';
 import apiUrls from './../../utils/apiUrls';
 import { buildParams } from './../../utils/buildParams';
 import { addAsyncReducers } from './../../utils/addAsyncReducers';
+import errorHandler from '../../utils/errorHandler';
 
 export const fetchAllProductData = createAsyncThunk(
   'product/fetchAllProductData',
@@ -26,7 +27,7 @@ export const updateProductData = createAsyncThunk(
       toast.success(response?.data?.message || 'Product updated successfully');
       return response.data;
     } catch (error) {
-      console.error("Error", error);
+      errorHandler.handleError(error)
       return rejectWithValue(error?.response?.data || {});
     }
   }
@@ -41,7 +42,7 @@ export const createProductData = createAsyncThunk(
       navigate('/product');
       return response.data;
     } catch (error) {
-      console.error("Error", error);
+      errorHandler.handleError(error)
       return rejectWithValue(error?.response?.data || {});
     }
   }

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
 import { toast } from "react-toastify";
+import errorHandler from "../../../utils/errorHandler";
 
 function useUpdateBancaField() {
   const [loading, setLoading] = useState(false);
@@ -13,7 +14,7 @@ function useUpdateBancaField() {
         response?.data?.message || "Banca Field updated successfully"
       );
     } catch (error) {
-      console.error("Error updating Banca Field", error);
+      errorHandler.handleError(error);
     } finally {
       setLoading(false); 
     }

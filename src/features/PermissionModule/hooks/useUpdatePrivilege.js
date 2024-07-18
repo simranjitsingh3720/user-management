@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { hideDialog } from "../../../stores/slices/dialogSlice";
 import apiUrls from "../../../utils/apiUrls";
+import errorHandler from "../../../utils/errorHandler";
 
 function useUpdatePrivilege(fetchData) {
   const dispatch = useDispatch();
@@ -30,7 +31,7 @@ function useUpdatePrivilege(fetchData) {
       dispatch(hideDialog());
       fetchData();
     } catch (error) {
-      console.error("Error", error);
+      errorHandler.handleError(error);
     } finally {
       setLoading(false);
     }

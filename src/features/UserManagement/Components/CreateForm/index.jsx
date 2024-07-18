@@ -46,6 +46,7 @@ import CustomFormHeader from '../../../../components/CustomFormHeader';
 import { FORM_HEADER_TEXT } from '../../../../utils/constants';
 import dayjs from 'dayjs';
 import { getProducerTypes } from '../../../../Redux/getProducerType';
+import errorHandler from '../../../../utils/errorHandler';
 
 function CreateUserCreationForm() {
   const dispatch = useDispatch();
@@ -113,7 +114,7 @@ function CreateUserCreationForm() {
           setRoleConfig(response?.data?.roles[0]);
         }
       } catch (error) {
-        console.error('Error fetching mock data:', error);
+        errorHandler.handleError(error);
       }
     };
     fetchData();

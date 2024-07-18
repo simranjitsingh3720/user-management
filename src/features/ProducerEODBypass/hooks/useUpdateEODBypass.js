@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import axiosInstance from '../../../utils/axiosInstance';
 
 import apiUrls from '../../../utils/apiUrls';
+import errorHandler from '../../../utils/errorHandler';
 
 function useUpdateEODBypass() {
   const [loading, setLoading] = useState(false);
@@ -17,7 +18,7 @@ function useUpdateEODBypass() {
       toast.success(response?.data?.message || 'EOD Producer updated successfully');
       navigate('/producer-eod-bypass-list');
     } catch (error) {
-      console.error("Error", error);
+      errorHandler.handleError(error);
     } finally {
       setLoading(false);
     }

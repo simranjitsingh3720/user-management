@@ -4,6 +4,7 @@ import axiosInstance from "../../../utils/axiosInstance";
 import { toast } from "react-toastify";
 
 import apiUrls from "../../../utils/apiUrls";
+import errorHandler from "../../../utils/errorHandler";
 
 function useUpdatePaymentConfig() {
   const [loading, setLoading] = useState(false);
@@ -22,7 +23,7 @@ function useUpdatePaymentConfig() {
       );
       navigate("/product-payment-config");
     } catch (error) {
-      console.error("Error", error);
+      errorHandler.handleError(error);
     } finally {
       setLoading(false);
     }

@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axiosInstance from './../utils/axiosInstance';
 import apiUrls from '../utils/apiUrls';
 import { buildQueryString, toCapitalize } from '../utils/globalizationFunction';
+import errorHandler from '../utils/errorHandler';
 
 export const getProducts = createAsyncThunk('productUserCreation/getProducts', async (lob, { rejectWithValue }) => {
   try {
@@ -19,7 +20,7 @@ export const getProducts = createAsyncThunk('productUserCreation/getProducts', a
       return formattedArray;
     }
   } catch (error) {
-    console.error(error);
+    errorHandler.handleError(error);
     return rejectWithValue([]);
   }
 });

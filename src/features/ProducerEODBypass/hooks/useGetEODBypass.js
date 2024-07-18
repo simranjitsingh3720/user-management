@@ -5,6 +5,7 @@ import { COMMON_WORDS } from '../../../utils/constants';
 import { buildQueryString } from '../../../utils/globalizationFunction';
 import moment from 'moment';
 import apiUrls from '../../../utils/apiUrls';
+import errorHandler from '../../../utils/errorHandler';
 
 const calculateUnlockedDays = (startDateString, endDateString) => {
   const startMoment = moment(startDateString, 'DD/MM/YYYY');
@@ -68,7 +69,7 @@ function useGetEODBypass(page, pageSize, date, order, orderBy) {
       setData(producerEodByPass);
       setCount(response?.data?.totalCount);
     } catch (error) {
-      console.error('Error fetching data', error);
+      errorHandler.handleError(error);
     } finally {
       setLoading(false);
     }

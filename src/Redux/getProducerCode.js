@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axiosInstance from '../utils/axiosInstance';
 import apiUrls from '../utils/apiUrls';
 import { buildQueryString, getFullName } from '../utils/globalizationFunction';
+import errorHandler from '../utils/errorHandler';
 
 export const getProducerCodes = createAsyncThunk(
   'producerCode/getProducerCodes',
@@ -30,7 +31,7 @@ export const getProducerCodes = createAsyncThunk(
         }
       }
     } catch (error) {
-      console.error(error);
+      errorHandler.handleError(error)
       return rejectWithValue([]);
     }
   }

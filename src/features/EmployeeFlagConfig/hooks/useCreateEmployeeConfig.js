@@ -4,6 +4,7 @@ import axiosInstance from "../../../utils/axiosInstance";
 import { toast } from "react-toastify";
 
 import apiUrls from "../../../utils/apiUrls";
+import errorHandler from "../../../utils/errorHandler";
 
 function useCreateEmployeeConfig(listFetchFun) {
   const [loading, setLoading] = useState(false);
@@ -25,7 +26,7 @@ function useCreateEmployeeConfig(listFetchFun) {
       }
       navigate("/employee-flag-config");
     } catch (error) {
-      console.error("Error creating Employee Flag Configuration", error);
+      errorHandler.handleError(error);
     } finally {
       setLoading(false);
     }
