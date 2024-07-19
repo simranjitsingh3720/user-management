@@ -1,6 +1,5 @@
-import { Autocomplete, TextField } from '@mui/material';
+import { Autocomplete, Grid, TextField, CircularProgress, CardContent, Card, Box } from '@mui/material';
 import React, { useEffect } from 'react';
-import styles from './styles.module.scss';
 import { Controller, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import useGetGroup from '../hooks/useGetGroup';
@@ -40,6 +39,7 @@ function CreateRoleForm() {
       postData(result);
     }
   };
+
   const { handleSubmit, control, setValue, formState, getValues } = useForm({
     defaultValues: { roleName: '', groups: {} },
   });
@@ -51,6 +51,7 @@ function CreateRoleForm() {
       fetchData(id);
     }
   }, [id]);
+
   useEffect(() => {
     if (roleData) {
       setValue('roleName', roleData?.data?.roleName);
@@ -59,82 +60,72 @@ function CreateRoleForm() {
   }, [roleData]);
 
   return (
-    <div>
-      {' '}
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className={styles.createNewUserContainer}>
-          <div className="p-4">
+    <>
+      <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+        <Card>
+          <CardContent>
             <CustomFormHeader id={id} headerText={FORM_HEADER_TEXT.ROLE} navigateRoute="/roles" />
-          </div>
-          <div className={styles.containerStyle}>
-            <div className={styles.fieldContainerStyle}>
-              <span className={styles.labelText}>
-                Role Name <span className={styles.styledRequired}>*</span>
-              </span>
-              <Controller
-                name="roleName"
-                control={control}
-                defaultValue=""
-                rules={{ required: true }}
-                render={({ field }) => (
-                  <TextField
-                    id="roleName"
-                    variant="outlined"
-                    placeholder="Enter Name"
-                    size="small"
-                    className={styles.customizeSelect}
-                    {...field}
-                    onChange={(e) => {
-                      setValue('roleName', e.target.value);
-                    }}
-                  />
-                )}
-              />
-              <div className={styles.styledError}>{errors.roleName && <span>This field is required</span>} </div>
-            </div>
-            <div className={styles.fieldContainerStyle}>
-              <span className={styles.labelText}>
-                Group Name <span className={styles.styledRequired}>*</span>
-              </span>
-              <Controller
-                name="groups"
-                control={control}
-                rules={{ required: true }}
-                render={({ field }) => (
-                  <Autocomplete
-                    id="groups"
-                    value={getValues('groups') || {}}
-                    options={allGroupData?.data || []}
-                    getOptionLabel={(option) => option?.groupName?.toUpperCase() || ''}
-                    limitTags={2}
-                    className={styles.customizePrivilegeSelect}
-                    size="small"
-                    isOptionEqualToValue={(option, value) => option.id === value.id}
-                    renderInput={(params) => <TextField {...params} placeholder="Select" />}
-                    onChange={(event, newValue) => {
-                      field.onChange(newValue);
-                    }}
-                    ListboxProps={{
-                      style: {
-                        maxHeight: '200px',
-                      },
-                    }}
-                  />
-                )}
-              />
-              <div className={styles.styledError}>{errors.groups && <span>This field is required</span>}</div>
-            </div>
-          </div>
+            <Grid container spacing={2}>
+              <Grid item xs={12} md={6}>
+              <span className="text-gray-600 text-sm required-field">Role Name</span>
+                <Controller
+                  name="roleName"
+                  control={control}
+                  defaultValue=""
+                  rules={{ required: 'Role Name is required' }}
+                  render={({ field }) => (
+                    <TextField
+                      variant="outlined"
+                      placeholder="Enter Name"
+                      size="small"
+                      fullWidth
+                      {...field}
+                      error={!!errors.roleName}
+                      helperText={errors.roleName ? errors.roleName.message : ''}
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <span className="text-gray-600 text-sm required-field">Group Name</span>
+                <Controller
+                  name="groups"
+                  control={control}
+                  rules={{ required: 'Group Name is required' }}
+                  render={({ field }) => (
+                    <Autocomplete
+                      value={getValues('groups') || {}}
+                      options={allGroupData?.data || []}
+                      getOptionLabel={(option) => option?.groupName?.toUpperCase() || ''}
+                      isOptionEqualToValue={(option, value) => option.id === value.id}
+                      onChange={(event, newValue) => field.onChange(newValue)}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          placeholder="Select"
+                          size="small"
+                          error={!!errors.groups}
+                          helperText={errors.groups ? errors.groups.message : ''}
+                        />
+                      )}
+                    />
+                  )}
+                />
+              </Grid>
+            </Grid>
+          </CardContent>
+        </Card>
+        <div className="mt-4">
+          <CustomButton
+            type="submit"
+            variant="contained"
+            disabled={loading || (id && roleUpdateLoading) || updateLoading}
+          >
+            {id ? 'Update' : 'Submit'}
+          </CustomButton>
         </div>
-        <CustomButton
-          type="submit"
-          variant="contained"
-          disabled={loading || (id && roleUpdateLoading) || updateLoading}
-        >
-          {id ? 'Update' : 'Submit'}
-        </CustomButton>
-      </form>
-    </div>
+      </Box>
+    </>
   );
 }
 
