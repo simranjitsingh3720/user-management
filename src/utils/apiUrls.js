@@ -27,6 +27,7 @@ const apiUrls = {
   houseBank: '/api/house-bank',
   getEodByPass: '/api/producer-eod-bypass',
   getOTPException: '/api/otp-exception',
+  role: '/api/role',
 };
 
 export default apiUrls;

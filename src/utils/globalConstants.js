@@ -1,9 +1,15 @@
 export const drawerWidth = 240;
 export const BASE_URL = 'https://dev-usermgmt.tataaig.com';
 export const MODULE_TYPE = 'um';
-
 export const selectRowsData = [5, 10, 15, 20];
 export const PAGECOUNT = 10;
+export const COMMON_ERROR = 'An error occurred. Please try again.';
+export const TOKEN = 'user-token';
+export const USER_DETAILS = 'user-details';
+export const TOKEN_EXPIRATION_ERROR = 'Your session has expired. Please log in again!';
+export const DATE_FORMAT = 'DD/MM/YYYY';
+export const CREATED_AT = 'createdAt';
+export const ASC = 'asc';
 
 export const REGEX = {
   alphaNumericRegex: /^[a-zA-Z0-9\s]*$/,
@@ -13,7 +19,6 @@ export const REGEX = {
   emailRegex: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
   nameRegex: '^[A-Za-z]+$',
   mobileRegex: /^[6-9][0-9]{9}$/,
-  // passwordRegex: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{5,}$/,
   passwordRegex: /^\d{5,10}$/,
   fullNameRegex: /^[A-Za-z]+ [A-Za-z]+$/,
 };
@@ -31,6 +36,7 @@ export const BUTTON_TEXT = {
   HOUSE_BANK: 'Create House Bank Master Confirguration',
   PRODUCER_EOD: 'Create New Producer EOD Bypass',
   SET_OTP_EXCEPTION: 'Create New OTP Exception',
+  ROLES: 'Create New Role',
 };
 
 export const STATUS = [
@@ -56,9 +62,3 @@ export const ProductPayment = [
     value: 'lob',
   },
 ];
-
-export const COMMON_ERROR = 'An error occurred. Please try again.';
-export const TOKEN = 'user-token';
-export const USER_DETAILS = 'user-details';
-export const TOKEN_EXPIRATION_ERROR = 'Your session has expired. Please log in again!';
-export const DATE_FORMAT = 'DD/MM/YYYY';

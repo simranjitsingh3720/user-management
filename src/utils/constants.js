@@ -27,6 +27,7 @@ export const COMMON_WORDS = {
   PERMISSIONNAME: 'permissionName',
   GROUPNAME: 'groupName',
   GROUP: 'group',
+  HAS_GROUP: 'hasGroup',
   SEARCH: 'search',
   STATUS: 'status',
   SCOPES: 'scopes',
@@ -36,6 +37,7 @@ export const COMMON_WORDS = {
   CHANNEL: 'channel',
   HAS_CHANNEL: 'hasChannel',
   OTP_EXCEPTION: 'OTP Exception',
+  ROLE: 'role',
 };
 
 export const HEADER = {

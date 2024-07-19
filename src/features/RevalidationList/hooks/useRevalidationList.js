@@ -65,7 +65,7 @@ const useRevalidationList = () => {
     try {
       await axiosInstance.put(API_END_POINTS.updateRevalidationList, payload);
       toast.success('Data updated successfully');
-      setData(transformedData); // Set the updated data after successful API response
+      setData(transformedData);
     } catch (error) {
       errorHandler.handleError(error);
     }
