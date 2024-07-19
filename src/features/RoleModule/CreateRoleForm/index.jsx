@@ -55,19 +55,24 @@ function CreateRoleForm() {
   }, [roleData, loading, setValue]);
 
   const handleReset = () => {
-    if(id) {
+    if (id) {
       setValue('groups', null);
     } else {
       setValue('roleName', '');
       setValue('groups', null);
     }
-  }
+  };
 
   return (
     <Box component="form" onSubmit={handleSubmit(onSubmit)}>
       <Card>
         <CardContent>
-          <CustomFormHeader id={id} headerText={FORM_HEADER_TEXT.ROLE} navigateRoute="/roles" handleReset={handleReset} />
+          <CustomFormHeader
+            id={id}
+            headerText={FORM_HEADER_TEXT.ROLE}
+            navigateRoute="/roles"
+            handleReset={handleReset}
+          />
           <Grid container spacing={2}>
             <Grid item xs={12} md={6}>
               <InputField

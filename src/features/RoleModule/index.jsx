@@ -28,19 +28,22 @@ function RoleModule() {
 
   const { fetchRoles, data, loading, totalCount, setData } = useRole();
 
-  const updateRoleInState = useCallback((id, data) => {
-    const updatedData = data.map((item) => {
-      if (item.id === id) {
-        return {
-          ...item,
-          checked: !item.checked,
-          status: !item.status,
-        };
-      }
-      return item;
-    });
-    setData(updatedData);
-  }, [setData]);
+  const updateRoleInState = useCallback(
+    (id, data) => {
+      const updatedData = data.map((item) => {
+        if (item.id === id) {
+          return {
+            ...item,
+            checked: !item.checked,
+            status: !item.status,
+          };
+        }
+        return item;
+      });
+      setData(updatedData);
+    },
+    [setData]
+  );
 
   const handleGo = () => {
     if (query !== '') {
@@ -83,7 +86,7 @@ function RoleModule() {
         showDialog({
           title: COMMON_WORDS.CHANGE_STATUS,
           content: <Content label={COMMON_WORDS.ROLE} />,
-          actions: <Action row={row} data={data} updateRoleInState={updateRoleInState}/>,
+          actions: <Action row={row} data={data} updateRoleInState={updateRoleInState} />,
         })
       );
     },
