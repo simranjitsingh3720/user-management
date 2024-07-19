@@ -11,6 +11,7 @@ import CustomTable from '../../components/CustomTable';
 import generateTableHeaders from './utils/generateTableHeaders';
 import { useNavigate } from 'react-router-dom';
 import usePermissions from '../../hooks/usePermission';
+import { SearchKey, showTextField } from './utils/constants';
 
 function ProducerEODBypass() {
   const navigate = useNavigate();
@@ -22,8 +23,10 @@ function ProducerEODBypass() {
   const [pageSize, setPageSize] = useState(10);
   const [order, setOrder] = useState(COMMON_WORDS.ASC);
   const [orderBy, setOrderBy] = useState(COMMON_WORDS.CREATED_AT);
+  const [query, setQuery] = useState('');
+  const [searched, setSearched] = useState('producerName');
 
-  const { data, loading, fetchData, count } = useGetEODBypass(page, pageSize, date, order, orderBy);
+  const { data, loading, fetchData, count } = useGetEODBypass(page, pageSize, date, order, orderBy, query, searched);
   const { canCreate, canUpdate } = usePermissions();
 
   useEffect(() => {
@@ -81,6 +84,12 @@ function ProducerEODBypass() {
         navigateRoute="/producer-eod-bypass-list/form"
         showExportButton
         canCreate={canCreate}
+        selectOptions={SearchKey}
+        searched={searched}
+        setSearched={setSearched}
+        setQuery={setQuery}
+        textField={showTextField.includes(searched)}
+        textFieldPlaceholder={COMMON_WORDS.SEARCH}
       />
       <div className="mt-4">
         <CustomTable

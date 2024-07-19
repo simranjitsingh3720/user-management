@@ -74,7 +74,7 @@ function HealthConfigurationForm() {
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.createNewUserContainer}>
-          <div className="p-5">
+          <div className="px-5 pt-5">
             <CustomFormHeader
               id={id}
               headerText={FORM_HEADER_TEXT.HEALTH_CONFIG}
