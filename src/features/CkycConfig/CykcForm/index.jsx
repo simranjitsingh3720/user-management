@@ -68,10 +68,12 @@ const CkycForm = () => {
 
   const handleResetButton = () => {
     dispatch(clearProducts());
-    setValue('lob', null);
-    setValue('product', null);
+    if(!id) {
+      setValue('lob', null);
+      setValue('product', null);
+    }
     setValue('cykc', 'enable');
-    setValue('forWhom', 'both');
+    setValue('forWhom', null);
   };
 
   const { data: lobListData } = useGetLobData();
