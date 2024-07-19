@@ -27,16 +27,16 @@ const useRevalidationList = () => {
 
       const transformedData =
         response?.data?.data?.map((item) => {
-          const { producer, revalidationList } = item;
+          const { producer, revalidationList: { id, emailId, mobileNo, createdAt, updatedAt, status } } = item;
           return {
-            id: revalidationList.id,
-            userName: `${producer[0].firstName} ${producer[0].lastName}`,
-            emailId: revalidationList.emailId,
-            mobileNo: revalidationList.mobileNo,
-            createdAt: revalidationList.createdAt,
-            updatedAt: revalidationList.updatedAt,
-            checked: revalidationList.status,
-            status: revalidationList.status,
+            id: id,
+            userName: `${producer?.[0].firstName} ${producer?.[0].lastName}`,
+            emailId: emailId,
+            mobileNo: mobileNo,
+            createdAt: createdAt,
+            updatedAt: updatedAt,
+            checked: status,
+            status: status,
           };
         }) || [];
       setData(transformedData);
