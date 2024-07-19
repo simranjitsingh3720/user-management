@@ -2,7 +2,7 @@ import { Autocomplete, TextField } from '@mui/material';
 import React, { useEffect } from 'react';
 import styles from './styles.module.scss';
 import { Controller, useForm } from 'react-hook-form';
-import { useFetcher, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import useGetLobListData from '../../ProductModule/hooks/useGetLobListData';
 import useGetProductList from '../hooks/useGetProductList';
 import useGetPayment from '../hooks/useGetPayment';
@@ -41,8 +41,6 @@ function ProductPaymentConfigForm() {
   const { UpdateDataFun, updateLoading } = useUpdatePaymentConfig();
 
   const { errors } = formState;
-
-  console.log('paymentDataByID', paymentDataByID);
 
   useEffect(() => {
     if (paymentDataByID && paymentDataByID?.data) {
