@@ -7,13 +7,13 @@ import { SEARCH_OPTIONS } from './utils/constants';
 import { SEARCH_PLACEHOLDER } from '../UserManagement/Components/utils/constants';
 import CustomTable from '../../components/CustomTable';
 import { Header } from './utils/Header';
-import useFetchRole from './hooks/useFetchRole';
 import CustomDialog from '../../components/CustomDialog';
 import { COMMON_WORDS } from '../../utils/constants';
 import Content from '../../components/CustomDialogContent';
 import Action from './Action';
 import { showDialog } from '../../stores/slices/dialogSlice';
 import { useDispatch } from 'react-redux';
+import useRole from './hooks/useRole';
 
 function RoleModule() {
   const navigate = useNavigate();
@@ -25,25 +25,26 @@ function RoleModule() {
   const [searched, setSearched] = useState(SEARCH_OPTIONS[0].value);
   const [query, setQuery] = useState('');
   const { canCreate, canUpdate } = usePermissions();
-  const { getRole, roleData, roleLoading, totalCount, setRoleData } = useFetchRole();
+
+  const { fetchRoles, data, loading, totalCount, setData } = useRole();
 
   const updateRoleInState = useCallback((id, data) => {
     const updatedData = data.map((item) => {
       if (item.id === id) {
         return {
           ...item,
-          checked : !item.checked,
+          checked: !item.checked,
           status: !item.status,
         };
       }
       return item;
     });
-    setRoleData(updatedData);
-  }, [setRoleData])
+    setData(updatedData);
+  }, [setData]);
 
   const handleGo = () => {
     if (query !== '') {
-      getRole({
+      fetchRoles({
         sortKey: orderBy,
         sortOrder: order,
         pageNo: page,
@@ -64,13 +65,13 @@ function RoleModule() {
   );
 
   const loadData = useCallback(() => {
-    getRole({
+    fetchRoles({
       pageNo: page,
       pageSize,
       sortKey: orderBy,
       sortOrder: order,
     });
-  }, [getRole, page, pageSize, orderBy, order]);
+  }, [fetchRoles, page, pageSize, orderBy, order]);
 
   useEffect(() => {
     loadData();
@@ -111,8 +112,8 @@ function RoleModule() {
       </div>
 
       <CustomTable
-        rows={roleData}
-        loading={roleLoading}
+        rows={data}
+        loading={loading}
         totalCount={totalCount}
         canUpdate={canUpdate}
         columns={header}
