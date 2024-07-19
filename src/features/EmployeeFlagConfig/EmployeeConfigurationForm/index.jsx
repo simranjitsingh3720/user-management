@@ -171,7 +171,7 @@ function EmployeeConfigurationForm({ fetchData: listFetchFun }) {
 
         <div className="mt-4">
           <CustomButton type="submit" variant="contained" disabled={loading || updateLoading}>
-            Save
+            Submit
           </CustomButton>
         </div>
       </Box>

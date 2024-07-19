@@ -16,7 +16,7 @@ const calculateUnlockedDays = (startDateString, endDateString) => {
   return differenceInDays;
 };
 
-function useGetEODBypass(page, pageSize, date, order, orderBy) {
+function useGetEODBypass(page, pageSize, date, order, orderBy, query, searched) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [count, setCount] = useState(0);
@@ -45,6 +45,14 @@ function useGetEODBypass(page, pageSize, date, order, orderBy) {
         let moreParams = {
           startDate: date.startDate,
           endDate: date.endDate,
+        };
+        params += `&${buildQueryString(moreParams)}`;
+      }
+
+      if (query && searched) {
+        let moreParams = {
+          searchKey: searched,
+          searchString: query,
         };
         params += `&${buildQueryString(moreParams)}`;
       }

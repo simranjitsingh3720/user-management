@@ -42,6 +42,8 @@ function ProductPaymentConfigForm() {
 
   const { errors } = formState;
 
+  console.log('paymentDataByID', paymentDataByID);
+
   useEffect(() => {
     if (paymentDataByID && paymentDataByID?.data) {
       setValue('lob', paymentDataByID?.data.lob || null);
@@ -51,11 +53,11 @@ function ProductPaymentConfigForm() {
     }
   }, [paymentDataByID]);
 
-  const lobWatch = watch("lob");
+  const lobWatch = watch('lob');
 
-  useEffect(()=> {
-    setValue("product", null)
-  }, [lobWatch])
+  useEffect(() => {
+    if (!id) setValue('product', null);
+  }, [lobWatch]);
 
   const onSubmit = (data) => {
     if (id) {
@@ -78,15 +80,27 @@ function ProductPaymentConfigForm() {
     }
   };
 
+  const handleReset = () => {
+    if (id) {
+      setValue('product', null);
+      setValue('payment', []);
+    } else {
+      setValue('lob', null);
+      setValue('product', null);
+      setValue('payment', []);
+    }
+  };
+
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.createNewUserContainer}>
-          <div className="p-4">
+          <div className="px-4 pt-4">
             <CustomFormHeader
               id={id}
               headerText={FORM_HEADER_TEXT.PAYMENT_CONFIG}
               navigateRoute="/product-payment-config"
+              handleReset={handleReset}
             />
           </div>
           <div className={styles.containerStyle}>
@@ -97,7 +111,7 @@ function ProductPaymentConfigForm() {
               <Controller
                 name="lob"
                 control={control}
-                rules={{ required: true }}
+                rules={{ required: 'LOB is required' }}
                 render={({ field }) => (
                   <Autocomplete
                     id="lob"
@@ -123,7 +137,7 @@ function ProductPaymentConfigForm() {
                   />
                 )}
               />
-              <div className={styles.styledError}>{errors.lob && <span>This field is required</span>} </div>
+              <div className={styles.styledError}>{errors.lob && <span>{errors.lob.message}</span>} </div>
             </div>
             <div className={styles.fieldContainerStyle}>
               <span className={styles.labelText}>
@@ -132,7 +146,7 @@ function ProductPaymentConfigForm() {
               <Controller
                 name="product"
                 control={control}
-                rules={{ required: true }}
+                rules={{ required: 'Product is required' }}
                 render={({ field }) => (
                   <Autocomplete
                     id="product"
@@ -153,7 +167,7 @@ function ProductPaymentConfigForm() {
                   />
                 )}
               />
-              <div className={styles.styledError}>{errors.product && <span>This field is required</span>} </div>
+              <div className={styles.styledError}>{errors.product && <span>{errors.product.message}</span>} </div>
             </div>
             <div className={styles.fieldContainerStyle}>
               <span className={styles.labelText}>
@@ -162,7 +176,7 @@ function ProductPaymentConfigForm() {
               <Controller
                 name="payment"
                 control={control}
-                rules={{ required: true }}
+                rules={{ required: 'Payment is required' }}
                 render={({ field }) => (
                   <Autocomplete
                     id="payment"
@@ -200,7 +214,7 @@ function ProductPaymentConfigForm() {
                   />
                 )}
               />
-              <div className={styles.styledError}>{errors.payment && <span>This field is required</span>} </div>
+              <div className={styles.styledError}>{errors.payment && <span>{errors.payment.message}</span>} </div>
             </div>
           </div>
         </div>

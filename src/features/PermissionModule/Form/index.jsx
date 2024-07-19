@@ -61,7 +61,7 @@ function Form() {
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.createNewUserContainer}>
-          <div className="p-4">
+          <div className="px-4 pt-4">
             <CustomFormHeader headerText={FORM_HEADER_TEXT.PERMISSION} navigateRoute="/permission" />
           </div>
           {fields.map((item, index) => (
