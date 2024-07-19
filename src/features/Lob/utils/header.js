@@ -8,7 +8,7 @@ export const Header = (updateLobData) => {
     { value: "Updated At", id: "updatedAt", sortable: true},
     {
         id: "action",
-        value: "Action",
+        value: "Status",
         sortable: false,
         action: [
           {
