@@ -1,27 +1,34 @@
-import axiosInstance from "../../../utils/axiosInstance"; 
+import { useEffect, useState } from 'react';
+import axiosInstance from '../../../utils/axiosInstance';
+import errorHandler from '../../../utils/errorHandler';
+import apiUrls from '../../../utils/apiUrls';
 
-import { useEffect, useState } from "react";
-
+/**
+ * Custom hook to fetch all groups.
+ * @returns {object} - An object containing group data and loading state.
+ */
 function useGetGroup() {
-  const [data, setData] = useState(null);
+  const [groupData, setGroupData] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const fetchData = async () => {
     try {
-      let url = `/api/group?isAll=${true}&status=${true}`;
-      const response = await axiosInstance.get(url);
-      setData(response.data);
+      const response = await axiosInstance.get(`${apiUrls.getGroup}`, { params: { status: true, isAll: true } });
+      const { data: { data } } = response;
+      setGroupData(data);
     } catch (error) {
-      setData([]);
+      errorHandler.handleError(error);
+      setGroupData([]);
     } finally {
       setLoading(false);
     }
   };
+
   useEffect(() => {
     fetchData();
   }, []);
 
-  return { data, loading, fetchData, setLoading };
+  return { groupData, loading };
 }
 
 export default useGetGroup;

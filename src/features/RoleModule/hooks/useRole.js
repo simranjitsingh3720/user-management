@@ -76,8 +76,11 @@ const useRole = (updateRoleInState) => {
   const fetchRoleById = async (roleId) => {
     setLoading(true);
     try {
-      const response = await axiosInstance.get(`/api/role/${roleId}`);
-      setRoleData(response.data);
+      const response = await axiosInstance.get(`${apiUrls.role}/${roleId}`);
+      const {
+        data: { data },
+      } = response;
+      setRoleData(data);
     } catch (error) {
       errorHandler.handleError(error);
       setRoleData(null);
@@ -93,7 +96,7 @@ const useRole = (updateRoleInState) => {
   const createRole = async (data) => {
     setLoading(true);
     try {
-      const response = await axiosInstance.post('/api/role', data);
+      const response = await axiosInstance.post(`${apiUrls.role}`, data);
       toast.success(response?.data?.message || 'Role created successfully');
       navigate('/roles');
     } catch (error) {
@@ -106,14 +109,16 @@ const useRole = (updateRoleInState) => {
   /**
    * Function to update an existing role.
    * @param {string} id - The ID of the role to update.
-   * @param {object} data - The new data for the role.
    */
   const updateRole = async (id, payload, data) => {
     setLoading(true);
     try {
-      const response = await axiosInstance.put(`/api/role/${id}`, payload);
+      const response = await axiosInstance.put(`${apiUrls.role}/${id}`, payload);
       toast.success(response?.data?.message || 'Role updated successfully');
-      updateRoleInState(id, data);
+      if (data) {
+        updateRoleInState(id, data);
+      }
+      navigate('/roles');
     } catch (error) {
       errorHandler.handleError(error);
     } finally {
