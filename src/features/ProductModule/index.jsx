@@ -1,18 +1,16 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Header } from "./utils/header";
-import CustomTable from "../../components/CustomTable";
-import {
-  fetchAllProductData,
-  updateProductData,
-} from "../../stores/slices/productSlice";
-import { COMMON_WORDS } from "../../utils/constants";
-import { BUTTON_TEXT, PAGECOUNT } from "../../utils/globalConstants";
-import { getPlaceHolder } from "../../utils/globalizationFunction";
-import { fetchLobData } from "../../stores/slices/lobSlice";
-import SearchComponent from "../../components/SearchComponent";
-import { COMMON_FIELDS } from "../PartnerNeft/utils/constant";
-import usePermissions from "../../hooks/usePermission";
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Header } from './utils/header';
+import CustomTable from '../../components/CustomTable';
+import { fetchAllProductData, updateProductData } from '../../stores/slices/productSlice';
+import { COMMON_WORDS } from '../../utils/constants';
+import { BUTTON_TEXT, PAGECOUNT } from '../../utils/globalConstants';
+import { getPlaceHolder } from '../../utils/globalizationFunction';
+import { fetchLobData } from '../../stores/slices/lobSlice';
+import SearchComponent from '../../components/SearchComponent';
+import { COMMON_FIELDS } from '../PartnerNeft/utils/constant';
+import usePermissions from '../../hooks/usePermission';
+import { SEARCH_OPTIONS } from './utils/constant';
 
 function Product() {
   const dispatch = useDispatch();
@@ -52,15 +50,10 @@ function Product() {
 
     const transformedData =
       products?.data?.map((item) => {
-        const { lob, product: {
-          id,
-          product,
-          product_value,
-          product_code,
-          createdAt,
-          updatedAt,
-          status
-        } } = item;
+        const {
+          lob,
+          product: { id, product, product_value, product_code, createdAt, updatedAt, status },
+        } = item;
 
         let lobValue = lob && lob[0]?.lob;
 
@@ -90,7 +83,7 @@ function Product() {
   const header = useMemo(() => Header(handleUpdate), [handleUpdate]);
 
   const optionLabel = (option, type) => {
-    return option[type] || "";
+    return option[type] || '';
   };
   const renderOptionFunction = (props, option, type) => (
     <li {...props} key={option?.id} style={{ textTransform: 'capitalize' }}>
@@ -129,8 +122,8 @@ function Product() {
   const fetchIdsAndConvert = (inputData) => inputData.map((item) => item.id).join();
   const handleGo = useCallback(() => {
     setPage(0);
-    let searchString = "";
-    let edge = "";
+    let searchString = '';
+    let edge = '';
 
     switch (searched) {
       case COMMON_WORDS.LOB:
@@ -141,7 +134,7 @@ function Product() {
         break;
     }
 
-    if(searchString) {
+    if (searchString) {
       dispatch(
         fetchAllProductData({
           page,
@@ -154,7 +147,6 @@ function Product() {
         })
       );
     }
-
   }, [searched, lobValue, dispatch, page, pageSize, order, orderBy]);
 
   return (
@@ -164,16 +156,10 @@ function Product() {
           optionsData={getOptionsData()}
           option={getOption()}
           setOption={setOption}
-          optionLabel={(option) =>
-            optionLabel(option, COMMON_WORDS[searched.toUpperCase()])
-          }
+          optionLabel={(option) => optionLabel(option, COMMON_WORDS[searched.toUpperCase()])}
           placeholder={getPlaceHolder(searched)}
           renderOptionFunction={(props, option) =>
-            renderOptionFunction(
-              props,
-              option,
-              COMMON_WORDS[searched.toUpperCase()]
-            )
+            renderOptionFunction(props, option, COMMON_WORDS[searched.toUpperCase()])
           }
           buttonText={BUTTON_TEXT.PRODUCT}
           navigateRoute="/product/product-form"
@@ -182,6 +168,7 @@ function Product() {
           handleGo={handleGo}
           showButton
           canCreate={canCreate}
+          selectOptions={SEARCH_OPTIONS}
         />
       </div>
       <CustomTable
