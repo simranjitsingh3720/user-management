@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Header } from './utils/header';
 import CustomTable from '../../components/CustomTable';
-import { fetchAllProductData, updateProductData } from '../../stores/slices/productSlice';
+import { fetchAllProductData } from '../../stores/slices/productSlice';
 import { COMMON_WORDS } from '../../utils/constants';
 import { BUTTON_TEXT, PAGECOUNT } from '../../utils/globalConstants';
 import { getPlaceHolder } from '../../utils/globalizationFunction';
@@ -11,6 +11,10 @@ import SearchComponent from '../../components/SearchComponent';
 import { COMMON_FIELDS } from '../PartnerNeft/utils/constant';
 import usePermissions from '../../hooks/usePermission';
 import { SEARCH_OPTIONS } from './utils/constant';
+import { showDialog } from '../../stores/slices/dialogSlice';
+import Content from '../../components/CustomDialogContent';
+import Action from './Action';
+import CustomDialog from '../../components/CustomDialog';
 
 function Product() {
   const dispatch = useDispatch();
@@ -71,16 +75,40 @@ function Product() {
       }) || [];
 
     setProductData(transformedData);
-  }, [products, canUpdate]);
+  }, [products]);
 
-  const handleUpdate = useCallback(
-    async (data) => {
-      dispatch(updateProductData({ data }));
+  const updateProductStatus = useCallback(
+    (id, data) => {
+      const updatedData = data.map((item) => {
+        if (item.id === id) {
+          return {
+            ...item,
+            checked: !item.checked,
+            status: !item.status,
+          };
+        }
+        return item;
+      });
+      
+      setProductData(updatedData);
     },
-    [dispatch]
+    []
   );
 
-  const header = useMemo(() => Header(handleUpdate), [handleUpdate]);
+  const handleStatusUpdate = useCallback(
+    (data, row) => {
+      dispatch(
+        showDialog({
+          title: COMMON_WORDS.CHANGE_STATUS,
+          content: <Content label={COMMON_WORDS.PRODUCT} />,
+          actions: <Action row={row} productData={data} updateProductStatus={updateProductStatus} />,
+        })
+      );
+    },
+    [dispatch, updateProductStatus]
+  );
+
+  const header = useMemo(() => Header(handleStatusUpdate), [handleStatusUpdate]);
 
   const optionLabel = (option, type) => {
     return option[type] || '';
@@ -186,6 +214,7 @@ function Product() {
         setOrderBy={setOrderBy}
         canUpdate={canUpdate}
       />
+      <CustomDialog />
     </>
   );
 }

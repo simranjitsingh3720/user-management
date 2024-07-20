@@ -29,13 +29,16 @@ instance.interceptors.response.use(
   },
   (error) => {
     let errorMessage = '';
-    if (error.response) {
-      switch (error.response.status) {
+    const { response } = error;
+    if (response) {
+      const { status } = response;
+      const { data } = response;
+      switch (status) {
         case 400:
         case 403:
         case 404:
         case 500:
-          errorMessage = error?.response?.data?.error?.message;
+          errorMessage = data?.error?.message ? data?.error?.message : data?.details;
           break;
         case 401:
           localStorage.clear();
