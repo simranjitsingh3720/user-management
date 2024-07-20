@@ -174,6 +174,16 @@ function Product() {
           edge: edge,
         })
       );
+    } else {
+      dispatch(
+        fetchAllProductData({
+          page,
+          pageSize,
+          order,
+          orderBy,
+          childFieldsToFetch: COMMON_WORDS.LOB,
+        })
+      );
     }
   }, [searched, lobValue, dispatch, page, pageSize, order, orderBy]);
 
