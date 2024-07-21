@@ -22,6 +22,7 @@ function SignInPage() {
   const {
     handleSubmit,
     control,
+    trigger,
     formState: { errors },
   } = useForm({});
 
@@ -63,6 +64,7 @@ function SignInPage() {
                     errors={errors}
                     disabled={false}
                     classes="w-full text-left"
+                    trigger={trigger}
                   />
                 </div>
                 <div className="mb-4">
@@ -77,6 +79,7 @@ function SignInPage() {
                     errors={errors}
                     disabled={false}
                     classes="w-full text-left"
+                    trigger={trigger}
                   />
 
                 </div>

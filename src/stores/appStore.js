@@ -16,6 +16,7 @@ import houseBankSlice from '../Redux/getHouseBank';
 import loginTypeSlice from '../Redux/getLoginType';
 import groupSlice from "./slices/groupSlice";
 import producerTypeSlice from "../Redux/getProducerType";
+import masterPolicySlice from '../Redux/getMasterPolicy';
 
 const appStore = configureStore({
   reducer: {
@@ -35,7 +36,8 @@ const appStore = configureStore({
     channelType: channelSlice,
     houseBank: houseBankSlice,
     loginType: loginTypeSlice,
-    producerType: producerTypeSlice
+    producerType: producerTypeSlice,
+    masterPolicy: masterPolicySlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

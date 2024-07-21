@@ -40,6 +40,10 @@ export const FORM_LABEL = {
   ROLE_ASSIGNED: 'roleAssigned',
   PLAN_IDS: 'planIds',
   ZONE_IDS: 'zoneIds',
+  CKYC: 'ckyc',
+  SEND_EMAIL: 'sendEmail',
+  PAYMENT_TYPE: 'paymentType',
+  GC_STATUS: 'gcStatus'
 };
 
 export const FORM_VALUE = {
@@ -50,6 +54,7 @@ export const FORM_VALUE = {
   ACTIVE: 'active',
   YES: 'yes',
   NO: 'no',
+  LOCATION: 'location',
   ROLE_SELECT: 'roleSelect',
   PARENT_CODE: 'parentCode',
   TYPE_OF_PRODUCER: 'typeOfProducer',
@@ -59,6 +64,9 @@ export const FORM_VALUE = {
   ROLE_ASSIGNMENT: 'roleAssignment',
   PLAN: 'plan',
   ZONE: 'zone',
+  CKYC: 'cKyc',
+  SEND_EMAIL: 'sendEmail',
+  PAYMENT_TYPE: 'paymentType',
 };
 
 export const Header = (editAction, handleInsillionStatus) => {  return[
@@ -100,20 +108,20 @@ export const Header = (editAction, handleInsillionStatus) => {  return[
       },
     ],
   },
-  // {
-  //   id: "action",
-  //   value: "Action",
-  //   sortable: false,
-  //   action: [
-  //     {
-  //       showIcon: true,
-  //       iconName: <EditIcon />,
-  //       onClick: (row) => {
-  //           editAction(row)
-  //       },
-  //     }
-  //   ],
-  // },
+  {
+    id: "action",
+    value: "Action",
+    sortable: false,
+    action: [
+      {
+        showIcon: true,
+        iconName: <EditIcon />,
+        onClick: (row) => {
+            editAction(row)
+        },
+      }
+    ],
+  },
 ]};
 
 export const SEARCH_OPTIONS = [

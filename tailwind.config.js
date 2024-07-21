@@ -17,6 +17,7 @@ module.exports = {
         persianRed: "#d32f2f",
         linkWater: "#ECF2FB",
         blueHaze: "#C5CFDE",
+        silverChalice: "#a2a2a2"
       }
     },
   },

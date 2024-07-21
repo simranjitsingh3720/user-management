@@ -4,7 +4,13 @@ import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import styles from "./styles.module.scss";
-import { EMPTY_START_DATE_ERR, END_DATE, END_DATE_LESS_ERR, REQUIRED_MSG, START_DATE } from "./utils/constants";
+import {
+  EMPTY_START_DATE_ERR,
+  END_DATE,
+  END_DATE_LESS_ERR,
+  REQUIRED_MSG,
+  START_DATE,
+} from "./utils/constants";
 import { DATE_FORMAT } from "./../../utils/globalConstants";
 
 const DateField = ({
@@ -19,11 +25,30 @@ const DateField = ({
   classes,
   labelVisible,
   isEdit = false,
+  trigger,
 }) => {
+  const MIN_DATE = dayjs("1950-01-01");
+  const seventyYearsFromNow = dayjs().add(70, 'year');
+
   const validateDate = (value) => {
     if (!value) {
       return required ? REQUIRED_MSG : true;
     }
+
+    const date = dayjs(value, DATE_FORMAT);
+
+    if (!date.isValid()) {
+      return "Please enter a valid date";
+    }
+
+    if (date.isBefore(MIN_DATE)) {
+      return "Date cannot be before January 1, 1950";
+    }
+
+    if (date.isAfter(seventyYearsFromNow)) {
+      return "Date cannot be more than 70 years from today";
+    }
+    
     if (name === END_DATE) {
       const startDate = watch(START_DATE);
       if (!startDate) {
@@ -64,7 +89,10 @@ const DateField = ({
           name={name}
           control={control}
           defaultValue={name === START_DATE ? dayjs().format(DATE_FORMAT) : ""}
-          rules={{ validate: validateDate, required: required ? `${label} is required` : false }}
+          rules={{
+            validate: validateDate,
+            required: required ? `${label} is required` : false,
+          }}
           render={({ field }) => (
             <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
               <DatePicker
@@ -75,7 +103,7 @@ const DateField = ({
                     size: "small",
                     variant: labelVisible ? "outlined" : "standard",
                     InputProps: {
-                      disableUnderline: true,
+                      disableUnderline: !labelVisible,
                       style: !labelVisible
                         ? {
                             display: "flex",
@@ -89,11 +117,19 @@ const DateField = ({
                     },
                   },
                 }}
-                minDate={!isEdit ? dayjs() : {}}
+                minDate={!isEdit ? dayjs() : undefined}
                 onChange={(date) => {
                   const formattedDate = date ? dayjs(date).format(DATE_FORMAT) : "";
                   setValue(name, formattedDate);
                   field.onChange(formattedDate);
+                  trigger(name);
+                }}
+                onBlur={(e) => {
+                  field.onBlur(e);
+                  trigger(name);
+                }}
+                onClose={() => {
+                  trigger(name);
                 }}
               />
             </LocalizationProvider>

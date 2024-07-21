@@ -25,6 +25,8 @@ const AutocompleteField = ({
   resetClicked,
   roleChanged,
   isEdit,
+  trigger,
+  showCheckbox = true,
 }) => {
   const [selectedValues, setSelectedValues] = useState(name === ROLE_SELECT ? null : []);
 
@@ -102,12 +104,12 @@ const AutocompleteField = ({
             }}
             renderOption={(props, option, { selected }) => (
               <li {...props} key={option?.value || option?.roleName}>
-                <Checkbox
+                {showCheckbox && <Checkbox
                   icon={icon}
                   checkedIcon={checkedIcon}
                   style={{ marginRight: 8 }}
-                  checked={selected}
-                />
+                  checked={selectedValues.some(val => val.value === option.value)}
+                />}
                 {option.label}
               </li>
             )}
@@ -125,6 +127,14 @@ const AutocompleteField = ({
                 }}
                 error={Boolean(errors[name])}
                 helperText={errors[name] ? `${label} is required` : ''}
+                onChange={(e) => {
+                  //field.onChange(e);
+                  trigger(name);
+                }}
+                onBlur={(e) => {
+                  //field.onBlur();
+                  trigger(name);
+                }}
               />
             )}
           />

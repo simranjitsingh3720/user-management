@@ -13,6 +13,7 @@ const InputField = ({
   disabled,
   classes,
   placeholder,
+  trigger,
   type = 'text',
 }) => {
   return (
@@ -45,6 +46,14 @@ const InputField = ({
             error={Boolean(errors[id])}
             FormHelperTextProps={{ classes: { root: 'ml-0' } }}
             {...field}
+            onChange={(e) => {
+              field.onChange(e);
+              trigger(id);
+            }}
+            onBlur={(e) => {
+              field.onBlur();
+              trigger(id);
+            }}
           />
         )}
       />

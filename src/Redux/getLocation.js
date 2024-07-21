@@ -15,7 +15,7 @@ export const getLocations = createAsyncThunk('location/getLocations', async (_, 
     const formattedArray = response?.data?.data?.map((obj) => ({
       ...obj,
       label: toCapitalize(obj, 'txtOffice'),
-      value: obj?.locationName,
+      value: obj?.id,
     }));
     return formattedArray;
   } catch (error) {

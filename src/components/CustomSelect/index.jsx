@@ -15,15 +15,9 @@ const SelectField = ({
   placeholder = '',
   errors = {},
   classes,
-  setValue
+  setValue,
+  trigger,
 }) => {
-  
-  useEffect(() => {
-    if (menuItem.length > 0) {
-      setValue(name, menuItem[0]?.value);
-    }
-  }, [menuItem, name, setValue]);
-
   return (
     <div className={styles.fieldContainerStyle}>
       <div className={styles.labelText}>
@@ -32,15 +26,11 @@ const SelectField = ({
       <Controller
         name={name}
         control={control}
-        defaultValue={menuItem[0]?.value || ''}
+        defaultValue={name === GC_STATUS ? NO : ''}
         rules={{
-          required: required ? `${label} is required` : false,}}
+          required: required ? `${label} is required` : false,
+        }}
         render={({ field }) => {
-          let value = field.value;
-          if (name === GC_STATUS) {
-            value = NO;
-          }
-          
           return (
             <Select
               {...field}
@@ -48,32 +38,37 @@ const SelectField = ({
               labelId={name}
               id={name}
               placeholder={placeholder || label}
-              value={value}
+              value={field.value}
               onChange={(e) => {
                 setValue(name, e.target.value);
                 field.onChange(e);
+                trigger(name);
+              }}
+              onBlur={(e) => {
+                field.onBlur();
+                trigger(name);
               }}
               displayEmpty
-              className={`${styles.customizeSelect} ${classes}`}
+              className={`${styles.customizeSelect} ${classes} ${
+                field.value === '' ? 'text-lg font-light text-silverChalice' : 'text-lg'
+              }`}
               size="small"
             >
               <MenuItem value="" disabled>
-                {"Select"}
+                {'Select'}
               </MenuItem>
               {menuItem.length > 0
                 ? menuItem.map((item) => (
-                  <MenuItem key={item.value} value={item.value} className={styles.styledMenuText}>
-                    {item.label}
-                  </MenuItem>
-                ))
+                    <MenuItem key={item.value} value={item.value} className={styles.styledMenuText}>
+                      {item.label}
+                    </MenuItem>
+                  ))
                 : null}
             </Select>
           );
         }}
       />
-      <div className={styles.styledError}>
-        {errors[name] && <span>{errors[name]?.message}</span>}
-      </div>
+      <div className={styles.styledError}>{errors[name] && <span>{errors[name]?.message}</span>}</div>
     </div>
   );
 };
