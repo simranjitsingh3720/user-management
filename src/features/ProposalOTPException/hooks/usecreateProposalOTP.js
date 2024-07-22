@@ -14,7 +14,7 @@ function useCreateProposalOTP() {
     try {
       const response = await axiosInstance.post('/api/proposal-otp-exception', data);
       toast.success(response?.data?.message || 'Proposal OTP Created successfully');
-      navigate('/proposalOtpException');
+      navigate('/proposalotpexception');
     } catch (error) {
       errorHandler.handleError(error);
     } finally {

@@ -114,7 +114,7 @@ function ProposalForm() {
             <CustomFormHeader
               id={id}
               headerText={FORM_HEADER_TEXT.PROPOSAL_OTP}
-              navigateRoute="/proposalOtpException"
+              navigateRoute="/proposalotpexception"
               subHeading="Please select a channel or producer code from below and add it to the given list for OTP Exception."
             />
           </div>

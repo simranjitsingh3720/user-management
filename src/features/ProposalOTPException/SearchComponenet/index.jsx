@@ -25,7 +25,7 @@ function SearchComponenet({
   const navigate = useNavigate();
 
   const handleCreateNewForm = () => {
-    navigate("/proposalOtpException/form");
+    navigate("/proposalotpexception/form");
   };
 
   const { handleSubmit, control, setValue, formState } = useForm({

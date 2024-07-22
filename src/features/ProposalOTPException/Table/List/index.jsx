@@ -45,7 +45,7 @@ function List({ item, fetchData: fetchGroupList, canUpdate }) {
   const navigate = useNavigate();
 
   const handleEditClick = () => {
-    navigate(`/proposalOtpException/form/${item.id}`);
+    navigate(`/proposalotpexception/form/${item.id}`);
   };
   return (
     <div>

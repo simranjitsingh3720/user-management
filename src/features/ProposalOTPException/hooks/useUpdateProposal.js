@@ -18,7 +18,7 @@ function useUpdateProposal(setChangeStatusOpen, fetchGroupList) {
         data
       );
       toast.success(response?.data?.message || "Proposal updated successfully");
-      navigate("/proposalOtpException");
+      navigate("/proposalotpexception");
       if (setChangeStatusOpen) setChangeStatusOpen(false);
       if (fetchGroupList) fetchGroupList();
     } catch (error) {
