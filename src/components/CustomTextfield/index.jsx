@@ -48,7 +48,9 @@ const InputField = ({
             value={field.value || ''}
             onChange={(e) => {
               field.onChange(e);
-              trigger(id);
+              if (typeof trigger === 'function') {
+                trigger(id);
+              }
             }}
           />
         )}
