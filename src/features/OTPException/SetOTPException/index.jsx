@@ -75,7 +75,7 @@ function SetOTPException({ fetchData }) {
             <CustomFormHeader
               headerText={FORM_HEADER_TEXT.OTP_EXCEPTION}
               handleReset={handleReset}
-              navigateRoute="/otpException"
+              navigateRoute="/otpexception"
             />
           </div>
           <div className={styles.OTPSelectStyle}>
