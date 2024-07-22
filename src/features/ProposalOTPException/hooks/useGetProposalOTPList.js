@@ -3,6 +3,8 @@ import axiosInstance from '../../../utils/axiosInstance';
 import { buildQueryString } from '../../../utils/globalizationFunction';
 import { COMMON_WORDS } from '../../../utils/constants';
 import errorHandler from '../../../utils/errorHandler';
+import { setTableName } from '../../../stores/slices/exportSlice';
+import { useDispatch } from 'react-redux';
 
 function useGetProposalOTPList(pageChange, rowsPage, query, searched, date) {
   const [data, setData] = useState(null);
@@ -12,6 +14,8 @@ function useGetProposalOTPList(pageChange, rowsPage, query, searched, date) {
     sortKey: 'createdAt',
     sortOrder: 'asc',
   });
+
+  const dispatch = useDispatch();
 
   const fetchData = async () => {
     try {
@@ -40,7 +44,7 @@ function useGetProposalOTPList(pageChange, rowsPage, query, searched, date) {
       const newData = data.data.map((item) => {
         const {
           lob,
-          otpException: { type, startDate, endDate, status, createdAt, updatedAt },
+          otpException: { type, startDate, endDate, status, createdAt, updatedAt, label },
           producer,
           product,
         } = item;
@@ -60,9 +64,11 @@ function useGetProposalOTPList(pageChange, rowsPage, query, searched, date) {
           updatedAt: updatedAt,
           status: status,
           checked: status,
+          label: label
         };
       });
-      debugger;
+      
+      dispatch(setTableName(newData[0]?.label));
       setTotalPage(data?.totalCount);
       setData(newData);
     } catch (error) {
