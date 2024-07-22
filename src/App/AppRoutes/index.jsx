@@ -208,7 +208,7 @@ const AppRoutes = () => {
         }
       />
       <Route
-        path="/otpException"
+        path="/otpexception"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
             <PrivateRoute component={OTPException} />
@@ -216,7 +216,7 @@ const AppRoutes = () => {
         }
       />
       <Route
-        path="/otpException/form"
+        path="/otpexception/form"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
             <PrivateRoute component={SetOTPException} />

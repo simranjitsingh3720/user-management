@@ -50,7 +50,7 @@ function OTPException() {
         textFieldPlaceholder="Search"
         setQuery={setQuery}
         buttonText={BUTTON_TEXT.SET_OTP_EXCEPTION}
-        navigateRoute={'/otpException/form'}
+        navigateRoute={'/otpexception/form'}
         handleGo={handleGo}
         showButton
         canCreate={canCreate}
