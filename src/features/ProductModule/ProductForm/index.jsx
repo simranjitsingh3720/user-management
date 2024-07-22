@@ -1,8 +1,6 @@
-import { Box, Card, CardContent, Grid, IconButton, Typography } from '@mui/material';
+import { Box, Card, CardContent, Grid } from '@mui/material';
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
-import LeftArrow from '../../../assets/LeftArrow';
 import useCreateProduct from '../hooks/useCreateProduct';
 import CustomButton from '../../../components/CustomButton';
 import InputField from '../../../components/CustomTextfield';
@@ -15,7 +13,6 @@ import { STATUS } from '../../../utils/globalConstants';
 import CustomFormHeader from '../../../components/CustomFormHeader';
 
 function ProductForm() {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { handleSubmit, control, formState } = useForm({
     defaultValues: {
@@ -113,8 +110,8 @@ function ProductForm() {
                 disableClearable={true}
                 placeholder={COMMON_WORDS.SELECT}
                 renderOption={(props, option) => (
-                  <li {...props} key={option.id}>
-                    {option?.lob?.toUpperCase()}
+                  <li {...props} key={option.id} style={{ textTransform: 'capitalize' }}>
+                    {option?.lob}
                   </li>
                 )}
               />
