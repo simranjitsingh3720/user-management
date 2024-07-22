@@ -1,120 +1,137 @@
-import React, { useEffect, useState } from 'react';
-
-import SearchComponenet from './SearchComponent';
-import Table from './Table';
-import styles from './styles.module.scss';
-import { MenuItem, Pagination, Select } from '@mui/material';
-import TableHeader from './Table/TableHeader';
-import NoDataFound from '../../components/NoDataCard';
-import ListLoader from '../../components/ListLoader';
-import useGetRole from './hooks/useGetRole';
-import { PAGECOUNT, selectRowsData } from '../../utils/globalConstants';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { ASC, BUTTON_TEXT, CREATED_AT, PAGECOUNT } from '../../utils/globalConstants';
 import usePermissions from '../../hooks/usePermission';
-
-function getSelectedRowData(count) {
-  let selectedRowData = [];
-
-  for (let i = 0; i < selectRowsData.length; i++) {
-    if (selectRowsData[i] <= count) {
-      selectedRowData.push(selectRowsData[i]);
-    }
-  }
-
-  return selectedRowData;
-}
+import SearchComponent from '../../components/SearchComponent';
+import { SEARCH_OPTIONS } from './utils/constants';
+import { SEARCH_PLACEHOLDER } from '../UserManagement/Components/utils/constants';
+import CustomTable from '../../components/CustomTable';
+import { Header } from './utils/Header';
+import CustomDialog from '../../components/CustomDialog';
+import { COMMON_WORDS } from '../../utils/constants';
+import Content from '../../components/CustomDialogContent';
+import Action from './Action';
+import { showDialog } from '../../stores/slices/dialogSlice';
+import { useDispatch } from 'react-redux';
+import useRole from './hooks/useRole';
 
 function RoleModule() {
-  const [rowsPage, setRowsPage] = useState(PAGECOUNT);
-  const [searched, setSearched] = useState('roleName');
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [page, setPage] = useState(0);
+  const [pageSize, setPageSize] = useState(PAGECOUNT);
+  const [order, setOrder] = useState(ASC);
+  const [orderBy, setOrderBy] = useState(CREATED_AT);
+  const [searched, setSearched] = useState(SEARCH_OPTIONS[0].value);
   const [query, setQuery] = useState('');
-  const [pageChange, setPageChange] = useState(1);
-  const [value, setValue] = useState([]);
-
   const { canCreate, canUpdate } = usePermissions();
 
-  const { data, loading, fetchData, setLoading, setSort, sort } = useGetRole(pageChange, rowsPage);
+  const { fetchRoles, data, loading, totalCount, setData } = useRole();
 
-  const handlePaginationChange = (event, page) => {
-    setLoading(true);
-    setPageChange(page);
+  const updateRoleInState = useCallback(
+    (id, data) => {
+      const updatedData = data.map((item) => {
+        if (item.id === id) {
+          return {
+            ...item,
+            checked: !item.checked,
+            status: !item.status,
+          };
+        }
+        return item;
+      });
+      setData(updatedData);
+    },
+    [setData]
+  );
+
+  const handleGo = () => {
+    if (query !== '') {
+      fetchRoles({
+        sortKey: orderBy,
+        sortOrder: order,
+        pageNo: page,
+        pageSize,
+        searchString: query,
+        searchKey: searched,
+      });
+    } else {
+      loadData();
+    }
   };
+
+  const handleEditClick = useCallback(
+    (item) => {
+      navigate(`/roles/role-form/${item.id}`);
+    },
+    [navigate]
+  );
+
+  const loadData = useCallback(() => {
+    fetchRoles({
+      pageNo: page,
+      pageSize,
+      sortKey: orderBy,
+      sortOrder: order,
+    });
+  }, [fetchRoles, page, pageSize, orderBy, order]);
 
   useEffect(() => {
-    if (query) setQuery('');
-    else setValue([]);
-  }, [searched]);
+    loadData();
+  }, [loadData]);
 
-  const handleRowsChange = (event) => {
-    setPageChange(1);
-    setRowsPage(event.target.value);
-  };
+  const updateRoleStatus = useCallback(
+    (data, row) => {
+      dispatch(
+        showDialog({
+          title: COMMON_WORDS.CHANGE_STATUS,
+          content: <Content label={COMMON_WORDS.ROLE} />,
+          actions: <Action row={row} data={data} updateRoleInState={updateRoleInState} />,
+        })
+      );
+    },
+    [dispatch, updateRoleInState]
+  );
+
+  const header = useMemo(() => Header(handleEditClick, updateRoleStatus), [handleEditClick, updateRoleStatus]);
 
   return (
-    <div>
-      <SearchComponenet
-        searched={searched}
-        setSearched={setSearched}
-        query={query}
-        setQuery={setQuery}
-        fetchData={fetchData}
-        value={value}
-        setValue={setValue}
-        setLoading={setLoading}
-        canCreate={canCreate}
-      />
-      <div className={styles.tableContainerStyle}>
-        <div className={styles.tableStyled}>
-          {loading ? (
-            <>
-              <TableHeader />
-              <ListLoader />
-            </>
-          ) : data?.data && data?.data.length ? (
-            <>
-              <Table
-                ListData={data?.data}
-                loading={loading}
-                fetchData={fetchData}
-                setLoading={setLoading}
-                sort={sort}
-                setSort={setSort}
-                canUpdate={canUpdate}
-              />
-            </>
-          ) : (
-            <NoDataFound />
-          )}
-        </div>
-        <div className={styles.pageFooter}>
-          <div className={styles.rowsPerPage}>
-            <p className={styles.totalRecordStyle}>Showing Results:</p>
-            <Select
-              labelId="rows-per-page"
-              id="rows-per-page"
-              value={rowsPage}
-              onChange={handleRowsChange}
-              size="small"
-              className={styles.customizeRowsSelect}
-            >
-              {getSelectedRowData(data?.totalCount).map((item) => (
-                <MenuItem value={item} className={styles.styledOptionText}>
-                  {item}
-                </MenuItem>
-              ))}
-            </Select>
-            <p className={styles.totalRecordStyle}>of {data?.totalCount}</p>
-          </div>
-          <Pagination
-            count={data?.totalPageSize}
-            color="primary"
-            size="small"
-            onChange={handlePaginationChange}
-            page={pageChange}
-            className={styles.marginFotter}
-          />
-        </div>
+    <>
+      <div className="mb-4">
+        <SearchComponent
+          selectOptions={SEARCH_OPTIONS}
+          searched={searched}
+          setSearched={setSearched}
+          textField
+          textFieldPlaceholder={SEARCH_PLACEHOLDER}
+          setQuery={setQuery}
+          buttonText={BUTTON_TEXT.ROLES}
+          navigateRoute="/roles/role-form"
+          handleGo={handleGo}
+          showExportButton={true}
+          showButton
+          canCreate={canCreate}
+        />
       </div>
-    </div>
+
+      <CustomTable
+        rows={data}
+        loading={loading}
+        totalCount={totalCount}
+        canUpdate={canUpdate}
+        columns={header}
+        page={page}
+        setPage={setPage}
+        rowsPerPage={pageSize}
+        setRowsPerPage={setPageSize}
+        order={order}
+        setOrder={setOrder}
+        orderBy={orderBy}
+        setOrderBy={setOrderBy}
+      />
+
+      <CustomDialog />
+    </>
   );
 }
 

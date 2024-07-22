@@ -2,7 +2,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../../utils/axiosInstance";
 import { toast } from "react-toastify";
-import { COMMON_ERROR } from "../../../utils/globalConstants";
+import errorHandler from "../../../utils/errorHandler";
+
 
 function useCreateProduct() {
   const [loading, setLoading] = useState(false);
@@ -16,9 +17,7 @@ function useCreateProduct() {
       toast.success(response?.data?.message || "Product created successfully");
       navigate("/product");
     } catch (error) {
-      toast.error(
-        error?.response?.data?.error?.message || COMMON_ERROR
-      );
+     errorHandler.handleError(error); 
     } finally {
       setLoading(false); 
     }

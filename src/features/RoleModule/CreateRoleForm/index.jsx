@@ -1,140 +1,122 @@
-import { Autocomplete, TextField } from '@mui/material';
+import { Grid, CardContent, Card, Box } from '@mui/material';
 import React, { useEffect } from 'react';
-import styles from './styles.module.scss';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
+import useRole from '../hooks/useRole';
 import useGetGroup from '../hooks/useGetGroup';
-import useCreateRole from '../hooks/useCreateRole';
-import useGetRoleById from '../hooks/useGetRoleByID';
-import useUpdateRole from '../hooks/useUpdateRole';
 import CustomButton from '../../../components/CustomButton';
 import CustomFormHeader from '../../../components/CustomFormHeader';
-import { FORM_HEADER_TEXT } from '../../../utils/constants';
-
-const convertToDesiredFormat = (data, roleName) => {
-  const groupId = data.id;
-  return { groupId, roleName };
-};
-
-const convertUpdateFormat = (data) => {
-  return { roleName: data.roleName, groupId: data.groups.id };
-};
+import { COMMON_WORDS, FORM_HEADER_TEXT } from '../../../utils/constants';
+import InputField from '../../../components/CustomTextfield';
+import CustomAutoCompleteWithoutCheckbox from '../../../components/CustomAutoCompleteWithoutCheckbox';
 
 function CreateRoleForm() {
   const { id } = useParams();
-
-  const { loading: roleUpdateLoading, data: roleData, fetchData } = useGetRoleById();
-
-  const { data: allGroupData } = useGetGroup();
-
-  const { UpdateDataFun, updateLoading } = useUpdateRole(id);
-
-  const { postData, loading } = useCreateRole();
-
-  const onSubmit = (data) => {
-    if (id) {
-      const result = convertUpdateFormat(data);
-      UpdateDataFun(result);
-    } else {
-      const result = convertToDesiredFormat(data.groups, data.roleName);
-      postData(result);
-    }
-  };
-  const { handleSubmit, control, setValue, formState, getValues } = useForm({
-    defaultValues: { roleName: '', groups: {} },
+  const { groupData, loading: groupLoading } = useGetGroup();
+  const { roleData, fetchRoleById, createRole, updateRole, loading } = useRole();
+  const {
+    handleSubmit,
+    control,
+    setValue,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      roleName: '',
+      groups: null,
+    },
   });
 
-  const { errors } = formState;
+  const onSubmit = (data) => {
+    const { roleName, groups } = data;
+
+    if (id) {
+      updateRole(id, {
+        groupId: groups?.id,
+      });
+    } else {
+      createRole({
+        roleName,
+        groupId: groups?.id,
+      });
+    }
+  };
 
   useEffect(() => {
     if (id) {
-      fetchData(id);
+      fetchRoleById(id);
     }
   }, [id]);
+
   useEffect(() => {
-    if (roleData) {
-      setValue('roleName', roleData?.data?.roleName);
-      setValue('groups', roleData?.data?.group || {});
+    if (roleData && !loading) {
+      setValue('roleName', roleData?.roleName || '');
+      setValue('groups', roleData?.group || null);
     }
-  }, [roleData]);
+  }, [roleData, loading, setValue]);
+
+  const handleReset = () => {
+    if (id) {
+      setValue('groups', null);
+    } else {
+      setValue('roleName', '');
+      setValue('groups', null);
+    }
+  };
 
   return (
-    <div>
-      {' '}
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className={styles.createNewUserContainer}>
-          <div className="p-4">
-            <CustomFormHeader id={id} headerText={FORM_HEADER_TEXT.ROLE} navigateRoute="/roles" />
-          </div>
-          <div className={styles.containerStyle}>
-            <div className={styles.fieldContainerStyle}>
-              <span className={styles.labelText}>
-                Role Name <span className={styles.styledRequired}>*</span>
-              </span>
-              <Controller
-                name="roleName"
+    <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+      <Card>
+        <CardContent>
+          <CustomFormHeader
+            id={id}
+            headerText={FORM_HEADER_TEXT.ROLE}
+            navigateRoute="/roles"
+            handleReset={handleReset}
+          />
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={6}>
+              <InputField
+                id="roleName"
+                required
+                label="Role Name"
+                validation={{ required: 'Role Name is required' }}
                 control={control}
-                defaultValue=""
-                rules={{ required: true }}
-                render={({ field }) => (
-                  <TextField
-                    id="roleName"
-                    variant="outlined"
-                    placeholder="Enter Name"
-                    size="small"
-                    className={styles.customizeSelect}
-                    {...field}
-                    onChange={(e) => {
-                      setValue('roleName', e.target.value);
-                    }}
-                  />
-                )}
+                errors={errors}
+                classes="w-full"
+                disabled={id ? true : false}
               />
-              <div className={styles.styledError}>{errors.roleName && <span>This field is required</span>} </div>
-            </div>
-            <div className={styles.fieldContainerStyle}>
-              <span className={styles.labelText}>
-                Group Name <span className={styles.styledRequired}>*</span>
-              </span>
-              <Controller
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <CustomAutoCompleteWithoutCheckbox
                 name="groups"
+                label="Group Name"
+                required={true}
+                options={groupData || []}
+                loading={groupLoading}
+                getOptionLabel={(option) => option?.groupName?.toUpperCase() || ''}
+                isOptionEqualToValue={(option, value) => option.id === value.id}
                 control={control}
-                rules={{ required: true }}
-                render={({ field }) => (
-                  <Autocomplete
-                    id="groups"
-                    value={getValues('groups') || {}}
-                    options={allGroupData?.data || []}
-                    getOptionLabel={(option) => option?.groupName?.toUpperCase() || ''}
-                    limitTags={2}
-                    className={styles.customizePrivilegeSelect}
-                    size="small"
-                    isOptionEqualToValue={(option, value) => option.id === value.id}
-                    renderInput={(params) => <TextField {...params} placeholder="Select" />}
-                    onChange={(event, newValue) => {
-                      field.onChange(newValue);
-                    }}
-                    ListboxProps={{
-                      style: {
-                        maxHeight: '200px',
-                      },
-                    }}
-                  />
+                rules={{ required: 'Group is required' }}
+                error={Boolean(errors.groups)}
+                helperText={errors.groups?.message}
+                disableClearable={true}
+                placeholder={COMMON_WORDS.SELECT}
+                renderOption={(props, option) => (
+                  <li {...props} key={option.id}>
+                    {option?.groupName?.toUpperCase()}
+                  </li>
                 )}
               />
-              <div className={styles.styledError}>{errors.groups && <span>This field is required</span>}</div>
-            </div>
-          </div>
-        </div>
-        <CustomButton
-          type="submit"
-          variant="contained"
-          disabled={loading || (id && roleUpdateLoading) || updateLoading}
-        >
+            </Grid>
+          </Grid>
+        </CardContent>
+      </Card>
+      <div className="mt-4">
+        <CustomButton type="submit" variant="contained" disabled={loading}>
           {id ? 'Update' : 'Submit'}
         </CustomButton>
-      </form>
-    </div>
+      </div>
+    </Box>
   );
 }
 

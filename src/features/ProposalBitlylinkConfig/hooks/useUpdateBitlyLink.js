@@ -1,7 +1,7 @@
-import { useState } from "react";
-import axiosInstance from "../../../utils/axiosInstance";
-import { toast } from "react-toastify";
-import { COMMON_ERROR } from "../../../utils/globalConstants";
+import { useState } from 'react';
+import axiosInstance from '../../../utils/axiosInstance';
+import { toast } from 'react-toastify';
+import errorHandler from '../../../utils/errorHandler';
 
 function useUpdateBitlyLink(setChangeStatusOpen, fetchGroupList) {
   const [loading, setLoading] = useState(false);
@@ -9,22 +9,14 @@ function useUpdateBitlyLink(setChangeStatusOpen, fetchGroupList) {
   async function UpdateDataFun(data) {
     setLoading(true);
     try {
-      const response = await axiosInstance.put(
-        "/api/proposal-bitly-config",
-        data
-      );
-      toast.success(
-        response?.data?.message || "Proposal bitly config successfully"
-      );
+      const response = await axiosInstance.put('/api/proposal-bitly-config', data);
+      toast.success(response?.data?.message || 'Proposal bitly config successfully');
       setChangeStatusOpen(false);
       fetchGroupList();
     } catch (error) {
-      toast.error(
-        error?.response?.data?.error?.message || COMMON_ERROR
-      );
-      
+      errorHandler.handleError(error);
     } finally {
-      setLoading(false); 
+      setLoading(false);
     }
   }
   return { UpdateDataFun, updateLoading: loading };

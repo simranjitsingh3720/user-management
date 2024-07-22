@@ -15,3 +15,16 @@ export const textFieldValidation = {
     message: 'Reason must be alphanumeric',
   },
 };
+
+export const SearchKey = [
+  {
+    label: 'Producer Name',
+    value: 'producerName',
+  },
+  {
+    label: 'Reason',
+    value: 'reason',
+  },
+];
+
+export const showTextField = ['reason'];

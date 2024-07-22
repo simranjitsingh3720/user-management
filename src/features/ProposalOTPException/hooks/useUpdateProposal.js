@@ -2,7 +2,8 @@ import { useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { COMMON_ERROR } from "../../../utils/globalConstants";
+import errorHandler from "../../../utils/errorHandler";
+
 
 function useUpdateProposal(setChangeStatusOpen, fetchGroupList) {
   const [loading, setLoading] = useState(false);
@@ -21,9 +22,7 @@ function useUpdateProposal(setChangeStatusOpen, fetchGroupList) {
       if (setChangeStatusOpen) setChangeStatusOpen(false);
       if (fetchGroupList) fetchGroupList();
     } catch (error) {
-      toast.error(
-        error?.response?.data?.error?.message || COMMON_ERROR
-      );
+     errorHandler.handleError(error);
       
     } finally {
       setLoading(false); 

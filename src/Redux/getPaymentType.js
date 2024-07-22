@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axiosInstance from '../utils/axiosInstance';
 import apiUrls from '../utils/apiUrls';
 import { buildQueryString } from '../utils/globalizationFunction';
+import errorHandler from '../utils/errorHandler';
 
 export const getPaymentTypes = createAsyncThunk(
   'paymentType/getPaymentTypes',
@@ -21,7 +22,7 @@ export const getPaymentTypes = createAsyncThunk(
       }));
       return formattedArray;
     } catch (error) {
-      console.error(error);
+      errorHandler.handleError(error);
       return rejectWithValue([]);
     }
   }

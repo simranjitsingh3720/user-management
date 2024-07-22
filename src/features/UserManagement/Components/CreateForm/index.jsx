@@ -34,6 +34,7 @@ import { getProducerTypes } from '../../../../Redux/getProducerType';
 import { clearMasterPolicy, getMasterPolicies } from '../../../../Redux/getMasterPolicy';
 import { ARR_CONTAINS, COMMON, FORM_LABEL, FORM_VALUE } from '../utils/constants';
 import useUpdateUser from '../hooks/useUpdateUser';
+import errorHandler from '../../../../utils/errorHandler';
 
 function CreateUserCreationForm() {
   const dispatch = useDispatch();
@@ -107,7 +108,7 @@ function CreateUserCreationForm() {
           setRoleConfig(response?.data?.roles[0]);
         }
       } catch (error) {
-        console.error('Error fetching mock data:', error);
+        errorHandler.handleError(error);
       }
     };
     fetchData();

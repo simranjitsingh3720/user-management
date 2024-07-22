@@ -2,7 +2,8 @@ import { useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance"; 
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { COMMON_ERROR } from "../../../utils/globalConstants";
+import errorHandler from "../../../utils/errorHandler";
+
 
 function useCreateGroup() {
   const [loading, setLoading] = useState(false);
@@ -28,10 +29,7 @@ function useCreateGroup() {
       toast.success(response?.data?.message || "Group created successfully");
       navigate("/group");
     } catch (error) {
-      toast.error(
-        error?.response?.data?.error?.message || COMMON_ERROR
-      );
-      
+      errorHandler.handleError(error);
     } finally {
       setLoading(false); 
     }

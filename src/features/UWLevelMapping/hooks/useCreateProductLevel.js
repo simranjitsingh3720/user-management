@@ -2,10 +2,11 @@ import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axiosInstance from '../../../utils/axiosInstance';
 import { toast } from 'react-toastify';
-import { COMMON_ERROR } from '../../../utils/globalConstants';
+
 import apiUrls from '../../../utils/apiUrls';
 import { hideDialog } from '../../../stores/slices/dialogSlice';
 import { useDispatch } from 'react-redux';
+import errorHandler from '../../../utils/errorHandler';
 
 function useCreateProductLevel(fetchData, setEditData) {
   const [loading, setLoading] = useState(false);
@@ -26,7 +27,7 @@ function useCreateProductLevel(fetchData, setEditData) {
         fetchData();
       }
     } catch (error) {
-      toast.error(error?.response?.data?.error?.message || COMMON_ERROR);
+      errorHandler.handleError(error);
     } finally {
       setLoading(false);
     }
@@ -57,7 +58,7 @@ function useCreateProductLevel(fetchData, setEditData) {
         setEditData([]);
       }
     } catch (error) {
-      toast.error(error?.response?.data?.error?.message || COMMON_ERROR);
+      errorHandler.handleError(error);
     } finally {
       setLoading(false);
     }

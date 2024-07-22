@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import axiosInstance from '../../../utils/axiosInstance';
-import { toast } from 'react-toastify';
-import { COMMON_ERROR } from '../../../utils/globalConstants';
+
 import { COMMON_WORDS } from '../../../utils/constants';
 import { buildQueryString } from '../../../utils/globalizationFunction';
 import moment from 'moment';
 import apiUrls from '../../../utils/apiUrls';
+import errorHandler from '../../../utils/errorHandler';
 
 const calculateUnlockedDays = (startDateString, endDateString) => {
   const startMoment = moment(startDateString, 'DD/MM/YYYY');
@@ -16,7 +16,7 @@ const calculateUnlockedDays = (startDateString, endDateString) => {
   return differenceInDays;
 };
 
-function useGetEODBypass(page, pageSize, date, order, orderBy) {
+function useGetEODBypass(page, pageSize, date, order, orderBy, query, searched) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [count, setCount] = useState(0);
@@ -49,6 +49,14 @@ function useGetEODBypass(page, pageSize, date, order, orderBy) {
         params += `&${buildQueryString(moreParams)}`;
       }
 
+      if (query && searched) {
+        let moreParams = {
+          searchKey: searched,
+          searchString: query,
+        };
+        params += `&${buildQueryString(moreParams)}`;
+      }
+
       let url = `${apiUrls.getEodByPass}?${params}`;
       const response = await axiosInstance.get(url);
       const producerEodByPass = response?.data?.data?.map((item) => {
@@ -69,7 +77,7 @@ function useGetEODBypass(page, pageSize, date, order, orderBy) {
       setData(producerEodByPass);
       setCount(response?.data?.totalCount);
     } catch (error) {
-      toast.error(error?.response?.data?.details || COMMON_ERROR);
+      errorHandler.handleError(error);
     } finally {
       setLoading(false);
     }

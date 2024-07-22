@@ -1,14 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../../utils/axiosInstance";
-import { toast } from "react-toastify";
 import {
-  COMMON_ERROR,
   TOKEN,
 } from "../../../utils/globalConstants";
 import apiUrls from "../../../utils/apiUrls";
 import { DASHBOARD } from "../utils/constants";
 import { COMMON_WORDS } from "../../../utils/constants";
+import errorHandler from "../../../utils/errorHandler";
 
 export default function usePostLogin() {
   const [loading, setLoading] = useState(false);
@@ -27,7 +26,7 @@ export default function usePostLogin() {
         navigate(DASHBOARD);
       }
     } catch (error) {
-      toast.error(error?.response?.data?.error?.message || COMMON_ERROR);
+      errorHandler.handleError(error);
     } finally {
       setLoading(false);
     }

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from '@mui/material/Button';
+import CircularProgress from '@mui/material/CircularProgress';
 import { styled } from '@mui/material/styles';
 
 const StyledButton = styled(Button)(({ theme, size }) => ({
@@ -10,7 +11,8 @@ const StyledButton = styled(Button)(({ theme, size }) => ({
   ...(size === 'medium' && {
     height: '2.5rem',
   }),
-  textTransform: 'none'
+  textTransform: 'none',
+  position: 'relative'
 }));
 
 const CustomButton = ({
@@ -25,6 +27,7 @@ const CustomButton = ({
   size = 'medium',
   startIcon = null,
   endIcon = null,
+  loading = false,
   ...props
 }) => {
   return (
@@ -32,16 +35,20 @@ const CustomButton = ({
       className={className}
       onClick={onClick}
       type={type}
-      disabled={disabled}
+      disabled={disabled || loading}
       sx={sx}
       variant={variant}
       color={color}
       size={size}
-      startIcon={startIcon}
-      endIcon={endIcon}
+      startIcon={!loading ? startIcon : null}
+      endIcon={!loading ? endIcon : null}
       {...props}
     >
-      {children}
+      {loading ? (
+        <CircularProgress size={24} sx={{ position: 'absolute' }} />
+      ) : (
+        children
+      )}
     </StyledButton>
   );
 };
@@ -58,6 +65,7 @@ CustomButton.propTypes = {
   size: PropTypes.oneOf(['small', 'medium', 'large']),
   startIcon: PropTypes.node,
   endIcon: PropTypes.node,
+  loading: PropTypes.bool,
 };
 
 export default CustomButton;

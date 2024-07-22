@@ -68,95 +68,98 @@ function SetOTPException({ fetchData }) {
   }, [OTPValue]);
 
   return (
-    <div className={styles.otpException}>
-      <div className="p-5">
-        <CustomFormHeader
-          headerText={FORM_HEADER_TEXT.OTP_EXCEPTION}
-          subHeading="Please select a channel or producer code from below and add it to the given list for OTP Exception."
-          handleReset={handleReset}
-        />
-      </div>
-      <div className={styles.OTPSelectStyle}>
-        <span className={styles.labelText}>
-          Select <span className={styles.styledRequired}>*</span>
-        </span>
-        <div className={styles.radioContainer}>
-          <RadioGroup
-            row
-            aria-labelledby="insillion-status-row-radio-buttons-group-label"
-            name="groupStatus"
-            defaultValue="byChannnel"
-            value={OTPValue}
-            onChange={handleChange}
-          >
-            <FormControlLabel
-              value="byChannnel"
-              control={<Radio />}
-              label="By Channel"
-              className={OTPValue === 'byChannnel' ? styles.radioSelectStyle : styles.radioNotSelectStyle}
+    <div>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className={styles.otpException}>
+          <div className="p-5">
+            <CustomFormHeader
+              headerText={FORM_HEADER_TEXT.OTP_EXCEPTION}
+              handleReset={handleReset}
+              navigateRoute="/otpException"
             />
-            <FormControlLabel
-              value="byProducerCode"
-              control={<Radio />}
-              label="By Producer Code"
-              className={OTPValue === 'byProducerCode' ? styles.radioSelectStyle : styles.radioNotSelectStyle}
-            />
-          </RadioGroup>
+          </div>
+          <div className={styles.OTPSelectStyle}>
+            <span className={styles.labelText}>
+              Select <span className={styles.styledRequired}>*</span>
+            </span>
+            <div className={styles.radioContainer}>
+              <RadioGroup
+                row
+                aria-labelledby="insillion-status-row-radio-buttons-group-label"
+                name="groupStatus"
+                defaultValue="byChannnel"
+                value={OTPValue}
+                onChange={handleChange}
+              >
+                <FormControlLabel
+                  value="byChannnel"
+                  control={<Radio />}
+                  label="By Channel"
+                  className={OTPValue === 'byChannnel' ? styles.radioSelectStyle : styles.radioNotSelectStyle}
+                />
+                <FormControlLabel
+                  value="byProducerCode"
+                  control={<Radio />}
+                  label="By Producer Code"
+                  className={OTPValue === 'byProducerCode' ? styles.radioSelectStyle : styles.radioNotSelectStyle}
+                />
+              </RadioGroup>
+            </div>
+
+            {OTPValue === 'byChannnel' ? (
+              <div className="w-full max-w-[380px] mt-4">
+                <CustomAutoCompleteWithoutCheckbox
+                  name="channel"
+                  label="Channel"
+                  required={true}
+                  options={channelType || []}
+                  getOptionLabel={(option) => {
+                    return option?.label?.toUpperCase();
+                  }}
+                  control={control}
+                  rules={{ required: 'Channel is required' }}
+                  error={Boolean(errors.channel)}
+                  helperText={errors.channel?.message}
+                  disableClearable={true}
+                  placeholder={COMMON_WORDS.SELECT}
+                  renderOption={(props, option) => (
+                    <li {...props} key={option.id}>
+                      {option?.label?.toUpperCase()}
+                    </li>
+                  )}
+                />
+              </div>
+            ) : (
+              <div className="w-full max-w-[380px] mt-4">
+                <CustomAutoCompleteWithoutCheckbox
+                  name="producerCode"
+                  label="Producer Code"
+                  required={true}
+                  loading={userLoading}
+                  options={user.data || []}
+                  getOptionLabel={(option) => {
+                    return `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`;
+                  }}
+                  control={control}
+                  rules={{ required: 'Producer is required' }}
+                  error={Boolean(errors.producerCode)}
+                  helperText={errors.producerCode?.message}
+                  disableClearable={true}
+                  placeholder={COMMON_WORDS.SELECT}
+                  renderOption={(props, option) => (
+                    <li {...props} key={option.id}>
+                      {option?.firstName?.toUpperCase()} {option?.lastName?.toUpperCase()}
+                    </li>
+                  )}
+                />
+              </div>
+            )}
+          </div>
         </div>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          {OTPValue === 'byChannnel' ? (
-            <div className="w-full max-w-[380px] mt-4">
-              <CustomAutoCompleteWithoutCheckbox
-                name="channel"
-                label="Channel"
-                required={true}
-                options={channelType || []}
-                getOptionLabel={(option) => {
-                  return option?.label?.toUpperCase();
-                }}
-                control={control}
-                rules={{ required: 'Channel is required' }}
-                error={Boolean(errors.channel)}
-                helperText={errors.channel?.message}
-                disableClearable={true}
-                placeholder={COMMON_WORDS.SELECT}
-                renderOption={(props, option) => (
-                  <li {...props} key={option.id}>
-                    {option?.label?.toUpperCase()}
-                  </li>
-                )}
-              />
-            </div>
-          ) : (
-            <div className="w-full max-w-[380px] mt-4">
-              <CustomAutoCompleteWithoutCheckbox
-                name="producerCode"
-                label="Producer Code"
-                required={true}
-                loading={userLoading}
-                options={user.data || []}
-                getOptionLabel={(option) => {
-                  return `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`;
-                }}
-                control={control}
-                rules={{ required: 'Producer is required' }}
-                error={Boolean(errors.producerCode)}
-                helperText={errors.producerCode?.message}
-                disableClearable={true}
-                placeholder={COMMON_WORDS.SELECT}
-                renderOption={(props, option) => (
-                  <li {...props} key={option.id}>
-                    {option?.firstName?.toUpperCase()} {option?.lastName?.toUpperCase()}
-                  </li>
-                )}
-              />
-            </div>
-          )}
-          <CustomButton type="submit" variant="contained" loading={loading} className="mt-4">
-            Add
-          </CustomButton>
-        </form>
-      </div>
+        <CustomButton type="submit" variant="contained" loading={loading} className="mt-4">
+          Submit
+        </CustomButton>
+      </form>
     </div>
   );
 }

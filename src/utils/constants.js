@@ -27,6 +27,7 @@ export const COMMON_WORDS = {
   PERMISSIONNAME: 'permissionName',
   GROUPNAME: 'groupName',
   GROUP: 'group',
+  HAS_GROUP: 'hasGroup',
   SEARCH: 'search',
   STATUS: 'status',
   SCOPES: 'scopes',
@@ -47,7 +48,8 @@ export const COMMON_WORDS = {
   PARENT_ID: 'parentId',
   HAS_PARENT_ID: 'hasParentId',
   HOUSE_BANK: 'houseBank',
-  HAS_HOUSE_BANK: 'hasHouseBank'
+  HAS_HOUSE_BANK: 'hasHouseBank',
+  OTP_EXCEPTION: 'OTP Exception',
 };
 
 export const HEADER = {
@@ -68,7 +70,7 @@ export const FORM_HEADER_TEXT = {
   HEALTH_CONFIG: 'Health Configuration',
   HOUSE_BANK: 'House Bank Configuration',
   LOB: 'Lob',
-  OTP_EXCEPTION: 'Set OTP Exception By',
+  OTP_EXCEPTION: 'OTP Exception By',
   PERMISSION: 'Permission',
   PRODUCER_EOD: 'Producer EOD Bypass',
   PRODUCT: 'Product',

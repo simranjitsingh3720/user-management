@@ -63,12 +63,24 @@ function HealthConfigurationForm() {
     }
   };
 
+  const handleReset = () => {
+    if (id) {
+      setValue('medicare', null);
+    } else setValue('producer', null);
+    setValue('medicare', null);
+  };
+
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.createNewUserContainer}>
-          <div className="p-5">
-            <CustomFormHeader id={id} headerText={FORM_HEADER_TEXT.HEALTH_CONFIG} navigateRoute="/health-config" />
+          <div className="px-5 pt-5">
+            <CustomFormHeader
+              id={id}
+              headerText={FORM_HEADER_TEXT.HEALTH_CONFIG}
+              navigateRoute="/health-config"
+              handleReset={handleReset}
+            />
           </div>
           <div className={styles.containerStyle}>
             <div className={styles.fieldContainerStyle}>
@@ -121,7 +133,7 @@ function HealthConfigurationForm() {
               <Controller
                 name="medicare"
                 control={control}
-                rules={{ required: 'Medicare is required' }}
+                rules={{ required: 'Medicare Existing TATA AIG General Insurance Customer is required' }}
                 render={({ field }) => (
                   <Select
                     labelId="search-select"

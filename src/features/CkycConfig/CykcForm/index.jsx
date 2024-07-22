@@ -8,7 +8,7 @@ import { forWhomDisable, forWhomEnable, STATUS } from '../utils/constants';
 import useGetLobData from '../../../hooks/useGetLobData';
 import useGetCkycById from '../hooks/useGetCkycById';
 import useHandleCkyc from '../hooks/useHandleCkyc';
-import { fetchAllProductData } from '../../../stores/slices/productSlice';
+import { clearProducts, fetchAllProductData } from '../../../stores/slices/productSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import UserTypeToggle from '../../../components/CustomRadioButtonGroup';
 import CustomFormHeader from '../../../components/CustomFormHeader';
@@ -67,10 +67,13 @@ const CkycForm = () => {
   };
 
   const handleResetButton = () => {
-    setValue('lob', null);
-    setValue('product', null);
+    dispatch(clearProducts());
+    if(!id) {
+      setValue('lob', null);
+      setValue('product', null);
+    }
     setValue('cykc', 'enable');
-    setValue('forWhom', 'both');
+    setValue('forWhom', null);
   };
 
   const { data: lobListData } = useGetLobData();
@@ -100,7 +103,7 @@ const CkycForm = () => {
                     getOptionLabel={(option) => {
                       return option?.lob?.toUpperCase() || '';
                     }}
-                    disabled={id}
+                    disabled={id ? true : false}
                     className="customize-select"
                     size="small"
                     isOptionEqualToValue={(option, value) => option.id === value.id}
@@ -138,7 +141,7 @@ const CkycForm = () => {
                     id="product"
                     options={products.data || []}
                     getOptionLabel={(option) => option?.product?.toUpperCase() || ''}
-                    disabled={id}
+                    disabled={id ? true : false}
                     loading={productsLoading}
                     className="customize-select"
                     size="small"
@@ -201,8 +204,8 @@ const CkycForm = () => {
                         return selectedItem ? selectedItem.label : '';
                       }}
                     >
-                      {(watch('cykc') === 'enable' ? forWhomEnable : forWhomDisable).map((item) => (
-                        <MenuItem value={item.value} className={styles.styledOptionText}>
+                      {(watch('cykc') === 'enable' ? forWhomEnable : forWhomDisable).map((item, index) => (
+                        <MenuItem key={index} value={item.value} className={styles.styledOptionText}>
                           {item.label}
                         </MenuItem>
                       ))}

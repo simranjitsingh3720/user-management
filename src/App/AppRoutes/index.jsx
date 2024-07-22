@@ -48,6 +48,7 @@ import BulkUpload from '../../features/BulkUpload/UploadForm';
 import UWLevelMapping from '../../features/UWLevelMapping';
 import UWLevelMappingEmployee from '../../features/UWLevelMapping/EmployeeForm';
 import UWLevelMappingForm from '../../features/UWLevelMapping/LevelMappingForm';
+import SetOTPException from '../../features/OTPException/SetOTPException';
 
 const AppRoutes = () => {
   return (
@@ -211,6 +212,14 @@ const AppRoutes = () => {
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
             <PrivateRoute component={OTPException} />
+          </ResponsiveDrawer>
+        }
+      />
+      <Route
+        path="/otpException/form"
+        element={
+          <ResponsiveDrawer showSidebarAndHeader={true}>
+            <PrivateRoute component={SetOTPException} />
           </ResponsiveDrawer>
         }
       />

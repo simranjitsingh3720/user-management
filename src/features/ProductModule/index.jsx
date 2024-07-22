@@ -90,10 +90,10 @@ function Product() {
   const header = useMemo(() => Header(handleUpdate), [handleUpdate]);
 
   const optionLabel = (option, type) => {
-    return option[type]?.toUpperCase() || "";
+    return option[type] || "";
   };
   const renderOptionFunction = (props, option, type) => (
-    <li {...props} key={option?.id}>
+    <li {...props} key={option?.id} style={{ textTransform: 'capitalize' }}>
       {optionLabel(option, type)}
     </li>
   );
@@ -179,7 +179,6 @@ function Product() {
           navigateRoute="/product/product-form"
           searched={searched}
           setSearched={setSearched}
-          // selectOptions={SEARCH_OPTIONS}
           handleGo={handleGo}
           showButton
           canCreate={canCreate}

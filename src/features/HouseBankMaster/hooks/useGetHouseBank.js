@@ -1,7 +1,6 @@
 import { useCallback, useState } from 'react';
-import { toast } from 'react-toastify';
 import axiosInstance from './../../../utils/axiosInstance';
-import { COMMON_ERROR } from '../../../utils/globalConstants';
+
 import { buildQueryString } from '../../../utils/globalizationFunction';
 import apiUrls from "../../../utils/apiUrls";
 import { useDispatch } from 'react-redux';
@@ -45,7 +44,6 @@ const useGetHouseBank = () => {
         dispatch(setTableName(data?.data[0]?.label));
         setTotalCount(data.totalCount);
       } catch (e) {
-        toast.error(e?.response?.data?.error?.message || COMMON_ERROR);
         setData([]);
       } finally {
         setLoading(false);

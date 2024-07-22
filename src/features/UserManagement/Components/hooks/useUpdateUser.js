@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import axiosInstance from '../../../../utils/axiosInstance';
-import { COMMON_ERROR } from '../../../../utils/globalConstants';
 import apiUrls from '../../../../utils/apiUrls';
 import { COMMON, NAVIGATE } from '../utils/constants';
 import { useNavigate } from 'react-router-dom';
@@ -23,7 +22,7 @@ export default function useUpdateUser() {
       //fetchData();
       navigate(NAVIGATE.NAVIGATE_TO_USER_MANAGEMENT);
     } catch (error) {
-      toast.error(error?.response?.data?.error?.message || COMMON_ERROR);
+      toast.error(error?.response?.data?.error?.message);
     } finally {
       setLoading(false);
     }

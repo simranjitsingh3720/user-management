@@ -4,6 +4,7 @@ import { API_END_POINTS } from '../constants';
 import { toast } from 'react-toastify';
 import { COMMON_WORDS } from '../../../utils/constants';
 import { buildQueryString } from '../../../utils/globalizationFunction';
+import errorHandler from '../../../utils/errorHandler';
 
 const useRevalidationList = () => {
   const [data, setData] = useState([]);
@@ -26,22 +27,21 @@ const useRevalidationList = () => {
 
       const transformedData =
         response?.data?.data?.map((item) => {
-          const { producer, revalidationList } = item;
+          const { producer, revalidationList: { id, emailId, mobileNo, createdAt, updatedAt, status } } = item;
           return {
-            id: revalidationList.id,
-            userName: `${producer[0].firstName} ${producer[0].lastName}`,
-            emailId: revalidationList.emailId,
-            mobileNo: revalidationList.mobileNo,
-            createdAt: revalidationList.createdAt,
-            updatedAt: revalidationList.updatedAt,
-            checked: revalidationList.status,
-            status: revalidationList.status,
+            id: id,
+            userName: `${producer?.[0].firstName} ${producer?.[0].lastName}`,
+            emailId: emailId,
+            mobileNo: mobileNo,
+            createdAt: createdAt,
+            updatedAt: updatedAt,
+            checked: status,
+            status: status,
           };
         }) || [];
       setData(transformedData);
       setTotalCount(response?.data?.totalCount || 0);
     } catch (error) {
-      toast.error(error.response?.data?.error?.message || 'Failed to fetch revalidation list');
       setData([]);
     } finally {
       setLoading(false);
@@ -65,9 +65,9 @@ const useRevalidationList = () => {
     try {
       await axiosInstance.put(API_END_POINTS.updateRevalidationList, payload);
       toast.success('Data updated successfully');
-      setData(transformedData); // Set the updated data after successful API response
+      setData(transformedData);
     } catch (error) {
-      toast.error(error.response?.data?.error?.message || 'Failed to update data');
+      errorHandler.handleError(error);
     }
   }, []);
 

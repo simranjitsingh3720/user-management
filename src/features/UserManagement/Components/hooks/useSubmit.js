@@ -1,7 +1,5 @@
 import { useCallback } from 'react';
-import { toast } from 'react-toastify';
 import axiosInstance from './../../../../utils/axiosInstance';
-import { COMMON_ERROR } from './../../../../utils/globalConstants';
 import apiUrls from '../../../../utils/apiUrls';
 import { buildQueryString } from '../../../../utils/globalizationFunction';
 import { COMMON_WORDS } from '../../../../utils/constants';
@@ -47,7 +45,6 @@ const useSubmit = () => {
       const { data: responseData } = await axiosInstance.get(url);
       return flattenNestedObjects(responseData.data)[0];
     } catch (e) {
-      toast.error(e?.response?.data?.error?.message || COMMON_ERROR);
       return null;
     }
   }, []);
