@@ -1,22 +1,22 @@
-import { Box, Card, CardContent, Grid, TextField } from '@mui/material';
+import { Box, Card, CardContent, Grid } from '@mui/material';
 import React, { useEffect } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import useUpdatePaymentConfig from '../hooks/useUpdateHouseBank';
 import useCreateHouseBank from '../hooks/useCreateHouseBank';
 import useGetHouseBankByID from '../hooks/useGetHouseBankById';
 import CustomButton from '../../../components/CustomButton';
-import { REGEX } from '../../../utils/globalConstants';
 import CustomFormHeader from '../../../components/CustomFormHeader';
 import { FORM_HEADER_TEXT } from '../../../utils/constants';
+import { REGEX } from '../../../utils/globalConstants';
+import InputField from '../../../components/CustomTextfield';
 
 const formConfig = [
   {
     name: 'houseBankCode',
     label: 'House Bank Code',
-    placeholder: 'Enter House Bank Code',
-    rules: {
-      required: 'House Bank Code is required',
+    validation: {
+      required: true,
       pattern: {
         value: REGEX.numericRegex,
         message: 'Only numeric values are allowed',
@@ -26,9 +26,8 @@ const formConfig = [
   {
     name: 'bankCode',
     label: 'Bank Code',
-    placeholder: 'Enter Bank Code',
-    rules: {
-      required: 'Bank Code is required',
+    validation: {
+      required: true,
       pattern: {
         value: REGEX.bankCodeRegex,
         message: 'Invalid Bank Code format',
@@ -38,17 +37,15 @@ const formConfig = [
   {
     name: 'branchName',
     label: 'Branch Name',
-    placeholder: 'Enter Branch Name',
-    rules: {
-      required: 'Branch Name is required',
+    validation: {
+      required: true,
     },
   },
   {
     name: 'accountNumber',
     label: 'Account Number',
-    placeholder: 'Enter Account Number',
-    rules: {
-      required: 'Account Number is required',
+    validation: {
+      required: true,
       pattern: {
         value: REGEX.numericRegex,
         message: 'Only numeric values are allowed',
@@ -144,31 +141,15 @@ function HouseBankMasterForm() {
           <Grid container spacing={3} className="pb-5">
             {formConfig.map((fieldConfig, index) => (
               <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
-                <span className="text-gray-600 text-sm required-field">{fieldConfig.label}</span>
-                <Controller
-                  name={fieldConfig.name}
+                <InputField
+                  id={fieldConfig.name}
+                  label={fieldConfig.label}
+                  required={!!fieldConfig.validation?.required}
+                  validation={fieldConfig.validation}
                   control={control}
-                  defaultValue=""
-                  rules={fieldConfig.rules}
-                  render={({ field }) => (
-                    <TextField
-                      id={fieldConfig.name}
-                      variant="outlined"
-                      placeholder={fieldConfig.placeholder}
-                      size="small"
-                      className="bg-white w-full text-sm h-10"
-                      error={!!errors[fieldConfig.name]}
-                      helperText={errors[fieldConfig.name] ? errors[fieldConfig.name].message : ''}
-                      FormHelperTextProps={{ className: 'ml-0' }}
-                      {...field}
-                      value={field.value || ''}
-                      onChange={(e) => {
-                        field.onChange(e);
-                        trigger(fieldConfig.name);
-                      }}
-                      disabled={fieldConfig.disabled && !!id}
-                    />
-                  )}
+                  errors={errors}
+                  disabled={fieldConfig.disabled && !!id}
+                  trigger={trigger}
                 />
               </Grid>
             ))}
