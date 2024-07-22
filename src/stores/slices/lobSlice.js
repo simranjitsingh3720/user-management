@@ -35,7 +35,6 @@ export const updateLobData = createAsyncThunk(
     try {
       const response = await axiosInstance.put(apiUrls.getLob, data);
       toast.success(response?.data?.message || "LOB updated successfully");
-      debugger
       if(updateLobStatus) {
         updateLobStatus(data.id, lobData);
       }

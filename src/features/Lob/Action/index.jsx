@@ -8,7 +8,6 @@ const Action = ({ row, lobData, updateLobStatus }) => {
   const dispatch = useDispatch();
 
   const confirmAction = () => {
-    debugger
     const payload = {
       id: row.id,
       properties: {

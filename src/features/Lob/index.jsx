@@ -45,7 +45,6 @@ const Lob = () => {
 
   const updateLobStatus = useCallback(
     (id, data) => {
-      debugger
       const updatedData = data.map((item) => {
         if (item.id === id) {
           return {
