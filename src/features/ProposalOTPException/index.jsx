@@ -1,16 +1,19 @@
-import React, { useEffect, useState } from "react";
-import SearchComponenet from "./SearchComponenet";
-import styles from "./styles.module.scss";
-import TableHeader from "./Table/TableHeader";
-import ListLoader from "../../components/ListLoader";
-import Table from "./Table";
-import NoDataFound from "../../components/NoDataCard";
-import { MenuItem, Pagination, Select } from "@mui/material";
-import { PAGECOUNT, selectRowsData } from "../../utils/globalConstants";
-import useGetProposalOTPList from "./hooks/useGetProposalOTPList";
-import { useDispatch } from "react-redux";
-import { setTableName } from "../../stores/slices/exportSlice";
-import usePermissions from "../../hooks/usePermission";
+import React, { useEffect, useMemo, useState } from 'react';
+import SearchComponenet from './SearchComponenet';
+import styles from './styles.module.scss';
+import TableHeader from './Table/TableHeader';
+import ListLoader from '../../components/ListLoader';
+import Table from './Table';
+import NoDataFound from '../../components/NoDataCard';
+import { MenuItem, Pagination, Select } from '@mui/material';
+import { PAGECOUNT, selectRowsData } from '../../utils/globalConstants';
+import useGetProposalOTPList from './hooks/useGetProposalOTPList';
+import { useDispatch } from 'react-redux';
+import { setTableName } from '../../stores/slices/exportSlice';
+import usePermissions from '../../hooks/usePermission';
+import { Header } from './Header';
+import CustomTable from '../../components/CustomTable';
+import { useNavigate } from 'react-router-dom';
 
 function getSelectedRowData(count) {
   let selectedRowData = [];
@@ -24,19 +27,23 @@ function getSelectedRowData(count) {
 }
 
 function ProposalOTPException() {
-  const [query, setQuery] = useState("");
-  const [searched, setSearched] = useState("type");
-  const [date, setDate] = useState({ startDate: "", endDate: "" });
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  // Check permission
+  const [page, setPage] = useState(0);
+  const [pageSize, setPageSize] = useState(PAGECOUNT);
+  const [order, setOrder] = useState();
+  const [orderBy, setOrderBy] = useState();
+  const [searched, setSearched] = useState();
+  const [query, setQuery] = useState('');
   const { canCreate, canUpdate } = usePermissions();
+
+  const [date, setDate] = useState({ startDate: '', endDate: '' });
 
   const [rowsPage, setRowsPage] = useState(PAGECOUNT);
 
   const [pageChange, setPageChange] = useState(1);
 
-  const { data, loading, fetchData, setSort, sort } = useGetProposalOTPList(
+  const { data, loading, fetchData, setSort, sort, totalPage } = useGetProposalOTPList(
     pageChange,
     rowsPage,
     query,
@@ -54,12 +61,14 @@ function ProposalOTPException() {
     setRowsPage(event.target.value);
   };
 
-  useEffect(() => {
-    dispatch(setTableName(data?.data[0]?.otpException.label));
-  }, [dispatch, data]);
+  // useEffect(() => {
+  //   dispatch(setTableName(data?.data[0]?.otpException.label));
+  // }, [dispatch, data]);
+
+  const header = useMemo(() => Header(), []);
 
   return (
-    <div>
+    <>
       <SearchComponenet
         fetchData={fetchData}
         setPageChange={setPageChange}
@@ -70,56 +79,23 @@ function ProposalOTPException() {
         setDate={setDate}
         canCreate={canCreate}
       />
-      <div className={styles.tableContainerStyle}>
-        <div className={styles.tableStyled}>
-          {loading ? (
-            <>
-              <TableHeader />
-              <ListLoader />
-            </>
-          ) : data?.data && data?.data.length ? (
-            <Table
-              ListData={data?.data}
-              loading={loading}
-              fetchData={fetchData}
-              sort={sort}
-              setSort={setSort}
-              canUpdate={canUpdate}
-            />
-          ) : (
-            <NoDataFound />
-          )}
-        </div>
-        <div className={styles.pageFooter}>
-          <div className={styles.rowsPerPage}>
-            <p className={styles.totalRecordStyle}>Showing Results:</p>
-            <Select
-              labelId="rows-per-page"
-              id="rows-per-page"
-              value={rowsPage}
-              onChange={handleRowsChange}
-              size="small"
-              className={styles.customizeRowsSelect}
-            >
-              {getSelectedRowData(data?.totalCount).map((item) => (
-                <MenuItem value={item} className={styles.styledOptionText}>
-                  {item}
-                </MenuItem>
-              ))}
-            </Select>
-            <p className={styles.totalRecordStyle}>of {data?.totalCount}</p>
-          </div>
-          <Pagination
-            count={data?.totalPageSize}
-            color="primary"
-            size="small"
-            onChange={handlePaginationChange}
-            page={pageChange}
-            className={styles.marginFotter}
-          />
-        </div>
-      </div>
-    </div>
+
+      <CustomTable
+        rows={data || []}
+        loading={loading}
+        totalCount={totalPage}
+        canUpdate={canUpdate}
+        columns={header}
+        page={page}
+        setPage={setPage}
+        rowsPerPage={pageSize}
+        setRowsPerPage={setPageSize}
+        order={order}
+        setOrder={setOrder}
+        orderBy={orderBy}
+        setOrderBy={setOrderBy}
+      />
+    </>
   );
 }
 
