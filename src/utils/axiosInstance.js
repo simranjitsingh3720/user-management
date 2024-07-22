@@ -31,8 +31,7 @@ instance.interceptors.response.use(
     let errorMessage = '';
     const { response } = error;
     if (response) {
-      const { status } = response;
-      const { data } = response;
+      const { status, data } = response;
       switch (status) {
         case 400:
         case 403:
