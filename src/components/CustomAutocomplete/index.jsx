@@ -28,7 +28,7 @@ const AutocompleteField = ({
   trigger,
   showCheckbox = true,
 }) => {
-  const [selectedValues, setSelectedValues] = useState(name === ROLE_SELECT ? null : []);
+  const [selectedValues, setSelectedValues] = useState(multiple ? [] : null);
 
   const watchedValues = useWatch({
     control,
@@ -39,41 +39,42 @@ const AutocompleteField = ({
     if (isEdit) {
       setSelectedValues(watchedValues);
     }
-  }, [watchedValues]);
+  }, [watchedValues, isEdit]);
 
   useEffect(() => {
+    if (resetClicked) {
+      setSelectedValues(multiple ? [] : null);
+    }
+  }, [resetClicked, multiple]);
+
+  useEffect(() => {
+    if (roleChanged && name !== ROLE_SELECT && !isEdit) {
+      setSelectedValues([]);
+    }
+  }, [roleChanged, name, isEdit]);
+
+  const toggleOption = (option) => {
     if (multiple) {
-      setSelectedValues([]);
-    } else if (name === ROLE_SELECT) {
-      setSelectedValues(null);
+      setSelectedValues((prevSelectedValues) => {
+        const isSelected = prevSelectedValues?.some((val) => val.value === option.value);
+        return isSelected
+          ? prevSelectedValues?.filter((val) => val.value !== option.value)
+          : [...(prevSelectedValues || []), option];
+      });
     } else {
-      setSelectedValues([]);
+      setSelectedValues((prevSelectedValues) => (prevSelectedValues && prevSelectedValues.value === option.value ? null : option));
     }
-  }, [resetClicked]);
+  };
 
   useEffect(() => {
-    if (name !== ROLE_SELECT && !isEdit) {
-      setSelectedValues([]);
+    if (!options || options.length === 0 || (options && options.every(isEmptyObject))) {
+      setSelectedValues(multiple ? [] : null);
     }
-  }, [roleChanged]);
-
-  const handleAutocompleteChangeMultiple = (event, newValue) => {
-    setSelectedValues(newValue);
-  };
-
-  const handleAutocompleteChangeSingle = (event, newValue) => {
-    setSelectedValues(newValue);
-  };
+  }, [options, multiple]);
 
   const isEmptyObject = (obj) => {
     return Object.keys(obj).length === 0 && obj.constructor === Object;
   };
-
-  useEffect(()=> {
-    if(!options || options?.length === 0 || (options && isEmptyObject(options[0]))){
-      setSelectedValues(name === ROLE_SELECT ? null : []);
-    }
-  }, [options, name])
 
   return (
     <div className={styles.fieldContainerStyle}>
@@ -92,24 +93,38 @@ const AutocompleteField = ({
             disabled={disabled}
             disableCloseOnSelect={multiple}
             options={options.length > 0 ? options : []}
-            value={name === ROLE_SELECT && !selectedValues ? null : selectedValues || []}
-            getOptionLabel={(option) => option?.label}
+            value={selectedValues || (multiple ? [] : null)}
+            getOptionLabel={(option) => option?.label || ''}
             onChange={(event, newValue) => {
-              if (multiple) {
-                handleAutocompleteChangeMultiple(event, newValue);
-              } else {
-                handleAutocompleteChangeSingle(event, newValue);
-              }
+              setSelectedValues(newValue);
               field.onChange(newValue);
             }}
             renderOption={(props, option, { selected }) => (
-              <li {...props} key={option?.value || option?.roleName}>
-                {showCheckbox && <Checkbox
-                  icon={icon}
-                  checkedIcon={checkedIcon}
-                  style={{ marginRight: 8 }}
-                  checked={selectedValues.some(val => val.value === option.value)}
-                />}
+              <li
+                {...props}
+                key={option?.value || option?.roleName}
+                onClick={() => {
+                  toggleOption(option);
+                  if (multiple) {
+                    const updatedValues = selectedValues?.some((val) => val.value === option.value)
+                      ? selectedValues?.filter((val) => val.value !== option.value)
+                      : [...(selectedValues || []), option];
+                    setSelectedValues(updatedValues);
+                    field.onChange(updatedValues); 
+                  } else {
+                    setSelectedValues(option);
+                    field.onChange(option); 
+                  }
+                }}
+              >
+                {showCheckbox && multiple && (
+                  <Checkbox
+                    icon={icon}
+                    checkedIcon={checkedIcon}
+                    style={{ marginRight: 8 }}
+                    checked={selectedValues?.some((val) => val.value === option.value)}
+                  />
+                )}
                 {option.label}
               </li>
             )}
@@ -127,12 +142,10 @@ const AutocompleteField = ({
                 }}
                 error={Boolean(errors[name])}
                 helperText={errors[name] ? `${label} is required` : ''}
-                onChange={(e) => {
-                  //field.onChange(e);
+                onChange={() => {
                   trigger(name);
                 }}
-                onBlur={(e) => {
-                  //field.onBlur();
+                onBlur={() => {
                   trigger(name);
                 }}
               />

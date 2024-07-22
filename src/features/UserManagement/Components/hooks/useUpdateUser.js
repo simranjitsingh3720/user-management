@@ -3,31 +3,27 @@ import { toast } from 'react-toastify';
 import axiosInstance from '../../../../utils/axiosInstance';
 import { COMMON_ERROR } from '../../../../utils/globalConstants';
 import apiUrls from '../../../../utils/apiUrls';
-import { useDispatch } from 'react-redux';
-import { hideDialog } from '../../../../stores/slices/dialogSlice';
-import { USER_UPDATED_SUCCESS } from '../utils/constants';
+import { COMMON, NAVIGATE } from '../utils/constants';
+import { useNavigate } from 'react-router-dom';
 
-export default function useUpdateUser(fetchData) {
+export default function useUpdateUser() {
   const [loading, setLoading] = useState(false);
-  const dispatch = useDispatch();
-  async function updateData(id, data) {
+  const navigate = useNavigate();
+  async function updateData(id, roleId, roleName, data) {
     setLoading(true);
-
     let payload;
     payload = {
       id: id,
-      fields: {
-        status: !data,
-      },
+      roleId,roleName,
+      fields: data
     };
     try {
       const response = await axiosInstance.put(`${apiUrls.getUser}`, payload);
-      toast.success(response?.data?.message || USER_UPDATED_SUCCESS);
-      dispatch(hideDialog());
-      fetchData();
+      toast.success(response?.data?.message || COMMON.USER_UPDATED_SUCCESS);
+      //fetchData();
+      navigate(NAVIGATE.NAVIGATE_TO_USER_MANAGEMENT);
     } catch (error) {
       toast.error(error?.response?.data?.error?.message || COMMON_ERROR);
-      dispatch(hideDialog());
     } finally {
       setLoading(false);
     }

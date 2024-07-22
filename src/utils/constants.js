@@ -35,6 +35,19 @@ export const COMMON_WORDS = {
   UPDATE: 'update',
   CHANNEL: 'channel',
   HAS_CHANNEL: 'hasChannel',
+  ROLE: "role",
+  HAS_ROLE : "hasRole",
+  LOCATION: "location",
+  LOGIN_TYPE:"loginType",
+  HAS_LOGIN_TYPE: 'hasLoginType',
+  PRODUCER_TYPE: 'producerType',
+  HAS_PRODUCER_TYPE: 'hasProducerType',
+  PAYMENT_TYPE: 'paymentType',
+  HAS_USER_TYPE: 'hasUserType',
+  PARENT_ID: 'parentId',
+  HAS_PARENT_ID: 'hasParentId',
+  HOUSE_BANK: 'houseBank',
+  HAS_HOUSE_BANK: 'hasHouseBank'
 };
 
 export const HEADER = {

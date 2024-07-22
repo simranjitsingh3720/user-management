@@ -4,9 +4,9 @@ import Autocomplete from '@mui/material/Autocomplete';
 import Checkbox from '@mui/material/Checkbox';
 import TextField from '@mui/material/TextField';
 import styles from './styles.module.scss';
-import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
-import CheckBoxIcon from "@mui/icons-material/CheckBox";
-import { All, PLACEHOLDER, REQUIRED_MSG, ROLE_SELECT } from './constants';
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import { All, NA, PLACEHOLDER } from './constants';
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -26,19 +26,18 @@ const AutocompleteFieldAll = ({
   roleChanged,
   setValue,
   trigger,
-  isEdit
+  isEdit,
+  showCheckbox = true,
 }) => {
   const [selectedValues, setSelectedValues] = useState([]);
-  const naOption = options.find(option => option.label === 'NA');
+
+  const naOption = options.find((option) => option.label === NA);
 
   useEffect(() => {
     setSelectedValues([]);
   }, [resetClicked]);
 
-  const watchedValues = useWatch({
-    control,
-    name,
-  });
+  const watchedValues = useWatch({ control, name });
 
   useEffect(() => {
     if (isEdit) {
@@ -47,34 +46,41 @@ const AutocompleteFieldAll = ({
   }, [watchedValues, isEdit]);
 
   useEffect(() => {
-    const naOption = options.find(option => option.label === 'NA');
     if (naOption) {
       setSelectedValues([naOption]);
       setValue(name, [naOption]);
     } else {
       setSelectedValues([]);
     }
-  }, [options, control, name, setValue]);
+  }, [options, control, name, setValue, naOption]);
 
   const isCheckedAll = useCallback(() => {
-    return selectedValues.length === (apiDataMap[name]?.length);
+    return selectedValues?.length === apiDataMap[name]?.length;
   }, [selectedValues, apiDataMap, name]);
 
-  const handleAutocompleteChangeAll = useCallback((event, newValue) => {
-    if (newValue.some(option => option?.value === All)) {
-      if (isCheckedAll()) {
-        setSelectedValues([]);
-        setValue(name, []);
+  const toggleOption = (option) => {
+    setSelectedValues((prevSelectedValues) => {
+      if (option?.value === All) {
+        if (isCheckedAll()) {
+          return [];
+        } else {
+          return apiDataMap[name] || [];
+        }
       } else {
-        setSelectedValues(apiDataMap[name] || []);
-        setValue(name, apiDataMap[name] || []);
+        const isSelected = prevSelectedValues.some((val) => val.value === option.value);
+        if (isSelected) {
+          return prevSelectedValues.filter((val) => val.value !== option.value);
+        } else {
+          return [...prevSelectedValues, option];
+        }
       }
-    } else {
-      const filteredValues = newValue.filter(option => option?.value !== All);
-      setSelectedValues(filteredValues);
-      setValue(name, filteredValues);
-    }
-  }, [apiDataMap, isCheckedAll, name, setValue]);
+    });
+  };
+
+  const handleAutocompleteChangeAll = useCallback((event, newValue) => {
+    setSelectedValues(newValue);
+    // field.onChange(newValue);
+  }, []);
 
   const isEmptyObject = (obj) => {
     return Object.keys(obj).length === 0 && obj.constructor === Object;
@@ -94,34 +100,53 @@ const AutocompleteFieldAll = ({
       <Controller
         name={name}
         control={control}
-        rules={{ required: required ? `${label} is required` : false }}
+        rules={{ ...validation }}
         render={({ field }) => (
           <Autocomplete
             {...field}
             multiple
             id={name}
-            options={options?.length > 0 ? [{ label: 'All', value: 'all' }, ...(options || [])] : []}
+            options={options.length > 0 ? [{ label: 'All', value: All }, ...(options || [])] : []}
             disableCloseOnSelect
             getOptionLabel={(option) => option?.label}
             value={selectedValues || []}
             onChange={(event, newValue) => {
               handleAutocompleteChangeAll(event, newValue);
-              field.onChange(newValue.some(option => option?.value === All) ? apiDataMap[name] || [] : newValue.filter(option => option?.value !== All));
+              field.onChange(newValue);
             }}
             renderOption={(props, option, { selected }) => (
-              <li {...props} key={option?.value}>
-                <Checkbox
-                  icon={icon}
-                  checkedIcon={checkedIcon}
-                  checked={option?.value === All ? isCheckedAll() : selectedValues.some(val => val.value === option.value)}
-                />
+              <li
+                {...props}
+                key={option?.value || option?.roleName}
+                onClick={() => {
+                  toggleOption(option);
+                  field.onChange(
+                    option?.value === All
+                      ? isCheckedAll()
+                        ? []
+                        : apiDataMap[name] || []
+                      : selectedValues.some((val) => val.value === option.value)
+                      ? selectedValues.filter((val) => val.value !== option.value)
+                      : [...selectedValues, option]
+                  );
+                }}
+              >
+                {showCheckbox && (
+                  <Checkbox
+                    icon={icon}
+                    checkedIcon={checkedIcon}
+                    style={{ marginRight: 8 }}
+                    checked={
+                      option?.value === All ? isCheckedAll() : selectedValues.some((val) => val.value === option.value)
+                    }
+                  />
+                )}
                 {option.label}
               </li>
             )}
             size="small"
             className={`${styles.customizeSelect} ${classes}`}
             limitTags={1}
-            disabled={naOption}
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -132,6 +157,7 @@ const AutocompleteFieldAll = ({
                   },
                 }}
                 error={Boolean(errors[name])}
+                helperText={errors[name] ? `${label} is required` : ''}
                 onChange={(e) => {
                   field.onChange(e);
                   trigger(name);
@@ -140,7 +166,6 @@ const AutocompleteFieldAll = ({
                   field.onBlur();
                   trigger(name);
                 }}
-                helperText={errors[name] ? `${label} is required` : ''}
               />
             )}
           />

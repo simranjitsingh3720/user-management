@@ -1,7 +1,7 @@
 import React from 'react';
 import { TextField } from '@mui/material';
 import { Controller } from 'react-hook-form';
-import { ACTIVE, PRODUCER_STATUS, REQUIRED_MSG } from './utils/constants';
+import { ACTIVE, PRODUCER_STATUS } from './utils/constants';
 
 const InputField = ({
   id,

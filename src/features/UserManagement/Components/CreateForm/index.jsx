@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styles from './styles.module.scss';
 import { useForm } from 'react-hook-form';
-import { useParams } from 'react-router-dom';
+import { json, useParams } from 'react-router-dom';
 import usePostUser from '../hooks/usePostUser';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
@@ -24,21 +24,6 @@ import { getHouseBanks } from '../../../../Redux/getHouseBank';
 import useGetUserType from '../hooks/useGetUserType';
 import useGetRoleHierarchy from '../hooks/useRoleHierarchy';
 import Loader from './../../../../components/Loader';
-import {
-  AUTOCOMPLETE,
-  DATE_FORMAT,
-  DROPDOWN,
-  FORM_LABEL,
-  FORM_VALUE,
-  LOB,
-  LOGIN_TYPE,
-  PAYMENT_CALL,
-  PAYMENT_TYPE,
-  PRODUCER_ARR,
-  PRODUCER_CODE_CALL,
-  PRODUCER_PARTNER_ARR,
-  ROLE_SELECT,
-} from '../utils/constants';
 import apiUrls from '../../../../utils/apiUrls';
 import useSubmit from '../hooks/useSubmit';
 import { getLoginType } from '../../../../Redux/getLoginType';
@@ -47,6 +32,8 @@ import { FORM_HEADER_TEXT } from '../../../../utils/constants';
 import dayjs from 'dayjs';
 import { getProducerTypes } from '../../../../Redux/getProducerType';
 import { clearMasterPolicy, getMasterPolicies } from '../../../../Redux/getMasterPolicy';
+import { ARR_CONTAINS, COMMON, FORM_LABEL, FORM_VALUE } from '../utils/constants';
+import useUpdateUser from '../hooks/useUpdateUser';
 
 function CreateUserCreationForm() {
   const dispatch = useDispatch();
@@ -76,11 +63,12 @@ function CreateUserCreationForm() {
     masterPolicy: masterPolicy,
   });
   const { loading, postData } = usePostUser();
+  const { updateUserLoading, updateData } = useUpdateUser();
   const [roleConfig, setRoleConfig] = useState([]);
   const [resetClicked, setResetClicked] = useState(false);
   const [jsonData, setJsonData] = useState([]);
   const [roleChanged, setRoleChanged] = useState(false);
-  const today = dayjs().format(DATE_FORMAT);
+  const today = dayjs().format(COMMON.DATE_FORMAT);
   const [editData, setEditData] = useState({});
   const {
     handleSubmit,
@@ -99,10 +87,10 @@ function CreateUserCreationForm() {
     },
   });
 
-  const roleValue = watch(ROLE_SELECT)?.roleName;
-  const paymentsType = watch(PAYMENT_TYPE);
-  const lobsWatch = watch(LOB);
-  const rolesWatch = watch(ROLE_SELECT);
+  const roleValue = watch(COMMON.ROLE_SELECT)?.roleName;
+  const paymentsType = watch(COMMON.PAYMENT_TYPE);
+  const lobsWatch = watch(COMMON.LOB);
+  const rolesWatch = watch(COMMON.ROLE_SELECT);
   const { userType, userTypeFetch } = useGetUserType();
   const { roleHierarchy, roleHierarchyFetch } = useGetRoleHierarchy();
   const params = useParams();
@@ -193,22 +181,22 @@ function CreateUserCreationForm() {
 
   useEffect(() => {
     if (jsonData) {
-      setValue(ROLE_SELECT, '');
+      setValue(COMMON.ROLE_SELECT, '');
     }
   }, []);
 
   useEffect(() => {
     if (roleValue && !isEdit) {
       let resetValues = {
-        roleSelect: watch(ROLE_SELECT),
+        roleSelect: watch(COMMON.ROLE_SELECT),
       };
       roleConfig?.forEach((item) => {
-        if (item?.type === AUTOCOMPLETE && item?.multiple === true) {
+        if (item?.type === COMMON.AUTOCOMPLETE && item?.multiple === true) {
           resetValues[item?.id] = [];
         }
-        if (item?.type === AUTOCOMPLETE) {
+        if (item?.type === COMMON.AUTOCOMPLETE) {
           resetValues[item?.id] = [];
-        } else if (item?.type !== DROPDOWN) {
+        } else if (item?.type !== COMMON.DROPDOWN) {
           resetValues[item?.id] = '';
         }
       });
@@ -237,12 +225,12 @@ function CreateUserCreationForm() {
   const handleReset = () => {
     let originalArray = roleConfig;
     let resultObject = originalArray.reduce((resetValues, item) => {
-      if (item?.type === AUTOCOMPLETE && item?.multiple === true) {
+      if (item?.type === COMMON.AUTOCOMPLETE && item?.multiple === true) {
         resetValues[item?.id] = [];
       }
-      if (item?.type === AUTOCOMPLETE) {
+      if (item?.type === COMMON.AUTOCOMPLETE) {
         resetValues[item?.id] = null;
-      } else if (item?.type !== DROPDOWN) {
+      } else if (item?.type !== COMMON.DROPDOWN) {
         resetValues[item?.id] = '';
       }
       return resetValues;
@@ -262,7 +250,7 @@ function CreateUserCreationForm() {
   useEffect(() => {
     dispatch(clearProducts());
     dispatch(clearMasterPolicy());
-    if (lobsWatch) {
+    if (lobsWatch && lobsWatch.length > 0) {
       dispatch(getProducts(lobsWatch));
       setValue('masterPolicy', []);
     }
@@ -303,24 +291,23 @@ function CreateUserCreationForm() {
   useEffect(() => {
     if (rolesWatch && rolesWatch?.roleName) {
       userTypeFetch(rolesWatch?.id);
-
-      if (PRODUCER_CODE_CALL.some((role) => rolesWatch?.roleName?.includes(role))) {
+      if (ARR_CONTAINS.PRODUCER_CODE_CALL.some((role) => rolesWatch?.roleName?.includes(role))) {
         dispatch(getProducerCodes(rolesWatch));
         roleHierarchyFetch(rolesWatch?.id);
       }
-      if (PRODUCER_ARR.some((role) => rolesWatch?.roleName?.includes(role))) {
+      if (ARR_CONTAINS.PRODUCER_ARR.some((role) => rolesWatch?.roleName?.includes(role))) {
         dispatch(getParentCode(rolesWatch));
         dispatch(getProducerTypes());
         dispatch(getChannels());
         dispatch(getHouseBanks());
       }
-      if (PAYMENT_CALL.some((role) => rolesWatch?.roleName?.includes(role))) {
+      if (ARR_CONTAINS.PAYMENT_CALL.some((role) => rolesWatch?.roleName?.includes(role))) {
         dispatch(getPaymentTypes());
       }
     }
   }, [rolesWatch?.roleName]);
 
-  const onSubmit = (data) => {
+  const createUserPayload = (data) => {
     const {
       mobileNumber,
       email,
@@ -404,17 +391,17 @@ function CreateUserCreationForm() {
       vertical,
       subVertical,
       solId,
-      gcStatus: PRODUCER_ARR.includes(roleName) ? false : '',
+      gcStatus: ARR_CONTAINS.PRODUCER_ARR.includes(roleName) ? false : '',
       producerCode: typeof producerCode === 'string' ? producerCode : '',
       producerType: typeOfProducer,
       channelId: channelType,
       bankingLimit,
-      sendEmail: PRODUCER_PARTNER_ARR.includes(roleName) ? sendEmail === FORM_VALUE.YES : '',
+      sendEmail: ARR_CONTAINS.PRODUCER_PARTNER_ARR.includes(roleName) ? sendEmail === FORM_VALUE.YES : '',
       domain,
       paymentType: paymentTypeNames,
       houseBankId,
       ocrChequeScanning: paymentTypeNames.includes('cheque') ? chequeOCRScanning === FORM_VALUE.YES : '',
-      ckyc: PRODUCER_ARR.includes(roleName) ? cKyc === FORM_VALUE.YES : '',
+      ckyc: ARR_CONTAINS.PRODUCER_ARR.includes(roleName) ? cKyc === FORM_VALUE.YES : '',
       partnerName,
       masterPolicyIds,
       brokerType,
@@ -436,7 +423,101 @@ function CreateUserCreationForm() {
     const filteredData = Object.fromEntries(
       Object.entries(payload).filter(([key, value]) => value !== '' && !(Array.isArray(value) && value.length === 0))
     );
-    postData(filteredData);
+    return filteredData;
+  };
+
+  const updateUserPayload = (data, role) => {
+    let payload;
+    const childIds =
+      data?.producerCode && Array.isArray(data?.producerCode) ? data?.producerCode.map((code) => code.id) : [];
+    const locationIds = data.location && data?.location.map((loc) => loc.id);
+    const productIds = data?.product && data?.product.map((prod) => prod.id);
+    const paymentTypeNames = data.paymentType && data?.paymentType.map((payment) => payment.name);
+    if (ARR_CONTAINS.CLIENT_ARR.includes(role)) {
+      payload = {
+        employeeId: editData && editData.employeeId !== data?.employeeId ? data?.employeeId : '',
+        childIds: childIds,
+        firstName: data?.firstName,
+        lastName: data?.lastName,
+        mobileNo: editData && editData.mobileNo !== data?.mobileNumber ? data?.mobileNumber : '',
+        email: editData && editData.email !== data?.email ? data?.email : '',
+        locationIds: locationIds,
+        productIds: productIds,
+        vertical: data?.vertical,
+        subVertical: data?.subVertical,
+        solId: data?.solId,
+        startDate: data?.startDate,
+        endDate: data?.endDate,
+        status: data?.active === FORM_VALUE.YES,
+      };
+    } else if (ARR_CONTAINS.PRODUCER_ARR.includes(role)) {
+      payload = {
+        // locationIds: locationIds,
+        productIds: productIds,
+        paymentType: paymentTypeNames,
+      };
+    } else if (ARR_CONTAINS.DATA_ENTRY_USER_ARR.includes(role)) {
+      payload = {
+        employeeId: editData && editData.employeeId !== data?.employeeId ? data?.employeeId : '',
+        firstName: data?.firstName,
+        lastName: data?.lastName,
+        mobileNo: editData && editData.mobileNo !== data?.mobileNumber ? data?.mobileNumber : '',
+        location: locationIds,
+        product: productIds,
+        vertical: data?.vertical,
+        subVertical: data?.subVertical,
+        solId: data?.solId,
+        startDate: data?.startDate,
+        endDate: data?.endDate,
+        status: data?.active === FORM_VALUE.YES,
+      };
+    } else if (ARR_CONTAINS.ADMIN_ARR.includes(role)) {
+      payload = {
+        employeeId: editData && editData.employeeId !== data?.employeeId ? data?.employeeId : '',
+        firstName: data?.firstName,
+        lastName: data?.lastName,
+        mobileNo: editData && editData.mobileNo !== data?.mobileNumber ? data?.mobileNumber : '',
+        locationIds: locationIds,
+        ntId: editData && editData.ntId !== data?.ntloginId ? data?.ntloginId : '',
+        vertical: data?.vertical,
+        subVertical: data?.subVertical,
+        solId: data?.solId,
+        startDate: data?.startDate,
+        endDate: data?.endDate,
+        status: data?.active === FORM_VALUE.YES,
+      };
+    } else {
+      payload = {
+        employeeId: editData && editData.employeeId !== data?.employeeId ? data?.employeeId : '',
+        firstName: data?.firstName,
+        lastName: data?.lastName,
+        mobileNo: editData && editData.mobileNo !== data?.mobileNumber ? data?.mobileNumber : '',
+        location: locationIds,
+        product: productIds,
+        ntId: editData && editData.ntId !== data?.ntloginId ? data?.ntloginId : '',
+        vertical: data?.vertical,
+        subVertical: data?.subVertical,
+        solId: data?.solId,
+        startDate: data?.startDate,
+        endDate: data?.endDate,
+        status: data?.active === FORM_VALUE.YES,
+      };
+    }
+    const filteredData = Object.fromEntries(
+      Object.entries(payload).filter(([key, value]) => value !== '' && !(Array.isArray(value) && value.length === 0))
+    );
+    return filteredData;
+  };
+
+  const onSubmit = (data) => {
+    if (params?.id) {
+      const { id: roleId, roleName } = data?.roleSelect;
+      const updatePayload = updateUserPayload(data, rolesWatch.roleName);
+      updateData(params.id, roleId, roleName, updatePayload);
+    } else {
+      const filteredData = createUserPayload(data);
+      postData(filteredData);
+    }
   };
 
   const formatDate = (dateString) => {
@@ -461,6 +542,20 @@ function CreateUserCreationForm() {
         setValue(
           FORM_VALUE.LOGIN_TYPE,
           loginType.filter((item) => value.includes(item.id))
+        );
+        break;
+
+      case FORM_LABEL.CHANNEL_ID:
+        setValue(
+          FORM_VALUE.CHANNEL_TYPE,
+          channelType.filter((item) => value.includes(item.id)).map((item) => item.id)
+        );
+        break;
+
+      case FORM_LABEL.PRODUCER_TYPE:
+        setValue(
+          FORM_VALUE.TYPE_OF_PRODUCER,
+          producerType.filter((item) => value.includes(item.id)).map((item) => item.id)
         );
         break;
 
@@ -496,7 +591,10 @@ function CreateUserCreationForm() {
         break;
 
       case FORM_LABEL.ROLE_NAME:
-        setValue(FORM_VALUE.ROLE_SELECT, role.find((item) => item.roleName === value) || null);
+        setValue(
+          FORM_VALUE.ROLE_SELECT,
+          role.find((item) => item.roleName === value)
+        );
         break;
 
       case FORM_LABEL.LOCATION:
@@ -512,15 +610,9 @@ function CreateUserCreationForm() {
           paymentType.filter((item) => value.includes(item.id))
         );
         break;
+
       case FORM_LABEL.OCR_CHEQUE_SCANNING:
         setValue(FORM_VALUE.CHEQUE_OCR_SCANNING, value ? FORM_VALUE.YES : FORM_VALUE.NO);
-        break;
-
-      case FORM_LABEL.PRODUCER_TYPE:
-        setValue(
-          FORM_VALUE.PRODUCER_TYPE,
-          producerType.filter((item) => value.includes(item.id))
-        );
         break;
 
       case FORM_LABEL.PRODUCT:
@@ -549,6 +641,8 @@ function CreateUserCreationForm() {
     }
   }, [
     editData,
+    lobs,
+    paymentType,
     locations,
     producerCode,
     parentCode,
@@ -556,18 +650,26 @@ function CreateUserCreationForm() {
     channelType,
     neftDefaultBank,
     producerType,
-    loginType,
-    lobs,
-    paymentType,
   ]);
+
+  useEffect(() => {
+    if (products) {
+      Object.entries(editData).forEach(([key, value]) => {
+        if (key === 'product') {
+          processKey(key, value);
+        }
+      });
+    }
+  }, [products]);
 
   return (
     <>
-      {loading && <Loader></Loader>}
+      {(loading || updateUserLoading) && <Loader></Loader>}
       <form onSubmit={handleSubmit(onSubmit)} className={styles.formMainContainer}>
         <div className={styles.createNewUserContainer}>
           <div className="p-4 pb-0">
             <CustomFormHeader
+              id={params?.id}
               headerText={FORM_HEADER_TEXT.USER}
               navigateRoute="/user-management"
               handleReset={handleReset}
@@ -575,9 +677,9 @@ function CreateUserCreationForm() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 px-8 gap-5 py-5">
             <AutocompleteMultipleField
-              key={ROLE_SELECT}
+              key={COMMON.ROLE_SELECT}
               control={control}
-              name={ROLE_SELECT}
+              name={COMMON.ROLE_SELECT}
               label="Role"
               required
               disabled={!isEdit ? false : true}
@@ -594,13 +696,13 @@ function CreateUserCreationForm() {
               setValue={setValue}
             />
             <AutocompleteFieldAll
-              key={LOGIN_TYPE}
+              key={COMMON.LOGIN_TYPE}
               control={control}
-              name={LOGIN_TYPE}
+              name={COMMON.LOGIN_TYPE}
               label={'Login Type'}
               required
               roleChanged={roleChanged}
-              options={apiDataMap[LOGIN_TYPE]}
+              options={apiDataMap[COMMON.LOGIN_TYPE]}
               resetClicked={resetClicked}
               validation={{ required: 'Login Type is required' }}
               errors={errors}
