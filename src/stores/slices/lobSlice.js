@@ -31,10 +31,14 @@ export const fetchLobData = createAsyncThunk(
 
 export const updateLobData = createAsyncThunk(
   "lob/updateLobData",
-  async ({ data }, { rejectWithValue }) => {
+  async ({ data, lobData, updateLobStatus }, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.put(apiUrls.getLob, data);
       toast.success(response?.data?.message || "LOB updated successfully");
+      debugger
+      if(updateLobStatus) {
+        updateLobStatus(data.id, lobData);
+      }
       return response.data;
     } catch (error) {
       errorHandler.handleError(error);

@@ -2,19 +2,20 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { hideDialog } from '../../../stores/slices/dialogSlice';
 import CustomButton from '../../../components/CustomButton';
-import { updateProductData } from '../../../stores/slices/productSlice';
+import { updateLobData } from '../../../stores/slices/lobSlice';
 
-const Action = ({ row, productData, updateProductStatus }) => {
+const Action = ({ row, lobData, updateLobStatus }) => {
   const dispatch = useDispatch();
 
   const confirmAction = () => {
+    debugger
     const payload = {
       id: row.id,
       properties: {
         status: !row.checked,
       },
     }
-    dispatch(updateProductData({ data: payload, productData, updateProductStatus }));
+    dispatch(updateLobData({ data: payload, lobData, updateLobStatus }));
     dispatch(hideDialog());
   };
 
