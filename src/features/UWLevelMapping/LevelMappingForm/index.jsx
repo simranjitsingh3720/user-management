@@ -4,7 +4,6 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { getLocations } from '../../../Redux/getLocation';
 import { COMMON_WORDS, FORM_HEADER_TEXT } from '../../../utils/constants';
-import { fetchLobData } from '../../../stores/slices/lobSlice';
 import CustomAutoCompleteWithoutCheckbox from '../../../components/CustomAutoCompleteWithoutCheckbox';
 import { fetchAllProductData } from '../../../stores/slices/productSlice';
 import CustomButton from '../../../components/CustomButton';
@@ -25,11 +24,9 @@ function LevelMappingForm({ dataById, fetchData }) {
 
   const { employeeId } = params;
   const { products, productLoading } = useSelector((state) => state.product);
-  const { lob, lobLoading } = useSelector((state) => state.lob);
   const locations = useSelector((state) => state.location.location);
 
   useEffect(() => {
-    dispatch(fetchLobData({ isAll: true, status: true }));
     dispatch(getLocations());
   }, [dispatch]);
 
@@ -48,7 +45,22 @@ function LevelMappingForm({ dataById, fetchData }) {
     },
   });
 
-  const { postData, loading, updateData } = useCreateProductLevel(fetchData, setEditData);
+  const handleReset = () => {
+    setEditData([]);
+    setValue('lob', null);
+    setValue('product', null);
+    setValue('level', null);
+    setValue('location', null);
+  };
+  const { data, postData, loading, updateData, getLobByUserId } = useCreateProductLevel(
+    fetchData,
+    setEditData,
+    handleReset
+  );
+
+  useEffect(() => {
+    if (employeeId) getLobByUserId(employeeId);
+  }, [employeeId, getLobByUserId]);
 
   useEffect(() => {
     if (dataById && dataById?.data) {
@@ -96,14 +108,6 @@ function LevelMappingForm({ dataById, fetchData }) {
     }
   };
 
-  const handleReset = () => {
-    setEditData([]);
-    setValue('lob', null);
-    setValue('product', null);
-    setValue('level', null);
-    setValue('location', null);
-  };
-
   return (
     <Box component="form" onSubmit={handleSubmit(onSubmit)}>
       <Card>
@@ -122,8 +126,7 @@ function LevelMappingForm({ dataById, fetchData }) {
                 name="lob"
                 label="LOB"
                 required={true}
-                loading={lobLoading}
-                options={lob.data || []}
+                options={data || []}
                 getOptionLabel={(option) => option?.lob?.toUpperCase()}
                 isOptionEqualToValue={(option, value) => option.id === value.id}
                 control={control}

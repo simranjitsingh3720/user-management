@@ -67,12 +67,18 @@ function HouseBankMasterForm() {
   };
 
   const handleReset = () => {
-    reset({
-      houseBankCode: '',
-      bankCode: '',
-      branchName: '',
-      accountNumber: '',
-    });
+    if (id) {
+      setValue('houseBankCode', '');
+      setValue('bankCode', '');
+      setValue('branchName', '');
+    } else {
+      reset({
+        houseBankCode: '',
+        bankCode: '',
+        branchName: '',
+        accountNumber: '',
+      });
+    }
   };
 
   return (
@@ -187,17 +193,10 @@ function HouseBankMasterForm() {
                 defaultValue=""
                 rules={{
                   required: 'Account Number is required',
-                  pattern: {
-                    value: REGEX.numericRegex,
-                    message: 'Only numeric values are allowed',
-                  },
-                  minLength: {
-                    value: 9,
-                    message: 'Account Number must be at least 9 digits long',
-                  },
-                  maxLength: {
-                    value: 18,
-                    message: 'Account Number must be at most 18 digits long',
+                  validate: {
+                    isNumeric: (value) => REGEX.numericRegex.test(value) || 'Only numeric values are allowed',
+                    minLength: (value) => value.length >= 9 || 'Account Number must be at least 9 digits long',
+                    maxLength: (value) => value.length <= 18 || 'Account Number must be at most 18 digits long',
                   },
                 }}
                 render={({ field }) => (
