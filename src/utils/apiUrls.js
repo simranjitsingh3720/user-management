@@ -28,6 +28,7 @@ const apiUrls = {
   getEodByPass: '/api/producer-eod-bypass',
   getOTPException: '/api/otp-exception',
   role: '/api/role',
+  otpException: "/api/otp-exception"
 };
 
 export default apiUrls;

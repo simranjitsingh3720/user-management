@@ -5,8 +5,9 @@ import { COMMON_WORDS } from '../../../utils/constants';
 import errorHandler from '../../../utils/errorHandler';
 import { setTableName } from '../../../stores/slices/exportSlice';
 import { useDispatch } from 'react-redux';
+import apiUrls from '../../../utils/apiUrls';
 
-function useGetProposalOTPList(page, pageSize, order, orderBy, query, searched) {
+function useGetProposalOTPList(page, pageSize, order, orderBy, query, searched, date) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [totalPage, setTotalPage] = useState(0);
@@ -27,11 +28,11 @@ function useGetProposalOTPList(page, pageSize, order, orderBy, query, searched) 
       if (query && searched) {
         params += '&searchKey=' + searched + '&searchString=' + query;
       }
-      // if (date?.startDate && date?.endDate) {
-      //   params += `&startDate=${date.startDate}&endDate=${date.endDate}`;
-      // }
+      if (date?.startDate && date?.endDate) {
+        params += `&startDate=${date.startDate}&endDate=${date.endDate}`;
+      }
 
-      let url = `/api/otp-exception?${params}`;
+      let url = `${apiUrls.otpException}?${params}`;
 
       const response = await axiosInstance.get(url);
 
@@ -73,7 +74,8 @@ function useGetProposalOTPList(page, pageSize, order, orderBy, query, searched) 
     } finally {
       setLoading(false);
     }
-  }, [page, orderBy, order, pageSize, query, searched, dispatch]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page, orderBy, order, pageSize, dispatch, date]);
   
   useEffect(() => {
     fetchData();
