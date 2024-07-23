@@ -1,14 +1,67 @@
-import { Box, Card, CardContent, Grid, TextField } from '@mui/material';
+import { Box, Card, CardContent, Grid } from '@mui/material';
 import React, { useEffect } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import useUpdatePaymentConfig from '../hooks/useUpdateHouseBank';
 import useCreateHouseBank from '../hooks/useCreateHouseBank';
 import useGetHouseBankByID from '../hooks/useGetHouseBankById';
 import CustomButton from '../../../components/CustomButton';
-import { REGEX } from '../../../utils/globalConstants';
 import CustomFormHeader from '../../../components/CustomFormHeader';
 import { FORM_HEADER_TEXT } from '../../../utils/constants';
+import { REGEX } from '../../../utils/globalConstants';
+import InputField from '../../../components/CustomTextfield';
+
+const formConfig = [
+  {
+    name: 'houseBankCode',
+    label: 'House Bank Code',
+    validation: {
+      required: true,
+      pattern: {
+        value: REGEX.numericRegex,
+        message: 'Only numeric values are allowed',
+      },
+    },
+  },
+  {
+    name: 'bankCode',
+    label: 'Bank Code',
+    validation: {
+      required: true,
+      pattern: {
+        value: REGEX.bankCodeRegex,
+        message: 'Invalid Bank Code format',
+      },
+    },
+  },
+  {
+    name: 'branchName',
+    label: 'Branch Name',
+    validation: {
+      required: true,
+    },
+  },
+  {
+    name: 'accountNumber',
+    label: 'Account Number',
+    validation: {
+      required: true,
+      pattern: {
+        value: REGEX.numericRegex,
+        message: 'Only numeric values are allowed',
+      },
+      minLength: {
+        value: 9,
+        message: 'Account Number must be at least 9 digits long',
+      },
+      maxLength: {
+        value: 18,
+        message: 'Account Number must be at most 18 digits long',
+      },
+    },
+    disabled: true,
+  },
+];
 
 function HouseBankMasterForm() {
   const { id } = useParams();
@@ -86,141 +139,20 @@ function HouseBankMasterForm() {
             handleReset={handleReset}
           />
           <Grid container spacing={3} className="pb-5">
-            <Grid item xs={12} sm={6} md={6} lg={4}>
-              <span className="text-gray-600 text-sm required-field">House Bank Code</span>
-              <Controller
-                name="houseBankCode"
-                control={control}
-                defaultValue=""
-                rules={{
-                  required: 'House Bank Code is required',
-                  pattern: {
-                    value: REGEX.numericRegex,
-                    message: 'Only numeric values are allowed',
-                  },
-                }}
-                render={({ field }) => (
-                  <TextField
-                    id="houseBankCode"
-                    variant="outlined"
-                    placeholder="Enter House Bank Code"
-                    size="small"
-                    className="bg-white w-full text-sm h-10"
-                    error={!!errors.houseBankCode}
-                    helperText={errors.houseBankCode ? errors.houseBankCode.message : ''}
-                    FormHelperTextProps={{ className: 'ml-0' }}
-                    {...field}
-                    value={field.value || ''}
-                    onChange={(e) => {
-                      field.onChange(e);
-                      trigger('houseBankCode');
-                    }}
-                  />
-                )}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6} md={6} lg={4}>
-              <span className="text-gray-600 text-sm required-field">Bank Code</span>
-              <Controller
-                name="bankCode"
-                control={control}
-                defaultValue=""
-                rules={{
-                  required: 'Bank Code is required',
-                  pattern: {
-                    value: REGEX.bankCodeRegex,
-                    message: 'Invalid Bank Code format',
-                  },
-                }}
-                render={({ field }) => (
-                  <TextField
-                    id="bankCode"
-                    variant="outlined"
-                    placeholder="Enter Bank Code"
-                    size="small"
-                    className="bg-white w-full text-sm h-10"
-                    error={!!errors.bankCode}
-                    helperText={errors.bankCode ? errors.bankCode.message : ''}
-                    FormHelperTextProps={{ className: 'ml-0' }}
-                    {...field}
-                    value={field.value || ''}
-                    onChange={(e) => {
-                      field.onChange(e);
-                      trigger('bankCode');
-                    }}
-                  />
-                )}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6} md={6} lg={4}>
-              <span className="text-gray-600 text-sm required-field">Branch Name</span>
-              <Controller
-                name="branchName"
-                control={control}
-                defaultValue=""
-                rules={{ required: 'Branch Name is required' }}
-                render={({ field }) => (
-                  <TextField
-                    id="branchName"
-                    variant="outlined"
-                    placeholder="Enter Branch Name"
-                    size="small"
-                    className="bg-white w-full text-sm h-10"
-                    error={!!errors.branchName}
-                    helperText={errors.branchName ? errors.branchName.message : ''}
-                    FormHelperTextProps={{ className: 'ml-0' }}
-                    {...field}
-                    value={field.value || ''}
-                    onChange={(e) => {
-                      field.onChange(e);
-                      trigger('branchName');
-                    }}
-                  />
-                )}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6} md={6} lg={4}>
-              <span className="text-gray-600 text-sm required-field">Account Number</span>
-              <Controller
-                name="accountNumber"
-                control={control}
-                defaultValue=""
-                rules={{
-                  required: 'Account Number is required',
-                  pattern: {
-                    value: REGEX.numericRegex,
-                    message: 'Only numeric values are allowed',
-                  },
-                  minLength: {
-                    value: 9,
-                    message: 'Account Number must be at least 9 digits long',
-                  },
-                  maxLength: {
-                    value: 18,
-                    message: 'Account Number must be at most 18 digits long',
-                  },
-                }}
-                render={({ field }) => (
-                  <TextField
-                    id="accountNumber"
-                    variant="outlined"
-                    disabled={!!id}
-                    placeholder="Enter Account Number"
-                    size="small"
-                    className="bg-white w-full text-sm h-10"
-                    error={!!errors.accountNumber}
-                    helperText={errors.accountNumber ? errors.accountNumber.message : ''}
-                    FormHelperTextProps={{ className: 'ml-0' }}
-                    {...field}
-                    value={field.value || ''}
-                    onChange={(e) => {
-                      field.onChange(e);
-                      trigger('accountNumber');
-                    }}
-                  />
-                )}
-              />
-            </Grid>
+            {formConfig.map((fieldConfig, index) => (
+              <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
+                <InputField
+                  id={fieldConfig.name}
+                  label={fieldConfig.label}
+                  required={!!fieldConfig.validation?.required}
+                  validation={fieldConfig.validation}
+                  control={control}
+                  errors={errors}
+                  disabled={fieldConfig.disabled && !!id}
+                  trigger={trigger}
+                />
+              </Grid>
+            ))}
           </Grid>
         </CardContent>
       </Card>

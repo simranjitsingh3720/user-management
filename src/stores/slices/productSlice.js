@@ -21,10 +21,13 @@ export const fetchAllProductData = createAsyncThunk(
 
 export const updateProductData = createAsyncThunk(
   'product/updateProductData',
-  async ({ data }, { rejectWithValue }) => {
+  async ({ data, productData, updateProductStatus }, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.put(apiUrls.getProduct, data);
       toast.success(response?.data?.message || 'Product updated successfully');
+      if(updateProductStatus) {
+        updateProductStatus(data.id, productData);
+      }
       return response.data;
     } catch (error) {
       errorHandler.handleError(error)
