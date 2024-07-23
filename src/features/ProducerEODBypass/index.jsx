@@ -16,17 +16,14 @@ import { SearchKey, showTextField } from './utils/constants';
 function ProducerEODBypass() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [date, setDate] = useState({ startDate: '', endDate: '' });
   const { user } = useSelector((state) => state.user);
-  const [userData, setUserData] = useState();
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(10);
   const [order, setOrder] = useState(COMMON_WORDS.ASC);
   const [orderBy, setOrderBy] = useState(COMMON_WORDS.CREATED_AT);
-  const [query, setQuery] = useState('');
   const [searched, setSearched] = useState('producerName');
 
-  const { data, loading, fetchData, count } = useGetEODBypass(page, pageSize, date, order, orderBy, query, searched);
+  const { data, loading, fetchData, count } = useGetEODBypass(page, pageSize, order, orderBy);
   const { canCreate, canUpdate } = usePermissions();
 
   useEffect(() => {
@@ -56,10 +53,6 @@ function ProducerEODBypass() {
     const ids = (inputData || []).map((item) => item.id);
     return ids.join();
   };
-  const handleGo = () => {
-    const resultUserString = fetchIdsAndConvert(userData);
-    fetchData(resultUserString);
-  };
 
   const handleEditClick = (row) => {
     navigate(`/producer-eod-bypass-list/form/${row?.id}`);
@@ -67,18 +60,25 @@ function ProducerEODBypass() {
 
   const HEADER_COLUMNS = generateTableHeaders(handleEditClick);
 
+  const onSubmit = (data) => {
+    const { search = '' } = data;
+    const date = {
+      startDate: data.startDate,
+      endDate: data.endDate,
+    };
+    const resultUserString = fetchIdsAndConvert(data.producer);
+    fetchData(resultUserString, date, search, searched);
+  };
+
   return (
     <div>
       <SearchComponenet
-        setDate={setDate}
         dateField
         optionsData={user?.data || []}
-        option={userData}
-        setOption={setUserData}
         optionLabel={optionLabelUser}
         placeholder={getPlaceHolder(COMMON_WORDS.USER)}
         renderOptionFunction={renderOptionUserFunction}
-        handleGo={handleGo}
+        onSubmit={onSubmit}
         showButton={true}
         buttonText={BUTTON_TEXT.PRODUCER_EOD}
         navigateRoute="/producer-eod-bypass-list/form"
@@ -87,7 +87,6 @@ function ProducerEODBypass() {
         selectOptions={SearchKey}
         searched={searched}
         setSearched={setSearched}
-        setQuery={setQuery}
         textField={showTextField.includes(searched)}
         textFieldPlaceholder={COMMON_WORDS.SEARCH}
       />

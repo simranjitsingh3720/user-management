@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Autocomplete, Box, Grid, MenuItem, Select, TextField } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import CustomButton from '../CustomButton';
@@ -10,8 +10,6 @@ import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import ExportDropdown from '../../features/ExportDropdown';
 
 function SearchComponent({
-  option,
-  setOption,
   optionsData,
   optionLabel,
   placeholder,
@@ -21,16 +19,14 @@ function SearchComponent({
   searched,
   setSearched,
   selectOptions,
-  handleGo,
   textField,
   textFieldPlaceholder,
-  setQuery,
-  setDate,
   dateField,
   showButton,
   showExportButton,
   hideSearch,
   canCreate,
+  onSubmit,
 }) {
   const navigate = useNavigate();
 
@@ -38,32 +34,45 @@ function SearchComponent({
     navigate(navigateRoute);
   };
 
-  const { handleSubmit, control, setValue, formState } = useForm({
+  const { handleSubmit, control, setValue, formState, reset } = useForm({
     defaultValues: {
       startDate: null,
       endDate: null,
+      producer: null,
+      search: null,
     },
   });
 
   const { errors } = formState;
 
-  const onSubmit = (data) => {
-    setDate({
-      startDate: data.startDate,
-      endDate: data.endDate,
-    });
-  };
+  console.log('errors', errors);
+
+  // const onSubmit = (data) => {
+  //   console.log('data', data);
+  //   setDate({
+  //     startDate: data.startDate,
+  //     endDate: data.endDate,
+  //   });
+  // };
 
   const handleResetButton = () => {
-    setDate({});
     setValue('startDate', null);
     setValue('endDate', null);
+    setValue('producer', null);
+    setValue('search', null);
   };
+
+  console.log('textField', textField);
+
+  useEffect(() => {
+    setValue('producer', null);
+    setValue('search', null);
+  }, [searched]);
 
   return (
     <Box>
-      {dateField && (
-        <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        {dateField && (
           <Grid container spacing={2} alignItems="center" className="mb-4">
             <Grid item>
               <div>
@@ -117,98 +126,118 @@ function SearchComponent({
                 <div className="error-msg">{errors.endDate && <span>This field is required</span>}</div>
               </div>
             </Grid>
-            <Grid item>
-              <CustomButton variant="outlined" type="submit">
-                Go
-              </CustomButton>
-              <CustomButton
-                variant="outlined"
-                startIcon={<RestartAltIcon />}
-                sx={{ textTransform: 'none' }}
-                onClick={handleResetButton}
-              >
-                Reset
-              </CustomButton>
-            </Grid>
           </Grid>
-        </form>
-      )}
+        )}
 
-      <Grid container spacing={2} justifyContent="space-between" alignItems="center">
-        <Grid item lg={6} xs={12}>
-          {!hideSearch && (
-            <Grid container spacing={2} alignItems="center">
-              {selectOptions && (
-                <Grid item xs={12} sm={4} md={3}>
-                  <Select
-                    labelId="search-select"
-                    id="search-select"
-                    value={searched}
-                    onChange={(event) => setSearched(event.target.value)}
-                    fullWidth
-                    displayEmpty
-                    className="customize-select"
-                    size="small"
-                    renderValue={searched !== '' ? undefined : () => <span>Select</span>}
-                  >
-                    {selectOptions.map((item) => (
-                      <MenuItem key={item.value} value={item.value}>
-                        {item.label}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </Grid>
-              )}
-              <Grid item xs={12} sm={6} md={6}>
-                {textField ? (
-                  <TextField
-                    id="search"
-                    variant="outlined"
-                    placeholder={textFieldPlaceholder}
-                    size="small"
-                    className="customize-select"
-                    onChange={(e) => {
-                      setQuery(e.target.value);
-                    }}
-                    fullWidth
-                  />
-                ) : (
-                  <Autocomplete
-                    id="producer"
-                    options={optionsData || []}
-                    getOptionLabel={optionLabel}
-                    multiple
-                    size="small"
-                    renderInput={(params) => <TextField {...params} placeholder={placeholder} />}
-                    className="customize-select"
-                    value={option}
-                    onChange={(event, newValue) => setOption(newValue)}
-                    renderOption={renderOptionFunction}
-                    ListboxProps={{
-                      style: { maxHeight: '200px' },
-                    }}
-                    fullWidth
-                  />
+        <Grid container spacing={2} justifyContent="space-between" alignItems="center">
+          <Grid item lg={8} xs={12}>
+            {!hideSearch && (
+              <Grid container spacing={2} alignItems="center">
+                {selectOptions && (
+                  <Grid item xs={12} sm={4} md={3}>
+                    <Select
+                      labelId="search-select"
+                      id="search-select"
+                      value={searched}
+                      onChange={(event) => {
+                        setSearched(event.target.value);
+                      }}
+                      fullWidth
+                      displayEmpty
+                      className="customize-select"
+                      size="small"
+                      renderValue={searched !== '' ? undefined : () => <span>Select</span>}
+                    >
+                      {selectOptions.map((item) => (
+                        <MenuItem key={item.value} value={item.value}>
+                          {item.label}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </Grid>
                 )}
+                <Grid item xs={12} sm={6} md={4}>
+                  {textField ? (
+                    <Controller
+                      name="search"
+                      control={control}
+                      rules={{ required: 'Search field is required' }}
+                      render={({ field }) => (
+                        <TextField
+                          id="search"
+                          variant="outlined"
+                          placeholder={textFieldPlaceholder}
+                          size="small"
+                          className="customize-select"
+                          onChange={(e) => {
+                            field.onChange(e.target.value);
+                          }}
+                          value={field.value || ''}
+                          error={Boolean(errors.search)}
+                          helperText={errors.search?.message}
+                          fullWidth
+                        />
+                      )}
+                    />
+                  ) : (
+                    <Controller
+                      name="producer"
+                      control={control}
+                      rules={{ required: 'Producer is required' }}
+                      render={({ field }) => (
+                        <Autocomplete
+                          id="producer"
+                          options={optionsData || []}
+                          getOptionLabel={optionLabel}
+                          multiple
+                          size="small"
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              placeholder={placeholder}
+                              error={Boolean(errors.producer)}
+                              helperText={errors.producer?.message}
+                            />
+                          )}
+                          value={field.value || []}
+                          className="customize-select"
+                          onChange={(event, newValue) => {
+                            field.onChange(newValue);
+                          }}
+                          renderOption={renderOptionFunction}
+                          fullWidth
+                        />
+                      )}
+                    />
+                  )}
+                </Grid>
+                <Grid item>
+                  <CustomButton variant="outlined" type="submit">
+                    Go
+                  </CustomButton>
+                  <CustomButton
+                    variant="outlined"
+                    startIcon={<RestartAltIcon />}
+                    sx={{ textTransform: 'none' }}
+                    onClick={handleResetButton}
+                  >
+                    Reset
+                  </CustomButton>
+                </Grid>
               </Grid>
-              <Grid item>
-                <CustomButton variant="outlined" onClick={handleGo} fullWidth>
-                  Go
-                </CustomButton>
-              </Grid>
-            </Grid>
-          )}
-        </Grid>
+            )}
+          </Grid>
 
-        <Grid item lg={6} xs={12} className="flex justify-end">
-          {showExportButton && <ExportDropdown />}
-          {showButton && canCreate && (
-            <CustomButton variant="contained" onClick={handleCreateNewForm}>
-              {buttonText}
-            </CustomButton>
-          )}
+          <Grid item lg={4} xs={12} className="flex justify-end">
+            {showExportButton && <ExportDropdown />}
+            {showButton && canCreate && (
+              <CustomButton variant="contained" onClick={handleCreateNewForm}>
+                {buttonText}
+              </CustomButton>
+            )}
+          </Grid>
         </Grid>
-      </Grid>
+      </form>
     </Box>
   );
 }

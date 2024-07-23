@@ -16,12 +16,13 @@ const calculateUnlockedDays = (startDateString, endDateString) => {
   return differenceInDays;
 };
 
-function useGetEODBypass(page, pageSize, date, order, orderBy, query, searched) {
+function useGetEODBypass(page, pageSize, order, orderBy) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [count, setCount] = useState(0);
 
-  const fetchData = async (resultProducersId = null) => {
+  const fetchData = async (resultProducersId = null, date, search, searched) => {
+    console.log('search', search);
     try {
       setLoading(true);
       let params = buildQueryString({
@@ -49,10 +50,10 @@ function useGetEODBypass(page, pageSize, date, order, orderBy, query, searched) 
         params += `&${buildQueryString(moreParams)}`;
       }
 
-      if (query && searched) {
+      if (search && searched) {
         let moreParams = {
           searchKey: searched,
-          searchString: query,
+          searchString: search,
         };
         params += `&${buildQueryString(moreParams)}`;
       }
@@ -84,7 +85,7 @@ function useGetEODBypass(page, pageSize, date, order, orderBy, query, searched) 
   };
   useEffect(() => {
     fetchData();
-  }, [page, pageSize, date, order, orderBy]);
+  }, [page, pageSize, order, orderBy]);
 
   return { data, loading, fetchData, count };
 }
