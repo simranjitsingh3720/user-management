@@ -47,14 +47,6 @@ function SearchComponent({
 
   console.log('errors', errors);
 
-  // const onSubmit = (data) => {
-  //   console.log('data', data);
-  //   setDate({
-  //     startDate: data.startDate,
-  //     endDate: data.endDate,
-  //   });
-  // };
-
   const handleResetButton = () => {
     setValue('startDate', null);
     setValue('endDate', null);
@@ -62,13 +54,10 @@ function SearchComponent({
     setValue('search', null);
   };
 
-  console.log('textField', textField);
-
-  useEffect(() => {
+  const resetField = () => {
     setValue('producer', null);
-    setValue('search', null);
-  }, [searched]);
-
+    setValue('search', '');
+  };
   return (
     <Box>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -140,6 +129,7 @@ function SearchComponent({
                       id="search-select"
                       value={searched}
                       onChange={(event) => {
+                        resetField();
                         setSearched(event.target.value);
                       }}
                       fullWidth
