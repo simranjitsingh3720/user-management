@@ -48,11 +48,15 @@ const InputField = ({
             {...field}
             onChange={(e) => {
               field.onChange(e);
-              trigger(id);
+              if(typeof trigger === 'function'){
+                trigger(id);
+              }
             }}
             onBlur={(e) => {
               field.onBlur();
-              trigger(id);
+              if(typeof trigger === 'function'){
+                trigger(id);
+              }
             }}
           />
         )}

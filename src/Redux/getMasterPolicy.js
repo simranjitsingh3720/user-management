@@ -24,7 +24,7 @@ export const masterPolicy = createSlice({
   name: 'masterPolicy',
   initialState: {
     masterPolicy: [],
-    loading: true,
+    loading: false,
     error: '',
   },
   reducers: {},

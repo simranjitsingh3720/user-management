@@ -3,10 +3,9 @@ import { Controller, useWatch } from 'react-hook-form';
 import Autocomplete from '@mui/material/Autocomplete';
 import Checkbox from '@mui/material/Checkbox';
 import TextField from '@mui/material/TextField';
-import styles from './styles.module.scss';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
-import { PLACEHOLDER, REQUIRED_MSG, ROLE_SELECT } from './constants';
+import { PLACEHOLDER, ROLE_SELECT } from './constants';
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -28,7 +27,8 @@ const AutocompleteField = ({
   trigger,
   showCheckbox = true,
 }) => {
-  const [selectedValues, setSelectedValues] = useState(multiple ? [] : null);
+  const isMultiple = multiple ? [] : null;
+  const [selectedValues, setSelectedValues] = useState(isMultiple);
 
   const watchedValues = useWatch({
     control,
@@ -43,7 +43,7 @@ const AutocompleteField = ({
 
   useEffect(() => {
     if (resetClicked) {
-      setSelectedValues(multiple ? [] : null);
+      setSelectedValues(isMultiple);
     }
   }, [resetClicked, multiple]);
 
@@ -68,7 +68,7 @@ const AutocompleteField = ({
 
   useEffect(() => {
     if (!options || options.length === 0 || (options && options.every(isEmptyObject))) {
-      setSelectedValues(multiple ? [] : null);
+      setSelectedValues(isMultiple);
     }
   }, [options, multiple]);
 
@@ -77,9 +77,9 @@ const AutocompleteField = ({
   };
 
   return (
-    <div className={styles.fieldContainerStyle}>
-      <div className={styles.labelText}>
-        {label} {required && <span className={styles.styledRequired}>*</span>}
+    <div className="m-0 flex flex-col">
+      <div className="text-shuttleGray text-sm">
+        {label} {required && <span className="text-bittersweet">*</span>}
       </div>
       <Controller
         name={name}
@@ -93,7 +93,7 @@ const AutocompleteField = ({
             disabled={disabled}
             disableCloseOnSelect={multiple}
             options={options.length > 0 ? options : []}
-            value={selectedValues || (multiple ? [] : null)}
+            value={selectedValues || isMultiple}
             getOptionLabel={(option) => option?.label || ''}
             onChange={(event, newValue) => {
               setSelectedValues(newValue);
@@ -129,7 +129,7 @@ const AutocompleteField = ({
               </li>
             )}
             size="small"
-            className={`${styles.customizeSelect} ${classes}`}
+            className={`bg-white text-sm ${classes}`}
             limitTags={1}
             renderInput={(params) => (
               <TextField

@@ -32,6 +32,7 @@ export const COMMON = {
   SEARCH_PLACEHOLDER: 'Search',
   REQUIRED_MSG: 'This field is required',
   YES: 'yes',
+  NO: 'no',
   DATE_FORMAT: 'DD/MM/YYYY',
   DATE_FORMAT_2: 'MM/DD/YYYY',
   ROLE_SELECT: 'roleSelect',
@@ -40,6 +41,7 @@ export const COMMON = {
   DROPDOWN: 'dropdown',
   LOB: 'lob',
   LOGIN_TYPE: 'loginType',
+  CHEQUE: 'cheque',
   USER_CREATION_SUCCESS: 'User created successfully',
   USER_UPDATED_SUCCESS: 'User updated successfully',
 };
@@ -67,6 +69,7 @@ export const FORM_LABEL = {
   SEND_EMAIL: 'sendEmail',
   PAYMENT_TYPE: 'paymentType',
   GC_STATUS: 'gcStatus',
+  CHILDS: 'childs'
 };
 
 export const FORM_VALUE = {
@@ -91,6 +94,7 @@ export const FORM_VALUE = {
   CKYC: 'cKyc',
   SEND_EMAIL: 'sendEmail',
   PAYMENT_TYPE: 'paymentType',
+  PRODUCER_CODE: 'producerCode'
 };
 
 export const Header = (editAction, handleInsillionStatus) => {
@@ -175,3 +179,10 @@ export const SEARCH_OPTIONS = [
     value: 'roleName',
   },
 ];
+
+export const MASTER_POLICY = {
+  TRAVEL: "travel",
+  GROUPBUSINESSTRAVELACCIDENT: "groupbusinesstravelaccident",
+  SMALLBUSINESSTRAVELGUARD: "smallbusinesstravelguard",
+  BOTH: 'both'
+}

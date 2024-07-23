@@ -3,8 +3,7 @@ import { Controller } from 'react-hook-form';
 import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
-import styles from './styles.module.scss';
-import { END_DATE, ERR_MSG, MIN_ALLOWED_DATE, START_DATE } from './utils/constants';
+import { END_DATE, ERR_MSG, START_DATE } from './utils/constants';
 import { DATE_FORMAT } from './../../utils/globalConstants';
 
 const DateField = ({
@@ -21,16 +20,8 @@ const DateField = ({
   isEdit = false,
   trigger,
 }) => {
-  const minDate = dayjs(MIN_ALLOWED_DATE);
-  const seventyYearsFromNow = dayjs().add(70, 'year');
-  const inputSX = {
-    display: 'flex',
-    flexDirection: 'row-reverse',
-    gap: 10,
-    fontSize: 13,
-    marginLeft: '-22px',
-    color: '#607083',
-  };
+  // const minDate = dayjs(MIN_ALLOWED_DATE);
+  // const seventyYearsFromNow = dayjs().add(70, 'year');
 
   const validateDate = (value) => {
     if (!value) {
@@ -43,13 +34,13 @@ const DateField = ({
       return ERR_MSG.INVALID_DATE_ERR;
     }
 
-    if (date.isBefore(minDate)) {
-      return ERR_MSG.MIN_DATE_ERR;
-    }
+    // if (date.isBefore(minDate)) {
+    //   return ERR_MSG.MIN_DATE_ERR;
+    // }
 
-    if (date.isAfter(seventyYearsFromNow)) {
-      return ERR_MSG.MAX_DATE_ERR;
-    }
+    // if (date.isAfter(seventyYearsFromNow)) {
+    //   return ERR_MSG.MAX_DATE_ERR;
+    // }
 
     if (name === END_DATE) {
       const startDate = watch(START_DATE);
@@ -73,11 +64,11 @@ const DateField = ({
   }, [labelVisible, setValue, name]);
 
   return (
-    <div className={`${labelVisible ? styles.fieldContainerStyle : styles.fieldContainerNoMarginStyle}`}>
-      <div className={styles.startDateStyle}>
+    <div className={`${labelVisible ? 'm-0 flex flex-col' : "flex flex-col"}`}>
+      <div>
         {labelVisible && (
-          <div className={styles.labelText}>
-            {label} {required && <span className={styles.styledRequired}>*</span>}
+          <div className="text-shuttleGray text-sm">
+            {label} {required && <span className="text-bittersweet">*</span>}
           </div>
         )}
         <Controller
@@ -92,14 +83,21 @@ const DateField = ({
             <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
               <DatePicker
                 value={field.value ? dayjs(field.value, DATE_FORMAT) : null}
-                className={`${styles.dateStyle} ${classes}`}
+                className={`bg-white ${classes}`}
                 slotProps={{
                   textField: {
                     size: 'small',
                     variant: labelVisible ? 'outlined' : 'standard',
                     InputProps: {
                       disableUnderline: !labelVisible,
-                      style: !labelVisible ? inputSX : {},
+                      style: !labelVisible ? {
+                        display: 'flex',
+                        flexDirection: 'row-reverse',
+                        gap: 10,
+                        fontSize: 13,
+                        marginLeft: '-22px',
+                        color: '#607083',
+                      } : {},
                     },
                   },
                 }}
@@ -108,20 +106,26 @@ const DateField = ({
                   const formattedDate = date ? dayjs(date).format(DATE_FORMAT) : '';
                   setValue(name, formattedDate);
                   field.onChange(formattedDate);
-                  trigger(name);
+                  if(typeof trigger === 'function'){
+                    trigger(name);
+                  }
                 }}
                 onBlur={(e) => {
                   field.onBlur(e);
-                  trigger(name);
+                  if(typeof trigger === 'function'){
+                    trigger(name);
+                  }
                 }}
                 onClose={() => {
-                  trigger(name);
+                  if(typeof trigger === 'function'){
+                    trigger(name);
+                  }
                 }}
               />
             </LocalizationProvider>
           )}
         />
-        <div className={styles.styledError}>{errors[name] && <span>{errors[name]?.message}</span>}</div>
+        <div className="text-xs text-bittersweet">{errors[name] && <span>{errors[name]?.message}</span>}</div>
       </div>
     </div>
   );

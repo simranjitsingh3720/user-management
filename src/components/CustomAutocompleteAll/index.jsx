@@ -3,7 +3,6 @@ import { Controller, useWatch } from 'react-hook-form';
 import Autocomplete from '@mui/material/Autocomplete';
 import Checkbox from '@mui/material/Checkbox';
 import TextField from '@mui/material/TextField';
-import styles from './styles.module.scss';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import { All, NA, PLACEHOLDER } from './constants';
@@ -93,10 +92,10 @@ const AutocompleteFieldAll = ({
   }, [options, name]);
 
   return (
-    <div className={styles.fieldContainerStyle}>
-      <div className={styles.labelText}>
-        {label} {required && <span className={styles.styledRequired}>*</span>}
-      </div>
+    <div className="m-0 flex flex-col">
+    <div className="text-shuttleGray text-sm">
+      {label} {required && <span className="text-bittersweet">*</span>}
+    </div>
       <Controller
         name={name}
         control={control}
@@ -145,7 +144,7 @@ const AutocompleteFieldAll = ({
               </li>
             )}
             size="small"
-            className={`${styles.customizeSelect} ${classes}`}
+            className={`bg-white text-sm ${classes}`}
             limitTags={1}
             renderInput={(params) => (
               <TextField
