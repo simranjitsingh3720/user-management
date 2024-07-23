@@ -8,3 +8,17 @@ export const ProposalOTPSearch = [
     value: "value",
   },
 ];
+
+
+export const PROPOSAL_CREATE_BY = [
+  {
+    id: 'byChannel',
+    label: 'Channel',
+    value: 'byChannel',
+  },
+  {
+    id: 'byProducerCode',
+    label: 'Producer',
+    value: 'byProducerCode',
+  },
+];

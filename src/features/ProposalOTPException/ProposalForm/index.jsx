@@ -26,6 +26,8 @@ import 'dayjs/locale/en-gb';
 import CustomButton from '../../../components/CustomButton';
 import CustomFormHeader from '../../../components/CustomFormHeader';
 import { FORM_HEADER_TEXT } from '../../../utils/constants';
+import UserTypeToggle from '../../../components/CustomRadioButtonGroup';
+import { PROPOSAL_CREATE_BY } from '../utils/constants';
 
 function ProposalForm() {
   const { id } = useParams();
@@ -61,8 +63,8 @@ function ProposalForm() {
     }
   }, [proposalDataByID]);
 
-  const handleChange = (event) => {
-    setOTPValue(event.target.value);
+  const handleChange = (val) => {
+    setOTPValue(val);
   };
 
   const { producerList, fetchData: fetchProducerListData } = useGetProducerData();
@@ -124,20 +126,16 @@ function ProposalForm() {
           </Box>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <Typography variant="h6">
-                Select <span style={{ color: 'red' }}>*</span>
-              </Typography>
-              <RadioGroup
-                row
-                aria-labelledby="insillion-status-row-radio-buttons-group-label"
+              <UserTypeToggle
+                menuItem={PROPOSAL_CREATE_BY}
+                label="Select By"
+                required={true}
+                control={control}
                 name="groupStatus"
-                defaultValue="byChannel"
-                value={OTPValue}
-                onChange={handleChange}
-              >
-                <FormControlLabel value="byChannel" control={<Radio />} label="By Channel" disabled={id} />
-                <FormControlLabel value="byProducerCode" control={<Radio />} label="By Producer Code" disabled={id} />
-              </RadioGroup>
+                defaultValue="byProducerCode"
+                disabled={id}
+                onChangeCallback={handleChange}
+              />
             </Grid>
 
             {OTPValue === 'byChannel' ? (
