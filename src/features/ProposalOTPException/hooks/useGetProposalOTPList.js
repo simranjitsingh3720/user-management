@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import axiosInstance from '../../../utils/axiosInstance';
 import { buildQueryString } from '../../../utils/globalizationFunction';
 import { COMMON_WORDS } from '../../../utils/constants';
@@ -6,34 +6,30 @@ import errorHandler from '../../../utils/errorHandler';
 import { setTableName } from '../../../stores/slices/exportSlice';
 import { useDispatch } from 'react-redux';
 
-function useGetProposalOTPList(pageChange, rowsPage, query, searched, date) {
+function useGetProposalOTPList(page, pageSize, order, orderBy, query, searched) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [totalPage, setTotalPage] = useState(0);
-  const [sort, setSort] = useState({
-    sortKey: 'createdAt',
-    sortOrder: 'asc',
-  });
 
   const dispatch = useDispatch();
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       setLoading(true);
       let params = buildQueryString({
-        pageNo: pageChange - 1,
-        sortKey: sort.sortKey,
-        sortOrder: sort.sortOrder,
-        pageSize: rowsPage,
+        pageNo: page,
+        sortKey: orderBy,
+        sortOrder: order,
+        pageSize: pageSize,
         childFieldsToFetch: COMMON_WORDS.PRODUCER + ',' + COMMON_WORDS.LOB + ',' + COMMON_WORDS.PRODUCT,
         childFieldsEdge: COMMON_WORDS.HAS_PRODUCER + ',' + COMMON_WORDS.HAS_LOB + ',' + COMMON_WORDS.HAS_PRODUCT,
       });
       if (query && searched) {
         params += '&searchKey=' + searched + '&searchString=' + query;
       }
-      if (date?.startDate && date?.endDate) {
-        params += `&startDate=${date.startDate}&endDate=${date.endDate}`;
-      }
+      // if (date?.startDate && date?.endDate) {
+      //   params += `&startDate=${date.startDate}&endDate=${date.endDate}`;
+      // }
 
       let url = `/api/otp-exception?${params}`;
 
@@ -44,7 +40,7 @@ function useGetProposalOTPList(pageChange, rowsPage, query, searched, date) {
       const newData = data.data.map((item) => {
         const {
           lob,
-          otpException: { type, startDate, endDate, status, createdAt, updatedAt, label },
+          otpException: { id, type, startDate, endDate, status, createdAt, updatedAt, label },
           producer,
           product,
         } = item;
@@ -54,6 +50,7 @@ function useGetProposalOTPList(pageChange, rowsPage, query, searched, date) {
         const productName = product?.[0]?.name ?? '';
 
         return {
+          id: id,
           type: type,
           producerName,
           lob: lobName,
@@ -76,12 +73,13 @@ function useGetProposalOTPList(pageChange, rowsPage, query, searched, date) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [page, orderBy, order, pageSize, query, searched, dispatch]);
+  
   useEffect(() => {
     fetchData();
-  }, [pageChange, sort, rowsPage, query, date]);
+  }, [fetchData]);
 
-  return { data, loading, sort, setSort, fetchData, totalPage };
+  return { data, loading, fetchData, totalPage };
 }
 
 export default useGetProposalOTPList;
