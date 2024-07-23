@@ -3,6 +3,7 @@ import axiosInstance from '../../../utils/axiosInstance';
 import apiUrls from '../../../utils/apiUrls';
 import { COMMON_WORDS } from '../../../utils/constants';
 import { buildQueryString } from '../../../utils/globalizationFunction';
+import errorHandler from '../../../utils/errorHandler';
 
 function useGetProductLocationLevel(page, pageSize, order, orderBy, employeeId) {
   const [data, setData] = useState(null);
@@ -66,7 +67,7 @@ function useGetProductLocationLevel(page, pageSize, order, orderBy, employeeId) 
       setCount(response.data.totalCount);
       setData(partnerNeftData);
     } catch (error) {
-      console.log('error', error);
+      errorHandler.handleError(error);
       setData([]);
     } finally {
       setLoading(false);
