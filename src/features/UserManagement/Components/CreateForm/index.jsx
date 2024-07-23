@@ -34,7 +34,6 @@ import { clearMasterPolicy, getMasterPolicies } from '../../../../Redux/getMaste
 import { ARR_CONTAINS, COMMON, FORM_LABEL, FORM_VALUE, MASTER_POLICY } from '../utils/constants';
 import useUpdateUser from '../hooks/useUpdateUser';
 import errorHandler from '../../../../utils/errorHandler';
-import useHouseBank from '../hooks/useHouseBank';
 
 function CreateUserCreationForm() {
   const dispatch = useDispatch();
