@@ -28,7 +28,7 @@ export const COMMON_WORDS = {
   GROUPNAME: 'groupName',
   GROUP: 'group',
   HAS_GROUP: 'hasGroup',
-  SEARCH: 'search',
+  SEARCH: 'Search',
   STATUS: 'status',
   SCOPES: 'scopes',
   READ: 'read',

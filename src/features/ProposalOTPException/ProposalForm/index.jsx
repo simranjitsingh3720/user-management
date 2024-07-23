@@ -1,7 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import styles from './styles.module.scss';
-import { Autocomplete, FormControlLabel, Radio, RadioGroup, TextField } from '@mui/material';
+import {
+  Autocomplete,
+  FormControlLabel,
+  Radio,
+  RadioGroup,
+  TextField,
+  Grid,
+  Box,
+  Card,
+  CardContent,
+  Typography,
+} from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -55,8 +65,6 @@ function ProposalForm() {
     setOTPValue(event.target.value);
   };
 
-  // const { data: lobListData } = useGetLobListData();
-
   const { producerList, fetchData: fetchProducerListData } = useGetProducerData();
 
   const { data: lobList, fetchData: fetchLobData } = useGetLobListData();
@@ -69,9 +77,7 @@ function ProposalForm() {
 
   const onSubmit = (data) => {
     if (id) {
-      let payload = {};
-
-      payload = {
+      const payload = {
         id: id,
         properties: {
           startDate: data?.startDate,
@@ -106,54 +112,39 @@ function ProposalForm() {
   };
 
   return (
-    <div>
-      {' '}
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className={styles.createNewUserContainer}>
-          <div className="p-4">
+    <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+      <Card>
+        <CardContent>
+          <Box mb={2}>
             <CustomFormHeader
               id={id}
               headerText={FORM_HEADER_TEXT.PROPOSAL_OTP}
               navigateRoute="/proposalotpexception"
-              subHeading="Please select a channel or producer code from below and add it to the given list for OTP Exception."
             />
-          </div>
-          <div className={styles.containerStyle}>
-            <div>
-              <span className={styles.labelText}>
-                Select <span className={styles.styledRequired}>*</span>
-              </span>
-              <div className={styles.radioContainer}>
-                <RadioGroup
-                  row
-                  aria-labelledby="insillion-status-row-radio-buttons-group-label"
-                  name="groupStatus"
-                  defaultValue="byChannel"
-                  value={OTPValue}
-                  onChange={handleChange}
-                >
-                  <FormControlLabel
-                    value="byChannel"
-                    control={<Radio />}
-                    label="By Channel"
-                    disabled={id}
-                    className={OTPValue === 'byChannel' ? styles.radioSelectStyle : styles.radioNotSelectStyle}
-                  />
-                  <FormControlLabel
-                    value="byProducerCode"
-                    control={<Radio />}
-                    label="By Producer Code"
-                    disabled={id}
-                    className={OTPValue === 'byProducerCode' ? styles.radioSelectStyle : styles.radioNotSelectStyle}
-                  />
-                </RadioGroup>
-              </div>
-            </div>
+          </Box>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <Typography variant="h6">
+                Select <span style={{ color: 'red' }}>*</span>
+              </Typography>
+              <RadioGroup
+                row
+                aria-labelledby="insillion-status-row-radio-buttons-group-label"
+                name="groupStatus"
+                defaultValue="byChannel"
+                value={OTPValue}
+                onChange={handleChange}
+              >
+                <FormControlLabel value="byChannel" control={<Radio />} label="By Channel" disabled={id} />
+                <FormControlLabel value="byProducerCode" control={<Radio />} label="By Producer Code" disabled={id} />
+              </RadioGroup>
+            </Grid>
+
             {OTPValue === 'byChannel' ? (
-              <div className={styles.fieldContainerStyle}>
-                <span className={styles.labelText}>
-                  Channel <span className={styles.styledRequired}>*</span>
-                </span>
+              <Grid item xs={12} sm={6} lg={4}>
+                <Typography variant="h6">
+                  Channel <span style={{ color: 'red' }}>*</span>
+                </Typography>
                 <Controller
                   name="channel"
                   control={control}
@@ -163,34 +154,22 @@ function ProposalForm() {
                       id="channel"
                       options={[]}
                       disabled={id}
-                      getOptionLabel={(option) => {
-                        return `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`;
-                      }}
-                      className={styles.customizeSelect}
-                      size="small"
-                      isOptionEqualToValue={(option, value) => option.id === value.id}
+                      getOptionLabel={(option) =>
+                        `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`
+                      }
                       renderInput={(params) => <TextField {...params} placeholder="Select" />}
-                      onChange={(event, newValue) => {
-                        field.onChange(newValue);
-                      }}
-                      ListboxProps={{
-                        style: {
-                          maxHeight: '200px',
-                        },
-                      }}
-                      // onInputChange={(event, val, reason) => {
-                      //   if (reason === "input") setInput(val);
-                      // }}
+                      onChange={(event, newValue) => field.onChange(newValue)}
+                      ListboxProps={{ style: { maxHeight: '200px' } }}
                     />
                   )}
                 />
-                <div className={styles.styledError}>{errors.channel && <span>This field is required</span>} </div>
-              </div>
+                {errors.channel && <Typography color="error">This field is required</Typography>}
+              </Grid>
             ) : (
-              <div className={styles.fieldContainerStyle}>
-                <span className={styles.labelText}>
-                  Producer Code <span className={styles.styledRequired}>*</span>
-                </span>
+              <Grid item xs={12} sm={6} lg={4}>
+                <Typography variant="h6">
+                  Producer Code <span style={{ color: 'red' }}>*</span>
+                </Typography>
                 <Controller
                   name="producerCode"
                   control={control}
@@ -201,12 +180,9 @@ function ProposalForm() {
                       disabled={id}
                       options={userData || []}
                       value={field.value}
-                      getOptionLabel={(option) => {
-                        return `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`;
-                      }}
-                      className={styles.customizeSelect}
-                      size="small"
-                      isOptionEqualToValue={(option, value) => option.id === value.id}
+                      getOptionLabel={(option) =>
+                        `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`
+                      }
                       renderInput={(params) => <TextField {...params} placeholder="Select" />}
                       onChange={(event, newValue) => {
                         field.onChange(newValue);
@@ -214,155 +190,120 @@ function ProposalForm() {
                         setValue('product', null);
                         setValue('lob', null);
                       }}
-                      ListboxProps={{
-                        style: {
-                          maxHeight: '200px',
-                        },
-                      }}
+                      ListboxProps={{ style: { maxHeight: '200px' } }}
                     />
                   )}
                 />
-                <div className={styles.styledError}>{errors.producerCode && <span>This field is required</span>} </div>
-              </div>
+                {errors.producerCode && <Typography color="error">This field is required</Typography>}
+              </Grid>
             )}
 
-            <div className={styles.fieldStyle}>
-              <div className={styles.fieldContainerStyle}>
-                <span className={styles.labelText}>
-                  Product <span className={styles.styledRequired}>*</span>
-                </span>
-                <Controller
-                  name="product"
-                  control={control}
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <Autocomplete
-                      id="product"
-                      disabled={id}
-                      options={producerList?.data || []}
-                      value={field.value}
-                      getOptionLabel={(option) => {
-                        return `${option?.product?.toUpperCase()} - ${option?.product_code}`;
-                      }}
-                      className={styles.customizeSelect}
-                      size="small"
-                      renderInput={(params) => <TextField {...params} placeholder="Select" />}
-                      onChange={(event, newValue) => {
-                        field.onChange(newValue);
-                        fetchLobData(newValue.id);
-                        setValue('lob', null);
-                      }}
-                      ListboxProps={{
-                        style: {
-                          maxHeight: '200px',
-                        },
-                      }}
-                    />
-                  )}
-                />
-                <div className={styles.styledError}>{errors.product && <span>This field is required</span>} </div>
-              </div>
-              <div className={styles.fieldContainerStyle}>
-                <span className={styles.labelText}>
-                  LOB <span className={styles.styledRequired}>*</span>
-                </span>
-                <Controller
-                  name="lob"
-                  control={control}
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <Autocomplete
-                      id="lob"
-                      disabled={id}
-                      options={lobList?.data || []}
-                      value={field.value}
-                      getOptionLabel={(option) => {
-                        return `${option?.lob?.toUpperCase()} - ${option?.lob_value}`;
-                      }}
-                      className={styles.customizeSelect}
-                      size="small"
-                      renderInput={(params) => <TextField {...params} placeholder="Select by LOB Name..." />}
-                      onChange={(event, newValue) => {
-                        field.onChange(newValue);
-                      }}
-                      ListboxProps={{
-                        style: {
-                          maxHeight: '200px',
-                        },
-                      }}
-                    />
-                  )}
-                />
-                <div className={styles.styledError}>{errors.lob && <span>This field is required</span>} </div>
-              </div>
+            <Grid item xs={12} sm={6} lg={4}>
+              <Typography variant="h6">
+                Product <span style={{ color: 'red' }}>*</span>
+              </Typography>
+              <Controller
+                name="product"
+                control={control}
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <Autocomplete
+                    id="product"
+                    disabled={id}
+                    options={producerList?.data || []}
+                    value={field.value}
+                    getOptionLabel={(option) => `${option?.product?.toUpperCase()} - ${option?.product_code}`}
+                    renderInput={(params) => <TextField {...params} placeholder="Select" />}
+                    onChange={(event, newValue) => {
+                      field.onChange(newValue);
+                      fetchLobData(newValue.id);
+                      setValue('lob', null);
+                    }}
+                    ListboxProps={{ style: { maxHeight: '200px' } }}
+                  />
+                )}
+              />
+              {errors.product && <Typography color="error">This field is required</Typography>}
+            </Grid>
 
-              <div className={styles.fieldContainerStyle}>
-                <div className={styles.startDateStyle}>
-                  <div className={styles.labelText}>
-                    Start Date <span className={styles.styledRequired}>*</span>
-                  </div>
-                  <Controller
-                    name="startDate"
-                    control={control}
-                    rules={{ required: true }}
-                    render={({ field }) => (
-                      <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
-                        <DatePicker
-                          className={styles.dateStyle}
-                          minDate={dayjs()}
-                          // {...register("startDate", { required: true })}
-                          value={field.value ? dayjs(field.value, 'DD/MM/YYYY') : null}
-                          slotProps={{ textField: { size: 'small' } }}
-                          //   value={dayjs(field.value)}
-                          onChange={(date) => {
-                            const formattedDate = dayjs(date).format('DD/MM/YYYY');
-                            setValue('startDate', formattedDate);
-                          }}
-                        />
-                      </LocalizationProvider>
-                    )}
+            <Grid item xs={12} sm={6} lg={4}>
+              <Typography variant="h6">
+                LOB <span style={{ color: 'red' }}>*</span>
+              </Typography>
+              <Controller
+                name="lob"
+                control={control}
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <Autocomplete
+                    id="lob"
+                    disabled={id}
+                    options={lobList?.data || []}
+                    value={field.value}
+                    getOptionLabel={(option) => `${option?.lob?.toUpperCase()} - ${option?.lob_value}`}
+                    renderInput={(params) => <TextField {...params} placeholder="Select by LOB Name..." />}
+                    onChange={(event, newValue) => field.onChange(newValue)}
+                    ListboxProps={{ style: { maxHeight: '200px' } }}
                   />
-                </div>
-                <div className={styles.styledError}>{errors.startDate && <span>This field is required</span>}</div>
-              </div>
-              <div className={styles.fieldContainerStyle}>
-                <div>
-                  <div className={styles.labelText}>
-                    End Date <span className={styles.styledRequired}>*</span>
-                  </div>
-                  <Controller
-                    name="endDate"
-                    control={control}
-                    rules={{ required: true }}
-                    render={({ field }) => (
-                      <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
-                        <DatePicker
-                          className={styles.dateStyle}
-                          minDate={dayjs()}
-                          // {...register("expiryDate", { required: true })}
-                          // value={watch("expiryDate")}
-                          //   value={dayjs(field.value)}
-                          value={field.value ? dayjs(field.value, 'DD/MM/YYYY') : null}
-                          onChange={(date) => {
-                            const formattedDate = dayjs(date).format('DD/MM/YYYY');
-                            setValue('endDate', formattedDate);
-                          }}
-                          slotProps={{ textField: { size: 'small' } }}
-                        />
-                      </LocalizationProvider>
-                    )}
-                  />
-                  <div className={styles.styledError}>{errors.endDate && <span>This field is required</span>}</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+                )}
+              />
+              {errors.lob && <Typography color="error">This field is required</Typography>}
+            </Grid>
+
+            <Grid item xs={12} sm={6} lg={4}>
+              <Typography variant="h6">
+                Start Date <span style={{ color: 'red' }}>*</span>
+              </Typography>
+              <Controller
+                name="startDate"
+                control={control}
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
+                    <DatePicker
+                      className='w-full'
+                      minDate={dayjs()}
+                      value={field.value ? dayjs(field.value, 'DD/MM/YYYY') : null}
+                      onChange={(date) => setValue('startDate', dayjs(date).format('DD/MM/YYYY'))}
+                      renderInput={(params) => <TextField {...params} size="small" />}
+                    />
+                  </LocalizationProvider>
+                )}
+              />
+              {errors.startDate && <Typography color="error">This field is required</Typography>}
+            </Grid>
+
+            <Grid item xs={12} sm={6} lg={4}>
+              <Typography variant="h6">
+                End Date <span style={{ color: 'red' }}>*</span>
+              </Typography>
+              <Controller
+                name="endDate"
+                control={control}
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
+                    <DatePicker
+                      className='w-full'
+                      minDate={dayjs()}
+                      value={field.value ? dayjs(field.value, 'DD/MM/YYYY') : null}
+                      onChange={(date) => setValue('endDate', dayjs(date).format('DD/MM/YYYY'))}
+                      renderInput={(params) => <TextField {...params} size="small" />}
+                    />
+                  </LocalizationProvider>
+                )}
+              />
+              {errors.endDate && <Typography color="error">This field is required</Typography>}
+            </Grid>
+          </Grid>
+        </CardContent>
+      </Card>
+      <div className="mt-4">
         <CustomButton type="submit" variant="contained" disabled={proposalOTPLoading}>
           {id ? 'Update' : 'Submit'}
         </CustomButton>
-      </form>
-    </div>
+      </div>
+    </Box>
   );
 }
 

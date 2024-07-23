@@ -79,7 +79,7 @@ function ProductForm() {
             </Grid>
 
             {FormFields.map((item) => (
-              <Grid item xs={12} sm={6} key={item.value}>
+              <Grid item xs={12} sm={6} lg={4} key={item.value}>
                 <InputField
                   key={item?.id}
                   id={item?.id}

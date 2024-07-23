@@ -2,9 +2,9 @@ import React, { useMemo, useState } from 'react';
 import { ASC, BUTTON_TEXT, CREATED_AT, PAGECOUNT } from '../../utils/globalConstants';
 import useGetProposalOTPList from './hooks/useGetProposalOTPList';
 import usePermissions from '../../hooks/usePermission';
-import { Header } from './Header';
+import { Header } from './utils/Header';
 import CustomTable from '../../components/CustomTable';
-import { ProposalOTPSearch } from './constants';
+import { ProposalOTPSearch } from './utils/constants';
 import { COMMON_WORDS } from '../../utils/constants';
 import SearchComponent from '../../components/SearchComponent';
 
@@ -31,22 +31,24 @@ function ProposalOTPException() {
 
   return (
     <>
-      <SearchComponent
-        setDate={setDate}
-        dateField
-        handleGo={handleGo}
-        showButton={true}
-        buttonText={BUTTON_TEXT.PROPOSAL_EXCEPTION}
-        navigateRoute="/proposalotpexception/form"
-        showExportButton
-        canCreate={canCreate}
-        selectOptions={ProposalOTPSearch}
-        searched={searched}
-        setSearched={setSearched}
-        setQuery={setQuery}
-        textFieldPlaceholder={COMMON_WORDS.SEARCH}
-        textField
-      />
+      <div className="mb-4">
+        <SearchComponent
+          setDate={setDate}
+          dateField
+          handleGo={handleGo}
+          showButton={true}
+          buttonText={BUTTON_TEXT.PROPOSAL_EXCEPTION}
+          navigateRoute="/proposalotpexception/form"
+          showExportButton
+          canCreate={canCreate}
+          selectOptions={ProposalOTPSearch}
+          searched={searched}
+          setSearched={setSearched}
+          setQuery={setQuery}
+          textFieldPlaceholder={COMMON_WORDS.SEARCH}
+          textField
+        />
+      </div>
 
       <CustomTable
         rows={data || []}
