@@ -172,7 +172,7 @@ function SearchComponent({
                           onChange={(e) => {
                             field.onChange(e.target.value);
                           }}
-                          value={field.value || ''}
+                          value={field?.value || ''}
                           error={Boolean(errors.search)}
                           helperText={errors.search?.message}
                           fullWidth
@@ -199,7 +199,7 @@ function SearchComponent({
                               helperText={errors.producer?.message}
                             />
                           )}
-                          value={field.value || []}
+                          value={field?.value || []}
                           className="customize-select"
                           onChange={(event, newValue) => {
                             field.onChange(newValue);
