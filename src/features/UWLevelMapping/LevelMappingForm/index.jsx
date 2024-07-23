@@ -35,6 +35,7 @@ function LevelMappingForm({ dataById, fetchData }) {
     control,
     setValue,
     formState: { errors },
+    reset,
   } = useForm({
     defaultValues: {
       lob: null,
@@ -47,10 +48,13 @@ function LevelMappingForm({ dataById, fetchData }) {
 
   const handleReset = () => {
     setEditData([]);
-    setValue('lob', null);
-    setValue('product', null);
-    setValue('level', null);
-    setValue('location', null);
+    reset({
+      lob: null,
+      product: null,
+      level: null,
+      location: null,
+      isLeader: null,
+    });
   };
   const { data, postData, loading, updateData, getLobByUserId } = useCreateProductLevel(
     fetchData,

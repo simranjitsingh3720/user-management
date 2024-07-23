@@ -1,7 +1,7 @@
 import React from 'react';
 import { TextField } from '@mui/material';
 import { Controller } from 'react-hook-form';
-import { ACTIVE, PRODUCER_STATUS, REQUIRED_MSG } from './utils/constants';
+import { ACTIVE, PRODUCER_STATUS } from './utils/constants';
 
 const InputField = ({
   id,
@@ -12,8 +12,8 @@ const InputField = ({
   errors,
   disabled,
   classes,
-  placeholder,
   type = 'text',
+  trigger,
 }) => {
   return (
     <div className="flex flex-col">
@@ -45,6 +45,13 @@ const InputField = ({
             error={Boolean(errors[id])}
             FormHelperTextProps={{ classes: { root: 'ml-0' } }}
             {...field}
+            value={field.value || ''}
+            onChange={(e) => {
+              field.onChange(e);
+              if (typeof trigger === 'function') {
+                trigger(id);
+              }
+            }}
           />
         )}
       />

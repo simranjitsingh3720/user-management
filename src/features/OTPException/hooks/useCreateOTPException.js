@@ -15,7 +15,7 @@ function useCreateOTPException({ fetchData }) {
     try {
       const response = await axiosInstance.post(`${apiUrls.getOTPException}`, data);
       toast.success(response?.data?.message || 'OTP Exception created successfully');
-      navigate('/otpException');
+      navigate('/otpexception');
       fetchData();
     } catch (error) {
       errorHandler.handleError(error);

@@ -1,4 +1,4 @@
-export const Header = (updateProductData) => {
+export const Header = (handleStatusUpdate) => {
     return [
       { value: "Product Name", id: "product" },
       { value: "Product Value", id: "product_value" },
@@ -14,21 +14,7 @@ export const Header = (updateProductData) => {
             {
               component: "switch",
               onClick: (data, row) => {
-                data.map((item) => {
-                  if (item.id === row.id) {
-                    return (row.checked = !row.checked);
-                  }
-                  
-                  return row.checked;
-                });
-  
-                updateProductData({
-                  id: row.id,
-                  properties: {
-                    status: row.checked,
-                  },
-                });
-                
+                handleStatusUpdate(data, row);
               },
             },
           ],

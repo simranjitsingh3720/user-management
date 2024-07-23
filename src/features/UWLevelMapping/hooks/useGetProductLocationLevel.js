@@ -38,23 +38,35 @@ function useGetProductLocationLevel(page, pageSize, order, orderBy, employeeId) 
       }
       const response = await axiosInstance.get(url);
       const partnerNeftData = response.data.data.map((item) => {
-        const { productLocationLevelMappings, products, lobs, locations } = item;
+        const { productLocationLevelMappings = {}, products = [], lobs = [], locations = [] } = item || {};
+        const {
+          id = '',
+          label = '',
+          level = '',
+          status = '',
+          createdAt = '',
+          updatedAt = '',
+        } = productLocationLevelMappings || {};
+        const { lob = '' } = lobs?.[0] || {};
+        const { product = '' } = products?.[0] || {};
+        const { txtOffice = '' } = locations?.[0] || {};
         return {
-          id: productLocationLevelMappings.id,
-          label: productLocationLevelMappings.label,
-          lob: lobs[0].lob,
-          product: products[0].product,
-          location: locations[0]?.txtOffice,
-          level: productLocationLevelMappings.level,
-          status: productLocationLevelMappings.status,
-          createdAt: productLocationLevelMappings.createdAt,
-          updatedAt: productLocationLevelMappings.updatedAt,
-          checked: productLocationLevelMappings.status,
+          id: id,
+          label: label,
+          lob: lob,
+          product: product,
+          location: txtOffice,
+          level: level,
+          status: status,
+          createdAt: createdAt,
+          updatedAt: updatedAt,
+          checked: status,
         };
       });
       setCount(response.data.totalCount);
       setData(partnerNeftData);
     } catch (error) {
+      console.log('error', error);
       setData([]);
     } finally {
       setLoading(false);

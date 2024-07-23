@@ -29,18 +29,20 @@ instance.interceptors.response.use(
   },
   (error) => {
     let errorMessage = '';
-    if (error.response) {
-      switch (error.response.status) {
+    const { response } = error;
+    if (response) {
+      const { status, data } = response;
+      switch (status) {
         case 400:
         case 403:
         case 404:
         case 500:
-          errorMessage = error?.response?.data?.error?.message;
+          errorMessage = data?.error?.message ? data?.error?.message : data?.details;
           break;
         case 401:
           localStorage.clear();
-          toast.error('Session expired. Please login again');
           window.location.href = '/';
+          toast.error('Session expired. Please login again');
           break;
         default:
           errorMessage = COMMON_ERROR;

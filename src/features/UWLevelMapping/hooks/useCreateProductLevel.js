@@ -73,7 +73,6 @@ function useCreateProductLevel(fetchData, setEditData, handleReset) {
     setLoading(true);
     try {
       const response = await axiosInstance.get(`${apiUrls.getUser}/${employeeId}/lobs`);
-      console.log('response', response);
       const { data = {} } = response || {};
       const { data: lobList = [] } = data;
       setData(lobList);
