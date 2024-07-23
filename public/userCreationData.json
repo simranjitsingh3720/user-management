@@ -122,7 +122,7 @@
         "label": "LOB",
         "type": "autocomplete",
         "required": true,
-        "multiple": true,
+        "all": true,
         "validation": {
           "required": "This field is required"
         },
@@ -133,7 +133,7 @@
         "label": "Product",
         "type": "autocomplete",
         "required": true,
-        "multiple": true,
+        "all": true,
         "validation": {
           "required": "This field is required"
         },
@@ -354,7 +354,7 @@
         "label": "LOB",
         "type": "autocomplete",
         "required": true,
-        "multiple": true,
+        "all": true,
         "validation": {
           "required": "This field is required"
         },
@@ -365,7 +365,7 @@
         "label": "Product",
         "type": "autocomplete",
         "required": true,
-        "multiple": true,
+        "all": true,
         "validation": {
           "required": "This field is required"
         },
@@ -586,7 +586,7 @@
         "label": "LOB",
         "type": "autocomplete",
         "required": true,
-        "multiple": true,
+        "all": true,
         "validation": {
           "required": "This field is required"
         },
@@ -597,7 +597,7 @@
         "label": "Product",
         "type": "autocomplete",
         "required": true,
-        "multiple": true,
+        "all": true,
         "validation": {
           "required": "This field is required"
         },
@@ -841,14 +841,14 @@
         "validation": {
           "required": "This field is required"
         },
-        "canEdit": true
+        "canEdit": false
       },
       {
         "id": "lob",
         "label": "LOB",
         "type": "autocomplete",
         "required": true,
-        "multiple": true,
+        "all": true,
         "validation": {
           "required": "This field is required"
         },
@@ -859,7 +859,7 @@
         "label": "Product",
         "type": "autocomplete",
         "required": true,
-        "multiple": true,
+        "all": true,
         "validation": {
           "required": "This field is required"
         },
@@ -1224,14 +1224,14 @@
         "validation": {
           "required": "This field is required"
         },
-        "canEdit": true
+        "canEdit": false
       },
       {
         "id": "lob",
         "label": "LOB",
         "type": "autocomplete",
         "required": true,
-        "multiple": true,
+        "all": true,
         "validation": {
           "required": "This field is required"
         },
@@ -1242,7 +1242,7 @@
         "label": "Product",
         "type": "autocomplete",
         "required": true,
-        "multiple": true,
+        "all": true,
         "validation": {
           "required": "This field is required"
         },
@@ -1607,14 +1607,14 @@
         "validation": {
           "required": "This field is required"
         },
-        "canEdit": true
+        "canEdit": false
       },
       {
         "id": "lob",
         "label": "LOB",
         "type": "autocomplete",
         "required": true,
-        "multiple": true,
+        "all": true,
         "validation": {
           "required": "This field is required"
         },
@@ -1625,7 +1625,7 @@
         "label": "Product",
         "type": "autocomplete",
         "required": true,
-        "multiple": true,
+        "all": true,
         "validation": {
           "required": "This field is required"
         },
@@ -4268,7 +4268,7 @@
         "label": "LOB",
         "type": "autocomplete",
         "required": true,
-        "multiple": true,
+        "all": true,
         "validation": {
           "required": "This field is required"
         },
@@ -4279,7 +4279,7 @@
         "label": "Product",
         "type": "autocomplete",
         "required": true,
-        "multiple": true,
+        "all": true,
         "validation": {
           "required": "This field is required"
         },

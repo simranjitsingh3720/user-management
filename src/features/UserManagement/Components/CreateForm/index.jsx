@@ -1,8 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useRef, useState } from 'react';
-import styles from './styles.module.scss';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { json, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import usePostUser from '../hooks/usePostUser';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
@@ -32,9 +31,10 @@ import { FORM_HEADER_TEXT } from '../../../../utils/constants';
 import dayjs from 'dayjs';
 import { getProducerTypes } from '../../../../Redux/getProducerType';
 import { clearMasterPolicy, getMasterPolicies } from '../../../../Redux/getMasterPolicy';
-import { ARR_CONTAINS, COMMON, FORM_LABEL, FORM_VALUE } from '../utils/constants';
+import { ARR_CONTAINS, COMMON, FORM_LABEL, FORM_VALUE, MASTER_POLICY } from '../utils/constants';
 import useUpdateUser from '../hooks/useUpdateUser';
 import errorHandler from '../../../../utils/errorHandler';
+import useHouseBank from '../hooks/useHouseBank';
 
 function CreateUserCreationForm() {
   const dispatch = useDispatch();
@@ -83,8 +83,9 @@ function CreateUserCreationForm() {
     defaultValues: {
       roleSelect: null,
       loginType: [],
-      active: 'yes',
+      active: COMMON.YES,
       startDate: today,
+      gcStatus: COMMON.NO,
     },
   });
 
@@ -93,6 +94,7 @@ function CreateUserCreationForm() {
   const lobsWatch = watch(COMMON.LOB);
   const rolesWatch = watch(COMMON.ROLE_SELECT);
   const { userType, userTypeFetch } = useGetUserType();
+  const { houseBank, houseBankFetch } = useHouseBank();
   const { roleHierarchy, roleHierarchyFetch } = useGetRoleHierarchy();
   const params = useParams();
   const { getUserById } = useSubmit();
@@ -268,18 +270,18 @@ function CreateUserCreationForm() {
       productWatch &&
       productWatch.length > 0
     ) {
-      const containsTravel = lobsWatch.some((item) => item.value === 'travel');
-      const containsProduct = productWatch.some((item) => item.value === 'groupbusinesstravelaccident');
-      const containsProductGuard = productWatch.some((item) => item.value === 'smallbusinesstravelguard');
+      const containsTravel = lobsWatch.some((item) => item.value === MASTER_POLICY.TRAVEL);
+      const containsProduct = productWatch.some((item) => item.value === MASTER_POLICY.GROUPBUSINESSTRAVELACCIDENT);
+      const containsProductGuard = productWatch.some((item) => item.value === MASTER_POLICY.SMALLBUSINESSTRAVELGUARD);
       if (containsTravel && containsProduct && containsProductGuard) {
         dispatch(clearMasterPolicy());
-        dispatch(getMasterPolicies('both'));
+        dispatch(getMasterPolicies(MASTER_POLICY.BOTH));
       } else if (containsTravel && containsProduct) {
         dispatch(clearMasterPolicy());
-        dispatch(getMasterPolicies('groupbusinesstravelaccident'));
+        dispatch(getMasterPolicies(MASTER_POLICY.GROUPBUSINESSTRAVELACCIDENT));
       } else if (containsTravel && containsProductGuard) {
         dispatch(clearMasterPolicy());
-        dispatch(getMasterPolicies('smallbusinesstravelguard'));
+        dispatch(getMasterPolicies(MASTER_POLICY.SMALLBUSINESSTRAVELGUARD));
       } else {
         dispatch(clearMasterPolicy());
         dispatch(getMasterPolicies([]));
@@ -401,7 +403,7 @@ function CreateUserCreationForm() {
       domain,
       paymentType: paymentTypeNames,
       houseBankId,
-      ocrChequeScanning: paymentTypeNames.includes('cheque') ? chequeOCRScanning === FORM_VALUE.YES : '',
+      ocrChequeScanning: paymentTypeNames.includes(COMMON.CHEQUE) ? chequeOCRScanning === FORM_VALUE.YES : '',
       ckyc: ARR_CONTAINS.PRODUCER_ARR.includes(roleName) ? cKyc === FORM_VALUE.YES : '',
       partnerName,
       masterPolicyIds,
@@ -428,85 +430,81 @@ function CreateUserCreationForm() {
   };
 
   const updateUserPayload = (data, role) => {
-    let payload;
-    const childIds =
-      data?.producerCode && Array.isArray(data?.producerCode) ? data?.producerCode.map((code) => code.id) : [];
-    const locationIds = data.location && data?.location.map((loc) => loc.id);
-    const productIds = data?.product && data?.product.map((prod) => prod.id);
-    const paymentTypeNames = data.paymentType && data?.paymentType.map((payment) => payment.name);
+    const {
+      producerCode,
+      location,
+      product,
+      paymentType,
+      employeeId,
+      firstName,
+      lastName,
+      mobileNumber,
+      email,
+      vertical,
+      subVertical,
+      solId,
+      startDate,
+      endDate,
+      active,
+      ntloginId,
+    } = data;
+
+    const producerId = producerCode && Array.isArray(producerCode) ? producerCode.map((code) => code.id) : [];
+    const locationIds = location ? location.map((loc) => loc.id) : [];
+    const productIds = product ? product.map((prod) => prod.id) : [];
+    const paymentTypeNames = paymentType ? paymentType.map((payment) => payment.name) : [];
+
+    let payload = {
+      employeeId: editData && editData.employeeId !== employeeId ? employeeId : '',
+      firstName,
+      lastName,
+      mobileNo: editData && editData.mobileNo !== mobileNumber ? mobileNumber : '',
+      email: editData && editData.email !== email ? email : '',
+      vertical,
+      subVertical,
+      solId,
+      startDate,
+      endDate,
+      status: active === FORM_VALUE.YES,
+    };
+
     if (ARR_CONTAINS.CLIENT_ARR.includes(role)) {
       payload = {
-        employeeId: editData && editData.employeeId !== data?.employeeId ? data?.employeeId : '',
-        childIds: childIds,
-        firstName: data?.firstName,
-        lastName: data?.lastName,
-        mobileNo: editData && editData.mobileNo !== data?.mobileNumber ? data?.mobileNumber : '',
-        email: editData && editData.email !== data?.email ? data?.email : '',
-        locationIds: locationIds,
-        productIds: productIds,
-        vertical: data?.vertical,
-        subVertical: data?.subVertical,
-        solId: data?.solId,
-        startDate: data?.startDate,
-        endDate: data?.endDate,
-        status: data?.active === FORM_VALUE.YES,
+        ...payload,
+        producerId,
+        locationIds,
+        productIds,
       };
     } else if (ARR_CONTAINS.PRODUCER_ARR.includes(role)) {
       payload = {
-        // locationIds: locationIds,
-        productIds: productIds,
+        productIds,
         paymentType: paymentTypeNames,
       };
     } else if (ARR_CONTAINS.DATA_ENTRY_USER_ARR.includes(role)) {
       payload = {
-        employeeId: editData && editData.employeeId !== data?.employeeId ? data?.employeeId : '',
-        firstName: data?.firstName,
-        lastName: data?.lastName,
-        mobileNo: editData && editData.mobileNo !== data?.mobileNumber ? data?.mobileNumber : '',
-        location: locationIds,
-        product: productIds,
-        vertical: data?.vertical,
-        subVertical: data?.subVertical,
-        solId: data?.solId,
-        startDate: data?.startDate,
-        endDate: data?.endDate,
-        status: data?.active === FORM_VALUE.YES,
+        ...payload,
+        locationIds,
+        productIds,
       };
     } else if (ARR_CONTAINS.ADMIN_ARR.includes(role)) {
       payload = {
-        employeeId: editData && editData.employeeId !== data?.employeeId ? data?.employeeId : '',
-        firstName: data?.firstName,
-        lastName: data?.lastName,
-        mobileNo: editData && editData.mobileNo !== data?.mobileNumber ? data?.mobileNumber : '',
-        locationIds: locationIds,
-        ntId: editData && editData.ntId !== data?.ntloginId ? data?.ntloginId : '',
-        vertical: data?.vertical,
-        subVertical: data?.subVertical,
-        solId: data?.solId,
-        startDate: data?.startDate,
-        endDate: data?.endDate,
-        status: data?.active === FORM_VALUE.YES,
+        ...payload,
+        locationIds,
+        ntId: editData && editData.ntId !== ntloginId ? ntloginId : '',
       };
     } else {
       payload = {
-        employeeId: editData && editData.employeeId !== data?.employeeId ? data?.employeeId : '',
-        firstName: data?.firstName,
-        lastName: data?.lastName,
-        mobileNo: editData && editData.mobileNo !== data?.mobileNumber ? data?.mobileNumber : '',
-        location: locationIds,
-        product: productIds,
-        ntId: editData && editData.ntId !== data?.ntloginId ? data?.ntloginId : '',
-        vertical: data?.vertical,
-        subVertical: data?.subVertical,
-        solId: data?.solId,
-        startDate: data?.startDate,
-        endDate: data?.endDate,
-        status: data?.active === FORM_VALUE.YES,
+        ...payload,
+        locationIds,
+        productIds,
+        ntId: editData && editData.ntId !== ntloginId ? ntloginId : '',
       };
     }
+
     const filteredData = Object.fromEntries(
       Object.entries(payload).filter(([key, value]) => value !== '' && !(Array.isArray(value) && value.length === 0))
     );
+
     return filteredData;
   };
 
@@ -566,6 +564,13 @@ function CreateUserCreationForm() {
           lobs.filter((item) => value.includes(item.id))
         );
         break;
+
+      case FORM_LABEL.CHILDS:
+          setValue(
+            FORM_VALUE.PRODUCER_CODE,
+            producerCode.filter((item) => value.includes(item.id))
+          );
+          break;
 
       case FORM_LABEL.NT_ID:
         setValue(FORM_VALUE.NT_LOGIN_ID, value);
@@ -663,11 +668,21 @@ function CreateUserCreationForm() {
     }
   }, [products]);
 
+  useEffect(()=> {
+    if(isEdit && params.id && ARR_CONTAINS.PRODUCER_ARR.includes(rolesWatch.roleName)){
+      houseBankFetch(params?.id);
+    }
+  }, [rolesWatch, params?.id]);
+
+  // useEffect(()=> {
+
+  // }, [houseBank]);
+
   return (
     <>
       {(loading || updateUserLoading) && <Loader></Loader>}
-      <form onSubmit={handleSubmit(onSubmit)} className={styles.formMainContainer}>
-        <div className={styles.createNewUserContainer}>
+      <form onSubmit={handleSubmit(onSubmit)} className="mb-3">
+        <div className="bg-white h-full mb-5 rounded-xl shadow-lg shadow-shadowColor">
           <div className="p-4 pb-0">
             <CustomFormHeader
               id={params?.id}

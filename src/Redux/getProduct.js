@@ -15,7 +15,7 @@ export const getProducts = createAsyncThunk('productUserCreation/getProducts', a
       const formattedArray = response?.data?.data?.map((obj) => ({
         ...obj,
         label: toCapitalize(obj, 'product'),
-        value: obj?.product_value,
+        value: obj?.productValue,
       }));
       return formattedArray;
     }

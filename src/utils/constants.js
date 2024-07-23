@@ -50,6 +50,8 @@ export const COMMON_WORDS = {
   HOUSE_BANK: 'houseBank',
   HAS_HOUSE_BANK: 'hasHouseBank',
   OTP_EXCEPTION: 'OTP Exception',
+  CHILDS: 'childs',
+  HAS_CHILDS: 'manages'
 };
 
 export const HEADER = {
