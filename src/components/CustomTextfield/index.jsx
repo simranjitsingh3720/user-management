@@ -31,6 +31,8 @@ const InputField = ({
             value: new RegExp(validation?.pattern?.value),
             message: validation?.pattern?.message,
           },
+          minLength: validation?.minLength,
+          maxLength: validation?.maxLength,
         }}
         render={({ field }) => (
           <TextField
@@ -46,10 +48,10 @@ const InputField = ({
             FormHelperTextProps={{ classes: { root: 'ml-0' } }}
             {...field}
             value={field.value || ''}
-            onChange={(e) => {
+            onChange={async (e) => {
               field.onChange(e);
               if (typeof trigger === 'function') {
-                trigger(id);
+                await trigger(id, { shouldValidate: true });
               }
             }}
           />
