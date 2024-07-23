@@ -71,14 +71,14 @@ function SetOTPException({ fetchData }) {
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.otpException}>
-          <div className="p-5">
+          <div className="px-5 pt-5">
             <CustomFormHeader
               headerText={FORM_HEADER_TEXT.OTP_EXCEPTION}
               handleReset={handleReset}
               navigateRoute="/otpexception"
             />
           </div>
-          <div className={styles.OTPSelectStyle}>
+          <div className="px-5 pb-5">
             <span className={styles.labelText}>
               Select <span className={styles.styledRequired}>*</span>
             </span>
@@ -114,7 +114,7 @@ function SetOTPException({ fetchData }) {
                   required={true}
                   options={channelType || []}
                   getOptionLabel={(option) => {
-                    return option?.label?.toUpperCase();
+                    return `${option?.label?.toUpperCase() || ''} - ${option?.numChannelCode || ''}`;
                   }}
                   control={control}
                   rules={{ required: 'Channel is required' }}
@@ -124,7 +124,7 @@ function SetOTPException({ fetchData }) {
                   placeholder={COMMON_WORDS.SELECT}
                   renderOption={(props, option) => (
                     <li {...props} key={option.id}>
-                      {option?.label?.toUpperCase()}
+                      {option?.label?.toUpperCase()} - {option?.numChannelCode}
                     </li>
                   )}
                 />
@@ -138,7 +138,9 @@ function SetOTPException({ fetchData }) {
                   loading={userLoading}
                   options={user.data || []}
                   getOptionLabel={(option) => {
-                    return `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`;
+                    return `${option?.firstName?.toUpperCase() || ''} ${option?.lastName?.toUpperCase() || ''} - ${
+                      option.producerCode || ''
+                    }`;
                   }}
                   control={control}
                   rules={{ required: 'Producer is required' }}
@@ -148,7 +150,8 @@ function SetOTPException({ fetchData }) {
                   placeholder={COMMON_WORDS.SELECT}
                   renderOption={(props, option) => (
                     <li {...props} key={option.id}>
-                      {option?.firstName?.toUpperCase()} {option?.lastName?.toUpperCase()}
+                      {option?.firstName?.toUpperCase() || ''} {option?.lastName?.toUpperCase() || ''} -
+                      {option?.producerCode || ''}
                     </li>
                   )}
                 />

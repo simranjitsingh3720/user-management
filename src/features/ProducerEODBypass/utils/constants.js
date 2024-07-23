@@ -1,4 +1,4 @@
-import { REGEX } from '../../../utils/globalConstants';
+const reasonFieldRegex = /^[a-zA-Z0-9\s.,!?'"()-]*$/;
 
 export const textFieldValidation = {
   required: 'Reason is required',
@@ -11,7 +11,7 @@ export const textFieldValidation = {
     message: 'Reason cannot exceed 1000 characters',
   },
   pattern: {
-    value: REGEX.alphaNumericRegex,
+    value: reasonFieldRegex,
     message: 'Reason must be alphanumeric',
   },
 };
