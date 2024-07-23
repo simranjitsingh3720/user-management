@@ -56,7 +56,7 @@ function Product() {
       products?.data?.map((item) => {
         const {
           lob,
-          product: { id, product, product_value, product_code, createdAt, updatedAt, status },
+          gc_product_master: { id, product, productValue, productCode, createdAt, updatedAt, status },
         } = item;
 
         let lobValue = lob && lob[0]?.lob;
@@ -64,9 +64,9 @@ function Product() {
         return {
           id: id,
           product: product,
-          product_value: product_value,
+          product_value: productValue,
           lob_name: lobValue,
-          product_code: product_code,
+          product_code: productCode,
           createdAt: createdAt,
           updatedAt: updatedAt,
           checked: status,
