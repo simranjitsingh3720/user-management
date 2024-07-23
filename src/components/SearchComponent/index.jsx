@@ -1,14 +1,12 @@
-import React, { useEffect } from 'react';
-import { Autocomplete, Box, Grid, MenuItem, Select, TextField } from '@mui/material';
+import React from 'react';
+import { Autocomplete, Box, Grid, IconButton, InputAdornment, MenuItem, Select, TextField } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import CustomButton from '../CustomButton';
 import { Controller, useForm } from 'react-hook-form';
-import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import dayjs from 'dayjs';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import ExportDropdown from '../../features/ExportDropdown';
-
+import DateField from '../CustomDateInput';
+import CloseIcon from '@mui/icons-material/Close';
 function SearchComponent({
   optionsData,
   optionLabel,
@@ -27,6 +25,7 @@ function SearchComponent({
   hideSearch,
   canCreate,
   onSubmit,
+  fetchData,
 }) {
   const navigate = useNavigate();
 
@@ -34,28 +33,29 @@ function SearchComponent({
     navigate(navigateRoute);
   };
 
-  const { handleSubmit, control, setValue, formState, reset } = useForm({
+  const { handleSubmit, control, setValue, formState, reset, watch } = useForm({
     defaultValues: {
       startDate: null,
       endDate: null,
-      producer: null,
+      autocomplete: null,
       search: null,
     },
   });
 
   const { errors } = formState;
 
-  console.log('errors', errors);
-
   const handleResetButton = () => {
-    setValue('startDate', null);
-    setValue('endDate', null);
-    setValue('producer', null);
-    setValue('search', null);
+    reset({
+      startDate: null,
+      endDate: null,
+      autocomplete: null,
+      search: null,
+    });
+    fetchData();
   };
 
   const resetField = () => {
-    setValue('producer', null);
+    setValue('autocomplete', null);
     setValue('search', '');
   };
   return (
@@ -64,60 +64,35 @@ function SearchComponent({
         {dateField && (
           <Grid container spacing={2} alignItems="center" className="mb-4">
             <Grid item>
-              <div>
-                <div className="label-text required-field">Start Date</div>
-                <Controller
-                  name="startDate"
-                  control={control}
-                  rules={{ required: 'Start date is required' }}
-                  render={({ field }) => (
-                    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
-                      <DatePicker
-                        className="customize-select"
-                        slotProps={{
-                          textField: { size: 'small' },
-                        }}
-                        value={field.value ? dayjs(field.value, 'DD/MM/YYYY') : null}
-                        onChange={(date) => {
-                          const formattedDate = dayjs(date).format('DD/MM/YYYY');
-                          setValue('startDate', formattedDate);
-                        }}
-                        fullWidth
-                      />
-                    </LocalizationProvider>
-                  )}
-                />
-                <div className="error-msg">{errors.startDate && <span>This field is required</span>}</div>
-              </div>
+              <DateField
+                key="startDate"
+                control={control}
+                name="startDate"
+                labelVisible={true}
+                label="Start Date"
+                required
+                errors={errors}
+                classes="w-full text-red-600"
+                setValue={setValue}
+                watch={watch}
+              />
             </Grid>
             <Grid item>
-              <div>
-                <div className="label-text required-field">End Date</div>
-                <Controller
-                  name="endDate"
-                  control={control}
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
-                      <DatePicker
-                        className="customize-select"
-                        slotProps={{ textField: { size: 'small' } }}
-                        value={field.value ? dayjs(field.value, 'DD/MM/YYYY') : null}
-                        onChange={(date) => {
-                          const formattedDate = dayjs(date).format('DD/MM/YYYY');
-                          setValue('endDate', formattedDate);
-                        }}
-                        fullWidth
-                      />
-                    </LocalizationProvider>
-                  )}
-                />
-                <div className="error-msg">{errors.endDate && <span>This field is required</span>}</div>
-              </div>
+              <DateField
+                key="endDate"
+                control={control}
+                name="endDate"
+                labelVisible={true}
+                label="End Date"
+                required
+                errors={errors}
+                classes="w-full text-red-600"
+                setValue={setValue}
+                watch={watch}
+              />
             </Grid>
           </Grid>
         )}
-
         <Grid container spacing={2} justifyContent="space-between" alignItems="center">
           <Grid item lg={8} xs={12}>
             {!hideSearch && (
@@ -151,7 +126,6 @@ function SearchComponent({
                     <Controller
                       name="search"
                       control={control}
-                      rules={{ required: 'Search field is required' }}
                       render={({ field }) => (
                         <TextField
                           id="search"
@@ -163,35 +137,43 @@ function SearchComponent({
                             field.onChange(e.target.value);
                           }}
                           value={field?.value || ''}
-                          error={Boolean(errors.search)}
-                          helperText={errors.search?.message}
                           fullWidth
+                          InputProps={{
+                            endAdornment: field.value ? (
+                              <InputAdornment position="end">
+                                <IconButton
+                                  onClick={() => {
+                                    field.onChange('');
+                                    fetchData();
+                                  }}
+                                >
+                                  <CloseIcon />
+                                </IconButton>
+                              </InputAdornment>
+                            ) : null,
+                          }}
                         />
                       )}
                     />
                   ) : (
                     <Controller
-                      name="producer"
+                      name="autocomplete"
                       control={control}
-                      rules={{ required: 'Producer is required' }}
                       render={({ field }) => (
                         <Autocomplete
-                          id="producer"
+                          id="autocomplete"
                           options={optionsData || []}
                           getOptionLabel={optionLabel}
                           multiple
                           size="small"
-                          renderInput={(params) => (
-                            <TextField
-                              {...params}
-                              placeholder={placeholder}
-                              error={Boolean(errors.producer)}
-                              helperText={errors.producer?.message}
-                            />
-                          )}
+                          renderInput={(params) => <TextField {...params} placeholder={placeholder} />}
                           value={field?.value || []}
                           className="customize-select"
                           onChange={(event, newValue) => {
+                            console.log('newValue', newValue);
+                            if (newValue?.length === 0) {
+                              fetchData();
+                            }
                             field.onChange(newValue);
                           }}
                           renderOption={renderOptionFunction}
@@ -205,14 +187,16 @@ function SearchComponent({
                   <CustomButton variant="outlined" type="submit">
                     Go
                   </CustomButton>
-                  <CustomButton
-                    variant="outlined"
-                    startIcon={<RestartAltIcon />}
-                    sx={{ textTransform: 'none' }}
-                    onClick={handleResetButton}
-                  >
-                    Reset
-                  </CustomButton>
+                  {dateField && (
+                    <CustomButton
+                      variant="outlined"
+                      startIcon={<RestartAltIcon />}
+                      sx={{ textTransform: 'none' }}
+                      onClick={handleResetButton}
+                    >
+                      Reset
+                    </CustomButton>
+                  )}
                 </Grid>
               </Grid>
             )}

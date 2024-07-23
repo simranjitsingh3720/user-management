@@ -16,8 +16,6 @@ import { BUTTON_TEXT, PAGECOUNT } from '../../utils/globalConstants';
 import usePermissions from '../../hooks/usePermission';
 
 function EmployeeFlagConfig() {
-  const [producers, setProducers] = useState();
-
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(PAGECOUNT);
   const [order, setOrder] = useState(COMMON_WORDS.ASC);
@@ -61,11 +59,6 @@ function EmployeeFlagConfig() {
     return ids.join();
   };
 
-  const handleGo = () => {
-    const resultProducersId = fetchIdsAndConvert(producers);
-    fetchData(resultProducersId);
-  };
-
   const optionLabelUser = (option) => {
     return option?.firstName ? `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}` : '';
   };
@@ -89,22 +82,26 @@ function EmployeeFlagConfig() {
 
   const HEADER_COLUMNS = generateTableHeaders(handleClicked);
 
+  const onSubmit = (data) => {
+    const resultProducersId = fetchIdsAndConvert(data.autocomplete);
+    fetchData(resultProducersId);
+  };
+
   return (
     <div>
       <div className="mb-4">
         <SearchComponent
           optionsData={user?.data || []}
-          option={producers}
-          setOption={setProducers}
           optionLabel={optionLabelUser}
           placeholder={getPlaceHolder(COMMON_WORDS.USER)}
           renderOptionFunction={renderOptionUserFunction}
-          handleGo={handleGo}
+          onSubmit={onSubmit}
           showExportButton={true}
           buttonText={BUTTON_TEXT.EMPLOYEE_FLAG_CONFIG}
           navigateRoute="/employee-flag-config/form"
           showButton
           canCreate={canCreate}
+          fetchData={fetchData}
         />
       </div>
       <CustomTable
@@ -121,7 +118,7 @@ function EmployeeFlagConfig() {
         orderBy={orderBy}
         setOrderBy={setOrderBy}
       />
-      <CustomDialog size='md' />
+      <CustomDialog size="md" />
     </div>
   );
 }

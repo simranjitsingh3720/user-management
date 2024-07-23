@@ -2,7 +2,13 @@ import { Box } from '@mui/material';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import CustomTable from '../../components/CustomTable';
 import useGetUser from './Components/hooks/useGetUser';
-import { BUTTON_TEXT, Header, NAVIGATE_TO_FORM, SEARCH_OPTIONS, SEARCH_PLACEHOLDER } from './Components/utils/constants';
+import {
+  BUTTON_TEXT,
+  Header,
+  NAVIGATE_TO_FORM,
+  SEARCH_OPTIONS,
+  SEARCH_PLACEHOLDER,
+} from './Components/utils/constants';
 import { useNavigate } from 'react-router-dom';
 import { COMMON_WORDS } from '../../utils/constants';
 import Content from './Components/Dialog/Content';
@@ -18,18 +24,17 @@ import usePermissions from '../../hooks/usePermission';
 function UserManagement() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [query, setQuery] = useState('');
   const [searched, setSearched] = useState(SEARCH_OPTIONS[0].value);
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(PAGECOUNT);
   const [order, setOrder] = useState(COMMON_WORDS.DESC);
   const [orderBy, setOrderBy] = useState(COMMON_WORDS.CREATED_AT);
-  const { data, loading, fetchData } = useGetUser(page, pageSize, query, order, orderBy);
+  const { data, loading, fetchData } = useGetUser(page, pageSize, order, orderBy);
   const [userData, setUserData] = useState([]);
   const { canCreate, canUpdate } = usePermissions();
 
   const updateUserForm = useCallback((row) => {
-    navigate(NAVIGATE_TO_FORM + '/'+ row.id);
+    navigate(NAVIGATE_TO_FORM + '/' + row.id);
   }, []);
 
   useEffect(() => {
@@ -39,7 +44,7 @@ function UserManagement() {
         return {
           ...item,
           checked: item?.status,
-          disabled: !canUpdate
+          disabled: !canUpdate,
         };
       }) || [];
     setUserData(transformedData);
@@ -58,30 +63,31 @@ function UserManagement() {
 
   const header = useMemo(() => Header(updateUserForm, handleInsillionStatus), [updateUserForm, handleInsillionStatus]);
 
-  const handleGo = () => {
-    if(query){
+  const onSubmit = (data) => {
+    console.log(data);
+    if (data.search) {
       setUserData([]);
-      fetchData(searched, query);
+      fetchData(searched, data.search);
     } else {
-      fetchData()
+      fetchData();
     }
   };
 
   return (
     <Box>
       <SearchComponent
-         selectOptions={SEARCH_OPTIONS}
-         searched={searched}
-         setSearched={setSearched}
-         textField
-         textFieldPlaceholder={SEARCH_PLACEHOLDER}
-         setQuery={setQuery}
-         buttonText={BUTTON_TEXT}
-         navigateRoute={NAVIGATE_TO_FORM}
-         handleGo={handleGo}
-         showExportButton={true}
-         showButton
-         canCreate={canCreate}
+        selectOptions={SEARCH_OPTIONS}
+        searched={searched}
+        setSearched={setSearched}
+        textField
+        textFieldPlaceholder={SEARCH_PLACEHOLDER}
+        buttonText={BUTTON_TEXT}
+        navigateRoute={NAVIGATE_TO_FORM}
+        showExportButton={true}
+        showButton
+        fetchData={fetchData}
+        canCreate={canCreate}
+        onSubmit={onSubmit}
       />
       <div className="mt-4">
         <CustomTable

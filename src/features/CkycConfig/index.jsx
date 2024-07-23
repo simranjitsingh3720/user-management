@@ -20,16 +20,12 @@ function CkycConfig() {
   const { lob } = useSelector((state) => state.lob);
   const { products } = useSelector((state) => state.product);
   const [tableData, setTableData] = useState([]);
-  const [query, setQuery] = useState('');
   const [searched, setSearched] = useState(COMMON_WORDS.PRODUCT);
 
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(PAGECOUNT);
   const [order, setOrder] = useState(COMMON_WORDS.ASC);
   const [orderBy, setOrderBy] = useState(COMMON_WORDS.CREATED_AT);
-
-  const [productValue, setProductValue] = useState([]);
-  const [lobValue, setLobValue] = useState([]);
 
   useEffect(() => {
     dispatch(fetchLobData({ isAll: true, status: true }));
@@ -64,26 +60,6 @@ function CkycConfig() {
 
   const HEADER_COLUMNS = generateTableHeaders(handleEditClick);
 
-  useEffect(() => {
-    if (searched === COMMON_WORDS.PRODUCT) {
-      setLobValue([]);
-    } else {
-      setProductValue([]);
-    }
-  }, [searched]);
-
-  const handleGo = () => {
-    if (searched === COMMON_WORDS.PRODUCT) {
-      const resultProductString = fetchIdsAndConvert(productValue);
-      fetchData(searched, resultProductString);
-    } else if (searched === COMMON_WORDS.LOB) {
-      const resultLobString = fetchIdsAndConvert(lobValue);
-      fetchData(searched, resultLobString);
-    } else {
-      fetchData(searched, '', query);
-    }
-  };
-
   const fetchIdsAndConvert = (inputData) => {
     const ids = inputData.map((permission) => permission.id);
     return ids.join();
@@ -101,30 +77,6 @@ function CkycConfig() {
     }
   };
 
-  const getOption = () => {
-    switch (searched) {
-      case COMMON_WORDS.PRODUCT:
-        return productValue;
-      case COMMON_WORDS.LOB:
-        return lobValue;
-      default:
-        return [];
-    }
-  };
-
-  const setOption = (option) => {
-    switch (searched) {
-      case COMMON_WORDS.PRODUCT:
-        setProductValue(option);
-        break;
-      case COMMON_WORDS.LOB:
-        setLobValue(option);
-        break;
-      default:
-        break;
-    }
-  };
-
   const optionLabel = (option, type) => {
     return option[type]?.toUpperCase() || '';
   };
@@ -134,12 +86,23 @@ function CkycConfig() {
     </li>
   );
 
+  const onSubmit = (data) => {
+    console.log('data', data);
+    if (searched === COMMON_WORDS.PRODUCT) {
+      const resultProductString = fetchIdsAndConvert(data.autocomplete);
+      fetchData(searched, resultProductString);
+    } else if (searched === COMMON_WORDS.LOB) {
+      const resultLobString = fetchIdsAndConvert(data.autocomplete);
+      fetchData(searched, resultLobString);
+    } else {
+      fetchData(searched, '', data.search);
+    }
+  };
+
   return (
     <Box>
       <SearchComponenet
         optionsData={getOptionsData()}
-        option={getOption()}
-        setOption={setOption}
         fetchData={fetchData}
         optionLabel={(option) => optionLabel(option, searched)}
         placeholder={getPlaceHolder(searched)}
@@ -148,11 +111,10 @@ function CkycConfig() {
         navigateRoute={'/ckyc-config/form'}
         searched={searched}
         textField={showTextField.includes(searched)}
-        setQuery={setQuery}
         textFieldPlaceholder={COMMON_WORDS.SEARCH}
         setSearched={setSearched}
         selectOptions={CKYC_DROPDOWN}
-        handleGo={handleGo}
+        onSubmit={onSubmit}
         showButton
         canCreate={canCreate}
         showExportButton={true}

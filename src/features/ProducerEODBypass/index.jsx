@@ -66,7 +66,7 @@ function ProducerEODBypass() {
       startDate: data.startDate,
       endDate: data.endDate,
     };
-    const resultUserString = fetchIdsAndConvert(data.producer);
+    const resultUserString = fetchIdsAndConvert(data.autocomplete);
     fetchData(resultUserString, date, search, searched);
   };
 
@@ -89,6 +89,7 @@ function ProducerEODBypass() {
         setSearched={setSearched}
         textField={showTextField.includes(searched)}
         textFieldPlaceholder={COMMON_WORDS.SEARCH}
+        fetchData={fetchData}
       />
       <div className="mt-4">
         <CustomTable

@@ -16,7 +16,6 @@ import usePermissions from '../../hooks/usePermission';
 function PermissionModule() {
   const dispatch = useDispatch();
 
-  const [query, setQuery] = useState('');
   const [searched, setSearched] = useState('permissionName');
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(PAGECOUNT);
@@ -24,7 +23,7 @@ function PermissionModule() {
   const [orderBy, setOrderBy] = useState(COMMON_WORDS.CREATED_AT);
 
   const { fetchData, data, loading, count } = useGetPrivilege(page, pageSize, order, orderBy);
-  // Check Permission 
+
   const { canCreate, canUpdate } = usePermissions();
 
   const handleClicked = (data, row) => {
@@ -39,8 +38,9 @@ function PermissionModule() {
 
   const HEADER_COLUMNS = generateTableHeaders(handleClicked);
 
-  const handleGo = () => {
-    fetchData(searched, query);
+  const onSubmit = (data) => {
+    console.log('data', data);
+    fetchData(searched, data.search);
   };
 
   return (
@@ -51,12 +51,12 @@ function PermissionModule() {
         setSearched={setSearched}
         textField
         textFieldPlaceholder="Search"
-        setQuery={setQuery}
         buttonText={BUTTON_TEXT.Permission}
         navigateRoute={'/permission/permission-form'}
-        handleGo={handleGo}
         showButton
         canCreate={canCreate}
+        onSubmit={onSubmit}
+        fetchData={fetchData}
       />
       <div className="mt-4">
         <CustomTable

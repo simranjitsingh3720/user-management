@@ -15,7 +15,6 @@ import Actions from './Dialog/Action';
 
 function OTPException() {
   const dispatch = useDispatch();
-  const [query, setQuery] = useState('');
   const [searched, setSearched] = useState('type');
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(PAGECOUNT);
@@ -37,8 +36,8 @@ function OTPException() {
 
   const { canCreate, canUpdate } = usePermissions();
 
-  const handleGo = () => {
-    fetchData(searched, query);
+  const onSubmit = (data) => {
+    fetchData(searched, data.search);
   };
   return (
     <div>
@@ -48,12 +47,12 @@ function OTPException() {
         searched={searched}
         setSearched={setSearched}
         textFieldPlaceholder="Search"
-        setQuery={setQuery}
         buttonText={BUTTON_TEXT.SET_OTP_EXCEPTION}
         navigateRoute={'/otpException/form'}
-        handleGo={handleGo}
         showButton
         canCreate={canCreate}
+        onSubmit={onSubmit}
+        fetchData={fetchData}
       />
       <div className="mt-4">
         <CustomTable

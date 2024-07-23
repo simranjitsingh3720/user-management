@@ -35,8 +35,6 @@ function ProductPaymentConfig() {
   const { lob } = useSelector((state) => state.lob);
   const { products } = useSelector((state) => state.product);
   const [searched, setSearched] = useState(COMMON_WORDS.PRODUCT);
-  const [productValue, setProductValue] = useState([]);
-  const [lobValue, setLobValue] = useState([]);
 
   const [rowsPage, setRowsPage] = useState(PAGECOUNT);
   const [pageChange, setPageChange] = useState(1);
@@ -85,24 +83,6 @@ function ProductPaymentConfig() {
     </li>
   );
 
-  useEffect(() => {
-    if (searched === COMMON_WORDS.PRODUCT) {
-      setLobValue([]);
-    } else {
-      setProductValue([]);
-    }
-  }, [searched]);
-
-  const handleGo = () => {
-    if (searched === COMMON_WORDS.PRODUCT) {
-      const resultProductString = fetchIdsAndConvert(productValue);
-      fetchData(searched, resultProductString);
-    } else {
-      const resultLobString = fetchIdsAndConvert(lobValue);
-      fetchData(searched, resultLobString);
-    }
-  };
-
   const fetchIdsAndConvert = (inputData) => {
     const ids = inputData.map((permission) => permission.id);
     return ids.join();
@@ -114,12 +94,20 @@ function ProductPaymentConfig() {
     }
   }, [data, dispatch]);
 
+  const onSubmit = (data) => {
+    if (searched === COMMON_WORDS.PRODUCT) {
+      const resultProductString = fetchIdsAndConvert(data.autocomplete);
+      fetchData(searched, resultProductString);
+    } else {
+      const resultLobString = fetchIdsAndConvert(data.autocomplete);
+      fetchData(searched, resultLobString);
+    }
+  };
+
   return (
     <div>
       <SearchComponenet
         optionsData={searched === COMMON_WORDS.PRODUCT ? products?.data ?? [] : lob?.data ?? []}
-        option={searched === COMMON_WORDS.PRODUCT ? productValue : lobValue}
-        setOption={searched === COMMON_WORDS.PRODUCT ? setProductValue : setLobValue}
         fetchData={fetchData}
         optionLabel={searched === COMMON_WORDS.PRODUCT ? optionLabelProduct : optionLabelLob}
         placeholder={
@@ -131,10 +119,10 @@ function ProductPaymentConfig() {
         searched={searched}
         setSearched={setSearched}
         selectOptions={ProductPayment}
-        handleGo={handleGo}
         showButton
         showExportButton={true}
         canCreate={canCreate}
+        onSubmit={onSubmit}
       />
       <div className={styles.tableContainerStyle}>
         <div className={styles.tableStyled}>

@@ -1,16 +1,23 @@
-import { useEffect, useState } from "react";
-import axiosInstance from "../../../../utils/axiosInstance";
-import apiUrls from "../../../../utils/apiUrls";
-import { buildQueryString } from "../../../../utils/globalizationFunction";
+import { useEffect, useState } from 'react';
+import axiosInstance from '../../../../utils/axiosInstance';
+import apiUrls from '../../../../utils/apiUrls';
+import { buildQueryString } from '../../../../utils/globalizationFunction';
 
-export default function useGetUser(page, pageSize, query, order, orderBy) {
+export default function useGetUser(page, pageSize, order, orderBy) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const fetchData = async (searched, query) => {
     setLoading(true);
     try {
-      const params = buildQueryString({ pageNo: page, sortOrder: order, sortKey: orderBy, pageSize, searchString: query, searchKey: searched });
+      const params = buildQueryString({
+        pageNo: page,
+        sortOrder: order,
+        sortKey: orderBy,
+        pageSize,
+        searchString: query,
+        searchKey: searched,
+      });
       const response = await axiosInstance.get(`${apiUrls.getUser}?${params}`);
       setData(response.data);
     } catch (error) {
@@ -19,7 +26,7 @@ export default function useGetUser(page, pageSize, query, order, orderBy) {
       setLoading(false);
     }
   };
-  
+
   useEffect(() => {
     fetchData();
   }, [page, pageSize, order, orderBy]);
