@@ -69,7 +69,8 @@ export const FORM_LABEL = {
   SEND_EMAIL: 'sendEmail',
   PAYMENT_TYPE: 'paymentType',
   GC_STATUS: 'gcStatus',
-  CHILDS: 'childs'
+  CHILDS: 'childs',
+  HOUSE_BANK: 'houseBank',
 };
 
 export const FORM_VALUE = {
@@ -94,7 +95,8 @@ export const FORM_VALUE = {
   CKYC: 'cKyc',
   SEND_EMAIL: 'sendEmail',
   PAYMENT_TYPE: 'paymentType',
-  PRODUCER_CODE: 'producerCode'
+  PRODUCER_CODE: 'producerCode',
+  NEFT_DEFAULT_BANK: 'neftDefaultBank'
 };
 
 export const Header = (editAction, handleInsillionStatus) => {

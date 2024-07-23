@@ -17,11 +17,15 @@ function flattenNestedObjects(data) {
     }
 
     if (Array.isArray(item?.product) && item.product?.length > 0 && typeof item.product[0] === 'object') {
-      result.lob = item.product.map((prod) => prod?.lob_id);
+      result.lob = item.product.map((prod) => prod?.lobId);
     }
 
     if (Array.isArray(item?.product) && item?.product.length > 0) {
-      result.product = item?.product.map((prod) => prod?.id);
+      result.product = item?.product.map((prod) => prod.id);
+    }
+
+    if (item?.houseBank && item?.houseBank.length > 0) {
+      result = { ...result, ...item.houseBank[0] };
     }
 
     for (const key in item) {

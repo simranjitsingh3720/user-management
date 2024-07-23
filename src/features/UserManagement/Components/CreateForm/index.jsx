@@ -94,7 +94,6 @@ function CreateUserCreationForm() {
   const lobsWatch = watch(COMMON.LOB);
   const rolesWatch = watch(COMMON.ROLE_SELECT);
   const { userType, userTypeFetch } = useGetUserType();
-  const { houseBank, houseBankFetch } = useHouseBank();
   const { roleHierarchy, roleHierarchyFetch } = useGetRoleHierarchy();
   const params = useParams();
   const { getUserById } = useSubmit();
@@ -360,7 +359,6 @@ function CreateUserCreationForm() {
     } = data;
 
     const { id: roleId, roleName } = roleSelect;
-    const { id: houseBankId } = neftDefaultBank;
     const [userTypeObj = {}] = userType || [];
     const { userType: userTypeStr, id: userTypeId } = userTypeObj;
     const childIds = Array.isArray(producerCode) ? producerCode.map((code) => code.id) : [];
@@ -402,7 +400,7 @@ function CreateUserCreationForm() {
       sendEmail: ARR_CONTAINS.PRODUCER_PARTNER_ARR.includes(roleName) ? sendEmail === FORM_VALUE.YES : '',
       domain,
       paymentType: paymentTypeNames,
-      houseBankId,
+      houseBankId: neftDefaultBank,
       ocrChequeScanning: paymentTypeNames.includes(COMMON.CHEQUE) ? chequeOCRScanning === FORM_VALUE.YES : '',
       ckyc: ARR_CONTAINS.PRODUCER_ARR.includes(roleName) ? cKyc === FORM_VALUE.YES : '',
       partnerName,
@@ -566,11 +564,11 @@ function CreateUserCreationForm() {
         break;
 
       case FORM_LABEL.CHILDS:
-          setValue(
-            FORM_VALUE.PRODUCER_CODE,
-            producerCode.filter((item) => value.includes(item.id))
-          );
-          break;
+        setValue(
+          FORM_VALUE.PRODUCER_CODE,
+          producerCode.filter((item) => value.includes(item.id))
+        );
+        break;
 
       case FORM_LABEL.NT_ID:
         setValue(FORM_VALUE.NT_LOGIN_ID, value);
@@ -615,6 +613,10 @@ function CreateUserCreationForm() {
           FORM_LABEL.PAYMENT_TYPE,
           paymentType.filter((item) => value.includes(item.id))
         );
+        break;
+
+      case FORM_LABEL.HOUSE_BANK:
+        setValue(FORM_VALUE.NEFT_DEFAULT_BANK, value);
         break;
 
       case FORM_LABEL.OCR_CHEQUE_SCANNING:
@@ -667,16 +669,6 @@ function CreateUserCreationForm() {
       });
     }
   }, [products]);
-
-  useEffect(()=> {
-    if(isEdit && params.id && ARR_CONTAINS.PRODUCER_ARR.includes(rolesWatch.roleName)){
-      houseBankFetch(params?.id);
-    }
-  }, [rolesWatch, params?.id]);
-
-  // useEffect(()=> {
-
-  // }, [houseBank]);
 
   return (
     <>
