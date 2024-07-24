@@ -139,6 +139,7 @@ export const {
   toggleColumn,
   setTableName,
   setExtraColumns,
+  columnLoading: loading
 } = exportSlice.actions;
 
 export default exportSlice.reducer;
