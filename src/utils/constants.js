@@ -70,7 +70,7 @@ export const FORM_HEADER_TEXT = {
   EMPLOYEE_FLAG: 'Employee Flag Configuration',
   GROUP: 'Group',
   HEALTH_CONFIG: 'Health Configuration',
-  HOUSE_BANK: 'House Bank Configuration',
+  HOUSE_BANK: 'House Bank Master Configuration',
   LOB: 'Lob',
   OTP_EXCEPTION: 'OTP Exception By',
   PERMISSION: 'Permission',

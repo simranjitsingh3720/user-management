@@ -33,7 +33,7 @@ function ProducerEODFrom() {
 
   const { data, fetchData } = useGetDataById();
 
-  const { handleSubmit, control, setValue, formState, watch, reset } = useForm({
+  const { handleSubmit, control, setValue, formState, watch, reset, trigger } = useForm({
     defaultValues: {
       producerCode: null,
       startDate: null,
@@ -131,6 +131,9 @@ function ProducerEODFrom() {
                       {`${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`}
                     </li>
                   )}
+                  onChangeCallback={() => {
+                    trigger('producerCode');
+                  }}
                 />
               </Grid>
               <Grid item xs={12} sm={6} lg={4}>
@@ -172,6 +175,7 @@ function ProducerEODFrom() {
                   errors={errors}
                   disabled={false}
                   classes="w-full text-left"
+                  trigger={trigger}
                 />
               </Grid>
             </Grid>

@@ -11,7 +11,7 @@ export const textFieldValidation = {
     message: 'Reason cannot exceed 1000 characters',
   },
   pattern: {
-    value: REGEX.alphaNumericRegex,
+    value: REGEX.reasonFieldRegex,
     message: 'Reason must be alphanumeric',
   },
 };
