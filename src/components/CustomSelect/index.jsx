@@ -20,7 +20,7 @@ const SelectField = ({
   return (
     <div className="m-0 flex flex-col">
       <div className="text-shuttleGray text-sm">
-        {label} {required && <span className="text-bittersweet">*</span>}
+        {label} {required && <span className="text-persianRed">*</span>}
       </div>
       <Controller
         name={name}
@@ -71,7 +71,7 @@ const SelectField = ({
           );
         }}
       />
-      <div className="text-xs text-bittersweet">{errors[name] && <span>{errors[name]?.message}</span>}</div>
+      <div className="text-xs text-persianRed">{errors[name] && <span>{errors[name]?.message}</span>}</div>
     </div>
   );
 };

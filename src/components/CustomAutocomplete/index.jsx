@@ -79,7 +79,7 @@ const AutocompleteField = ({
   return (
     <div className="m-0 flex flex-col">
       <div className="text-shuttleGray text-sm">
-        {label} {required && <span className="text-bittersweet">*</span>}
+        {label} {required && <span className="text-persianRed">*</span>}
       </div>
       <Controller
         name={name}

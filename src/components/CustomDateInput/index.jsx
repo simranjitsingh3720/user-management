@@ -68,7 +68,7 @@ const DateField = ({
       <div>
         {labelVisible && (
           <div className="text-shuttleGray text-sm">
-            {label} {required && <span className="text-bittersweet">*</span>}
+            {label} {required && <span className="text-persianRed">*</span>}
           </div>
         )}
         <Controller
@@ -125,7 +125,7 @@ const DateField = ({
             </LocalizationProvider>
           )}
         />
-        <div className="text-xs text-bittersweet">{errors[name] && <span>{errors[name]?.message}</span>}</div>
+        <div className="text-xs text-persianRed">{errors[name] && <span>{errors[name]?.message}</span>}</div>
       </div>
     </div>
   );
