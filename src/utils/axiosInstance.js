@@ -40,9 +40,11 @@ instance.interceptors.response.use(
           errorMessage = data?.error?.message ? data?.error?.message : data?.details;
           break;
         case 401:
-          localStorage.clear();
-          window.location.href = '/';
-          toast.error('Session expired. Please login again');
+          errorMessage = data?.error?.message;
+          setTimeout(() => {
+            localStorage.clear();
+            window.location.href = '/';
+          }, 2000);
           break;
         default:
           errorMessage = COMMON_ERROR;
