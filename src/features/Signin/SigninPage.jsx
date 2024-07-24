@@ -22,6 +22,7 @@ function SignInPage() {
   const {
     handleSubmit,
     control,
+    trigger,
     formState: { errors },
   } = useForm({});
 
@@ -29,7 +30,7 @@ function SignInPage() {
     <>
       {loading && <FullPageLoader />}
       {
-        !loading && <Box className="flex w-full h-screen overflow-hidden">
+        !loading && <Box className="flex w-full h-screen">
         <div
           className="invisible w-0 md:visible md:w-1/2 h-full bg-cornFlower flex justify-center items-center bg-cover bg-center"
           style={{ backgroundImage: `url(${backgroundImage})` }}
@@ -63,6 +64,7 @@ function SignInPage() {
                     errors={errors}
                     disabled={false}
                     classes="w-full text-left"
+                    trigger={trigger}
                   />
                 </div>
                 <div className="mb-4">
@@ -77,6 +79,7 @@ function SignInPage() {
                     errors={errors}
                     disabled={false}
                     classes="w-full text-left"
+                    trigger={trigger}
                   />
 
                 </div>

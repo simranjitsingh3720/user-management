@@ -7,7 +7,7 @@ import { Header } from './utils/Header';
 import { BUTTON_TEXT, PAGECOUNT } from '../../utils/globalConstants';
 import SearchComponent from '../../components/SearchComponent';
 import { SearchKey } from './utils/constants';
-import { SEARCH_PLACEHOLDER } from '../UserManagement/Components/utils/constants';
+import { COMMON } from '../UserManagement/Components/utils/constants';
 
 function HouseBankMaster() {
   const navigate = useNavigate();
@@ -68,7 +68,7 @@ function HouseBankMaster() {
           searched={searched}
           setSearched={setSearched}
           textField
-          textFieldPlaceholder={SEARCH_PLACEHOLDER}
+          textFieldPlaceholder={COMMON.SEARCH_PLACEHOLDER}
           setQuery={setQuery}
           buttonText={BUTTON_TEXT.HOUSE_BANK}
           navigateRoute="/house-bank-master/form"

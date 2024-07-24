@@ -36,8 +36,22 @@ export const COMMON_WORDS = {
   UPDATE: 'update',
   CHANNEL: 'channel',
   HAS_CHANNEL: 'hasChannel',
+  ROLE: "role",
+  HAS_ROLE : "hasRole",
+  LOCATION: "location",
+  LOGIN_TYPE:"loginType",
+  HAS_LOGIN_TYPE: 'hasLoginType',
+  PRODUCER_TYPE: 'producerType',
+  HAS_PRODUCER_TYPE: 'hasProducerType',
+  PAYMENT_TYPE: 'paymentType',
+  HAS_USER_TYPE: 'hasUserType',
+  PARENT_ID: 'parentId',
+  HAS_PARENT_ID: 'hasParentId',
+  HOUSE_BANK: 'houseBank',
+  HAS_HOUSE_BANK: 'hasHouseBank',
   OTP_EXCEPTION: 'OTP Exception',
-  ROLE: 'role',
+  CHILDS: 'childs',
+  HAS_CHILDS: 'manages'
 };
 
 export const HEADER = {
@@ -56,7 +70,7 @@ export const FORM_HEADER_TEXT = {
   EMPLOYEE_FLAG: 'Employee Flag Configuration',
   GROUP: 'Group',
   HEALTH_CONFIG: 'Health Configuration',
-  HOUSE_BANK: 'House Bank Configuration',
+  HOUSE_BANK: 'House Bank Master Configuration',
   LOB: 'Lob',
   OTP_EXCEPTION: 'OTP Exception By',
   PERMISSION: 'Permission',

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axiosInstance from '../../../utils/axiosInstance';
 import { toast } from 'react-toastify';
@@ -8,7 +8,7 @@ import { hideDialog } from '../../../stores/slices/dialogSlice';
 import { useDispatch } from 'react-redux';
 import errorHandler from '../../../utils/errorHandler';
 
-function useCreateProductLevel(fetchData, setEditData) {
+function useCreateProductLevel(fetchData, setEditData, handleReset) {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   const params = useParams();
@@ -25,6 +25,9 @@ function useCreateProductLevel(fetchData, setEditData) {
       navigate(`/uwlevelmappingemployee/${employeeId}`);
       if (fetchData) {
         fetchData();
+      }
+      if (handleReset) {
+        handleReset();
       }
     } catch (error) {
       errorHandler.handleError(error);
@@ -57,13 +60,30 @@ function useCreateProductLevel(fetchData, setEditData) {
       if (setEditData) {
         setEditData([]);
       }
+      if (handleReset) {
+        handleReset();
+      }
     } catch (error) {
       errorHandler.handleError(error);
     } finally {
       setLoading(false);
     }
   }
-  return { postData, loading, fetchDataById, data, updateData };
+  const getLobByUserId = useCallback(async (employeeId) => {
+    setLoading(true);
+    try {
+      const response = await axiosInstance.get(`${apiUrls.getUser}/${employeeId}/lobs`);
+      const { data = {} } = response || {};
+      const { data: lobList = [] } = data;
+      setData(lobList);
+    } catch (error) {
+      errorHandler.handleError(error);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  return { postData, loading, fetchDataById, data, updateData, getLobByUserId };
 }
 
 export default useCreateProductLevel;

@@ -4,6 +4,18 @@ import apiUrls from '../utils/apiUrls';
 import { buildQueryString, toCapitalize } from '../utils/globalizationFunction';
 import errorHandler from '../utils/errorHandler';
 
+function formatLoginTypes(loginType) {
+  if (loginType.includes('&')) {
+    loginType = loginType
+      .split('&')
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' & ');
+  } else {
+    loginType = loginType.charAt(0).toUpperCase() + loginType.slice(1);
+  }
+  return loginType;
+}
+
 export const getLoginType = createAsyncThunk('loginType/getLoginType', async (_, { getState, rejectWithValue }) => {
   try {
     const { loginType } = getState();
@@ -15,7 +27,7 @@ export const getLoginType = createAsyncThunk('loginType/getLoginType', async (_,
     const response = await axiosInstance.get(url);
     const formattedArray = response?.data?.data?.map((obj) => ({
       ...obj,
-      label: toCapitalize(obj, 'loginType'),
+      label: formatLoginTypes(obj.loginType),
       value: obj?.loginType,
     }));
     return formattedArray;

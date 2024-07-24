@@ -1,13 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
-import styles from './styles.module.scss';
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import usePostUser from '../hooks/usePostUser';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { getLobs } from '../../../../Redux/getLob';
-import { getProducts } from '../../../../Redux/getProduct';
+import { clearProducts, getProducts } from '../../../../Redux/getProduct';
 import { getLocations } from '../../../../Redux/getLocation';
 import { getRoles } from '../../../../Redux/getRole';
 import InputField from '../../../../components/CustomTextfield';
@@ -24,21 +23,6 @@ import { getHouseBanks } from '../../../../Redux/getHouseBank';
 import useGetUserType from '../hooks/useGetUserType';
 import useGetRoleHierarchy from '../hooks/useRoleHierarchy';
 import Loader from './../../../../components/Loader';
-import {
-  AUTOCOMPLETE,
-  DATE_FORMAT,
-  DROPDOWN,
-  FORM_LABEL,
-  FORM_VALUE,
-  LOB,
-  LOGIN_TYPE,
-  PAYMENT_CALL,
-  PAYMENT_TYPE,
-  PRODUCER_ARR,
-  PRODUCER_CODE_CALL,
-  PRODUCER_PARTNER_ARR,
-  ROLE_SELECT,
-} from '../utils/constants';
 import apiUrls from '../../../../utils/apiUrls';
 import useSubmit from '../hooks/useSubmit';
 import { getLoginType } from '../../../../Redux/getLoginType';
@@ -46,6 +30,9 @@ import CustomFormHeader from '../../../../components/CustomFormHeader';
 import { FORM_HEADER_TEXT } from '../../../../utils/constants';
 import dayjs from 'dayjs';
 import { getProducerTypes } from '../../../../Redux/getProducerType';
+import { clearMasterPolicy, getMasterPolicies } from '../../../../Redux/getMasterPolicy';
+import { ARR_CONTAINS, COMMON, FORM_LABEL, FORM_VALUE, MASTER_POLICY, REQUIRED_ERR } from '../utils/constants';
+import useUpdateUser from '../hooks/useUpdateUser';
 import errorHandler from '../../../../utils/errorHandler';
 
 function CreateUserCreationForm() {
@@ -60,6 +47,7 @@ function CreateUserCreationForm() {
   const parentCode = useSelector((state) => state.parentCode.parentCode);
   const channelType = useSelector((state) => state.channelType.channelType);
   const producerType = useSelector((state) => state.producerType.producerType);
+  const masterPolicy = useSelector((state) => state.masterPolicy.masterPolicy);
   const loginType = useSelector((state) => state.loginType.loginType);
   const [apiDataMap, setApiDataMap] = useState({
     lob: lobs,
@@ -71,33 +59,39 @@ function CreateUserCreationForm() {
     channelType: channelType,
     neftDefaultBank: neftDefaultBank,
     typeOfProducer: producerType,
+    loginType: loginType,
+    masterPolicy: masterPolicy,
   });
   const { loading, postData } = usePostUser();
+  const { updateUserLoading, updateData } = useUpdateUser();
   const [roleConfig, setRoleConfig] = useState([]);
   const [resetClicked, setResetClicked] = useState(false);
   const [jsonData, setJsonData] = useState([]);
   const [roleChanged, setRoleChanged] = useState(false);
-  const today = dayjs().format(DATE_FORMAT);
+  const today = dayjs().format(COMMON.DATE_FORMAT);
+  const [editData, setEditData] = useState({});
   const {
     handleSubmit,
     setValue,
     reset,
     control,
     watch,
+    trigger,
     formState: { errors },
   } = useForm({
     defaultValues: {
       roleSelect: null,
       loginType: [],
-      active: 'yes',
+      active: COMMON.YES,
       startDate: today,
+      gcStatus: COMMON.NO,
     },
   });
 
-  const roleValue = watch(ROLE_SELECT)?.roleName;
-  const paymentsType = watch(PAYMENT_TYPE);
-  const lobsWatch = watch(LOB);
-  const rolesWatch = watch(ROLE_SELECT);
+  const roleValue = watch(COMMON.ROLE_SELECT)?.roleName;
+  const paymentsType = watch(COMMON.PAYMENT_TYPE);
+  const lobsWatch = watch(COMMON.LOB);
+  const rolesWatch = watch(COMMON.ROLE_SELECT);
   const { userType, userTypeFetch } = useGetUserType();
   const { roleHierarchy, roleHierarchyFetch } = useGetRoleHierarchy();
   const params = useParams();
@@ -121,10 +115,18 @@ function CreateUserCreationForm() {
   }, []);
 
   useEffect(() => {
+    if (params?.id && role.length > 0) {
+      setIsEdit(true);
+      getUserDetails(params?.id);
+    }
+  }, [role]);
+
+  useEffect(() => {
     dispatch(getRoles());
     dispatch(getLoginType());
     dispatch(getLobs());
     dispatch(getLocations());
+    dispatch(getMasterPolicies());
   }, []);
 
   useEffect(() => {
@@ -156,6 +158,12 @@ function CreateUserCreationForm() {
     if (producerType) {
       updatedApiDataMap.typeOfProducer = producerType;
     }
+    if (loginType) {
+      updatedApiDataMap.loginType = loginType;
+    }
+    if (masterPolicy) {
+      updatedApiDataMap.masterPolicy = masterPolicy;
+    }
     setApiDataMap(updatedApiDataMap);
   }, [
     lobs,
@@ -168,30 +176,33 @@ function CreateUserCreationForm() {
     channelType,
     neftDefaultBank,
     producerType,
+    loginType,
+    masterPolicy,
   ]);
 
   useEffect(() => {
     if (jsonData) {
-      setValue(ROLE_SELECT, '');
+      setValue(COMMON.ROLE_SELECT, '');
     }
   }, []);
 
   useEffect(() => {
-    if (roleValue && resetClicked && !isEdit) {
+    if (roleValue && !isEdit) {
       let resetValues = {
-        roleSelect: watch(ROLE_SELECT),
+        roleSelect: watch(COMMON.ROLE_SELECT),
       };
       roleConfig?.forEach((item) => {
-        if (item?.type === AUTOCOMPLETE && item?.multiple === true) {
+        if (item?.type === COMMON.AUTOCOMPLETE && item?.multiple === true) {
           resetValues[item?.id] = [];
         }
-        if (item?.type === AUTOCOMPLETE) {
+        if (item?.type === COMMON.AUTOCOMPLETE) {
           resetValues[item?.id] = [];
-        } else if (item?.type !== DROPDOWN) {
+        } else if (item?.type !== COMMON.DROPDOWN) {
           resetValues[item?.id] = '';
         }
       });
       setRoleChanged(!roleChanged);
+      resetValues[FORM_LABEL.START_DATE] = today;
       reset(resetValues);
     }
   }, [roleValue]);
@@ -215,18 +226,18 @@ function CreateUserCreationForm() {
   const handleReset = () => {
     let originalArray = roleConfig;
     let resultObject = originalArray.reduce((resetValues, item) => {
-      if (item?.type === AUTOCOMPLETE && item?.multiple === true) {
+      if (item?.type === COMMON.AUTOCOMPLETE && item?.multiple === true) {
         resetValues[item?.id] = [];
       }
-      if (item?.type === AUTOCOMPLETE) {
+      if (item?.type === COMMON.AUTOCOMPLETE) {
         resetValues[item?.id] = null;
-      } else if (item?.type !== DROPDOWN) {
+      } else if (item?.type !== COMMON.DROPDOWN) {
         resetValues[item?.id] = '';
       }
       return resetValues;
     }, {});
     resultObject.roleSelect = '';
-    resultObject['startDate'] = today;
+    resultObject[FORM_LABEL.START_DATE] = today;
     setResetClicked(!resetClicked);
     reset(resultObject);
     if (isEdit) {
@@ -238,32 +249,66 @@ function CreateUserCreationForm() {
   };
 
   useEffect(() => {
-    if (lobsWatch && lobsWatch?.length > 0) {
+    dispatch(clearMasterPolicy());
+    if (lobsWatch && lobsWatch.length > 0) {
+      dispatch(clearProducts());
       dispatch(getProducts(lobsWatch));
+      setValue(FORM_LABEL.MASTER_POLICY, []);
     }
-  }, [lobsWatch]);
+  }, [lobsWatch?.length]);
+
+  const productWatch = watch(FORM_LABEL.PRODUCT);
 
   useEffect(() => {
-    if (rolesWatch) {
-      userTypeFetch(rolesWatch?.id);
+    dispatch(clearMasterPolicy());
+    if (
+      rolesWatch?.roleName === COMMON.PARTNER &&
+      lobsWatch &&
+      lobsWatch?.length > 0 &&
+      productWatch &&
+      productWatch.length > 0
+    ) {
+      const containsTravel = lobsWatch.some((item) => item.value === MASTER_POLICY.TRAVEL);
+      const containsProduct = productWatch.some((item) => item.value === MASTER_POLICY.GROUPBUSINESSTRAVELACCIDENT);
+      const containsProductGuard = productWatch.some((item) => item.value === MASTER_POLICY.SMALLBUSINESSTRAVELGUARD);
+      if (containsTravel && containsProduct && containsProductGuard) {
+        dispatch(clearMasterPolicy());
+        dispatch(getMasterPolicies(MASTER_POLICY.BOTH));
+      } else if (containsTravel && containsProduct) {
+        dispatch(clearMasterPolicy());
+        dispatch(getMasterPolicies(MASTER_POLICY.GROUPBUSINESSTRAVELACCIDENT));
+      } else if (containsTravel && containsProductGuard) {
+        dispatch(clearMasterPolicy());
+        dispatch(getMasterPolicies(MASTER_POLICY.SMALLBUSINESSTRAVELGUARD));
+      } else {
+        dispatch(clearMasterPolicy());
+        dispatch(getMasterPolicies([]));
+      }
+    } else {
+      dispatch(clearMasterPolicy());
+    }
+  }, [lobsWatch, productWatch, rolesWatch]);
 
-      if (PRODUCER_CODE_CALL.some((role) => rolesWatch?.roleName?.includes(role))) {
+  useEffect(() => {
+    if (rolesWatch && rolesWatch?.roleName) {
+      userTypeFetch(rolesWatch?.id);
+      if (ARR_CONTAINS.PRODUCER_CODE_CALL.some((role) => rolesWatch?.roleName?.includes(role))) {
         dispatch(getProducerCodes(rolesWatch));
         roleHierarchyFetch(rolesWatch?.id);
       }
-      if (PRODUCER_ARR.some((role) => rolesWatch?.roleName?.includes(role))) {
+      if (ARR_CONTAINS.PRODUCER_ARR.some((role) => rolesWatch?.roleName?.includes(role))) {
         dispatch(getParentCode(rolesWatch));
         dispatch(getProducerTypes());
         dispatch(getChannels());
         dispatch(getHouseBanks());
       }
-      if (PAYMENT_CALL.some((role) => rolesWatch?.roleName?.includes(role))) {
+      if (ARR_CONTAINS.PAYMENT_CALL.some((role) => rolesWatch?.roleName?.includes(role))) {
         dispatch(getPaymentTypes());
       }
     }
-  }, [rolesWatch]);
+  }, [rolesWatch?.roleName]);
 
-  const onSubmit = (data) => {
+  const createUserPayload = (data) => {
     const {
       mobileNumber,
       email,
@@ -313,7 +358,6 @@ function CreateUserCreationForm() {
     } = data;
 
     const { id: roleId, roleName } = roleSelect;
-    const { id: houseBankId } = neftDefaultBank;
     const [userTypeObj = {}] = userType || [];
     const { userType: userTypeStr, id: userTypeId } = userTypeObj;
     const childIds = Array.isArray(producerCode) ? producerCode.map((code) => code.id) : [];
@@ -321,7 +365,7 @@ function CreateUserCreationForm() {
     const locationIds = location.map((loc) => loc.id);
     const productIds = product.map((prod) => prod.id);
     const paymentTypeNames = paymentType.map((payment) => payment.name);
-    const masterPolicyIds = masterPolicy.map((policy) => policy.id);
+    const masterPolicyIds = masterPolicy.map((policy) => policy.value);
     const roleHierarchyId = roleHierarchy && (parentCode || childIds.length) ? roleHierarchy.id : '';
     const payload = {
       mobileNo: mobileNumber,
@@ -347,17 +391,19 @@ function CreateUserCreationForm() {
       vertical,
       subVertical,
       solId,
-      gcStatus: PRODUCER_ARR.includes(roleName) ? false : '',
+      gcStatus: ARR_CONTAINS.PRODUCER_ARR.includes(roleName) ? false : '',
       producerCode: typeof producerCode === 'string' ? producerCode : '',
       producerType: typeOfProducer,
       channelId: channelType,
       bankingLimit,
-      sendEmail: PRODUCER_PARTNER_ARR.includes(roleName) ? sendEmail === FORM_VALUE.YES : '',
+      sendEmail: ARR_CONTAINS.PRODUCER_PARTNER_ARR.includes(roleName) ? sendEmail === FORM_VALUE.YES : '',
       domain,
       paymentType: paymentTypeNames,
-      houseBankId,
-      ocrChequeScanning: paymentTypeNames.includes('cheque') ? chequeOCRScanning === FORM_VALUE.YES : '',
-      ckyc: PRODUCER_ARR.includes(roleName) ? cKyc === FORM_VALUE.YES : '',
+      houseBankId: ARR_CONTAINS.PRODUCER_ARR.includes(roleName) ? neftDefaultBank : '',
+      ocrChequeScanning: paymentTypeNames.includes(COMMON.CHEQUE)
+        ? chequeOCRScanning && chequeOCRScanning === FORM_VALUE.YES
+        : '',
+      ckyc: ARR_CONTAINS.PRODUCER_ARR.includes(roleName) ? cKyc === FORM_VALUE.YES : '',
       partnerName,
       masterPolicyIds,
       brokerType,
@@ -379,15 +425,110 @@ function CreateUserCreationForm() {
     const filteredData = Object.fromEntries(
       Object.entries(payload).filter(([key, value]) => value !== '' && !(Array.isArray(value) && value.length === 0))
     );
-    postData(filteredData);
+    return filteredData;
   };
 
-  useEffect(() => {
-    if (params?.id && role) {
-      setIsEdit(true);
-      getUserDetails(params?.id);
+  const updateUserPayload = (data, role) => {
+    const {
+      producerCode,
+      location,
+      product,
+      paymentType,
+      employeeId,
+      firstName,
+      lastName,
+      mobileNumber,
+      email,
+      vertical,
+      subVertical,
+      solId,
+      startDate,
+      endDate,
+      active,
+      ntloginId,
+      chequeOCRScanning,
+      neftDefaultBank,
+    } = data;
+
+    const childIds = producerCode && Array.isArray(producerCode) ? producerCode.map((code) => code.id) : [];
+    const locationIds = location ? location.map((loc) => loc.id) : [];
+    const productIds = product ? product.map((prod) => prod.id) : [];
+    const paymentTypeNames = paymentType ? paymentType.map((payment) => payment.name) : [];
+    const roleHierarchyId = roleHierarchy && (parentCode || childIds.length) ? roleHierarchy.id : '';
+
+    let payload = {
+      employeeId: editData && editData.employeeId !== employeeId ? employeeId : '',
+      firstName,
+      lastName,
+      mobileNo: editData && editData.mobileNo !== mobileNumber ? mobileNumber : '',
+      email: editData && editData.email !== email ? email : '',
+      vertical,
+      subVertical,
+      solId,
+      startDate,
+      endDate,
+      status: active === FORM_VALUE.YES,
+    };
+
+    if (ARR_CONTAINS.CLIENT_ARR.includes(role)) {
+      payload = {
+        ...payload,
+        roleHierarchyId,
+        childIds,
+        locationIds,
+        productIds,
+      };
+    } else if (ARR_CONTAINS.PRODUCER_ARR.includes(role)) {
+      payload = {
+        productIds,
+        paymentType: paymentTypeNames,
+        houseBankId: ARR_CONTAINS.PRODUCER_ARR.includes(role)
+          ? Array.isArray(neftDefaultBank)
+            ? neftDefaultBank.join(',')
+            : neftDefaultBank
+          : '',
+        ocrChequeScanning: paymentTypeNames.includes(COMMON.CHEQUE)
+          ? chequeOCRScanning && chequeOCRScanning === FORM_VALUE.YES
+          : '',
+      };
+    } else if (ARR_CONTAINS.DATA_ENTRY_USER_ARR.includes(role)) {
+      payload = {
+        ...payload,
+        locationIds,
+        productIds,
+      };
+    } else if (ARR_CONTAINS.ADMIN_ARR.includes(role)) {
+      payload = {
+        ...payload,
+        locationIds,
+        ntId: editData && editData.ntId !== ntloginId ? ntloginId : '',
+      };
+    } else {
+      payload = {
+        ...payload,
+        locationIds,
+        productIds,
+        ntId: editData && editData.ntId !== ntloginId ? ntloginId : '',
+      };
     }
-  }, [params?.id, role]);
+
+    const filteredData = Object.fromEntries(
+      Object.entries(payload).filter(([key, value]) => value !== '' && !(Array.isArray(value) && value.length === 0))
+    );
+
+    return filteredData;
+  };
+
+  const onSubmit = (data) => {
+    if (params?.id) {
+      const { id: roleId, roleName } = data?.roleSelect;
+      const updatePayload = updateUserPayload(data, rolesWatch.roleName);
+      updateData(params.id, roleId, roleName, updatePayload);
+    } else {
+      const filteredData = createUserPayload(data);
+      postData(filteredData);
+    }
+  };
 
   const formatDate = (dateString) => {
     if (dateString.includes('/')) {
@@ -410,14 +551,35 @@ function CreateUserCreationForm() {
       case FORM_LABEL.LOGIN_TYPE:
         setValue(
           FORM_VALUE.LOGIN_TYPE,
-          loginType.filter((item) => item.value === value)
+          loginType.filter((item) => value.includes(item.id))
+        );
+        break;
+
+      case FORM_LABEL.CHANNEL_ID:
+        setValue(
+          FORM_VALUE.CHANNEL_TYPE,
+          channelType.filter((item) => value.includes(item.id)).map((item) => item.id)
+        );
+        break;
+
+      case FORM_LABEL.PRODUCER_TYPE:
+        setValue(
+          FORM_VALUE.TYPE_OF_PRODUCER,
+          producerType.filter((item) => value.includes(item.id)).map((item) => item.id)
         );
         break;
 
       case FORM_LABEL.LOB:
         setValue(
           FORM_VALUE.LOB,
-          lobs.filter((item) => item.value === value)
+          lobs.filter((item) => value.includes(item.id))
+        );
+        break;
+
+      case FORM_LABEL.CHILDS:
+        setValue(
+          FORM_VALUE.PRODUCER_CODE,
+          producerCode.filter((item) => value.includes(item.id))
         );
         break;
 
@@ -433,21 +595,51 @@ function CreateUserCreationForm() {
         setValue(FORM_VALUE.ACTIVE, value ? FORM_VALUE.YES : FORM_VALUE.NO);
         break;
 
+      case FORM_LABEL.CKYC:
+        setValue(FORM_VALUE.CKYC, value ? FORM_VALUE.YES : FORM_VALUE.NO);
+        break;
+
+      case FORM_LABEL.SEND_EMAIL:
+        setValue(FORM_VALUE.SEND_EMAIL, value ? FORM_VALUE.YES : FORM_VALUE.NO);
+        break;
+
+      case FORM_LABEL.GC_STATUS:
+        setValue(FORM_LABEL.GC_STATUS, value ? FORM_VALUE.YES : FORM_VALUE.NO);
+        break;
+
       case FORM_LABEL.ROLE_NAME:
-        setValue(FORM_VALUE.ROLE_SELECT, role.find((item) => item.roleName === value) || null);
+        setValue(
+          FORM_VALUE.ROLE_SELECT,
+          role.find((item) => item.roleName === value)
+        );
         break;
 
       case FORM_LABEL.LOCATION:
         setValue(
           FORM_VALUE.LOCATION,
-          locations.filter((item) => item.value === value)
+          locations.filter((item) => value.includes(item.id))
         );
+        break;
+
+      case FORM_LABEL.PAYMENT_TYPE:
+        setValue(
+          FORM_LABEL.PAYMENT_TYPE,
+          paymentType.filter((item) => value.includes(item.id))
+        );
+        break;
+
+      case FORM_LABEL.HOUSE_BANK:
+        setValue(FORM_VALUE.NEFT_DEFAULT_BANK, value);
+        break;
+
+      case FORM_LABEL.OCR_CHEQUE_SCANNING:
+        setValue(FORM_VALUE.CHEQUE_OCR_SCANNING, value ? FORM_VALUE.YES : FORM_VALUE.NO);
         break;
 
       case FORM_LABEL.PRODUCT:
         setValue(
-          FORM_VALUE.PRODUCT,
-          products.filter((item) => item.value === value)
+          FORM_LABEL.PRODUCT,
+          products.filter((item) => value.includes(item.id))
         );
         break;
 
@@ -460,17 +652,47 @@ function CreateUserCreationForm() {
   const getUserDetails = async (id) => {
     const data = await getUserById(id);
     if (data) {
-      Object.entries(data).forEach(([key, value]) => processKey(key, value));
+      setEditData(data);
     }
   };
 
+  useEffect(() => {
+    if (editData && Object.keys(editData).length > 0) {
+      Object.entries(editData).forEach(([key, value]) => processKey(key, value));
+    }
+  }, [
+    editData,
+    lobs,
+    paymentType,
+    locations,
+    producerCode,
+    parentCode,
+    loginType,
+    channelType,
+    neftDefaultBank,
+    producerType,
+  ]);
+
+  const neftValue = watch(COMMON.DEFAULT_HOUSE_BANK);
+
+  useEffect(() => {
+    if (products && products.length > 0 && editData && Object.keys(editData).length > 0) {
+      Object.entries(editData).forEach(([key, value]) => {
+        if (key === FORM_LABEL.PRODUCT) {
+          processKey(key, value);
+        }
+      });
+    }
+  }, [products, editData]);
+
   return (
     <>
-      {loading && <Loader></Loader>}
-      <form onSubmit={handleSubmit(onSubmit)} className={styles.formMainContainer}>
-        <div className={styles.createNewUserContainer}>
+      {(loading || updateUserLoading) && <Loader></Loader>}
+      <form onSubmit={handleSubmit(onSubmit)} className="mb-3">
+        <div className="bg-white h-full mb-5 rounded-xl shadow-lg shadow-shadowColor">
           <div className="p-4 pb-0">
             <CustomFormHeader
+              id={params?.id}
               headerText={FORM_HEADER_TEXT.USER}
               navigateRoute="/user-management"
               handleReset={handleReset}
@@ -478,36 +700,41 @@ function CreateUserCreationForm() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 px-8 gap-5 py-5">
             <AutocompleteMultipleField
-              key={ROLE_SELECT}
+              key={COMMON.ROLE_SELECT}
               control={control}
-              name={ROLE_SELECT}
+              name={COMMON.ROLE_SELECT}
               label="Role"
               required
-              disabled={isEdit}
+              disabled={!isEdit ? false : true}
               options={role || []}
-              validation={{ required: 'Role is required' }}
+              validation={{ required: REQUIRED_ERR.ROLE }}
               errors={errors}
               multiple={false}
               resetClicked={resetClicked}
               roleChanged={roleChanged}
               classes="w-full"
               isEdit={isEdit}
+              trigger={trigger}
+              showCheckbox={false}
+              setValue={setValue}
             />
-            <AutocompleteMultipleField
-              key={LOGIN_TYPE}
+            <AutocompleteFieldAll
+              key={COMMON.LOGIN_TYPE}
               control={control}
-              name={LOGIN_TYPE}
-              label="Login Type"
+              name={COMMON.LOGIN_TYPE}
+              label={'Login Type'}
               required
-              disabled={false}
-              options={loginType || []}
-              validation={{ required: 'Login Type is required' }}
-              errors={errors}
-              multiple={true}
               roleChanged={roleChanged}
+              options={apiDataMap[COMMON.LOGIN_TYPE]}
               resetClicked={resetClicked}
+              validation={{ required: REQUIRED_ERR.LOGIN_TYPE }}
+              errors={errors}
+              apiDataMap={apiDataMap}
               classes="w-full"
               isEdit={isEdit}
+              trigger={trigger}
+              setValue={setValue}
+              disabled={!isEdit ? false : true}
             />
 
             {roleConfig?.map((item) =>
@@ -520,8 +747,9 @@ function CreateUserCreationForm() {
                   validation={item?.validation}
                   control={control}
                   errors={errors}
-                  disabled={item?.disabled}
+                  disabled={!isEdit ? item?.disabled : !item?.canEdit}
                   classes="w-full"
+                  trigger={trigger}
                 />
               ) : item?.type === 'date' ? (
                 <DateField
@@ -536,6 +764,8 @@ function CreateUserCreationForm() {
                   errors={errors}
                   classes="w-full"
                   isEdit={isEdit}
+                  trigger={trigger}
+                  disabled={!isEdit ? item?.disabled : !item?.canEdit}
                 />
               ) : item?.type === 'autocomplete' && item?.multiple === true ? (
                 <AutocompleteMultipleField
@@ -545,7 +775,7 @@ function CreateUserCreationForm() {
                   name={item?.id}
                   label={item?.label}
                   required={item?.required}
-                  disabled={item?.disabled}
+                  disabled={!isEdit ? item?.disabled : !item?.canEdit}
                   options={apiDataMap[item?.id]}
                   validation={item?.validation}
                   errors={errors}
@@ -553,6 +783,8 @@ function CreateUserCreationForm() {
                   resetClicked={resetClicked}
                   classes="w-full"
                   isEdit={isEdit}
+                  trigger={trigger}
+                  setValue={setValue}
                 />
               ) : item?.type === 'autocomplete' && item?.all === true ? (
                 <>
@@ -562,70 +794,92 @@ function CreateUserCreationForm() {
                     label={item?.label}
                     required={item?.required}
                     roleChanged={roleChanged}
-                    disabled={item?.disabled}
+                    disabled={!isEdit ? item?.disabled : !item?.canEdit}
                     options={apiDataMap[item?.id]}
                     resetClicked={resetClicked}
                     validation={item?.validation}
                     errors={errors}
                     apiDataMap={apiDataMap}
+                    setValue={setValue}
                     classes="w-full"
                     isEdit={isEdit}
+                    trigger={trigger}
                   />
                   {item?.subFields !== undefined &&
-                    item?.subFields['neft'] &&
-                    roleValue !== 'partner' &&
+                    item?.subFields[COMMON.PAYMENT_NEFT] &&
+                    roleValue !== COMMON.PARTNER &&
                     paymentsType &&
-                    paymentsType?.some((item) => item?.value === 'neft' || item?.value === 'all') && (
-                      <div className="grid gap-5" key={item?.subFields['neft'][0]?.id}>
+                    paymentsType?.some((item) => item?.value === COMMON.PAYMENT_NEFT || item?.value === COMMON.ALL) && (
+                      <div className="grid gap-5" key={item?.subFields[COMMON.PAYMENT_NEFT][0]?.id}>
                         <SelectField
-                          key={item?.subFields['neft'][0]?.id}
+                          key={item?.subFields[COMMON.PAYMENT_NEFT][0]?.id}
                           control={control}
-                          name={item?.subFields['neft'][0]?.id}
-                          label={item?.subFields['neft'][0]?.label}
-                          required={item?.subFields['neft'][0]?.required}
-                          disabled={item?.subFields['neft'][0]?.disabled}
-                          menuItem={item?.subFields['neft'][0]?.menuItem || apiDataMap['neftDefaultBank']}
+                          name={item?.subFields[COMMON.PAYMENT_NEFT][0]?.id}
+                          label={item?.subFields[COMMON.PAYMENT_NEFT][0]?.label}
+                          required={item?.subFields[COMMON.PAYMENT_NEFT][0]?.required}
+                          disabled={
+                            !isEdit
+                              ? item?.subFields[COMMON.PAYMENT_NEFT][0]?.disabled
+                              : !item?.subFields[COMMON.PAYMENT_NEFT][0]?.canEdit
+                          }
+                          menuItem={
+                            item?.subFields[COMMON.PAYMENT_NEFT][0]?.menuItem || apiDataMap[COMMON.DEFAULT_HOUSE_BANK]
+                          }
                           placeholder="Select"
                           errors={errors}
                           setValue={setValue}
                           classes="w-full"
+                          trigger={trigger}
                         />
                       </div>
                     )}
 
                   {item?.subFields !== undefined &&
-                    item?.subFields['neft'] &&
-                    roleValue !== 'partner' &&
+                    item?.subFields[COMMON.PAYMENT_NEFT] &&
+                    roleValue !== COMMON.PARTNER &&
+                    neftValue &&
                     paymentsType &&
-                    paymentsType?.some((item) => item?.value === 'neft' || item?.value === 'all') && (
+                    paymentsType?.some((item) => item?.value === COMMON.PAYMENT_NEFT || item?.value === COMMON.ALL) && (
                       <InputField
-                        id={item?.subFields['accountNumber'][0]?.id}
-                        required={item?.subFields['accountNumber'][0]?.required}
-                        label={item?.subFields['accountNumber'][0]?.label}
-                        validation={item?.subFields['accountNumber'][0]?.validation}
+                        id={item?.subFields[COMMON.ACCOUNT_NUMBER][0]?.id}
+                        required={neftValue ? true : false}
+                        label={item?.subFields[COMMON.ACCOUNT_NUMBER][0]?.label}
+                        validation={item?.subFields[COMMON.ACCOUNT_NUMBER][0]?.validation}
                         control={control}
                         errors={errors}
-                        disabled={item?.subFields['accountNumber'][0]?.disabled}
+                        disabled={
+                          !isEdit
+                            ? item?.subFields[COMMON.ACCOUNT_NUMBER][0]?.disabled
+                            : !item?.subFields[COMMON.ACCOUNT_NUMBER][0]?.canEdit
+                        }
                         classes="w-full"
+                        trigger={trigger}
                       />
                     )}
 
                   {item?.subFields &&
                     paymentsType &&
-                    paymentsType?.some((item) => item?.value === 'cheque' || item?.value === 'all') && (
+                    paymentsType?.some(
+                      (item) => item?.value === COMMON.PAYMENT_CHEQUE || item?.value === COMMON.ALL
+                    ) && (
                       <div>
                         <SelectField
-                          key={item?.subFields['cheque'][0]?.id}
+                          key={item?.subFields[COMMON.PAYMENT_CHEQUE][0]?.id}
                           control={control}
-                          name={item?.subFields['cheque'][0]?.id}
-                          label={item?.subFields['cheque'][0]?.label}
-                          required={item?.subFields['cheque'][0]?.required}
-                          disabled={item?.subFields['cheque'][0]?.disabled}
-                          menuItem={item?.subFields['cheque'][0]?.menuItem}
+                          name={item?.subFields[COMMON.PAYMENT_CHEQUE][0]?.id}
+                          label={item?.subFields[COMMON.PAYMENT_CHEQUE][0]?.label}
+                          required={item?.subFields[COMMON.PAYMENT_CHEQUE][0]?.required}
+                          menuItem={item?.subFields[COMMON.PAYMENT_CHEQUE][0]?.menuItem}
+                          disabled={
+                            !isEdit
+                              ? item?.subFields[COMMON.PAYMENT_CHEQUE][0]?.disabled
+                              : !item?.subFields[COMMON.PAYMENT_CHEQUE][0]?.canEdit
+                          }
                           placeholder="Select"
                           errors={errors}
                           classes="w-full"
                           setValue={setValue}
+                          trigger={trigger}
                         />
                       </div>
                     )}
@@ -638,7 +892,7 @@ function CreateUserCreationForm() {
                   label={item?.label}
                   required={item?.required}
                   roleChanged={roleChanged}
-                  disabled={item?.disabled}
+                  disabled={!isEdit ? item?.disabled : !item?.canEdit}
                   options={apiDataMap[item?.id]}
                   validation={item?.validation}
                   errors={errors}
@@ -646,6 +900,8 @@ function CreateUserCreationForm() {
                   resetClicked={resetClicked}
                   classes="w-full"
                   isEdit={isEdit}
+                  trigger={trigger}
+                  setValue={setValue}
                 />
               ) : (
                 <SelectField
@@ -654,12 +910,13 @@ function CreateUserCreationForm() {
                   name={item?.id}
                   label={item?.label}
                   required={item?.required}
-                  disabled={item?.disabled}
+                  disabled={!isEdit ? item?.disabled : !item?.canEdit}
                   menuItem={item?.menuItem || apiDataMap[item?.id]}
                   placeholder={item?.label}
                   errors={errors}
                   setValue={setValue}
                   classes="w-full"
+                  trigger={trigger}
                 />
               )
             )}

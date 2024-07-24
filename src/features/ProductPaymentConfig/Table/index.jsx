@@ -1,20 +1,20 @@
-import React from "react";
-import styles from "./styles.module.scss";
-import { IconButton, Tooltip } from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
-import { useNavigate } from "react-router-dom";
-import { capitalizeWords } from "../../../utils/globalizationFunction";
+import React from 'react';
+import styles from './styles.module.scss';
+import { IconButton, Tooltip } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+import { useNavigate } from 'react-router-dom';
+import { capitalizeWords } from '../../../utils/globalizationFunction';
 
 function Table({ ListData, fetchData, sort, setSort, paymentData, canUpdate }) {
   const resultFun = (item) => {
-    const { payments } = item;
+    const payments = Array.isArray(item.payments) ? item.payments : [];
     const isSelected = (payment, selected) => {
       return selected.some((sel) => sel.id === payment.id);
     };
     const result = (paymentData?.data || []).map((payment) => {
       return {
         ...payment,
-        selected: isSelected(payment, payments) ? "Yes" : "No",
+        selected: isSelected(payment, payments) ? 'Yes' : 'No',
       };
     });
 
@@ -24,9 +24,7 @@ function Table({ ListData, fetchData, sort, setSort, paymentData, canUpdate }) {
   const navigate = useNavigate();
 
   const handleEditClick = (item) => {
-    navigate(
-      `/product-payment-config/form/${item.productWisePaymentMethod.id}`
-    );
+    navigate(`/product-payment-config/form/${item.productWisePaymentMethod.id}`);
   };
 
   return (
@@ -38,10 +36,8 @@ function Table({ ListData, fetchData, sort, setSort, paymentData, canUpdate }) {
         </div>
         {ListData.map((item) => (
           <div className={styles.listHeader}>
-            <div className={styles.productList}>
-              {item?.products[0]?.product || "-"}
-            </div>
-            <div className={styles.lobList}>{item?.lobs[0]?.lob}</div>
+            <div className={styles.productList}>{item?.products[0]?.product || '-'}</div>
+            <div className={styles.lobList}>{item?.lobs[0]?.lob || '-'}</div>
           </div>
         ))}
       </div>
@@ -52,7 +48,7 @@ function Table({ ListData, fetchData, sort, setSort, paymentData, canUpdate }) {
             <div className={styles.paymentObj}>
               {(paymentData?.data || []).map((paymentObj) => (
                 <div className={styles.subPayment}>
-                  <span>{capitalizeWords(paymentObj.name) || ""}</span>
+                  <span>{capitalizeWords(paymentObj.name) || ''}</span>
                 </div>
               ))}
             </div>
@@ -71,29 +67,27 @@ function Table({ ListData, fetchData, sort, setSort, paymentData, canUpdate }) {
         <div className={styles.headerStyle}>
           <div className={styles.action}>Created At</div>
           <div className={styles.action}>Updated At</div>
-          {canUpdate && (<div className={styles.action}>Action</div>)}
+          {canUpdate && <div className={styles.action}>Action</div>}
         </div>
         {ListData.map((item) => (
           <div className={styles.listHeader}>
-            <div className={styles.createdAt}>
-              {item?.productWisePaymentMethod?.createdAt}
-            </div>
-            <div className={styles.createdAt}>
-              {item?.productWisePaymentMethod?.updatedAt}
-            </div>
-            {canUpdate && (<div className={styles.productStatus}>
-              <Tooltip title="Edit Payment Modes">
-                <IconButton
-                  aria-label="back"
-                  type="button"
-                  onClick={() => {
-                    handleEditClick(item);
-                  }}
-                >
-                  <EditIcon color="primary" />
-                </IconButton>
-              </Tooltip>
-            </div>)}
+            <div className={styles.createdAt}>{item?.productWisePaymentMethod?.createdAt}</div>
+            <div className={styles.createdAt}>{item?.productWisePaymentMethod?.updatedAt}</div>
+            {canUpdate && (
+              <div className={styles.productStatus}>
+                <Tooltip title="Edit Payment Modes">
+                  <IconButton
+                    aria-label="back"
+                    type="button"
+                    onClick={() => {
+                      handleEditClick(item);
+                    }}
+                  >
+                    <EditIcon color="primary" />
+                  </IconButton>
+                </Tooltip>
+              </div>
+            )}
           </div>
         ))}
       </div>

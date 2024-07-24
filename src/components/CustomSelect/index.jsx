@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Controller } from 'react-hook-form';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import styles from './styles.module.scss';
 import { GC_STATUS, NO } from './utils/constants';
 
 const SelectField = ({
@@ -15,32 +14,22 @@ const SelectField = ({
   placeholder = '',
   errors = {},
   classes,
-  setValue
+  setValue,
+  trigger,
 }) => {
-  
-  useEffect(() => {
-    if (menuItem.length > 0) {
-      setValue(name, menuItem[0]?.value);
-    }
-  }, [menuItem, name, setValue]);
-
   return (
-    <div className={styles.fieldContainerStyle}>
-      <div className={styles.labelText}>
-        {label} {required && <span className={styles.styledRequired}>*</span>}
+    <div className="m-0 flex flex-col">
+      <div className="text-shuttleGray text-sm">
+        {label} {required && <span className="text-persianRed">*</span>}
       </div>
       <Controller
         name={name}
         control={control}
-        defaultValue={menuItem[0]?.value || ''}
+        defaultValue={name === GC_STATUS ? NO : ''}
         rules={{
-          required: required ? `${label} is required` : false,}}
+          required: required ? `${label} is required` : false,
+        }}
         render={({ field }) => {
-          let value = field.value;
-          if (name === GC_STATUS) {
-            value = NO;
-          }
-          
           return (
             <Select
               {...field}
@@ -48,32 +37,41 @@ const SelectField = ({
               labelId={name}
               id={name}
               placeholder={placeholder || label}
-              value={value}
+              value={field.value}
               onChange={(e) => {
                 setValue(name, e.target.value);
                 field.onChange(e);
+                if(typeof trigger === 'function'){
+                  trigger(name);
+                }
+              }}
+              onBlur={(e) => {
+                field.onBlur();
+                if(typeof trigger === 'function'){
+                  trigger(name);
+                }
               }}
               displayEmpty
-              className={`${styles.customizeSelect} ${classes}`}
+              className={`bg-white text-normal h-10 ${classes} ${
+                field.value === '' ? 'text-lg text-silverChalice' : 'text-lg'
+              }`}
               size="small"
             >
               <MenuItem value="" disabled>
-                {"Select"}
+                {'Select'}
               </MenuItem>
               {menuItem.length > 0
                 ? menuItem.map((item) => (
-                  <MenuItem key={item.value} value={item.value} className={styles.styledMenuText}>
-                    {item.label}
-                  </MenuItem>
-                ))
+                    <MenuItem key={item.value} value={item.value}>
+                      {item.label}
+                    </MenuItem>
+                  ))
                 : null}
             </Select>
           );
         }}
       />
-      <div className={styles.styledError}>
-        {errors[name] && <span>{errors[name]?.message}</span>}
-      </div>
+      <div className="text-xs text-persianRed">{errors[name] && <span>{errors[name]?.message}</span>}</div>
     </div>
   );
 };

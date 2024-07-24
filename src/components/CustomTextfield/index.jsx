@@ -12,8 +12,9 @@ const InputField = ({
   errors,
   disabled,
   classes,
-  type = 'text',
+  placeholder,
   trigger,
+  type = 'text',
 }) => {
   return (
     <div className="flex flex-col">
@@ -48,7 +49,13 @@ const InputField = ({
             value={field.value || ''}
             onChange={(e) => {
               field.onChange(e);
-              if (typeof trigger === 'function') {
+              if(typeof trigger === 'function'){
+                trigger(id);
+              }
+            }}
+            onBlur={(e) => {
+              field.onBlur();
+              if(typeof trigger === 'function'){
                 trigger(id);
               }
             }}

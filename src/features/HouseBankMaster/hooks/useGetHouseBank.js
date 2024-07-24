@@ -39,7 +39,6 @@ const useGetHouseBank = () => {
         });
 
         const {data} = await axiosInstance.get(`${apiUrls.houseBank}?${queryParams}`);
-
         setData(data?.data);
         dispatch(setTableName(data?.data[0]?.label));
         setTotalCount(data.totalCount);
