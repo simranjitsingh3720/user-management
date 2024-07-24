@@ -30,7 +30,7 @@ function ProposalForm() {
   const { user } = useSelector((state) => state.user);
   const channelType = useSelector((state) => state.channelType.channelType);
 
-  const { handleSubmit, control, setValue, formState, trigger } = useForm({
+  const { handleSubmit, control, setValue, formState, trigger, watch } = useForm({
     defaultValues: {
       producerCode: null,
       lob: null,
@@ -247,6 +247,7 @@ function ProposalForm() {
                 errors={errors}
                 classes="w-full"
                 setValue={setValue}
+                watch={watch}
               />
             </Grid>
 
@@ -261,6 +262,7 @@ function ProposalForm() {
                 errors={errors}
                 classes="w-full"
                 setValue={setValue}
+                watch={watch}
               />
             </Grid>
           </Grid>

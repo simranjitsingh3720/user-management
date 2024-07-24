@@ -42,14 +42,15 @@ function useGetProposalOTPList(page, pageSize, order, orderBy) {
         const newData = data.data.map((item) => {
           const {
             lob,
-            proposalOtpException: { id, type, startDate, endDate, status, createdAt, updatedAt, label },
+            proposalOtpException: { id, startDate, endDate, status, createdAt, updatedAt, label },
             producer,
             product,
           } = item;
 
           const producerName = `${producer?.[0]?.firstName ?? ''} ${producer?.[0]?.lastName ?? ''}`.trim();
-          const lobName = lob?.[0]?.name ?? '';
-          const productName = product?.[0]?.name ?? '';
+          const lobName = lob?.[0]?.lob ?? '';
+          const productName = product?.[0]?.product ?? '';
+          const type = producerName ? 'Producer' : 'Channel';
 
           return {
             id: id,
