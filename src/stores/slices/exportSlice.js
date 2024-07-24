@@ -6,7 +6,6 @@ import { toast } from 'react-toastify';
 import { DATE_FORMAT } from '../../utils/globalConstants';
 import toastifyUtils from '../../utils/toastify';
 
-// Initial state
 const initialState = {
   selectedValue: '',
   fromDate: null,
@@ -18,7 +17,6 @@ const initialState = {
   extraColumns: [],
 };
 
-// Fetch columns based on the table name
 export const fetchColumns = createAsyncThunk('export/fetchColumns', async (tableName, thunkAPI) => {
   try {
     const response = await axiosInstance.get(`${API_END_POINTS.getColumns}${tableName}`);
@@ -33,7 +31,6 @@ export const fetchColumns = createAsyncThunk('export/fetchColumns', async (table
   }
 });
 
-// Download data with selected columns and additional columns
 export const downloadData = createAsyncThunk('export/downloadData', async (payload, thunkAPI) => {
   try {
     const { tableName, past30Days, isBulkDownload, email, columns, startDate, endDate, additionalColumns } = payload;
@@ -46,7 +43,7 @@ export const downloadData = createAsyncThunk('export/downloadData', async (paylo
         columns: columns,
         startDate: startDate,
         endDate: endDate,
-        // additionalColumns: additionalColumns,
+        additionalColumns: additionalColumns,
       },
     });
 
@@ -59,7 +56,6 @@ export const downloadData = createAsyncThunk('export/downloadData', async (paylo
   }
 });
 
-// Slice
 const exportSlice = createSlice({
   name: 'export',
   initialState,
@@ -136,7 +132,6 @@ const exportSlice = createSlice({
   },
 });
 
-// Export actions and reducer
 export const {
   setSelectedValue,
   setFromDate,
