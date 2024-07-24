@@ -3,10 +3,9 @@ import { Controller, useWatch } from 'react-hook-form';
 import Autocomplete from '@mui/material/Autocomplete';
 import Checkbox from '@mui/material/Checkbox';
 import TextField from '@mui/material/TextField';
-import styles from './styles.module.scss';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
-import { PLACEHOLDER, REQUIRED_MSG, ROLE_SELECT } from './constants';
+import { PLACEHOLDER, ROLE_SELECT } from './constants';
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -25,8 +24,11 @@ const AutocompleteField = ({
   resetClicked,
   roleChanged,
   isEdit,
+  trigger,
+  showCheckbox = true,
 }) => {
-  const [selectedValues, setSelectedValues] = useState(name === ROLE_SELECT ? null : []);
+  const isMultiple = multiple ? [] : null;
+  const [selectedValues, setSelectedValues] = useState(isMultiple);
 
   const watchedValues = useWatch({
     control,
@@ -37,46 +39,47 @@ const AutocompleteField = ({
     if (isEdit) {
       setSelectedValues(watchedValues);
     }
-  }, [watchedValues]);
+  }, [watchedValues, isEdit]);
 
   useEffect(() => {
+    if (resetClicked) {
+      setSelectedValues(isMultiple);
+    }
+  }, [resetClicked, multiple]);
+
+  useEffect(() => {
+    if (roleChanged && name !== ROLE_SELECT && !isEdit) {
+      setSelectedValues([]);
+    }
+  }, [roleChanged, name, isEdit]);
+
+  const toggleOption = (option) => {
     if (multiple) {
-      setSelectedValues([]);
-    } else if (name === ROLE_SELECT) {
-      setSelectedValues(null);
+      setSelectedValues((prevSelectedValues) => {
+        const isSelected = prevSelectedValues?.some((val) => val.value === option.value);
+        return isSelected
+          ? prevSelectedValues?.filter((val) => val.value !== option.value)
+          : [...(prevSelectedValues || []), option];
+      });
     } else {
-      setSelectedValues([]);
+      setSelectedValues((prevSelectedValues) => (prevSelectedValues && prevSelectedValues.value === option.value ? null : option));
     }
-  }, [resetClicked]);
+  };
 
   useEffect(() => {
-    if (name !== ROLE_SELECT && !isEdit) {
-      setSelectedValues([]);
+    if (!options || options.length === 0 || (options && options.every(isEmptyObject))) {
+      setSelectedValues(isMultiple);
     }
-  }, [roleChanged]);
-
-  const handleAutocompleteChangeMultiple = (event, newValue) => {
-    setSelectedValues(newValue);
-  };
-
-  const handleAutocompleteChangeSingle = (event, newValue) => {
-    setSelectedValues(newValue);
-  };
+  }, [options, multiple]);
 
   const isEmptyObject = (obj) => {
     return Object.keys(obj).length === 0 && obj.constructor === Object;
   };
 
-  useEffect(()=> {
-    if(!options || options?.length === 0 || (options && isEmptyObject(options[0]))){
-      setSelectedValues(name === ROLE_SELECT ? null : []);
-    }
-  }, [options, name])
-
   return (
-    <div className={styles.fieldContainerStyle}>
-      <div className={styles.labelText}>
-        {label} {required && <span className={styles.styledRequired}>*</span>}
+    <div className="m-0 flex flex-col">
+      <div className="text-shuttleGray text-sm">
+        {label} {required && <span className="text-bittersweet">*</span>}
       </div>
       <Controller
         name={name}
@@ -90,29 +93,43 @@ const AutocompleteField = ({
             disabled={disabled}
             disableCloseOnSelect={multiple}
             options={options.length > 0 ? options : []}
-            value={name === ROLE_SELECT && !selectedValues ? null : selectedValues || []}
-            getOptionLabel={(option) => option?.label}
+            value={selectedValues || isMultiple}
+            getOptionLabel={(option) => option?.label || ''}
             onChange={(event, newValue) => {
-              if (multiple) {
-                handleAutocompleteChangeMultiple(event, newValue);
-              } else {
-                handleAutocompleteChangeSingle(event, newValue);
-              }
+              setSelectedValues(newValue);
               field.onChange(newValue);
             }}
             renderOption={(props, option, { selected }) => (
-              <li {...props} key={option?.value || option?.roleName}>
-                <Checkbox
-                  icon={icon}
-                  checkedIcon={checkedIcon}
-                  style={{ marginRight: 8 }}
-                  checked={selected}
-                />
+              <li
+                {...props}
+                key={option?.value || option?.roleName}
+                onClick={() => {
+                  toggleOption(option);
+                  if (multiple) {
+                    const updatedValues = selectedValues?.some((val) => val.value === option.value)
+                      ? selectedValues?.filter((val) => val.value !== option.value)
+                      : [...(selectedValues || []), option];
+                    setSelectedValues(updatedValues);
+                    field.onChange(updatedValues); 
+                  } else {
+                    setSelectedValues(option);
+                    field.onChange(option); 
+                  }
+                }}
+              >
+                {showCheckbox && multiple && (
+                  <Checkbox
+                    icon={icon}
+                    checkedIcon={checkedIcon}
+                    style={{ marginRight: 8 }}
+                    checked={selectedValues?.some((val) => val.value === option.value)}
+                  />
+                )}
                 {option.label}
               </li>
             )}
             size="small"
-            className={`${styles.customizeSelect} ${classes}`}
+            className={`bg-white text-sm ${classes}`}
             limitTags={1}
             renderInput={(params) => (
               <TextField
@@ -125,6 +142,12 @@ const AutocompleteField = ({
                 }}
                 error={Boolean(errors[name])}
                 helperText={errors[name] ? `${label} is required` : ''}
+                onChange={() => {
+                  trigger(name);
+                }}
+                onBlur={() => {
+                  trigger(name);
+                }}
               />
             )}
           />

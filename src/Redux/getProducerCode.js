@@ -24,7 +24,7 @@ export const getProducerCodes = createAsyncThunk(
           const response = await axiosInstance.get(url);
           const formattedArray = response?.data?.data?.map((obj) => ({
             ...obj,
-            label: obj?.producerCode + ' - ' + getFullName(obj?.firstName, obj?.lastName),
+            label: getFullName(obj?.firstName, obj?.lastName) + ' - ' + obj?.producerCode,
             value: obj?.producerCode,
           }));
           return formattedArray;
