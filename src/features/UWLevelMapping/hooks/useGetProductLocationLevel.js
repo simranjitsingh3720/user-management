@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import axiosInstance from '../../../utils/axiosInstance';
 import apiUrls from '../../../utils/apiUrls';
 import { COMMON_WORDS } from '../../../utils/constants';
@@ -10,14 +10,15 @@ function useGetProductLocationLevel(page, pageSize, order, orderBy, employeeId) 
   const [loading, setLoading] = useState(true);
   const [count, setCount] = useState(0);
 
-  const fetchData = async (searched, resultProductString) => {
+  const fetchData = useCallback(async () => {
+    setLoading(true);
+
     try {
-      setLoading(true);
-      let params = {
+      const params = {
         pageNo: page,
         sortKey: orderBy,
         sortOrder: order,
-        pageSize: pageSize,
+        pageSize,
         childFieldsToFetch: `${COMMON_WORDS.PRODUCTS},${COMMON_WORDS.LOBS},${COMMON_WORDS.LOCATIONS}`,
         childFieldsEdge: `${COMMON_WORDS.HAS_PRODUCT},${COMMON_WORDS.HAS_LOB},${COMMON_WORDS.HAS_LOCATION}`,
         searchKey: 'userId',
@@ -26,20 +27,11 @@ function useGetProductLocationLevel(page, pageSize, order, orderBy, employeeId) 
 
       let url = `${apiUrls.productLocationLevelMapping}?${buildQueryString(params)}`;
 
-      if (searched === COMMON_WORDS.PRODUCT && resultProductString) {
-        const params = {
-          edge: COMMON_WORDS.HAS_PRODUCT,
-          ids: resultProductString,
-          isExclusive: true,
-        };
-        url += `&${buildQueryString(params)}`;
-      }
-      if (searched === COMMON_WORDS.LOB && resultProductString) {
-        url += `&${buildQueryString(params)}`;
-      }
       const response = await axiosInstance.get(url);
-      const partnerNeftData = response.data.data.map((item) => {
-        const { productLocationLevelMappings = {}, products = [], lobs = [], locations = [] } = item || {};
+
+      const formattedData = response.data.data.map((item) => {
+        const { productLocationLevelMappings = {}, products = [], lobs = [], locations = [] } = item;
+
         const {
           id = '',
           label = '',
@@ -47,35 +39,39 @@ function useGetProductLocationLevel(page, pageSize, order, orderBy, employeeId) 
           status = '',
           createdAt = '',
           updatedAt = '',
-        } = productLocationLevelMappings || {};
-        const { lob = '' } = lobs?.[0] || {};
-        const { product = '' } = products?.[0] || {};
-        const { txtOffice = '' } = locations?.[0] || {};
+        } = productLocationLevelMappings;
+
+        const { lob = '' } = lobs[0] || {};
+        const { product = '' } = products[0] || {};
+        const { txtOffice: location = '' } = locations[0] || {};
+
         return {
-          id: id,
-          label: label,
-          lob: lob,
-          product: product,
-          location: txtOffice,
-          level: level,
-          status: status,
-          createdAt: createdAt,
-          updatedAt: updatedAt,
+          id,
+          label,
+          lob,
+          product,
+          location,
+          level,
+          status,
+          createdAt,
+          updatedAt,
           checked: status,
         };
       });
-      setCount(response.data.totalCount);
-      setData(partnerNeftData);
+
+      setCount(response.data.totalCount ?? 0);
+      setData(formattedData);
     } catch (error) {
       errorHandler.handleError(error);
       setData([]);
     } finally {
       setLoading(false);
     }
-  };
+  }, [page, order, orderBy, pageSize, employeeId]);
+
   useEffect(() => {
     fetchData();
-  }, [page, order, orderBy, pageSize]);
+  }, [fetchData]);
 
   return { data, loading, fetchData, count };
 }
