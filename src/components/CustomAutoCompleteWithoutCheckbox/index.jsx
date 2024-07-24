@@ -39,7 +39,7 @@ const CustomAutoCompleteWithoutCheckbox = ({
             className={className + 'customize-select bg-white'}
             size={size}
             isOptionEqualToValue={isOptionEqualToValue}
-            renderInput={(params) => <TextField {...params} error={error} placeholder={placeholder} />}
+            renderInput={(params) => <TextField {...params} error={error} placeholder={placeholder} sx={{ textTransform: 'capitalize'}} />}
             value={field.value}
             onChange={(event, newValue) => {
               field.onChange(newValue);

@@ -52,7 +52,7 @@ export function generateTableHeadersProduct() {
     },
     {
       id: "isEmployee",
-      value: "Is Employee",
+      value: "Member Is Employee",
       sortable: false,
     },
   ];
