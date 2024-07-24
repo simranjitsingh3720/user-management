@@ -818,6 +818,14 @@
           "pattern": {
             "value": "^[0-9]+$",
             "message": "It should contain only digits"
+          },
+          "minLength": {
+            "value": 10,
+            "message": "It should be at least 10 digits long"
+          },
+          "maxLength": {
+            "value": 10,
+            "message": "It should not exceed 10 digits"
           }
         },
         "canEdit": false
@@ -1021,7 +1029,7 @@
               "id": "chequeOCRScanning",
               "label": "OCR Cheque Scanning Mandatory",
               "type": "dropdown",
-              "required": true,
+              "required": false,
               "menuItem": [
                 {
                   "value": "yes",
@@ -1043,7 +1051,7 @@
               "id": "neftDefaultBank",
               "label": "Default House Bank ",
               "type": "dropdown",
-              "required": true,
+              "required": false,
               "disabled": false,
               "validation": {
                 "required": "This field is required"
@@ -1060,14 +1068,6 @@
               "disabled": false,
               "validation": {
                 "required": "This field is required",
-                "minLength": {
-                  "value": 8,
-                  "message": "It should be at least 8 characters long"
-                },
-                "maxLength": {
-                  "value": 17,
-                  "message": "It should not exceed 17 characters"
-                },
                 "pattern": {
                   "value": "^[0-9]*$",
                   "message": "It should contain only digits"
@@ -1201,6 +1201,14 @@
           "pattern": {
             "value": "^[0-9]+$",
             "message": "It should contain only digits"
+          },
+          "minLength": {
+            "value": 10,
+            "message": "It should be at least 10 digits long"
+          },
+          "maxLength": {
+            "value": 10,
+            "message": "It should not exceed 10 digits"
           }
         },
         "canEdit": false
@@ -1404,7 +1412,7 @@
               "id": "chequeOCRScanning",
               "label": "OCR Cheque Scanning Mandatory",
               "type": "dropdown",
-              "required": true,
+              "required": false,
               "menuItem": [
                 {
                   "value": "yes",
@@ -1426,7 +1434,7 @@
               "id": "neftDefaultBank",
               "label": "Default House Bank ",
               "type": "dropdown",
-              "required": true,
+              "required": false,
               "disabled": false,
               "validation": {
                 "required": "This field is required"
@@ -1443,14 +1451,6 @@
               "disabled": false,
               "validation": {
                 "required": "This field is required",
-                "minLength": {
-                  "value": 8,
-                  "message": "It should be at least 8 characters long"
-                },
-                "maxLength": {
-                  "value": 17,
-                  "message": "It should not exceed 17 characters"
-                },
                 "pattern": {
                   "value": "^[0-9]*$",
                   "message": "It should contain only digits"
@@ -1584,6 +1584,14 @@
           "pattern": {
             "value": "^[0-9]+$",
             "message": "It should contain only digits"
+          },
+          "minLength": {
+            "value": 10,
+            "message": "It should be at least 10 digits long"
+          },
+          "maxLength": {
+            "value": 10,
+            "message": "It should not exceed 10 digits"
           }
         },
         "canEdit": false
@@ -1787,7 +1795,7 @@
               "id": "chequeOCRScanning",
               "label": "OCR Cheque Scanning Mandatory",
               "type": "dropdown",
-              "required": true,
+              "required": false,
               "menuItem": [
                 {
                   "value": "yes",
@@ -1809,7 +1817,7 @@
               "id": "neftDefaultBank",
               "label": "Default House Bank ",
               "type": "dropdown",
-              "required": true,
+              "required": false,
               "disabled": false,
               "validation": {
                 "required": "This field is required"
@@ -1826,14 +1834,6 @@
               "disabled": false,
               "validation": {
                 "required": "This field is required",
-                "minLength": {
-                  "value": 8,
-                  "message": "It should be at least 8 characters long"
-                },
-                "maxLength": {
-                  "value": 17,
-                  "message": "It should not exceed 17 characters"
-                },
                 "pattern": {
                   "value": "^[0-9]*$",
                   "message": "It should contain only digits"
@@ -2069,7 +2069,7 @@
               "id": "chequeOCRScanning",
               "label": "OCR Cheque Scanning Mandatory",
               "type": "dropdown",
-              "required": true,
+              "required": false,
               "menuItem": [
                 {
                   "value": "yes",
