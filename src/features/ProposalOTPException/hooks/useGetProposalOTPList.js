@@ -7,7 +7,7 @@ import { setTableName } from '../../../stores/slices/exportSlice';
 import { useDispatch } from 'react-redux';
 import apiUrls from '../../../utils/apiUrls';
 
-function useGetProposalOTPList(page, pageSize, order, orderBy, date) {
+function useGetProposalOTPList(page, pageSize, order, orderBy, date, query, searched) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [totalPage, setTotalPage] = useState(0);
@@ -15,7 +15,7 @@ function useGetProposalOTPList(page, pageSize, order, orderBy, date) {
   const dispatch = useDispatch();
 
   const fetchProposalOtp = useCallback(
-    async (query, searched) => {
+    async () => {
       try {
         setLoading(true);
         let params = buildQueryString({
@@ -75,8 +75,8 @@ function useGetProposalOTPList(page, pageSize, order, orderBy, date) {
       } finally {
         setLoading(false);
       }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [page, orderBy, order, pageSize, dispatch]
   );
 
