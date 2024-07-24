@@ -125,7 +125,7 @@ function ProposalForm() {
             />
           </Box>
           <Grid container spacing={2}>
-            <Grid item xs={12}>
+            <Grid item xs={12} md={6} lg={4}>
               <UserTypeToggle
                 menuItem={PROPOSAL_CREATE_BY}
                 label="Select By"
