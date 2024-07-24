@@ -13,7 +13,7 @@ import { COMMON_FIELDS, SEARCH_OPTIONS } from './utils/constant';
 import { COMMON_WORDS } from '../../utils/constants';
 import { fetchUser } from '../../stores/slices/userSlice';
 import { getPlaceHolder } from '../../utils/globalizationFunction';
-import { setTableName } from '../../stores/slices/exportSlice';
+import { setExtraColumns, setTableName } from '../../stores/slices/exportSlice';
 import usePermissions from '../../hooks/usePermission';
 
 const PartnerNeft = () => {
@@ -89,6 +89,7 @@ const PartnerNeft = () => {
 
   useEffect(() => {
     dispatch(setTableName(partnerNeftData[0]?.label));
+    dispatch(setExtraColumns(['product', 'lob', 'firstName', 'lastName', 'producerCode']));
   }, [dispatch, partnerNeftData]);
 
   const fetchIdsAndConvert = (inputData) => inputData.map((item) => item.id).join();
