@@ -1,38 +1,36 @@
 import React, { useEffect, useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import {
-  Autocomplete,
-  FormControlLabel,
-  Radio,
-  RadioGroup,
-  TextField,
   Grid,
   Box,
   Card,
   CardContent,
-  Typography,
 } from '@mui/material';
 import { useParams } from 'react-router-dom';
-import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
-import useGetUserData from '../../BANCALogin/hooks/useGetUserData';
 import useCreateProposalOTP from '../hooks/usecreateProposalOTP';
 import useGetProposalOTPById from '../hooks/useGetProposalOTPById';
 import useUpdateProposal from '../hooks/useUpdateProposal';
 import useGetProducerData from '../../BANCALogin/hooks/useGetProducerData';
 import useGetLobListData from '../hooks/useGetLobListData';
-import 'dayjs/locale/en-gb';
 import CustomButton from '../../../components/CustomButton';
 import CustomFormHeader from '../../../components/CustomFormHeader';
-import { FORM_HEADER_TEXT } from '../../../utils/constants';
+import { COMMON_WORDS, FORM_HEADER_TEXT } from '../../../utils/constants';
 import UserTypeToggle from '../../../components/CustomRadioButtonGroup';
 import { PROPOSAL_CREATE_BY } from '../utils/constants';
+import { fetchUser } from '../../../stores/slices/userSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import CustomAutoCompleteWithoutCheckbox from '../../../components/CustomAutoCompleteWithoutCheckbox';
+import { getChannels } from '../../../Redux/getChannel';
+import DateField from '../../../components/CustomDateInput';
 
 function ProposalForm() {
   const { id } = useParams();
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.user);
+  const channelType = useSelector((state) => state.channelType.channelType);
 
-  const { handleSubmit, control, setValue, formState } = useForm({
+  const { handleSubmit, control, setValue, formState, trigger } = useForm({
     defaultValues: {
       producerCode: null,
       lob: null,
@@ -71,7 +69,19 @@ function ProposalForm() {
 
   const { data: lobList, fetchData: fetchLobData } = useGetLobListData();
 
-  const { userData } = useGetUserData();
+  // Get User Data
+  useEffect(() => {
+    dispatch(
+      fetchUser({
+        userType: COMMON_WORDS.PRODUCER,
+        searchKey: COMMON_WORDS.ROLE_NAME,
+        isAll: true,
+        status: true,
+      })
+    );
+
+    dispatch(getChannels());
+  }, [dispatch]);
 
   const { postData, loading: proposalOTPLoading } = useCreateProposalOTP();
 
@@ -140,158 +150,118 @@ function ProposalForm() {
 
             {OTPValue === 'byChannel' ? (
               <Grid item xs={12} sm={6} lg={4}>
-                <Typography variant="h6">
-                  Channel <span style={{ color: 'red' }}>*</span>
-                </Typography>
-                <Controller
+                <CustomAutoCompleteWithoutCheckbox
                   name="channel"
+                  label="Channel"
+                  required={true}
+                  options={channelType || []}
+                  getOptionLabel={(option) => {
+                    return `${option?.label?.toUpperCase() || ''} - ${option?.numChannelCode || ''}`;
+                  }}
                   control={control}
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <Autocomplete
-                      id="channel"
-                      options={[]}
-                      disabled={id}
-                      getOptionLabel={(option) =>
-                        `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`
-                      }
-                      renderInput={(params) => <TextField {...params} placeholder="Select" />}
-                      onChange={(event, newValue) => field.onChange(newValue)}
-                      ListboxProps={{ style: { maxHeight: '200px' } }}
-                    />
+                  rules={{ required: 'Channel is required' }}
+                  error={Boolean(errors.channel)}
+                  helperText={errors.channel?.message}
+                  disableClearable={true}
+                  placeholder={COMMON_WORDS.SELECT}
+                  renderOption={(props, option) => (
+                    <li {...props} key={option.id}>
+                      {option?.label?.toUpperCase()} - {option?.numChannelCode}
+                    </li>
                   )}
+                  trigger={trigger}
+                  onChangeCallback={(newValue) => {
+                    
+                  }}
                 />
-                {errors.channel && <Typography color="error">This field is required</Typography>}
               </Grid>
             ) : (
               <Grid item xs={12} sm={6} lg={4}>
-                <Typography variant="h6">
-                  Producer Code <span style={{ color: 'red' }}>*</span>
-                </Typography>
-                <Controller
+                <CustomAutoCompleteWithoutCheckbox
                   name="producerCode"
+                  label="Producer Name"
                   control={control}
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <Autocomplete
-                      id="producerCode"
-                      disabled={id}
-                      options={userData || []}
-                      value={field.value}
-                      getOptionLabel={(option) =>
-                        `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`
-                      }
-                      renderInput={(params) => <TextField {...params} placeholder="Select" />}
-                      onChange={(event, newValue) => {
-                        field.onChange(newValue);
-                        fetchProducerListData(newValue.id);
-                        setValue('product', null);
-                        setValue('lob', null);
-                      }}
-                      ListboxProps={{ style: { maxHeight: '200px' } }}
-                    />
-                  )}
+                  rules={{ required: 'Producer Name is required' }}
+                  options={user?.data || []}
+                  getOptionLabel={(option) => `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`}
+                  placeholder="Select"
+                  error={Boolean(errors.producerCode)}
+                  helperText={errors.producerCode?.message}
+                  disableClearable={true}
+                  onChangeCallback={(newValue) => {
+                    fetchProducerListData(newValue.id);
+                    setValue('product', null);
+                    setValue('lob', null);
+                  }}
+                  trigger={trigger}
                 />
-                {errors.producerCode && <Typography color="error">This field is required</Typography>}
               </Grid>
             )}
 
             <Grid item xs={12} sm={6} lg={4}>
-              <Typography variant="h6">
-                Product <span style={{ color: 'red' }}>*</span>
-              </Typography>
-              <Controller
+              <CustomAutoCompleteWithoutCheckbox
                 name="product"
+                label="Product"
                 control={control}
-                rules={{ required: true }}
-                render={({ field }) => (
-                  <Autocomplete
-                    id="product"
-                    disabled={id}
-                    options={producerList?.data || []}
-                    value={field.value}
-                    getOptionLabel={(option) => `${option?.product?.toUpperCase()} - ${option?.product_code}`}
-                    renderInput={(params) => <TextField {...params} placeholder="Select" />}
-                    onChange={(event, newValue) => {
-                      field.onChange(newValue);
-                      fetchLobData(newValue.id);
-                      setValue('lob', null);
-                    }}
-                    ListboxProps={{ style: { maxHeight: '200px' } }}
-                  />
-                )}
+                rules={{ required: 'Product is required' }}
+                options={producerList?.data || []}
+                getOptionLabel={(option) => `${option?.product?.toUpperCase()} - ${option?.productCode}`}
+                placeholder="Select"
+                required
+                error={Boolean(errors.product)}
+                helperText={errors.product?.message}
+                disableClearable={true}
+                onChangeCallback={(newValue) => {
+                  fetchLobData(newValue.id);
+                  setValue('lob', null);
+                }}
+                trigger={trigger}
               />
-              {errors.product && <Typography color="error">This field is required</Typography>}
             </Grid>
 
             <Grid item xs={12} sm={6} lg={4}>
-              <Typography variant="h6">
-                LOB <span style={{ color: 'red' }}>*</span>
-              </Typography>
-              <Controller
+              <CustomAutoCompleteWithoutCheckbox
                 name="lob"
+                label="LOB"
                 control={control}
-                rules={{ required: true }}
-                render={({ field }) => (
-                  <Autocomplete
-                    id="lob"
-                    disabled={id}
-                    options={lobList?.data || []}
-                    value={field.value}
-                    getOptionLabel={(option) => `${option?.lob?.toUpperCase()} - ${option?.lob_value}`}
-                    renderInput={(params) => <TextField {...params} placeholder="Select by LOB Name..." />}
-                    onChange={(event, newValue) => field.onChange(newValue)}
-                    ListboxProps={{ style: { maxHeight: '200px' } }}
-                  />
-                )}
+                rules={{ required: 'LOB is required' }}
+                options={lobList?.data || []}
+                getOptionLabel={(option) => `${option?.lob?.toUpperCase()} - ${option?.lobCode}`}
+                placeholder="Select"
+                required
+                error={Boolean(errors.lob)}
+                helperText={errors.lob?.message}
+                disableClearable={true}
+                trigger={trigger}
               />
-              {errors.lob && <Typography color="error">This field is required</Typography>}
             </Grid>
 
             <Grid item xs={12} sm={6} lg={4}>
-              <Typography variant="h6">
-                Start Date <span style={{ color: 'red' }}>*</span>
-              </Typography>
-              <Controller
+              <DateField
+                key="startDate"
+                control={control}
                 name="startDate"
-                control={control}
-                rules={{ required: true }}
-                render={({ field }) => (
-                  <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
-                    <DatePicker
-                      className='w-full'
-                      minDate={dayjs()}
-                      value={field.value ? dayjs(field.value, 'DD/MM/YYYY') : null}
-                      onChange={(date) => setValue('startDate', dayjs(date).format('DD/MM/YYYY'))}
-                      renderInput={(params) => <TextField {...params} size="small" />}
-                    />
-                  </LocalizationProvider>
-                )}
+                labelVisible={true}
+                label="Start Date"
+                required
+                errors={errors}
+                classes="w-full"
+                setValue={setValue}
               />
-              {errors.startDate && <Typography color="error">This field is required</Typography>}
             </Grid>
 
             <Grid item xs={12} sm={6} lg={4}>
-              <Typography variant="h6">
-                End Date <span style={{ color: 'red' }}>*</span>
-              </Typography>
-              <Controller
-                name="endDate"
+              <DateField
+                key="endDate"
                 control={control}
-                rules={{ required: true }}
-                render={({ field }) => (
-                  <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
-                    <DatePicker
-                      className='w-full'
-                      minDate={dayjs()}
-                      value={field.value ? dayjs(field.value, 'DD/MM/YYYY') : null}
-                      onChange={(date) => setValue('endDate', dayjs(date).format('DD/MM/YYYY'))}
-                      renderInput={(params) => <TextField {...params} size="small" />}
-                    />
-                  </LocalizationProvider>
-                )}
+                name="endDate"
+                labelVisible={true}
+                label="End Date"
+                required
+                errors={errors}
+                classes="w-full"
+                setValue={setValue}
               />
-              {errors.endDate && <Typography color="error">This field is required</Typography>}
             </Grid>
           </Grid>
         </CardContent>

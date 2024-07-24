@@ -22,6 +22,7 @@ const CustomAutoCompleteWithoutCheckbox = ({
   helperText,
   onChangeCallback,
   disabled,
+  trigger
 }) => {
   return (
     <>
@@ -43,6 +44,9 @@ const CustomAutoCompleteWithoutCheckbox = ({
             value={field.value}
             onChange={(event, newValue) => {
               field.onChange(newValue);
+              if(typeof trigger === 'function') {
+                trigger(name);
+              }
               onChangeCallback && onChangeCallback(newValue);
             }}
             disableClearable={disableClearable}
