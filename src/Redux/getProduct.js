@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axiosInstance from './../utils/axiosInstance';
 import apiUrls from '../utils/apiUrls';
 import { buildQueryString, toCapitalize } from '../utils/globalizationFunction';
@@ -15,7 +15,7 @@ export const getProducts = createAsyncThunk('productUserCreation/getProducts', a
       const formattedArray = response?.data?.data?.map((obj) => ({
         ...obj,
         label: toCapitalize(obj, 'product'),
-        value: obj?.product_value,
+        value: obj?.productValue,
       }));
       return formattedArray;
     }
@@ -24,6 +24,8 @@ export const getProducts = createAsyncThunk('productUserCreation/getProducts', a
     return rejectWithValue([]);
   }
 });
+
+export const clearProducts = createAction('productUserCreation/clearProducts');
 
 export const productUserCreation = createSlice({
   name: 'productUserCreation',
@@ -35,6 +37,9 @@ export const productUserCreation = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+    .addCase(clearProducts, (state) => {
+      state.product = [];
+    })
       .addCase(getProducts.pending, (state) => {
         state.loading = true;
         state.error = null;

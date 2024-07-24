@@ -10,6 +10,7 @@ import CustomFormHeader from '../../../components/CustomFormHeader';
 import { FORM_HEADER_TEXT } from '../../../utils/constants';
 import { REGEX } from '../../../utils/globalConstants';
 import InputField from '../../../components/CustomTextfield';
+import { numericRegex } from '../utils/constants';
 
 const formConfig = [
   {
@@ -46,17 +47,15 @@ const formConfig = [
     label: 'Account Number',
     validation: {
       required: true,
-      pattern: {
-        value: REGEX.numericRegex,
-        message: 'Only numeric values are allowed',
-      },
-      minLength: {
-        value: 9,
-        message: 'Account Number must be at least 9 digits long',
-      },
-      maxLength: {
-        value: 18,
-        message: 'Account Number must be at most 18 digits long',
+      validate: (value) => {
+        if (!REGEX.numericRegex.test(value)) {
+          return 'Only numeric values are allowed';
+        } else if (value.length < 9) {
+          return 'Account Number must be at least 9 digits long';
+        } else if (value.length > 18) {
+          return 'Account Number must be at most 18 digits long';
+        }
+        return true;
       },
     },
     disabled: true,
@@ -120,12 +119,18 @@ function HouseBankMasterForm() {
   };
 
   const handleReset = () => {
-    reset({
-      houseBankCode: '',
-      bankCode: '',
-      branchName: '',
-      accountNumber: '',
-    });
+    if (id) {
+      setValue('houseBankCode', '');
+      setValue('bankCode', '');
+      setValue('branchName', '');
+    } else {
+      reset({
+        houseBankCode: '',
+        bankCode: '',
+        branchName: '',
+        accountNumber: '',
+      });
+    }
   };
 
   return (

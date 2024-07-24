@@ -2,7 +2,6 @@ import { Box } from '@mui/material';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import CustomTable from '../../components/CustomTable';
 import useGetUser from './Components/hooks/useGetUser';
-import { BUTTON_TEXT, Header, NAVIGATE_TO_FORM, SEARCH_OPTIONS, SEARCH_PLACEHOLDER } from './Components/utils/constants';
 import { useNavigate } from 'react-router-dom';
 import { COMMON_WORDS } from '../../utils/constants';
 import Content from './Components/Dialog/Content';
@@ -14,6 +13,7 @@ import SearchComponent from '../../components/SearchComponent';
 import { setTableName } from '../../stores/slices/exportSlice';
 import { PAGECOUNT } from '../../utils/globalConstants';
 import usePermissions from '../../hooks/usePermission';
+import { COMMON, Header, NAVIGATE, SEARCH_OPTIONS } from './Components/utils/constants';
 
 function UserManagement() {
   const navigate = useNavigate();
@@ -29,7 +29,7 @@ function UserManagement() {
   const { canCreate, canUpdate } = usePermissions();
 
   const updateUserForm = useCallback((row) => {
-    navigate(NAVIGATE_TO_FORM + '/'+ row.id);
+    navigate(NAVIGATE.NAVIGATE_TO_FORM + '/'+ row.id);
   }, []);
 
   useEffect(() => {
@@ -74,10 +74,10 @@ function UserManagement() {
          searched={searched}
          setSearched={setSearched}
          textField
-         textFieldPlaceholder={SEARCH_PLACEHOLDER}
+         textFieldPlaceholder={COMMON.SEARCH_PLACEHOLDER}
          setQuery={setQuery}
-         buttonText={BUTTON_TEXT}
-         navigateRoute={NAVIGATE_TO_FORM}
+         buttonText={COMMON.BUTTON_TEXT}
+         navigateRoute={NAVIGATE.NAVIGATE_TO_FORM}
          handleGo={handleGo}
          showExportButton={true}
          showButton

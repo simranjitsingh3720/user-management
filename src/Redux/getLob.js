@@ -16,7 +16,7 @@ export const getLobs = createAsyncThunk('lobUserCreation/getLobs', async (_, { g
     const formattedArray = response?.data?.data?.map((obj) => ({
       ...obj,
       label: toCapitalize(obj, 'lob'),
-      value: obj?.lob_value,
+      value: obj?.lobValue,
     }));
     return formattedArray;
   } catch (error) {
