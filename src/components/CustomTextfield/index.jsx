@@ -46,6 +46,7 @@ const InputField = ({
             error={Boolean(errors[id])}
             FormHelperTextProps={{ classes: { root: 'ml-0' } }}
             {...field}
+            value={field.value || ''}
             onChange={(e) => {
               field.onChange(e);
               if(typeof trigger === 'function'){

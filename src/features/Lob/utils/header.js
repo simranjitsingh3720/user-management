@@ -1,9 +1,9 @@
-export const Header = (updateLobData) => {
+export const Header = (handleStatusUpdate) => {
   return [
     { value: "Lob Name", id: "lob" },
-    { value: "Lob Value", id: "lob_value" },
-    { value: "Lob Level", id: "lob_level" },
-    { value: "Lob Code", id: "lob_code" },
+    { value: "Lob Value", id: "lobValue" },
+    { value: "Lob Level", id: "lobLevel" },
+    { value: "Lob Code", id: "lobCode" },
     { value: "Created At", id: "createdAt", sortable: true},
     { value: "Updated At", id: "updatedAt", sortable: true},
     {
@@ -14,21 +14,7 @@ export const Header = (updateLobData) => {
           {
             component: "switch",
             onClick: (data, row) => {
-              data.map((item) => {
-                if (item.id === row.id) {
-                  return (row.checked = !row.checked);
-                }
-                
-                return row.checked;
-              });
-
-              updateLobData({
-                id: row.id,
-                properties: {
-                  status: row.checked,
-                },
-              });
-              
+              handleStatusUpdate(data, row);
             },
           },
         ],

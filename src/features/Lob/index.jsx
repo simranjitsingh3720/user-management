@@ -3,12 +3,16 @@ import { Box } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import CustomTable from '../../components/CustomTable';
 import { Header } from './utils/header';
-import { fetchLobData, updateLobData } from '../../stores/slices/lobSlice';
+import { fetchLobData } from '../../stores/slices/lobSlice';
 import CustomButton from '../../components/CustomButton';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import usePermissions from '../../hooks/usePermission';
-import { COMMON_WORDS } from '../../utils/constants';
 import { PAGECOUNT } from '../../utils/globalConstants';
+import CustomDialog from '../../components/CustomDialog';
+import { showDialog } from '../../stores/slices/dialogSlice';
+import { COMMON_WORDS } from '../../utils/constants';
+import Content from '../../components/CustomDialogContent';
+import Action from './Action';
 
 const Lob = () => {
   const dispatch = useDispatch();
@@ -39,11 +43,35 @@ const Lob = () => {
     );
   }, [dispatch, page, pageSize, order, orderBy]);
 
-  const handleUpdate = useCallback(
-    async (data) => {
-      dispatch(updateLobData({ data: data }));
+  const updateLobStatus = useCallback(
+    (id, data) => {
+      const updatedData = data.map((item) => {
+        if (item.id === id) {
+          return {
+            ...item,
+            checked: !item.checked,
+            status: !item.status,
+          };
+        }
+        return item;
+      });
+      
+      setLobData(updatedData);
     },
-    [dispatch]
+    []
+  );
+
+  const handleStatusUpdate = useCallback(
+    (data, row) => {
+      dispatch(
+        showDialog({
+          title: COMMON_WORDS.CHANGE_STATUS,
+          content: <Content label={COMMON_WORDS.LOB} />,
+          actions: <Action row={row} lobData={data} updateLobStatus={updateLobStatus} />,
+        })
+      );
+    },
+    [dispatch, updateLobStatus]
   );
 
   useEffect(() => {
@@ -58,7 +86,7 @@ const Lob = () => {
     setLobData(transformedData);
   }, [lob, canUpdate]);
 
-  const header = useMemo(() => Header(handleUpdate), [handleUpdate]);
+  const header = useMemo(() => Header(handleStatusUpdate), [handleStatusUpdate]);
 
   return (
     <Box>
@@ -86,6 +114,7 @@ const Lob = () => {
           canUpdate={canUpdate}
         />
       </div>
+      <CustomDialog />
     </Box>
   );
 };
