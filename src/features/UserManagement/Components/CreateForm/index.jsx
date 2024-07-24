@@ -249,9 +249,9 @@ function CreateUserCreationForm() {
   };
 
   useEffect(() => {
-    dispatch(clearProducts());
     dispatch(clearMasterPolicy());
     if (lobsWatch && lobsWatch.length > 0) {
+      dispatch(clearProducts());
       dispatch(getProducts(lobsWatch));
       setValue('masterPolicy', []);
     }
@@ -399,8 +399,8 @@ function CreateUserCreationForm() {
       sendEmail: ARR_CONTAINS.PRODUCER_PARTNER_ARR.includes(roleName) ? sendEmail === FORM_VALUE.YES : '',
       domain,
       paymentType: paymentTypeNames,
-      houseBankId: neftDefaultBank,
-      ocrChequeScanning: paymentTypeNames.includes(COMMON.CHEQUE) ? chequeOCRScanning === FORM_VALUE.YES : '',
+      houseBankId: ARR_CONTAINS.PRODUCER_ARR.includes(roleName) ? neftDefaultBank : '',
+      ocrChequeScanning: paymentTypeNames.includes(COMMON.CHEQUE) ? chequeOCRScanning && chequeOCRScanning === FORM_VALUE.YES : '',
       ckyc: ARR_CONTAINS.PRODUCER_ARR.includes(roleName) ? cKyc === FORM_VALUE.YES : '',
       partnerName,
       masterPolicyIds,
@@ -444,12 +444,15 @@ function CreateUserCreationForm() {
       endDate,
       active,
       ntloginId,
+      chequeOCRScanning,
+      neftDefaultBank
     } = data;
 
-    const producerId = producerCode && Array.isArray(producerCode) ? producerCode.map((code) => code.id) : [];
+    const childIds = producerCode && Array.isArray(producerCode) ? producerCode.map((code) => code.id) : [];
     const locationIds = location ? location.map((loc) => loc.id) : [];
     const productIds = product ? product.map((prod) => prod.id) : [];
     const paymentTypeNames = paymentType ? paymentType.map((payment) => payment.name) : [];
+    const roleHierarchyId = roleHierarchy && (parentCode || childIds.length) ? roleHierarchy.id : '';
 
     let payload = {
       employeeId: editData && editData.employeeId !== employeeId ? employeeId : '',
@@ -468,7 +471,8 @@ function CreateUserCreationForm() {
     if (ARR_CONTAINS.CLIENT_ARR.includes(role)) {
       payload = {
         ...payload,
-        producerId,
+        roleHierarchyId,
+        childIds,
         locationIds,
         productIds,
       };
@@ -476,6 +480,10 @@ function CreateUserCreationForm() {
       payload = {
         productIds,
         paymentType: paymentTypeNames,
+        houseBankId: ARR_CONTAINS.PRODUCER_ARR.includes(role) 
+        ? (Array.isArray(neftDefaultBank) ? neftDefaultBank.join(',') : neftDefaultBank) 
+        : '',
+        ocrChequeScanning: paymentTypeNames.includes(COMMON.CHEQUE) ? chequeOCRScanning && chequeOCRScanning === FORM_VALUE.YES : '',
       };
     } else if (ARR_CONTAINS.DATA_ENTRY_USER_ARR.includes(role)) {
       payload = {
@@ -659,15 +667,17 @@ function CreateUserCreationForm() {
     producerType,
   ]);
 
+  const neftValue = watch("neftDefaultBank");
+
   useEffect(() => {
-    if (products) {
+    if (products && products.length > 0 && editData && Object.keys(editData).length > 0) {
       Object.entries(editData).forEach(([key, value]) => {
         if (key === 'product') {
           processKey(key, value);
         }
       });
     }
-  }, [products]);
+  }, [products, editData]);
 
   return (
     <>
@@ -817,11 +827,12 @@ function CreateUserCreationForm() {
                   {item?.subFields !== undefined &&
                     item?.subFields['neft'] &&
                     roleValue !== 'partner' &&
+                    neftValue && 
                     paymentsType &&
                     paymentsType?.some((item) => item?.value === 'neft' || item?.value === 'all') && (
                       <InputField
                         id={item?.subFields['accountNumber'][0]?.id}
-                        required={item?.subFields['accountNumber'][0]?.required}
+                        required={neftValue ? true : false}
                         label={item?.subFields['accountNumber'][0]?.label}
                         validation={item?.subFields['accountNumber'][0]?.validation}
                         control={control}

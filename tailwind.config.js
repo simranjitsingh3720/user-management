@@ -16,7 +16,7 @@ module.exports = {
         blueHaze: '#C5CFDE',
         silverChalice: '#a2a2a2',
         shuttleGray: '#566475',
-        bittersweet: '#ff6262',
+        bittersweet: '#d32f2f',
         shadowColor: '#185ec414',
       },
       fontSize:{

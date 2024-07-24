@@ -48,8 +48,6 @@ const AutocompleteFieldAll = ({
     if (naOption) {
       setSelectedValues([naOption]);
       setValue(name, [naOption]);
-    } else {
-      setSelectedValues([]);
     }
   }, [options, control, name, setValue, naOption]);
 
@@ -78,24 +76,25 @@ const AutocompleteFieldAll = ({
 
   const handleAutocompleteChangeAll = useCallback((event, newValue) => {
     setSelectedValues(newValue);
-    // field.onChange(newValue);
   }, []);
 
   const isEmptyObject = (obj) => {
-    return Object.keys(obj).length === 0 && obj.constructor === Object;
+    if (obj) {
+      return Object.keys(obj).length === 0 && obj.constructor === Object;
+    }
   };
 
   useEffect(() => {
-    if (!options || options.length === 0 || (options && isEmptyObject(options[0]))) {
+    if (!options || options.length === 0 || (options && options.every(isEmptyObject))) {
       setSelectedValues([]);
     }
-  }, [options, name]);
+  }, [options]);
 
   return (
     <div className="m-0 flex flex-col">
-    <div className="text-shuttleGray text-sm">
-      {label} {required && <span className="text-bittersweet">*</span>}
-    </div>
+      <div className="text-shuttleGray text-sm">
+        {label} {required && <span className="text-persianRed">*</span>}
+      </div>
       <Controller
         name={name}
         control={control}
