@@ -33,13 +33,12 @@ export const fetchColumns = createAsyncThunk('export/fetchColumns', async (table
 
 export const downloadData = createAsyncThunk('export/downloadData', async (payload, thunkAPI) => {
   try {
-    const { tableName, past30Days, isBulkDownload, email, columns, startDate, endDate, additionalColumns } = payload;
+    const { tableName, past30Days, isBulkDownload, columns, startDate, endDate, additionalColumns } = payload;
     const response = await axiosInstance.get(`${API_END_POINTS.downloadFile}`, {
       params: {
         tableName: tableName,
         past30Days: past30Days,
         isBulkDownload: isBulkDownload,
-        email: email,
         columns: columns,
         startDate: startDate,
         endDate: endDate,

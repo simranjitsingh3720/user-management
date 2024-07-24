@@ -24,7 +24,6 @@ const Actions = () => {
       tableName: tableName,
       past30Days: selectedValue !== EXPORT_CONSTANTS.custom,
       isBulkDownload: selectedValue === EXPORT_CONSTANTS.custom,
-      // email: email, // Will uncomment once will get user
       columns: selectedColumns,
       startDate: fromDate,
       endDate: toDate,
