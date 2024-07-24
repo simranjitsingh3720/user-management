@@ -16,15 +16,20 @@ export const ARR_CONTAINS = {
     'externalposp',
     'sso',
   ],
-  ADMIN_ARR: ["admin", "adminView"],
-  CLIENT_ARR: ["csm"],
-  DATA_ENTRY_USER_ARR: ["distops"],
+  ADMIN_ARR: ['admin', 'adminView'],
+  CLIENT_ARR: ['csm'],
+  DATA_ENTRY_USER_ARR: ['distops'],
 };
 
 export const NAVIGATE = {
   NAVIGATE_TO_DASHBOARD: '/dashboard',
   NAVIGATE_TO_USER_MANAGEMENT: '/user-management',
   NAVIGATE_TO_FORM: '/user-management/form',
+};
+
+export const REQUIRED_ERR = {
+  ROLE: 'Role is required',
+  LOGIN_TYPE: 'Login Type is required',
 };
 
 export const COMMON = {
@@ -44,6 +49,12 @@ export const COMMON = {
   CHEQUE: 'cheque',
   USER_CREATION_SUCCESS: 'User created successfully',
   USER_UPDATED_SUCCESS: 'User updated successfully',
+  PARTNER: 'partner',
+  DEFAULT_HOUSE_BANK: 'neftDefaultBank',
+  PAYMENT_NEFT: 'neft',
+  ACCOUNT_NUMBER: 'accountNumber',
+  PAYMENT_CHEQUE: 'cheque',
+  ALL: 'all',
 };
 
 export const FORM_LABEL = {
@@ -71,6 +82,7 @@ export const FORM_LABEL = {
   GC_STATUS: 'gcStatus',
   CHILDS: 'childs',
   HOUSE_BANK: 'houseBank',
+  MASTER_POLICY: 'masterPolicy',
 };
 
 export const FORM_VALUE = {
@@ -96,7 +108,7 @@ export const FORM_VALUE = {
   SEND_EMAIL: 'sendEmail',
   PAYMENT_TYPE: 'paymentType',
   PRODUCER_CODE: 'producerCode',
-  NEFT_DEFAULT_BANK: 'neftDefaultBank'
+  NEFT_DEFAULT_BANK: 'neftDefaultBank',
 };
 
 export const Header = (editAction, handleInsillionStatus) => {
@@ -183,8 +195,8 @@ export const SEARCH_OPTIONS = [
 ];
 
 export const MASTER_POLICY = {
-  TRAVEL: "travel",
-  GROUPBUSINESSTRAVELACCIDENT: "groupbusinesstravelaccident",
-  SMALLBUSINESSTRAVELGUARD: "smallbusinesstravelguard",
-  BOTH: 'both'
-}
+  TRAVEL: 'travel',
+  GROUPBUSINESSTRAVELACCIDENT: 'groupbusinesstravelaccident',
+  SMALLBUSINESSTRAVELGUARD: 'smallbusinesstravelguard',
+  BOTH: 'both',
+};

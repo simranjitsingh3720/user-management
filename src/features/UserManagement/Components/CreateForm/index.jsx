@@ -31,7 +31,7 @@ import { FORM_HEADER_TEXT } from '../../../../utils/constants';
 import dayjs from 'dayjs';
 import { getProducerTypes } from '../../../../Redux/getProducerType';
 import { clearMasterPolicy, getMasterPolicies } from '../../../../Redux/getMasterPolicy';
-import { ARR_CONTAINS, COMMON, FORM_LABEL, FORM_VALUE, MASTER_POLICY } from '../utils/constants';
+import { ARR_CONTAINS, COMMON, FORM_LABEL, FORM_VALUE, MASTER_POLICY, REQUIRED_ERR } from '../utils/constants';
 import useUpdateUser from '../hooks/useUpdateUser';
 import errorHandler from '../../../../utils/errorHandler';
 
@@ -202,7 +202,7 @@ function CreateUserCreationForm() {
         }
       });
       setRoleChanged(!roleChanged);
-      resetValues['startDate'] = today;
+      resetValues[FORM_LABEL.START_DATE] = today;
       reset(resetValues);
     }
   }, [roleValue]);
@@ -237,7 +237,7 @@ function CreateUserCreationForm() {
       return resetValues;
     }, {});
     resultObject.roleSelect = '';
-    resultObject['startDate'] = today;
+    resultObject[FORM_LABEL.START_DATE] = today;
     setResetClicked(!resetClicked);
     reset(resultObject);
     if (isEdit) {
@@ -253,16 +253,16 @@ function CreateUserCreationForm() {
     if (lobsWatch && lobsWatch.length > 0) {
       dispatch(clearProducts());
       dispatch(getProducts(lobsWatch));
-      setValue('masterPolicy', []);
+      setValue(FORM_LABEL.MASTER_POLICY, []);
     }
   }, [lobsWatch?.length]);
 
-  const productWatch = watch('product');
+  const productWatch = watch(FORM_LABEL.PRODUCT);
 
   useEffect(() => {
     dispatch(clearMasterPolicy());
     if (
-      rolesWatch?.roleName === 'partner' &&
+      rolesWatch?.roleName === COMMON.PARTNER &&
       lobsWatch &&
       lobsWatch?.length > 0 &&
       productWatch &&
@@ -400,7 +400,9 @@ function CreateUserCreationForm() {
       domain,
       paymentType: paymentTypeNames,
       houseBankId: ARR_CONTAINS.PRODUCER_ARR.includes(roleName) ? neftDefaultBank : '',
-      ocrChequeScanning: paymentTypeNames.includes(COMMON.CHEQUE) ? chequeOCRScanning && chequeOCRScanning === FORM_VALUE.YES : '',
+      ocrChequeScanning: paymentTypeNames.includes(COMMON.CHEQUE)
+        ? chequeOCRScanning && chequeOCRScanning === FORM_VALUE.YES
+        : '',
       ckyc: ARR_CONTAINS.PRODUCER_ARR.includes(roleName) ? cKyc === FORM_VALUE.YES : '',
       partnerName,
       masterPolicyIds,
@@ -445,7 +447,7 @@ function CreateUserCreationForm() {
       active,
       ntloginId,
       chequeOCRScanning,
-      neftDefaultBank
+      neftDefaultBank,
     } = data;
 
     const childIds = producerCode && Array.isArray(producerCode) ? producerCode.map((code) => code.id) : [];
@@ -480,10 +482,14 @@ function CreateUserCreationForm() {
       payload = {
         productIds,
         paymentType: paymentTypeNames,
-        houseBankId: ARR_CONTAINS.PRODUCER_ARR.includes(role) 
-        ? (Array.isArray(neftDefaultBank) ? neftDefaultBank.join(',') : neftDefaultBank) 
-        : '',
-        ocrChequeScanning: paymentTypeNames.includes(COMMON.CHEQUE) ? chequeOCRScanning && chequeOCRScanning === FORM_VALUE.YES : '',
+        houseBankId: ARR_CONTAINS.PRODUCER_ARR.includes(role)
+          ? Array.isArray(neftDefaultBank)
+            ? neftDefaultBank.join(',')
+            : neftDefaultBank
+          : '',
+        ocrChequeScanning: paymentTypeNames.includes(COMMON.CHEQUE)
+          ? chequeOCRScanning && chequeOCRScanning === FORM_VALUE.YES
+          : '',
       };
     } else if (ARR_CONTAINS.DATA_ENTRY_USER_ARR.includes(role)) {
       payload = {
@@ -667,12 +673,12 @@ function CreateUserCreationForm() {
     producerType,
   ]);
 
-  const neftValue = watch("neftDefaultBank");
+  const neftValue = watch(COMMON.DEFAULT_HOUSE_BANK);
 
   useEffect(() => {
     if (products && products.length > 0 && editData && Object.keys(editData).length > 0) {
       Object.entries(editData).forEach(([key, value]) => {
-        if (key === 'product') {
+        if (key === FORM_LABEL.PRODUCT) {
           processKey(key, value);
         }
       });
@@ -701,7 +707,7 @@ function CreateUserCreationForm() {
               required
               disabled={!isEdit ? false : true}
               options={role || []}
-              validation={{ required: 'Role is required' }}
+              validation={{ required: REQUIRED_ERR.ROLE }}
               errors={errors}
               multiple={false}
               resetClicked={resetClicked}
@@ -721,7 +727,7 @@ function CreateUserCreationForm() {
               roleChanged={roleChanged}
               options={apiDataMap[COMMON.LOGIN_TYPE]}
               resetClicked={resetClicked}
-              validation={{ required: 'Login Type is required' }}
+              validation={{ required: REQUIRED_ERR.LOGIN_TYPE }}
               errors={errors}
               apiDataMap={apiDataMap}
               classes="w-full"
@@ -800,21 +806,25 @@ function CreateUserCreationForm() {
                     trigger={trigger}
                   />
                   {item?.subFields !== undefined &&
-                    item?.subFields['neft'] &&
-                    roleValue !== 'partner' &&
+                    item?.subFields[COMMON.PAYMENT_NEFT] &&
+                    roleValue !== COMMON.PARTNER &&
                     paymentsType &&
-                    paymentsType?.some((item) => item?.value === 'neft' || item?.value === 'all') && (
-                      <div className="grid gap-5" key={item?.subFields['neft'][0]?.id}>
+                    paymentsType?.some((item) => item?.value === COMMON.PAYMENT_NEFT || item?.value === COMMON.ALL) && (
+                      <div className="grid gap-5" key={item?.subFields[COMMON.PAYMENT_NEFT][0]?.id}>
                         <SelectField
-                          key={item?.subFields['neft'][0]?.id}
+                          key={item?.subFields[COMMON.PAYMENT_NEFT][0]?.id}
                           control={control}
-                          name={item?.subFields['neft'][0]?.id}
-                          label={item?.subFields['neft'][0]?.label}
-                          required={item?.subFields['neft'][0]?.required}
+                          name={item?.subFields[COMMON.PAYMENT_NEFT][0]?.id}
+                          label={item?.subFields[COMMON.PAYMENT_NEFT][0]?.label}
+                          required={item?.subFields[COMMON.PAYMENT_NEFT][0]?.required}
                           disabled={
-                            !isEdit ? item?.subFields['neft'][0]?.disabled : !item?.subFields['neft'][0]?.canEdit
+                            !isEdit
+                              ? item?.subFields[COMMON.PAYMENT_NEFT][0]?.disabled
+                              : !item?.subFields[COMMON.PAYMENT_NEFT][0]?.canEdit
                           }
-                          menuItem={item?.subFields['neft'][0]?.menuItem || apiDataMap['neftDefaultBank']}
+                          menuItem={
+                            item?.subFields[COMMON.PAYMENT_NEFT][0]?.menuItem || apiDataMap[COMMON.DEFAULT_HOUSE_BANK]
+                          }
                           placeholder="Select"
                           errors={errors}
                           setValue={setValue}
@@ -825,22 +835,22 @@ function CreateUserCreationForm() {
                     )}
 
                   {item?.subFields !== undefined &&
-                    item?.subFields['neft'] &&
-                    roleValue !== 'partner' &&
-                    neftValue && 
+                    item?.subFields[COMMON.PAYMENT_NEFT] &&
+                    roleValue !== COMMON.PARTNER &&
+                    neftValue &&
                     paymentsType &&
-                    paymentsType?.some((item) => item?.value === 'neft' || item?.value === 'all') && (
+                    paymentsType?.some((item) => item?.value === COMMON.PAYMENT_NEFT || item?.value === COMMON.ALL) && (
                       <InputField
-                        id={item?.subFields['accountNumber'][0]?.id}
+                        id={item?.subFields[COMMON.ACCOUNT_NUMBER][0]?.id}
                         required={neftValue ? true : false}
-                        label={item?.subFields['accountNumber'][0]?.label}
-                        validation={item?.subFields['accountNumber'][0]?.validation}
+                        label={item?.subFields[COMMON.ACCOUNT_NUMBER][0]?.label}
+                        validation={item?.subFields[COMMON.ACCOUNT_NUMBER][0]?.validation}
                         control={control}
                         errors={errors}
                         disabled={
                           !isEdit
-                            ? item?.subFields['accountNumber'][0]?.disabled
-                            : !item?.subFields['accountNumber'][0]?.canEdit
+                            ? item?.subFields[COMMON.ACCOUNT_NUMBER][0]?.disabled
+                            : !item?.subFields[COMMON.ACCOUNT_NUMBER][0]?.canEdit
                         }
                         classes="w-full"
                         trigger={trigger}
@@ -849,17 +859,21 @@ function CreateUserCreationForm() {
 
                   {item?.subFields &&
                     paymentsType &&
-                    paymentsType?.some((item) => item?.value === 'cheque' || item?.value === 'all') && (
+                    paymentsType?.some(
+                      (item) => item?.value === COMMON.PAYMENT_CHEQUE || item?.value === COMMON.ALL
+                    ) && (
                       <div>
                         <SelectField
-                          key={item?.subFields['cheque'][0]?.id}
+                          key={item?.subFields[COMMON.PAYMENT_CHEQUE][0]?.id}
                           control={control}
-                          name={item?.subFields['cheque'][0]?.id}
-                          label={item?.subFields['cheque'][0]?.label}
-                          required={item?.subFields['cheque'][0]?.required}
-                          menuItem={item?.subFields['cheque'][0]?.menuItem}
+                          name={item?.subFields[COMMON.PAYMENT_CHEQUE][0]?.id}
+                          label={item?.subFields[COMMON.PAYMENT_CHEQUE][0]?.label}
+                          required={item?.subFields[COMMON.PAYMENT_CHEQUE][0]?.required}
+                          menuItem={item?.subFields[COMMON.PAYMENT_CHEQUE][0]?.menuItem}
                           disabled={
-                            !isEdit ? item?.subFields['cheque'][0]?.disabled : !item?.subFields['cheque'][0]?.canEdit
+                            !isEdit
+                              ? item?.subFields[COMMON.PAYMENT_CHEQUE][0]?.disabled
+                              : !item?.subFields[COMMON.PAYMENT_CHEQUE][0]?.canEdit
                           }
                           placeholder="Select"
                           errors={errors}
