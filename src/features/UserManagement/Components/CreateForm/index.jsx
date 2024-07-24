@@ -399,7 +399,7 @@ function CreateUserCreationForm() {
       sendEmail: ARR_CONTAINS.PRODUCER_PARTNER_ARR.includes(roleName) ? sendEmail === FORM_VALUE.YES : '',
       domain,
       paymentType: paymentTypeNames,
-      houseBankId: ARR_CONTAINS.PRODUCER_ARR.includes(roleName) ? neftDefaultBank : '',
+      houseBankId: ARR_CONTAINS.PRODUCER_ARR.includes(roleName) ? neftDefaultBank && Object.keys(neftDefaultBank).length > 0 ? neftDefaultBank : '' :  '',
       ocrChequeScanning: paymentTypeNames.includes(COMMON.CHEQUE)
         ? chequeOCRScanning && chequeOCRScanning === FORM_VALUE.YES
         : '',
