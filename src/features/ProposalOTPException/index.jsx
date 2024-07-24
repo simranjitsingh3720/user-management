@@ -20,13 +20,13 @@ function ProposalOTPException() {
   const [date, setDate] = useState({ startDate: '', endDate: '' });
 
   const { data, loading, totalPage, fetchProposalOtp } = useGetProposalOTPList(
-    page, pageSize, order, orderBy, date, query, searched
+    page, pageSize, order, orderBy, date
   );
 
   const header = useMemo(() => Header(), []);
 
   const handleGo = () => {
-    fetchProposalOtp();
+    fetchProposalOtp(query, searched, date);
   };
 
   return (

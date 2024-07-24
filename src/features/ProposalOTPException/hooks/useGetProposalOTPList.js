@@ -7,7 +7,7 @@ import { setTableName } from '../../../stores/slices/exportSlice';
 import { useDispatch } from 'react-redux';
 import apiUrls from '../../../utils/apiUrls';
 
-function useGetProposalOTPList(page, pageSize, order, orderBy, date, query, searched) {
+function useGetProposalOTPList(page, pageSize, order, orderBy) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [totalPage, setTotalPage] = useState(0);
@@ -15,7 +15,7 @@ function useGetProposalOTPList(page, pageSize, order, orderBy, date, query, sear
   const dispatch = useDispatch();
 
   const fetchProposalOtp = useCallback(
-    async () => {
+    async (query, searched, date) => {
       try {
         setLoading(true);
         let params = buildQueryString({
@@ -33,7 +33,7 @@ function useGetProposalOTPList(page, pageSize, order, orderBy, date, query, sear
           params += `&startDate=${date.startDate}&endDate=${date.endDate}`;
         }
 
-        let url = `${apiUrls.otpException}?${params}`;
+        let url = `${apiUrls.proposalOtpException}?${params}`;
 
         const response = await axiosInstance.get(url);
 
@@ -42,7 +42,7 @@ function useGetProposalOTPList(page, pageSize, order, orderBy, date, query, sear
         const newData = data.data.map((item) => {
           const {
             lob,
-            otpException: { id, type, startDate, endDate, status, createdAt, updatedAt, label },
+            proposalOtpException: { id, type, startDate, endDate, status, createdAt, updatedAt, label },
             producer,
             product,
           } = item;
@@ -77,7 +77,7 @@ function useGetProposalOTPList(page, pageSize, order, orderBy, date, query, sear
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [page, orderBy, order, pageSize, dispatch]
+    [page, pageSize, order, orderBy, dispatch]
   );
 
   useEffect(() => {
