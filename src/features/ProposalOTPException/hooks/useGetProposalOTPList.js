@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import axiosInstance from '../../../utils/axiosInstance';
 import { buildQueryString } from '../../../utils/globalizationFunction';
 import { COMMON_WORDS } from '../../../utils/constants';
