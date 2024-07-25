@@ -22,8 +22,7 @@ const CustomAutoCompleteWithoutCheckbox = ({
   helperText,
   onChangeCallback,
   disabled,
-  trigger,
-  key
+  trigger
 }) => {
   return (
     <>

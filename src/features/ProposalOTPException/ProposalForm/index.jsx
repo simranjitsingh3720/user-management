@@ -34,6 +34,8 @@ function ProposalForm() {
       product: null,
       startDate: null,
       endDate: null,
+      groupStatus: 'byProducerCode',
+      channel: null,
     },
   });
 
@@ -42,25 +44,6 @@ function ProposalForm() {
   const { errors } = formState;
 
   const { data: proposalDataByID, fetchData: fetchDataProposalById } = useGetProposalOTPById();
-
-  useEffect(() => {
-    if (id) fetchDataProposalById(id);
-  }, [id]);
-
-  useEffect(() => {
-    if (proposalDataByID && proposalDataByID?.data) {
-      setValue('producerCode', proposalDataByID?.data?.producer);
-      setValue('lob', proposalDataByID?.data?.lob);
-      setValue('product', proposalDataByID?.data?.product);
-      setValue('startDate', dayjs(proposalDataByID?.data?.startDate, 'DD/MM/YYYY').format('DD/MM/YYYY'));
-      setValue('endDate', dayjs(proposalDataByID?.data?.endDate, 'DD/MM/YYYY').format('DD/MM/YYYY'));
-      setOTPValue(proposalDataByID?.data?.producer ? 'byProducerCode' : 'byChannel');
-    }
-  }, [proposalDataByID]);
-
-  const handleChange = (val) => {
-    setOTPValue(val);
-  };
 
   // Get User Data
   useEffect(() => {
@@ -78,8 +61,31 @@ function ProposalForm() {
     dispatch(clearProducts());
   }, [dispatch]);
 
-  const { postData, loading: proposalOTPLoading } = useCreateProposalOTP();
+  useEffect(() => {
+    if (id) fetchDataProposalById(id);
+  }, [id]);
 
+  useEffect(() => {
+    if (proposalDataByID && proposalDataByID?.data) {
+      debugger;
+      if (proposalDataByID?.data?.isChannel) {
+        setValue('channel', proposalDataByID?.data?.channelId);
+      } else {
+        setValue('producerCode', proposalDataByID?.data?.producer);
+      }
+      setValue('lob', proposalDataByID?.data?.lob);
+      setValue('product', proposalDataByID?.data?.product);
+      setValue('startDate', dayjs(proposalDataByID?.data?.startDate, 'DD/MM/YYYY').format('DD/MM/YYYY'));
+      setValue('endDate', dayjs(proposalDataByID?.data?.endDate, 'DD/MM/YYYY').format('DD/MM/YYYY'));
+      setValue('groupStatus', proposalDataByID?.data?.isChannel ? 'byChannel' : 'byProducerCode');
+      setOTPValue(proposalDataByID?.data?.isChannel ? 'byChannel' : 'byProducerCode');
+    }
+  }, [proposalDataByID]);
+
+  const handleChange = (val) => {
+    setOTPValue(val);
+  };
+  const { postData, loading: proposalOTPLoading } = useCreateProposalOTP();
   const { UpdateDataFun } = useUpdateProposal();
 
   const onSubmit = (data) => {
@@ -139,8 +145,7 @@ function ProposalForm() {
                 required={true}
                 control={control}
                 name="groupStatus"
-                defaultValue="byProducerCode"
-                disabled={id}
+                disabled={id ? true : false}
                 onChangeCallback={handleChange}
               />
             </Grid>
@@ -184,7 +189,7 @@ function ProposalForm() {
                   error={Boolean(errors.producerCode)}
                   helperText={errors.producerCode?.message}
                   disableClearable={true}
-                  trigger={trigger}  
+                  trigger={trigger}
                   disabled={id ? true : false}
                 />
               </Grid>
