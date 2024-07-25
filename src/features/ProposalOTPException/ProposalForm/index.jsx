@@ -30,7 +30,7 @@ function ProposalForm() {
   const { fetchProposalOtp } = useGetProposalOTPList();
   const [proposalDataByID, setProposalDataByID] = useState(null);
   const { postData, loading: proposalOTPLoading } = useCreateProposalOTP();
-  const { UpdateDataFun } = useUpdateProposal();
+  const { updateProposalData } = useUpdateProposal();
 
   const {
     handleSubmit,
@@ -119,7 +119,7 @@ function ProposalForm() {
         },
       };
 
-      UpdateDataFun(payload);
+      updateProposalData(payload);
     } else {
       let payload = {};
       if (OTPValue === 'byChannel') {

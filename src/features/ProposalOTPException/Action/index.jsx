@@ -7,7 +7,7 @@ import useUpdateProposal from '../../ProposalOTPException/hooks/useUpdateProposa
 const Action = ({ row, data, updateStatus }) => {
   const dispatch = useDispatch();
 
-  const { UpdateDataFun } = useUpdateProposal()
+  const { updateProposalData } = useUpdateProposal()
 
   const confirmAction = () => {
     const payload = {
@@ -17,7 +17,7 @@ const Action = ({ row, data, updateStatus }) => {
       },
     }
 
-    UpdateDataFun(payload, data, updateStatus)
+    updateProposalData(payload, data, updateStatus)
     dispatch(hideDialog());
   };
 

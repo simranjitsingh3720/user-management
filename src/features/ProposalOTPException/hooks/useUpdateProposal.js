@@ -10,7 +10,7 @@ function useUpdateProposal() {
 
   const navigate = useNavigate();
 
-  async function UpdateDataFun(payload, data, updateStatus) {
+  async function updateProposalData(payload, data, updateStatus) {
     setLoading(true);
     try {
       const response = await axiosInstance.put(
@@ -32,7 +32,7 @@ function useUpdateProposal() {
       setLoading(false); 
     }
   }
-  return { UpdateDataFun, updateLoading: loading };
+  return { updateProposalData, updateLoading: loading };
 }
 
 export default useUpdateProposal;
