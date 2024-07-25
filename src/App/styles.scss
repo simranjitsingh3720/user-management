@@ -74,3 +74,21 @@ $breakpoint-xl: 1536px;
 .selected {
   filter: invert(88%) sepia(58%) saturate(920%) hue-rotate(180deg) brightness(100%) contrast(66%);
 }
+
+
+// Fix all input placeholder text to capitalize
+::-webkit-input-placeholder {
+  text-transform: capitalize;
+}
+
+:-moz-placeholder { 
+  text-transform: capitalize;
+}
+
+::-moz-placeholder {  
+  text-transform: capitalize;
+}
+
+:-ms-input-placeholder { 
+  text-transform: capitalize;
+}

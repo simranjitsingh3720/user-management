@@ -51,7 +51,8 @@ export const COMMON_WORDS = {
   HAS_HOUSE_BANK: 'hasHouseBank',
   OTP_EXCEPTION: 'OTP Exception',
   CHILDS: 'childs',
-  HAS_CHILDS: 'manages'
+  HAS_CHILDS: 'manages',
+  PRODUCT_DETAILS: 'Product Details',
 };
 
 export const HEADER = {

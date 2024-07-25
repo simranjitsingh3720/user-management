@@ -2,7 +2,6 @@ import { Card, CardContent, Box, Grid, Switch, FormLabel, FormControlLabel } fro
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import useGetUserData from '../../BANCALogin/hooks/useGetUserData';
 import useGetProducerData from '../../BANCALogin/hooks/useGetProducerData';
 import useCreateEmployeeConfig from '../hooks/useCreateEmployeeConfig';
 import useGetEmployeeByProducer from '../hooks/useGetEmployeeById';
@@ -12,13 +11,21 @@ import CustomAutoCompleteWithoutCheckbox from '../../../components/CustomAutoCom
 import { COMMON_WORDS, FORM_HEADER_TEXT } from '../../../utils/constants';
 import ListLoader from '../../../components/ListLoader';
 import CustomFormHeader from '../../../components/CustomFormHeader';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchUser } from '../../../stores/slices/userSlice';
 
 function EmployeeConfigurationForm({ fetchData: listFetchFun }) {
   const params = useParams();
   const { id } = params;
+  const dispatch = useDispatch();
   const { producerList, fetchData, loading: producerLoading } = useGetProducerData();
   const [dataList, setDataList] = useState([]);
   const { data: EmployeeProducerData, fetchData: fetchDataByProducer } = useGetEmployeeByProducer();
+  const { user } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    dispatch(fetchUser({ userType: COMMON_WORDS.PRODUCER, searchKey: COMMON_WORDS.ROLE_NAME, isAll: true }));
+  }, [dispatch])
 
   useEffect(() => {
     if (EmployeeProducerData && EmployeeProducerData?.data) {
@@ -49,7 +56,6 @@ function EmployeeConfigurationForm({ fetchData: listFetchFun }) {
     },
   });
 
-  const { userData } = useGetUserData();
   const { errors } = formState;
   const { postData, loading } = useCreateEmployeeConfig(listFetchFun);
   const { UpdateDataFun, loading: updateLoading } = useUpdateEmployeeConfig(listFetchFun);
@@ -117,9 +123,9 @@ function EmployeeConfigurationForm({ fetchData: listFetchFun }) {
                   name="producer"
                   label="Select Producer"
                   required={true}
-                  options={userData || []}
+                  options={user.data || []}
                   getOptionLabel={(option) => {
-                    return `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`;
+                    return `${option?.firstName} ${option?.lastName}`;
                   }}
                   isOptionEqualToValue={(option, value) => option.id === value.id}
                   control={control}
@@ -129,8 +135,8 @@ function EmployeeConfigurationForm({ fetchData: listFetchFun }) {
                   disableClearable={true}
                   placeholder={COMMON_WORDS.SELECT}
                   renderOption={(props, option) => (
-                    <li {...props} key={option.id}>
-                      {option?.firstName?.toUpperCase()} {option?.lastName?.toUpperCase()}
+                    <li {...props} key={option.id} style={{ textTransform: 'capitalize' }}>
+                      {option?.firstName} {option?.lastName}
                     </li>
                   )}
                   onChangeCallback={(newValue) => {
@@ -147,7 +153,7 @@ function EmployeeConfigurationForm({ fetchData: listFetchFun }) {
                     <Grid container spacing={2}>
                       {dataList.map((item) => (
                         <Grid item xs={12} md={6} lg={4}>
-                          <FormLabel component="legend">{item.name}</FormLabel>
+                          <FormLabel component="legend" sx={{ textTransform: 'capitalize' }}>{item.name}</FormLabel>
                           <FormControlLabel
                             control={
                               <Switch
