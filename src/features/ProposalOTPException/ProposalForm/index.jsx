@@ -153,7 +153,7 @@ function ProposalForm() {
                   required={true}
                   options={channelType || []}
                   getOptionLabel={(option) => {
-                    return `${option?.label?.toUpperCase() || ''} - ${option?.numChannelCode || ''}`;
+                    return `${option?.label || ''}`;
                   }}
                   control={control}
                   rules={{ required: 'Channel is required' }}
@@ -162,14 +162,11 @@ function ProposalForm() {
                   disableClearable={true}
                   placeholder={COMMON_WORDS.SELECT}
                   renderOption={(props, option) => (
-                    <li {...props} key={option.id}>
-                      {option?.label?.toUpperCase()} - {option?.numChannelCode}
+                    <li {...props} key={option.id} style={{ textTransform: 'capitalize' }}>
+                      {option?.label}
                     </li>
                   )}
                   trigger={trigger}
-                  onChangeCallback={(newValue) => {
-                    dispatch(fetchLobData({ isAll: true }));
-                  }}
                 />
               </Grid>
             ) : (
@@ -180,12 +177,13 @@ function ProposalForm() {
                   control={control}
                   rules={{ required: 'Producer Name is required' }}
                   options={user?.data || []}
-                  getOptionLabel={(option) => `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`}
+                  getOptionLabel={(option) => `${option?.firstName} ${option?.lastName}`}
+                  isOptionEqualToValue={(option, value) => option?.id === value?.id}
                   placeholder="Select"
                   error={Boolean(errors.producerCode)}
                   helperText={errors.producerCode?.message}
                   disableClearable={true}
-                  trigger={trigger}
+                  trigger={trigger}  
                 />
               </Grid>
             )}
@@ -197,7 +195,7 @@ function ProposalForm() {
                 control={control}
                 rules={{ required: 'LOB is required' }}
                 options={lob?.data || []}
-                getOptionLabel={(option) => `${option?.lob?.toUpperCase()} - ${option?.lobCode}`}
+                getOptionLabel={(option) => `${option?.lob}`}
                 isOptionEqualToValue={(option, value) => option?.id === value?.id}
                 placeholder="Select"
                 required
@@ -219,7 +217,7 @@ function ProposalForm() {
                 control={control}
                 rules={{ required: 'Product is required' }}
                 options={products?.data || []}
-                getOptionLabel={(option) => `${option?.product?.toUpperCase()} - ${option?.productCode}`}
+                getOptionLabel={(option) => `${option?.product}`}
                 isOptionEqualToValue={(option, value) => option?.id === value?.id}
                 placeholder="Select"
                 required
