@@ -105,7 +105,6 @@ function ProposalForm() {
   }, [proposalDataByID]);
 
   const handleChange = (val) => {
-    debugger
     setOTPValue(val);
   };
   

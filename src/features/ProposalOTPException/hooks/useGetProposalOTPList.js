@@ -40,7 +40,6 @@ function useGetProposalOTPList(page, pageSize, order, orderBy) {
 
         const { data } = response;
 
-        debugger
         if(id) {
           return data.data;
         }
