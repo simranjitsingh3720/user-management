@@ -33,8 +33,47 @@ function GroupModule() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // Check Permission
   const { canCreate, canUpdate } = usePermissions();
+
+  const fetchGroupData = useCallback(() => {
+    let searchString = '';
+    let edge = '';
+    let searchKey = '';
+  
+    switch (searched) {
+      case COMMON_WORDS.PERMISSIONNAME:
+        searchString = permissionValue.map((item) => item.id).join(',');
+        edge = COMMON_FIELDS.hasPermission;
+        break;
+      case COMMON_WORDS.GROUPNAME:
+        searchString = query;
+        searchKey = searched;
+        break;
+      default:
+        break;
+    }
+  
+    const params = {
+      page,
+      pageSize,
+      order,
+      orderBy,
+      ...(edge && { edge }),
+      ...(searchString && { searchString }),
+      ...(edge || searchString ? { searchKey } : {}),
+    };
+  
+    dispatch(getGroup(params));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, page, pageSize, order, orderBy]);
+  
+  const handleGo = useCallback(() => {
+    setPage(0);
+  }, []);
+
+  useEffect(() => {
+    fetchGroupData();
+  }, [fetchGroupData]);
 
   const updateGroupStatus = useCallback(
     (id, data) => {
@@ -55,17 +94,6 @@ function GroupModule() {
   );
 
   useEffect(() => {
-    dispatch(
-      getGroup({
-        page,
-        pageSize,
-        order,
-        orderBy,
-      })
-    );
-  }, [dispatch, page, pageSize, order, orderBy]);
-
-  useEffect(() => {
     const transformedData =
       group?.data?.map((item) => {
         return {
@@ -81,7 +109,6 @@ function GroupModule() {
 
     setGroupData(transformedData);
   }, [group]);
-
   const handleGroupStatus = useCallback(
     (data, row) => {
       dispatch(
@@ -92,7 +119,7 @@ function GroupModule() {
         })
       );
     },
-    [dispatch]
+    [dispatch, updateGroupStatus]
   );
 
   const showGroupPermission = useCallback(
@@ -120,9 +147,7 @@ function GroupModule() {
     [handleGroupStatus, showGroupPermission, handleGroupEdit]
   );
 
-  const optionLabel = (option, type) => {
-    return option[type]?.toUpperCase() || '';
-  };
+  const optionLabel = (option, type) => option[type]?.toUpperCase() || '';
 
   const renderOptionFunction = (props, option, type) => (
     <li {...props} key={option?.id}>
@@ -157,63 +182,6 @@ function GroupModule() {
         break;
     }
   };
-
-  const fetchIdsAndConvert = (inputData) => inputData.map((item) => item.id).join();
-
-  const handleGo = useCallback(() => {
-    setPage(0);
-    let searchString = '';
-    let edge = '';
-    let searchKey = '';
-
-    switch (searched) {
-      case COMMON_WORDS.PERMISSIONNAME:
-        searchString = fetchIdsAndConvert(permissionValue);
-        edge = COMMON_FIELDS.hasPermission;
-        break;
-      case COMMON_WORDS.GROUPNAME:
-        searchKey = searched;
-        searchString = query;
-        break;
-      default:
-        break;
-    }
-
-    if (searchString && edge) {
-      dispatch(
-        getGroup({
-          page,
-          pageSize,
-          order,
-          orderBy,
-          ids: searchString,
-          edge: edge,
-        })
-      );
-    }
-    if (searchKey && searchString) {
-      dispatch(
-        getGroup({
-          page,
-          pageSize,
-          order,
-          orderBy,
-          searchKey: searchKey,
-          searchString: searchString,
-        })
-      );
-    }
-    if (searchString === '' || searchKey === '') {
-      dispatch(
-        getGroup({
-          page,
-          pageSize,
-          order,
-          orderBy,
-        })
-      );
-    }
-  }, [searched, permissionValue, query, dispatch, page, pageSize, order, orderBy]);
 
   return (
     <>
