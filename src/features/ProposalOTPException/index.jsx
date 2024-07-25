@@ -28,7 +28,7 @@ function ProposalOTPException() {
 
   const handleEditClick = useCallback((row) => {
     navigate(`/proposalotpexception/form/${row.id}`);
-  }, [])
+  }, [navigate])
 
   const header = useMemo(() => Header(handleEditClick), [handleEditClick]);
 
