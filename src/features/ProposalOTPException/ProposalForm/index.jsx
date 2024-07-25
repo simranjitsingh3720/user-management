@@ -108,6 +108,7 @@ function ProposalForm() {
           lobId: data?.lob?.id,
           startDate: data?.startDate,
           endDate: data?.endDate,
+          isChannel: true,
         };
       } else {
         payload = {
@@ -116,6 +117,7 @@ function ProposalForm() {
           lobId: data?.lob?.id,
           startDate: data?.startDate,
           endDate: data?.endDate,
+          isChannel: false,
         };
       }
 
