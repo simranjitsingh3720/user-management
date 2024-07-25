@@ -1,18 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import {
-  Grid,
-  Box,
-  Card,
-  CardContent,
-} from '@mui/material';
+import { Grid, Box, Card, CardContent } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import dayjs from 'dayjs';
 import useCreateProposalOTP from '../hooks/usecreateProposalOTP';
 import useGetProposalOTPById from '../hooks/useGetProposalOTPById';
 import useUpdateProposal from '../hooks/useUpdateProposal';
-import useGetProducerData from '../../BANCALogin/hooks/useGetProducerData';
-import useGetLobListData from '../hooks/useGetLobListData';
 import CustomButton from '../../../components/CustomButton';
 import CustomFormHeader from '../../../components/CustomFormHeader';
 import { COMMON_WORDS, FORM_HEADER_TEXT } from '../../../utils/constants';
@@ -23,11 +16,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import CustomAutoCompleteWithoutCheckbox from '../../../components/CustomAutoCompleteWithoutCheckbox';
 import { getChannels } from '../../../Redux/getChannel';
 import DateField from '../../../components/CustomDateInput';
+import { fetchLobData } from '../../../stores/slices/lobSlice';
+import { clearProducts, fetchAllProductData } from '../../../stores/slices/productSlice';
 
 function ProposalForm() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
+  const { lob } = useSelector((state) => state.lob);
+  const { products } = useSelector((state) => state.product);
   const channelType = useSelector((state) => state.channelType.channelType);
 
   const { handleSubmit, control, setValue, formState, trigger, watch } = useForm({
@@ -65,10 +62,6 @@ function ProposalForm() {
     setOTPValue(val);
   };
 
-  const { producerList, fetchData: fetchProducerListData } = useGetProducerData();
-
-  const { data: lobList, fetchData: fetchLobData } = useGetLobListData();
-
   // Get User Data
   useEffect(() => {
     dispatch(
@@ -81,6 +74,8 @@ function ProposalForm() {
     );
 
     dispatch(getChannels());
+    dispatch(fetchLobData({ isAll: true, status: true }));
+    dispatch(clearProducts());
   }, [dispatch]);
 
   const { postData, loading: proposalOTPLoading } = useCreateProposalOTP();
@@ -173,7 +168,7 @@ function ProposalForm() {
                   )}
                   trigger={trigger}
                   onChangeCallback={(newValue) => {
-                    // to do
+                    dispatch(fetchLobData({ isAll: true }));
                   }}
                 />
               </Grid>
@@ -190,11 +185,6 @@ function ProposalForm() {
                   error={Boolean(errors.producerCode)}
                   helperText={errors.producerCode?.message}
                   disableClearable={true}
-                  onChangeCallback={(newValue) => {
-                    fetchProducerListData(newValue.id);
-                    setValue('product', null);
-                    setValue('lob', null);
-                  }}
                   trigger={trigger}
                 />
               </Grid>
@@ -202,37 +192,39 @@ function ProposalForm() {
 
             <Grid item xs={12} sm={6} lg={4}>
               <CustomAutoCompleteWithoutCheckbox
-                name="product"
-                label="Product"
+                name="lob"
+                label="LOB"
                 control={control}
-                rules={{ required: 'Product is required' }}
-                options={producerList?.data || []}
-                getOptionLabel={(option) => `${option?.product?.toUpperCase()} - ${option?.productCode}`}
+                rules={{ required: 'LOB is required' }}
+                options={lob?.data || []}
+                getOptionLabel={(option) => `${option?.lob?.toUpperCase()} - ${option?.lobCode}`}
+                isOptionEqualToValue={(option, value) => option?.id === value?.id}
                 placeholder="Select"
                 required
-                error={Boolean(errors.product)}
-                helperText={errors.product?.message}
+                error={Boolean(errors.lob)}
+                helperText={errors.lob?.message}
                 disableClearable={true}
-                onChangeCallback={(newValue) => {
-                  fetchLobData(newValue.id);
-                  setValue('lob', null);
-                }}
                 trigger={trigger}
+                onChangeCallback={(newValue) => {
+                  setValue('product', null);
+                  dispatch(fetchAllProductData({ ids: newValue.id, status: true, edge: COMMON_WORDS.HAS_LOB }));
+                }}
               />
             </Grid>
 
             <Grid item xs={12} sm={6} lg={4}>
               <CustomAutoCompleteWithoutCheckbox
-                name="lob"
-                label="LOB"
+                name="product"
+                label="Product"
                 control={control}
-                rules={{ required: 'LOB is required' }}
-                options={lobList?.data || []}
-                getOptionLabel={(option) => `${option?.lob?.toUpperCase()} - ${option?.lobCode}`}
+                rules={{ required: 'Product is required' }}
+                options={products?.data || []}
+                getOptionLabel={(option) => `${option?.product?.toUpperCase()} - ${option?.productCode}`}
+                isOptionEqualToValue={(option, value) => option?.id === value?.id}
                 placeholder="Select"
                 required
-                error={Boolean(errors.lob)}
-                helperText={errors.lob?.message}
+                error={Boolean(errors.product)}
+                helperText={errors.product?.message}
                 disableClearable={true}
                 trigger={trigger}
               />

@@ -23,8 +23,8 @@ function useGetProposalOTPList(page, pageSize, order, orderBy) {
           sortKey: orderBy,
           sortOrder: order,
           pageSize: pageSize,
-          childFieldsToFetch: COMMON_WORDS.PRODUCER + ',' + COMMON_WORDS.LOB + ',' + COMMON_WORDS.PRODUCT,
-          childFieldsEdge: COMMON_WORDS.HAS_PRODUCER + ',' + COMMON_WORDS.HAS_LOB + ',' + COMMON_WORDS.HAS_PRODUCT,
+          childFieldsToFetch: `${COMMON_WORDS.PRODUCER},${COMMON_WORDS.LOB},${COMMON_WORDS.PRODUCT},${COMMON_WORDS.CHANNEL}`,
+          childFieldsEdge: `${COMMON_WORDS.HAS_PRODUCER},${COMMON_WORDS.HAS_LOB},${COMMON_WORDS.HAS_PRODUCT},${COMMON_WORDS.HAS_CHANNEL}`,
         });
         if (query && searched) {
           params += '&searchKey=' + searched + '&searchString=' + query;
@@ -42,20 +42,26 @@ function useGetProposalOTPList(page, pageSize, order, orderBy) {
         const newData = data.data.map((item) => {
           const {
             lob,
-            proposalOtpException: { id, startDate, endDate, status, createdAt, updatedAt, label },
+            proposalOtpException: { id, startDate, endDate, status, createdAt, updatedAt, label, isChannel },
+            channel,
             producer,
             product,
           } = item;
 
-          const producerName = `${producer?.[0]?.firstName ?? ''} ${producer?.[0]?.lastName ?? ''}`.trim();
+          let name = ''; 
           const lobName = lob?.[0]?.lob ?? '';
           const productName = product?.[0]?.product ?? '';
-          const type = producerName ? 'Producer' : 'Channel';
+
+          if(isChannel){
+            name = `${channel?.[0]?.txtChannelName ?? ''}`;
+          } else {
+            name = `${producer?.[0]?.firstName ?? ''} ${producer?.[0]?.lastName ?? ''}`;
+          }
 
           return {
             id: id,
-            type: type,
-            producerName,
+            type: isChannel ? 'Channel' : 'Producer',
+            producerName: name,
             lob: lobName,
             product: productName,
             startDate: startDate,
