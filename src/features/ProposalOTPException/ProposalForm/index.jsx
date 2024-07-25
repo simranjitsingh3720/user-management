@@ -27,7 +27,14 @@ function ProposalForm() {
   const { products } = useSelector((state) => state.product);
   const channelType = useSelector((state) => state.channelType.channelType);
 
-  const { handleSubmit, control, setValue, formState, trigger, watch } = useForm({
+  const {
+    handleSubmit,
+    control,
+    setValue,
+    formState: { errors },
+    trigger,
+    watch,
+  } = useForm({
     defaultValues: {
       producerCode: null,
       lob: null,
@@ -40,13 +47,10 @@ function ProposalForm() {
   });
 
   const [OTPValue, setOTPValue] = useState('byProducerCode');
-
-  const { errors } = formState;
-
   const { data: proposalDataByID, fetchData: fetchDataProposalById } = useGetProposalOTPById();
 
-  // Get User Data
   useEffect(() => {
+    // Get User Data
     dispatch(
       fetchUser({
         userType: COMMON_WORDS.PRODUCER,
@@ -56,29 +60,31 @@ function ProposalForm() {
       })
     );
 
-    dispatch(getChannels());
-    dispatch(fetchLobData({ isAll: true, status: true }));
-    dispatch(clearProducts());
+    dispatch(getChannels()); // Get Channel Data
+    dispatch(fetchLobData({ isAll: true, status: true })); // Get Lobs Data
+    dispatch(clearProducts()); // Clear Product
   }, [dispatch]);
 
   useEffect(() => {
-    if (id) fetchDataProposalById(id);
+    if (id) {
+      fetchDataProposalById(id);
+    }
   }, [id]);
 
   useEffect(() => {
     if (proposalDataByID && proposalDataByID?.data) {
-      debugger;
-      if (proposalDataByID?.data?.isChannel) {
+      const { lob, product, startDate, endDate, isChannel } = proposalDataByID?.data;
+      setOTPValue(isChannel ? 'byChannel' : 'byProducerCode');
+      if (isChannel) {
         setValue('channel', proposalDataByID?.data?.channelId);
       } else {
         setValue('producerCode', proposalDataByID?.data?.producer);
       }
-      setValue('lob', proposalDataByID?.data?.lob);
-      setValue('product', proposalDataByID?.data?.product);
-      setValue('startDate', dayjs(proposalDataByID?.data?.startDate, 'DD/MM/YYYY').format('DD/MM/YYYY'));
-      setValue('endDate', dayjs(proposalDataByID?.data?.endDate, 'DD/MM/YYYY').format('DD/MM/YYYY'));
-      setValue('groupStatus', proposalDataByID?.data?.isChannel ? 'byChannel' : 'byProducerCode');
-      setOTPValue(proposalDataByID?.data?.isChannel ? 'byChannel' : 'byProducerCode');
+      setValue('lob', lob);
+      setValue('product', product);
+      setValue('startDate', dayjs(startDate, 'DD/MM/YYYY').format('DD/MM/YYYY'));
+      setValue('endDate', dayjs(endDate, 'DD/MM/YYYY').format('DD/MM/YYYY'));
+      setValue('groupStatus', isChannel ? 'byChannel' : 'byProducerCode');
     }
   }, [proposalDataByID]);
 
@@ -158,7 +164,10 @@ function ProposalForm() {
                   required={true}
                   options={channelType || []}
                   getOptionLabel={(option) => {
-                    return `${option?.label || ''}`;
+                    return `${option?.txtChannelName || ''}`;
+                  }}
+                  isOptionEqualToValue={(option, value) => {
+                    return option?.id === value
                   }}
                   control={control}
                   rules={{ required: 'Channel is required' }}
@@ -166,11 +175,6 @@ function ProposalForm() {
                   helperText={errors.channel?.message}
                   disableClearable={true}
                   placeholder={COMMON_WORDS.SELECT}
-                  renderOption={(props, option) => (
-                    <li {...props} key={option.id} style={{ textTransform: 'capitalize' }}>
-                      {option?.label}
-                    </li>
-                  )}
                   trigger={trigger}
                   disabled={id ? true : false}
                 />
