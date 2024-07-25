@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useMemo, useRef, useState, useCallback, useEffect } from 'react';
 import styles from './styles.module.scss';
 import { Box } from '@mui/material';
 import { useForm } from 'react-hook-form';
@@ -7,29 +7,42 @@ import DownloadLogo from '../../../assets/DownloadLogo';
 import DocumentIconGray from '../../../assets/DocumentIconGray';
 import DocumentIconGreen from '../../../assets/DocumentIconGreen';
 import { toast } from 'react-toastify';
-import { COMMON_WORDS } from '../../../utils/constants';
 import SearchComponent from '../../../components/SearchComponent';
 import { getPlaceHolder } from '../../../utils/globalizationFunction';
-import { CONTENT, SEARCH_BY, SEARCH_OPTIONS } from './utils/constants';
+import { COMMON_VAR, CONTENT, SEARCH_BY, SEARCH_OPTIONS } from './utils/constants';
 import CustomTable from '../../../components/CustomTable';
 import { Header } from './utils/header';
 import CustomFormHeader from '../../../components/CustomFormHeader';
+import useGetBulkUpload from './hooks/useGetBulkUpload';
+import useSubmit from './hooks/useSubmit';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { COMMON } from '../../UserManagement/Components/utils/constants';
 
 function UploadForm() {
+  const [searched, setSearched] = useState(SEARCH_OPTIONS[0].value);
+  const [page, setPage] = useState(0);
+  const [pageSize, setPageSize] = useState(10);
+  const [order, setOrder] = useState('');
+  const [orderBy, setOrderBy] = useState('');
+  const [fileUploaded, setFileUploaded] = useState(false);
+  const [fileName, setFileName] = useState('');
+  const { postBulkUpload, getBulkTemplate } = useSubmit();
+  const { getBulkUpload, bulkUploadData, totalCount, setData } = useGetBulkUpload();
+  const { tableName } = useSelector((state) => state.export);
+  const navigate = useNavigate();
+  const [query, setQuery] = useState('');
+  const [file, setFile] = useState();
+  const header = useMemo(() => Header(), []);
+
   const {
     handleSubmit,
-    control,
-    formState: { errors },
-    watch,
-    setValue,
   } = useForm({
     defaultValues: {},
   });
 
-  const onSubmit = (data) => {
-  };
-
   const downloadTemplate = () => {
+    fetchTemplate();
   };
 
   const fileInputRef = useRef(null);
@@ -41,70 +54,80 @@ function UploadForm() {
     const file = event.target.files[0];
     if (file) {
       const fileType = file.name.split('.').pop().toLowerCase();
-      if (fileType === 'xls' || fileType === 'xlsx') {
+      if (fileType === COMMON_VAR.XLS_TYPE || fileType === COMMON_VAR.XLSX_TYPE) {
         const fileSize = file.size;
         const maxSize = 5 * 1024 * 1024; // 5 MB in bytes
         if (fileSize > maxSize) {
-          toast.error('File size exceeds 5 MB limit.');
+          toast.error(COMMON_VAR.FILE_SIZE_LIMIT_ERR);
           event.target.value = null;
         } else {
           setFileUploaded(true);
           setFileName(file.name);
+          setFile(event.target.files[0]);
         }
       } else {
-        toast.error('Please select a valid CSV or XLS file.');
+        toast.error(COMMON_VAR.INVALID_FILE_ERR);
       }
     }
   };
 
-  const [searched, setSearched] = useState(SEARCH_OPTIONS[0].value);
-  const getOptionsData = () => {
-    switch (searched) {
-      default:
-        return [];
+  const loadData = useCallback(() => {
+    getBulkUpload({
+      pageNo: page,
+      pageSize,
+      searchKey: COMMON_VAR.FILE_TYPE,
+      searchString: tableName,
+    });
+  }, [page, pageSize, getBulkUpload, tableName]);
+
+  const fetchTemplate = useCallback(() => {
+    getBulkTemplate({
+      fileName: COMMON_VAR.REVALIDATION_FILE_NAME,
+      label: COMMON_VAR.REVALIDATION_LABEL,
+    });
+  }, []);
+
+  useEffect(() => {
+    loadData();
+  }, [loadData]);
+
+  const handleGo = () => {
+    if (query) {
+      setData([]);
+      console.log(query);
+      getBulkUpload({pageNo:page, pageSize, searchKey: COMMON_VAR.FILE_TYPE,
+      searchString: tableName, searched, query});
+    } else {
+      getBulkUpload({searchKey: COMMON_VAR.FILE_TYPE,
+      searchString: tableName, pageNo: page,
+      pageSize,});
     }
   };
-
-  const getOption = () => {
-    switch (searched) {
-      default:
-        return [];
-    }
-  };
-
-  const setOption = (option) => {
-    switch (searched) {
-      default:
-        break;
-    }
-  };
-
-  const [page, setPage] = useState(0);
-  const [pageSize, setPageSize] = useState(5);
-  const [order, setOrder] = useState('');
-  const [orderBy, setOrderBy] = useState('');
-  const [fileUploaded, setFileUploaded] = useState(false);
-  const [fileName, setFileName] = useState('');
-
-  const optionLabel = (option, type) => {
-    if (type === COMMON_WORDS.PRODUCER) return option['firstName'] + ' ' + option['lastName'];
-    return option[type]?.toUpperCase() || '';
-  };
-
-  const renderOptionFunction = (props, option, type) => (
-    <li {...props} key={option?.id}>
-      {optionLabel(option, type)}
-    </li>
-  );
-
-  const handleGo = () => {};
-
-  const header = useMemo(() => Header(), []);
 
   const deleteBtn = () => {
     setFileName('');
     setFileUploaded(false);
+    setFile('');
   };
+
+  const onSubmit = async () => {
+    if (file && tableName) {
+      const formData = new FormData();
+      formData.append(COMMON_VAR.FILE, file);
+      formData.append(COMMON_VAR.FILE_TYPE, tableName);
+      const res = await postBulkUpload(formData);
+      console.log(res);
+      if (res && res.success && res.statusCode === 200) {
+        setFileUploaded(false);
+        setFile('');
+        setFileName('');
+      }
+    }
+  };
+
+  if (!tableName) {
+    navigate(-1)
+  }
 
   return (
     <>
@@ -112,7 +135,7 @@ function UploadForm() {
         <div className={styles.createContainer}>
           <div className="p-5">
             <CustomFormHeader
-              navigateRoute="/communication-restrictions"
+              navigateRoute={-1}
               headerText={CONTENT.TITLE}
               subHeading={CONTENT.HEADER}
             />
@@ -162,7 +185,9 @@ function UploadForm() {
                   <div className="text-xs text-fiord my-3">{CONTENT.FILE_UPLOAD_TEXT}</div>
                   <div className="my-5">
                     {' '}
-                    <CustomButton>{CONTENT.UPLOAD_BUTTON_TEXT}</CustomButton>
+                    <CustomButton type="submit" disabled={!fileUploaded}>
+                      {CONTENT.UPLOAD_BUTTON_TEXT}
+                    </CustomButton>
                   </div>
                 </div>
               </div>
@@ -174,27 +199,23 @@ function UploadForm() {
       <div className="h-5"></div>
       <Box className={`${styles.createContainer} px-7 pb-7`}>
         <SearchComponent
-          optionsData={getOptionsData()}
-          option={getOption()}
-          setOption={setOption}
-          optionLabel={(option) => optionLabel(option, COMMON_WORDS[searched.toUpperCase()])}
+          selectOptions={SEARCH_OPTIONS}
           placeholder={getPlaceHolder(SEARCH_BY)}
-          renderOptionFunction={(props, option) =>
-            renderOptionFunction(props, option, COMMON_WORDS[searched.toUpperCase()])
-          }
           searched={searched}
           setSearched={setSearched}
-          selectOptions={SEARCH_OPTIONS}
+          setQuery={setQuery}
+          textField
+          textFieldPlaceholder={COMMON.SEARCH_PLACEHOLDER}
           handleGo={handleGo}
           showButton={false}
           showExportButton={false}
         />
         <div className="mt-4">
           <CustomTable
-            rows={[]}
+            rows={bulkUploadData}
             columns={header}
             loading={false}
-            totalCount={0}
+            totalCount={totalCount}
             page={page}
             setPage={setPage}
             rowsPerPage={pageSize}

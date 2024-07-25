@@ -1,7 +1,7 @@
 export const SEARCH_OPTIONS = [
     {
       label: "File Name",
-      value: "file",
+      value: "fileName",
     },
 ];
 
@@ -15,3 +15,15 @@ export const CONTENT = {
   FILE_UPLOAD_TEXT: "Supported Format: XLS | Maximum Size: 5 MB",
   UPLOAD_BUTTON_TEXT: "Upload",
 };
+
+export const COMMON_VAR = {
+  FILE_TYPE: 'fileType',
+  FILE : 'file',
+  REVALIDATION_FILE_NAME: 'Revalidation_sample_file.xlsx',
+  REVALIDATION_LABEL: 'revalidationList',
+  INVALID_FILE_ERR: 'Please select a valid XLS file.',
+  FILE_SIZE_LIMIT_ERR: 'File size exceeds 5 MB limit.',
+  XLS_TYPE: 'xls',
+  XLSX_TYPE: 'xlsx'
+
+}
