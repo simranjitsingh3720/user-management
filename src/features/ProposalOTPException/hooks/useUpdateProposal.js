@@ -5,22 +5,26 @@ import { useNavigate } from "react-router-dom";
 import errorHandler from "../../../utils/errorHandler";
 
 
-function useUpdateProposal(setChangeStatusOpen, fetchGroupList) {
+function useUpdateProposal() {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
-  async function UpdateDataFun(data) {
+  async function UpdateDataFun(payload, data, updateStatus) {
     setLoading(true);
     try {
       const response = await axiosInstance.put(
         "/api/proposal-otp-exception",
-        data
+        payload
       );
+
       toast.success(response?.data?.message || "Proposal updated successfully");
-      navigate("/proposalotpexception");
-      if (setChangeStatusOpen) setChangeStatusOpen(false);
-      if (fetchGroupList) fetchGroupList();
+      if(updateStatus) {
+        updateStatus(payload.id, data);
+      } else {
+        navigate("/proposalotpexception");
+      }
+      
     } catch (error) {
      errorHandler.handleError(error);
       

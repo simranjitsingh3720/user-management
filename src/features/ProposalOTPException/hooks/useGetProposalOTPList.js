@@ -91,7 +91,7 @@ function useGetProposalOTPList(page, pageSize, order, orderBy) {
     fetchProposalOtp();
   }, [fetchProposalOtp]);
 
-  return { data, loading, fetchProposalOtp, totalPage };
+  return { data, loading, fetchProposalOtp, totalPage, setData };
 }
 
 export default useGetProposalOTPList;

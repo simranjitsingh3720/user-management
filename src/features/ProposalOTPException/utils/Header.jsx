@@ -1,6 +1,6 @@
 import EditIcon from '@mui/icons-material/Edit';
 
-export const Header = (handleEditClick) => {
+export const Header = (handleEditClick, handleStatusUpdate) => {
   return [
     {
       id: 'type',
@@ -44,7 +44,7 @@ export const Header = (handleEditClick) => {
         {
           component: 'switch',
           onClick: (data, row) => {
-            // updateRoleStatus(data, row);
+            handleStatusUpdate(data, row);
           },
         },
       ],

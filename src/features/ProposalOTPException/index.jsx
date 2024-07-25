@@ -8,6 +8,10 @@ import { ProposalOTPSearch } from './utils/constants';
 import { COMMON_WORDS } from '../../utils/constants';
 import SearchComponent from '../../components/SearchComponent';
 import { useNavigate } from 'react-router-dom';
+import { showDialog } from '../../stores/slices/dialogSlice';
+import Content from '../../components/CustomDialogContent';
+import Action from './Action';
+import { useDispatch } from 'react-redux';
 
 function ProposalOTPException() {
   const [page, setPage] = useState(0);
@@ -19,10 +23,11 @@ function ProposalOTPException() {
   const { canCreate, canUpdate } = usePermissions();
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [date, setDate] = useState({ startDate: '', endDate: '' });
 
-  const { data, loading, totalPage, fetchProposalOtp } = useGetProposalOTPList(
+  const { data, loading, totalPage, fetchProposalOtp, setData } = useGetProposalOTPList(
     page, pageSize, order, orderBy, date
   );
 
@@ -30,7 +35,39 @@ function ProposalOTPException() {
     navigate(`/proposalotpexception/form/${row.id}`);
   }, [navigate])
 
-  const header = useMemo(() => Header(handleEditClick), [handleEditClick]);
+  const updateStatus = useCallback(
+    (id, data) => {
+      const updatedData = data.map((item) => {
+        if (item.id === id) {
+          return {
+            ...item,
+            checked: !item.checked,
+            status: !item.status,
+          };
+        }
+        return item;
+      });
+      
+      setData(updatedData);
+    },
+    []
+  );
+
+  const handleStatusUpdate = useCallback(
+    (data, row) => {
+      dispatch(
+        showDialog({
+          title: COMMON_WORDS.CHANGE_STATUS,
+          content: <Content label={COMMON_WORDS.PROPOSAL_OTP_EXCEPTION} />,
+          actions: <Action row={row} data={data} updateStatus={updateStatus} />,
+        })
+      );
+    },
+    [dispatch, updateStatus]
+  );
+
+
+  const header = useMemo(() => Header(handleEditClick, handleStatusUpdate), [handleEditClick, handleStatusUpdate]);
 
   const handleGo = () => {
     fetchProposalOtp(query, searched, date);

@@ -53,6 +53,7 @@ export const COMMON_WORDS = {
   CHILDS: 'childs',
   HAS_CHILDS: 'manages',
   PRODUCT_DETAILS: 'Product Details',
+  PROPOSAL_OTP_EXCEPTION: 'Proposal OTP Exception',
 };
 
 export const HEADER = {
