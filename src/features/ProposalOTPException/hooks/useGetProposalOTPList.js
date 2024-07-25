@@ -15,10 +15,11 @@ function useGetProposalOTPList(page, pageSize, order, orderBy) {
   const dispatch = useDispatch();
 
   const fetchProposalOtp = useCallback(
-    async (query, searched, date) => {
+    async ({id = null, query=null, searched=null, date=null} = {}) => {
       try {
         setLoading(true);
         let params = buildQueryString({
+          id: id,
           pageNo: page,
           sortKey: orderBy,
           sortOrder: order,
@@ -38,6 +39,11 @@ function useGetProposalOTPList(page, pageSize, order, orderBy) {
         const response = await axiosInstance.get(url);
 
         const { data } = response;
+
+        debugger
+        if(id) {
+          return data.data;
+        }
 
         const newData = data.data.map((item) => {
           const {
@@ -86,10 +92,6 @@ function useGetProposalOTPList(page, pageSize, order, orderBy) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [page, pageSize, order, orderBy, dispatch]
   );
-
-  useEffect(() => {
-    fetchProposalOtp();
-  }, [fetchProposalOtp]);
 
   return { data, loading, fetchProposalOtp, totalPage, setData };
 }

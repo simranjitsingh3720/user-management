@@ -18,14 +18,20 @@ import { getChannels } from '../../../Redux/getChannel';
 import DateField from '../../../components/CustomDateInput';
 import { fetchLobData } from '../../../stores/slices/lobSlice';
 import { clearProducts, fetchAllProductData } from '../../../stores/slices/productSlice';
+import useGetProposalOTPList from '../hooks/useGetProposalOTPList';
 
 function ProposalForm() {
-  const { id } = useParams();
   const dispatch = useDispatch();
+  const { id } = useParams();
   const { user } = useSelector((state) => state.user);
   const { lob } = useSelector((state) => state.lob);
   const { products } = useSelector((state) => state.product);
   const channelType = useSelector((state) => state.channelType.channelType);
+
+  const { fetchProposalOtp } = useGetProposalOTPList();
+  const [proposalDataByID, setProposalDataByID] = useState(null);
+  const { postData, loading: proposalOTPLoading } = useCreateProposalOTP();
+  const { UpdateDataFun } = useUpdateProposal();
 
   const {
     handleSubmit,
@@ -46,8 +52,7 @@ function ProposalForm() {
     },
   });
 
-  const [OTPValue, setOTPValue] = useState('byProducerCode');
-  const { data: proposalDataByID, fetchData: fetchDataProposalById } = useGetProposalOTPById();
+  const [OTPValue, setOTPValue] = useState('byChannel');
 
   useEffect(() => {
     // Get User Data
@@ -60,28 +65,40 @@ function ProposalForm() {
       })
     );
 
-    dispatch(getChannels()); // Get Channel Data
-    dispatch(fetchLobData({ isAll: true, status: true })); // Get Lobs Data
-    dispatch(clearProducts()); // Clear Product
+    dispatch(getChannels());
+    dispatch(fetchLobData({ isAll: true, status: true }));
+    dispatch(clearProducts());
   }, [dispatch]);
 
   useEffect(() => {
-    if (id) {
-      fetchDataProposalById(id);
+    async function fetchData() {
+      if (id) {
+        const data = await fetchProposalOtp({ id });
+        setProposalDataByID(data[0]);
+      }
     }
+    fetchData();
   }, [id]);
 
   useEffect(() => {
-    if (proposalDataByID && proposalDataByID?.data) {
-      const { lob, product, startDate, endDate, isChannel } = proposalDataByID?.data;
+    if (proposalDataByID) {
+      const {
+        lob,
+        proposalOtpException: {startDate, endDate, isChannel },
+        channel,
+        producer,
+        product,
+      } = proposalDataByID;
+
+
       setOTPValue(isChannel ? 'byChannel' : 'byProducerCode');
       if (isChannel) {
-        setValue('channel', proposalDataByID?.data?.channelId);
+        setValue('channel', channel?.[0]);
       } else {
-        setValue('producerCode', proposalDataByID?.data?.producer);
+        setValue('producerCode', producer?.[0]);
       }
-      setValue('lob', lob);
-      setValue('product', product);
+      setValue('lob', lob?.[0]);
+      setValue('product', product?.[0]);
       setValue('startDate', dayjs(startDate, 'DD/MM/YYYY').format('DD/MM/YYYY'));
       setValue('endDate', dayjs(endDate, 'DD/MM/YYYY').format('DD/MM/YYYY'));
       setValue('groupStatus', isChannel ? 'byChannel' : 'byProducerCode');
@@ -89,11 +106,10 @@ function ProposalForm() {
   }, [proposalDataByID]);
 
   const handleChange = (val) => {
+    debugger
     setOTPValue(val);
   };
-  const { postData, loading: proposalOTPLoading } = useCreateProposalOTP();
-  const { UpdateDataFun } = useUpdateProposal();
-
+  
   const onSubmit = (data) => {
     if (id) {
       const payload = {
@@ -164,10 +180,10 @@ function ProposalForm() {
                   required={true}
                   options={channelType || []}
                   getOptionLabel={(option) => {
-                    return `${option?.txtChannelName || ''}`;
+                    return `${option?.txtChannelName}`;
                   }}
                   isOptionEqualToValue={(option, value) => {
-                    return option?.id === value
+                    return option?.id === value?.id;
                   }}
                   control={control}
                   rules={{ required: 'Channel is required' }}

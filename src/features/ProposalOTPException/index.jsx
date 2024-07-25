@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { ASC, BUTTON_TEXT, CREATED_AT, PAGECOUNT } from '../../utils/globalConstants';
 import useGetProposalOTPList from './hooks/useGetProposalOTPList';
 import usePermissions from '../../hooks/usePermission';
@@ -27,9 +27,12 @@ function ProposalOTPException() {
 
   const [date, setDate] = useState({ startDate: '', endDate: '' });
 
-  const { data, loading, totalPage, fetchProposalOtp, setData } = useGetProposalOTPList(
-    page, pageSize, order, orderBy, date
-  );
+  const { data, loading, totalPage, fetchProposalOtp, setData } = useGetProposalOTPList(page, pageSize, order, orderBy);
+
+  useEffect(() => {
+    fetchProposalOtp();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleEditClick = useCallback((row) => {
     navigate(`/proposalotpexception/form/${row.id}`);
@@ -71,7 +74,7 @@ function ProposalOTPException() {
   const header = useMemo(() => Header(handleEditClick, handleStatusUpdate), [handleEditClick, handleStatusUpdate]);
 
   const handleGo = () => {
-    fetchProposalOtp(query, searched, date);
+    fetchProposalOtp({query, searched, date});
   };
 
   return (
