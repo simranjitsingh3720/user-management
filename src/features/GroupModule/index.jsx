@@ -36,6 +36,25 @@ function GroupModule() {
   // Check Permission
   const { canCreate, canUpdate } = usePermissions();
 
+  const updateGroupStatus = useCallback(
+    (id, data) => {
+      debugger
+      const updatedData = data.map((item) => {
+        if (item.id === id) {
+          return {
+            ...item,
+            checked: !item.checked,
+            status: !item.status,
+          };
+        }
+        return item;
+      });
+      
+      setGroupData(updatedData);
+    },
+    []
+  );
+
   useEffect(() => {
     dispatch(
       getGroup({
@@ -65,12 +84,12 @@ function GroupModule() {
   }, [group]);
 
   const handleGroupStatus = useCallback(
-    (data) => {
+    (data, row) => {
       dispatch(
         showDialog({
           title: COMMON_WORDS.CHANGE_STATUS,
           content: <Content label={COMMON_WORDS.GROUP} />,
-          actions: <ConfirmAction row={data} />,
+          actions: <ConfirmAction row={row} groupData={data} handleGroupStatus={updateGroupStatus}  />,
         })
       );
     },

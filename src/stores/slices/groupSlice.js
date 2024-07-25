@@ -44,10 +44,13 @@ export const getGroupById = createAsyncThunk('group/getGroupById', async ({ id }
   }
 });
 
-export const updateGroup = createAsyncThunk('group/updateGroup', async ({ data }, { rejectWithValue }) => {
+export const updateGroup = createAsyncThunk('group/updateGroup', async ({ data, groupData, handleGroupStatus }, { rejectWithValue }) => {
   try {
     const response = await axiosInstance.put(apiUrls.getGroup, data);
     toast.success(response?.data?.message || 'Group updated successfully');
+    if(handleGroupStatus) {
+      handleGroupStatus(data.id, groupData);
+    }
     return response.data;
   } catch (error) {
     return rejectWithValue(error?.response?.data || {});
