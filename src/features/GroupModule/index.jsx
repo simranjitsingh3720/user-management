@@ -38,7 +38,6 @@ function GroupModule() {
 
   const updateGroupStatus = useCallback(
     (id, data) => {
-      debugger
       const updatedData = data.map((item) => {
         if (item.id === id) {
           return {
