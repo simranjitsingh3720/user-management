@@ -4,7 +4,6 @@ import { Grid, Box, Card, CardContent } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import dayjs from 'dayjs';
 import useCreateProposalOTP from '../hooks/usecreateProposalOTP';
-import useGetProposalOTPById from '../hooks/useGetProposalOTPById';
 import useUpdateProposal from '../hooks/useUpdateProposal';
 import CustomButton from '../../../components/CustomButton';
 import CustomFormHeader from '../../../components/CustomFormHeader';
