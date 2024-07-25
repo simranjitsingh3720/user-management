@@ -10,9 +10,9 @@ export const fetchUser = createAsyncThunk(
         ? `${apiUrls.getUser}?searchString=${userType}&searchKey=${searchKey}`
         : `${apiUrls.getUser}`;
 
-        if(isAll) {
-          url = `${url}&isAll=${isAll}`;
-        }
+      if(isAll) {
+        url = `${url}&isAll=${isAll}`;
+      }
 
       if(status) {
         url = `${url}&status=${status}`;
