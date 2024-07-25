@@ -1,11 +1,24 @@
 export const SEARCH_OPTIONS = [
   {
+    label: 'Group Name',
+    value: 'groupName',
+  },
+  {
     label: 'Permission',
     value: 'permissionName',
   },
+];
+
+export const STATUS = [
   {
-    label: 'Group Name',
-    value: 'groupName',
+    id: 'active',
+    label: 'Active',
+    value: 'active',
+  },
+  {
+    id: 'inactive',
+    label: 'Inactive',
+    value: 'inactive',
   },
 ];
 

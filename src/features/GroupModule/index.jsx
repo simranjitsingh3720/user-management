@@ -27,7 +27,7 @@ function GroupModule() {
 
   const [groupData, setGroupData] = useState([]);
   const { group, groupLoading } = useSelector((state) => state.group);
-  const [searched, setSearched] = useState(COMMON_WORDS.PERMISSIONNAME);
+  const [searched, setSearched] = useState(COMMON_WORDS.GROUPNAME);
   const [permissionValue, setPermissionValue] = useState([]);
   const { permissionData } = useGetPermission();
 
@@ -213,7 +213,7 @@ function GroupModule() {
           navigateRoute="/group/group-form"
           textField={showTextField.includes(searched)}
           setQuery={setQuery}
-          textFieldPlaceholder={COMMON_WORDS.SEARCH}
+          textFieldPlaceholder={getPlaceHolder(COMMON_WORDS.GROUP)}
           searched={searched}
           setSearched={setSearched}
           selectOptions={SEARCH_OPTIONS}
