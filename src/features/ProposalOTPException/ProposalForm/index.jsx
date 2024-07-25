@@ -167,6 +167,7 @@ function ProposalForm() {
                     </li>
                   )}
                   trigger={trigger}
+                  disabled={id ? true : false}
                 />
               </Grid>
             ) : (
@@ -184,6 +185,7 @@ function ProposalForm() {
                   helperText={errors.producerCode?.message}
                   disableClearable={true}
                   trigger={trigger}  
+                  disabled={id ? true : false}
                 />
               </Grid>
             )}
@@ -207,6 +209,7 @@ function ProposalForm() {
                   setValue('product', null);
                   dispatch(fetchAllProductData({ ids: newValue.id, status: true, edge: COMMON_WORDS.HAS_LOB }));
                 }}
+                disabled={id ? true : false}
               />
             </Grid>
 
@@ -225,6 +228,7 @@ function ProposalForm() {
                 helperText={errors.product?.message}
                 disableClearable={true}
                 trigger={trigger}
+                disabled={id ? true : false}
               />
             </Grid>
 

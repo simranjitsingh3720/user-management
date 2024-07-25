@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { ASC, BUTTON_TEXT, CREATED_AT, PAGECOUNT } from '../../utils/globalConstants';
 import useGetProposalOTPList from './hooks/useGetProposalOTPList';
 import usePermissions from '../../hooks/usePermission';
@@ -7,6 +7,7 @@ import CustomTable from '../../components/CustomTable';
 import { ProposalOTPSearch } from './utils/constants';
 import { COMMON_WORDS } from '../../utils/constants';
 import SearchComponent from '../../components/SearchComponent';
+import { useNavigate } from 'react-router-dom';
 
 function ProposalOTPException() {
   const [page, setPage] = useState(0);
@@ -17,13 +18,19 @@ function ProposalOTPException() {
   const [query, setQuery] = useState('');
   const { canCreate, canUpdate } = usePermissions();
 
+  const navigate = useNavigate();
+
   const [date, setDate] = useState({ startDate: '', endDate: '' });
 
   const { data, loading, totalPage, fetchProposalOtp } = useGetProposalOTPList(
     page, pageSize, order, orderBy, date
   );
 
-  const header = useMemo(() => Header(), []);
+  const handleEditClick = useCallback((row) => {
+    navigate(`/proposalotpexception/form/${row.id}`);
+  }, [])
+
+  const header = useMemo(() => Header(handleEditClick), [handleEditClick]);
 
   const handleGo = () => {
     fetchProposalOtp(query, searched, date);

@@ -1,6 +1,6 @@
 import EditIcon from '@mui/icons-material/Edit';
 
-export const Header = () => {
+export const Header = (handleEditClick) => {
   return [
     {
       id: 'type',
@@ -57,7 +57,7 @@ export const Header = () => {
           showIcon: true,
           iconName: <EditIcon />,
           onClick: (row) => {
-            // handleEditClick(row);
+            handleEditClick(row);
           },
         },
       ],
