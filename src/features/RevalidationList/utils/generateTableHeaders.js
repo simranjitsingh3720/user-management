@@ -6,7 +6,7 @@ function generateTableHeaders(
   return [
     {
       id: "userName",
-      value: "User Name",
+      value: "Producer Name",
     },
     {
       id: "emailId",
