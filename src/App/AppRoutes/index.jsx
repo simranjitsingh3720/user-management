@@ -79,7 +79,15 @@ const AppRoutes = () => {
         }
       />
       <Route
-        path="/bulk-upload"
+        path="/:id/bulk-upload"
+        element={
+          <ResponsiveDrawer showSidebarAndHeader={true}>
+            <PrivateRoute component={BulkUpload} />
+          </ResponsiveDrawer>
+        }
+      />
+      <Route
+        path="/:product/:id/bulk-upload"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
             <PrivateRoute component={BulkUpload} />

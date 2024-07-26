@@ -8,6 +8,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import ExportDropdown from '../../features/ExportDropdown';
+import BulkUpload from '../../assets/BulkUpload';
 
 function SearchComponent({
   option,
@@ -31,6 +32,7 @@ function SearchComponent({
   showExportButton,
   hideSearch,
   canCreate,
+  showBulkUploadButton = false
 }) {
   const navigate = useNavigate();
 
@@ -44,6 +46,10 @@ function SearchComponent({
       endDate: null,
     },
   });
+
+  const handleBulkUpload = () => {
+    navigate("bulk-upload")
+  }
 
   const { errors } = formState;
 
@@ -201,6 +207,9 @@ function SearchComponent({
         </Grid>
 
         <Grid item lg={6} xs={12} className="flex justify-end">
+        {showBulkUploadButton && (
+            <CustomButton variant="outlined" onClick={handleBulkUpload} startIcon={<BulkUpload />} />
+          )}
           {showExportButton && <ExportDropdown />}
           {showButton && canCreate && (
             <CustomButton variant="contained" onClick={handleCreateNewForm}>

@@ -109,7 +109,7 @@ function ProductPaymentConfig() {
   };
 
   useEffect(() => {
-    if (data && data?.data) {
+    if (data && data?.data && data?.data[0]) {
       dispatch(setTableName(data?.data[0]?.productWisePaymentMethod.label));
     }
   }, [data, dispatch]);
@@ -135,6 +135,7 @@ function ProductPaymentConfig() {
         showButton
         showExportButton={true}
         canCreate={canCreate}
+        showBulkUploadButton={true}
       />
       <div className={styles.tableContainerStyle}>
         <div className={styles.tableStyled}>

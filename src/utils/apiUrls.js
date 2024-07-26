@@ -28,6 +28,9 @@ const apiUrls = {
   getEodByPass: '/api/producer-eod-bypass',
   getOTPException: '/api/otp-exception',
   role: '/api/role',
+  getBulkUploadHistory:'/api/file/upload-history',
+  postBulkUpload: '/api/file/bulk-upload',
+  downloadBulkTemplate: '/api/file/download-sample-file',
   proposalOtpException: "/api/proposal-otp-exception"
 };
 

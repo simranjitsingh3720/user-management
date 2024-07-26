@@ -219,6 +219,7 @@ const PartnerNeft = () => {
         showButton
         showExportButton={true}
         canCreate={canCreate}
+        showBulkUploadButton={true}
       />
       <div className="mt-4">
         <CustomTable
