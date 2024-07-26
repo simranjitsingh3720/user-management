@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router-dom';
 const ProducerForm = ({ onFormSubmit }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { tableName } = useSelector((state) => state.export);
   const {
     handleSubmit,
     control,
@@ -75,7 +76,7 @@ const ProducerForm = ({ onFormSubmit }) => {
               Submit
             </CustomButton>
             <ExportDropdown />
-            {<CustomButton variant="outlined" onClick={handleBulkUpload} startIcon={<BulkUpload />} />}
+            {tableName && <CustomButton variant="outlined" onClick={handleBulkUpload} startIcon={<BulkUpload />} />}
           </Grid>
         </Grid>
       </form>
