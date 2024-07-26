@@ -1,7 +1,6 @@
 import { useCallback, useState } from 'react';
 import { API_END_POINTS, VERFICATION_ENUM } from '../utils/constant';
 import axiosInstance from './../../../utils/axiosInstance';
-
 import { buildQueryString } from '../../../utils/globalizationFunction';
 
 const useGetPartnerNeft = () => {
@@ -49,18 +48,19 @@ const useGetPartnerNeft = () => {
 
         const response = await axiosInstance.get(`${API_END_POINTS.GET_API}?${queryParams}`);
 
-        const partnerNeftData = response.data.data.map((item) => {
-          const { partnerNeft, product, lob, producer } = item;
+        const partnerNeftData = response.data.data.map((item, index) => {
+          const { partnerNeft: { label, id, verificationMethod, createdAt, updatedAt }, product, lob, producer } = item;
+         
           return {
-            id: partnerNeft?.id,
-            label: partnerNeft?.label,
-            lobId: lob[0]?.lob,
-            product: product[0]?.product,
-            producerName: producer[0]?.firstName + ' ' + producer[0]?.lastName,
-            producerCode: producer[0]?.producerCode,
-            verificationMethod: VERFICATION_ENUM[partnerNeft?.verificationMethod],
-            createdAt: partnerNeft?.createdAt,
-            updatedAt: partnerNeft?.updatedAt,
+            id: id,
+            label: label,
+            lobId: lob?.[0]?.lob,
+            product: product?.[0]?.product,
+            producerName: `${producer?.[0]?.firstName} ${producer?.[0]?.lastName}`,
+            producerCode: producer?.[0]?.producerCode,
+            verificationMethod: VERFICATION_ENUM[verificationMethod],
+            createdAt: createdAt,
+            updatedAt: updatedAt,
           };
         });
         setData(partnerNeftData);
