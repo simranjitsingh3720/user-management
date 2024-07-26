@@ -9,13 +9,13 @@ import { MenuItem, Pagination, Select } from '@mui/material';
 import { BUTTON_TEXT, PAGECOUNT, selectRowsData } from '../../utils/globalConstants';
 import useGetPaymentConfig from './hooks/useGetPaymentConfig';
 import useGetPayment from './hooks/useGetPayment';
-import { ProductPayment } from './constants';
+import { EXPORT_DROPDOWN_COLUMNS, ProductPayment } from './constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchLobData } from '../../stores/slices/lobSlice';
 import { fetchAllProductData } from '../../stores/slices/productSlice';
 import { COMMON_WORDS } from '../../utils/constants';
 import { getPlaceHolder } from '../../utils/globalizationFunction';
-import { setTableName } from '../../stores/slices/exportSlice';
+import { setExtraColumns, setTableName } from '../../stores/slices/exportSlice';
 import usePermissions from '../../hooks/usePermission';
 
 function getSelectedRowData(count) {
@@ -89,8 +89,9 @@ function ProductPaymentConfig() {
   };
 
   useEffect(() => {
-    if (data && data?.data) {
+    if (data && data?.data && data?.data[0]) {
       dispatch(setTableName(data?.data[0]?.productWisePaymentMethod.label));
+      dispatch(setExtraColumns(EXPORT_DROPDOWN_COLUMNS));
     }
   }, [data, dispatch]);
 
@@ -123,6 +124,7 @@ function ProductPaymentConfig() {
         showExportButton={true}
         canCreate={canCreate}
         onSubmit={onSubmit}
+        showBulkUploadButton={true}
       />
       <div className={styles.tableContainerStyle}>
         <div className={styles.tableStyled}>

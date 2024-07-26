@@ -4,6 +4,9 @@ import CustomTable from '../../../components/CustomTable';
 import { Checkbox, FormControlLabel, TableCell, TableRow } from '@mui/material';
 import generateTableHeaders from '../utils/generateTableHeaders';
 import usePermissions from '../../../hooks/usePermission';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setTableName } from '../../../stores/slices/exportSlice';
 
 const ProducerTable = ({
   revalidationList,
@@ -17,8 +20,9 @@ const ProducerTable = ({
   const { revalidationListUpdateData } = useRevalidationList();
   const [selectAllActive, setSelectAllActive] = useState(false);
   const [selectAllInactive, setSelectAllInactive] = useState(false);
-
   const { canUpdate } = usePermissions();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleDataUpdate = (updatedData) => {
     revalidationListUpdateData(updatedData);
@@ -32,6 +36,9 @@ const ProducerTable = ({
   );
 
   useEffect(() => {
+    if (revalidationList && revalidationList.length > 0) {
+      dispatch(setTableName(revalidationList[0]?.label));
+    }
     const allActive = revalidationList.every((row) => row.checked);
     const allInactive = revalidationList.every((row) => !row.checked);
 

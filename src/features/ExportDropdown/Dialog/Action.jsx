@@ -1,28 +1,64 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { hideDialog } from "../../../stores/slices/dialogSlice";
-import CustomButton from "../../../components/CustomButton";
-import { EXPORT_CONSTANTS } from "../utils/constants";
-import { downloadData } from "../../../stores/slices/exportSlice";
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { hideDialog } from '../../../stores/slices/dialogSlice';
+import CustomButton from '../../../components/CustomButton';
+import { EXPORT_CONSTANTS } from '../utils/constants';
+import { downloadData } from '../../../stores/slices/exportSlice';
 
 const Actions = () => {
   const dispatch = useDispatch();
-  const { columns, fromDate, toDate, selectedValue, tableName } = useSelector((state) => state.export);
+  const { columns, fromDate, toDate, selectedValue, tableName, extraColumns } = useSelector((state) => state.export);
 
   const confirmAction = () => {
-    const selectedColumns = columns
-      .filter((col) => col.checked)
-      .map((col) => col.name)
-      .join(", ");
-
     let combinedData = {
       tableName: tableName,
-      past30Days: selectedValue !== EXPORT_CONSTANTS.custom,
-      isBulkDownload: selectedValue === EXPORT_CONSTANTS.custom,
-      // email: email, // Will uncomment once will get user
+    };
+    const is30Days = selectedValue !== EXPORT_CONSTANTS.custom;
+    let additionalColumns =[]
+    let selectedColumns = [];
+
+    if (columns.length !== 0) {
+      selectedColumns = columns
+        .filter((col) => col.checked)
+        .map((col) => col.name)
+        .join(',');
+
+      combinedData = {
+        ...combinedData,
+        columns: selectedColumns,
+      };
+    }
+
+    if (extraColumns.length !== 0) {
+      additionalColumns = extraColumns
+        .filter((col) => col.checked)
+        .map((col) => col.name)
+        .join(',');
+
+      combinedData = {
+        ...combinedData,
+        additionalColumns: additionalColumns,
+      };
+    }
+
+    combinedData = {
+      tableName: tableName,
       columns: selectedColumns,
-      startDate: fromDate,
-      endDate: toDate,
+      additionalColumns: additionalColumns,
+    };
+
+    if (!is30Days) {
+      combinedData = {
+        ...combinedData,
+        isBulkDownload: !is30Days,
+        // startDate: fromDate,
+        // endDate: toDate,
+      };
+    } else {
+      combinedData = {
+        ...combinedData,
+        past30Days: is30Days,
+      };
     }
 
     dispatch(downloadData(combinedData));

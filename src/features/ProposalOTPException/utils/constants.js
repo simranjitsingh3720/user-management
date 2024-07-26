@@ -22,3 +22,5 @@ export const PROPOSAL_CREATE_BY = [
     value: 'byProducerCode',
   },
 ];
+
+export const EXPORT_COLUMNS = ['txtChannelName', 'firstName', 'lastName', 'lob', 'product'];

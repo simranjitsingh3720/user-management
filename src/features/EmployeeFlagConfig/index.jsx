@@ -11,9 +11,10 @@ import { fetchUser } from '../../stores/slices/userSlice';
 import { showDialog } from '../../stores/slices/dialogSlice';
 import Content from './Dialog/Content';
 import Actions from './Dialog/Action';
-import { setTableName } from '../../stores/slices/exportSlice';
+import { setExtraColumns, setTableName } from '../../stores/slices/exportSlice';
 import { BUTTON_TEXT, PAGECOUNT } from '../../utils/globalConstants';
 import usePermissions from '../../hooks/usePermission';
+import { EXPORT_DROPDOWN_COLUMNS } from './utils/constant';
 
 function EmployeeFlagConfig() {
   const [page, setPage] = useState(0);
@@ -51,6 +52,7 @@ function EmployeeFlagConfig() {
       }));
       setTableData(refactorData);
       dispatch(setTableName(refactorData[0]?.label));
+      dispatch(setExtraColumns(EXPORT_DROPDOWN_COLUMNS))
     }
   }, [data, dispatch]);
 

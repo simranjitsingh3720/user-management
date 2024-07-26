@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import useGetEODBypass from './hooks/useGetEODBypass';
 import { BUTTON_TEXT } from '../../utils/globalConstants';
 import { useDispatch, useSelector } from 'react-redux';
-import { setTableName } from '../../stores/slices/exportSlice';
+import { setExtraColumns, setTableName } from '../../stores/slices/exportSlice';
 import { getPlaceHolder } from '../../utils/globalizationFunction';
 import { COMMON_WORDS } from '../../utils/constants';
 import SearchComponenet from '../../components/SearchComponent';
@@ -11,7 +11,7 @@ import CustomTable from '../../components/CustomTable';
 import generateTableHeaders from './utils/generateTableHeaders';
 import { useNavigate } from 'react-router-dom';
 import usePermissions from '../../hooks/usePermission';
-import { SearchKey, showTextField } from './utils/constants';
+import { EXPORT_EXTRA_COLUMNS, SearchKey, showTextField } from './utils/constants';
 
 function ProducerEODBypass() {
   const navigate = useNavigate();
@@ -36,7 +36,8 @@ function ProducerEODBypass() {
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(setTableName(data?.label));
+    dispatch(setTableName(data?.[0]?.label));
+    dispatch(setExtraColumns(EXPORT_EXTRA_COLUMNS))
   }, [dispatch, data]);
 
   const optionLabelUser = (option) => {

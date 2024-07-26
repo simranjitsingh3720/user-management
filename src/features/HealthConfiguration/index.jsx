@@ -9,8 +9,9 @@ import { BUTTON_TEXT, PAGECOUNT } from '../../utils/globalConstants';
 import { getPlaceHolder } from '../../utils/globalizationFunction';
 import { fetchUser } from '../../stores/slices/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { setTableName } from '../../stores/slices/exportSlice';
 import usePermissions from '../../hooks/usePermission';
+import { setExtraColumns, setTableName } from "../../stores/slices/exportSlice";
+import { EXPORT_EXTRA_COLUMNS } from "./constants";
 
 function HealthConfiguration() {
   const dispatch = useDispatch();
@@ -60,6 +61,7 @@ function HealthConfiguration() {
   useEffect(() => {
     if (data) {
       dispatch(setTableName(data[0]?.label));
+      dispatch(setExtraColumns(EXPORT_EXTRA_COLUMNS));
     }
   }, [dispatch, data]);
 

@@ -12,6 +12,7 @@ import { showDialog } from '../../stores/slices/dialogSlice';
 import Content from '../../components/CustomDialogContent';
 import Action from './Action';
 import { useDispatch } from 'react-redux';
+import { removeExtraColumns } from '../../stores/slices/exportSlice';
 
 function ProposalOTPException() {
   const [page, setPage] = useState(0);
@@ -30,6 +31,7 @@ function ProposalOTPException() {
   const { data, loading, totalPage, fetchProposalOtp, setData } = useGetProposalOTPList(page, pageSize, order, orderBy);
 
   useEffect(() => {
+    dispatch(removeExtraColumns())
     fetchProposalOtp();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

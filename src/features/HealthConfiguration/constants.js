@@ -27,3 +27,5 @@ export const BitlyLinkMandatory = [
     value: "no",
   },
 ];
+
+export const EXPORT_EXTRA_COLUMNS = ['firstName', 'lastName', 'producerCode'];

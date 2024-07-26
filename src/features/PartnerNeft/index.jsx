@@ -13,8 +13,9 @@ import { COMMON_FIELDS, SEARCH_OPTIONS } from './utils/constant';
 import { COMMON_WORDS } from '../../utils/constants';
 import { fetchUser } from '../../stores/slices/userSlice';
 import { getPlaceHolder } from '../../utils/globalizationFunction';
-import { setTableName } from '../../stores/slices/exportSlice';
+import { setExtraColumns, setTableName } from '../../stores/slices/exportSlice';
 import usePermissions from '../../hooks/usePermission';
+import { ExtraColumnsEnum } from '../../utils/ExtraColumnsEnum';
 
 const PartnerNeft = () => {
   const navigate = useNavigate();
@@ -89,6 +90,15 @@ const PartnerNeft = () => {
 
   useEffect(() => {
     dispatch(setTableName(partnerNeftData[0]?.label));
+    dispatch(
+      setExtraColumns([
+        ExtraColumnsEnum.PRODUCT,
+        ExtraColumnsEnum.LOB,
+        ExtraColumnsEnum.FIRST_NAME,
+        ExtraColumnsEnum.LAST_NAME,
+        ExtraColumnsEnum.PRODUCER_CODE,
+      ])
+    );
   }, [dispatch, partnerNeftData]);
 
   const fetchIdsAndConvert = (inputData) => inputData.map((item) => item.id).join();
@@ -209,6 +219,7 @@ const PartnerNeft = () => {
         showButton
         showExportButton={true}
         canCreate={canCreate}
+        showBulkUploadButton={true}
       />
       <div className="mt-4">
         <CustomTable

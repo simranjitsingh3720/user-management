@@ -7,6 +7,8 @@ import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import ExportDropdown from '../../features/ExportDropdown';
 import DateField from '../CustomDateInput';
 import CloseIcon from '@mui/icons-material/Close';
+import BulkUpload from '../../assets/BulkUpload';
+
 function SearchComponent({
   optionsData,
   optionLabel,
@@ -26,6 +28,7 @@ function SearchComponent({
   canCreate,
   onSubmit,
   fetchData,
+  showBulkUploadButton = false,
 }) {
   const navigate = useNavigate();
 
@@ -41,6 +44,10 @@ function SearchComponent({
       search: null,
     },
   });
+
+  const handleBulkUpload = () => {
+    navigate('bulk-upload');
+  };
 
   const { errors } = formState;
 
@@ -201,8 +208,10 @@ function SearchComponent({
               </Grid>
             )}
           </Grid>
-
-          <Grid item lg={4} xs={12} className="flex justify-end">
+          <Grid item lg={6} xs={12} className="flex justify-end">
+            {showBulkUploadButton && (
+              <CustomButton variant="outlined" onClick={handleBulkUpload} startIcon={<BulkUpload />} />
+            )}
             {showExportButton && <ExportDropdown />}
             {showButton && canCreate && (
               <CustomButton variant="contained" onClick={handleCreateNewForm}>

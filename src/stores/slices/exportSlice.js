@@ -1,70 +1,80 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axiosInstance from "./../../utils/axiosInstance";
-import dayjs from "dayjs";
-import { API_END_POINTS } from "../../features/ExportDropdown/utils/constants";
-import { toast } from "react-toastify";
-import { DATE_FORMAT } from "../../utils/globalConstants";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import axiosInstance from './../../utils/axiosInstance';
+import dayjs from 'dayjs';
+import { API_END_POINTS } from '../../features/ExportDropdown/utils/constants';
+import { toast } from 'react-toastify';
+import { DATE_FORMAT } from '../../utils/globalConstants';
+import toastifyUtils from '../../utils/toastify';
 
 const initialState = {
-  selectedValue: "",
+  selectedValue: '',
   fromDate: null,
   toDate: null,
   columns: [],
   loading: false,
   error: null,
   tableName: '',
+  extraColumns: [],
 };
 
-export const fetchColumns = createAsyncThunk(
-  "export/fetchColumns",
-  async (tableName, thunkAPI) => {
-    try {
-      const response = await axiosInstance.get(
-        `${API_END_POINTS.getColumns}${tableName}`
-      );
-      const columns = response.data.data.map((col) => ({
-        id: col,
-        name: col,
-        checked: false,
-      }));
-      return columns;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data);
-    }
+export const fetchColumns = createAsyncThunk('export/fetchColumns', async (tableName, thunkAPI) => {
+  try {
+    const response = await axiosInstance.get(`${API_END_POINTS.getColumns}${tableName}`);
+    const columns = response.data.data.map((col) => ({
+      id: col,
+      name: col,
+      checked: false,
+    }));
+    return columns;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.response.data);
   }
-);
+});
 
-export const downloadData = createAsyncThunk(
-  "export/downloadData",
-  async (payload, thunkAPI) => {
-    try {
-      const response = await axiosInstance.get(`${API_END_POINTS.downloadFile}`, {
-        params: {
-          tableName: payload.tableName,
-          past30Days: payload.past30Days,
-          isBulkDownload: payload.isBulkDownload,
-          email: payload.email,
-          columns: payload.columns,
-          startDate: payload.startDate,
-          endDate: payload.endDate,
-        },
-      });
-      return response.data.data.url;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data);
+export const downloadData = createAsyncThunk('export/downloadData', async (payload, thunkAPI) => {
+  try {
+    const { tableName, past30Days, isBulkDownload, columns, startDate, endDate, additionalColumns } = payload;
+    const response = await axiosInstance.get(`${API_END_POINTS.downloadFile}`, {
+      params: {
+        tableName: tableName,
+        past30Days: past30Days,
+        isBulkDownload: isBulkDownload,
+        columns: columns,
+        startDate: startDate,
+        endDate: endDate,
+        additionalColumns: additionalColumns,
+      },
+    });
+
+    if(response) {
+      toastifyUtils.notifySuccess(response.data.message);
     }
+    return response.data;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.response.data);
   }
-);
+});
 
 const exportSlice = createSlice({
-  name: "export",
+  name: 'export',
   initialState,
   reducers: {
     setSelectedValue: (state, action) => {
       state.selectedValue = action.payload;
     },
+    setExtraColumns: (state, action) => {
+      const columns = action.payload.map((col) => ({
+        id: col,
+        name: col,
+        checked: false,
+      }));
+      state.extraColumns = columns;
+    },
+    removeExtraColumns: (state) => {
+      state.extraColumns = [];
+    },
     setTableName: (state, action) => {
-      state.tableName = action.payload
+      state.tableName = action.payload;
     },
     setFromDate: (state, action) => {
       state.fromDate = dayjs(action.payload).format(DATE_FORMAT);
@@ -73,16 +83,21 @@ const exportSlice = createSlice({
       state.toDate = dayjs(action.payload).format(DATE_FORMAT);
     },
     setLast30Days: (state) => {
-      state.fromDate = dayjs().subtract(30, "day").format(DATE_FORMAT);
+      state.fromDate = dayjs().subtract(30, 'day').format(DATE_FORMAT);
       state.toDate = dayjs().format(DATE_FORMAT);
     },
     toggleColumn: (state, action) => {
-      const columnIndex = state.columns.findIndex(
-        (col) => col.id === action.payload
-      );
-      if (columnIndex !== -1) {
-        state.columns[columnIndex].checked =
-          !state.columns[columnIndex].checked;
+      const { id, isAdditional } = action.payload;
+      if (isAdditional) {
+        const columnIndex = state.extraColumns.findIndex((col) => col.id === id);
+        if (columnIndex !== -1) {
+          state.extraColumns[columnIndex].checked = !state.extraColumns[columnIndex].checked;
+        }
+      } else {
+        const columnIndex = state.columns.findIndex((col) => col.id === id);
+        if (columnIndex !== -1) {
+          state.columns[columnIndex].checked = !state.columns[columnIndex].checked;
+        }
       }
     },
   },
@@ -110,19 +125,11 @@ const exportSlice = createSlice({
       })
       .addCase(downloadData.fulfilled, (state, action) => {
         state.loading = false;
-
-        const link = document.createElement('a');
-        link.href = action.payload;
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-
-        toast.success("Download Successfully")
       })
       .addCase(downloadData.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-        toast.error("Download Failed: "+ action.payload.details)
+        toast.error('Download Failed: ' + action.payload.details);
       });
   },
 });
@@ -134,6 +141,9 @@ export const {
   setLast30Days,
   toggleColumn,
   setTableName,
-  columnLoading: loading
+  setExtraColumns,
+  removeExtraColumns,
+  loading
 } = exportSlice.actions;
+
 export default exportSlice.reducer;
