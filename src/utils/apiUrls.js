@@ -30,7 +30,8 @@ const apiUrls = {
   role: '/api/role',
   getBulkUploadHistory:'/api/file/upload-history',
   postBulkUpload: '/api/file/bulk-upload',
-  downloadBulkTemplate: '/api/file/download-sample-file'
+  downloadBulkTemplate: '/api/file/download-sample-file',
+  proposalOtpException: "/api/proposal-otp-exception"
 };
 
 export default apiUrls;

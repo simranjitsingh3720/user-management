@@ -6,7 +6,7 @@ import { fetchColumns, toggleColumn } from "../../../stores/slices/exportSlice";
 
 const Content = () => {
   const dispatch = useDispatch();
-  const { columns, tableName, columnLoading } = useSelector(
+  const { columns, tableName, columnLoading, extraColumns } = useSelector(
     (state) => state.export
   );
 
@@ -14,8 +14,8 @@ const Content = () => {
     dispatch(fetchColumns(tableName));
   }, [dispatch, tableName]);
 
-  const handleCheckUncheck = (id) => {
-    dispatch(toggleColumn(id));
+  const handleCheckUncheck = (id, isAdditional = false) => {
+    dispatch(toggleColumn({ id, isAdditional }));
   };
 
   return (
@@ -25,7 +25,7 @@ const Content = () => {
       </Grid>
 
       <Grid item xs={12}>
-        <h2 className="text-lg font-semibold">
+        <h2 className="text-sm font-semibold">
           Please select columns to download the data
         </h2>
       </Grid>
@@ -47,9 +47,32 @@ const Content = () => {
                 />
               }
               label={item.name}
+              sx={{textTransform: 'capitalize'}}
             />
           </Grid>
         ))}
+
+      {extraColumns && extraColumns.length > 0 && (
+        <>
+          <Grid item xs={12}>
+            <h2 className="text-sm font-semibold">Additional columns</h2>
+          </Grid>
+          {extraColumns.map((item, index) => (
+            <Grid item xs={12} md={6} lg={4} key={index}>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={item.checked || false}
+                    onChange={() => handleCheckUncheck(item.id, true)}
+                  />
+                }
+                label={item.name}
+                sx={{textTransform: 'capitalize'}}
+              />
+            </Grid>
+          ))}
+        </>
+      )}
     </Grid>
   );
 };

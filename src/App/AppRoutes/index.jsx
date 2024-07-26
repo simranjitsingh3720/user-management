@@ -232,7 +232,7 @@ const AppRoutes = () => {
         }
       />
       <Route
-        path="/proposalOtpException"
+        path="/proposalotpexception"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
             <PrivateRoute component={ProposalOTPException} />
@@ -240,7 +240,7 @@ const AppRoutes = () => {
         }
       />
       <Route
-        path="/proposalOtpException/form/:id?"
+        path="/proposalotpexception/form/:id?"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
             <PrivateRoute component={ProposalForm} />

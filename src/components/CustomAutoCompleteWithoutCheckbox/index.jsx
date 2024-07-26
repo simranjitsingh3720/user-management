@@ -22,6 +22,7 @@ const CustomAutoCompleteWithoutCheckbox = ({
   helperText,
   onChangeCallback,
   disabled,
+  trigger
 }) => {
   return (
     <>
@@ -39,15 +40,22 @@ const CustomAutoCompleteWithoutCheckbox = ({
             className={className + 'customize-select bg-white'}
             size={size}
             isOptionEqualToValue={isOptionEqualToValue}
-            renderInput={(params) => <TextField {...params} error={error} placeholder={placeholder} sx={{ textTransform: 'capitalize'}} />}
+            renderInput={(params) => <TextField {...params} error={error} placeholder={placeholder} />}
             value={field.value}
             onChange={(event, newValue) => {
               field.onChange(newValue);
+              if (typeof trigger === 'function') {
+                trigger(name);
+              }
               onChangeCallback && onChangeCallback(newValue);
             }}
             disableClearable={disableClearable}
             ListboxProps={ListboxProps}
-            renderOption={renderOption}
+            renderOption={(props, option) => (
+              <li {...props} key={option.id || option.label} style={{ textTransform: 'capitalize' }} >
+                {renderOption ? renderOption(props, option) : getOptionLabel(option)}
+              </li>
+            )}    
           />
         )}
       />

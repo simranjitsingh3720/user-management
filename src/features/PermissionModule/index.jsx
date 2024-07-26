@@ -23,7 +23,7 @@ function PermissionModule() {
   const [order, setOrder] = useState(COMMON_WORDS.ASC);
   const [orderBy, setOrderBy] = useState(COMMON_WORDS.CREATED_AT);
 
-  const { fetchData, data, loading, count } = useGetPrivilege(page, pageSize, order, orderBy);
+  const { fetchData, data, loading, count } = useGetPrivilege(page, pageSize, order, orderBy, searched, query);
   // Check Permission 
   const { canCreate, canUpdate } = usePermissions();
 
@@ -40,7 +40,7 @@ function PermissionModule() {
   const HEADER_COLUMNS = generateTableHeaders(handleClicked);
 
   const handleGo = () => {
-    fetchData(searched, query);
+    fetchData();
   };
 
   return (

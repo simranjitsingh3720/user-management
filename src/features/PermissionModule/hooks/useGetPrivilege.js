@@ -4,12 +4,12 @@ import { useEffect, useState } from 'react';
 import apiUrls from '../../../utils/apiUrls';
 import { buildQueryString } from '../../../utils/globalizationFunction';
 
-function useGetPrivilege(page, pageSize, order, orderBy) {
+function useGetPrivilege(page, pageSize, order, orderBy, searched, query) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [count, setCount] = useState(0);
 
-  const fetchData = async (searched, query) => {
+  const fetchData = async () => {
     try {
       setLoading(true);
       let params = {
@@ -45,6 +45,7 @@ function useGetPrivilege(page, pageSize, order, orderBy) {
   };
   useEffect(() => {
     fetchData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, pageSize, order, orderBy]);
 
   return { data, loading, fetchData, setLoading, count };

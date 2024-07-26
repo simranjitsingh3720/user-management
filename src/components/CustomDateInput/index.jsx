@@ -89,7 +89,7 @@ const DateField = ({
                     size: 'small',
                     variant: labelVisible ? 'outlined' : 'standard',
                     InputProps: {
-                      disableUnderline: !labelVisible,
+                      // disableunderline: !labelVisible,
                       style: !labelVisible ? {
                         display: 'flex',
                         flexDirection: 'row-reverse',
