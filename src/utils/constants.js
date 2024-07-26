@@ -28,7 +28,7 @@ export const COMMON_WORDS = {
   GROUPNAME: 'groupName',
   GROUP: 'group',
   HAS_GROUP: 'hasGroup',
-  SEARCH: 'search',
+  SEARCH: 'Search',
   STATUS: 'status',
   SCOPES: 'scopes',
   READ: 'read',
@@ -51,7 +51,9 @@ export const COMMON_WORDS = {
   HAS_HOUSE_BANK: 'hasHouseBank',
   OTP_EXCEPTION: 'OTP Exception',
   CHILDS: 'childs',
-  HAS_CHILDS: 'manages'
+  HAS_CHILDS: 'manages',
+  PRODUCT_DETAILS: 'Product Details',
+  PROPOSAL_OTP_EXCEPTION: 'Proposal OTP Exception',
 };
 
 export const HEADER = {

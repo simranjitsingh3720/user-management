@@ -4,7 +4,7 @@ import { ASC, BUTTON_TEXT, CREATED_AT, PAGECOUNT } from '../../utils/globalConst
 import usePermissions from '../../hooks/usePermission';
 import SearchComponent from '../../components/SearchComponent';
 import { SEARCH_OPTIONS } from './utils/constants';
-import { COMMON, SEARCH_PLACEHOLDER } from '../UserManagement/Components/utils/constants';
+import { COMMON } from '../UserManagement/Components/utils/constants';
 import CustomTable from '../../components/CustomTable';
 import { Header } from './utils/Header';
 import CustomDialog from '../../components/CustomDialog';
@@ -46,18 +46,7 @@ function RoleModule() {
   );
 
   const handleGo = () => {
-    if (query !== '') {
-      fetchRoles({
-        sortKey: orderBy,
-        sortOrder: order,
-        pageNo: page,
-        pageSize,
-        searchString: query,
-        searchKey: searched,
-      });
-    } else {
-      loadData();
-    }
+    page !== 0 ? setPage(0) : loadData();
   };
 
   const handleEditClick = useCallback(
@@ -73,7 +62,10 @@ function RoleModule() {
       pageSize,
       sortKey: orderBy,
       sortOrder: order,
+      searchString: query !== '' ? query : null,
+      searchKey:query !== '' ? searched : null,
     });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fetchRoles, page, pageSize, orderBy, order]);
 
   useEffect(() => {

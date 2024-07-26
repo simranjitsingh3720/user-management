@@ -38,6 +38,7 @@ export const BUTTON_TEXT = {
   PRODUCER_EOD: 'Create New Producer EOD Bypass',
   SET_OTP_EXCEPTION: 'Create New OTP Exception',
   ROLES: 'Create New Role',
+  PROPOSAL_EXCEPTION: 'Create New Proposal Exception',
 };
 
 export const STATUS = [

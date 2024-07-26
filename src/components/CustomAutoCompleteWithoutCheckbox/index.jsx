@@ -22,6 +22,7 @@ const CustomAutoCompleteWithoutCheckbox = ({
   helperText,
   onChangeCallback,
   disabled,
+  trigger
 }) => {
   return (
     <>
@@ -43,11 +44,18 @@ const CustomAutoCompleteWithoutCheckbox = ({
             value={field.value}
             onChange={(event, newValue) => {
               field.onChange(newValue);
+              if (typeof trigger === 'function') {
+                trigger(name);
+              }
               onChangeCallback && onChangeCallback(newValue);
             }}
             disableClearable={disableClearable}
             ListboxProps={ListboxProps}
-            renderOption={renderOption}
+            renderOption={(props, option) => (
+              <li {...props} key={option.id || option.label} style={{ textTransform: 'capitalize' }} >
+                {renderOption ? renderOption(props, option) : getOptionLabel(option)}
+              </li>
+            )}    
           />
         )}
       />

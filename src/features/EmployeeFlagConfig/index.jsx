@@ -73,7 +73,7 @@ function EmployeeFlagConfig() {
   const handleClicked = (row) => {
     dispatch(
       showDialog({
-        title: COMMON_WORDS.CHANGE_STATUS,
+        title: COMMON_WORDS.PRODUCT_DETAILS,
         content: <Content row={row} />,
         actions: <Actions row={row} fetchData={fetchData} />,
       })
@@ -93,7 +93,7 @@ function EmployeeFlagConfig() {
         <SearchComponent
           optionsData={user?.data || []}
           optionLabel={optionLabelUser}
-          placeholder={getPlaceHolder(COMMON_WORDS.USER)}
+          placeholder={getPlaceHolder(COMMON_WORDS.PRODUCER)}
           renderOptionFunction={renderOptionUserFunction}
           onSubmit={onSubmit}
           showExportButton={true}

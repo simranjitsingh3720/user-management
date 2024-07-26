@@ -2,6 +2,13 @@ import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { COMMON_WORDS } from '../utils/constants';
 
+/**
+ * Custom hook to manage user permissions based on their roles and the current route.
+ * 
+ * This hook retrieves permissions from local storage and provides functions to
+ * check if the user has the necessary permissions to read, create, or update
+ * resources based on the current route.
+ */
 const usePermissions = () => {
   const [permissions, setPermissions] = useState({
     read: [],
@@ -20,6 +27,11 @@ const usePermissions = () => {
     }
   }, []);
 
+  /**
+   * Function to check if the user has a specific type of permission for the current path.
+   * @param {string} type - The type of permission to check (e.g., 'read', 'create', 'update').
+   * @returns {boolean} - True if the user has the permission, otherwise false.
+   */
   const hasPermission = (type) => {
     return permissions[type]?.some(permission => permission.route === path);
   };
