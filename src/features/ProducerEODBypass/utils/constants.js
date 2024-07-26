@@ -28,3 +28,5 @@ export const SearchKey = [
 ];
 
 export const showTextField = ['reason'];
+
+export const EXPORT_EXTRA_COLUMNS = ['firstName', 'lastName', 'producerCode'];

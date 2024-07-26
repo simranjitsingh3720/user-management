@@ -108,7 +108,6 @@ const ProducerTable = ({
         rowsPerPage={pageSize}
         setRowsPerPage={setPageSize}
         canUpdate={canUpdate}
-        showBulkUploadButton={true}
       />
     </div>
   );
