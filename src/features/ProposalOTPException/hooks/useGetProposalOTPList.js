@@ -3,9 +3,10 @@ import axiosInstance from '../../../utils/axiosInstance';
 import { buildQueryString } from '../../../utils/globalizationFunction';
 import { COMMON_WORDS } from '../../../utils/constants';
 import errorHandler from '../../../utils/errorHandler';
-import { setTableName } from '../../../stores/slices/exportSlice';
+import { setExtraColumns, setTableName } from '../../../stores/slices/exportSlice';
 import { useDispatch } from 'react-redux';
 import apiUrls from '../../../utils/apiUrls';
+import { EXPORT_COLUMNS } from '../utils/constants';
 
 function useGetProposalOTPList(page, pageSize, order, orderBy) {
   const [data, setData] = useState(null);
@@ -80,6 +81,7 @@ function useGetProposalOTPList(page, pageSize, order, orderBy) {
         });
 
         dispatch(setTableName(newData[0]?.label));
+        dispatch(setExtraColumns(EXPORT_COLUMNS));
         setTotalPage(data?.totalCount);
         setData(newData);
       } catch (error) {

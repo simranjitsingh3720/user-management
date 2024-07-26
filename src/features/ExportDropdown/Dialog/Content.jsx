@@ -6,7 +6,7 @@ import { fetchColumns, toggleColumn } from "../../../stores/slices/exportSlice";
 
 const Content = () => {
   const dispatch = useDispatch();
-  const { columns, tableName, columnLoading, extraColumns } = useSelector(
+  const { columns, tableName, loading, extraColumns } = useSelector(
     (state) => state.export
   );
 
@@ -29,13 +29,13 @@ const Content = () => {
           Please select columns to download the data
         </h2>
       </Grid>
-      {columnLoading && (
+      {loading && (
         <Grid item xs={12} className="flex items-center justify-center">
           Loading...
         </Grid>
       )}
 
-      {!columnLoading &&
+      {!loading &&
         columns.length > 0 &&
         columns.map((item, index) => (
           <Grid item xs={12} md={6} lg={4} key={index}>
@@ -52,7 +52,7 @@ const Content = () => {
           </Grid>
         ))}
 
-      {extraColumns && extraColumns.length > 0 && (
+      {!loading && extraColumns && extraColumns.length > 0 && (
         <>
           <Grid item xs={12}>
             <h2 className="text-sm font-semibold">Additional columns</h2>

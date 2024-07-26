@@ -70,6 +70,9 @@ const exportSlice = createSlice({
       }));
       state.extraColumns = columns;
     },
+    removeExtraColumns: (state) => {
+      state.extraColumns = [];
+    },
     setTableName: (state, action) => {
       state.tableName = action.payload;
     },
@@ -139,7 +142,8 @@ export const {
   toggleColumn,
   setTableName,
   setExtraColumns,
-  columnLoading: loading
+  removeExtraColumns,
+  loading
 } = exportSlice.actions;
 
 export default exportSlice.reducer;
