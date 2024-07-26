@@ -11,8 +11,8 @@ import { getPlaceHolder } from '../../utils/globalizationFunction';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchLobData } from '../../stores/slices/lobSlice';
 import { fetchAllProductData } from '../../stores/slices/productSlice';
-import { setTableName } from '../../stores/slices/exportSlice';
-import { CKYC_DROPDOWN } from './utils/constants';
+import { setExtraColumns, setTableName } from '../../stores/slices/exportSlice';
+import { CKYC_DROPDOWN, EXTRA_COLUMNS } from './utils/constants';
 import usePermissions from '../../hooks/usePermission';
 
 function CkycConfig() {
@@ -53,6 +53,7 @@ function CkycConfig() {
       }));
       setTableData(refactorData);
       dispatch(setTableName(refactorData[0]?.label));
+      dispatch(setExtraColumns(EXTRA_COLUMNS));
     }
   }, [data]);
 
