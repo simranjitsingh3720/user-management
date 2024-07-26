@@ -74,9 +74,6 @@ const ProducerForm = ({ onFormSubmit }) => {
             <CustomButton type="submit" variant="contained" color="primary" className="w-full md:w-auto">
               Submit
             </CustomButton>
-          </Grid>
-
-          <Grid item xs={12} sm={6} lg={4} alignItems="flex-end" display="flex" justifyContent="end">
             <ExportDropdown />
             {<CustomButton variant="outlined" onClick={handleBulkUpload} startIcon={<BulkUpload />} />}
           </Grid>

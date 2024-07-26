@@ -4,9 +4,7 @@ import CustomTable from '../../../components/CustomTable';
 import { Checkbox, FormControlLabel, TableCell, TableRow } from '@mui/material';
 import generateTableHeaders from '../utils/generateTableHeaders';
 import usePermissions from '../../../hooks/usePermission';
-import CustomButton from '../../../components/CustomButton';
 import { useNavigate } from 'react-router-dom';
-import BulkUpload from '../../../assets/BulkUpload';
 import { useDispatch } from 'react-redux';
 import { setTableName } from '../../../stores/slices/exportSlice';
 
