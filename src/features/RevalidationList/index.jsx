@@ -2,9 +2,10 @@ import React, { useCallback, useEffect, useState } from 'react';
 import ProducerForm from './ProducerForm/index';
 import ProducerTable from './ProducerTable/index';
 import useRevalidationList from './hooks/useRevalidationList';
-import { setTableName } from '../../stores/slices/exportSlice';
+import { setExtraColumns, setTableName } from '../../stores/slices/exportSlice';
 import { useDispatch } from 'react-redux';
 import { PAGECOUNT } from '../../utils/globalConstants';
+import { EXPORT_EXTRA_COLUMNS } from './constants';
 
 const RevalidationList = () => {
   const [userId, setUserId] = useState('');
@@ -39,6 +40,7 @@ const RevalidationList = () => {
 
   useEffect(() => {
     dispatch(setTableName(revalidationList[0]?.label));
+    dispatch(setExtraColumns(EXPORT_EXTRA_COLUMNS))
   }, [dispatch, revalidationList]);
 
   return (
