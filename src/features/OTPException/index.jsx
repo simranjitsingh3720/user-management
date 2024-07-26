@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useGetOTPException from './hooks/useGetOTPException';
 import { BUTTON_TEXT, PAGECOUNT } from '../../utils/globalConstants';
 import SearchComponent from '../../components/SearchComponent';
@@ -12,6 +12,7 @@ import { useDispatch } from 'react-redux';
 import { showDialog } from '../../stores/slices/dialogSlice';
 import Content from '../../components/CustomDialogContent';
 import Actions from './Dialog/Action';
+import { setTableName } from '../../stores/slices/exportSlice';
 
 function OTPException() {
   const dispatch = useDispatch();
@@ -40,6 +41,13 @@ function OTPException() {
   const handleGo = () => {
     fetchData(searched, query);
   };
+
+  useEffect(() => {
+    if (data && data.length > 0) {
+      dispatch(setTableName(data[0]?.label));
+    }
+  }, [data]);
+
   return (
     <div>
       <SearchComponent
@@ -54,6 +62,7 @@ function OTPException() {
         handleGo={handleGo}
         showButton
         canCreate={canCreate}
+        showBulkUploadButton={true}
       />
       <div className="mt-4">
         <CustomTable
