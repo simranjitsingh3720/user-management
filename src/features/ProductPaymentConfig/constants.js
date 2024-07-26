@@ -8,3 +8,5 @@ export const ProductPayment = [
     value: "lob",
   },
 ];
+
+export const EXPORT_DROPDOWN_COLUMNS = ['product', 'lob', 'name'];
