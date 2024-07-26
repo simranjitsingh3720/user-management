@@ -70,7 +70,7 @@ function CreateGroupForm() {
   const { userPostData } = useUpdateUser();
 
   const { postData, loading } = useCreateGroup();
-  const { handleSubmit, control, setValue, formState, getValues, setError } = useForm({
+  const { handleSubmit, control, setValue, formState, getValues } = useForm({
     defaultValues: { groupName: '', groupStatus: 'active', groupUser: [] },
   });
 
@@ -117,6 +117,7 @@ function CreateGroupForm() {
     if (id) {
       fetchData(id);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   useEffect(() => {
@@ -151,6 +152,7 @@ function CreateGroupForm() {
         });
       }
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [groupData, permissionData]);
 
   const areAllPermissionsSelected = (permissions) => {

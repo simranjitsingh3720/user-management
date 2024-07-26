@@ -77,6 +77,7 @@ function ProposalForm() {
       }
     }
     fetchData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   useEffect(() => {
@@ -102,6 +103,7 @@ function ProposalForm() {
       setValue('endDate', dayjs(endDate, 'DD/MM/YYYY').format('DD/MM/YYYY'));
       setValue('groupStatus', isChannel ? 'byChannel' : 'byProducerCode');
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [proposalDataByID]);
 
   const handleChange = (val) => {
