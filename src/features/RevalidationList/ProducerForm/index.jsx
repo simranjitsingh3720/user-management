@@ -7,9 +7,12 @@ import CustomAutoCompleteWithoutCheckbox from '../../../components/CustomAutoCom
 import { COMMON_WORDS } from '../../../utils/constants';
 import { fetchUser } from '../../../stores/slices/userSlice';
 import ExportDropdown from '../../ExportDropdown';
+import BulkUpload from '../../../assets/BulkUpload';
+import { useNavigate } from 'react-router-dom';
 
 const ProducerForm = ({ onFormSubmit }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const {
     handleSubmit,
     control,
@@ -33,6 +36,10 @@ const ProducerForm = ({ onFormSubmit }) => {
       })
     );
   }, [dispatch]);
+
+  const handleBulkUpload = () => {
+    navigate('bulk-upload');
+  };
 
   return (
     <>
@@ -71,6 +78,7 @@ const ProducerForm = ({ onFormSubmit }) => {
 
           <Grid item xs={12} sm={6} lg={4} alignItems="flex-end" display="flex" justifyContent="end">
             <ExportDropdown />
+            {<CustomButton variant="outlined" onClick={handleBulkUpload} startIcon={<BulkUpload />} />}
           </Grid>
         </Grid>
       </form>

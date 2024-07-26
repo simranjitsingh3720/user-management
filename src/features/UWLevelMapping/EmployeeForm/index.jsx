@@ -50,7 +50,6 @@ function EmployeeForm() {
         textFieldPlaceholder="Search"
         setQuery={setQuery}
         handleGo={handleGo}
-        showBulkUploadButton={true}
       />
       <div className="mt-4">
         <CustomTable

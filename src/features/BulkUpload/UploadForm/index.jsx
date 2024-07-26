@@ -82,10 +82,10 @@ function UploadForm() {
 
   const fetchTemplate = useCallback(() => {
     getBulkTemplate({
-      fileName: COMMON_VAR.REVALIDATION_FILE_NAME,
-      label: COMMON_VAR.REVALIDATION_LABEL,
+      fileName: COMMON_VAR.FILE_NAME,
+      label: tableName,
     });
-  }, []);
+  }, [tableName]);
 
   useEffect(() => {
     loadData();

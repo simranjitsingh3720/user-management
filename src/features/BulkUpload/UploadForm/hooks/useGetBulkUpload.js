@@ -10,7 +10,6 @@ const useGetBulkUpload = () => {
 
   const getBulkUpload = useCallback(async ({pageNo, pageSize, searchString, searchKey, searched, query} = {}) => {
     setLoading(true);
-    console.log(pageNo, pageSize, searchString, searchKey, searched, query);
     try {
       const queryParams = buildQueryString({
         searchString: `${searchString}${query? `,${query}`: ''}`,
@@ -18,7 +17,6 @@ const useGetBulkUpload = () => {
         pageNo,
         pageSize,
       });
-
       const response = await axiosInstance.get(`${apiUrls.getBulkUploadHistory}?${queryParams}`);
       setData(response.data.data);
       setTotalCount(response.data.totalCount);

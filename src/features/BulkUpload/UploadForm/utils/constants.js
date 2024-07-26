@@ -19,8 +19,7 @@ export const CONTENT = {
 export const COMMON_VAR = {
   FILE_TYPE: 'fileType',
   FILE : 'file',
-  REVALIDATION_FILE_NAME: 'Revalidation_sample_file.xlsx',
-  REVALIDATION_LABEL: 'revalidationList',
+  FILE_NAME: 'sampleFile.xlsx',
   INVALID_FILE_ERR: 'Please select a valid XLS file.',
   FILE_SIZE_LIMIT_ERR: 'File size exceeds 5 MB limit.',
   XLS_TYPE: 'xls',

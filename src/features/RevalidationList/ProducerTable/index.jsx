@@ -78,10 +78,6 @@ const ProducerTable = ({
     }
   };
 
-  const handleBulkUpload = () => {
-    navigate('bulk-upload');
-  };
-
   const customExtraHeader = (
     <TableRow>
       <TableCell colSpan={HEADER_COLUMNS.length}>
@@ -94,7 +90,6 @@ const ProducerTable = ({
             control={<Checkbox checked={selectAllInactive} onChange={handleSelectAllInactiveChange} color="primary" />}
             label="All Inactive"
           />
-          {<CustomButton variant="outlined" onClick={handleBulkUpload} startIcon={<BulkUpload />} />}
         </div>
       </TableCell>
     </TableRow>

@@ -34,7 +34,7 @@ const useSubmit = () => {
       document.body.removeChild(link);
       toast.success('Download Successfully');
     } catch (e) {
-      toast.error("Download Failed");
+      errorHandler.handleError(e);
       return;
     }
   }, []);
