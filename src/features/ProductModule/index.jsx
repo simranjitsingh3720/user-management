@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Header } from './utils/header';
 import CustomTable from '../../components/CustomTable';
-import { fetchAllProductData } from '../../stores/slices/productSlice';
+import { clearProducts, fetchAllProductData } from '../../stores/slices/productSlice';
 import { COMMON_WORDS } from '../../utils/constants';
 import { BUTTON_TEXT, PAGECOUNT } from '../../utils/globalConstants';
 import { getPlaceHolder } from '../../utils/globalizationFunction';
@@ -51,6 +51,11 @@ function Product() {
 
   useEffect(() => {
     if (products?.length === 0) return;
+
+    if(products?.data?.[0]?.id) {
+      dispatch(clearProducts())
+      return;
+    }
 
     const transformedData =
       products?.data?.map((item) => {
