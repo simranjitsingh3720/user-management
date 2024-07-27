@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import styles from './styles.module.scss';
-import { FormControlLabel, Radio, RadioGroup } from '@mui/material';
+import { Grid, Box, CardContent, Card } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import useCreateOTPException from '../hooks/useCreateOTPException';
 import CustomButton from '../../../components/CustomButton';
@@ -10,14 +9,14 @@ import CustomAutoCompleteWithoutCheckbox from '../../../components/CustomAutoCom
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUser } from '../../../stores/slices/userSlice';
 import { getChannels } from '../../../Redux/getChannel';
+import UserTypeToggle from '../../../components/CustomRadioButtonGroup';
 
 function SetOTPException({ fetchData }) {
   const dispatch = useDispatch();
+  const [OTPValue, setOTPValue] = useState('byChannel');
 
-  const [OTPValue, setOTPValue] = useState('byChannnel');
-
-  const handleChange = (event) => {
-    setOTPValue(event.target.value);
+  const handleChange = (value) => {
+    setOTPValue(value);
   };
 
   const { user, userLoading } = useSelector((state) => state.user);
@@ -28,6 +27,7 @@ function SetOTPException({ fetchData }) {
       fetchUser({
         userType: COMMON_WORDS.PRODUCER,
         searchKey: COMMON_WORDS.ROLE_NAME,
+        isAll: true,
       })
     );
     dispatch(getChannels());
@@ -41,86 +41,62 @@ function SetOTPException({ fetchData }) {
   });
 
   const { errors } = formState;
-
   const { postData, loading } = useCreateOTPException({ fetchData });
 
   const onSubmit = (data) => {
-    if (OTPValue === 'byChannnel') {
-      const payload = {
-        channelId: data?.channel?.id,
-      };
-      postData(payload);
-    } else {
-      const payload = {
-        producerId: data.producerCode.id,
-      };
-      postData(payload);
-    }
+    const payload = OTPValue === 'byChannel' ? { channelId: data?.channel?.id } : { producerId: data.producerCode.id };
+    postData(payload);
   };
 
   const handleReset = () => {
     setValue('channel', null);
     setValue('producerCode', null);
   };
+
   useEffect(() => {
     setValue('channel', null);
     setValue('producerCode', null);
   }, [OTPValue]);
 
   return (
-    <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className={styles.otpException}>
-          <div className="px-5 pt-5">
-            <CustomFormHeader
-              headerText={FORM_HEADER_TEXT.OTP_EXCEPTION}
-              handleReset={handleReset}
-              navigateRoute="/otpexception"
-            />
-          </div>
-          <div className="px-5 pb-5">
-            <span className={styles.labelText}>
-              Select <span className={styles.styledRequired}>*</span>
-            </span>
-            <div className={styles.radioContainer}>
-              <RadioGroup
-                row
-                aria-labelledby="insillion-status-row-radio-buttons-group-label"
+    <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+      <Card>
+        <CardContent>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <CustomFormHeader
+                headerText={FORM_HEADER_TEXT.OTP_EXCEPTION}
+                handleReset={handleReset}
+                navigateRoute="/otpexception"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <UserTypeToggle
+                menuItem={[
+                  { label: 'Channel', value: 'byChannel' },
+                  { label: 'Producer Code', value: 'byProducerCode' },
+                ]}
+                label="Select By"
+                required={true}
+                control={control}
                 name="groupStatus"
-                defaultValue="byChannnel"
-                value={OTPValue}
-                onChange={handleChange}
-              >
-                <FormControlLabel
-                  value="byChannnel"
-                  control={<Radio />}
-                  label="By Channel"
-                  className={OTPValue === 'byChannnel' ? styles.radioSelectStyle : styles.radioNotSelectStyle}
-                />
-                <FormControlLabel
-                  value="byProducerCode"
-                  control={<Radio />}
-                  label="By Producer Code"
-                  className={OTPValue === 'byProducerCode' ? styles.radioSelectStyle : styles.radioNotSelectStyle}
-                />
-              </RadioGroup>
-            </div>
-
-            {OTPValue === 'byChannnel' ? (
-              <div className="w-full max-w-[380px] mt-4">
+                defaultValue="byChannel"
+                onChangeCallback={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              {OTPValue === 'byChannel' ? (
                 <CustomAutoCompleteWithoutCheckbox
                   name="channel"
                   label="Channel"
-                  required={true}
+                  required
                   options={channelType || []}
-                  getOptionLabel={(option) => {
-                    return `${option?.label?.toUpperCase() || ''} - ${option?.numChannelCode || ''}`;
-                  }}
+                  getOptionLabel={(option) => `${option?.label?.toUpperCase() || ''} - ${option?.numChannelCode || ''}`}
                   control={control}
                   rules={{ required: 'Channel is required' }}
                   error={Boolean(errors.channel)}
                   helperText={errors.channel?.message}
-                  disableClearable={true}
+                  disableClearable
                   placeholder={COMMON_WORDS.SELECT}
                   renderOption={(props, option) => (
                     <li {...props} key={option.id}>
@@ -128,42 +104,42 @@ function SetOTPException({ fetchData }) {
                     </li>
                   )}
                 />
-              </div>
-            ) : (
-              <div className="w-full max-w-[380px] mt-4">
+              ) : (
                 <CustomAutoCompleteWithoutCheckbox
                   name="producerCode"
                   label="Producer Code"
-                  required={true}
+                  required
                   loading={userLoading}
                   options={user.data || []}
-                  getOptionLabel={(option) => {
-                    return `${option?.firstName?.toUpperCase() || ''} ${option?.lastName?.toUpperCase() || ''} - ${
+                  getOptionLabel={(option) =>
+                    `${option?.firstName?.toUpperCase() || ''} ${option?.lastName?.toUpperCase() || ''} - ${
                       option.producerCode || ''
-                    }`;
-                  }}
+                    }`
+                  }
                   control={control}
                   rules={{ required: 'Producer is required' }}
                   error={Boolean(errors.producerCode)}
                   helperText={errors.producerCode?.message}
-                  disableClearable={true}
+                  disableClearable
                   placeholder={COMMON_WORDS.SELECT}
                   renderOption={(props, option) => (
                     <li {...props} key={option.id}>
-                      {option?.firstName?.toUpperCase() || ''} {option?.lastName?.toUpperCase() || ''} -
+                      {option?.firstName?.toUpperCase() || ''} {option?.lastName?.toUpperCase() || ''} -{' '}
                       {option?.producerCode || ''}
                     </li>
                   )}
                 />
-              </div>
-            )}
-          </div>
-        </div>
-        <CustomButton type="submit" variant="contained" loading={loading} className="mt-4">
+              )}
+            </Grid>
+          </Grid>
+        </CardContent>
+      </Card>
+      <div className="mt-4">
+        <CustomButton type="submit" variant="contained" disabled={loading}>
           Submit
         </CustomButton>
-      </form>
-    </div>
+      </div>
+    </Box>
   );
 }
 
