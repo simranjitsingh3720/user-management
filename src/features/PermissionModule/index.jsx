@@ -36,7 +36,7 @@ function PermissionModule() {
       showDialog({
         title: COMMON_WORDS.CHANGE_STATUS,
         content: <Content label={COMMON_WORDS.PERMISSION} />,
-        actions: <Actions row={row} fetchData={fetchPermission} />,
+        actions: <Actions row={row} fetchData={getPermissionData} />,
       })
     );
   };
