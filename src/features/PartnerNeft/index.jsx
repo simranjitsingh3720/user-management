@@ -32,10 +32,10 @@ const PartnerNeft = () => {
   const [productValue, setProductValue] = useState([]);
   const [lobValue, setLobValue] = useState([]);
   const [userValue, setUserValue] = useState([]);
+  const [idArr, setIdsArr] = useState('');
+  const [edge, setEdge] = useState('');
 
   const { getPartnerNeft, partnerNeftData, partnerNeftLoading, totalCount } = useGetPartnerNeft();
-
-  // Check Permission
   const { canCreate, canUpdate } = usePermissions();
 
   const loadData = useCallback(() => {
@@ -46,31 +46,16 @@ const PartnerNeft = () => {
       pageSize,
       childFieldsToFetch: COMMON_FIELDS.childFieldsToFetch,
       childFieldsEdge: COMMON_FIELDS.childFieldsEdge,
+      edge: idArr ? edge : '',
+      ids: idArr ? idArr : '',
+      isExclusive: idArr ? true : null,
     });
-  }, [orderBy, order, page, pageSize, getPartnerNeft]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [orderBy, order, page, pageSize, idArr]);
 
   useEffect(() => {
     loadData();
   }, [loadData]);
-
-  useEffect(() => {
-    switch (searched) {
-      case COMMON_WORDS.PRODUCT:
-        setLobValue([]);
-        setUserValue([]);
-        break;
-      case COMMON_WORDS.LOB:
-        setProductValue([]);
-        setUserValue([]);
-        break;
-      case COMMON_WORDS.PRODUCER:
-        setProductValue([]);
-        setLobValue([]);
-        break;
-      default:
-        break;
-    }
-  }, [searched]);
 
   useEffect(() => {
     dispatch(
@@ -84,12 +69,13 @@ const PartnerNeft = () => {
       fetchUser({
         userType: COMMON_WORDS.PRODUCER,
         searchKey: COMMON_WORDS.ROLE_NAME,
+        isAll: true,
       })
     );
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(setTableName(partnerNeftData[0]?.label));
+    dispatch(setTableName(partnerNeftData?.[0]?.label));
     dispatch(
       setExtraColumns([
         ExtraColumnsEnum.PRODUCT,
@@ -103,39 +89,29 @@ const PartnerNeft = () => {
 
   const fetchIdsAndConvert = (inputData) => inputData.map((item) => item.id).join();
 
-  const handleGo = useCallback(() => {
-    let searchString = '';
-    let edge = '';
-
+  const handleGo = (data) => {
+    setPage(0);
     switch (searched) {
       case COMMON_WORDS.PRODUCT:
-        searchString = fetchIdsAndConvert(productValue);
-        edge = COMMON_FIELDS.hasProduct;
+        setEdge(COMMON_FIELDS.hasProduct);
         break;
       case COMMON_WORDS.LOB:
-        searchString = fetchIdsAndConvert(lobValue);
-        edge = COMMON_FIELDS.hasLob;
+        setEdge(COMMON_FIELDS.hasLob);
         break;
       case COMMON_WORDS.PRODUCER:
-        searchString = fetchIdsAndConvert(userValue);
-        edge = COMMON_FIELDS.hasProducer;
+        setEdge(COMMON_FIELDS.hasProducer);
         break;
       default:
+        setEdge('');
         break;
     }
 
-    if (searchString) {
-      getPartnerNeft({
-        childFieldsToFetch: COMMON_FIELDS.childFieldsToFetch,
-        childFieldsEdge: COMMON_FIELDS.childFieldsEdge,
-        ids: searchString,
-        isExclusive: true,
-        edge: edge,
-      });
+    if (data?.autocomplete) {
+      setIdsArr(fetchIdsAndConvert(data?.autocomplete));
     } else {
-      loadData();
+      setIdsArr('');
     }
-  }, [searched, productValue, lobValue, userValue, getPartnerNeft, loadData]);
+  };
 
   const updateNeftForm = useCallback(
     (row) => {
@@ -215,7 +191,8 @@ const PartnerNeft = () => {
         searched={searched}
         setSearched={setSearched}
         selectOptions={SEARCH_OPTIONS}
-        handleGo={handleGo}
+        onSubmit={handleGo}
+        fetchData={handleGo}
         showButton
         showExportButton={true}
         canCreate={canCreate}
