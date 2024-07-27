@@ -101,8 +101,8 @@ function SearchComponent({
           </Grid>
         )}
         <Grid container spacing={2} justifyContent="space-between" alignItems="center">
-          <Grid item lg={8} xs={12}>
-            {!hideSearch && (
+          {!hideSearch && (
+            <Grid item lg={8} xs={12}>
               <Grid container spacing={2} alignItems="center">
                 {selectOptions && (
                   <Grid item xs={12} sm={4} md={3}>
@@ -206,9 +206,9 @@ function SearchComponent({
                   )}
                 </Grid>
               </Grid>
-            )}
-          </Grid>
-          <Grid item lg={6} xs={12} className="flex justify-end">
+            </Grid>
+          )}
+          <Grid item lg={hideSearch ? 12 : 6} xs={12} className="flex justify-end">
             {showBulkUploadButton && (
               <CustomButton variant="outlined" onClick={handleBulkUpload} startIcon={<BulkUpload />} />
             )}

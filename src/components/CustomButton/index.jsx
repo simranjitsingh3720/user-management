@@ -54,7 +54,6 @@ const CustomButton = ({
 };
 
 CustomButton.propTypes = {
-  children: PropTypes.node.isRequired,
   onClick: PropTypes.func,
   type: PropTypes.string,
   disabled: PropTypes.bool,
