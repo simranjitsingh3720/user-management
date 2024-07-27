@@ -1,15 +1,16 @@
 import axiosInstance from '../../../utils/axiosInstance';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import apiUrls from '../../../utils/apiUrls';
 import { buildQueryString } from '../../../utils/globalizationFunction';
+import errorHandler from '../../../utils/errorHandler';
 
-function useGetPrivilege(page, pageSize, order, orderBy, searched, query) {
-  const [data, setData] = useState(null);
+function useGetPrivilege() {
+  const [permissions, setPermissions] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [count, setCount] = useState(0);
+  const [totalCount, setTotalCount] = useState(0);
 
-  const fetchData = async () => {
+  const fetchPermission = async (page, pageSize, order, orderBy, searched, query) => {
     try {
       setLoading(true);
       let params = {
@@ -30,25 +31,24 @@ function useGetPrivilege(page, pageSize, order, orderBy, searched, query) {
       const response = await axiosInstance.get(url);
       const { data = {} } = response;
       const { totalCount = 0 } = data;
+
       const transformedData =
         response?.data?.data.map((item) => ({
           ...item,
           checked: item.status,
         })) || [];
-      setData(transformedData);
-      setCount(totalCount);
+        
+        setPermissions(transformedData);
+      setTotalCount(totalCount);
     } catch (error) {
-      setData([]);
+      setPermissions([]);
+      errorHandler.handleError(error)
     } finally {
       setLoading(false);
     }
   };
-  useEffect(() => {
-    fetchData();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, pageSize, order, orderBy]);
 
-  return { data, loading, fetchData, setLoading, count };
+  return { permissions, loading, fetchPermission, totalCount };
 }
 
 export default useGetPrivilege;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import useGetPrivilege from './hooks/useGetPrivilege';
 import { BUTTON_TEXT, PAGECOUNT } from '../../utils/globalConstants';
 import CustomTable from '../../components/CustomTable';
@@ -17,30 +17,45 @@ function PermissionModule() {
   const dispatch = useDispatch();
 
   const [searched, setSearched] = useState('permissionName');
+  const [query, setQuery] = useState('');
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(PAGECOUNT);
   const [order, setOrder] = useState(COMMON_WORDS.ASC);
   const [orderBy, setOrderBy] = useState(COMMON_WORDS.CREATED_AT);
 
-  const { fetchData, data, loading, count } = useGetPrivilege(page, pageSize, order, orderBy, searched, query);
-  // Check Permission 
   const { canCreate, canUpdate } = usePermissions();
+  const { fetchPermission, permissions, loading, totalCount } = useGetPrivilege();
 
-  const handleClicked = (data, row) => {
+  /**
+   * @description Update status of the permission
+   * @param data 
+   * @param row 
+   */
+  const handleClicked = ({row}) => {
     dispatch(
       showDialog({
         title: COMMON_WORDS.CHANGE_STATUS,
         content: <Content label={COMMON_WORDS.PERMISSION} />,
-        actions: <Actions row={row} fetchData={fetchData} />,
+        actions: <Actions row={row} fetchData={fetchPermission} />,
       })
     );
   };
-
   const HEADER_COLUMNS = generateTableHeaders(handleClicked);
 
+
   const onSubmit = (data) => {
-    fetchData(searched, data.search);
+      setPage(0);
+      setQuery(data?.search || '');
   };
+
+  const getPermissionData = useCallback(() => {
+    fetchPermission(page, pageSize, order, orderBy, searched, query);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page, pageSize, order, orderBy, query]);
+
+  useEffect(() => {
+    getPermissionData();
+  }, [getPermissionData])
 
   return (
     <div>
@@ -55,14 +70,14 @@ function PermissionModule() {
         showButton
         canCreate={canCreate}
         onSubmit={onSubmit}
-        fetchData={fetchData}
+        fetchData={onSubmit}
       />
       <div className="mt-4">
         <CustomTable
           columns={HEADER_COLUMNS}
-          rows={data || []}
+          rows={permissions}
           loading={loading}
-          totalCount={count || 0}
+          totalCount={totalCount}
           page={page}
           setPage={setPage}
           rowsPerPage={pageSize}
