@@ -39,11 +39,14 @@ function GroupModule() {
     let searchString = '';
     let edge = '';
     let searchKey = '';
-  
+    let ids = '';
+    let isExclusive = null;
+
     switch (searched) {
       case COMMON_WORDS.PERMISSIONNAME:
-        searchString = permissionValue.map((item) => item.id).join(',');
+        ids = permissionValue.map((item) => item.id).join(',');
         edge = COMMON_FIELDS.hasPermission;
+        isExclusive = true;
         break;
       case COMMON_WORDS.GROUPNAME:
         searchString = query;
@@ -52,7 +55,7 @@ function GroupModule() {
       default:
         break;
     }
-  
+
     const params = {
       page,
       pageSize,
@@ -61,37 +64,32 @@ function GroupModule() {
       ...(edge && { edge }),
       ...(searchString && { searchString }),
       ...(edge || searchString ? { searchKey } : {}),
+      ...(ids && { ids }),
+      isExclusive,
     };
-  
+
     dispatch(getGroup(params));
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, page, pageSize, order, orderBy]);
-  
-  const handleGo = useCallback(() => {
-    setPage(0);
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, page, pageSize, order, orderBy, query, permissionValue]);
 
   useEffect(() => {
     fetchGroupData();
   }, [fetchGroupData]);
 
-  const updateGroupStatus = useCallback(
-    (id, data) => {
-      const updatedData = data.map((item) => {
-        if (item.id === id) {
-          return {
-            ...item,
-            checked: !item.checked,
-            status: !item.status,
-          };
-        }
-        return item;
-      });
-      
-      setGroupData(updatedData);
-    },
-    []
-  );
+  const updateGroupStatus = useCallback((id, data) => {
+    const updatedData = data.map((item) => {
+      if (item.id === id) {
+        return {
+          ...item,
+          checked: !item.checked,
+          status: !item.status,
+        };
+      }
+      return item;
+    });
+
+    setGroupData(updatedData);
+  }, []);
 
   useEffect(() => {
     const transformedData =
@@ -109,13 +107,14 @@ function GroupModule() {
 
     setGroupData(transformedData);
   }, [group]);
+
   const handleGroupStatus = useCallback(
     (data, row) => {
       dispatch(
         showDialog({
           title: COMMON_WORDS.CHANGE_STATUS,
           content: <Content label={COMMON_WORDS.GROUP} />,
-          actions: <ConfirmAction row={row} groupData={data} handleGroupStatus={updateGroupStatus}  />,
+          actions: <ConfirmAction row={row} groupData={data} handleGroupStatus={updateGroupStatus} />,
         })
       );
     },
@@ -183,6 +182,17 @@ function GroupModule() {
     }
   };
 
+  const onSubmit = (data) => {
+    if (searched === COMMON_WORDS.PERMISSIONNAME) {
+      setPermissionValue(data?.autocomplete || []);
+      setQuery('');
+    }
+    if (searched === COMMON_WORDS.GROUPNAME) {
+      setQuery(data?.search || '');
+      setPermissionValue([]);
+    }
+  };
+
   return (
     <>
       <div className="mb-4">
@@ -198,14 +208,14 @@ function GroupModule() {
           buttonText={BUTTON_TEXT.GROUP}
           navigateRoute="/group/group-form"
           textField={showTextField.includes(searched)}
-          setQuery={setQuery}
           textFieldPlaceholder={getPlaceHolder(COMMON_WORDS.GROUP)}
           searched={searched}
           setSearched={setSearched}
           selectOptions={SEARCH_OPTIONS}
-          handleGo={handleGo}
           showButton
           canCreate={canCreate}
+          onSubmit={onSubmit}
+          fetchData={onSubmit}
         />
       </div>
       <div>

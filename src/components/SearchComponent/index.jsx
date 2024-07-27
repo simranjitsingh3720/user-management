@@ -171,13 +171,13 @@ function SearchComponent({
                           id="autocomplete"
                           options={optionsData || []}
                           getOptionLabel={optionLabel}
+                          isOptionEqualToValue={(option, value) => option.id === value.id}
                           multiple
                           size="small"
                           renderInput={(params) => <TextField {...params} placeholder={placeholder} />}
                           value={field?.value || []}
                           className="customize-select"
                           onChange={(event, newValue) => {
-                            console.log('newValue', newValue);
                             if (newValue?.length === 0) {
                               fetchData();
                             }
