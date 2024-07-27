@@ -3,18 +3,23 @@ import axiosInstance from '../../../utils/axiosInstance';
 
 import { COMMON_WORDS } from '../../../utils/constants';
 import { buildQueryString } from '../../../utils/globalizationFunction';
-import moment from 'moment';
 import apiUrls from '../../../utils/apiUrls';
 import errorHandler from '../../../utils/errorHandler';
+import dayjs from 'dayjs';
+import { DATE_FORMAT } from '../../../utils/globalConstants';
 
 const calculateUnlockedDays = (startDateString, endDateString) => {
-  const startMoment = moment(startDateString, 'DD/MM/YYYY');
-  const endMoment = moment(endDateString, 'DD/MM/YYYY');
+  const startDate = dayjs(startDateString, DATE_FORMAT);
+  const enddate = dayjs(endDateString, DATE_FORMAT);
 
-  const differenceInDays = endMoment.diff(startMoment, 'days');
+  if (!startDate.isValid() || !enddate.isValid()) {
+    throw new Error('Invalid date format');
+  }
 
+  const differenceInDays = enddate.diff(startDate, 'day');
   return differenceInDays;
 };
+
 
 function useGetEODBypass(page, pageSize, order, orderBy) {
   const [data, setData] = useState(null);
