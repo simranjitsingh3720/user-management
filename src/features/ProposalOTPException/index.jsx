@@ -84,7 +84,7 @@ function ProposalOTPException() {
       <div className="mb-4">
         <SearchComponent
           setDate={setDate}
-          dateField
+          // dateField
           handleGo={handleGo}
           showButton={true}
           buttonText={BUTTON_TEXT.PROPOSAL_EXCEPTION}
@@ -97,6 +97,7 @@ function ProposalOTPException() {
           setQuery={setQuery}
           textFieldPlaceholder={COMMON_WORDS.SEARCH}
           textField
+          hideSearch={true}
         />
       </div>
 
