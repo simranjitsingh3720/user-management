@@ -94,7 +94,6 @@ function UploadForm() {
   const handleGo = () => {
     if (query) {
       setData([]);
-      console.log(query);
       getBulkUpload({pageNo:page, pageSize, searchKey: COMMON_VAR.FILE_TYPE,
       searchString: tableName, searched, query});
     } else {
@@ -116,7 +115,6 @@ function UploadForm() {
       formData.append(COMMON_VAR.FILE, file);
       formData.append(COMMON_VAR.FILE_TYPE, tableName);
       const res = await postBulkUpload(formData);
-      console.log(res);
       if (res && res.success && res.statusCode === 200) {
         setFileUploaded(false);
         setFile('');

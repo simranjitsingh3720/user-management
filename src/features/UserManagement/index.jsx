@@ -23,7 +23,8 @@ function UserManagement() {
   const [pageSize, setPageSize] = useState(PAGECOUNT);
   const [order, setOrder] = useState(COMMON_WORDS.DESC);
   const [orderBy, setOrderBy] = useState(COMMON_WORDS.CREATED_AT);
-  const { data, loading, fetchData } = useGetUser(page, pageSize, order, orderBy);
+  const [query, setQuery] = useState('');
+  const { userList, loading, fetchUserList, totalCount } = useGetUser();
   const [userData, setUserData] = useState([]);
   const { canCreate, canUpdate } = usePermissions();
 
@@ -32,39 +33,42 @@ function UserManagement() {
   }, []);
 
   useEffect(() => {
-    if (data?.data?.length === 0) return;
+    if (userList?.data?.length === 0) return;
     const transformedData =
-      data?.data?.map((item) => {
+      userList?.data?.map((item) => {
         return {
           ...item,
           checked: item?.status,
-          disabled: !canUpdate,
         };
       }) || [];
     setUserData(transformedData);
     dispatch(setTableName(transformedData[0]?.label));
-  }, [data, canUpdate, dispatch]);
+  }, [userList, dispatch]);
 
   const handleInsillionStatus = useCallback((data, row) => {
     dispatch(
       showDialog({
         title: COMMON_WORDS.CHANGE_STATUS,
         content: <Content />,
-        actions: <Actions row={row} fetchData={fetchData} />,
+        actions: <Actions row={row} fetchData={userList} />,
       })
     );
-  }, []);
+  }, [dispatch, userList]);
 
   const header = useMemo(() => Header(updateUserForm, handleInsillionStatus), [updateUserForm, handleInsillionStatus]);
 
+  const getUserList = useCallback(() => {
+    fetchUserList({page, pageSize, order, orderBy, query, searched});
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page, pageSize, order, orderBy, query]);
+
+  useEffect(() => {
+    getUserList();
+  }, [getUserList])
+
   const onSubmit = (data) => {
-    console.log(data);
-    if (data.search) {
-      setUserData([]);
-      fetchData(searched, data.search);
-    } else {
-      fetchData();
-    }
+    setPage(0);
+    setQuery(data?.search || '');
   };
 
   return (
@@ -79,7 +83,7 @@ function UserManagement() {
         navigateRoute={NAVIGATE.NAVIGATE_TO_FORM}
         showExportButton={true}
         showButton
-        fetchData={fetchData}
+        fetchData={onSubmit}
         canCreate={canCreate}
         onSubmit={onSubmit}
       />
@@ -88,7 +92,7 @@ function UserManagement() {
           rows={userData || []}
           columns={header}
           loading={loading}
-          totalCount={data?.totalCount || 0}
+          totalCount={totalCount}
           page={page}
           setPage={setPage}
           rowsPerPage={pageSize}

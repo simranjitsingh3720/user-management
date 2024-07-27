@@ -22,7 +22,6 @@ function useGetEODBypass(page, pageSize, order, orderBy) {
   const [count, setCount] = useState(0);
 
   const fetchData = async (resultProducersId = null, date, search, searched) => {
-    console.log('search', search);
     try {
       setLoading(true);
       let params = buildQueryString({

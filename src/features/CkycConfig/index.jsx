@@ -88,7 +88,6 @@ function CkycConfig() {
   );
 
   const onSubmit = (data) => {
-    console.log('data', data);
     if (searched === COMMON_WORDS.PRODUCT) {
       const resultProductString = fetchIdsAndConvert(data.autocomplete);
       fetchData(searched, resultProductString);
