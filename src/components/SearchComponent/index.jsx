@@ -77,7 +77,6 @@ function SearchComponent({
                 name="startDate"
                 labelVisible={true}
                 label="Start Date"
-                required
                 errors={errors}
                 classes="w-full text-red-600"
                 setValue={setValue}
@@ -91,7 +90,6 @@ function SearchComponent({
                 name="endDate"
                 labelVisible={true}
                 label="End Date"
-                required
                 errors={errors}
                 classes="w-full text-red-600"
                 setValue={setValue}
