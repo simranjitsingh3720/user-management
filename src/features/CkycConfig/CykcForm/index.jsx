@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { Autocomplete, TextField, Box, Card, CardContent, Grid, Select, MenuItem } from '@mui/material';
-import styles from './styles.module.scss';
 import { useParams } from 'react-router-dom';
 import CustomButton from '../../../components/CustomButton';
 import { forWhomDisable, forWhomEnable, STATUS } from '../utils/constants';
@@ -198,14 +197,14 @@ const CkycForm = () => {
                       className="customize-select"
                       renderValue={(selected) => {
                         if (selected === null) {
-                          return <div className={styles.placeholderStyle}>Select</div>;
+                          return <span>Select</span>;
                         }
                         const selectedItem = forWhomEnable.find((item) => item.value === selected);
                         return selectedItem ? selectedItem.label : '';
                       }}
                     >
                       {(watch('cykc') === 'enable' ? forWhomEnable : forWhomDisable).map((item, index) => (
-                        <MenuItem key={index} value={item.value} className={styles.styledOptionText}>
+                        <MenuItem key={index} value={item.value}>
                           {item.label}
                         </MenuItem>
                       ))}
@@ -218,7 +217,7 @@ const CkycForm = () => {
           </Grid>
         </CardContent>
       </Card>
-      <div className={styles.buttonContainer}>
+      <div className='mt-4'>
         <CustomButton type="submit" variant="contained" disabled={loading}>
           {id ? 'Update' : 'Submit'}
         </CustomButton>
