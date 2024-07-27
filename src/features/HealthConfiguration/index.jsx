@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import useGetHouseBank from './hooks/useGetHealthConfig';
+import useGetHealthConfig from './hooks/useGetHealthConfig';
 import SearchComponenet from '../../components/SearchComponent';
 import CustomTable from '../../components/CustomTable';
 import { useNavigate } from 'react-router-dom';
@@ -22,7 +22,7 @@ function HealthConfiguration() {
   const [order, setOrder] = useState(COMMON_WORDS.ASC);
   const [orderBy, setOrderBy] = useState(COMMON_WORDS.CREATED_AT);
 
-  const { data, loading, fetchData, totalCount } = useGetHouseBank(page, pageSize, order, orderBy);
+  const { data, loading, fetchData, totalCount } = useGetHealthConfig(page, pageSize, order, orderBy);
 
   const { canUpdate, canCreate } = usePermissions();
 
