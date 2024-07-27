@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
+import apiUrls from "../../../utils/apiUrls";
 
 function useGetProposalOTPById() {
   const [data, setData] = useState(null);
@@ -7,7 +8,7 @@ function useGetProposalOTPById() {
 
   const fetchData = async (proposalId) => {
     try {
-      let url = `/api/proposal-otp-exception/${proposalId}`;
+      let url = `${apiUrls.proposalOtpException}/${proposalId}`;
 
       const response = await axiosInstance.get(url);
       setData(response.data);

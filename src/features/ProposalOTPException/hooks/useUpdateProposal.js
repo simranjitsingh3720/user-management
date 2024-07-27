@@ -3,6 +3,7 @@ import axiosInstance from "../../../utils/axiosInstance";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import errorHandler from "../../../utils/errorHandler";
+import apiUrls from "../../../utils/apiUrls";
 
 
 function useUpdateProposal() {
@@ -14,7 +15,7 @@ function useUpdateProposal() {
     setLoading(true);
     try {
       const response = await axiosInstance.put(
-        "/api/proposal-otp-exception",
+        apiUrls.proposalOtpException,
         payload
       );
 

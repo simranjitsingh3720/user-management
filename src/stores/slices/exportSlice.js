@@ -1,10 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axiosInstance from './../../utils/axiosInstance';
 import dayjs from 'dayjs';
-import { API_END_POINTS } from '../../features/ExportDropdown/utils/constants';
 import { toast } from 'react-toastify';
 import { DATE_FORMAT } from '../../utils/globalConstants';
 import toastifyUtils from '../../utils/toastify';
+import apiUrls from '../../utils/apiUrls';
 
 const initialState = {
   selectedValue: '',
@@ -19,7 +19,7 @@ const initialState = {
 
 export const fetchColumns = createAsyncThunk('export/fetchColumns', async (tableName, thunkAPI) => {
   try {
-    const response = await axiosInstance.get(`${API_END_POINTS.getColumns}${tableName}`);
+    const response = await axiosInstance.get(`${apiUrls.getColumns}${tableName}`);
     const columns = response.data.data.map((col) => ({
       id: col,
       name: col,
@@ -34,7 +34,7 @@ export const fetchColumns = createAsyncThunk('export/fetchColumns', async (table
 export const downloadData = createAsyncThunk('export/downloadData', async (payload, thunkAPI) => {
   try {
     const { tableName, past30Days, isBulkDownload, columns, startDate, endDate, additionalColumns } = payload;
-    const response = await axiosInstance.get(`${API_END_POINTS.downloadFile}`, {
+    const response = await axiosInstance.get(`${apiUrls.downloadFile}`, {
       params: {
         tableName: tableName,
         past30Days: past30Days,

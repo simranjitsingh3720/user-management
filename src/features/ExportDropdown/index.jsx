@@ -78,7 +78,7 @@ const ExportDropdown = () => {
           onClick={handleToggle}
           startIcon={<DownloadIcon />}
         >
-          <span>Export</span>
+          {/* <span>Export</span> */}
           <ArrowDropDownIcon />
         </CustomButton>
       </ButtonGroup>

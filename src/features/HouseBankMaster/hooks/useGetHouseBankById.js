@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
+import apiUrls from "../../../utils/apiUrls";
 
 function useGetHouseBankByID() {
   const [data, setData] = useState(null);
@@ -7,7 +8,7 @@ function useGetHouseBankByID() {
 
   const fetchData = async (houseBankId) => {
     try {
-      let url = `/api/house-bank/${houseBankId}`;
+      let url = `${apiUrls.houseBank}/${houseBankId}`;
 
       const response = await axiosInstance.get(url);
       setData(response.data);

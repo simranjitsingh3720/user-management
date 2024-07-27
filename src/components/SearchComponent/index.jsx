@@ -208,7 +208,7 @@ function SearchComponent({
               </Grid>
             </Grid>
           )}
-          <Grid item lg={hideSearch ? 12 : 6} xs={12} className="flex justify-end">
+          <Grid item lg={hideSearch ? 12 : 4} xs={12} className="flex justify-end">
             {showBulkUploadButton && (
               <CustomButton variant="outlined" onClick={handleBulkUpload} startIcon={<BulkUpload />} />
             )}

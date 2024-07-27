@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
 import { buildQueryString } from "../../../utils/globalizationFunction";
 import { COMMON_WORDS } from "../../../utils/constants";
+import apiUrls from "../../../utils/apiUrls";
 
 function useGetBitlyLink(pageChange, rowsPage, query, searched) {
   const [data, setData] = useState(null);
@@ -36,7 +37,7 @@ function useGetBitlyLink(pageChange, rowsPage, query, searched) {
         });
       }
 
-      let url = `/api/proposal-bitly-config?${queryParams}`;
+      let url = `${apiUrls.proposalBitlyConfig}?${queryParams}`;
 
       const response = await axiosInstance.get(url);
       setData(response.data);

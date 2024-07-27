@@ -31,7 +31,10 @@ const apiUrls = {
   getBulkUploadHistory:'/api/file/upload-history',
   postBulkUpload: '/api/file/bulk-upload',
   downloadBulkTemplate: '/api/file/download-sample-file',
-  proposalOtpException: "/api/proposal-otp-exception"
+  proposalOtpException: "/api/proposal-otp-exception",
+  proposalBitlyConfig: "/api/proposal-bitly-config",
+  getColumns: "/api/file/columns?tableName=",
+  downloadFile: "/api/file/download"
 };
 
 export default apiUrls;
