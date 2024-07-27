@@ -34,6 +34,7 @@ const ProducerForm = ({ onFormSubmit }) => {
       fetchUser({
         userType: COMMON_WORDS.PRODUCER,
         searchKey: COMMON_WORDS.ROLE_NAME,
+        isAll: true,
       })
     );
   }, [dispatch]);
@@ -54,7 +55,7 @@ const ProducerForm = ({ onFormSubmit }) => {
               loading={userLoading}
               options={user.data || []}
               getOptionLabel={(option) => {
-                return `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`;
+                return `${option?.firstName} ${option?.lastName}`;
               }}
               isOptionEqualToValue={(option, value) => option.id === value.id}
               control={control}
@@ -65,7 +66,7 @@ const ProducerForm = ({ onFormSubmit }) => {
               placeholder={COMMON_WORDS.SELECT}
               renderOption={(props, option) => (
                 <li {...props} key={option.id}>
-                  {option?.firstName?.toUpperCase()} {option?.lastName?.toUpperCase()}
+                  {option?.firstName} {option?.lastName}
                 </li>
               )}
             />

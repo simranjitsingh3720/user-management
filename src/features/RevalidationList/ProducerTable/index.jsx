@@ -4,7 +4,6 @@ import CustomTable from '../../../components/CustomTable';
 import { Checkbox, FormControlLabel, TableCell, TableRow } from '@mui/material';
 import generateTableHeaders from '../utils/generateTableHeaders';
 import usePermissions from '../../../hooks/usePermission';
-import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setTableName } from '../../../stores/slices/exportSlice';
 
@@ -21,7 +20,6 @@ const ProducerTable = ({
   const [selectAllActive, setSelectAllActive] = useState(false);
   const [selectAllInactive, setSelectAllInactive] = useState(false);
   const { canUpdate } = usePermissions();
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleDataUpdate = (updatedData) => {
