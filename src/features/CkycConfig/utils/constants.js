@@ -51,5 +51,3 @@ export const CKYC_DROPDOWN = [
     value: 'forWhom',
   },
 ];
-
-export const EXTRA_COLUMNS = ['product', 'lob'];
