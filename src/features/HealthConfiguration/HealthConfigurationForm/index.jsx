@@ -1,17 +1,26 @@
-import { Autocomplete, MenuItem, Select, TextField } from '@mui/material';
 import React, { useEffect } from 'react';
-import styles from './styles.module.scss';
+import {
+  Autocomplete,
+  Grid,
+  MenuItem,
+  Select,
+  TextField,
+  Typography,
+  Button,
+  Box,
+  Card,
+  CardContent,
+} from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
-
 import useUpdatePaymentConfig from '../hooks/useUpdateHealthConfig';
 import { BitlyLinkMandatory } from '../constants';
 import useGetUserData from '../../BANCALogin/hooks/useGetUserData';
 import useCreateHealthConfig from '../hooks/useCreateHealthConfig';
 import useGetHealthConfigByID from '../hooks/useGetHealthConfigById';
-import CustomButton from '../../../components/CustomButton';
 import CustomFormHeader from '../../../components/CustomFormHeader';
 import { FORM_HEADER_TEXT } from '../../../utils/constants';
+import CustomButton from '../../../components/CustomButton';
 
 function HealthConfigurationForm() {
   const { id } = useParams();
@@ -24,7 +33,6 @@ function HealthConfigurationForm() {
   });
 
   const { data: healthConfigData, fetchData: fetchHealthConfigByID } = useGetHealthConfigByID();
-
   const { userData } = useGetUserData();
 
   useEffect(() => {
@@ -32,9 +40,7 @@ function HealthConfigurationForm() {
   }, [id]);
 
   const { postData, loading: createPaymentLoading } = useCreateHealthConfig();
-
   const { UpdateDataFun, updateLoading } = useUpdatePaymentConfig();
-
   const { errors } = formState;
 
   useEffect(() => {
@@ -64,112 +70,87 @@ function HealthConfigurationForm() {
   };
 
   const handleReset = () => {
-    if (id) {
-      setValue('medicare', null);
-    } else setValue('producer', null);
+    if (!id) {
+      setValue('producer', null);
+    }
     setValue('medicare', null);
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className={styles.createNewUserContainer}>
-          <div className="px-5 pt-5">
-            <CustomFormHeader
-              id={id}
-              headerText={FORM_HEADER_TEXT.HEALTH_CONFIG}
-              navigateRoute="/health-config"
-              handleReset={handleReset}
-            />
-          </div>
-          <div className={styles.containerStyle}>
-            <div className={styles.fieldContainerStyle}>
-              <span className={styles.labelText}>
-                Select Producer
-                <span className={styles.styledRequired}>*</span>
-              </span>
-
+    <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+      <Card>
+        <CardContent>
+          <CustomFormHeader
+            id={id}
+            headerText={FORM_HEADER_TEXT.HEALTH_CONFIG}
+            navigateRoute="/health-config"
+            handleReset={handleReset}
+          />
+          <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+            <Grid item xs={12} md={12} lg={4}>
+              <Typography variant="h6">Select Producer</Typography>
               <Controller
                 name="producer"
-                id="producer"
                 control={control}
                 rules={{ required: 'Producer is required' }}
                 render={({ field }) => (
                   <Autocomplete
-                    id="producer"
                     options={userData || []}
-                    getOptionLabel={(option) => {
-                      return `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`;
-                    }}
-                    disabled={id}
-                    className={styles.customizeSelect}
+                    getOptionLabel={(option) => `${option.firstName.toUpperCase()} ${option.lastName.toUpperCase()}`}
+                    disabled={Boolean(id)}
                     size="small"
                     isOptionEqualToValue={(option, value) => option.id === value.id}
                     renderInput={(params) => <TextField {...params} placeholder="Select" />}
                     value={field.value}
-                    onChange={(event, newValue) => {
-                      field.onChange(newValue);
-                    }}
+                    onChange={(event, newValue) => field.onChange(newValue)}
                     renderOption={(props, option) => (
                       <li {...props} key={option.id}>
-                        {option?.firstName?.toUpperCase()} {option?.lastName?.toUpperCase()}
+                        {option.firstName.toUpperCase()} {option.lastName.toUpperCase()}
                       </li>
                     )}
-                    ListboxProps={{
-                      style: {
-                        maxHeight: '200px',
-                      },
-                    }}
                   />
                 )}
               />
-              <div className={styles.styledError}>{errors.producer && <span>{errors.producer.message}</span>} </div>
-            </div>
-            <div className={styles.fieldContainerStyle}>
-              <span className={styles.labelText}>
-                Medicare Existing TATA AIG General Insurance Customer
-                <span className={styles.styledRequired}>*</span>
-              </span>
+              {errors.producer && <Typography color="error">{errors.producer.message}</Typography>}
+            </Grid>
+            <Grid item xs={12} md={12} lg={8}>
+              <Typography variant="h6">Medicare Existing TATA AIG General Insurance Customer</Typography>
               <Controller
                 name="medicare"
                 control={control}
-                rules={{ required: 'Medicare Existing TATA AIG General Insurance Customer is required' }}
+                rules={{ required: 'This field is required' }}
                 render={({ field }) => (
                   <Select
-                    labelId="search-select"
-                    id="medicare"
                     value={field.value}
-                    onChange={(event, newValue) => {
-                      field.onChange(event.target.value);
-                    }}
+                    onChange={(event) => field.onChange(event.target.value)}
                     size="small"
                     displayEmpty
-                    className={styles.customizeSelect}
+                    className='w-1/2'
                     renderValue={(selected) => {
-                      if (selected === null) {
-                        return <div className={styles.placeholderStyle}>Select</div>;
-                      }
+                      if (!selected) return <Typography color="textSecondary">Select</Typography>;
                       const selectedItem = BitlyLinkMandatory.find((item) => item.value === selected);
                       return selectedItem ? selectedItem.label : '';
                     }}
                   >
                     {BitlyLinkMandatory.map((item) => (
-                      <MenuItem value={item.value} className={styles.styledOptionText}>
+                      <MenuItem key={item.value} value={item.value}>
                         {item.label}
                       </MenuItem>
                     ))}
                   </Select>
                 )}
               />
-              <div className={styles.styledError}>{errors.medicare && <span>{errors.medicare.message}</span>}</div>
-            </div>
-          </div>
-        </div>
+              {errors.medicare && <Typography color="error">{errors.medicare.message}</Typography>}
+            </Grid>
+          </Grid>
+        </CardContent>
+      </Card>
+      <div className="mt-4">
         <CustomButton type="submit" variant="contained" disabled={updateLoading || createPaymentLoading}>
           {id ? 'Update' : 'Submit'}
         </CustomButton>
-      </form>
-    </div>
+      </div>
+    </Box>
   );
 }
 
