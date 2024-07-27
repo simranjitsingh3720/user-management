@@ -14,7 +14,7 @@ import { COMMON_WORDS } from '../../../utils/constants';
  * @returns {object} - An object containing role data, loading states, and functions for CRUD operations.
  */
 const useRole = (updateRoleInState) => {
-  const [data, setData] = useState([]);
+  const [rolesList, setRolesList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [roleData, setRoleData] = useState(null);
   const [totalCount, setTotalCount] = useState(0);
@@ -56,17 +56,17 @@ const useRole = (updateRoleInState) => {
           };
         });
 
-        setData(transformedData);
-        dispatch(setTableName(data[0]?.tableName));
+        setRolesList(transformedData);
+        dispatch(setTableName(rolesList[0]?.tableName));
         setTotalCount(totalCount);
       } catch (e) {
         errorHandler.handleError(e);
-        setData([]);
+        setRolesList([]);
       } finally {
         setLoading(false);
       }
     },
-    [dispatch]
+    [dispatch, rolesList]
   );
 
   /**
@@ -127,8 +127,8 @@ const useRole = (updateRoleInState) => {
   };
 
   return {
-    data,
-    setData,
+    rolesList,
+    setRolesList,
     roleData,
     loading,
     totalCount,
