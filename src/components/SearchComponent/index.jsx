@@ -81,6 +81,7 @@ function SearchComponent({
                 classes="w-full text-red-600"
                 setValue={setValue}
                 watch={watch}
+                isEdit={true}
               />
             </Grid>
             <Grid item>
@@ -94,6 +95,7 @@ function SearchComponent({
                 classes="w-full text-red-600"
                 setValue={setValue}
                 watch={watch}
+                isEdit={true}
               />
             </Grid>
           </Grid>
