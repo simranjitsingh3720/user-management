@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import axiosInstance from '../../../utils/axiosInstance';
 
 import { COMMON_WORDS } from '../../../utils/constants';
@@ -20,13 +20,12 @@ const calculateUnlockedDays = (startDateString, endDateString) => {
   return differenceInDays;
 };
 
-
-function useGetEODBypass(page, pageSize, order, orderBy) {
-  const [data, setData] = useState(null);
+function useGetEODBypass() {
+  const [eodByPassList, setEodByPassList] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [count, setCount] = useState(0);
+  const [totalCount, setTotalCount] = useState(0);
 
-  const fetchData = async (resultProducersId = null, date, search, searched) => {
+  const getEodByPassList = async ({ page, pageSize, order, orderBy, resultProducersId, date, query, searched }) => {
     try {
       setLoading(true);
       let params = buildQueryString({
@@ -46,6 +45,7 @@ function useGetEODBypass(page, pageSize, order, orderBy) {
         };
         params += `&${buildQueryString(moreParams)}`;
       }
+      
       if (date?.startDate && date?.endDate) {
         let moreParams = {
           startDate: date.startDate,
@@ -54,10 +54,10 @@ function useGetEODBypass(page, pageSize, order, orderBy) {
         params += `&${buildQueryString(moreParams)}`;
       }
 
-      if (search && searched) {
+      if (query && searched) {
         let moreParams = {
           searchKey: searched,
-          searchString: search,
+          searchString: query,
         };
         params += `&${buildQueryString(moreParams)}`;
       }
@@ -79,19 +79,17 @@ function useGetEODBypass(page, pageSize, order, orderBy) {
           updatedAt: producerEodByPass.updatedAt,
         };
       });
-      setData(producerEodByPass);
-      setCount(response?.data?.totalCount);
+      setEodByPassList(producerEodByPass);
+      setTotalCount(response?.data?.totalCount);
     } catch (error) {
+      setEodByPassList([]);
       errorHandler.handleError(error);
     } finally {
       setLoading(false);
     }
   };
-  useEffect(() => {
-    fetchData();
-  }, [page, pageSize, order, orderBy]);
 
-  return { data, loading, fetchData, count };
+  return { eodByPassList, loading, getEodByPassList, totalCount };
 }
 
 export default useGetEODBypass;

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import useGetEODBypass from './hooks/useGetEODBypass';
-import { BUTTON_TEXT } from '../../utils/globalConstants';
+import { BUTTON_TEXT, PAGECOUNT } from '../../utils/globalConstants';
 import { useDispatch, useSelector } from 'react-redux';
 import { setExtraColumns, setTableName } from '../../stores/slices/exportSlice';
 import { getPlaceHolder } from '../../utils/globalizationFunction';
@@ -18,36 +18,57 @@ function ProducerEODBypass() {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
   const [page, setPage] = useState(0);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(PAGECOUNT);
   const [order, setOrder] = useState(COMMON_WORDS.ASC);
   const [orderBy, setOrderBy] = useState(COMMON_WORDS.CREATED_AT);
   const [searched, setSearched] = useState('producerName');
+  const [resultProducersId, setResultProducersId] = useState('');
+  const [query, setQuery] = useState('');
+  const [date, setDate] = useState({});
 
-  const { data, loading, fetchData, count } = useGetEODBypass(page, pageSize, order, orderBy);
+  const { eodByPassList, loading, getEodByPassList, totalCount } = useGetEODBypass();
   const { canCreate, canUpdate } = usePermissions();
+
+  const fetchData = useCallback(() => {
+    getEodByPassList({
+      page,
+      pageSize,
+      order,
+      orderBy,
+      resultProducersId,
+      date,
+      query,
+      searched,
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page, pageSize, order, orderBy, resultProducersId, date, query]);
 
   useEffect(() => {
     dispatch(
       fetchUser({
         userType: COMMON_WORDS.PRODUCER,
         searchKey: COMMON_WORDS.ROLE_NAME,
+        isAll: true,
       })
     );
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(setTableName(data?.[0]?.label));
-    dispatch(setExtraColumns(EXPORT_EXTRA_COLUMNS))
-  }, [dispatch, data]);
+    dispatch(setTableName(eodByPassList?.[0]?.label));
+    dispatch(setExtraColumns(EXPORT_EXTRA_COLUMNS));
+  }, [dispatch, eodByPassList]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   const optionLabelUser = (option) => {
-    return option?.firstName ? `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}` : '';
+    return `${option?.firstName} ${option?.lastName}` || '';
   };
 
   const renderOptionUserFunction = (props, option) => (
     <li {...props} key={option?.id}>
-      {option?.firstName?.toUpperCase()} {''}
-      {option?.lastName?.toUpperCase()}
+      {option?.firstName} {option?.lastName}
     </li>
   );
   const fetchIdsAndConvert = (inputData) => {
@@ -62,13 +83,20 @@ function ProducerEODBypass() {
   const HEADER_COLUMNS = generateTableHeaders(handleEditClick);
 
   const onSubmit = (data) => {
-    const { search = '' } = data;
-    const date = {
-      startDate: data.startDate,
-      endDate: data.endDate,
-    };
-    const resultUserString = fetchIdsAndConvert(data.autocomplete);
-    fetchData(resultUserString, date, search, searched);
+    setPage(0)
+    if(searched === 'producerName') {
+      const resultUserString = fetchIdsAndConvert(data?.autocomplete || []);
+      setResultProducersId(resultUserString || '');
+    } 
+
+    if(searched === 'reason') {
+      setQuery(data?.search || '');
+    }
+
+    setDate({
+      startDate: data?.startDate || '',
+      endDate: data?.endDate || '',
+    } || {});
   };
 
   return (
@@ -77,7 +105,7 @@ function ProducerEODBypass() {
         dateField
         optionsData={user?.data || []}
         optionLabel={optionLabelUser}
-        placeholder={getPlaceHolder(COMMON_WORDS.USER)}
+        placeholder={getPlaceHolder(COMMON_WORDS.PRODUCER)}
         renderOptionFunction={renderOptionUserFunction}
         onSubmit={onSubmit}
         showButton={true}
@@ -90,14 +118,14 @@ function ProducerEODBypass() {
         setSearched={setSearched}
         textField={showTextField.includes(searched)}
         textFieldPlaceholder={COMMON_WORDS.SEARCH}
-        fetchData={fetchData}
+        fetchData={onSubmit}
       />
       <div className="mt-4">
         <CustomTable
           columns={HEADER_COLUMNS}
-          rows={data || []}
+          rows={eodByPassList}
           loading={loading}
-          totalCount={count || 0}
+          totalCount={totalCount}
           page={page}
           setPage={setPage}
           rowsPerPage={pageSize}
