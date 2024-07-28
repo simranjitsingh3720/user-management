@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchUser } from '../../../stores/slices/userSlice';
 import InputField from '../../../components/CustomTextfield';
 import { textFieldValidation } from '../utils/constants';
+import { DATE_FORMAT } from '../../../utils/globalConstants';
 
 function ProducerEODFrom() {
   const { id } = useParams();
@@ -71,15 +72,18 @@ function ProducerEODFrom() {
 
   useEffect(() => {
     if (id) fetchData(id);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   useEffect(() => {
     if (data && data?.data) {
-      setValue('producerCode', data?.data?.producer || {});
-      setValue('reason', data?.data?.reason);
-      setValue('startDate', dayjs(data?.data?.startDate, 'DD/MM/YYYY').format('DD/MM/YYYY'));
-      setValue('endDate', dayjs(data?.data?.endDate, 'DD/MM/YYYY').format('DD/MM/YYYY'));
+      const { producer, reason, startDate, endDate } = data?.data;
+      setValue('producerCode', producer || {});
+      setValue('reason', reason);
+      setValue('startDate', dayjs(startDate, DATE_FORMAT).format(DATE_FORMAT));
+      setValue('endDate', dayjs(endDate, DATE_FORMAT).format(DATE_FORMAT));
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   const handleReset = () => {
