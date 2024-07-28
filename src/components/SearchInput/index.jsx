@@ -11,7 +11,8 @@ function SearchInput({ onSearch }) {
 
   useEffect(() => {
     onSearch(searchTerm);
-  }, [onSearch, searchTerm]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchTerm]);
 
   return (
     <div className={Styles.styledSearch}>
