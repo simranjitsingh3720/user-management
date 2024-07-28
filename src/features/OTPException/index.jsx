@@ -11,7 +11,7 @@ import { useDispatch } from 'react-redux';
 import { showDialog } from '../../stores/slices/dialogSlice';
 import Content from '../../components/CustomDialogContent';
 import Actions from './Dialog/Action';
-import { setTableName } from '../../stores/slices/exportSlice';
+import { removeExtraColumns, setTableName } from '../../stores/slices/exportSlice';
 
 function OTPException() {
   const dispatch = useDispatch();
@@ -38,6 +38,7 @@ function OTPException() {
   useEffect(() => {
     if (otpExceptionList?.length === 0) return;
     
+    dispatch(removeExtraColumns());
     dispatch(setTableName(otpExceptionList?.[0]?.label));
 
   }, [otpExceptionList, dispatch]);

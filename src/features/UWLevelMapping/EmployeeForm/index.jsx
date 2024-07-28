@@ -9,7 +9,7 @@ import { EMPLOYEE_SEARCH } from '../utils/constants';
 import { PAGECOUNT } from '../../../utils/globalConstants';
 import usePermissions from '../../../hooks/usePermission';
 import { useDispatch } from 'react-redux';
-import { setTableName } from '../../../stores/slices/exportSlice';
+import { removeExtraColumns, setTableName } from '../../../stores/slices/exportSlice';
 
 function EmployeeForm() {
   const [searched, setSearched] = useState('employeeId');
@@ -32,6 +32,7 @@ function EmployeeForm() {
 
   useEffect(()=> {
     if(data && data?.length > 0){
+      dispatch(removeExtraColumns());
       dispatch(setTableName(data[0]?.label))
     }
   },[data]);

@@ -3,6 +3,7 @@ import { Checkbox, Grid, FormControlLabel } from "@mui/material";
 import DateRangePicker from "./DateRangePicker";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchColumns, toggleColumn } from "../../../stores/slices/exportSlice";
+import CustomCheckbox from "../../../components/CustomCheckbox";
 
 const Content = () => {
   const dispatch = useDispatch();
@@ -39,16 +40,12 @@ const Content = () => {
         columns.length > 0 &&
         columns.map((item, index) => (
           <Grid item xs={12} md={6} lg={4} key={index}>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={item.checked || false}
-                  onChange={() => handleCheckUncheck(item.id)}
-                />
-              }
-              label={item.name}
-              sx={{textTransform: 'capitalize'}}
-            />
+            <CustomCheckbox 
+                checked={item.checked}
+                onChange={() => handleCheckUncheck(item.id, false)}
+                label={item.name}
+                indeterminate={false}
+              />
           </Grid>
         ))}
 
@@ -59,15 +56,11 @@ const Content = () => {
           </Grid>
           {extraColumns.map((item, index) => (
             <Grid item xs={12} md={6} lg={4} key={index}>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={item.checked || false}
-                    onChange={() => handleCheckUncheck(item.id, true)}
-                  />
-                }
+              <CustomCheckbox 
+                checked={item.checked}
+                onChange={() => handleCheckUncheck(item.id, true)}
                 label={item.name}
-                sx={{textTransform: 'capitalize'}}
+                indeterminate={false}
               />
             </Grid>
           ))}

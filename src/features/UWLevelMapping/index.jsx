@@ -17,7 +17,7 @@ import { PAGECOUNT } from '../../utils/globalConstants';
 import useCreateProductLevel from './hooks/useCreateProductLevel';
 import CustomButton from '../../components/CustomButton';
 import BulkUpload from '../../assets/BulkUpload';
-import { setTableName } from '../../stores/slices/exportSlice';
+import { removeExtraColumns, setTableName } from '../../stores/slices/exportSlice';
 
 function UWLevelMapping() {
   const dispatch = useDispatch();
@@ -55,6 +55,7 @@ function UWLevelMapping() {
 
   useEffect(()=> {
     if(data && data.length > 0){
+      dispatch(removeExtraColumns());
      dispatch(setTableName(data[0]?.label));
     }
   }, [data]);

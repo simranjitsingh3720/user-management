@@ -10,7 +10,7 @@ import { showDialog } from '../../stores/slices/dialogSlice';
 import { useDispatch } from 'react-redux';
 import CustomDialog from '../../components/CustomDialog';
 import SearchComponent from '../../components/SearchComponent';
-import { setTableName } from '../../stores/slices/exportSlice';
+import { removeExtraColumns, setTableName } from '../../stores/slices/exportSlice';
 import { PAGECOUNT } from '../../utils/globalConstants';
 import usePermissions from '../../hooks/usePermission';
 import { COMMON, Header, NAVIGATE, SEARCH_OPTIONS } from './Components/utils/constants';
@@ -42,6 +42,7 @@ function UserManagement() {
         };
       }) || [];
     setUserData(transformedData);
+    dispatch(removeExtraColumns());
     dispatch(setTableName(transformedData[0]?.label));
   }, [userList, dispatch]);
 

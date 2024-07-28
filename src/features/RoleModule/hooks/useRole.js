@@ -2,7 +2,7 @@ import { useState, useCallback } from 'react';
 import axiosInstance from '../../../utils/axiosInstance';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setTableName } from '../../../stores/slices/exportSlice';
+import { removeExtraColumns, setTableName } from '../../../stores/slices/exportSlice';
 import { toast } from 'react-toastify';
 import errorHandler from '../../../utils/errorHandler';
 import { buildQueryString } from '../../../utils/globalizationFunction';
@@ -57,6 +57,7 @@ const useRole = (updateRoleInState) => {
         });
 
         setRolesList(transformedData);
+        dispatch(removeExtraColumns());
         dispatch(setTableName(rolesList[0]?.tableName));
         setTotalCount(totalCount);
       } catch (e) {

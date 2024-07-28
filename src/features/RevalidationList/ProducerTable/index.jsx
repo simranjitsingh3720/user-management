@@ -5,7 +5,7 @@ import { Checkbox, FormControlLabel, TableCell, TableRow } from '@mui/material';
 import generateTableHeaders from '../utils/generateTableHeaders';
 import usePermissions from '../../../hooks/usePermission';
 import { useDispatch } from 'react-redux';
-import { setTableName } from '../../../stores/slices/exportSlice';
+import { removeExtraColumns, setTableName } from '../../../stores/slices/exportSlice';
 
 const ProducerTable = ({
   revalidationList,
@@ -35,6 +35,7 @@ const ProducerTable = ({
 
   useEffect(() => {
     if (revalidationList && revalidationList.length > 0) {
+      dispatch(removeExtraColumns());
       dispatch(setTableName(revalidationList[0]?.label));
     }
     const allActive = revalidationList.every((row) => row.checked);
