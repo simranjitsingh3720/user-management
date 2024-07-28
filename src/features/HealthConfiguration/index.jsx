@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import useGetHealthConfig from './hooks/useGetHealthConfig';
 import SearchComponenet from '../../components/SearchComponent';
 import CustomTable from '../../components/CustomTable';
@@ -15,25 +15,43 @@ import { EXPORT_EXTRA_COLUMNS } from "./constants";
 
 function HealthConfiguration() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { user } = useSelector((state) => state.user);
 
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(PAGECOUNT);
   const [order, setOrder] = useState(COMMON_WORDS.ASC);
   const [orderBy, setOrderBy] = useState(COMMON_WORDS.CREATED_AT);
+  const [resultProducersId, setResultProducersId] = useState('');
 
-  const { data, loading, fetchData, totalCount } = useGetHealthConfig(page, pageSize, order, orderBy);
+  const { healthConfigList, loading, getHealthConfigList, totalCount } = useGetHealthConfig();
 
   const { canUpdate, canCreate } = usePermissions();
+
+  const getHealthConfigData = useCallback(() => {
+    getHealthConfigList({ 
+      page, 
+      pageSize, 
+      order, 
+      orderBy,
+      resultProducersId
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page, pageSize, order, orderBy, resultProducersId]);
 
   useEffect(() => {
     dispatch(
       fetchUser({
         userType: COMMON_WORDS.PRODUCER,
         searchKey: COMMON_WORDS.ROLE_NAME,
+        isAll: true,
       })
     );
   }, [dispatch]);
+
+  useEffect(() => {
+    getHealthConfigData();
+  }, [getHealthConfigData]);
 
   const optionLabel = (option) => {
     return `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`;
@@ -50,7 +68,7 @@ function HealthConfiguration() {
     return ids.join();
   };
 
-  const navigate = useNavigate();
+  
 
   const handleEditClick = (row) => {
     navigate(`/health-config/form/${row.id}`);
@@ -59,22 +77,27 @@ function HealthConfiguration() {
   const HEADER_COLUMNS = generateTableHeaders(handleEditClick);
 
   useEffect(() => {
-    if (data) {
-      dispatch(setTableName(data[0]?.label));
+    if (healthConfigList) {
+      dispatch(setTableName(healthConfigList[0]?.label));
       dispatch(setExtraColumns(EXPORT_EXTRA_COLUMNS));
     }
-  }, [dispatch, data]);
+  }, [dispatch, healthConfigList]);
 
   const onSubmit = (data) => {
-    const resultProducersId = fetchIdsAndConvert(data.autocomplete);
-    fetchData(resultProducersId);
+    setPage(0);
+    if(data?.autocomplete?.length === 0) {
+      setResultProducersId('');
+      return;
+    }
+
+    setResultProducersId(fetchIdsAndConvert(data?.autocomplete));
   };
 
   return (
     <div>
       <SearchComponenet
         optionsData={user?.data || []}
-        fetchData={fetchData}
+        fetchData={onSubmit}
         optionLabel={optionLabel}
         placeholder={getPlaceHolder(COMMON_WORDS.PRODUCER)}
         renderOptionFunction={renderOptionFunction}
@@ -88,9 +111,9 @@ function HealthConfiguration() {
       <div className="mt-4">
         <CustomTable
           columns={HEADER_COLUMNS}
-          rows={data || []}
+          rows={healthConfigList}
           loading={loading}
-          totalCount={totalCount || 0}
+          totalCount={totalCount}
           page={page}
           setPage={setPage}
           rowsPerPage={pageSize}
