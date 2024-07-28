@@ -1,12 +1,12 @@
 import { Switch } from "@mui/material";
-import styles from "./styles.module.css";
 import { Controller } from "react-hook-form";
 import { useState } from "react";
 import { NO, YES } from "./constants";
 
 const ToggleSwitch = ({ control, name }) => {
-  const [changeStatusOpen, setChangeStatusOpen] = useState(false);
+  const [setChangeStatusOpen] = useState(false);
   const [status, setStatus] = useState(true);
+
   const handleChange = (field) => (event) => {
     setChangeStatusOpen(true);
     field.onChange(event.target.checked ? YES : NO);
@@ -28,7 +28,9 @@ const ToggleSwitch = ({ control, name }) => {
           />
         )}
       />
-      <div className={styles.styledActiveSelect}>{status ? YES : NO}</div>
+      <div className={`ml-2 text-sm text-gray-600`}>
+        {status ? YES : NO}
+      </div>
     </div>
   );
 };
