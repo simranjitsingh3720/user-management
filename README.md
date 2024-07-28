@@ -29,6 +29,11 @@ To get started with the User Management Portal, follow these steps:
 
 Contributions are welcome! If you have any ideas or improvements, please submit a pull request. Make sure to follow the coding guidelines.
 
+To commit make sure, you follow these steps: 
+1. git add .
+2. npm run commit
+3. git push
+
 ## License
 
 This project is licensed under the TATA AIG Group.
