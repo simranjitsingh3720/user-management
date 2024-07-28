@@ -21,7 +21,7 @@ function useHandleCkyc() {
       };
 
       if (payload.isCKYCApplicable) {
-        payload.forWhom = data.forWhom;
+        payload.forWhom = data.forWhom?.value;
       }
       const response = await axiosInstance.post(`${apiUrls.ckyc}`, payload);
       toast.success(response?.data?.message || 'CKYC Created successfully');
