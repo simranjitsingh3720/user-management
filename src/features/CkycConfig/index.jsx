@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import CustomTable from '../../components/CustomTable';
 import generateTableHeaders from './utils/generateTableHeaders';
 import { useNavigate } from 'react-router-dom';
@@ -27,18 +27,28 @@ function CkycConfig() {
   const [pageSize, setPageSize] = useState(PAGECOUNT);
   const [order, setOrder] = useState(COMMON_WORDS.ASC);
   const [orderBy, setOrderBy] = useState(COMMON_WORDS.CREATED_AT);
+  const [query, setQuery] = useState('');
+  const [resultProductString, setResultProductString] = useState('');
+  const { ckycList, loading, fetchData } = useGetCkycData();
+  const { canCreate, canUpdate } = usePermissions();
 
   useEffect(() => {
     dispatch(fetchLobData({ isAll: true, status: true }));
     dispatch(fetchAllProductData({ isAll: true }));
   }, [dispatch]);
-  const { data, loading, fetchData } = useGetCkycData(page, pageSize, order, orderBy);
 
-  const { canCreate, canUpdate } = usePermissions();
+  const getCkyc = useCallback(() => {
+    fetchData({ page, pageSize, order, orderBy, searched, resultProductString, query });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page, pageSize, order, orderBy, resultProductString, query]);
 
   useEffect(() => {
-    if (data && data?.data) {
-      const refactorData = data?.data.map((item) => ({
+    getCkyc();
+  }, [getCkyc]);
+
+  useEffect(() => {
+    if (ckycList && ckycList?.data) {
+      const refactorData = ckycList?.data.map((item) => ({
         id: item?.cKYC?.id,
         label: item?.cKYC?.label,
         lob: item?.lobs[0]?.lob,
@@ -53,7 +63,8 @@ function CkycConfig() {
       dispatch(setTableName(refactorData[0]?.label));
       dispatch(setExtraColumns([ExtraColumnsEnum.PRODUCT, ExtraColumnsEnum.LOB]));
     }
-  }, [data]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ckycList]);
 
   const navigate = useNavigate();
 
@@ -81,23 +92,22 @@ function CkycConfig() {
   };
 
   const optionLabel = (option, type) => {
-    return option[type]?.toUpperCase() || '';
+    return option[type] || '';
   };
   const renderOptionFunction = (props, option, type) => (
-    <li {...props} key={option?.id}>
+    <li {...props} key={option?.id} style={{ textTransform: 'capitalize'}}>
       {optionLabel(option, type)}
     </li>
   );
 
   const onSubmit = (data) => {
-    if (searched === COMMON_WORDS.PRODUCT) {
-      const resultProductString = fetchIdsAndConvert(data.autocomplete);
-      fetchData(searched, resultProductString);
-    } else if (searched === COMMON_WORDS.LOB) {
-      const resultLobString = fetchIdsAndConvert(data.autocomplete);
-      fetchData(searched, resultLobString);
+    setPage(0);
+    setQuery(data?.search || '');
+    
+    if(data === undefined) {
+      setResultProductString('');
     } else {
-      fetchData(searched, '', data.search);
+      setResultProductString(fetchIdsAndConvert(data?.autocomplete || []));
     }
   };
 
@@ -105,7 +115,7 @@ function CkycConfig() {
     <Box>
       <SearchComponenet
         optionsData={getOptionsData()}
-        fetchData={fetchData}
+        fetchData={onSubmit}
         optionLabel={(option) => optionLabel(option, searched)}
         placeholder={getPlaceHolder(searched)}
         renderOptionFunction={(props, option) => renderOptionFunction(props, option, searched)}
@@ -124,9 +134,9 @@ function CkycConfig() {
       <div className="mt-4">
         <CustomTable
           columns={HEADER_COLUMNS}
-          rows={tableData || []}
+          rows={tableData}
           loading={loading}
-          totalCount={data?.totalCount || 0}
+          totalCount={ckycList?.totalCount || 0}
           page={page}
           setPage={setPage}
           rowsPerPage={pageSize}

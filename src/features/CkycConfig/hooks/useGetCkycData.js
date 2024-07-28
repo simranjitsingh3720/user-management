@@ -1,14 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import axiosInstance from '../../../utils/axiosInstance';
 import apiUrls from '../../../utils/apiUrls';
 import { COMMON_WORDS } from '../../../utils/constants';
 import { buildQueryString } from '../../../utils/globalizationFunction';
+import errorHandler from '../../../utils/errorHandler';
 
-function useGetCkycData(page, pageSize, order, orderBy) {
-  const [data, setData] = useState(null);
+function useGetCkycData() {
+  const [ckycList, setCkycList] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const fetchData = async (searched, resultProductString, query) => {
+  const fetchData = async ({page, pageSize, order, orderBy, searched, resultProductString, query}) => {
     try {
       setLoading(true);
       let params = {
@@ -46,18 +47,16 @@ function useGetCkycData(page, pageSize, order, orderBy) {
         url += `&${buildQueryString(params)}`;
       }
       const response = await axiosInstance.get(url);
-      setData(response.data);
+      setCkycList(response.data);
     } catch (error) {
-      setData([]);
+      setCkycList([]);
+      errorHandler.handleError(error);
     } finally {
       setLoading(false);
     }
   };
-  useEffect(() => {
-    fetchData();
-  }, [page, order, orderBy, pageSize]);
 
-  return { data, loading, fetchData };
+  return { ckycList, loading, fetchData };
 }
 
 export default useGetCkycData;
