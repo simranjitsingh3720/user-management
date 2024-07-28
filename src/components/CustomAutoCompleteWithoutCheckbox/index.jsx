@@ -52,10 +52,12 @@ const CustomAutoCompleteWithoutCheckbox = ({
             disableClearable={disableClearable}
             ListboxProps={ListboxProps}
             renderOption={(props, option) => (
-              <li {...props} key={option.id || option.label} style={{ textTransform: 'capitalize' }} >
-                {renderOption ? renderOption(props, option) : getOptionLabel(option)}
-              </li>
-            )}    
+              renderOption ? renderOption(props, option) : (
+                <li {...props} key={option.id || option.label} style={{ textTransform: 'capitalize' }}>
+                  {getOptionLabel(option)}
+                </li>
+              )
+            )}            
           />
         )}
       />
