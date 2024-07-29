@@ -1,122 +1,79 @@
-import React, { useEffect, useState } from "react";
-import SearchComponent from "./SearchComponent";
-import styles from "./styles.module.scss";
-import TableHeader from "./Table/TableHeader";
-import ListLoader from "../../../components/ListLoader";
-import Table from "./Table";
-import NoDataFound from "../../../components/NoDataCard";
-import { MenuItem, Pagination, Select } from "@mui/material";
-import useGetBitlyLink from "../hooks/useGetBitlyLink";
-import { PAGECOUNT, selectRowsData } from "../../../utils/globalConstants";
-import { useDispatch } from "react-redux";
-import { removeExtraColumns, setTableName } from "../../../stores/slices/exportSlice";
-import usePermissions from "../../../hooks/usePermission";
-
-function getSelectedRowData(count) {
-  
-  let selectedRowData = [];
-
-  
-  for (let i = 0; i < selectRowsData.length; i++) {
-    if (selectRowsData[i] <= count) {
-      selectedRowData.push(selectRowsData[i]);
-    }
-  }
-
-  return selectedRowData;
-}
+import React, { useEffect, useState } from 'react';
+import useGetBitlyLink from '../hooks/useGetBitlyLink';
+import { BUTTON_TEXT, PAGECOUNT } from '../../../utils/globalConstants';
+import { useDispatch } from 'react-redux';
+import { removeExtraColumns, setTableName } from '../../../stores/slices/exportSlice';
+import usePermissions from '../../../hooks/usePermission';
+import SearchComponent from '../../../components/SearchComponent';
+import CustomTable from '../../../components/CustomTable';
+import { COMMON_WORDS } from '../../../utils/constants';
+import { showDialog } from '../../../stores/slices/dialogSlice';
+import Content from '../../../components/CustomDialogContent';
+import { Header } from '../utils/Header';
+import CustomDialog from '../../../components/CustomDialog';
+import Actions from '../Action';
 
 function Channel() {
-  const [query, setQuery] = useState("");
-  const [searched, setSearched] = useState("type");
-  const [rowsPage, setRowsPage] = useState(PAGECOUNT);
-  const [pageChange, setPageChange] = useState(1);
   const dispatch = useDispatch();
+  const [page, setPage] = useState(0);
+  const [pageSize, setPageSize] = useState(PAGECOUNT);
+  const [order, setOrder] = useState(COMMON_WORDS.ASC);
+  const [orderBy, setOrderBy] = useState(COMMON_WORDS.CREATED_AT);
 
-  const { canCreate, canUpdate } = usePermissions()
+  const { data, loading, fetchData, count } = useGetBitlyLink(page, pageSize, order, orderBy);
 
-  const handlePaginationChange = (event, page) => {
-    setPageChange(page);
+  const handleStatusUpdate = (data, row) => {
+    dispatch(
+      showDialog({
+        title: COMMON_WORDS.CHANGE_STATUS,
+        content: <Content label={COMMON_WORDS.OTP_EXCEPTION} />,
+        actions: <Actions row={row} fetchData={fetchData} />,
+      })
+    );
   };
 
-  const { data, loading, sort, setSort, fetchData } = useGetBitlyLink(
-    pageChange,
-    rowsPage,
-    query,
-    searched
-  );
-
-  const handleRowsChange = (event) => {
-    setPageChange(1);
-    setRowsPage(event.target.value);
+  const handleClicked = (row) => {
+    console.log('row', row);
   };
+
+  const HEADER_COLUMNS = Header(handleClicked, handleStatusUpdate);
+
+  const { canCreate, canUpdate } = usePermissions();
 
   useEffect(() => {
-    dispatch(setTableName(data?.data[0]?.proposalBitlyConfig.label));
-    dispatch(removeExtraColumns())
+    dispatch(setTableName(data?.[0]?.label));
+    dispatch(removeExtraColumns());
   }, [dispatch, data]);
 
   return (
     <div>
-      {" "}
       <SearchComponent
-        setQuery={setQuery}
-        setPageChange={setPageChange}
-        searched={searched}
-        setSearched={setSearched}
+        buttonText={BUTTON_TEXT.CREATE_CONFIG}
+        navigateRoute={'/proposal-bitly-config/channel-form'}
+        showButton
+        showBulkUploadButton
         canCreate={canCreate}
+        hideSearch={true}
+        showExportButton={true}
       />
-      <div className={styles.tableContainerStyle}>
-        <div className={styles.tableStyled}>
-          {loading ? (
-            <>
-              <TableHeader />
-              <ListLoader />
-            </>
-          ) : data?.data && data?.data.length ? (
-            <Table
-              ListData={data?.data}
-              loading={loading}
-              fetchData={fetchData}
-              sort={sort}
-              setSort={setSort}
-              canUpdate={canUpdate}
-            />
-          ) : (
-            <NoDataFound />
-          )}
-        </div>
-        <div className={styles.pageFooter}>
-          <div className={styles.rowsPerPage}>
-            <p className={styles.totalRecordStyle}>Showing Results:</p>
-            <Select
-              labelId="rows-per-page"
-              id="rows-per-page"
-              value={rowsPage}
-              onChange={handleRowsChange}
-              size="small"
-              className={styles.customizeRowsSelect}
-            >
-              {getSelectedRowData(data?.totalCount).map((item) => (
-                <MenuItem value={item} className={styles.styledOptionText}>
-                  {item}
-                </MenuItem>
-              ))}
-            </Select>
-            <p className={styles.totalRecordStyle}>of {data?.totalCount}</p>
-          </div>
-          <div>
-            <Pagination
-              count={data?.totalPageSize}
-              color="primary"
-              size="small"
-              onChange={handlePaginationChange}
-              page={pageChange}
-              className={styles.marginFotter}
-            />
-          </div>
-        </div>
+      <div className="mt-4">
+        <CustomTable
+          columns={HEADER_COLUMNS}
+          rows={data}
+          loading={loading}
+          totalCount={count}
+          page={page}
+          setPage={setPage}
+          rowsPerPage={pageSize}
+          setRowsPerPage={setPageSize}
+          order={order}
+          setOrder={setOrder}
+          orderBy={orderBy}
+          setOrderBy={setOrderBy}
+          canUpdate={canUpdate}
+        />
       </div>
+      <CustomDialog />
     </div>
   );
 }

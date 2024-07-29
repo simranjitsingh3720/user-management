@@ -1,46 +1,57 @@
-import { useEffect, useState } from "react";
-import axiosInstance from "../../../utils/axiosInstance";
-import { buildQueryString } from "../../../utils/globalizationFunction";
-import { COMMON_WORDS } from "../../../utils/constants";
-import apiUrls from "../../../utils/apiUrls";
+import { useEffect, useState } from 'react';
+import axiosInstance from '../../../utils/axiosInstance';
+import { buildQueryString } from '../../../utils/globalizationFunction';
+import { COMMON_WORDS } from '../../../utils/constants';
+import apiUrls from '../../../utils/apiUrls';
 
-function useGetBitlyLink(pageChange, rowsPage, query, searched) {
+function useGetBitlyLink(page, pageSize, order, orderBy) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [sort, setSort] = useState({
-    sortKey: "createdAt",
-    sortOrder: "asc",
-  });
+  const [count, setCount] = useState(0);
 
   const fetchData = async () => {
     try {
       setLoading(true);
       let queryParams = buildQueryString({
-        pageNo: pageChange - 1,
-        pageSize: rowsPage,
-        sortKey: sort.sortKey,
-        sortOrder: sort.sortOrder,
-        childFieldsToFetch: COMMON_WORDS.PRODUCER,
-        childFieldsEdge: COMMON_WORDS.HAS_PRODUCER,
+        pageNo: page,
+        pageSize,
+        sortKey: orderBy,
+        sortOrder: order,
+        childFieldsToFetch: `${COMMON_WORDS.PRODUCER},${COMMON_WORDS.CHANNEL}`,
+        childFieldsEdge: `${COMMON_WORDS.HAS_PRODUCER},${COMMON_WORDS.HAS_CHANNEL}`,
       });
-
-      if (query && searched) {
-        queryParams = buildQueryString({
-          pageNo: pageChange - 1,
-          pageSize: rowsPage,
-          sortKey: sort.sortKey,
-          sortOrder: sort.sortOrder,
-          childFieldsToFetch: COMMON_WORDS.PRODUCER,
-          childFieldsEdge: COMMON_WORDS.HAS_PRODUCER,
-          searchKey: searched,
-          searchString: query
-        });
-      }
 
       let url = `${apiUrls.proposalBitlyConfig}?${queryParams}`;
 
       const response = await axiosInstance.get(url);
-      setData(response.data);
+
+      const transformedData =
+        response?.data?.data?.map((item) => {
+          const {
+            proposalBitlyConfig: { id, createdAt, updatedAt, label, status },
+            producer = {},
+            channel = {},
+          } = item;
+
+          const { firstName = '', lastName = '', producerCode = '' } = producer?.[0] || {};
+
+          const { txtChannelName = '', numChannelCode = '' } = channel?.[0] || {};
+          return {
+            type: producer.length ? 'Producer' : 'Channel',
+            id: id,
+            userName: producer.length ? `${firstName || ''} ${lastName || ''}` : txtChannelName,
+            producerCode: producer.length ? producerCode : numChannelCode,
+            createdAt,
+            updatedAt,
+            checked: status,
+            status,
+            label,
+          };
+        }) || [];
+
+      setCount(response?.data?.totalCount);
+
+      setData(transformedData);
     } catch (error) {
       setData([]);
     } finally {
@@ -49,9 +60,9 @@ function useGetBitlyLink(pageChange, rowsPage, query, searched) {
   };
   useEffect(() => {
     fetchData();
-  }, [pageChange, sort, rowsPage, query]);
+  }, [page, pageSize, order, orderBy]);
 
-  return { data, loading, sort, setSort, fetchData };
+  return { data, loading, fetchData, count };
 }
 
 export default useGetBitlyLink;

@@ -1,7 +1,7 @@
-import React from "react";
-import styles from "./styles.module.scss";
-import { Card, CardContent, MenuItem, Select, Typography } from "@mui/material";
-import { BitlyLinkMandatory } from "../../constants";
+import React from 'react';
+import styles from './styles.module.scss';
+import { Card, CardContent, MenuItem, Select, Typography } from '@mui/material';
+import { BitlyLinkMandatory } from '../../utils/constants';
 
 function TableList({ dataList, setDataList }) {
   return (
@@ -13,7 +13,7 @@ function TableList({ dataList, setDataList }) {
       {dataList.length ? (
         (dataList || []).map((item) => (
           <div className={styles.listHeader}>
-            <div className={styles.namelistCell}>{item?.name || "-"}</div>
+            <div className={styles.namelistCell}>{item?.name || '-'}</div>
             <Select
               labelId="search-select"
               id="bitlyLinkMandatory"
@@ -34,17 +34,12 @@ function TableList({ dataList, setDataList }) {
                 if (selected === undefined) {
                   return <div className={styles.placeholderStyle}>Select</div>;
                 }
-                const selectedItem = BitlyLinkMandatory.find(
-                  (item) => item.value === selected
-                );
-                return selectedItem ? selectedItem.label : "";
+                const selectedItem = BitlyLinkMandatory.find((item) => item.value === selected);
+                return selectedItem ? selectedItem.label : '';
               }}
             >
               {BitlyLinkMandatory.map((item) => (
-                <MenuItem
-                  value={item.value}
-                  className={styles.styledOptionText}
-                >
+                <MenuItem value={item.value} className={styles.styledOptionText}>
                   {item.label}
                 </MenuItem>
               ))}

@@ -39,6 +39,7 @@ export const BUTTON_TEXT = {
   SET_OTP_EXCEPTION: 'Create New OTP Exception',
   ROLES: 'Create New Role',
   PROPOSAL_EXCEPTION: 'Create New Proposal Exception',
+  CREATE_CONFIG: 'Create Config',
 };
 
 export const STATUS = [
