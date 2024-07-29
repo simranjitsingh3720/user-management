@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
 import errorHandler from "../../../utils/errorHandler";
+import apiUrls from "../../../utils/apiUrls";
 
 function useGetSyncedProducer(pageChange, rowsPage, query, searched) {
   const [data, setData] = useState(null);
@@ -13,7 +14,7 @@ function useGetSyncedProducer(pageChange, rowsPage, query, searched) {
   const fetchData = async (data = null, resultProducersId = null) => {
     try {
       setLoading(true);
-      let url = `/api/producer-eod-bypass?pageNo=${pageChange - 1}&sortKey=${
+      let url = `${apiUrls.getEodByPass}?pageNo=${pageChange - 1}&sortKey=${
         sort.sortKey
       }&sortOrder=${sort.sortOrder}&pageSize=${rowsPage}`;
 

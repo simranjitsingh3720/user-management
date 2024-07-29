@@ -1,15 +1,16 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
 import { COMMON_WORDS } from "../../../utils/constants";
 import { buildQueryString } from "../../../utils/globalizationFunction";
 import apiUrls from "../../../utils/apiUrls";
+import errorHandler from "../../../utils/errorHandler";
 
-function useGetHealthConfig(page, pageSize, order, orderBy) {
-  const [data, setData] = useState(null);
+function useGetHealthConfig() {
+  const [healthConfigList, setHealthConfigList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [totalCount, setTotalCount] = useState(0);
 
-  const fetchData = async (resultProducersId) => {
+  const getHealthConfigList = async ({page, pageSize, order, orderBy, resultProducersId}) => {
     try {
       setLoading(true);
       let params = {
@@ -34,30 +35,30 @@ function useGetHealthConfig(page, pageSize, order, orderBy) {
       const response = await axiosInstance.get(url);
 
       const healthConfigData = response.data.data.map((item) => {
-        const { healthConfiguration, producer } = item;
+        const { healthConfiguration: {id, label, createdAt, updatedAt, isExistingCustomer}, producer } = item;
+
         return {
-          id: healthConfiguration.id,
-          label: healthConfiguration.label,
-          producerName: `${producer[0].firstName} ${producer[0].lastName}`,
-          medicare: healthConfiguration.isExistingCustomer ? "yes" : "No",
-          producerCode: producer[0].producerCode,
-          createdAt: healthConfiguration.createdAt,
-          updatedAt: healthConfiguration.updatedAt,
+          id: id,
+          label: label,
+          producerName: `${producer?.[0].firstName} ${producer?.[0].lastName}`,
+          medicare: isExistingCustomer ? "yes" : "No",
+          producerCode: producer?.[0].producerCode,
+          createdAt: createdAt,
+          updatedAt: updatedAt,
         };
       });
       setTotalCount(response.data.totalCount);
-      setData(healthConfigData);
+      setHealthConfigList(healthConfigData);
     } catch (error) {
-      setData([]);
+      setHealthConfigList([]);
+      errorHandler.handleError(error);
     } finally {
       setLoading(false);
     }
   };
-  useEffect(() => {
-    fetchData();
-  }, [page, pageSize, order, orderBy]);
+  
 
-  return { data, loading, fetchData, totalCount };
+  return { healthConfigList, loading, getHealthConfigList, totalCount };
 }
 
 export default useGetHealthConfig;

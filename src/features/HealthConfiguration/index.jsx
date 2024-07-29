@@ -1,44 +1,57 @@
-import React, { useEffect, useState } from "react";
-import useGetHouseBank from "./hooks/useGetHealthConfig";
-import SearchComponenet from "../../components/SearchComponent";
-import CustomTable from "../../components/CustomTable";
-import { useNavigate } from "react-router-dom";
-import generateTableHeaders from "./utils/generateTableHeaders";
-import { COMMON_WORDS } from "../../utils/constants";
-import { BUTTON_TEXT, PAGECOUNT } from "../../utils/globalConstants";
-import { getPlaceHolder } from "../../utils/globalizationFunction";
-import { fetchUser } from "../../stores/slices/userSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { setTableName } from "../../stores/slices/exportSlice";
-import usePermissions from "../../hooks/usePermission";
+import React, { useCallback, useEffect, useState } from 'react';
+import useGetHealthConfig from './hooks/useGetHealthConfig';
+import SearchComponenet from '../../components/SearchComponent';
+import CustomTable from '../../components/CustomTable';
+import { useNavigate } from 'react-router-dom';
+import generateTableHeaders from './utils/generateTableHeaders';
+import { COMMON_WORDS } from '../../utils/constants';
+import { BUTTON_TEXT, PAGECOUNT } from '../../utils/globalConstants';
+import { getPlaceHolder } from '../../utils/globalizationFunction';
+import { fetchUser } from '../../stores/slices/userSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import usePermissions from '../../hooks/usePermission';
+import { setExtraColumns, setTableName } from "../../stores/slices/exportSlice";
+import { EXPORT_EXTRA_COLUMNS } from "./constants";
 
 function HealthConfiguration() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { user } = useSelector((state) => state.user);
 
-  const [producers, setProducers] = useState([]);
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(PAGECOUNT);
   const [order, setOrder] = useState(COMMON_WORDS.ASC);
   const [orderBy, setOrderBy] = useState(COMMON_WORDS.CREATED_AT);
+  const [resultProducersId, setResultProducersId] = useState('');
 
-  const { data, loading, fetchData, totalCount } = useGetHouseBank(
-    page,
-    pageSize,
-    order,
-    orderBy
-  );
+  const { healthConfigList, loading, getHealthConfigList, totalCount } = useGetHealthConfig();
 
-  const {canUpdate, canCreate} = usePermissions();
+  const { canUpdate, canCreate } = usePermissions();
+
+  const getHealthConfigData = useCallback(() => {
+    getHealthConfigList({ 
+      page, 
+      pageSize, 
+      order, 
+      orderBy,
+      resultProducersId
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page, pageSize, order, orderBy, resultProducersId]);
 
   useEffect(() => {
     dispatch(
       fetchUser({
         userType: COMMON_WORDS.PRODUCER,
         searchKey: COMMON_WORDS.ROLE_NAME,
+        isAll: true,
       })
     );
   }, [dispatch]);
+
+  useEffect(() => {
+    getHealthConfigData();
+  }, [getHealthConfigData]);
 
   const optionLabel = (option) => {
     return `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`;
@@ -50,17 +63,12 @@ function HealthConfiguration() {
     </li>
   );
 
-  const handleGo = () => {
-    const resultProducersId = fetchIdsAndConvert(producers);
-    fetchData(resultProducersId);
-  };
-
   const fetchIdsAndConvert = (inputData) => {
     const ids = (inputData || []).map((producer) => producer.id);
     return ids.join();
   };
 
-  const navigate = useNavigate();
+  
 
   const handleEditClick = (row) => {
     navigate(`/health-config/form/${row.id}`);
@@ -69,25 +77,33 @@ function HealthConfiguration() {
   const HEADER_COLUMNS = generateTableHeaders(handleEditClick);
 
   useEffect(() => {
-    if(data) {
-      dispatch(setTableName(data[0]?.label));
+    if (healthConfigList) {
+      dispatch(setTableName(healthConfigList[0]?.label));
+      dispatch(setExtraColumns(EXPORT_EXTRA_COLUMNS));
     }
-    
-  }, [dispatch, data]);
+  }, [dispatch, healthConfigList]);
+
+  const onSubmit = (data) => {
+    setPage(0);
+    if(data?.autocomplete?.length === 0) {
+      setResultProducersId('');
+      return;
+    }
+
+    setResultProducersId(fetchIdsAndConvert(data?.autocomplete));
+  };
 
   return (
     <div>
       <SearchComponenet
         optionsData={user?.data || []}
-        option={producers}
-        setOption={setProducers}
-        fetchData={fetchData}
+        fetchData={onSubmit}
         optionLabel={optionLabel}
         placeholder={getPlaceHolder(COMMON_WORDS.PRODUCER)}
         renderOptionFunction={renderOptionFunction}
         buttonText={BUTTON_TEXT.HEALTH_CONFIG}
-        navigateRoute={"/health-config/form"}
-        handleGo={handleGo}
+        navigateRoute={'/health-config/form'}
+        onSubmit={onSubmit}
         showButton
         showExportButton={true}
         canCreate={canCreate}
@@ -95,9 +111,9 @@ function HealthConfiguration() {
       <div className="mt-4">
         <CustomTable
           columns={HEADER_COLUMNS}
-          rows={data || []}
+          rows={healthConfigList}
           loading={loading}
-          totalCount={totalCount || 0}
+          totalCount={totalCount}
           page={page}
           setPage={setPage}
           rowsPerPage={pageSize}

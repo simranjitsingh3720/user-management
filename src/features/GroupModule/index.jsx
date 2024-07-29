@@ -27,25 +27,69 @@ function GroupModule() {
 
   const [groupData, setGroupData] = useState([]);
   const { group, groupLoading } = useSelector((state) => state.group);
-  const [searched, setSearched] = useState(COMMON_WORDS.PERMISSIONNAME);
+  const [searched, setSearched] = useState(COMMON_WORDS.GROUPNAME);
   const [permissionValue, setPermissionValue] = useState([]);
   const { permissionData } = useGetPermission();
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // Check Permission
   const { canCreate, canUpdate } = usePermissions();
 
+  const fetchGroupData = useCallback(() => {
+    let searchString = '';
+    let edge = '';
+    let searchKey = '';
+    let ids = '';
+    let isExclusive = null;
+
+    switch (searched) {
+      case COMMON_WORDS.PERMISSIONNAME:
+        ids = permissionValue.map((item) => item.id).join(',');
+        edge = COMMON_FIELDS.hasPermission;
+        isExclusive = true;
+        break;
+      case COMMON_WORDS.GROUPNAME:
+        searchString = query;
+        searchKey = searched;
+        break;
+      default:
+        break;
+    }
+
+    const params = {
+      page,
+      pageSize,
+      order,
+      orderBy,
+      ...(edge && { edge }),
+      ...(searchString && { searchString }),
+      ...(edge || searchString ? { searchKey } : {}),
+      ...(ids && { ids }),
+      isExclusive,
+    };
+
+    dispatch(getGroup(params));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, page, pageSize, order, orderBy, query, permissionValue]);
+
   useEffect(() => {
-    dispatch(
-      getGroup({
-        page,
-        pageSize,
-        order,
-        orderBy,
-      })
-    );
-  }, [dispatch, page, pageSize, order, orderBy]);
+    fetchGroupData();
+  }, [fetchGroupData]);
+
+  const updateGroupStatus = useCallback((id, data) => {
+    const updatedData = data.map((item) => {
+      if (item.id === id) {
+        return {
+          ...item,
+          checked: !item.checked,
+          status: !item.status,
+        };
+      }
+      return item;
+    });
+
+    setGroupData(updatedData);
+  }, []);
 
   useEffect(() => {
     const transformedData =
@@ -65,16 +109,16 @@ function GroupModule() {
   }, [group]);
 
   const handleGroupStatus = useCallback(
-    (data) => {
+    (data, row) => {
       dispatch(
         showDialog({
           title: COMMON_WORDS.CHANGE_STATUS,
           content: <Content label={COMMON_WORDS.GROUP} />,
-          actions: <ConfirmAction row={data} />,
+          actions: <ConfirmAction row={row} groupData={data} handleGroupStatus={updateGroupStatus} />,
         })
       );
     },
-    [dispatch]
+    [dispatch, updateGroupStatus]
   );
 
   const showGroupPermission = useCallback(
@@ -102,9 +146,7 @@ function GroupModule() {
     [handleGroupStatus, showGroupPermission, handleGroupEdit]
   );
 
-  const optionLabel = (option, type) => {
-    return option[type]?.toUpperCase() || '';
-  };
+  const optionLabel = (option, type) => option[type]?.toUpperCase() || '';
 
   const renderOptionFunction = (props, option, type) => (
     <li {...props} key={option?.id}>
@@ -140,62 +182,16 @@ function GroupModule() {
     }
   };
 
-  const fetchIdsAndConvert = (inputData) => inputData.map((item) => item.id).join();
-
-  const handleGo = useCallback(() => {
-    setPage(0);
-    let searchString = '';
-    let edge = '';
-    let searchKey = '';
-
-    switch (searched) {
-      case COMMON_WORDS.PERMISSIONNAME:
-        searchString = fetchIdsAndConvert(permissionValue);
-        edge = COMMON_FIELDS.hasPermission;
-        break;
-      case COMMON_WORDS.GROUPNAME:
-        searchKey = searched;
-        searchString = query;
-        break;
-      default:
-        break;
+  const onSubmit = (data) => {
+    if (searched === COMMON_WORDS.PERMISSIONNAME) {
+      setPermissionValue(data?.autocomplete || []);
+      setQuery('');
     }
-
-    if (searchString && edge) {
-      dispatch(
-        getGroup({
-          page,
-          pageSize,
-          order,
-          orderBy,
-          ids: searchString,
-          edge: edge,
-        })
-      );
+    if (searched === COMMON_WORDS.GROUPNAME) {
+      setQuery(data?.search || '');
+      setPermissionValue([]);
     }
-    if (searchKey && searchString) {
-      dispatch(
-        getGroup({
-          page,
-          pageSize,
-          order,
-          orderBy,
-          searchKey: searchKey,
-          searchString: searchString,
-        })
-      );
-    }
-    if (searchString === '' || searchKey === '') {
-      dispatch(
-        getGroup({
-          page,
-          pageSize,
-          order,
-          orderBy,
-        })
-      );
-    }
-  }, [searched, permissionValue, query, dispatch, page, pageSize, order, orderBy]);
+  };
 
   return (
     <>
@@ -212,14 +208,14 @@ function GroupModule() {
           buttonText={BUTTON_TEXT.GROUP}
           navigateRoute="/group/group-form"
           textField={showTextField.includes(searched)}
-          setQuery={setQuery}
-          textFieldPlaceholder={COMMON_WORDS.SEARCH}
+          textFieldPlaceholder={getPlaceHolder(COMMON_WORDS.GROUP)}
           searched={searched}
           setSearched={setSearched}
           selectOptions={SEARCH_OPTIONS}
-          handleGo={handleGo}
           showButton
           canCreate={canCreate}
+          onSubmit={onSubmit}
+          fetchData={onSubmit}
         />
       </div>
       <div>

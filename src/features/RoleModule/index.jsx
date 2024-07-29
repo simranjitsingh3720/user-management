@@ -4,7 +4,7 @@ import { ASC, BUTTON_TEXT, CREATED_AT, PAGECOUNT } from '../../utils/globalConst
 import usePermissions from '../../hooks/usePermission';
 import SearchComponent from '../../components/SearchComponent';
 import { SEARCH_OPTIONS } from './utils/constants';
-import { COMMON, SEARCH_PLACEHOLDER } from '../UserManagement/Components/utils/constants';
+import { COMMON } from '../UserManagement/Components/utils/constants';
 import CustomTable from '../../components/CustomTable';
 import { Header } from './utils/Header';
 import CustomDialog from '../../components/CustomDialog';
@@ -26,7 +26,7 @@ function RoleModule() {
   const [query, setQuery] = useState('');
   const { canCreate, canUpdate } = usePermissions();
 
-  const { fetchRoles, data, loading, totalCount, setData } = useRole();
+  const { fetchRoles, rolesList, loading, totalCount, setRolesList } = useRole();
 
   const updateRoleInState = useCallback(
     (id, data) => {
@@ -40,25 +40,10 @@ function RoleModule() {
         }
         return item;
       });
-      setData(updatedData);
+      setRolesList(updatedData);
     },
-    [setData]
+    [setRolesList]
   );
-
-  const handleGo = () => {
-    if (query !== '') {
-      fetchRoles({
-        sortKey: orderBy,
-        sortOrder: order,
-        pageNo: page,
-        pageSize,
-        searchString: query,
-        searchKey: searched,
-      });
-    } else {
-      loadData();
-    }
-  };
 
   const handleEditClick = useCallback(
     (item) => {
@@ -66,20 +51,7 @@ function RoleModule() {
     },
     [navigate]
   );
-
-  const loadData = useCallback(() => {
-    fetchRoles({
-      pageNo: page,
-      pageSize,
-      sortKey: orderBy,
-      sortOrder: order,
-    });
-  }, [fetchRoles, page, pageSize, orderBy, order]);
-
-  useEffect(() => {
-    loadData();
-  }, [loadData]);
-
+  
   const updateRoleStatus = useCallback(
     (data, row) => {
       dispatch(
@@ -92,8 +64,28 @@ function RoleModule() {
     },
     [dispatch, updateRoleInState]
   );
-
   const header = useMemo(() => Header(handleEditClick, updateRoleStatus), [handleEditClick, updateRoleStatus]);
+
+  const loadData = useCallback(() => {
+    fetchRoles({
+      pageNo: page,
+      pageSize,
+      sortKey: orderBy,
+      sortOrder: order,
+      searchString: query !== '' ? query : null,
+      searchKey:query !== '' ? searched : null,
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page, pageSize, orderBy, order, query]);
+
+  useEffect(() => {
+    loadData();
+  }, [loadData]);
+
+  const handleGo = (data) => {
+    setPage(0);
+    setQuery(data?.search || '');
+  };
 
   return (
     <>
@@ -107,15 +99,16 @@ function RoleModule() {
           setQuery={setQuery}
           buttonText={BUTTON_TEXT.ROLES}
           navigateRoute="/roles/role-form"
-          handleGo={handleGo}
+          onSubmit={handleGo}
           showExportButton={true}
           showButton
           canCreate={canCreate}
+          fetchData={handleGo}
         />
       </div>
 
       <CustomTable
-        rows={data}
+        rows={rolesList}
         loading={loading}
         totalCount={totalCount}
         canUpdate={canUpdate}

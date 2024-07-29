@@ -3,24 +3,29 @@ import axiosInstance from "../../../utils/axiosInstance";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import errorHandler from "../../../utils/errorHandler";
+import apiUrls from "../../../utils/apiUrls";
 
 
-function useUpdateProposal(setChangeStatusOpen, fetchGroupList) {
+function useUpdateProposal() {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
-  async function UpdateDataFun(data) {
+  async function updateProposalData(payload, data, updateStatus) {
     setLoading(true);
     try {
       const response = await axiosInstance.put(
-        "/api/proposal-otp-exception",
-        data
+        apiUrls.proposalOtpException,
+        payload
       );
+
       toast.success(response?.data?.message || "Proposal updated successfully");
-      navigate("/proposalOtpException");
-      if (setChangeStatusOpen) setChangeStatusOpen(false);
-      if (fetchGroupList) fetchGroupList();
+      if(updateStatus) {
+        updateStatus(payload.id, data);
+      } else {
+        navigate("/proposalotpexception");
+      }
+      
     } catch (error) {
      errorHandler.handleError(error);
       
@@ -28,7 +33,7 @@ function useUpdateProposal(setChangeStatusOpen, fetchGroupList) {
       setLoading(false); 
     }
   }
-  return { UpdateDataFun, updateLoading: loading };
+  return { updateProposalData, updateLoading: loading };
 }
 
 export default useUpdateProposal;

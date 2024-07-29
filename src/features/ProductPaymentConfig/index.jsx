@@ -9,13 +9,13 @@ import { MenuItem, Pagination, Select } from '@mui/material';
 import { BUTTON_TEXT, PAGECOUNT, selectRowsData } from '../../utils/globalConstants';
 import useGetPaymentConfig from './hooks/useGetPaymentConfig';
 import useGetPayment from './hooks/useGetPayment';
-import { ProductPayment } from './constants';
+import { EXPORT_DROPDOWN_COLUMNS, ProductPayment } from './constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchLobData } from '../../stores/slices/lobSlice';
 import { fetchAllProductData } from '../../stores/slices/productSlice';
 import { COMMON_WORDS } from '../../utils/constants';
 import { getPlaceHolder } from '../../utils/globalizationFunction';
-import { setTableName } from '../../stores/slices/exportSlice';
+import { setExtraColumns, setTableName } from '../../stores/slices/exportSlice';
 import usePermissions from '../../hooks/usePermission';
 
 function getSelectedRowData(count) {
@@ -35,8 +35,6 @@ function ProductPaymentConfig() {
   const { lob } = useSelector((state) => state.lob);
   const { products } = useSelector((state) => state.product);
   const [searched, setSearched] = useState(COMMON_WORDS.PRODUCT);
-  const [productValue, setProductValue] = useState([]);
-  const [lobValue, setLobValue] = useState([]);
 
   const [rowsPage, setRowsPage] = useState(PAGECOUNT);
   const [pageChange, setPageChange] = useState(1);
@@ -85,41 +83,32 @@ function ProductPaymentConfig() {
     </li>
   );
 
-  useEffect(() => {
-    if (searched === COMMON_WORDS.PRODUCT) {
-      setLobValue([]);
-    } else {
-      setProductValue([]);
-    }
-  }, [searched]);
-
-  const handleGo = () => {
-    if (searched === COMMON_WORDS.PRODUCT) {
-      const resultProductString = fetchIdsAndConvert(productValue);
-      fetchData(searched, resultProductString);
-    } else {
-      const resultLobString = fetchIdsAndConvert(lobValue);
-      fetchData(searched, resultLobString);
-    }
-  };
-
   const fetchIdsAndConvert = (inputData) => {
     const ids = inputData.map((permission) => permission.id);
     return ids.join();
   };
 
   useEffect(() => {
-    if (data && data?.data) {
+    if (data && data?.data && data?.data[0]) {
       dispatch(setTableName(data?.data[0]?.productWisePaymentMethod.label));
+      dispatch(setExtraColumns(EXPORT_DROPDOWN_COLUMNS));
     }
   }, [data, dispatch]);
+
+  const onSubmit = (data) => {
+    if (searched === COMMON_WORDS.PRODUCT) {
+      const resultProductString = fetchIdsAndConvert(data.autocomplete);
+      fetchData(searched, resultProductString);
+    } else {
+      const resultLobString = fetchIdsAndConvert(data.autocomplete);
+      fetchData(searched, resultLobString);
+    }
+  };
 
   return (
     <div>
       <SearchComponenet
         optionsData={searched === COMMON_WORDS.PRODUCT ? products?.data ?? [] : lob?.data ?? []}
-        option={searched === COMMON_WORDS.PRODUCT ? productValue : lobValue}
-        setOption={searched === COMMON_WORDS.PRODUCT ? setProductValue : setLobValue}
         fetchData={fetchData}
         optionLabel={searched === COMMON_WORDS.PRODUCT ? optionLabelProduct : optionLabelLob}
         placeholder={
@@ -131,10 +120,11 @@ function ProductPaymentConfig() {
         searched={searched}
         setSearched={setSearched}
         selectOptions={ProductPayment}
-        handleGo={handleGo}
         showButton
         showExportButton={true}
         canCreate={canCreate}
+        onSubmit={onSubmit}
+        showBulkUploadButton={true}
       />
       <div className={styles.tableContainerStyle}>
         <div className={styles.tableStyled}>

@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { COMMON_WORDS } from '../../../utils/constants';
 import { buildQueryString } from '../../../utils/globalizationFunction';
 import errorHandler from '../../../utils/errorHandler';
+import toastifyUtils from '../../../utils/toastify';
 
 const useRevalidationList = () => {
   const [data, setData] = useState([]);
@@ -25,18 +26,23 @@ const useRevalidationList = () => {
     try {
       const response = await axiosInstance.get(API_END_POINTS.getRevalidationList + queryParams);
 
+      if(response?.data?.data?.length === 0) {
+        toastifyUtils.notifySuccess('No data found for the selected producer');
+      }
+
       const transformedData =
         response?.data?.data?.map((item) => {
-          const { producer, revalidationList: { id, emailId, mobileNo, createdAt, updatedAt, status } } = item;
+          const { revalidationList: { id, name, emailId, mobileNo, createdAt, updatedAt, status, label } } = item;
           return {
             id: id,
-            userName: `${producer?.[0].firstName} ${producer?.[0].lastName}`,
+            userName: name,
             emailId: emailId,
             mobileNo: mobileNo,
             createdAt: createdAt,
             updatedAt: updatedAt,
             checked: status,
             status: status,
+            label: label
           };
         }) || [];
       setData(transformedData);

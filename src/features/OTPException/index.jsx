@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import useGetOTPException from './hooks/useGetOTPException';
 import { BUTTON_TEXT, PAGECOUNT } from '../../utils/globalConstants';
 import SearchComponent from '../../components/SearchComponent';
-import { BitlyLink } from './constants';
 import usePermissions from '../../hooks/usePermission';
 import CustomTable from '../../components/CustomTable';
 import generateTableHeaders from './utils/generateTableHeaders';
@@ -12,16 +11,15 @@ import { useDispatch } from 'react-redux';
 import { showDialog } from '../../stores/slices/dialogSlice';
 import Content from '../../components/CustomDialogContent';
 import Actions from './Dialog/Action';
+import { removeExtraColumns, setTableName } from '../../stores/slices/exportSlice';
 
 function OTPException() {
   const dispatch = useDispatch();
-  const [query, setQuery] = useState('');
-  const [searched, setSearched] = useState('type');
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(PAGECOUNT);
   const [order, setOrder] = useState(COMMON_WORDS.ASC);
   const [orderBy, setOrderBy] = useState(COMMON_WORDS.CREATED_AT);
-  const { data, loading, fetchData, count } = useGetOTPException(page, pageSize, order, orderBy);
+  const { otpExceptionList, loading, fetchData, totalCount } = useGetOTPException();
 
   const handleClicked = (data, row) => {
     dispatch(
@@ -37,30 +35,44 @@ function OTPException() {
 
   const { canCreate, canUpdate } = usePermissions();
 
-  const handleGo = () => {
-    fetchData(searched, query);
-  };
+  useEffect(() => {
+    if (otpExceptionList?.length === 0) return;
+    
+    dispatch(removeExtraColumns());
+    dispatch(setTableName(otpExceptionList?.[0]?.label));
+
+  }, [otpExceptionList, dispatch]);
+
+  const getList = useCallback(() => {
+    fetchData({
+      page,
+      pageSize,
+      order,
+      orderBy,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page, pageSize, order, orderBy]);
+
+  useEffect(() => {
+    getList();
+  }, [getList]);
+
   return (
     <div>
       <SearchComponent
-        selectOptions={BitlyLink}
-        textField
-        searched={searched}
-        setSearched={setSearched}
-        textFieldPlaceholder="Search"
-        setQuery={setQuery}
         buttonText={BUTTON_TEXT.SET_OTP_EXCEPTION}
         navigateRoute={'/otpexception/form'}
-        handleGo={handleGo}
         showButton
         canCreate={canCreate}
+        showBulkUploadButton={true}
+        hideSearch={true}
       />
       <div className="mt-4">
         <CustomTable
           columns={HEADER_COLUMNS}
-          rows={data || []}
+          rows={otpExceptionList}
           loading={loading}
-          totalCount={count || 0}
+          totalCount={totalCount}
           page={page}
           setPage={setPage}
           rowsPerPage={pageSize}

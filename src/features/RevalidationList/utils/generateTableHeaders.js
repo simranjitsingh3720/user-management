@@ -6,7 +6,7 @@ function generateTableHeaders(
   return [
     {
       id: "userName",
-      value: "User Name",
+      value: "Name",
     },
     {
       id: "emailId",
@@ -18,7 +18,7 @@ function generateTableHeaders(
     },
     {
       id: "action",
-      value: "Action",
+      value: "Status",
       action: [
         {
           component: "switch",

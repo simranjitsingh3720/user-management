@@ -64,11 +64,14 @@ const AutocompleteFieldAll = ({
           return apiDataMap[name] || [];
         }
       } else {
-        const isSelected = prevSelectedValues.some((val) => val.value === option.value);
+        const isSelected =
+          prevSelectedValues &&
+          prevSelectedValues.some((val) => val.value === option.value);
         if (isSelected) {
           return prevSelectedValues.filter((val) => val.value !== option.value);
         } else {
-          return [...prevSelectedValues, option];
+          const safePrevSelectedValues = Array.isArray(prevSelectedValues) ? prevSelectedValues : [];
+          return [...safePrevSelectedValues, option];
         }
       }
     });
@@ -123,9 +126,10 @@ const AutocompleteFieldAll = ({
                       ? isCheckedAll()
                         ? []
                         : apiDataMap[name] || []
-                      : selectedValues.some((val) => val.value === option.value)
+                      : selectedValues &&
+                        selectedValues.some((val) => val.value === option.value)
                       ? selectedValues.filter((val) => val.value !== option.value)
-                      : [...selectedValues, option]
+                      : [...(Array.isArray(selectedValues) ? selectedValues : []), option]
                   );
                 }}
               >
@@ -135,7 +139,10 @@ const AutocompleteFieldAll = ({
                     checkedIcon={checkedIcon}
                     style={{ marginRight: 8 }}
                     checked={
-                      option?.value === All ? isCheckedAll() : selectedValues.some((val) => val.value === option.value)
+                      option?.value === All
+                        ? isCheckedAll()
+                        : selectedValues &&
+                          selectedValues.some((val) => val.value === option.value)
                     }
                   />
                 )}

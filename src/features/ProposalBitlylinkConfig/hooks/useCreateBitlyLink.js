@@ -2,6 +2,7 @@ import { useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
 import { toast } from "react-toastify";
 import errorHandler from "../../../utils/errorHandler";
+import apiUrls from "../../../utils/apiUrls";
 
 
 function useCreateBitlyLink() {
@@ -11,7 +12,7 @@ function useCreateBitlyLink() {
     setLoading(true);
     try {
       const response = await axiosInstance.post(
-        "/api/proposal-bitly-config",
+        apiUrls.proposalBitlyConfig,
         data
       );
       toast.success(

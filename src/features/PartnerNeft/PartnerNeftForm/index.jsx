@@ -86,6 +86,7 @@ const PartnerNeftForm = () => {
         userType: COMMON_WORDS.PRODUCER,
         searchKey: COMMON_WORDS.ROLE_NAME,
         status: true,
+        isAll: true,
       })
     );
   }, [dispatch]);

@@ -9,7 +9,7 @@ import { MenuItem, Pagination, Select } from "@mui/material";
 import useGetBitlyLink from "../hooks/useGetBitlyLink";
 import { PAGECOUNT, selectRowsData } from "../../../utils/globalConstants";
 import { useDispatch } from "react-redux";
-import { setTableName } from "../../../stores/slices/exportSlice";
+import { removeExtraColumns, setTableName } from "../../../stores/slices/exportSlice";
 import usePermissions from "../../../hooks/usePermission";
 
 function getSelectedRowData(count) {
@@ -53,6 +53,7 @@ function Channel() {
 
   useEffect(() => {
     dispatch(setTableName(data?.data[0]?.proposalBitlyConfig.label));
+    dispatch(removeExtraColumns())
   }, [dispatch, data]);
 
   return (

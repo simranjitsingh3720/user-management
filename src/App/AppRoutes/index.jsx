@@ -79,7 +79,15 @@ const AppRoutes = () => {
         }
       />
       <Route
-        path="/bulk-upload"
+        path="/:id/bulk-upload"
+        element={
+          <ResponsiveDrawer showSidebarAndHeader={true}>
+            <PrivateRoute component={BulkUpload} />
+          </ResponsiveDrawer>
+        }
+      />
+      <Route
+        path="/:product/:id/bulk-upload"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
             <PrivateRoute component={BulkUpload} />
@@ -224,7 +232,7 @@ const AppRoutes = () => {
         }
       />
       <Route
-        path="/proposalOtpException"
+        path="/proposalotpexception"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
             <PrivateRoute component={ProposalOTPException} />
@@ -232,7 +240,7 @@ const AppRoutes = () => {
         }
       />
       <Route
-        path="/proposalOtpException/form/:id?"
+        path="/proposalotpexception/form/:id?"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
             <PrivateRoute component={ProposalForm} />

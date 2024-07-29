@@ -36,22 +36,15 @@ function HouseBankMaster() {
       sortOrder: order,
       pageNo: page,
       pageSize,
+      searchKey: query ? searched : '',
+      searchString: query,
     });
-  }, [getHouseBank, orderBy, order, page, pageSize]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [orderBy, order, page, pageSize, query]);
 
-  const handleGo = () => {
-    if (query !== '') {
-      getHouseBank({
-        sortKey: orderBy,
-        sortOrder: order,
-        pageNo: page,
-        pageSize,
-        searchString: query,
-        searchKey: searched,
-      });
-    } else {
-      loadData();
-    }
+  const handleGo = (data) => {
+    setPage(0);
+    setQuery(data?.search || '');
   };
 
   useEffect(() => {
@@ -72,7 +65,8 @@ function HouseBankMaster() {
           setQuery={setQuery}
           buttonText={BUTTON_TEXT.HOUSE_BANK}
           navigateRoute="/house-bank-master/form"
-          handleGo={handleGo}
+          onSubmit={handleGo}
+          fetchData={handleGo}
           showExportButton={true}
           showButton
           canCreate={canCreate}

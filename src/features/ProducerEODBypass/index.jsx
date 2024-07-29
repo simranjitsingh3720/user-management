@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import useGetEODBypass from './hooks/useGetEODBypass';
-import { BUTTON_TEXT } from '../../utils/globalConstants';
+import { BUTTON_TEXT, PAGECOUNT } from '../../utils/globalConstants';
 import { useDispatch, useSelector } from 'react-redux';
-import { setTableName } from '../../stores/slices/exportSlice';
+import { setExtraColumns, setTableName } from '../../stores/slices/exportSlice';
 import { getPlaceHolder } from '../../utils/globalizationFunction';
 import { COMMON_WORDS } from '../../utils/constants';
 import SearchComponenet from '../../components/SearchComponent';
@@ -11,54 +11,69 @@ import CustomTable from '../../components/CustomTable';
 import generateTableHeaders from './utils/generateTableHeaders';
 import { useNavigate } from 'react-router-dom';
 import usePermissions from '../../hooks/usePermission';
-import { SearchKey, showTextField } from './utils/constants';
+import { EXPORT_EXTRA_COLUMNS, SearchKey, showTextField } from './utils/constants';
 
 function ProducerEODBypass() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [date, setDate] = useState({ startDate: '', endDate: '' });
   const { user } = useSelector((state) => state.user);
-  const [userData, setUserData] = useState();
   const [page, setPage] = useState(0);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(PAGECOUNT);
   const [order, setOrder] = useState(COMMON_WORDS.ASC);
   const [orderBy, setOrderBy] = useState(COMMON_WORDS.CREATED_AT);
-  const [query, setQuery] = useState('');
   const [searched, setSearched] = useState('producerName');
+  const [resultProducersId, setResultProducersId] = useState('');
+  const [query, setQuery] = useState('');
+  const [date, setDate] = useState({});
 
-  const { data, loading, fetchData, count } = useGetEODBypass(page, pageSize, date, order, orderBy, query, searched);
+  const { eodByPassList, loading, getEodByPassList, totalCount } = useGetEODBypass();
   const { canCreate, canUpdate } = usePermissions();
+
+  const fetchData = useCallback(() => {
+    getEodByPassList({
+      page,
+      pageSize,
+      order,
+      orderBy,
+      resultProducersId,
+      date,
+      query,
+      searched,
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page, pageSize, order, orderBy, resultProducersId, date, query]);
 
   useEffect(() => {
     dispatch(
       fetchUser({
         userType: COMMON_WORDS.PRODUCER,
         searchKey: COMMON_WORDS.ROLE_NAME,
+        isAll: true,
       })
     );
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(setTableName(data?.label));
-  }, [dispatch, data]);
+    dispatch(setTableName(eodByPassList?.[0]?.label));
+    dispatch(setExtraColumns(EXPORT_EXTRA_COLUMNS));
+  }, [dispatch, eodByPassList]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   const optionLabelUser = (option) => {
-    return option?.firstName ? `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}` : '';
+    return `${option?.firstName} ${option?.lastName}` || '';
   };
 
   const renderOptionUserFunction = (props, option) => (
     <li {...props} key={option?.id}>
-      {option?.firstName?.toUpperCase()} {''}
-      {option?.lastName?.toUpperCase()}
+      {option?.firstName} {option?.lastName}
     </li>
   );
   const fetchIdsAndConvert = (inputData) => {
     const ids = (inputData || []).map((item) => item.id);
     return ids.join();
-  };
-  const handleGo = () => {
-    const resultUserString = fetchIdsAndConvert(userData);
-    fetchData(resultUserString);
   };
 
   const handleEditClick = (row) => {
@@ -67,18 +82,32 @@ function ProducerEODBypass() {
 
   const HEADER_COLUMNS = generateTableHeaders(handleEditClick);
 
+  const onSubmit = (data) => {
+    setPage(0)
+    if(searched === 'producerName') {
+      const resultUserString = fetchIdsAndConvert(data?.autocomplete || []);
+      setResultProducersId(resultUserString || '');
+    } 
+
+    if(searched === 'reason') {
+      setQuery(data?.search || '');
+    }
+
+    setDate({
+      startDate: data?.startDate || '',
+      endDate: data?.endDate || '',
+    } || {});
+  };
+
   return (
     <div>
       <SearchComponenet
-        setDate={setDate}
         dateField
         optionsData={user?.data || []}
-        option={userData}
-        setOption={setUserData}
         optionLabel={optionLabelUser}
-        placeholder={getPlaceHolder(COMMON_WORDS.USER)}
+        placeholder={getPlaceHolder(COMMON_WORDS.PRODUCER)}
         renderOptionFunction={renderOptionUserFunction}
-        handleGo={handleGo}
+        onSubmit={onSubmit}
         showButton={true}
         buttonText={BUTTON_TEXT.PRODUCER_EOD}
         navigateRoute="/producer-eod-bypass-list/form"
@@ -87,16 +116,16 @@ function ProducerEODBypass() {
         selectOptions={SearchKey}
         searched={searched}
         setSearched={setSearched}
-        setQuery={setQuery}
         textField={showTextField.includes(searched)}
         textFieldPlaceholder={COMMON_WORDS.SEARCH}
+        fetchData={onSubmit}
       />
       <div className="mt-4">
         <CustomTable
           columns={HEADER_COLUMNS}
-          rows={data || []}
+          rows={eodByPassList}
           loading={loading}
-          totalCount={count || 0}
+          totalCount={totalCount}
           page={page}
           setPage={setPage}
           rowsPerPage={pageSize}

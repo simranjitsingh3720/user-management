@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../../utils/axiosInstance";
 import { toast } from "react-toastify";
 import errorHandler from "../../../utils/errorHandler";
+import apiUrls from "../../../utils/apiUrls";
 
 
 function useCreateProduct() {
@@ -13,7 +14,7 @@ function useCreateProduct() {
   async function postData(data) {
     setLoading(true);
     try {
-      const response = await axiosInstance.post("/api/product", data);
+      const response = await axiosInstance.post(apiUrls.getProduct, data);
       toast.success(response?.data?.message || "Product created successfully");
       navigate("/product");
     } catch (error) {

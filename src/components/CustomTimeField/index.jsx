@@ -1,6 +1,5 @@
 import React from "react";
 import { Controller } from "react-hook-form";
-import styles from './styles.module.scss';
 
 const CustomTimePicker = ({ control, name }) => {
   const hours = Array.from({ length: 24 }, (_, i) =>
@@ -12,7 +11,7 @@ const CustomTimePicker = ({ control, name }) => {
   };
 
   return (
-    <div className="flex -ml-2">
+    <div className="flex items-center">
       <Controller
         name={name}
         control={control}
@@ -20,7 +19,7 @@ const CustomTimePicker = ({ control, name }) => {
         render={({ field }) => (
           <>
             <select
-              className={styles.customSelect}
+              className="bg-gray-200 rounded-full w-12 p-1 text-gray-700 border-none outline-none"
               value={field.value.split(":")[0]}
               onChange={(e) => {
                 const newValue = formatTime(e.target.value, field.value.split(":")[1]);
@@ -33,9 +32,9 @@ const CustomTimePicker = ({ control, name }) => {
                 </option>
               ))}
             </select>
-            <span className="h-4">&nbsp;:&nbsp;</span>
+            <span className="px-2">:</span>
             <select
-              className={styles.customSelect}
+              className="bg-gray-200 rounded-full w-12 p-1 text-gray-700 border-none outline-none"
               value={field.value.split(":")[1]}
               onChange={(e) => {
                 const newValue = formatTime(field.value.split(":")[0], e.target.value);

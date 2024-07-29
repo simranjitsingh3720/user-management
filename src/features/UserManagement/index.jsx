@@ -10,7 +10,7 @@ import { showDialog } from '../../stores/slices/dialogSlice';
 import { useDispatch } from 'react-redux';
 import CustomDialog from '../../components/CustomDialog';
 import SearchComponent from '../../components/SearchComponent';
-import { setTableName } from '../../stores/slices/exportSlice';
+import { removeExtraColumns, setTableName } from '../../stores/slices/exportSlice';
 import { PAGECOUNT } from '../../utils/globalConstants';
 import usePermissions from '../../hooks/usePermission';
 import { COMMON, Header, NAVIGATE, SEARCH_OPTIONS } from './Components/utils/constants';
@@ -18,13 +18,13 @@ import { COMMON, Header, NAVIGATE, SEARCH_OPTIONS } from './Components/utils/con
 function UserManagement() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [query, setQuery] = useState('');
   const [searched, setSearched] = useState(SEARCH_OPTIONS[0].value);
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(PAGECOUNT);
   const [order, setOrder] = useState(COMMON_WORDS.DESC);
   const [orderBy, setOrderBy] = useState(COMMON_WORDS.CREATED_AT);
-  const { data, loading, fetchData } = useGetUser(page, pageSize, query, order, orderBy);
+  const [query, setQuery] = useState('');
+  const { userList, loading, fetchUserList, totalCount } = useGetUser();
   const [userData, setUserData] = useState([]);
   const { canCreate, canUpdate } = usePermissions();
 
@@ -33,62 +33,67 @@ function UserManagement() {
   }, []);
 
   useEffect(() => {
-    if (data?.data?.length === 0) return;
+    if (userList?.data?.length === 0) return;
     const transformedData =
-      data?.data?.map((item) => {
+      userList?.data?.map((item) => {
         return {
           ...item,
           checked: item?.status,
-          disabled: !canUpdate
         };
       }) || [];
     setUserData(transformedData);
+    dispatch(removeExtraColumns());
     dispatch(setTableName(transformedData[0]?.label));
-  }, [data, canUpdate, dispatch]);
+  }, [userList, dispatch]);
 
   const handleInsillionStatus = useCallback((data, row) => {
     dispatch(
       showDialog({
         title: COMMON_WORDS.CHANGE_STATUS,
         content: <Content />,
-        actions: <Actions row={row} fetchData={fetchData} />,
+        actions: <Actions row={row} fetchData={userList} />,
       })
     );
-  }, []);
+  }, [dispatch, userList]);
 
   const header = useMemo(() => Header(updateUserForm, handleInsillionStatus), [updateUserForm, handleInsillionStatus]);
 
-  const handleGo = () => {
-    if(query){
-      setUserData([]);
-      fetchData(searched, query);
-    } else {
-      fetchData()
-    }
+  const getUserList = useCallback(() => {
+    fetchUserList({page, pageSize, order, orderBy, query, searched});
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page, pageSize, order, orderBy, query]);
+
+  useEffect(() => {
+    getUserList();
+  }, [getUserList])
+
+  const onSubmit = (data) => {
+    setPage(0);
+    setQuery(data?.search || '');
   };
 
   return (
     <Box>
       <SearchComponent
-         selectOptions={SEARCH_OPTIONS}
-         searched={searched}
-         setSearched={setSearched}
-         textField
-         textFieldPlaceholder={COMMON.SEARCH_PLACEHOLDER}
-         setQuery={setQuery}
-         buttonText={COMMON.BUTTON_TEXT}
-         navigateRoute={NAVIGATE.NAVIGATE_TO_FORM}
-         handleGo={handleGo}
-         showExportButton={true}
-         showButton
-         canCreate={canCreate}
+        selectOptions={SEARCH_OPTIONS}
+        searched={searched}
+        setSearched={setSearched}
+        textField
+        textFieldPlaceholder={COMMON.SEARCH_PLACEHOLDER}
+        buttonText={COMMON.BUTTON_TEXT}
+        navigateRoute={NAVIGATE.NAVIGATE_TO_FORM}
+        showExportButton={true}
+        showButton
+        fetchData={onSubmit}
+        canCreate={canCreate}
+        onSubmit={onSubmit}
       />
       <div className="mt-4">
         <CustomTable
           rows={userData || []}
           columns={header}
           loading={loading}
-          totalCount={data?.totalCount || 0}
+          totalCount={totalCount}
           page={page}
           setPage={setPage}
           rowsPerPage={pageSize}

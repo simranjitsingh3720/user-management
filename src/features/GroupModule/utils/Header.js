@@ -14,20 +14,7 @@ export const Header = (updateGroupStatus, showGroupPermission, handleGroupEdit) 
         {
           component: 'switch',
           onClick: (data, row) => {
-            data.map((item) => {
-              if (item.id === row.id) {
-                return (row.checked = !row.checked);
-              }
-
-              return row.checked;
-            });
-
-            updateGroupStatus({
-              id: row.id,
-              properties: {
-                status: row.checked,
-              },
-            });
+            updateGroupStatus(data, row)
           },
         },
       ],

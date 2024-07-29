@@ -11,13 +11,12 @@ import { fetchUser } from '../../stores/slices/userSlice';
 import { showDialog } from '../../stores/slices/dialogSlice';
 import Content from './Dialog/Content';
 import Actions from './Dialog/Action';
-import { setTableName } from '../../stores/slices/exportSlice';
+import { setExtraColumns, setTableName } from '../../stores/slices/exportSlice';
 import { BUTTON_TEXT, PAGECOUNT } from '../../utils/globalConstants';
 import usePermissions from '../../hooks/usePermission';
+import { EXPORT_DROPDOWN_COLUMNS } from './utils/constant';
 
 function EmployeeFlagConfig() {
-  const [producers, setProducers] = useState();
-
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(PAGECOUNT);
   const [order, setOrder] = useState(COMMON_WORDS.ASC);
@@ -53,17 +52,13 @@ function EmployeeFlagConfig() {
       }));
       setTableData(refactorData);
       dispatch(setTableName(refactorData[0]?.label));
+      dispatch(setExtraColumns(EXPORT_DROPDOWN_COLUMNS))
     }
   }, [data, dispatch]);
 
   const fetchIdsAndConvert = (inputData) => {
     const ids = (inputData || []).map((producer) => producer.id);
     return ids.join();
-  };
-
-  const handleGo = () => {
-    const resultProducersId = fetchIdsAndConvert(producers);
-    fetchData(resultProducersId);
   };
 
   const optionLabelUser = (option) => {
@@ -89,22 +84,26 @@ function EmployeeFlagConfig() {
 
   const HEADER_COLUMNS = generateTableHeaders(handleClicked);
 
+  const onSubmit = (data) => {
+    const resultProducersId = fetchIdsAndConvert(data.autocomplete);
+    fetchData(resultProducersId);
+  };
+
   return (
     <div>
       <div className="mb-4">
         <SearchComponent
           optionsData={user?.data || []}
-          option={producers}
-          setOption={setProducers}
           optionLabel={optionLabelUser}
           placeholder={getPlaceHolder(COMMON_WORDS.PRODUCER)}
           renderOptionFunction={renderOptionUserFunction}
-          handleGo={handleGo}
+          onSubmit={onSubmit}
           showExportButton={true}
           buttonText={BUTTON_TEXT.EMPLOYEE_FLAG_CONFIG}
           navigateRoute="/employee-flag-config/form"
           showButton
           canCreate={canCreate}
+          fetchData={fetchData}
         />
       </div>
       <CustomTable
@@ -121,7 +120,7 @@ function EmployeeFlagConfig() {
         orderBy={orderBy}
         setOrderBy={setOrderBy}
       />
-      <CustomDialog size='md' />
+      <CustomDialog size="md" />
     </div>
   );
 }

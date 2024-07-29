@@ -1,22 +1,24 @@
-import { Autocomplete, MenuItem, Select, TextField } from '@mui/material';
 import React, { useEffect } from 'react';
-import styles from './styles.module.scss';
-import { Controller, useForm } from 'react-hook-form';
+import { Grid, Box, Card, CardContent } from '@mui/material';
+import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
-
-import useUpdatePaymentConfig from '../hooks/useUpdateHealthConfig';
+import { useDispatch, useSelector } from 'react-redux';
 import { BitlyLinkMandatory } from '../constants';
-import useGetUserData from '../../BANCALogin/hooks/useGetUserData';
+import useUpdatePaymentConfig from '../hooks/useUpdateHealthConfig';
 import useCreateHealthConfig from '../hooks/useCreateHealthConfig';
 import useGetHealthConfigByID from '../hooks/useGetHealthConfigById';
-import CustomButton from '../../../components/CustomButton';
 import CustomFormHeader from '../../../components/CustomFormHeader';
-import { FORM_HEADER_TEXT } from '../../../utils/constants';
+import { COMMON_WORDS, FORM_HEADER_TEXT } from '../../../utils/constants';
+import CustomButton from '../../../components/CustomButton';
+import CustomAutoCompleteWithoutCheckbox from '../../../components/CustomAutoCompleteWithoutCheckbox';
+import { fetchUser } from '../../../stores/slices/userSlice';
 
 function HealthConfigurationForm() {
+  const dispatch = useDispatch();
   const { id } = useParams();
+  const { user } = useSelector((state) => state.user);
 
-  const { handleSubmit, control, setValue, formState } = useForm({
+  const { handleSubmit, control, setValue, formState, trigger } = useForm({
     defaultValues: {
       producer: null,
       medicare: null,
@@ -25,23 +27,32 @@ function HealthConfigurationForm() {
 
   const { data: healthConfigData, fetchData: fetchHealthConfigByID } = useGetHealthConfigByID();
 
-  const { userData } = useGetUserData();
+  useEffect(() => {
+    dispatch(
+      fetchUser({
+        userType: COMMON_WORDS.PRODUCER,
+        searchKey: COMMON_WORDS.ROLE_NAME,
+        isAll: true,
+      })
+    );
+  }, [dispatch]);
 
   useEffect(() => {
     if (id) fetchHealthConfigByID(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   const { postData, loading: createPaymentLoading } = useCreateHealthConfig();
-
   const { UpdateDataFun, updateLoading } = useUpdatePaymentConfig();
-
   const { errors } = formState;
 
   useEffect(() => {
     if (healthConfigData && healthConfigData?.data) {
-      setValue('producer', healthConfigData?.data?.producer || null);
-      setValue('medicare', healthConfigData?.data?.isExistingCustomer ? 'yes' : 'no' || null);
+      const { producer, isExistingCustomer } = healthConfigData?.data;
+      setValue('producer', producer);
+      setValue('medicare', isExistingCustomer ? BitlyLinkMandatory[0] : BitlyLinkMandatory[1]);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [healthConfigData]);
 
   const onSubmit = (data) => {
@@ -64,112 +75,69 @@ function HealthConfigurationForm() {
   };
 
   const handleReset = () => {
-    if (id) {
-      setValue('medicare', null);
-    } else setValue('producer', null);
+    if (!id) {
+      setValue('producer', null);
+    }
     setValue('medicare', null);
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className={styles.createNewUserContainer}>
-          <div className="px-5 pt-5">
-            <CustomFormHeader
-              id={id}
-              headerText={FORM_HEADER_TEXT.HEALTH_CONFIG}
-              navigateRoute="/health-config"
-              handleReset={handleReset}
-            />
-          </div>
-          <div className={styles.containerStyle}>
-            <div className={styles.fieldContainerStyle}>
-              <span className={styles.labelText}>
-                Select Producer
-                <span className={styles.styledRequired}>*</span>
-              </span>
-
-              <Controller
+    <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+      <Card>
+        <CardContent>
+          <CustomFormHeader
+            id={id}
+            headerText={FORM_HEADER_TEXT.HEALTH_CONFIG}
+            navigateRoute="/health-config"
+            handleReset={handleReset}
+          />
+          <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+            <Grid item xs={12} md={12} lg={4}>
+              <CustomAutoCompleteWithoutCheckbox
                 name="producer"
-                id="producer"
+                label="Select Producer"
                 control={control}
                 rules={{ required: 'Producer is required' }}
-                render={({ field }) => (
-                  <Autocomplete
-                    id="producer"
-                    options={userData || []}
-                    getOptionLabel={(option) => {
-                      return `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`;
-                    }}
-                    disabled={id}
-                    className={styles.customizeSelect}
-                    size="small"
-                    isOptionEqualToValue={(option, value) => option.id === value.id}
-                    renderInput={(params) => <TextField {...params} placeholder="Select" />}
-                    value={field.value}
-                    onChange={(event, newValue) => {
-                      field.onChange(newValue);
-                    }}
-                    renderOption={(props, option) => (
-                      <li {...props} key={option.id}>
-                        {option?.firstName?.toUpperCase()} {option?.lastName?.toUpperCase()}
-                      </li>
-                    )}
-                    ListboxProps={{
-                      style: {
-                        maxHeight: '200px',
-                      },
-                    }}
-                  />
-                )}
+                required={true}
+                options={user.data || []}
+                getOptionLabel={(option) => {
+                  return `${option?.firstName} ${option?.lastName}`;
+                }}
+                isOptionEqualToValue={(option, value) => option.id === value.id}
+                error={Boolean(errors.producer)}
+                helperText={errors.producer?.message}
+                disableClearable={true}
+                placeholder={COMMON_WORDS.SELECT}
+                trigger={trigger}
+                disabled={id ? true : false}
               />
-              <div className={styles.styledError}>{errors.producer && <span>{errors.producer.message}</span>} </div>
-            </div>
-            <div className={styles.fieldContainerStyle}>
-              <span className={styles.labelText}>
-                Medicare Existing TATA AIG General Insurance Customer
-                <span className={styles.styledRequired}>*</span>
-              </span>
-              <Controller
+            </Grid>
+            <Grid item xs={12} md={12} lg={8}>
+              <CustomAutoCompleteWithoutCheckbox
                 name="medicare"
+                label="Medicare Existing TATA AIG General Insurance Customer"
                 control={control}
-                rules={{ required: 'Medicare Existing TATA AIG General Insurance Customer is required' }}
-                render={({ field }) => (
-                  <Select
-                    labelId="search-select"
-                    id="medicare"
-                    value={field.value}
-                    onChange={(event, newValue) => {
-                      field.onChange(event.target.value);
-                    }}
-                    size="small"
-                    displayEmpty
-                    className={styles.customizeSelect}
-                    renderValue={(selected) => {
-                      if (selected === null) {
-                        return <div className={styles.placeholderStyle}>Select</div>;
-                      }
-                      const selectedItem = BitlyLinkMandatory.find((item) => item.value === selected);
-                      return selectedItem ? selectedItem.label : '';
-                    }}
-                  >
-                    {BitlyLinkMandatory.map((item) => (
-                      <MenuItem value={item.value} className={styles.styledOptionText}>
-                        {item.label}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                )}
+                rules={{ required: 'Medicare is required' }}
+                required={true}
+                options={BitlyLinkMandatory}
+                getOptionLabel={(option) => option.label}
+                isOptionEqualToValue={(option, value) => option.value === value.value}
+                error={Boolean(errors.medicare)}
+                helperText={errors.medicare?.message}
+                disableClearable={true}
+                placeholder={COMMON_WORDS.SELECT}
+                trigger={trigger}
               />
-              <div className={styles.styledError}>{errors.medicare && <span>{errors.medicare.message}</span>}</div>
-            </div>
-          </div>
-        </div>
+            </Grid>
+          </Grid>
+        </CardContent>
+      </Card>
+      <div className="mt-4">
         <CustomButton type="submit" variant="contained" disabled={updateLoading || createPaymentLoading}>
           {id ? 'Update' : 'Submit'}
         </CustomButton>
-      </form>
-    </div>
+      </div>
+    </Box>
   );
 }
 

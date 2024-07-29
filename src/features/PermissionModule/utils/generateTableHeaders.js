@@ -27,7 +27,7 @@ function generateTableHeaders(handleClicked) {
         {
           component: 'switch',
           onClick: (data, row) => {
-            handleClicked(data, row);
+            handleClicked({data, row});
           },
         },
       ],

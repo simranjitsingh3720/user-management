@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Header } from './utils/header';
 import CustomTable from '../../components/CustomTable';
-import { fetchAllProductData } from '../../stores/slices/productSlice';
+import { clearProducts, fetchAllProductData } from '../../stores/slices/productSlice';
 import { COMMON_WORDS } from '../../utils/constants';
 import { BUTTON_TEXT, PAGECOUNT } from '../../utils/globalConstants';
 import { getPlaceHolder } from '../../utils/globalizationFunction';
@@ -29,6 +29,8 @@ function Product() {
   const { lob } = useSelector((state) => state.lob);
 
   const [searched, setSearched] = useState(COMMON_WORDS.LOB);
+  const [ids, setIds] = useState('');
+  const [edge, setEdge] = useState('');
 
   // Check Permission
   const { canCreate, canUpdate } = usePermissions();
@@ -37,20 +39,32 @@ function Product() {
     dispatch(fetchLobData({ isAll: true }));
   }, [dispatch]);
 
-  useEffect(() => {
+  const getProudctData = useCallback(() => {
     dispatch(
       fetchAllProductData({
         page,
         pageSize,
         order,
         orderBy,
+        ids: ids ? ids : '',
+        edge: ids ? edge : '',
+        isExclusive: ids ? true : '',
         childFieldsToFetch: COMMON_WORDS.LOB,
       })
     );
-  }, [dispatch, page, pageSize, order, orderBy]);
+  }, [page, pageSize, order, orderBy, ids, edge, dispatch]);
+
+  useEffect(() => {
+    getProudctData();
+  }, [getProudctData]);
 
   useEffect(() => {
     if (products?.length === 0) return;
+
+    if (products?.data?.[0]?.id) {
+      dispatch(clearProducts());
+      return;
+    }
 
     const transformedData =
       products?.data?.map((item) => {
@@ -77,23 +91,20 @@ function Product() {
     setProductData(transformedData);
   }, [products]);
 
-  const updateProductStatus = useCallback(
-    (id, data) => {
-      const updatedData = data.map((item) => {
-        if (item.id === id) {
-          return {
-            ...item,
-            checked: !item.checked,
-            status: !item.status,
-          };
-        }
-        return item;
-      });
-      
-      setProductData(updatedData);
-    },
-    []
-  );
+  const updateProductStatus = useCallback((id, data) => {
+    const updatedData = data.map((item) => {
+      if (item.id === id) {
+        return {
+          ...item,
+          checked: !item.checked,
+          status: !item.status,
+        };
+      }
+      return item;
+    });
+
+    setProductData(updatedData);
+  }, []);
 
   const handleStatusUpdate = useCallback(
     (data, row) => {
@@ -148,44 +159,20 @@ function Product() {
   };
 
   const fetchIdsAndConvert = (inputData) => inputData.map((item) => item.id).join();
-  const handleGo = useCallback(() => {
+  const handleGo = (data) => {
     setPage(0);
-    let searchString = '';
-    let edge = '';
+
+    let ids = data?.autocomplete ? fetchIdsAndConvert(data?.autocomplete) : '';
 
     switch (searched) {
       case COMMON_WORDS.LOB:
-        searchString = fetchIdsAndConvert(lobValue);
-        edge = COMMON_FIELDS.hasLob;
+        setEdge(COMMON_FIELDS.hasLob);
+        setIds(ids);
         break;
       default:
         break;
     }
-
-    if (searchString) {
-      dispatch(
-        fetchAllProductData({
-          page,
-          pageSize,
-          order,
-          orderBy,
-          childFieldsToFetch: COMMON_WORDS.LOB,
-          ids: searchString,
-          edge: edge,
-        })
-      );
-    } else {
-      dispatch(
-        fetchAllProductData({
-          page,
-          pageSize,
-          order,
-          orderBy,
-          childFieldsToFetch: COMMON_WORDS.LOB,
-        })
-      );
-    }
-  }, [searched, lobValue, dispatch, page, pageSize, order, orderBy]);
+  };
 
   return (
     <>
@@ -203,7 +190,8 @@ function Product() {
           navigateRoute="/product/product-form"
           searched={searched}
           setSearched={setSearched}
-          handleGo={handleGo}
+          onSubmit={handleGo}
+          fetchData={handleGo}
           showButton
           canCreate={canCreate}
           selectOptions={SEARCH_OPTIONS}

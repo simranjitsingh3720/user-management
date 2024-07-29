@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-
+import React, { useEffect, useState } from 'react';
+import { Grid } from '@mui/material';
 import { Box } from '@mui/material';
 import CustomTable from '../../components/CustomTable';
 import { tableHeaders } from './utils/tableHeaders';
@@ -12,9 +12,12 @@ import CustomDialog from '../../components/CustomDialog';
 import Content from '../../components/CustomDialogContent';
 import usePermissions from '../../hooks/usePermission';
 import LevelMappingForm from './LevelMappingForm';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { PAGECOUNT } from '../../utils/globalConstants';
 import useCreateProductLevel from './hooks/useCreateProductLevel';
+import CustomButton from '../../components/CustomButton';
+import BulkUpload from '../../assets/BulkUpload';
+import { removeExtraColumns, setTableName } from '../../stores/slices/exportSlice';
 
 function UWLevelMapping() {
   const dispatch = useDispatch();
@@ -25,9 +28,9 @@ function UWLevelMapping() {
   const [pageSize, setPageSize] = useState(PAGECOUNT);
   const [order, setOrder] = useState(COMMON_WORDS.ASC);
   const [orderBy, setOrderBy] = useState(COMMON_WORDS.CREATED_AT);
-
   const { canCreate, canUpdate } = usePermissions();
   const { fetchDataById, data: dataById } = useCreateProductLevel();
+  const navigate = useNavigate();
 
   const handleEditClick = (row) => {
     fetchDataById(row?.id);
@@ -46,10 +49,23 @@ function UWLevelMapping() {
 
   const { data, loading, fetchData, count } = useGetProductLocationLevel(page, pageSize, order, orderBy, employeeId);
 
+  const handleBulkUpload = () => {
+    navigate('bulk-upload');
+  };
+
+  useEffect(()=> {
+    if(data && data.length > 0){
+      dispatch(removeExtraColumns());
+     dispatch(setTableName(data[0]?.label));
+    }
+  }, [data]);
+
   return (
     <Box>
       {canCreate && <LevelMappingForm dataById={dataById} fetchData={fetchData} />}
-
+      <Grid item xs={12} sm={6} lg={4} alignItems="flex-end" display="flex" justifyContent="end">
+        {<CustomButton variant="outlined" onClick={handleBulkUpload} startIcon={<BulkUpload />} />}
+      </Grid>
       <div className="mt-4">
         <CustomTable
           columns={HEADER_COLUMNS}

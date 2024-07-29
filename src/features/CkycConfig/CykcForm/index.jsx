@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
-import { useForm, Controller } from 'react-hook-form';
-import { Autocomplete, TextField, Box, Card, CardContent, Grid, Select, MenuItem } from '@mui/material';
-import styles from './styles.module.scss';
+import { useForm } from 'react-hook-form';
+import { Box, Card, CardContent, Grid } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import CustomButton from '../../../components/CustomButton';
-import { forWhomDisable, forWhomEnable, STATUS } from '../utils/constants';
+import { forWhomEnable, STATUS } from '../utils/constants';
 import useGetLobData from '../../../hooks/useGetLobData';
 import useGetCkycById from '../hooks/useGetCkycById';
 import useHandleCkyc from '../hooks/useHandleCkyc';
@@ -12,7 +11,8 @@ import { clearProducts, fetchAllProductData } from '../../../stores/slices/produ
 import { useDispatch, useSelector } from 'react-redux';
 import UserTypeToggle from '../../../components/CustomRadioButtonGroup';
 import CustomFormHeader from '../../../components/CustomFormHeader';
-import { FORM_HEADER_TEXT } from '../../../utils/constants';
+import { COMMON_WORDS, FORM_HEADER_TEXT } from '../../../utils/constants';
+import CustomAutoCompleteWithoutCheckbox from '../../../components/CustomAutoCompleteWithoutCheckbox';
 
 const CkycForm = () => {
   const dispatch = useDispatch();
@@ -25,6 +25,7 @@ const CkycForm = () => {
     setValue,
     formState: { errors },
     watch,
+    trigger,
   } = useForm({
     defaultValues: {
       lob: null,
@@ -36,6 +37,7 @@ const CkycForm = () => {
 
   useEffect(() => {
     setValue('forWhom', null);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [watch('cykc')]);
 
   const { UpdateData, postData, loading } = useHandleCkyc();
@@ -46,16 +48,21 @@ const CkycForm = () => {
     if (id) {
       ckycFetchData(id);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   useEffect(() => {
     if (ckycDataById && ckycDataById?.data) {
       setValue('lob', ckycDataById.data.lob);
+      dispatch(fetchAllProductData({ lobId: ckycDataById.data.lob.id }));
       setValue('product', ckycDataById.data.product);
       setValue('cykc', ckycDataById.data.isCKYCApplicable ? 'enable' : 'disable');
-      setValue('forWhom', ckycDataById.data.forWhom);
-      dispatch(fetchAllProductData({ lobId: ckycDataById.data.lob.id }));
+      if (ckycDataById.data.isCKYCApplicable) {
+        const selectedValue = forWhomEnable.find((item) => item.value === ckycDataById.data.forWhom);
+        setValue('forWhom', selectedValue);
+      }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ckycDataById]);
 
   const onSubmit = (data) => {
@@ -68,7 +75,7 @@ const CkycForm = () => {
 
   const handleResetButton = () => {
     dispatch(clearProducts());
-    if(!id) {
+    if (!id) {
       setValue('lob', null);
       setValue('product', null);
     }
@@ -76,7 +83,7 @@ const CkycForm = () => {
     setValue('forWhom', null);
   };
 
-  const { data: lobListData } = useGetLobData();
+  const { data: lobListData, loading: lobLoading } = useGetLobData();
 
   return (
     <Box component="form" onSubmit={handleSubmit(onSubmit)}>
@@ -90,81 +97,49 @@ const CkycForm = () => {
               navigateRoute="/ckyc-config"
             />
             <Grid item xs={12} sm={6} lg={4}>
-              <span className="label-text required-field">LOB</span>
-              <Controller
+              <CustomAutoCompleteWithoutCheckbox
                 name="lob"
-                id="lob"
+                label="LOB"
                 control={control}
                 rules={{ required: 'LOB is required' }}
-                render={({ field }) => (
-                  <Autocomplete
-                    id="lob"
-                    options={lobListData?.data || []}
-                    getOptionLabel={(option) => {
-                      return option?.lob?.toUpperCase() || '';
-                    }}
-                    disabled={id ? true : false}
-                    className="customize-select"
-                    size="small"
-                    isOptionEqualToValue={(option, value) => option.id === value.id}
-                    renderInput={(params) => <TextField {...params} placeholder="Select" />}
-                    value={field.value}
-                    onChange={(event, newValue) => {
-                      setValue('product', null);
-                      field.onChange(newValue);
-                      dispatch(fetchAllProductData({ lobId: newValue?.id }));
-                    }}
-                    renderOption={(props, option) => (
-                      <li {...props} key={option.id}>
-                        {option?.lob?.toUpperCase()}
-                      </li>
-                    )}
-                    ListboxProps={{
-                      style: {
-                        maxHeight: '200px',
-                      },
-                    }}
-                  />
-                )}
+                options={lobListData?.data || []}
+                getOptionLabel={(option) => {
+                  return option?.lob || '';
+                }}
+                className="customize-select"
+                loading={lobLoading}
+                isOptionEqualToValue={(option, value) => option.id === value.id}
+                placeholder={COMMON_WORDS.SELECT}
+                disableClearable={false}
+                required={true}
+                error={Boolean(errors.lob)}
+                helperText={errors.lob?.message}
+                disabled={id ? true : false}
+                onChangeCallback={() => {
+                  setValue('product', null);
+                  dispatch(fetchAllProductData({ lobId: watch('lob')?.id }));
+                }}
+                trigger={trigger}
               />
-              <div className="error-msg">{errors.lob && <span>{errors.lob.message}</span>}</div>
             </Grid>
             <Grid item xs={12} sm={6} lg={4}>
-              <span className="label-text required-field">Product</span>
-              <Controller
+              <CustomAutoCompleteWithoutCheckbox
                 name="product"
-                id="product"
+                label="Product"
                 control={control}
                 rules={{ required: 'Product is required' }}
-                render={({ field }) => (
-                  <Autocomplete
-                    id="product"
-                    options={products.data || []}
-                    getOptionLabel={(option) => option?.product?.toUpperCase() || ''}
-                    disabled={id ? true : false}
-                    loading={productsLoading}
-                    className="customize-select"
-                    size="small"
-                    isOptionEqualToValue={(option, value) => option.id === value.id}
-                    renderInput={(params) => <TextField {...params} placeholder="Select" />}
-                    value={field.value}
-                    onChange={(event, newValue) => {
-                      field.onChange(newValue);
-                    }}
-                    renderOption={(props, option) => (
-                      <li {...props} key={option.id}>
-                        {option?.product?.toUpperCase()}
-                      </li>
-                    )}
-                    ListboxProps={{
-                      style: {
-                        maxHeight: '200px',
-                      },
-                    }}
-                  />
-                )}
+                options={products?.data || []}
+                getOptionLabel={(option) => option?.product || ''}
+                loading={productsLoading}
+                isOptionEqualToValue={(option, value) => option.id === value.id}
+                placeholder={COMMON_WORDS.SELECT}
+                disableClearable={false}
+                required={true}
+                error={Boolean(errors.product)}
+                helperText={errors.product?.message}
+                trigger={trigger}
+                disabled={id ? true : false}
               />
-              <div className="error-msg">{errors.product && <span>{errors.product.message}</span>}</div>
             </Grid>
             <Grid item xs={12} sm={6} lg={4}>
               <UserTypeToggle
@@ -179,46 +154,29 @@ const CkycForm = () => {
 
             {watch('cykc') === 'enable' && (
               <Grid item xs={12} sm={6} lg={4}>
-                <text className="label-text required-field">For Whom</text>
-                <Controller
+                <CustomAutoCompleteWithoutCheckbox
                   name="forWhom"
-                  id="forWhom"
+                  label="For Whom"
                   control={control}
                   rules={{ required: 'For Whom is required' }}
-                  render={({ field }) => (
-                    <Select
-                      id="forWhom"
-                      value={field.value}
-                      onChange={(event, newValue) => {
-                        field.onChange(event.target.value);
-                      }}
-                      size="small"
-                      displayEmpty
-                      fullWidth
-                      className="customize-select"
-                      renderValue={(selected) => {
-                        if (selected === null) {
-                          return <div className={styles.placeholderStyle}>Select</div>;
-                        }
-                        const selectedItem = forWhomEnable.find((item) => item.value === selected);
-                        return selectedItem ? selectedItem.label : '';
-                      }}
-                    >
-                      {(watch('cykc') === 'enable' ? forWhomEnable : forWhomDisable).map((item, index) => (
-                        <MenuItem key={index} value={item.value} className={styles.styledOptionText}>
-                          {item.label}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  )}
+                  options={forWhomEnable}
+                  getOptionLabel={(option) => option?.label || ''}
+                  isOptionEqualToValue={(option, value) => {
+                    return option.value === value.value;
+                  }}
+                  placeholder={COMMON_WORDS.SELECT}
+                  disableClearable={false}
+                  required={true}
+                  error={Boolean(errors.forWhom)}
+                  helperText={errors.forWhom?.message}
+                  trigger={trigger}
                 />
-                <div className="error-msg">{errors.forWhom && <span>{errors.forWhom.message}</span>}</div>
               </Grid>
             )}
           </Grid>
         </CardContent>
       </Card>
-      <div className={styles.buttonContainer}>
+      <div className="mt-4">
         <CustomButton type="submit" variant="contained" disabled={loading}>
           {id ? 'Update' : 'Submit'}
         </CustomButton>

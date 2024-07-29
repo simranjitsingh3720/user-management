@@ -7,9 +7,13 @@ import CustomAutoCompleteWithoutCheckbox from '../../../components/CustomAutoCom
 import { COMMON_WORDS } from '../../../utils/constants';
 import { fetchUser } from '../../../stores/slices/userSlice';
 import ExportDropdown from '../../ExportDropdown';
+import BulkUpload from '../../../assets/BulkUpload';
+import { useNavigate } from 'react-router-dom';
 
 const ProducerForm = ({ onFormSubmit }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { tableName } = useSelector((state) => state.export);
   const {
     handleSubmit,
     control,
@@ -30,9 +34,14 @@ const ProducerForm = ({ onFormSubmit }) => {
       fetchUser({
         userType: COMMON_WORDS.PRODUCER,
         searchKey: COMMON_WORDS.ROLE_NAME,
+        isAll: true,
       })
     );
   }, [dispatch]);
+
+  const handleBulkUpload = () => {
+    navigate('bulk-upload');
+  };
 
   return (
     <>
@@ -46,7 +55,7 @@ const ProducerForm = ({ onFormSubmit }) => {
               loading={userLoading}
               options={user.data || []}
               getOptionLabel={(option) => {
-                return `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`;
+                return `${option?.firstName} ${option?.lastName}`;
               }}
               isOptionEqualToValue={(option, value) => option.id === value.id}
               control={control}
@@ -57,7 +66,7 @@ const ProducerForm = ({ onFormSubmit }) => {
               placeholder={COMMON_WORDS.SELECT}
               renderOption={(props, option) => (
                 <li {...props} key={option.id}>
-                  {option?.firstName?.toUpperCase()} {option?.lastName?.toUpperCase()}
+                  {option?.firstName} {option?.lastName}
                 </li>
               )}
             />
@@ -67,10 +76,8 @@ const ProducerForm = ({ onFormSubmit }) => {
             <CustomButton type="submit" variant="contained" color="primary" className="w-full md:w-auto">
               Submit
             </CustomButton>
-          </Grid>
-
-          <Grid item xs={12} sm={6} lg={4} alignItems="flex-end" display="flex" justifyContent="end">
             <ExportDropdown />
+            {tableName && <CustomButton variant="outlined" onClick={handleBulkUpload} startIcon={<BulkUpload />} />}
           </Grid>
         </Grid>
       </form>

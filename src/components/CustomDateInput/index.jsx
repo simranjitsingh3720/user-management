@@ -19,6 +19,7 @@ const DateField = ({
   labelVisible,
   isEdit = false,
   trigger,
+  disable
 }) => {
   // const minDate = dayjs(MIN_ALLOWED_DATE);
   // const seventyYearsFromNow = dayjs().add(70, 'year');
@@ -89,7 +90,7 @@ const DateField = ({
                     size: 'small',
                     variant: labelVisible ? 'outlined' : 'standard',
                     InputProps: {
-                      disableUnderline: !labelVisible,
+                      // disableunderline: !labelVisible,
                       style: !labelVisible ? {
                         display: 'flex',
                         flexDirection: 'row-reverse',
@@ -121,6 +122,7 @@ const DateField = ({
                     trigger(name);
                   }
                 }}
+                disabled={disable}
               />
             </LocalizationProvider>
           )}

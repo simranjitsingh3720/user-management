@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
+import apiUrls from "../../../utils/apiUrls";
 
 function useGetPayment() {
   const [data, setData] = useState([]);
@@ -8,7 +9,7 @@ function useGetPayment() {
   const fetchData = async (lobId) => {
     try {
       setLoading(true);
-      let url = `/api/payment-type?isAll=${true}`;
+      let url = `${apiUrls.getPaymentType}?isAll=${true}`;
       const response = await axiosInstance.get(url);
       setData(response.data);
     } catch (error) {

@@ -10,7 +10,6 @@ import CustomFormHeader from '../../../components/CustomFormHeader';
 import { FORM_HEADER_TEXT } from '../../../utils/constants';
 import { REGEX } from '../../../utils/globalConstants';
 import InputField from '../../../components/CustomTextfield';
-import { numericRegex } from '../utils/constants';
 
 const formConfig = [
   {

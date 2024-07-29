@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SearchComponent from '../../../components/SearchComponent';
 import CustomTable from '../../../components/CustomTable';
 import { employeeTableHeaders } from '../utils/tableHeaders';
@@ -8,17 +8,20 @@ import { useNavigate } from 'react-router-dom';
 import { EMPLOYEE_SEARCH } from '../utils/constants';
 import { PAGECOUNT } from '../../../utils/globalConstants';
 import usePermissions from '../../../hooks/usePermission';
+import { useDispatch } from 'react-redux';
+import { removeExtraColumns, setTableName } from '../../../stores/slices/exportSlice';
 
 function EmployeeForm() {
   const [searched, setSearched] = useState('employeeId');
-  const [query, setQuery] = useState('');
+
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(PAGECOUNT);
   const [order, setOrder] = useState(COMMON_WORDS.ASC);
   const [orderBy, setOrderBy] = useState(COMMON_WORDS.CREATED_AT);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const {canUpdate} = usePermissions();
+  const { canUpdate } = usePermissions();
 
   const handleEditClick = (row) => {
     navigate(`/uwlevelmappingemployee/${row.id}`);
@@ -27,8 +30,15 @@ function EmployeeForm() {
 
   const { data, loading, fetchData, count } = useGetEmployeeData(page, pageSize, order, orderBy);
 
-  const handleGo = () => {
-    fetchData(searched, query);
+  useEffect(()=> {
+    if(data && data?.length > 0){
+      dispatch(removeExtraColumns());
+      dispatch(setTableName(data[0]?.label))
+    }
+  },[data]);
+
+  const onSubmit = () => {
+    fetchData(searched, data.search);
   };
 
   return (
@@ -39,8 +49,8 @@ function EmployeeForm() {
         setSearched={setSearched}
         textField
         textFieldPlaceholder="Search"
-        setQuery={setQuery}
-        handleGo={handleGo}
+        onSubmit={onSubmit}
+        fetchData={fetchData}
       />
       <div className="mt-4">
         <CustomTable

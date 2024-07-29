@@ -5,8 +5,3 @@ export const EXPORT_CONSTANTS = {
     custom: 'Bulk Export',
     last30Days: "Last 30 Days"
 }
-
-export const API_END_POINTS = {
-  getColumns: "/api/file/columns?tableName=",
-  downloadFile: "/api/file/download"
-}
