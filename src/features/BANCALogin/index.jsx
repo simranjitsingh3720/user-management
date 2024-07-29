@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import useGetBancaLoginData from './hooks/useGetBancaLoginData';
-import { Autocomplete, Box, Card, CardContent, Grid, Switch, TextField, Typography } from '@mui/material';
+import { Box, Card, CardContent, Grid, Switch, TextField, Typography } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
