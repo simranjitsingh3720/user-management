@@ -1,21 +1,34 @@
 export const BitlyLinkMandatory = [
   {
-    label: "Yes",
-    value: "yes",
+    label: 'Yes',
+    value: 'yes',
   },
   {
-    label: "No",
-    value: "no",
+    label: 'No',
+    value: 'no',
   },
 ];
 
 export const BitlyLink = [
   {
-    label: "Type",
-    value: "type",
+    label: 'Type',
+    value: 'type',
   },
   {
-    label: "Value",
-    value: "value",
+    label: 'Value',
+    value: 'value',
+  },
+];
+
+export const STATUS = [
+  {
+    id: 'byChannel',
+    label: 'By Channel',
+    value: 'byChannel',
+  },
+  {
+    id: 'byProducer',
+    label: 'By Producer Code',
+    value: 'byProducer',
   },
 ];

@@ -1,10 +1,10 @@
-import { FormControlLabel, Radio, RadioGroup } from "@mui/material";
-import React, { useState } from "react";
-import Channel from "./Channel";
-import ProducerCode from "./ProducerCode";
+import { FormControlLabel, Radio, RadioGroup } from '@mui/material';
+import React, { useState } from 'react';
+import Channel from './Channel';
+import ProducerCode from './ProducerCode';
 
 function ProposalBitlyLinkConfig() {
-  const [value, setValue] = useState("byproducerCode");
+  const [value, setValue] = useState('byproducerCode');
 
   const handleChange = (event) => {
     setValue(event.target.value);
@@ -12,7 +12,7 @@ function ProposalBitlyLinkConfig() {
 
   return (
     <div>
-      <div>
+      {/* <div>
         <RadioGroup
           row
           aria-labelledby="status-row-radio-buttons-group-label"
@@ -31,8 +31,9 @@ function ProposalBitlyLinkConfig() {
             label="By Producer Code"
           />
         </RadioGroup>
-      </div>
-      {value === "byChannel" ? <Channel /> : <ProducerCode />}
+      </div> */}
+      {/* {value === "byChannel" ? <Channel /> : <ProducerCode />} */}
+      <Channel />
     </div>
   );
 }
