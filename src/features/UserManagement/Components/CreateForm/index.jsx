@@ -249,9 +249,9 @@ function CreateUserCreationForm() {
   };
 
   useEffect(() => {
+    dispatch(clearProducts());
     dispatch(clearMasterPolicy());
     if (lobsWatch && lobsWatch.length > 0) {
-      dispatch(clearProducts());
       dispatch(getProducts(lobsWatch));
       setValue(FORM_LABEL.MASTER_POLICY, []);
     }

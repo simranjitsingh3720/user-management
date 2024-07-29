@@ -10,7 +10,7 @@ const Actions = ({ row, fetchData }) => {
   const { updateData } = useUpdateUser(fetchData);
 
   const confirmAction = () => {
-     updateData(row?.id, row?.status);
+    updateData(row?.id, row?.roleId, row?.roleName, {status: !row?.status}, fetchData);
   };
 
   return (
