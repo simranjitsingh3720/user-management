@@ -30,8 +30,8 @@ import CustomFormHeader from '../../../../components/CustomFormHeader';
 import { FORM_HEADER_TEXT } from '../../../../utils/constants';
 import dayjs from 'dayjs';
 import { getProducerTypes } from '../../../../Redux/getProducerType';
-import getMasterPolicy, { clearMasterPolicy, getMasterPolicies } from '../../../../Redux/getMasterPolicy';
-import { ARR_CONTAINS, COMMON, FORM_LABEL, FORM_VALUE, MASTER_POLICY, REQUIRED_ERR } from '../utils/constants';
+import { clearMasterPolicy, getMasterPolicies } from '../../../../Redux/getMasterPolicy';
+import { ARR_CONTAINS, COMMON, FORM_LABEL, FORM_VALUE, REQUIRED_ERR } from '../utils/constants';
 import useUpdateUser from '../hooks/useUpdateUser';
 import errorHandler from '../../../../utils/errorHandler';
 import { clearZones, getZones } from '../../../../Redux/getZone';
@@ -91,7 +91,7 @@ function CreateUserCreationForm() {
       active: COMMON.YES,
       startDate: today,
       gcStatus: COMMON.NO,
-      producerStatus: 'Active',
+      producerStatus: COMMON.ACTIVE,
     },
   });
 

@@ -3,18 +3,19 @@ import axiosInstance from '../utils/axiosInstance';
 import apiUrls from '../utils/apiUrls';
 import { buildQueryString, toCapitalize } from '../utils/globalizationFunction';
 import errorHandler from '../utils/errorHandler';
+import { COMMON_WORDS } from '../utils/constants';
 
 export const getZones = createAsyncThunk('zone/getZones', async (planId, { getState, rejectWithValue }) => {
   try {
     if (planId) {
       const planIds = planId.map((item) => item?.id);
       const idsString = planIds.join(',');
-      const params = buildQueryString({ ids: idsString, edge: 'hasProduct', isExclusive: true, status: true });
+      const params = buildQueryString({ ids: idsString, edge: COMMON_WORDS.HAS_PRODUCT, isExclusive: true, status: true });
       const url = `${apiUrls.getZone}?${params}`;
       const response = await axiosInstance.get(url);
       const formattedArray = response?.data?.data?.map((obj) => ({
         ...obj,
-        label: toCapitalize(obj, 'zone'),
+        label: toCapitalize(obj, COMMON_WORDS.ZONE),
         value: obj?.id,
       }));
       return formattedArray;

@@ -3,18 +3,19 @@ import axiosInstance from '../utils/axiosInstance';
 import apiUrls from '../utils/apiUrls';
 import { buildQueryString, toCapitalize } from '../utils/globalizationFunction';
 import errorHandler from '../utils/errorHandler';
+import { COMMON_WORDS } from '../utils/constants';
 
 export const getPlans = createAsyncThunk('plan/getPlans', async (product, { getState, rejectWithValue }) => {
   try {
     if (product) {
       const productIds = product.map((item) => item?.id);
       const idsString = productIds.join(',');
-      const params = buildQueryString({ ids: idsString, edge: 'hasProduct', isExclusive: true, status: true });
+      const params = buildQueryString({ ids: idsString, edge: COMMON_WORDS.HAS_PRODUCT, isExclusive: true, status: true });
       const url = `${apiUrls.getPlan}?${params}`;
       const response = await axiosInstance.get(url);
       const formattedArray = response?.data?.data?.map((obj) => ({
         ...obj,
-        label: toCapitalize(obj, 'plan'),
+        label: toCapitalize(obj, COMMON_WORDS.PLAN),
         value: obj?.id,
       }));
       return formattedArray;
