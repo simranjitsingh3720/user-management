@@ -25,7 +25,7 @@ export const getProducerCodes = createAsyncThunk(
           const formattedArray = response?.data?.data?.map((obj) => ({
             ...obj,
             label: getFullName(obj?.firstName, obj?.lastName) + ' - ' + obj?.producerCode,
-            value: obj?.producerCode,
+            value: obj?.id,
           }));
           return formattedArray;
         }

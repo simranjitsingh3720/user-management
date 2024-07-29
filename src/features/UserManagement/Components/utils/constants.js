@@ -19,6 +19,8 @@ export const ARR_CONTAINS = {
   ADMIN_ARR: ['admin', 'adminView'],
   CLIENT_ARR: ['csm'],
   DATA_ENTRY_USER_ARR: ['distops'],
+  PLAN_ZONE_ARR: ['partneremployee', 'sso', 'externalposp'],
+  MASTER_POLICY_ARR: ['partner']
 };
 
 export const NAVIGATE = {
@@ -55,6 +57,7 @@ export const COMMON = {
   ACCOUNT_NUMBER: 'accountNumber',
   PAYMENT_CHEQUE: 'cheque',
   ALL: 'all',
+  ACTIVE: 'Active'
 };
 
 export const FORM_LABEL = {
@@ -83,6 +86,7 @@ export const FORM_LABEL = {
   CHILDS: 'childs',
   HOUSE_BANK: 'houseBank',
   MASTER_POLICY: 'masterPolicy',
+  PLAN: 'plan'
 };
 
 export const FORM_VALUE = {

@@ -48,7 +48,7 @@ const AutocompleteField = ({
   }, [resetClicked, multiple]);
 
   useEffect(() => {
-    if (roleChanged && name !== ROLE_SELECT && !isEdit) {
+    if (name !== ROLE_SELECT && !isEdit) {
       setSelectedValues([]);
     }
   }, [roleChanged, name, isEdit]);

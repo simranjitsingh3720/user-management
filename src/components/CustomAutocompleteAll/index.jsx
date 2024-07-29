@@ -34,7 +34,7 @@ const AutocompleteFieldAll = ({
 
   useEffect(() => {
     setSelectedValues([]);
-  }, [resetClicked]);
+  }, [resetClicked, roleChanged]);
 
   const watchedValues = useWatch({ control, name });
 

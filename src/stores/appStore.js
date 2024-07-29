@@ -17,6 +17,8 @@ import loginTypeSlice from '../Redux/getLoginType';
 import groupSlice from "./slices/groupSlice";
 import producerTypeSlice from "../Redux/getProducerType";
 import masterPolicySlice from '../Redux/getMasterPolicy';
+import zoneSlice from '../Redux/getZone';
+import planSlice from '../Redux/getPlan';
 
 const appStore = configureStore({
   reducer: {
@@ -38,6 +40,8 @@ const appStore = configureStore({
     loginType: loginTypeSlice,
     producerType: producerTypeSlice,
     masterPolicy: masterPolicySlice,
+    zone: zoneSlice,
+    plan: planSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

@@ -3590,20 +3590,6 @@
         "canEdit": true
       },
       {
-        "id": "dataEntryUserName",
-        "label": "Data Entry Username",
-        "type": "input",
-        "required": true,
-        "validation": {
-          "required": "This field is required",
-          "pattern": {
-            "value": "^[a-zA-Z0-9]+$",
-            "message": "It should contain digits and letters only"
-          }
-        },
-        "canEdit": true
-      },
-      {
         "id": "employeeCodeUserLoginId",
         "label": "Employee Code/ User Login ID",
         "type": "input",
@@ -4037,6 +4023,7 @@
         "id": "paymentType",
         "label": "Payment Mode",
         "type": "autocomplete",
+        "all" : true,
         "required": true,
         "validation": {
           "required": "This field is required"
