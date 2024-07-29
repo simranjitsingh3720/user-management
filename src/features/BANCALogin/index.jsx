@@ -14,8 +14,9 @@ import useUpdateBancaField from './hooks/useUpdateBancaField';
 import 'dayjs/locale/en-gb';
 import CustomButton from '../../components/CustomButton';
 import CustomFormHeader from '../../components/CustomFormHeader';
-import { FORM_HEADER_TEXT } from '../../utils/constants';
+import { COMMON_WORDS, FORM_HEADER_TEXT } from '../../utils/constants';
 import usePermissions from '../../hooks/usePermission';
+import CustomAutoCompleteWithoutCheckbox from '../../components/CustomAutoCompleteWithoutCheckbox';
 
 function BANCALogin() {
   const [fileName, setFileName] = useState('');
@@ -57,7 +58,7 @@ function BANCALogin() {
     });
   };
 
-  const { handleSubmit, control, setValue, watch, formState, getValues } = useForm({
+  const { handleSubmit, control, setValue, watch, formState, getValues, trigger } = useForm({
     defaultValues: {
       producerCode: null,
       product: null,
@@ -168,69 +169,46 @@ function BANCALogin() {
           />
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
-              <Controller
+              <CustomAutoCompleteWithoutCheckbox
                 name="producerCode"
+                label="Producer Code"
                 control={control}
-                rules={{ required: true }}
-                render={({ field }) => (
-                  <Autocomplete
-                    id="producerCode"
-                    options={userData || []}
-                    getOptionLabel={(option) =>
-                      `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`
-                    }
-                    size="small"
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        label="Producer Code"
-                        variant="outlined"
-                        error={!!errors.producerCode}
-                        helperText={errors.producerCode ? 'This field is required' : ''}
-                      />
-                    )}
-                    value={field.value}
-                    onChange={(event, newValue) => {
-                      field.onChange(newValue);
-                      if (newValue) {
-                        fetchData(newValue?.id);
-                        resetFields();
-                      }
-                    }}
-                  />
-                )}
+                rules={{ required: 'Producer Code is required' }}
+                options={userData || []}
+                getOptionLabel={(option) =>
+                  `${option?.firstName} ${option?.lastName}`
+                }
+                error={Boolean(errors.producerCode)}
+                helperText={errors.lob?.message}
+                required={true}
+                placeholder={COMMON_WORDS.SELECT}
+                onChangeCallback={() => {
+                  fetchData(getValues('producerCode')?.id);
+                  resetFields();
+                }}
+                trigger={trigger}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <Controller
+              <CustomAutoCompleteWithoutCheckbox
                 name="product"
+                label="Product"
                 control={control}
-                rules={{ required: true }}
-                render={({ field }) => (
-                  <Autocomplete
-                    id="product"
-                    options={producerList?.data || []}
-                    getOptionLabel={(option) => option.product}
-                    size="small"
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        label="Product"
-                        variant="outlined"
-                        error={!!errors.product}
-                        helperText={errors.product ? 'This field is required' : ''}
-                      />
-                    )}
-                    value={field.value}
-                    onChange={(event, newValue) => {
-                      field.onChange(newValue);
-                      if (watch('producerCode') && watch('product')) {
-                        bancaFetchData(watch('producerCode').id, watch('product').id);
-                      }
-                    }}
-                  />
-                )}
+                rules={{ required: 'Product is required' }}
+                options={producerList?.data || []}
+                getOptionLabel={(option) => option.product}
+                error={Boolean(errors.product)}
+                helperText={errors.lob?.message}
+                required={true}
+                placeholder={COMMON_WORDS.SELECT}
+                trigger={trigger}
+                onChangeCallback={() => {
+                  if (watch('producerCode') && watch('product')) {
+                    bancaFetchData(watch('producerCode').id, watch('product').id);
+                  }
+                }}
               />
+             
             </Grid>
             <Grid item xs={12} sm={6}>
               <Controller
