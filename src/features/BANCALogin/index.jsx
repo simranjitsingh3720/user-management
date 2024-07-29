@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import useGetBancaLoginData from './hooks/useGetBancaLoginData';
-import styles from './styles.module.scss';
-import { Autocomplete, Switch, TextField } from '@mui/material';
+import { Autocomplete, Box, Card, CardContent, Grid, Switch, TextField, Typography } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -16,13 +15,14 @@ import 'dayjs/locale/en-gb';
 import CustomButton from '../../components/CustomButton';
 import CustomFormHeader from '../../components/CustomFormHeader';
 import { FORM_HEADER_TEXT } from '../../utils/constants';
+import usePermissions from '../../hooks/usePermission';
 
 function BANCALogin() {
   const [fileName, setFileName] = useState('');
 
   const { data: bancaData, loading: bancaLoading, fetchData: bancaFetchData } = useGetBancaLoginData();
-
   const [fieldData, setFieldData] = useState(Object.values(FieldDataList).flat());
+  const { canUpdate, canCreate } = usePermissions();
 
   const inputFileRef = useRef(null);
 
@@ -44,6 +44,7 @@ function BANCALogin() {
       return newFieldData;
     });
   };
+
   const handleMandatoryChange = (value) => {
     setFieldData(() => {
       const newFieldData = [...fieldData];
@@ -157,218 +158,203 @@ function BANCALogin() {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className={styles.bancaForm}>
-          <div className="p-5">
-            <CustomFormHeader
-              handleReset={handleResetButton}
-              headerText={FORM_HEADER_TEXT.BANCA_FIELDS}
-              subHeading="Fill in the mandatory information to modify the Banca fields."
-            />
-          </div>
-          <div className={styles.fieldStyle}>
-            <div className={styles.mainContainerField}>
-              <div className={styles.fieldContainerStyle}>
-                <span className={styles.labelText}>
-                  Producer Code <span className={styles.styledRequired}>*</span>
-                </span>
-                <Controller
-                  name="producerCode"
-                  control={control}
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <Autocomplete
-                      id="producerCode"
-                      options={userData || []}
-                      getOptionLabel={(option) => {
-                        return `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`;
-                      }}
-                      className={styles.customizeSelect}
-                      size="small"
-                      renderInput={(params) => <TextField {...params} placeholder="Select" />}
-                      value={field.value}
-                      onChange={(event, newValue) => {
-                        field.onChange(newValue);
-                        if (newValue) {
-                          fetchData(newValue?.id);
-                          resetFields();
-                        }
-                      }}
-                      ListboxProps={{
-                        style: {
-                          maxHeight: '200px',
-                        },
-                      }}
-                    />
-                  )}
-                />
-                <div className={styles.styledError}>{errors.producerCode && <span>This field is required</span>} </div>
-              </div>
-              <div className={styles.fieldContainerStyle}>
-                <span className={styles.labelText}>
-                  Products <span className={styles.styledRequired}>*</span>
-                </span>
-                <Controller
-                  name="product"
-                  control={control}
-                  value={getValues('product')}
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <Autocomplete
-                      id="product"
-                      options={producerList?.data || []}
-                      getOptionLabel={(option) => {
-                        return option.product;
-                      }}
-                      value={field.value}
-                      className={styles.customizeSelect}
-                      size="small"
-                      renderInput={(params) => <TextField {...params} placeholder="Select" />}
-                      onChange={(event, newValue) => {
-                        field.onChange(newValue);
-                        if (watch('producerCode') && watch('product')) {
-                          bancaFetchData(watch('producerCode').id, watch('product').id);
-                        }
-                      }}
-                      ListboxProps={{
-                        style: {
-                          maxHeight: '200px',
-                        },
-                      }}
-                    />
-                  )}
-                />
-                <div className={styles.styledError}>{errors.product && <span>This field is required</span>} </div>
-              </div>
-              <div className={styles.fieldContainerStyle}>
-                <div className={styles.startDateStyle}>
-                  <div className={styles.labelText}>
-                    Start Date <span className={styles.styledRequired}>*</span>
-                  </div>
-                  <Controller
-                    name="startDate"
-                    control={control}
-                    rules={{ required: true }}
-                    render={({ field }) => (
-                      <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
-                        <DatePicker
-                          className={styles.dateStyle}
-                          // {...register("startDate", { required: true })}
-                          slotProps={{ textField: { size: 'small' } }}
-                          value={field.value ? dayjs(field.value, 'DD/MM/YYYY') : null}
-                          minDate={dayjs()}
-                          onChange={(date) => {
-                            const formattedDate = dayjs(date).format('DD/MM/YYYY');
-                            setValue('startDate', formattedDate);
-                          }}
-                        />
-                      </LocalizationProvider>
+    <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+      <Card>
+        <CardContent>
+          <CustomFormHeader
+            handleReset={handleResetButton}
+            headerText={FORM_HEADER_TEXT.BANCA_FIELDS}
+            subHeading="Fill in the mandatory information to modify the Banca fields."
+          />
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+              <Controller
+                name="producerCode"
+                control={control}
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <Autocomplete
+                    id="producerCode"
+                    options={userData || []}
+                    getOptionLabel={(option) =>
+                      `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`
+                    }
+                    size="small"
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        label="Producer Code"
+                        variant="outlined"
+                        error={!!errors.producerCode}
+                        helperText={errors.producerCode ? 'This field is required' : ''}
+                      />
                     )}
+                    value={field.value}
+                    onChange={(event, newValue) => {
+                      field.onChange(newValue);
+                      if (newValue) {
+                        fetchData(newValue?.id);
+                        resetFields();
+                      }
+                    }}
                   />
-                </div>
-                <div className={styles.styledError}>{errors.startDate && <span>This field is required</span>}</div>
-              </div>
-              <div className={styles.fieldContainerStyle}>
-                <div>
-                  <div className={styles.labelText}>
-                    End Date <span className={styles.styledRequired}>*</span>
-                  </div>
-                  <Controller
-                    name="endDate"
-                    control={control}
-                    rules={{ required: true }}
-                    render={({ field }) => (
-                      <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
-                        <DatePicker
-                          className={styles.dateStyle}
-                          // {...register("expiryDate", { required: true })}
-                          // value={watch("expiryDate")}
-                          value={field.value ? dayjs(field.value, 'DD/MM/YYYY') : null}
-                          minDate={dayjs()}
-                          onChange={(date) => {
-                            const formattedDate = dayjs(date).format('DD/MM/YYYY');
-                            setValue('endDate', formattedDate);
-                          }}
-                          slotProps={{ textField: { size: 'small' } }}
-                        />
-                      </LocalizationProvider>
+                )}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Controller
+                name="product"
+                control={control}
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <Autocomplete
+                    id="product"
+                    options={producerList?.data || []}
+                    getOptionLabel={(option) => option.product}
+                    size="small"
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        label="Product"
+                        variant="outlined"
+                        error={!!errors.product}
+                        helperText={errors.product ? 'This field is required' : ''}
+                      />
                     )}
+                    value={field.value}
+                    onChange={(event, newValue) => {
+                      field.onChange(newValue);
+                      if (watch('producerCode') && watch('product')) {
+                        bancaFetchData(watch('producerCode').id, watch('product').id);
+                      }
+                    }}
                   />
-                  <div className={styles.styledError}>{errors.endDate && <span>This field is required</span>}</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className={styles.listBancaConatiner}>
-          <div className={styles.fieldStyle}>
-            {(fieldData || []).map((obj) => (
-              <div className={styles.fieldDiv}>
-                <div className={styles.lableStyle}>{obj.label}</div>
-                <div className={styles.switchContainer}>
-                  {' '}
-                  <div className={styles.enableSwitchStyle}>
+                )}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Controller
+                name="startDate"
+                control={control}
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
+                    <DatePicker
+                      label="Start Date"
+                      value={field.value ? dayjs(field.value, 'DD/MM/YYYY') : null}
+                      minDate={dayjs()}
+                      onChange={(date) => {
+                        const formattedDate = dayjs(date).format('DD/MM/YYYY');
+                        setValue('startDate', formattedDate);
+                      }}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          variant="outlined"
+                          error={!!errors.startDate}
+                          helperText={errors.startDate ? 'This field is required' : ''}
+                        />
+                      )}
+                    />
+                  </LocalizationProvider>
+                )}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Controller
+                name="endDate"
+                control={control}
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
+                    <DatePicker
+                      label="End Date"
+                      value={field.value ? dayjs(field.value, 'DD/MM/YYYY') : null}
+                      minDate={dayjs()}
+                      onChange={(date) => {
+                        const formattedDate = dayjs(date).format('DD/MM/YYYY');
+                        setValue('endDate', formattedDate);
+                      }}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          variant="outlined"
+                          error={!!errors.endDate}
+                          helperText={errors.endDate ? 'This field is required' : ''}
+                        />
+                      )}
+                    />
+                  </LocalizationProvider>
+                )}
+              />
+            </Grid>
+          </Grid>
+        </CardContent>
+      </Card>
+      <Grid container spacing={2} className='mt-4'>
+        {fieldData.map((obj) => (
+          <Grid item xs={12} md={6} key={obj.value}>
+            <Card className='rounded-2xl'>
+              <CardContent>
+                <Grid container spacing={2}>
+                  <Grid item xs={12}>
+                    <Typography variant="subtitle1">{obj.label}</Typography>
+                  </Grid>
+                  <Grid item xs={12} md={6} display={'flex'} alignItems={'center'}>
                     <Switch
                       checked={obj.Enable}
                       onChange={() => handleEnableChange(obj.value)}
                       inputProps={{ 'aria-label': 'toggle button' }}
                     />
-                    <span className={styles.enableStyle}>{obj.Enable ? 'Enabled' : 'Non Enabled'}</span>
-                  </div>
-                  <div className={styles.mandatorySwitchStyle}>
+                    <Typography variant="body2">{obj.Enable ? 'Enabled' : 'Non Enabled'}</Typography>
+                  </Grid>
+                  <Grid item xs={12} md={6} display={'flex'} alignItems={'center'}>
                     <Switch
                       checked={obj.Mandatory}
                       onChange={() => handleMandatoryChange(obj.value)}
                       inputProps={{ 'aria-label': 'toggle button' }}
                       disabled={!obj.Enable}
                     />
-                    <span className={styles.enableStyle}>{obj.Mandatory ? 'Mandatory' : 'Non Mandatory'}</span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className={styles.uploadContainer}>
-            <div className={styles.lableStyle}>Partner Employee Code Master</div>
-            <div className={styles.uploadStyle}>
-              <input
-                type="file"
-                ref={inputFileRef}
-                style={{ display: 'none' }}
-                // Optionally, you can handle file change event here
-                onChange={(event) => {
-                  const file = event.target.files[0];
-
-                  if (file) {
-                    setFileName(file.name);
-                  }
-                }}
-              />
-              <CustomButton
-                component="label"
-                role={undefined}
-                variant="contained"
-                tabIndex={-1}
-                startIcon={<CloudUploadIcon />}
-                disabled={!fieldData.filter((item) => item.value === 'partnerEmployeeCode')[0].Enable}
-                onClick={() => handleButtonClick()}
-              >
-                Upload file
-              </CustomButton>
-              {fileName && <div className={styles.fileNameStyle}>{fileName}</div>}
-            </div>
-          </div>
-        </div>
-        <div>
+                    <Typography variant="body2">{obj.Mandatory ? 'Mandatory' : 'Non Mandatory'}</Typography>
+                  </Grid>
+                </Grid>
+              </CardContent>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
+      <div style={{ marginTop: '16px' }}>
+        <Typography variant="subtitle1">Partner Employee Code Master</Typography>
+        <input
+          type="file"
+          ref={inputFileRef}
+          style={{ display: 'none' }}
+          onChange={(event) => {
+            const file = event.target.files[0];
+            if (file) {
+              setFileName(file.name);
+            }
+          }}
+        />
+        <CustomButton
+          component="label"
+          variant="contained"
+          startIcon={<CloudUploadIcon />}
+          disabled={!fieldData.find((item) => item.value === 'partnerEmployeeCode')?.Enable}
+          onClick={handleButtonClick}
+        >
+          Upload file
+        </CustomButton>
+        {fileName && <Typography variant="body2">{fileName}</Typography>}
+      </div>
+      {(canCreate || canUpdate) && (
+        <div style={{ marginTop: '16px' }}>
           <CustomButton type="submit" variant="contained" disabled={updateBancaLoding || createBancaLoding}>
             Submit
           </CustomButton>
         </div>
-      </form>
-    </div>
+      )}
+    </Box>
   );
 }
 
