@@ -37,8 +37,10 @@ function UserManagement() {
     const transformedData =
       userList?.data?.map((item) => {
         return {
-          ...item,
-          checked: item?.status,
+          ...item?.user,
+          checked: item?.user?.status,
+          disabled: !canUpdate,
+          roleId: item?.role[0]?.id
         };
       }) || [];
     setUserData(transformedData);
@@ -51,7 +53,7 @@ function UserManagement() {
       showDialog({
         title: COMMON_WORDS.CHANGE_STATUS,
         content: <Content />,
-        actions: <Actions row={row} fetchData={userList} />,
+        actions: <Actions row={row} fetchData={ getUserList} />,
       })
     );
   }, [dispatch, userList]);

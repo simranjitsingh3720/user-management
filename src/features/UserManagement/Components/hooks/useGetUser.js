@@ -3,6 +3,7 @@ import axiosInstance from '../../../../utils/axiosInstance';
 import apiUrls from '../../../../utils/apiUrls';
 import { buildQueryString } from '../../../../utils/globalizationFunction';
 import errorHandler from '../../../../utils/errorHandler';
+import { COMMON_WORDS } from '../../../../utils/constants';
 
 export default function useGetUser() {
   const [userList, setUserList] = useState([]);
@@ -19,6 +20,8 @@ export default function useGetUser() {
         pageSize,
         searchString: query ? query : '',
         searchKey: query ? searched : '',
+        childFieldsToFetch: COMMON_WORDS.ROLE,
+        childFieldsEdge: COMMON_WORDS.HAS_ROLE,
       });
       const { data } = await axiosInstance.get(`${apiUrls.getUser}?${params}`);
       setUserList(data);
