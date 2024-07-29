@@ -5,7 +5,7 @@ import errorHandler from './errorHandler';
 
 const instance = axios.create({
   baseURL: BASE_URL,
-  timeout: 100000,
+  timeout: 10000,
 });
 
 // Request interceptor
