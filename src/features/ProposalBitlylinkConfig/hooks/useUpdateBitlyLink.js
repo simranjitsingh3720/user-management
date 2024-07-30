@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import errorHandler from '../../../utils/errorHandler';
 import apiUrls from '../../../utils/apiUrls';
 
-function useUpdateBitlyLink(setChangeStatusOpen, fetchGroupList) {
+function useUpdateBitlyLink(fetchData) {
   const [loading, setLoading] = useState(false);
 
   async function UpdateDataFun(data) {
@@ -12,8 +12,7 @@ function useUpdateBitlyLink(setChangeStatusOpen, fetchGroupList) {
     try {
       const response = await axiosInstance.put(apiUrls.proposalBitlyConfig, data);
       toast.success(response?.data?.message || 'Proposal bitly config successfully');
-      setChangeStatusOpen(false);
-      fetchGroupList();
+      fetchData();
     } catch (error) {
       errorHandler.handleError(error);
     } finally {

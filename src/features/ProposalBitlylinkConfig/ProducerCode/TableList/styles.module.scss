@@ -24,7 +24,6 @@
   align-items: center;
   padding: 0px 12px;
   border-bottom: 1px solid #c5cfde;
-  overflow: scroll;
 }
 
 .namelistCell {
@@ -39,11 +38,12 @@
   background-color: #ffffff;
   border-radius: 12px 12px 0px 0px;
   border: 1px solid #c5cfde;
+  overflow: scroll;
 }
 
 .customizeSelect {
   background-color: #ffffff;
-  width: 50%; 
+  width: 50%;
   font-size: 14px !important;
   height: 40px;
 }

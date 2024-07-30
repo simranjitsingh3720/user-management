@@ -19,7 +19,7 @@ import Lob from '../../features/Lob';
 import LobForm from '../../features/Lob/CreateLobForm';
 import Product from '../../features/ProductModule';
 import ProductForm from '../../features/ProductModule/ProductForm';
-import ProposalBitlyLinkConfig from '../../features/ProposalBitlylinkConfig';
+import Channel from '../../features/ProposalBitlylinkConfig/Channel/index';
 import ChannelForm from '../../features/ProposalBitlylinkConfig/Channel/ChannelForm';
 import OTPException from '../../features/OTPException';
 import ProposalOTPException from '../../features/ProposalOTPException';
@@ -203,7 +203,7 @@ const AppRoutes = () => {
         path="/proposal-bitly-config"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PrivateRoute component={ProposalBitlyLinkConfig} />
+            <PrivateRoute component={Channel} />
           </ResponsiveDrawer>
         }
       />

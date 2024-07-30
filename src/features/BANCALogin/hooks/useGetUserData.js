@@ -11,10 +11,10 @@ function useGetUserData() {
   const fetchData = async () => {
     try {
       let params = {
-        pageNo: 0,
         searchKey: COMMON_WORDS.ROLE_NAME,
         searchString: COMMON_WORDS.PRODUCER,
         status: true,
+        isAll: true
       };
       let url = `${apiUrls.getUser}?${buildQueryString(params)}`;
       const response = await axiosInstance.get(url);
