@@ -46,7 +46,7 @@ function ProposalForm() {
       product: null,
       startDate: null,
       endDate: null,
-      groupStatus: 'byProducerCode',
+      groupStatus: 'byChannel',
       channel: null,
     },
   });
@@ -117,7 +117,7 @@ function ProposalForm() {
         properties: {
           startDate: data?.startDate,
           endDate: data?.endDate,
-          status: proposalDataByID.data.status,
+          status: proposalDataByID?.proposalOtpException?.status || false,
         },
       };
 
