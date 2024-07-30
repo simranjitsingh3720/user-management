@@ -100,8 +100,8 @@
         "validation": {
           "required": "This field is required",
           "pattern": {
-            "value": "^[a-zA-Z0-9._%+-]+@tataaig.com$",
-            "message": "Please enter a valid tagic email address"
+            "value": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$",
+            "message": "Please enter a valid email address"
           }
         },
         "canEdit": true
@@ -332,8 +332,8 @@
         "validation": {
           "required": "This field is required",
           "pattern": {
-            "value": "^[a-zA-Z0-9._%+-]+@tataaig.com$",
-            "message": "Please enter a valid tagic email address"
+            "value": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$",
+            "message": "Please enter a valid email address"
           }
         },
         "canEdit": true
@@ -564,8 +564,8 @@
         "validation": {
           "required": "This field is required",
           "pattern": {
-            "value": "^[a-zA-Z0-9._%+-]+@tataaig.com$",
-            "message": "Please enter a valid tagic email address"
+            "value": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$",
+            "message": "Please enter a valid email address"
           }
         },
         "canEdit": true
@@ -781,8 +781,8 @@
         "validation": {
           "required": "This field is required",
           "pattern": {
-            "value": "^[a-zA-Z0-9._%+-]+@tataaig.com$",
-            "message": "Please enter a valid tagic email address"
+            "value": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$",
+            "message": "Please enter a valid email address"
           }
         },
         "canEdit": false
@@ -948,8 +948,8 @@
         "required": false,
         "validation": {
           "pattern": {
-            "value": "^[A-Za-z]+$",
-            "message": "It should contain only letters"
+            "value": "^@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
+            "message": "Please enter a valid domain"
           }
         },
         "canEdit": false
@@ -1164,8 +1164,8 @@
         "validation": {
           "required": "This field is required",
           "pattern": {
-            "value": "^[a-zA-Z0-9._%+-]+@tataaig.com$",
-            "message": "Please enter a valid tagic email address"
+            "value": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$",
+            "message": "Please enter a valid email address"
           }
         },
         "canEdit": false
@@ -1331,8 +1331,8 @@
         "required": false,
         "validation": {
           "pattern": {
-            "value": "^[A-Za-z]+$",
-            "message": "It should contain only letters"
+            "value": "^@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
+            "message": "Please enter a valid domain"
           }
         },
         "canEdit": false
@@ -1547,8 +1547,8 @@
         "validation": {
           "required": "This field is required",
           "pattern": {
-            "value": "^[a-zA-Z0-9._%+-]+@tataaig.com$",
-            "message": "Please enter a valid tagic email address"
+            "value": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$",
+            "message": "Please enter a valid email address"
           }
         },
         "canEdit": false
@@ -1714,8 +1714,8 @@
         "required": false,
         "validation": {
           "pattern": {
-            "value": "^[A-Za-z]+$",
-            "message": "It should contain only letters"
+            "value": "^@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
+            "message": "Please enter a valid domain"
           }
         },
         "canEdit": false
@@ -1920,8 +1920,8 @@
         "validation": {
           "required": "This field is required",
           "pattern": {
-            "value": "^[a-zA-Z0-9._%+-]+@tataaig.com$",
-            "message": "Please enter a valid tagic email address"
+            "value": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$",
+            "message": "Please enter a valid email address"
           }
         },
         "canEdit": false
@@ -2164,8 +2164,8 @@
         "validation": {
           "required": "This field is required",
           "pattern": {
-            "value": "^[a-zA-Z0-9._%+-]+@tataaig.com$",
-            "message": "Please enter a valid tagic email address"
+            "value": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$",
+            "message": "Please enter a valid email address"
           }
         },
         "canEdit": true
@@ -2345,8 +2345,8 @@
         "validation": {
           "required": "This field is required",
           "pattern": {
-            "value": "^[a-zA-Z0-9._%+-]+@tataaig.com$",
-            "message": "Please enter a valid tagic email address"
+            "value": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$",
+            "message": "Please enter a valid email address"
           }
         },
         "canEdit": false
@@ -2533,8 +2533,8 @@
         "validation": {
           "required": "This field is required",
           "pattern": {
-            "value": "^[a-zA-Z0-9._%+-]+@tataaig.com$",
-            "message": "Please enter a valid tagic email address"
+            "value": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$",
+            "message": "Please enter a valid email address"
           }
         },
         "canEdit": false
@@ -2732,8 +2732,8 @@
         "validation": {
           "required": "This field is required",
           "pattern": {
-            "value": "^[a-zA-Z0-9._%+-]+@tataaig.com$",
-            "message": "Please enter a valid tagic email address"
+            "value": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$",
+            "message": "Please enter a valid email address"
           }
         },
         "canEdit": false
@@ -2931,8 +2931,8 @@
         "validation": {
           "required": "This field is required",
           "pattern": {
-            "value": "^[a-zA-Z0-9._%+-]+@tataaig.com$",
-            "message": "Please enter a valid tagic email address"
+            "value": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$",
+            "message": "Please enter a valid email address"
           }
         },
         "canEdit": false
@@ -3130,8 +3130,8 @@
         "validation": {
           "required": "This field is required",
           "pattern": {
-            "value": "^[a-zA-Z0-9._%+-]+@tataaig.com$",
-            "message": "Please enter a valid tagic email address"
+            "value": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$",
+            "message": "Please enter a valid email address"
           }
         },
         "canEdit": false
@@ -3322,8 +3322,8 @@
         "validation": {
           "required": "This is a required field",
           "pattern": {
-            "value": "^[a-zA-Z0-9._%+-]+@tataaig.com$",
-            "message": "Please enter a valid tagic email address"
+            "value": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$",
+            "message": "Please enter a valid email address"
           }
         },
         "canEdit": false
@@ -3631,8 +3631,8 @@
         "validation": {
           "required": "This field is required",
           "pattern": {
-            "value": "^[a-zA-Z0-9._%+-]+@tataaig.com$",
-            "message": "Please enter a valid tagic email address"
+            "value": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$",
+            "message": "Please enter a valid email address"
           }
         },
         "canEdit": false
@@ -3904,8 +3904,8 @@
         "validation": {
           "required": "This field is required",
           "pattern": {
-            "value": "^[a-zA-Z0-9._%+-]+@tataaig.com$",
-            "message": "Please enter a valid tagic email address"
+            "value": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$",
+            "message": "Please enter a valid email address"
           }
         },
         "canEdit": false
@@ -4233,8 +4233,8 @@
         "validation": {
           "required": "This field is required",
           "pattern": {
-            "value": "^[a-zA-Z0-9._%+-]+@tataaig.com$",
-            "message": "Please enter a valid tagic email address"
+            "value": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$",
+            "message": "Please enter a valid email address"
           }
         },
         "canEdit": false
