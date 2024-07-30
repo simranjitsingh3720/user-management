@@ -46,6 +46,7 @@ function useGetBitlyLink(page, pageSize, order, orderBy) {
             checked: status,
             status,
             label,
+            showIcon: producer.length ? true : false,
           };
         }) || [];
 

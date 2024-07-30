@@ -69,12 +69,3 @@ export function generateTableHeadersProduct() {
     },
   ];
 }
-
-export function generateTableHeadersChannel() {
-  return [
-    {
-      id: 'bitlyLinkMandatory',
-      value: 'Bitly Link Mandatory',
-    },
-  ];
-}

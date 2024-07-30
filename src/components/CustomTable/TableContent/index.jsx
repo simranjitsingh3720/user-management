@@ -17,7 +17,7 @@ const TableContent = ({ columns, data, loading, canUpdate }) => {
   }
 
   const isEditIcon = (icon) => {
-    return (icon && icon.type && icon.type === EditIcon) && !canUpdate;
+    return icon && icon.type && icon.type === EditIcon && !canUpdate;
   };
 
   if (data?.length === 0) {
@@ -34,36 +34,51 @@ const TableContent = ({ columns, data, loading, canUpdate }) => {
 
   return (
     <TableBody>
-      {data?.map((row) => (
-        <TableRow key={row.id}>
-          {columns.map((col) => (
-            <TableCell key={`${row.id}-${col.id}`} className="py-2 capitalize">
-              {col.action ? (
-                col.action.map((action, index) => (
-                  <React.Fragment key={index}>
-                    {action?.id ? <span>{row[action?.id]}</span> : null}
-                    <span key={`${col.id}-${index}`}>
-                      {action.component === 'checkbox' ? (
-                        <Checkbox checked={row.checked || false} onChange={() => action.onClick(row)} disabled={!canUpdate} />
-                      ) : action.component === 'switch' ? (
-                        <Switch checked={row.checked || false} onChange={() => action.onClick(data, row)} disabled={!canUpdate} />
-                      ) : action.showIcon ? (
-                        <IconButton onClick={() => action.onClick(row)} disabled={isEditIcon(action?.iconName)}>{action.iconName}</IconButton>
-                      ) : null}
-                    </span>
-                  </React.Fragment>
-                ))
-              ) : col.id === 'name' ? (
-                <span> {row['firstName'] + (row['lastName'] ? ' ' + row['lastName'] : '')}</span>
-              ) : row[col.id] ? (
-                <span>{row[col.id]}</span>
-              ) : (
-                '-'
-              )}
-            </TableCell>
-          ))}
-        </TableRow>
-      ))}
+      {data?.map((row) => {
+        const { showIcon = true } = row;
+        return (
+          <TableRow key={row.id}>
+            {columns.map((col) => (
+              <TableCell key={`${row.id}-${col.id}`} className="py-2 capitalize">
+                {col.action ? (
+                  col.action.map((action, index) => (
+                    <React.Fragment key={index}>
+                      {action?.id ? <span>{row[action?.id]}</span> : null}
+                      <span key={`${col.id}-${index}`}>
+                        {action.component === 'checkbox' ? (
+                          <Checkbox
+                            checked={row.checked || false}
+                            onChange={() => action.onClick(row)}
+                            disabled={!canUpdate}
+                          />
+                        ) : action.component === 'switch' ? (
+                          <Switch
+                            checked={row.checked || false}
+                            onChange={() => action.onClick(data, row)}
+                            disabled={!canUpdate}
+                          />
+                        ) : showIcon && action?.showIcon ? (
+                          <IconButton onClick={() => action.onClick(row)} disabled={isEditIcon(action?.iconName)}>
+                            {action.iconName}
+                          </IconButton>
+                        ) : (
+                          '-'
+                        )}
+                      </span>
+                    </React.Fragment>
+                  ))
+                ) : col.id === 'name' ? (
+                  <span> {row['firstName'] + (row['lastName'] ? ' ' + row['lastName'] : '')}</span>
+                ) : row[col.id] ? (
+                  <span>{row[col.id]}</span>
+                ) : (
+                  '-'
+                )}
+              </TableCell>
+            ))}
+          </TableRow>
+        );
+      })}
     </TableBody>
   );
 };

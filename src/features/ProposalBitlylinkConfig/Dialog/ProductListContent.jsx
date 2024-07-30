@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import CustomTable from '../../../components/CustomTable';
-import { generateTableHeadersChannel, generateTableHeadersProduct } from '../utils/Header';
+import { generateTableHeadersProduct } from '../utils/Header';
 
 const ProductListContent = (row) => {
-  const HEADER_COLUMNS = row?.row?.type === 'Channel' ? generateTableHeadersChannel() : generateTableHeadersProduct();
+  const HEADER_COLUMNS = generateTableHeadersProduct();
   const [data, setData] = useState([]);
 
   useEffect(() => {
