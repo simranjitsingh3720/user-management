@@ -90,7 +90,6 @@ function EmployeeFlagConfig() {
   const HEADER_COLUMNS = useMemo(() => generateTableHeaders(handleClicked), [handleClicked]);
 
   const onSubmit =(data) => {
-    debugger
     setPage(0);
     let ids = data?.autocomplete?.map((item) => item.id).join(',');
     setResultProducersId(ids || '');
