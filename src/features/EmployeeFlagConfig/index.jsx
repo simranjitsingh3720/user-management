@@ -26,33 +26,53 @@ function EmployeeFlagConfig() {
   const [order, setOrder] = useState(COMMON_WORDS.ASC);
   const [orderBy, setOrderBy] = useState(COMMON_WORDS.CREATED_AT);
   const [tableData, setTableData] = useState([]);
+  const [resultProducersId, setResultProducersId] = useState('');
 
-  const { data, loading, fetchData } = useGetEmployeeFlag(page, pageSize, order, orderBy);
+  const { employeeFlagList, loading, getEmployeeFlagList } = useGetEmployeeFlag();
+
+  const getEmployeeFlagData = useCallback(()=> {
+    getEmployeeFlagList({
+      page,
+      pageSize,
+      order,
+      orderBy,
+      resultProducersId
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page, pageSize, order, orderBy, resultProducersId]);
+
+  useEffect(() => {
+    getEmployeeFlagData();
+  }, [getEmployeeFlagData]);
 
   useEffect(() => {
     dispatch(fetchUser({ userType: COMMON_WORDS.PRODUCER, searchKey: COMMON_WORDS.ROLE_NAME, isAll: true }));
   }, [dispatch]);
 
   useEffect(() => {
-    if (data?.data) {
-      const refactorData = data.data.map((item) => {
-        const { employeeFlagConfig, producer, products } = item;
+    if (employeeFlagList?.data) {
+      const refactorData = employeeFlagList.data.map((item) => {
+        const {
+          employeeFlagConfig: { id, label, createdAt, updatedAt },
+          producer,
+          products,
+        } = item;
 
         return {
-          id: employeeFlagConfig?.id,
-          label: employeeFlagConfig?.label,
-          producerCode: producer[0]?.producerCode,
-          producerName: `${producer[0]?.firstName} ${producer[0]?.lastName}`,
+          id: id,
+          label: label,
+          producerCode: producer?.[0]?.producerCode,
+          producerName: `${producer?.[0]?.firstName} ${producer?.[0]?.lastName}`,
           productDetails: products,
-          createdAt: employeeFlagConfig?.createdAt,
-          updatedAt: employeeFlagConfig?.updatedAt,
+          createdAt: createdAt,
+          updatedAt: updatedAt,
         };
       });
       setTableData(refactorData);
       dispatch(setTableName(refactorData[0]?.label));
       dispatch(setExtraColumns(EXPORT_DROPDOWN_COLUMNS));
     }
-  }, [data, dispatch]);
+  }, [employeeFlagList, dispatch]);
 
   const handleClicked = useCallback(
     (row) => {
@@ -60,22 +80,21 @@ function EmployeeFlagConfig() {
         showDialog({
           title: COMMON_WORDS.PRODUCT_DETAILS,
           content: <Content row={row} />,
-          actions: <Actions row={row} fetchData={fetchData} />,
+          actions: <Actions row={row} fetchData={getEmployeeFlagList} />,
         })
       );
     },
-    [dispatch, fetchData]
+    [dispatch, getEmployeeFlagList]
   );
 
   const HEADER_COLUMNS = useMemo(() => generateTableHeaders(handleClicked), [handleClicked]);
 
-  const onSubmit = useCallback(
-    (data) => {
-      const resultProducersId = data.autocomplete.map((producer) => producer.id).join();
-      fetchData(resultProducersId);
-    },
-    [fetchData]
-  );
+  const onSubmit =(data) => {
+    debugger
+    setPage(0);
+    let ids = data?.autocomplete?.map((item) => item.id).join(',');
+    setResultProducersId(ids || '');
+  };
 
   return (
     <div>
@@ -97,14 +116,14 @@ function EmployeeFlagConfig() {
           navigateRoute="/employee-flag-config/form"
           showButton
           canCreate={canCreate}
-          fetchData={fetchData}
+          fetchData={onSubmit}
         />
       </div>
       <CustomTable
         columns={HEADER_COLUMNS}
         rows={tableData}
         loading={loading}
-        totalCount={data?.totalCount || 0}
+        totalCount={employeeFlagList?.totalCount || 0}
         page={page}
         setPage={setPage}
         rowsPerPage={pageSize}
