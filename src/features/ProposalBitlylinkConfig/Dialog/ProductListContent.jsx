@@ -3,7 +3,6 @@ import CustomTable from '../../../components/CustomTable';
 import { generateTableHeadersChannel, generateTableHeadersProduct } from '../utils/Header';
 
 const ProductListContent = (row) => {
-  console.log('row', row);
   const HEADER_COLUMNS = row?.row?.type === 'Channel' ? generateTableHeadersChannel() : generateTableHeadersProduct();
   const [data, setData] = useState([]);
 
