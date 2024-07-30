@@ -1,14 +1,14 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
 import { COMMON_WORDS } from "../../../utils/constants";
 import { buildQueryString } from "../../../utils/globalizationFunction";
 import apiUrls from "../../../utils/apiUrls";
 
-function useGetEmployeeFlag(page, pageSize, order, orderBy) {
+function useGetEmployeeFlag() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const fetchData = async (resultProducersId) => {
+  const fetchData = async ({page, pageSize, order, orderBy, resultProducersId}) => {
     try {
       setLoading(true);
       let params = {
@@ -39,11 +39,8 @@ function useGetEmployeeFlag(page, pageSize, order, orderBy) {
       setLoading(false);
     }
   };
-  useEffect(() => {
-    fetchData();
-  }, [page, pageSize, order, orderBy]);
 
-  return { data, loading, fetchData };
+  return { employeeFlagList: data, loading, getEmployeeFlagList: fetchData };
 }
 
 export default useGetEmployeeFlag;
