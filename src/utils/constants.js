@@ -36,10 +36,10 @@ export const COMMON_WORDS = {
   UPDATE: 'update',
   CHANNEL: 'channel',
   HAS_CHANNEL: 'hasChannel',
-  ROLE: "role",
-  HAS_ROLE : "hasRole",
-  LOCATION: "location",
-  LOGIN_TYPE:"loginType",
+  ROLE: 'role',
+  HAS_ROLE: 'hasRole',
+  LOCATION: 'location',
+  LOGIN_TYPE: 'loginType',
   HAS_LOGIN_TYPE: 'hasLoginType',
   PRODUCER_TYPE: 'producerType',
   HAS_PRODUCER_TYPE: 'hasProducerType',
@@ -54,6 +54,7 @@ export const COMMON_WORDS = {
   HAS_CHILDS: 'manages',
   PRODUCT_DETAILS: 'Product Details',
   PROPOSAL_OTP_EXCEPTION: 'Proposal OTP Exception',
+  BITLY_LINK: 'Bitly Link Details',
 };
 
 export const HEADER = {

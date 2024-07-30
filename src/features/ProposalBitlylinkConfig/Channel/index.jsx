@@ -12,6 +12,8 @@ import Content from '../../../components/CustomDialogContent';
 import { Header } from '../utils/Header';
 import CustomDialog from '../../../components/CustomDialog';
 import Actions from '../Action';
+import ProductListContent from '../Dialog/ProductListContent';
+import ProductListAction from '../Dialog/ProductListAction';
 
 function Channel() {
   const dispatch = useDispatch();
@@ -33,7 +35,13 @@ function Channel() {
   };
 
   const handleClicked = (row) => {
-    console.log('row', row);
+    dispatch(
+      showDialog({
+        title: COMMON_WORDS.BITLY_LINK,
+        content: <ProductListContent row={row} />,
+        actions: <ProductListAction />,
+      })
+    );
   };
 
   const HEADER_COLUMNS = Header(handleClicked, handleStatusUpdate);

@@ -16,7 +16,7 @@ export const Header = (handleClicked, handleStatusUpdate) => {
     },
     {
       id: 'action',
-      value: 'Product Details',
+      value: 'Bitly Link Details',
       action: [
         {
           showIcon: true,
@@ -52,3 +52,29 @@ export const Header = (handleClicked, handleStatusUpdate) => {
     },
   ];
 };
+
+export function generateTableHeadersProduct() {
+  return [
+    {
+      id: 'product',
+      value: 'Product',
+    },
+    {
+      id: 'product_code',
+      value: 'Product Code',
+    },
+    {
+      id: 'bitlyLinkMandatory',
+      value: 'Bitly Link Mandatory',
+    },
+  ];
+}
+
+export function generateTableHeadersChannel() {
+  return [
+    {
+      id: 'bitlyLinkMandatory',
+      value: 'Bitly Link Mandatory',
+    },
+  ];
+}

@@ -84,6 +84,13 @@ function ChannelForm() {
     setDataList([]);
   };
 
+  useEffect(() => {
+    setValue('channel', null);
+    setValue('bitlyLinkMandatory', null);
+    setValue('producerCode', null);
+    setDataList([]);
+  }, [watch('select')]);
+
   return (
     <Box component="form" onSubmit={handleSubmit(onSubmit)}>
       <Card>
