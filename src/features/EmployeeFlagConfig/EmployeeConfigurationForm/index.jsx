@@ -25,7 +25,7 @@ function EmployeeConfigurationForm({ fetchData: listFetchFun }) {
 
   useEffect(() => {
     dispatch(fetchUser({ userType: COMMON_WORDS.PRODUCER, searchKey: COMMON_WORDS.ROLE_NAME, isAll: true }));
-  }, [dispatch])
+  }, [dispatch]);
 
   useEffect(() => {
     if (EmployeeProducerData && EmployeeProducerData?.data) {
@@ -107,81 +107,81 @@ function EmployeeConfigurationForm({ fetchData: listFetchFun }) {
   };
 
   return (
-    <div>
-      <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-        <Card>
-          <CardContent>
-            <Grid container spacing={2}>
-              <CustomFormHeader
-                id={id}
-                headerText={FORM_HEADER_TEXT.EMPLOYEE_FLAG}
-                handleReset={handleResetButton}
-                navigateRoute="/employee-flag-config"
-              />
-              <Grid item xs={12} md={6} lg={4}>
-                <CustomAutoCompleteWithoutCheckbox
-                  name="producer"
-                  label="Select Producer"
-                  required={true}
-                  options={user.data || []}
-                  getOptionLabel={(option) => {
-                    return `${option?.firstName} ${option?.lastName}`;
-                  }}
-                  isOptionEqualToValue={(option, value) => option.id === value.id}
-                  control={control}
-                  rules={{ required: 'Producer is required' }}
-                  error={Boolean(errors.producer)}
-                  helperText={errors.producer?.message}
-                  disableClearable={true}
-                  placeholder={COMMON_WORDS.SELECT}
-                  renderOption={(props, option) => (
-                    <li {...props} key={option.id} style={{ textTransform: 'capitalize' }}>
-                      {option?.firstName} {option?.lastName}
-                    </li>
-                  )}
-                  onChangeCallback={(newValue) => {
-                    fetchDataByProducer(newValue?.id);
-                    fetchData(newValue?.id);
-                  }}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                {producerLoading ? (
-                  <ListLoader rows={3} column={3} />
-                ) : (
-                  producerList?.data?.length && (
-                    <Grid container spacing={2}>
-                      {dataList.map((item) => (
-                        <Grid item xs={12} md={6} lg={4}>
-                          <FormLabel component="legend" sx={{ textTransform: 'capitalize' }}>{item.name}</FormLabel>
-                          <FormControlLabel
-                            control={
-                              <Switch
-                                checked={item.isEmployee}
-                                onChange={() => handleChange(item.productId)}
-                                inputProps={{ 'aria-label': 'toggle button' }}
-                                label={item.isEmployee ? 'Yes' : 'No'}
-                              />
-                            }
-                            label={item.isEmployee ? 'Yes' : 'No'}
-                          />
-                        </Grid>
-                      ))}
-                    </Grid>
-                  )
+    <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+      <Card>
+        <CardContent>
+          <Grid container spacing={2}>
+            <CustomFormHeader
+              id={id}
+              headerText={FORM_HEADER_TEXT.EMPLOYEE_FLAG}
+              handleReset={handleResetButton}
+              navigateRoute="/employee-flag-config"
+            />
+            <Grid item xs={12} md={6} lg={4}>
+              <CustomAutoCompleteWithoutCheckbox
+                name="producer"
+                label="Select Producer"
+                required={true}
+                options={user.data || []}
+                getOptionLabel={(option) => {
+                  return `${option?.firstName} ${option?.lastName}`;
+                }}
+                isOptionEqualToValue={(option, value) => option.id === value.id}
+                control={control}
+                rules={{ required: 'Producer is required' }}
+                error={Boolean(errors.producer)}
+                helperText={errors.producer?.message}
+                disableClearable={true}
+                placeholder={COMMON_WORDS.SELECT}
+                renderOption={(props, option) => (
+                  <li {...props} key={option.id} style={{ textTransform: 'capitalize' }}>
+                    {option?.firstName} {option?.lastName}
+                  </li>
                 )}
-              </Grid>
+                onChangeCallback={(newValue) => {
+                  fetchDataByProducer(newValue?.id);
+                  fetchData(newValue?.id);
+                }}
+              />
             </Grid>
-          </CardContent>
-        </Card>
+            <Grid item xs={12}>
+              {producerLoading ? (
+                <ListLoader rows={3} column={3} />
+              ) : (
+                producerList?.data?.length && (
+                  <Grid container spacing={2}>
+                    {dataList.map((item) => (
+                      <Grid item xs={12} md={6} lg={4}>
+                        <FormLabel component="legend" sx={{ textTransform: 'capitalize' }}>
+                          {item.name}
+                        </FormLabel>
+                        <FormControlLabel
+                          control={
+                            <Switch
+                              checked={item.isEmployee}
+                              onChange={() => handleChange(item.productId)}
+                              inputProps={{ 'aria-label': 'toggle button' }}
+                              label={item.isEmployee ? 'Yes' : 'No'}
+                            />
+                          }
+                          label={item.isEmployee ? 'Yes' : 'No'}
+                        />
+                      </Grid>
+                    ))}
+                  </Grid>
+                )
+              )}
+            </Grid>
+          </Grid>
+        </CardContent>
+      </Card>
 
-        <div className="mt-4">
-          <CustomButton type="submit" variant="contained" disabled={loading || updateLoading}>
-            Submit
-          </CustomButton>
-        </div>
-      </Box>
-    </div>
+      <div className="mt-4">
+        <CustomButton type="submit" variant="contained" disabled={loading || updateLoading}>
+          Submit
+        </CustomButton>
+      </div>
+    </Box>
   );
 }
 
