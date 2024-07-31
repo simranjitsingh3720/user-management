@@ -9,7 +9,7 @@ export const getParentCode = createAsyncThunk(
   async (roleId, { getState, rejectWithValue }) => {
     try {
       if (roleId) {
-        const params = buildQueryString({ productName: 'sales', status: true });
+        const params = buildQueryString({ productName: 'sales', status: true, isAll: true });
         const url = `${apiUrls.getParentCode}/${roleId?.id}/parent?${params}`;
         const response = await axiosInstance.get(url);
         const formattedArray = response?.data?.data?.map((obj) => ({

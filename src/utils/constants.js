@@ -57,6 +57,8 @@ export const COMMON_WORDS = {
   PLAN: 'plan',
   ZONE: 'zone',
   BITLY_LINK: 'Bitly Link Details',
+  HAS_PLAN: 'hasPlan',
+  HAS_ZONE: 'hasZone',
 };
 
 export const HEADER = {

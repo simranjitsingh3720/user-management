@@ -9,7 +9,7 @@ export const getProducts = createAsyncThunk('productUserCreation/getProducts', a
     if (lob) {
       const lobids = lob.map((item) => item?.id);
       const idsString = lobids.join(',');
-      const params = buildQueryString({ ids: idsString, edge: 'hasLob', isExclusive: true, status: true });
+      const params = buildQueryString({ ids: idsString, edge: 'hasLob', isExclusive: true, status: true, isAll : true});
       const url = `${apiUrls.getProduct}?${params}`;
       const response = await axiosInstance.get(url);
       const formattedArray = response?.data?.data?.map((obj) => ({

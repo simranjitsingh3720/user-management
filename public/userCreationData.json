@@ -2008,8 +2008,8 @@
         "validation": {
           "required": "This field is required",
           "pattern": {
-            "value": "^[A-Za-z]+$",
-            "message": "It should contain only letters"
+            "value": "^@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
+            "message": "Please enter a valid domain"
           }
         },
         "canEdit": true
@@ -3241,7 +3241,7 @@
         "canEdit": true
       }
     ],
-    "partneremployee": [
+    "deo - partner employee": [
       {
         "id": "producerCode",
         "label": "Producer Code",
@@ -3565,7 +3565,7 @@
         "canEdit": true
       }
     ],
-    "externalposp": [
+    "deo - external posp": [
       {
         "id": "producerCode",
         "label": "Producer Code",
@@ -3824,7 +3824,7 @@
         "canEdit": true
       }
     ],
-    "sso": [
+    "deo - single sign on": [
       {
         "id": "producerCode",
         "label": "Producer Code",

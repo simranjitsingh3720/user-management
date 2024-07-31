@@ -109,6 +109,7 @@ const AutocompleteFieldAll = ({
             id={name}
             options={options.length > 0 ? [{ label: 'All', value: All }, ...(options || [])] : []}
             disableCloseOnSelect
+            disablePortal={true}
             getOptionLabel={(option) => option?.label}
             value={selectedValues || []}
             onChange={(event, newValue) => {

@@ -3,7 +3,15 @@ import EditIcon from '@mui/icons-material/Edit';
 export const ARR_CONTAINS = {
   PRODUCER_ARR: ['producer', 'subproducer', 'dealer'],
   PRODUCER_PARTNER_ARR: ['producer', 'subproducer', 'dealer', 'partner'],
-  PAYMENT_CALL: ['producer', 'subproducer', 'dealer', 'partner', 'partneremployee', 'externalposp', 'sso'],
+  PAYMENT_CALL: [
+    'producer',
+    'subproducer',
+    'dealer',
+    'partner',
+    'deo - partner employee',
+    'deo - external posp',
+    'deo - single sign on',
+  ],
   PRODUCER_CODE_CALL: [
     'csm',
     'offlineuser',
@@ -12,15 +20,15 @@ export const ARR_CONTAINS = {
     'subproducer',
     'dealer',
     'partner',
-    'partneremployee',
-    'externalposp',
-    'sso',
+    'deo - partner employee',
+    'deo - external posp',
+    'deo - single sign on',
   ],
   ADMIN_ARR: ['admin', 'adminView'],
   CLIENT_ARR: ['csm'],
   DATA_ENTRY_USER_ARR: ['distops'],
-  PLAN_ZONE_ARR: ['partneremployee', 'sso', 'externalposp'],
-  MASTER_POLICY_ARR: ['partner']
+  PLAN_ZONE_ARR: ['deo - partner employee', 'deo - external posp', 'deo - single sign on'],
+  MASTER_POLICY_ARR: ['partner'],
 };
 
 export const NAVIGATE = {
@@ -57,7 +65,7 @@ export const COMMON = {
   ACCOUNT_NUMBER: 'accountNumber',
   PAYMENT_CHEQUE: 'cheque',
   ALL: 'all',
-  ACTIVE: 'Active'
+  ACTIVE: 'Active',
 };
 
 export const FORM_LABEL = {
@@ -86,7 +94,11 @@ export const FORM_LABEL = {
   CHILDS: 'childs',
   HOUSE_BANK: 'houseBank',
   MASTER_POLICY: 'masterPolicy',
-  PLAN: 'plan'
+  PLAN: 'plan',
+  ZONE: 'zone',
+  REVALIDATION: 'revalidation',
+  
+
 };
 
 export const FORM_VALUE = {
@@ -95,6 +107,7 @@ export const FORM_VALUE = {
   NT_LOGIN_ID: 'ntloginId',
   MOBILE_NUMBER: 'mobileNumber',
   ACTIVE: 'active',
+  INACTIVE: 'inactive',
   YES: 'yes',
   NO: 'no',
   LOCATION: 'location',

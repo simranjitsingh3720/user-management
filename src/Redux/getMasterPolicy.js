@@ -12,7 +12,7 @@ export const getMasterPolicies = createAsyncThunk(
       if (product) {
         const productIds = product.map((item) => item?.id);
         const idsString = productIds.join(',');
-        const params = buildQueryString({ ids: idsString, edge: COMMON_WORDS.HAS_PRODUCT, isExclusive: true, status: true });
+        const params = buildQueryString({ ids: idsString, edge: COMMON_WORDS.HAS_PRODUCT, isExclusive: true, status: true , isAll: true });
         const url = `${apiUrls.getMasterPolicy}?${params}`;
         const response = await axiosInstance.get(url);
         const formattedArray = response?.data?.data?.map((obj) => ({

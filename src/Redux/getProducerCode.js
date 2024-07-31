@@ -9,7 +9,7 @@ export const getProducerCodes = createAsyncThunk(
   async (roleName, { rejectWithValue }) => {
     try {
       if (roleName) {
-        const params = buildQueryString({ searchKey: 'userType', searchString: 'external', status: true });
+        const params = buildQueryString({ searchKey: 'userType', searchString: 'external', status: true, isAll: true });
         const userType = `${apiUrls.getUserType}?${params}`;
         const responseUserType = await axiosInstance.get(userType);
         const userTypeID = responseUserType?.data?.data[0]?.id;

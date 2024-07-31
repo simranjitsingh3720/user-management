@@ -10,7 +10,7 @@ export const getZones = createAsyncThunk('zone/getZones', async (planId, { getSt
     if (planId) {
       const planIds = planId.map((item) => item?.id);
       const idsString = planIds.join(',');
-      const params = buildQueryString({ ids: idsString, edge: COMMON_WORDS.HAS_PRODUCT, isExclusive: true, status: true });
+      const params = buildQueryString({ ids: idsString, edge: COMMON_WORDS.HAS_PLAN, isExclusive: true, status: true, isAll: true });
       const url = `${apiUrls.getZone}?${params}`;
       const response = await axiosInstance.get(url);
       const formattedArray = response?.data?.data?.map((obj) => ({

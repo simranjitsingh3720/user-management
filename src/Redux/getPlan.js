@@ -10,7 +10,7 @@ export const getPlans = createAsyncThunk('plan/getPlans', async (product, { getS
     if (product) {
       const productIds = product.map((item) => item?.id);
       const idsString = productIds.join(',');
-      const params = buildQueryString({ ids: idsString, edge: COMMON_WORDS.HAS_PRODUCT, isExclusive: true, status: true });
+      const params = buildQueryString({ ids: idsString, edge: COMMON_WORDS.HAS_PRODUCT, isExclusive: true, status: true, isAll: true });
       const url = `${apiUrls.getPlan}?${params}`;
       const response = await axiosInstance.get(url);
       const formattedArray = response?.data?.data?.map((obj) => ({

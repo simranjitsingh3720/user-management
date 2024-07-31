@@ -35,7 +35,7 @@ import { ARR_CONTAINS, COMMON, FORM_LABEL, FORM_VALUE, REQUIRED_ERR } from '../u
 import useUpdateUser from '../hooks/useUpdateUser';
 import errorHandler from '../../../../utils/errorHandler';
 import { clearZones, getZones } from '../../../../Redux/getZone';
-import { clearPlans, getPlans } from '../../../../Redux/getPlan';
+import { clearPlans, getPlans, plan } from '../../../../Redux/getPlan';
 
 function CreateUserCreationForm() {
   const dispatch = useDispatch();
@@ -88,7 +88,6 @@ function CreateUserCreationForm() {
     defaultValues: {
       roleSelect: null,
       loginType: [],
-      active: COMMON.YES,
       startDate: today,
       gcStatus: COMMON.NO,
       producerStatus: COMMON.ACTIVE,
@@ -369,6 +368,7 @@ function CreateUserCreationForm() {
       externalPosp,
       plan,
       zone,
+      status,
     } = data;
 
     const { id: roleId, roleName } = roleSelect;
@@ -382,13 +382,16 @@ function CreateUserCreationForm() {
     const zoneIds = zone && zone.map((zone) => zone.id);
     const paymentTypeNames = paymentType && paymentType.map((payment) => payment.name);
     const masterPolicyIds = masterPolicy && masterPolicy.map((policy) => policy.value);
-    const roleHierarchyId = roleHierarchy && (parentCode || childIds.length > 0) ? roleHierarchy.id : '';
+    const roleHierarchyId =
+      roleHierarchy && (parentCode || childIds.length > 0 || ARR_CONTAINS.PLAN_ZONE_ARR.includes(roleName))
+        ? roleHierarchy.id
+        : '';
     const payload = {
       mobileNo: mobileNumber,
       email,
       startDate,
       endDate,
-      status: active === FORM_VALUE.YES,
+      status: active === FORM_VALUE.YES || status === FORM_VALUE.ACTIVE,
       roleId,
       roleName,
       firstName,
@@ -557,11 +560,11 @@ function CreateUserCreationForm() {
   const formatDate = (dateString) => {
     if (dateString.includes('/')) {
       const [day, month, year] = dateString.split('/');
-      return `${month}/${day}/${year}`;
+      return `${day}/${month}/${year}`;
     }
     if (dateString.includes('-')) {
       const [year, month, day] = dateString.split('-');
-      return `${month}/${day}/${year}`;
+      return `${day}/${month}/${year}`;
     }
   };
 
@@ -617,6 +620,29 @@ function CreateUserCreationForm() {
 
       case FORM_LABEL.STATUS:
         setValue(FORM_VALUE.ACTIVE, value ? FORM_VALUE.YES : FORM_VALUE.NO);
+        setValue(FORM_LABEL.STATUS, value ? FORM_VALUE.ACTIVE : FORM_VALUE.INACTIVE);
+        break;
+
+      case FORM_LABEL.REVALIDATION:
+        setValue(FORM_LABEL.REVALIDATION, value ? FORM_VALUE.ACTIVE : FORM_VALUE.INACTIVE);
+        break;
+
+      case FORM_LABEL.ROLE_ASSIGNED:
+        setValue(FORM_VALUE.ROLE_ASSIGNMENT, value);
+        break;
+
+      case FORM_LABEL.PLAN:
+        setValue(
+          FORM_LABEL.PLAN,
+          plans.filter((item) => value.includes(item.id))
+        );
+        break;
+
+      case FORM_LABEL.ZONE:
+        setValue(
+          FORM_LABEL.ZONE,
+          zones.filter((item) => value.includes(item.id))
+        );
         break;
 
       case FORM_LABEL.CKYC:
@@ -708,6 +734,28 @@ function CreateUserCreationForm() {
       });
     }
   }, [products, editData]);
+
+  // useEffect(() => {
+  //   if (plans && plans.length > 0 && editData && Object.keys(editData).length > 0) {
+  //     Object.entries(editData).forEach(([key, value]) => {
+  //       if (key === FORM_LABEL.PLAN) {
+  //         processKey(key, value);
+  //         return;
+  //       }
+  //     });
+  //   }
+  // }, [plans, editData]);
+
+  // useEffect(() => {
+  //   if (zones && zones.length > 0 && editData && Object.keys(editData).length > 0) {
+  //     Object.entries(editData).forEach(([key, value]) => {
+  //       if (key === FORM_LABEL.ZONE) {
+  //         processKey(key, value);
+  //         return;
+  //       }
+  //     });
+  //   }
+  // }, [zones, editData]);
 
   return (
     <>

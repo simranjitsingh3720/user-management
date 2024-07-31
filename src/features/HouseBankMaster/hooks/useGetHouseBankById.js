@@ -9,7 +9,6 @@ function useGetHouseBankByID() {
   const fetchData = async (houseBankId) => {
     try {
       let url = `${apiUrls.houseBank}/${houseBankId}`;
-
       const response = await axiosInstance.get(url);
       setData(response.data);
     } catch (error) {

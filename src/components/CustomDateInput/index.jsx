@@ -19,11 +19,8 @@ const DateField = ({
   labelVisible,
   isEdit = false,
   trigger,
-  disable
+  disabled
 }) => {
-  // const minDate = dayjs(MIN_ALLOWED_DATE);
-  // const seventyYearsFromNow = dayjs().add(70, 'year');
-
   const validateDate = (value) => {
     if (!value) {
       return required ? `${label} is required` : true;
@@ -122,7 +119,7 @@ const DateField = ({
                     trigger(name);
                   }
                 }}
-                disabled={disable}
+                disabled={disabled}
               />
             </LocalizationProvider>
           )}
