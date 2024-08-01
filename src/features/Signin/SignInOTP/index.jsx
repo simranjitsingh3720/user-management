@@ -1,12 +1,11 @@
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import React, { useEffect, useState } from 'react';
 import { IconButton, Tooltip } from '@mui/material';
 import CustomButton from '../../../components/CustomButton';
 import InputField from '../../../components/CustomTextfield';
 import { emailValidation } from '../utils/constants';
 import EditIcon from '@mui/icons-material/Edit';
-import OtpInput from 'react-otp-input';
-import { REGEX } from '../../../utils/globalConstants';
+import OtpField from '../../../components/CustomOTPField';
 
 function SignInOTP({ otpScreen, setOtpScreen, postData, loginLoading, verifyOTP, verifyLoading }) {
   const [timer, setTimer] = useState(60);
@@ -56,7 +55,7 @@ function SignInOTP({ otpScreen, setOtpScreen, postData, loginLoading, verifyOTP,
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
-        {otpScreen ? (
+        {true ? (
           <>
             <div className="mt-2 text-lg font-medium font-weight-600">OTP Verification</div>
             <div className="mt-1 text-fiord">Enter the one-time password sent to you on mail</div>
@@ -77,42 +76,15 @@ function SignInOTP({ otpScreen, setOtpScreen, postData, loginLoading, verifyOTP,
               </span>
             </div>
             <div className="mt-4 mb-4">
-              <Controller
+              <OtpField
                 name="otp"
                 control={control}
-                defaultValue=""
-                rules={{
-                  required: 'OTP is required',
-                  pattern: {
-                    value: REGEX.numericRegex,
-                    message: 'Only numeric values are allowed',
-                  },
-                  minLength: {
-                    value: 6,
-                    message: 'OTP must be exactly 6 digits long',
-                  },
-                }}
-                render={({ field }) => (
-                  <OtpInput
-                    inputStyle={{
-                      width: '3rem',
-                      height: '3rem',
-                      margin: '20px 1rem',
-                      fontSize: '1rem',
-                      borderRadius: 4,
-                      border: '1px solid black',
-                    }}
-                    value={field.value}
-                    onChange={field.onChange}
-                    numInputs={6}
-                    separator={<span>-</span>}
-                    renderInput={(props) => <input autoFocus {...props} />}
-                    inputType="password"
-                    shouldAutoFocus
-                  />
-                )}
+                errors={errors}
+                numInputs={6}
+                inputType={'password'}
+                shouldAutoFocus={true}
+                trigger={trigger}
               />
-              <div className="error-msg">{errors?.otp && <span>{errors?.otp?.message}</span>}</div>
             </div>
             <div className="mt-1 items-center">
               <span className="text-custom-gray text-sm">Didn't receive the code? </span>{' '}
