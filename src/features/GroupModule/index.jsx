@@ -146,7 +146,7 @@ function GroupModule() {
     [handleGroupStatus, showGroupPermission, handleGroupEdit]
   );
 
-  const optionLabel = (option, type) => option[type]?.toUpperCase() || '';
+  const optionLabel = (option, type) => option[type] || '';
 
   const renderOptionFunction = (props, option, type) => (
     <li {...props} key={option?.id}>

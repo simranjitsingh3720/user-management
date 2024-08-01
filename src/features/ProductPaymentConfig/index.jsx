@@ -64,22 +64,22 @@ function ProductPaymentConfig() {
   };
 
   const optionLabelProduct = (option) => {
-    return option?.product ? option.product.toUpperCase() : '';
+    return option?.product ? option.product : '';
   };
 
   const renderOptionProductFunction = (props, option) => (
     <li {...props} key={option?.id}>
-      {option?.product ? option?.product?.toUpperCase() : ''}
+      {option?.product ? option?.product : ''}
     </li>
   );
 
   const optionLabelLob = (option) => {
-    return option?.lob ? option?.lob?.toUpperCase() : '';
+    return option?.lob ? option?.lob : '';
   };
 
   const renderOptionLobFunction = (props, option) => (
     <li {...props} key={option?.id}>
-      {option?.lob ? option?.lob?.toUpperCase() : ''}
+      {option?.lob ? option?.lob : ''}
     </li>
   );
 

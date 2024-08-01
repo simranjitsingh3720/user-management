@@ -54,7 +54,13 @@ export const COMMON_WORDS = {
   HAS_CHILDS: 'manages',
   PRODUCT_DETAILS: 'Product Details',
   PROPOSAL_OTP_EXCEPTION: 'Proposal OTP Exception',
+  PLAN: 'plan',
+  ZONE: 'zone',
   BITLY_LINK: 'Bitly Link Details',
+  HAS_PLAN: 'hasPlan',
+  HAS_ZONE: 'hasZone',
+  EXTERNAL: 'external',
+  SALES: 'sales'
 };
 
 export const HEADER = {

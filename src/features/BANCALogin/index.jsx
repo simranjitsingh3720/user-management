@@ -178,6 +178,7 @@ function BANCALogin() {
                 getOptionLabel={(option) =>
                   `${option?.firstName} ${option?.lastName}`
                 }
+                isOptionEqualToValue={(option, value) => option.id === value.id}
                 error={Boolean(errors.producerCode)}
                 helperText={errors.lob?.message}
                 required={true}
@@ -197,6 +198,7 @@ function BANCALogin() {
                 rules={{ required: 'Product is required' }}
                 options={producerList?.data || []}
                 getOptionLabel={(option) => option.product}
+                isOptionEqualToValue={(option, value) => option.id === value.id}
                 error={Boolean(errors.product)}
                 helperText={errors.lob?.message}
                 required={true}

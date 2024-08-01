@@ -68,7 +68,11 @@ const TableContent = ({ columns, data, loading, canUpdate }) => {
                     </React.Fragment>
                   ))
                 ) : col.id === 'name' ? (
-                  <span> {row['firstName'] + (row['lastName'] ? ' ' + row['lastName'] : '')}</span>
+                  <span>
+                    {row['firstName']
+                      ? `${row['firstName']}${row['lastName'] ? ' ' + row['lastName'] : ''}`
+                      : row['dataEntryUserName']}
+                  </span>
                 ) : row[col.id] ? (
                   <span>{row[col.id]}</span>
                 ) : (

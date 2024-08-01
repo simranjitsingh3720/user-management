@@ -121,7 +121,7 @@ function ProducerEODFrom() {
                   label="Producer Code"
                   required={true}
                   options={user?.data || []}
-                  getOptionLabel={(option) => `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`}
+                  getOptionLabel={(option) => `${option?.firstName} ${option?.lastName}`}
                   isOptionEqualToValue={(option, value) => option.id === value.id}
                   control={control}
                   rules={{ required: 'Producer Code is required' }}
@@ -130,14 +130,7 @@ function ProducerEODFrom() {
                   disableClearable={true}
                   disabled={id ? true : false}
                   placeholder={COMMON_WORDS.SELECT}
-                  renderOption={(props, option) => (
-                    <li {...props} key={option.id}>
-                      {`${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`}
-                    </li>
-                  )}
-                  onChangeCallback={() => {
-                    trigger('producerCode');
-                  }}
+                  trigger={trigger}
                 />
               </Grid>
               <Grid item xs={12} sm={6} lg={4}>
@@ -147,11 +140,12 @@ function ProducerEODFrom() {
                   name="startDate"
                   labelVisible={true}
                   label="Start Date"
-                  required
+                  required={true}
                   errors={errors}
                   classes="w-full text-red-600"
                   setValue={setValue}
                   watch={watch}
+                  trigger={trigger}
                 />
               </Grid>
               <Grid item xs={12} sm={6} lg={4}>
@@ -161,11 +155,12 @@ function ProducerEODFrom() {
                   name="endDate"
                   labelVisible={true}
                   label="End Date"
-                  required
+                  required={true}
                   errors={errors}
                   classes="w-full text-red-600"
                   setValue={setValue}
                   watch={watch}
+                  trigger={trigger}
                 />
               </Grid>
               <Grid item xs={12} sm={6} lg={8}>

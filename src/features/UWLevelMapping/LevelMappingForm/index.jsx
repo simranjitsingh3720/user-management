@@ -131,7 +131,7 @@ function LevelMappingForm({ dataById, fetchData }) {
                 label="LOB"
                 required={true}
                 options={data || []}
-                getOptionLabel={(option) => option?.lob?.toUpperCase()}
+                getOptionLabel={(option) => option?.lob}
                 isOptionEqualToValue={(option, value) => option.id === value.id}
                 control={control}
                 rules={{ required: 'LOB is required' }}
@@ -140,11 +140,6 @@ function LevelMappingForm({ dataById, fetchData }) {
                 disableClearable={true}
                 placeholder={COMMON_WORDS.SELECT}
                 disabled={editData?.data?.id ? true : false}
-                renderOption={(props, option) => (
-                  <li {...props} key={option.id}>
-                    {option?.lob?.toUpperCase()}
-                  </li>
-                )}
                 onChangeCallback={(newValue) => {
                   setValue('product', null);
                   if (newValue && newValue.id) {
@@ -160,7 +155,7 @@ function LevelMappingForm({ dataById, fetchData }) {
                 required={true}
                 loading={productLoading}
                 options={products.data || []}
-                getOptionLabel={(option) => option?.product?.toUpperCase()}
+                getOptionLabel={(option) => option?.product}
                 isOptionEqualToValue={(option, value) => option.id === value.id}
                 control={control}
                 rules={{ required: 'Product is required' }}
@@ -169,11 +164,6 @@ function LevelMappingForm({ dataById, fetchData }) {
                 disableClearable={true}
                 placeholder={COMMON_WORDS.SELECT}
                 disabled={editData?.data?.id ? true : false}
-                renderOption={(props, option) => (
-                  <li {...props} key={option.id}>
-                    {option?.product?.toUpperCase()}
-                  </li>
-                )}
               />
             </Grid>
             <Grid item xs={12} sm={6} lg={4}>
@@ -182,7 +172,7 @@ function LevelMappingForm({ dataById, fetchData }) {
                 label="Location"
                 required={true}
                 options={locations || []}
-                getOptionLabel={(option) => option?.label?.toUpperCase()}
+                getOptionLabel={(option) => option?.label}
                 isOptionEqualToValue={(option, value) => option.value === value.value}
                 control={control}
                 rules={{ required: 'Location is required' }}
@@ -190,11 +180,6 @@ function LevelMappingForm({ dataById, fetchData }) {
                 helperText={errors.location?.message}
                 disableClearable={true}
                 placeholder={COMMON_WORDS.SELECT}
-                renderOption={(props, option) => (
-                  <li {...props} key={option.id}>
-                    {option?.label?.toUpperCase()}
-                  </li>
-                )}
               />
             </Grid>
             <Grid item xs={12} sm={6} lg={4}>

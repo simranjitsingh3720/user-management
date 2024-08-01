@@ -31,9 +31,11 @@ import { FORM_HEADER_TEXT } from '../../../../utils/constants';
 import dayjs from 'dayjs';
 import { getProducerTypes } from '../../../../Redux/getProducerType';
 import { clearMasterPolicy, getMasterPolicies } from '../../../../Redux/getMasterPolicy';
-import { ARR_CONTAINS, COMMON, FORM_LABEL, FORM_VALUE, MASTER_POLICY, REQUIRED_ERR } from '../utils/constants';
+import { ARR_CONTAINS, COMMON, FORM_LABEL, FORM_VALUE, REQUIRED_ERR } from '../utils/constants';
 import useUpdateUser from '../hooks/useUpdateUser';
 import errorHandler from '../../../../utils/errorHandler';
+import { clearZones, getZones } from '../../../../Redux/getZone';
+import { clearPlans, getPlans, plan } from '../../../../Redux/getPlan';
 
 function CreateUserCreationForm() {
   const dispatch = useDispatch();
@@ -49,6 +51,8 @@ function CreateUserCreationForm() {
   const producerType = useSelector((state) => state.producerType.producerType);
   const masterPolicy = useSelector((state) => state.masterPolicy.masterPolicy);
   const loginType = useSelector((state) => state.loginType.loginType);
+  const plans = useSelector((state) => state.plan.plan);
+  const zones = useSelector((state) => state.zone.zone);
   const [apiDataMap, setApiDataMap] = useState({
     lob: lobs,
     product: products,
@@ -61,6 +65,8 @@ function CreateUserCreationForm() {
     typeOfProducer: producerType,
     loginType: loginType,
     masterPolicy: masterPolicy,
+    plan: plans,
+    zone: zones,
   });
   const { loading, postData } = usePostUser();
   const { updateUserLoading, updateData } = useUpdateUser();
@@ -82,9 +88,9 @@ function CreateUserCreationForm() {
     defaultValues: {
       roleSelect: null,
       loginType: [],
-      active: COMMON.YES,
       startDate: today,
       gcStatus: COMMON.NO,
+      producerStatus: COMMON.ACTIVE,
     },
   });
 
@@ -97,6 +103,8 @@ function CreateUserCreationForm() {
   const params = useParams();
   const { getUserById } = useSubmit();
   const [isEdit, setIsEdit] = useState(false);
+  const productWatch = watch(FORM_LABEL.PRODUCT);
+  const planWatch = watch(FORM_LABEL.PLAN);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -126,43 +134,48 @@ function CreateUserCreationForm() {
     dispatch(getLoginType());
     dispatch(getLobs());
     dispatch(getLocations());
-    dispatch(getMasterPolicies());
   }, []);
 
   useEffect(() => {
     const updatedApiDataMap = { ...apiDataMap };
-    if (lobs) {
+    if (lobs && lobs.length > 0) {
       updatedApiDataMap.lob = lobs;
     }
-    if (products) {
+    if (products && products.length > 0) {
       updatedApiDataMap.product = products;
     }
-    if (locations) {
+    if (locations && locations.length > 0) {
       updatedApiDataMap.location = locations;
     }
-    if (paymentType) {
+    if (paymentType && paymentType.length > 0) {
       updatedApiDataMap.paymentType = paymentType;
     }
-    if (producerCode) {
+    if (producerCode && producerCode.length > 0) {
       updatedApiDataMap.producerCode = producerCode;
     }
-    if (parentCode) {
+    if (parentCode && parentCode.length > 0) {
       updatedApiDataMap.parentCode = parentCode;
     }
-    if (channelType) {
+    if (channelType && channelType.length > 0) {
       updatedApiDataMap.channelType = channelType;
     }
-    if (neftDefaultBank) {
+    if (neftDefaultBank && neftDefaultBank.length > 0) {
       updatedApiDataMap.neftDefaultBank = neftDefaultBank;
     }
-    if (producerType) {
+    if (producerType && producerType.length > 0) {
       updatedApiDataMap.typeOfProducer = producerType;
     }
-    if (loginType) {
+    if (loginType && loginType.length > 0) {
       updatedApiDataMap.loginType = loginType;
     }
-    if (masterPolicy) {
+    if (masterPolicy && masterPolicy.length > 0) {
       updatedApiDataMap.masterPolicy = masterPolicy;
+    }
+    if (plans && plans.length > 0) {
+      updatedApiDataMap.plan = plans;
+    }
+    if (zones && zones.length > 0) {
+      updatedApiDataMap.zone = zones;
     }
     setApiDataMap(updatedApiDataMap);
   }, [
@@ -178,6 +191,8 @@ function CreateUserCreationForm() {
     producerType,
     loginType,
     masterPolicy,
+    plans,
+    zones,
   ]);
 
   useEffect(() => {
@@ -191,19 +206,22 @@ function CreateUserCreationForm() {
       let resetValues = {
         roleSelect: watch(COMMON.ROLE_SELECT),
       };
-      roleConfig?.forEach((item) => {
+      let originalArray = roleConfig;
+      let resultObject = originalArray.reduce((resetValues, item) => {
         if (item?.type === COMMON.AUTOCOMPLETE && item?.multiple === true) {
           resetValues[item?.id] = [];
         }
         if (item?.type === COMMON.AUTOCOMPLETE) {
-          resetValues[item?.id] = [];
+          resetValues[item?.id] = null;
         } else if (item?.type !== COMMON.DROPDOWN) {
           resetValues[item?.id] = '';
         }
-      });
+        return resetValues;
+      }, {});
       setRoleChanged(!roleChanged);
-      resetValues[FORM_LABEL.START_DATE] = today;
-      reset(resetValues);
+      resultObject.roleSelect = watch(COMMON.ROLE_SELECT);
+      resultObject[FORM_LABEL.START_DATE] = today;
+      reset(resultObject);
     }
   }, [roleValue]);
 
@@ -251,43 +269,38 @@ function CreateUserCreationForm() {
   useEffect(() => {
     dispatch(clearProducts());
     dispatch(clearMasterPolicy());
+    dispatch(clearPlans());
+    dispatch(clearZones());
     if (lobsWatch && lobsWatch.length > 0) {
       dispatch(getProducts(lobsWatch));
-      setValue(FORM_LABEL.MASTER_POLICY, []);
     }
   }, [lobsWatch?.length]);
 
-  const productWatch = watch(FORM_LABEL.PRODUCT);
+  useEffect(() => {
+    dispatch(clearPlans());
+    dispatch(clearZones());
+    if (lobsWatch && lobsWatch?.length > 0 && productWatch && productWatch.length > 0) {
+      if (ARR_CONTAINS.PLAN_ZONE_ARR.includes(rolesWatch.roleName)) {
+        dispatch(getPlans(productWatch));
+      } else if (ARR_CONTAINS.MASTER_POLICY_ARR.includes(rolesWatch.roleName)) {
+        dispatch(getMasterPolicies(productWatch));
+      }
+    }
+  }, [lobsWatch, productWatch, rolesWatch]);
 
   useEffect(() => {
-    dispatch(clearMasterPolicy());
+    dispatch(clearZones());
     if (
-      rolesWatch?.roleName === COMMON.PARTNER &&
       lobsWatch &&
       lobsWatch?.length > 0 &&
       productWatch &&
-      productWatch.length > 0
+      productWatch.length > 0 &&
+      planWatch &&
+      planWatch.length > 0
     ) {
-      const containsTravel = lobsWatch.some((item) => item.value === MASTER_POLICY.TRAVEL);
-      const containsProduct = productWatch.some((item) => item.value === MASTER_POLICY.GROUPBUSINESSTRAVELACCIDENT);
-      const containsProductGuard = productWatch.some((item) => item.value === MASTER_POLICY.SMALLBUSINESSTRAVELGUARD);
-      if (containsTravel && containsProduct && containsProductGuard) {
-        dispatch(clearMasterPolicy());
-        dispatch(getMasterPolicies(MASTER_POLICY.BOTH));
-      } else if (containsTravel && containsProduct) {
-        dispatch(clearMasterPolicy());
-        dispatch(getMasterPolicies(MASTER_POLICY.GROUPBUSINESSTRAVELACCIDENT));
-      } else if (containsTravel && containsProductGuard) {
-        dispatch(clearMasterPolicy());
-        dispatch(getMasterPolicies(MASTER_POLICY.SMALLBUSINESSTRAVELGUARD));
-      } else {
-        dispatch(clearMasterPolicy());
-        dispatch(getMasterPolicies([]));
-      }
-    } else {
-      dispatch(clearMasterPolicy());
+      dispatch(getZones(planWatch));
     }
-  }, [lobsWatch, productWatch, rolesWatch]);
+  }, [lobsWatch, productWatch, rolesWatch, planWatch]);
 
   useEffect(() => {
     if (rolesWatch && rolesWatch?.roleName) {
@@ -355,6 +368,7 @@ function CreateUserCreationForm() {
       externalPosp,
       plan,
       zone,
+      status,
     } = data;
 
     const { id: roleId, roleName } = roleSelect;
@@ -362,23 +376,27 @@ function CreateUserCreationForm() {
     const { userType: userTypeStr, id: userTypeId } = userTypeObj;
     const childIds = Array.isArray(producerCode) ? producerCode.map((code) => code.id) : [];
     const loginTypeIds = loginType.map((type) => type.id);
-    const locationIds = location.map((loc) => loc.id);
+    const locationIds = location && location.map((loc) => loc.id);
     const productIds = product.map((prod) => prod.id);
-    const paymentTypeNames = paymentType.map((payment) => payment.name);
-    const masterPolicyIds = masterPolicy.map((policy) => policy.value);
-    const roleHierarchyId = roleHierarchy && (parentCode || childIds.length) ? roleHierarchy.id : '';
+    const planIds = plan && plan.map((plan) => plan.id);
+    const zoneIds = zone && zone.map((zone) => zone.id);
+    const paymentTypeNames = paymentType && paymentType.map((payment) => payment.name);
+    const masterPolicyIds = masterPolicy && masterPolicy.map((policy) => policy.value);
+    const roleHierarchyId =
+      roleHierarchy && (parentCode || childIds.length > 0 || ARR_CONTAINS.PLAN_ZONE_ARR.includes(roleName))
+        ? roleHierarchy.id
+        : '';
     const payload = {
       mobileNo: mobileNumber,
       email,
       startDate,
       endDate,
-      status: active === FORM_VALUE.YES,
+      status: active === FORM_VALUE.YES || status === FORM_VALUE.ACTIVE,
       roleId,
       roleName,
       firstName,
       lastName,
       groupIds,
-      parentId: parentCode,
       childIds,
       userType: userTypeStr || '',
       userTypeId: userTypeId || '',
@@ -392,14 +410,21 @@ function CreateUserCreationForm() {
       subVertical,
       solId,
       gcStatus: ARR_CONTAINS.PRODUCER_ARR.includes(roleName) ? false : '',
-      producerCode: typeof producerCode === 'string' ? producerCode : '',
+      producerCode:
+        typeof producerCode === 'string' && !ARR_CONTAINS.PLAN_ZONE_ARR.includes(roleName) ? producerCode : '',
+      parentId:
+        typeof producerCode === 'string' && ARR_CONTAINS.PLAN_ZONE_ARR.includes(roleName) ? producerCode : parentCode,
       producerType: typeOfProducer,
       channelId: channelType,
       bankingLimit,
       sendEmail: ARR_CONTAINS.PRODUCER_PARTNER_ARR.includes(roleName) ? sendEmail === FORM_VALUE.YES : '',
       domain,
       paymentType: paymentTypeNames,
-      houseBankId: ARR_CONTAINS.PRODUCER_ARR.includes(roleName) ? neftDefaultBank && Object.keys(neftDefaultBank).length > 0 ? neftDefaultBank : '' :  '',
+      houseBankId: ARR_CONTAINS.PRODUCER_ARR.includes(roleName)
+        ? neftDefaultBank && Object.keys(neftDefaultBank).length > 0
+          ? neftDefaultBank
+          : ''
+        : '',
       ocrChequeScanning: paymentTypeNames.includes(COMMON.CHEQUE)
         ? chequeOCRScanning && chequeOCRScanning === FORM_VALUE.YES
         : '',
@@ -414,16 +439,18 @@ function CreateUserCreationForm() {
       pospAadhar,
       pospPAN,
       transactionType,
-      producerStatus,
-      revalidation,
-      roleAssigned: roleAssignment,
+      producerStatus: ARR_CONTAINS.PLAN_ZONE_ARR.includes(roleName) ? producerStatus === COMMON.ACTIVE : '',
+      revalidation: ARR_CONTAINS.PLAN_ZONE_ARR.includes(roleName) ? revalidation === FORM_VALUE.ACTIVE : '',
+      roleAssigned: ARR_CONTAINS.PLAN_ZONE_ARR.includes(roleName) ? roleAssignment : '',
       externalPosp,
-      planIds: plan,
-      zoneIds: zone,
+      planIds,
+      zoneIds,
     };
 
     const filteredData = Object.fromEntries(
-      Object.entries(payload).filter(([key, value]) => value !== '' && !(Array.isArray(value) && value.length === 0))
+      Object.entries(payload).filter(
+        ([key, value]) => value !== '' && !(Array.isArray(value) && value.length === 0) && value !== null
+      )
     );
     return filteredData;
   };
@@ -482,11 +509,12 @@ function CreateUserCreationForm() {
       payload = {
         productIds,
         paymentType: paymentTypeNames,
-        houseBankId: ARR_CONTAINS.PRODUCER_ARR.includes(role)
-          ? Array.isArray(neftDefaultBank)
-            ? neftDefaultBank.join(',')
-            : neftDefaultBank
-          : '',
+        houseBankId:
+          ARR_CONTAINS.PRODUCER_ARR.includes(role) && paymentTypeNames.includes(COMMON.NEFT)
+            ? Array.isArray(neftDefaultBank)
+              ? neftDefaultBank.join(',')
+              : neftDefaultBank
+            : '',
         ocrChequeScanning: paymentTypeNames.includes(COMMON.CHEQUE)
           ? chequeOCRScanning && chequeOCRScanning === FORM_VALUE.YES
           : '',
@@ -533,11 +561,11 @@ function CreateUserCreationForm() {
   const formatDate = (dateString) => {
     if (dateString.includes('/')) {
       const [day, month, year] = dateString.split('/');
-      return `${month}/${day}/${year}`;
+      return `${day}/${month}/${year}`;
     }
     if (dateString.includes('-')) {
       const [year, month, day] = dateString.split('-');
-      return `${month}/${day}/${year}`;
+      return `${day}/${month}/${year}`;
     }
   };
 
@@ -593,6 +621,29 @@ function CreateUserCreationForm() {
 
       case FORM_LABEL.STATUS:
         setValue(FORM_VALUE.ACTIVE, value ? FORM_VALUE.YES : FORM_VALUE.NO);
+        setValue(FORM_LABEL.STATUS, value ? FORM_VALUE.ACTIVE : FORM_VALUE.INACTIVE);
+        break;
+
+      case FORM_LABEL.REVALIDATION:
+        setValue(FORM_LABEL.REVALIDATION, value ? FORM_VALUE.ACTIVE : FORM_VALUE.INACTIVE);
+        break;
+
+      case FORM_LABEL.ROLE_ASSIGNED:
+        setValue(FORM_VALUE.ROLE_ASSIGNMENT, value);
+        break;
+
+      case FORM_LABEL.PLAN:
+        setValue(
+          FORM_LABEL.PLAN,
+          plans.filter((item) => value.includes(item.id))
+        );
+        break;
+
+      case FORM_LABEL.ZONE:
+        setValue(
+          FORM_LABEL.ZONE,
+          zones.filter((item) => value.includes(item.id))
+        );
         break;
 
       case FORM_LABEL.CKYC:
@@ -684,6 +735,28 @@ function CreateUserCreationForm() {
       });
     }
   }, [products, editData]);
+
+  // useEffect(() => {
+  //   if (plans && plans.length > 0 && editData && Object.keys(editData).length > 0) {
+  //     Object.entries(editData).forEach(([key, value]) => {
+  //       if (key === FORM_LABEL.PLAN) {
+  //         processKey(key, value);
+  //         return;
+  //       }
+  //     });
+  //   }
+  // }, [plans, editData]);
+
+  // useEffect(() => {
+  //   if (zones && zones.length > 0 && editData && Object.keys(editData).length > 0) {
+  //     Object.entries(editData).forEach(([key, value]) => {
+  //       if (key === FORM_LABEL.ZONE) {
+  //         processKey(key, value);
+  //         return;
+  //       }
+  //     });
+  //   }
+  // }, [zones, editData]);
 
   return (
     <>

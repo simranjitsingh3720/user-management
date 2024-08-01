@@ -29,6 +29,7 @@ const AutocompleteField = ({
 }) => {
   const isMultiple = multiple ? [] : null;
   const [selectedValues, setSelectedValues] = useState(isMultiple);
+  const [open, setOpen] = useState(false);
 
   const watchedValues = useWatch({
     control,
@@ -48,7 +49,7 @@ const AutocompleteField = ({
   }, [resetClicked, multiple]);
 
   useEffect(() => {
-    if (roleChanged && name !== ROLE_SELECT && !isEdit) {
+    if (name !== ROLE_SELECT && !isEdit) {
       setSelectedValues([]);
     }
   }, [roleChanged, name, isEdit]);
@@ -92,12 +93,19 @@ const AutocompleteField = ({
             id={name}
             disabled={disabled}
             disableCloseOnSelect={multiple}
+            open={open}
+            onOpen={() => setOpen(true)}
+            onClose={() => setOpen(false)}
             options={options.length > 0 ? options : []}
             value={selectedValues || isMultiple}
             getOptionLabel={(option) => option?.label || ''}
+            disablePortal={true}
             onChange={(event, newValue) => {
               setSelectedValues(newValue);
               field.onChange(newValue);
+              if (!multiple && newValue) {
+                setOpen(false);
+              }
             }}
             renderOption={(props, option, { selected }) => (
               <li
@@ -110,10 +118,15 @@ const AutocompleteField = ({
                       ? selectedValues?.filter((val) => val.value !== option.value)
                       : [...(selectedValues || []), option];
                     setSelectedValues(updatedValues);
-                    field.onChange(updatedValues); 
+                    field.onChange(updatedValues);
                   } else {
                     setSelectedValues(option);
-                    field.onChange(option); 
+                    field.onChange(option);
+                  }
+
+                  // Close the dropdown if single value is selected
+                  if (!multiple) {
+                    setOpen(false);
                   }
                 }}
               >

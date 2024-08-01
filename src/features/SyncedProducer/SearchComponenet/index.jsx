@@ -162,7 +162,7 @@ function SearchComponenet({
                   id="groupMultiSelect"
                   options={userData || []}
                   getOptionLabel={(option) => {
-                    return `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`;
+                    return `${option?.firstName} ${option?.lastName}`;
                   }}
                   className={styles.customizeGroupSelect}
                   limitTags={2}
