@@ -32,14 +32,14 @@ function TermCondition() {
 
   const optionLabelUser = (option) => {
     return option?.firstName
-      ? `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`
+      ? `${option?.firstName} ${option?.lastName}`
       : "";
   };
 
   const renderOptionUserFunction = (props, option) => (
     <li {...props} key={option?.id}>
-      {option?.firstName?.toUpperCase()} {""}
-      {option?.lastName?.toUpperCase()}
+      {option?.firstName} {""}
+      {option?.lastName}
     </li>
   );
 

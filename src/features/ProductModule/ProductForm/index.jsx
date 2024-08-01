@@ -101,7 +101,7 @@ function ProductForm() {
                 required={true}
                 loading={lobLoading}
                 options={lob?.data || []}
-                getOptionLabel={(option) => option?.lob?.toUpperCase()}
+                getOptionLabel={(option) => option?.lob}
                 isOptionEqualToValue={(option, value) => option.id === value.id}
                 control={control}
                 rules={{ required: 'LOB is required' }}

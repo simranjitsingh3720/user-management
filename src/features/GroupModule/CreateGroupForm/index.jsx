@@ -306,8 +306,8 @@ function CreateGroupForm() {
                   disableCloseOnSelect
                   getOptionLabel={(option) => {
                     return option?.lastName
-                      ? `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`
-                      : option?.firstName?.toUpperCase();
+                      ? `${option?.firstName} ${option?.lastName}`
+                      : option?.firstName;
                   }}
                   limitTags={5}
                   className={styles.customizePrivilegeSelect}

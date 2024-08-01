@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchUser } from '../../../stores/slices/userSlice';
 import { getChannels } from '../../../Redux/getChannel';
 import UserTypeToggle from '../../../components/CustomRadioButtonGroup';
+import { otpExceptionConstants } from '../utils/constants';
 
 function SetOTPException({ fetchData }) {
   const dispatch = useDispatch();
@@ -33,7 +34,7 @@ function SetOTPException({ fetchData }) {
     dispatch(getChannels());
   }, [dispatch]);
 
-  const { handleSubmit, control, formState, setValue } = useForm({
+  const { handleSubmit, control, formState, setValue, trigger } = useForm({
     defaultValues: {
       producerCode: null,
       channel: null,
@@ -72,10 +73,7 @@ function SetOTPException({ fetchData }) {
             </Grid>
             <Grid item xs={12}>
               <UserTypeToggle
-                menuItem={[
-                  { label: 'Channel', value: 'byChannel' },
-                  { label: 'Producer Code', value: 'byProducerCode' },
-                ]}
+                menuItem={otpExceptionConstants}
                 label="Select By"
                 required={true}
                 control={control}
@@ -91,18 +89,14 @@ function SetOTPException({ fetchData }) {
                   label="Channel"
                   required
                   options={channelType || []}
-                  getOptionLabel={(option) => `${option?.label?.toUpperCase() || ''} - ${option?.numChannelCode || ''}`}
+                  getOptionLabel={(option) => `${option?.label || ''} - ${option?.numChannelCode || ''}`}
                   control={control}
                   rules={{ required: 'Channel is required' }}
                   error={Boolean(errors.channel)}
                   helperText={errors.channel?.message}
                   disableClearable
                   placeholder={COMMON_WORDS.SELECT}
-                  renderOption={(props, option) => (
-                    <li {...props} key={option.id}>
-                      {option?.label?.toUpperCase()} - {option?.numChannelCode}
-                    </li>
-                  )}
+                  trigger={trigger}
                 />
               ) : (
                 <CustomAutoCompleteWithoutCheckbox
@@ -112,7 +106,7 @@ function SetOTPException({ fetchData }) {
                   loading={userLoading}
                   options={user.data || []}
                   getOptionLabel={(option) =>
-                    `${option?.firstName?.toUpperCase() || ''} ${option?.lastName?.toUpperCase() || ''} - ${
+                    `${option?.firstName || ''} ${option?.lastName || ''} - ${
                       option.producerCode || ''
                     }`
                   }
@@ -122,12 +116,7 @@ function SetOTPException({ fetchData }) {
                   helperText={errors.producerCode?.message}
                   disableClearable
                   placeholder={COMMON_WORDS.SELECT}
-                  renderOption={(props, option) => (
-                    <li {...props} key={option.id}>
-                      {option?.firstName?.toUpperCase() || ''} {option?.lastName?.toUpperCase() || ''} -{' '}
-                      {option?.producerCode || ''}
-                    </li>
-                  )}
+                  trigger={trigger}
                 />
               )}
             </Grid>

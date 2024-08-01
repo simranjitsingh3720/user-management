@@ -101,12 +101,12 @@ function EmployeeFlagConfig() {
         <SearchComponent
           optionsData={user?.data || []}
           optionLabel={(option) =>
-            option?.firstName ? `${option.firstName.toUpperCase()} ${option.lastName.toUpperCase()}` : ''
+            option?.firstName ? `${option.firstName} ${option.lastName}` : ''
           }
           placeholder={getPlaceHolder(COMMON_WORDS.PRODUCER)}
           renderOptionFunction={(props, option) => (
             <li {...props} key={option?.id}>
-              {option?.firstName?.toUpperCase()} {option?.lastName?.toUpperCase()}
+              {option?.firstName} {option?.lastName}
             </li>
           )}
           onSubmit={onSubmit}

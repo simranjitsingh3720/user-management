@@ -54,12 +54,12 @@ function HealthConfiguration() {
   }, [getHealthConfigData]);
 
   const optionLabel = (option) => {
-    return `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`;
+    return `${option?.firstName} ${option?.lastName}`;
   };
 
   const renderOptionFunction = (props, option) => (
     <li {...props} key={option?.id}>
-      {option?.firstName?.toUpperCase()} {option?.lastName?.toUpperCase()}
+      {option?.firstName} {option?.lastName}
     </li>
   );
 

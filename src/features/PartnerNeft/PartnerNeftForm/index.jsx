@@ -109,7 +109,7 @@ const PartnerNeftForm = () => {
                 required={true}
                 loading={lobLoading}
                 options={lob.data || []}
-                getOptionLabel={(option) => option?.lob?.toUpperCase()}
+                getOptionLabel={(option) => option?.lob}
                 isOptionEqualToValue={(option, value) => option.id === value.id}
                 control={control}
                 rules={{ required: 'LOB is required' }}
@@ -117,11 +117,6 @@ const PartnerNeftForm = () => {
                 helperText={errors.lob?.message}
                 disableClearable={true}
                 placeholder={COMMON_WORDS.SELECT}
-                renderOption={(props, option) => (
-                  <li {...props} key={option.id}>
-                    {option?.lob?.toUpperCase()}
-                  </li>
-                )}
                 disabled={params.id ? true : false}
                 onChangeCallback={(newValue) => {
                   setValue('product', null);
@@ -139,7 +134,7 @@ const PartnerNeftForm = () => {
                 required={true}
                 loading={productsLoading}
                 options={products.data || []}
-                getOptionLabel={(option) => option?.product?.toUpperCase()}
+                getOptionLabel={(option) => option?.product}
                 isOptionEqualToValue={(option, value) => option.id === value.id}
                 control={control}
                 rules={{ required: 'Product is required' }}
@@ -148,11 +143,6 @@ const PartnerNeftForm = () => {
                 disableClearable={true}
                 disabled={params.id ? true : false}
                 placeholder={COMMON_WORDS.SELECT}
-                renderOption={(props, option) => (
-                  <li {...props} key={option.id}>
-                    {option?.product?.toUpperCase()}
-                  </li>
-                )}
               />
             </Grid>
 
@@ -164,7 +154,7 @@ const PartnerNeftForm = () => {
                 loading={userLoading}
                 options={user.data || []}
                 getOptionLabel={(option) => {
-                  return `${option?.firstName?.toUpperCase()} ${option?.lastName?.toUpperCase()}`;
+                  return `${option?.firstName} ${option?.lastName}`;
                 }}
                 isOptionEqualToValue={(option, value) => option.id === value.id}
                 control={control}
@@ -173,11 +163,6 @@ const PartnerNeftForm = () => {
                 helperText={errors.producer?.message}
                 disableClearable={true}
                 placeholder={COMMON_WORDS.SELECT}
-                renderOption={(props, option) => (
-                  <li {...props} key={option.id}>
-                    {option?.firstName?.toUpperCase()} {option?.lastName?.toUpperCase()}
-                  </li>
-                )}
               />
             </Grid>
 
@@ -195,11 +180,6 @@ const PartnerNeftForm = () => {
                 helperText={errors.verificationMethod?.message}
                 disableClearable={true}
                 placeholder={COMMON_WORDS.SELECT}
-                renderOption={(props, option) => (
-                  <li {...props} key={option.value}>
-                    {option?.label}
-                  </li>
-                )}
               />
             </Grid>
           </Grid>
