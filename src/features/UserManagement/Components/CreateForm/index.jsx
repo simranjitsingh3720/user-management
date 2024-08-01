@@ -138,43 +138,43 @@ function CreateUserCreationForm() {
 
   useEffect(() => {
     const updatedApiDataMap = { ...apiDataMap };
-    if (lobs && lobs.length > 0) {
+    if (lobs) {
       updatedApiDataMap.lob = lobs;
     }
-    if (products && products.length > 0) {
+    if (products) {
       updatedApiDataMap.product = products;
     }
-    if (locations && locations.length > 0) {
+    if (locations) {
       updatedApiDataMap.location = locations;
     }
-    if (paymentType && paymentType.length > 0) {
+    if (paymentType) {
       updatedApiDataMap.paymentType = paymentType;
     }
-    if (producerCode && producerCode.length > 0) {
+    if (producerCode) {
       updatedApiDataMap.producerCode = producerCode;
     }
-    if (parentCode && parentCode.length > 0) {
+    if (parentCode) {
       updatedApiDataMap.parentCode = parentCode;
     }
-    if (channelType && channelType.length > 0) {
+    if (channelType) {
       updatedApiDataMap.channelType = channelType;
     }
-    if (neftDefaultBank && neftDefaultBank.length > 0) {
+    if (neftDefaultBank) {
       updatedApiDataMap.neftDefaultBank = neftDefaultBank;
     }
-    if (producerType && producerType.length > 0) {
+    if (producerType) {
       updatedApiDataMap.typeOfProducer = producerType;
     }
-    if (loginType && loginType.length > 0) {
+    if (loginType) {
       updatedApiDataMap.loginType = loginType;
     }
-    if (masterPolicy && masterPolicy.length > 0) {
+    if (masterPolicy) {
       updatedApiDataMap.masterPolicy = masterPolicy;
     }
-    if (plans && plans.length > 0) {
+    if (plans) {
       updatedApiDataMap.plan = plans;
     }
-    if (zones && zones.length > 0) {
+    if (zones) {
       updatedApiDataMap.zone = zones;
     }
     setApiDataMap(updatedApiDataMap);
@@ -203,9 +203,6 @@ function CreateUserCreationForm() {
 
   useEffect(() => {
     if (roleValue && !isEdit) {
-      let resetValues = {
-        roleSelect: watch(COMMON.ROLE_SELECT),
-      };
       let originalArray = roleConfig;
       let resultObject = originalArray.reduce((resetValues, item) => {
         if (item?.type === COMMON.AUTOCOMPLETE && item?.multiple === true) {
@@ -221,6 +218,7 @@ function CreateUserCreationForm() {
       setRoleChanged(!roleChanged);
       resultObject.roleSelect = watch(COMMON.ROLE_SELECT);
       resultObject[FORM_LABEL.START_DATE] = today;
+      resultObject[COMMON.PRODUCER_STATUS] = COMMON.ACTIVE;
       reset(resultObject);
     }
   }, [roleValue]);
