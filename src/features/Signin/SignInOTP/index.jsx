@@ -12,8 +12,9 @@ function SignInOTP({ otpScreen, setOtpScreen, postData, loginLoading, verifyOTP,
   const [timer, setTimer] = useState(60);
 
   const onSubmit = (data) => {
+    const { emailId = '', otp = '' } = data;
     if (otpScreen) {
-      const payload = { email: data?.emailId, otp: data?.otp };
+      const payload = { email: emailId, otp: otp };
       verifyOTP(payload);
     } else {
       const payload = { email: data?.emailId };
@@ -30,8 +31,8 @@ function SignInOTP({ otpScreen, setOtpScreen, postData, loginLoading, verifyOTP,
     setValue,
   } = useForm({
     defaultValue: {
-      emailId: null,
-      otp: null,
+      emailId: '',
+      otp: '',
     },
   });
 
@@ -56,13 +57,12 @@ function SignInOTP({ otpScreen, setOtpScreen, postData, loginLoading, verifyOTP,
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
         {otpScreen ? (
-          <div>
+          <>
             <div className="mt-2 text-lg font-medium font-weight-600">OTP Verification</div>
             <div className="mt-1 text-fiord">Enter the one-time password sent to you on mail</div>
             <div className="mt-1 font-weight-600">
               {watch('emailId')}
               <span>
-                {' '}
                 <Tooltip title="Edit Email">
                   <IconButton
                     aria-label="back"
@@ -138,7 +138,7 @@ function SignInOTP({ otpScreen, setOtpScreen, postData, loginLoading, verifyOTP,
                 {verifyLoading ? 'Verifying...' : 'Verify OTP'}
               </CustomButton>
             </div>
-          </div>
+          </>
         ) : (
           <>
             <div className="mt-1 text-fiord">

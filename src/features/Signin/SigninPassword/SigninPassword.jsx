@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import React from 'react';
 import InputField from '../../../components/CustomTextfield';
-import { emailValidation, passwordValidation } from '../utils/constants';
+import { emailValidation } from '../utils/constants';
 import { encodeString } from '../../../utils/globalizationFunction';
 import CustomButton from '../../../components/CustomButton';
 
@@ -45,7 +45,6 @@ function SignInPassword({ postData, loginLoading }) {
               type="password"
               required
               label="Password"
-              validation={passwordValidation}
               control={control}
               errors={errors}
               disabled={false}
