@@ -57,6 +57,7 @@ export const COMMON = {
   LOB: 'lob',
   LOGIN_TYPE: 'loginType',
   CHEQUE: 'cheque',
+  NEFT: 'neft',
   USER_CREATION_SUCCESS: 'User created successfully',
   USER_UPDATED_SUCCESS: 'User updated successfully',
   PARTNER: 'partner',

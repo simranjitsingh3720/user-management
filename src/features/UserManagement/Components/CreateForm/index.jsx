@@ -509,7 +509,7 @@ function CreateUserCreationForm() {
       payload = {
         productIds,
         paymentType: paymentTypeNames,
-        houseBankId: ARR_CONTAINS.PRODUCER_ARR.includes(role)
+        houseBankId: ARR_CONTAINS.PRODUCER_ARR.includes(role) && paymentTypeNames.includes('neft')
           ? Array.isArray(neftDefaultBank)
             ? neftDefaultBank.join(',')
             : neftDefaultBank
