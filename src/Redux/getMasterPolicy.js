@@ -1,20 +1,31 @@
 import { createAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { masterPolicy2, masterPolicyNA, masterpolicy1 } from '../utils/masterPolicy';
+import { buildQueryString } from '../utils/globalizationFunction';
+import apiUrls from '../utils/apiUrls';
+import errorHandler from '../utils/errorHandler';
+import axiosInstance from '../utils/axiosInstance';
+import { COMMON_WORDS } from '../utils/constants';
 
 export const getMasterPolicies = createAsyncThunk(
   'masterPolicy/getMasterPolicies',
-  async (name, { getState, rejectWithValue }) => {
-    let formattedArray;
-    if (name === 'groupbusinesstravelaccident') {
-      formattedArray = masterPolicyNA;
-    } else if (name === 'smallbusinesstravelguard') {
-      formattedArray = masterpolicy1;
-    } else if (name === 'both') {
-      formattedArray = masterpolicy1;
-    } else {
-      formattedArray = masterPolicy2;
+  async (product, { getState, rejectWithValue }) => {
+    try {
+      if (product) {
+        const productIds = product.map((item) => item?.id);
+        const idsString = productIds.join(',');
+        const params = buildQueryString({ ids: idsString, edge: COMMON_WORDS.HAS_PRODUCT, isExclusive: true, status: true , isAll: true });
+        const url = `${apiUrls.getMasterPolicy}?${params}`;
+        const response = await axiosInstance.get(url);
+        const formattedArray = response?.data?.data?.map((obj) => ({
+          ...obj,
+          label: obj?.policy,
+          value: obj?.id,
+        }));
+        return formattedArray;
+      }
+    } catch (error) {
+      errorHandler.handleError(error);
+      return rejectWithValue([]);
     }
-    return formattedArray;
   }
 );
 

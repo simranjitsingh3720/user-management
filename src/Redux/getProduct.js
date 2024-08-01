@@ -3,18 +3,19 @@ import axiosInstance from './../utils/axiosInstance';
 import apiUrls from '../utils/apiUrls';
 import { buildQueryString, toCapitalize } from '../utils/globalizationFunction';
 import errorHandler from '../utils/errorHandler';
+import { COMMON_WORDS } from '../utils/constants';
 
 export const getProducts = createAsyncThunk('productUserCreation/getProducts', async (lob, { rejectWithValue }) => {
   try {
     if (lob) {
       const lobids = lob.map((item) => item?.id);
       const idsString = lobids.join(',');
-      const params = buildQueryString({ ids: idsString, edge: 'hasLob', isExclusive: true, status: true });
+      const params = buildQueryString({ ids: idsString, edge: COMMON_WORDS.HAS_LOB, isExclusive: true, status: true, isAll : true});
       const url = `${apiUrls.getProduct}?${params}`;
       const response = await axiosInstance.get(url);
       const formattedArray = response?.data?.data?.map((obj) => ({
         ...obj,
-        label: toCapitalize(obj, 'product'),
+        label: toCapitalize(obj, COMMON_WORDS.PRODUCT),
         value: obj?.productValue,
       }));
       return formattedArray;

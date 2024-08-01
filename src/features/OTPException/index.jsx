@@ -64,7 +64,6 @@ function OTPException() {
         navigateRoute={'/otpexception/form'}
         showButton
         canCreate={canCreate}
-        showBulkUploadButton={true}
         hideSearch={true}
       />
       <div className="mt-4">

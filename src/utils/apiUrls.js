@@ -34,7 +34,10 @@ const apiUrls = {
   proposalOtpException: "/api/proposal-otp-exception",
   proposalBitlyConfig: "/api/proposal-bitly-config",
   getColumns: "/api/file/columns?tableName=",
-  downloadFile: "/api/file/download"
+  downloadFile: "/api/file/download",
+  getZone: "/api/zone",
+  getPlan: '/api/plan',
+  getMasterPolicy: "/api/master-policy",
 };
 
 export default apiUrls;

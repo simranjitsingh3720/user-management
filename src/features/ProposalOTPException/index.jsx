@@ -98,6 +98,7 @@ function ProposalOTPException() {
           textFieldPlaceholder={COMMON_WORDS.SEARCH}
           textField
           hideSearch={true}
+          showBulkUploadButton={true}
         />
       </div>
 
