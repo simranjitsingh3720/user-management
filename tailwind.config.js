@@ -18,10 +18,11 @@ module.exports = {
         shuttleGray: '#566475',
         bittersweet: '#d32f2f',
         shadowColor: '#185ec414',
+        'custom-gray': '#2F374180',
       },
-      fontSize:{
-        normal: '15px'
-      }
+      fontSize: {
+        normal: '15px',
+      },
     },
   },
   plugins: [],
