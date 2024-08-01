@@ -3,20 +3,21 @@ import axiosInstance from '../utils/axiosInstance';
 import apiUrls from '../utils/apiUrls';
 import { buildQueryString, getFullName } from '../utils/globalizationFunction';
 import errorHandler from '../utils/errorHandler';
+import { COMMON_WORDS } from '../utils/constants';
 
 export const getProducerCodes = createAsyncThunk(
   'producerCode/getProducerCodes',
   async (roleName, { rejectWithValue }) => {
     try {
       if (roleName) {
-        const params = buildQueryString({ searchKey: 'userType', searchString: 'external', status: true, isAll: true });
+        const params = buildQueryString({ searchKey: COMMON_WORDS.USER_TYPE, searchString: COMMON_WORDS.EXTERNAL, status: true, isAll: true });
         const userType = `${apiUrls.getUserType}?${params}`;
         const responseUserType = await axiosInstance.get(userType);
         const userTypeID = responseUserType?.data?.data[0]?.id;
         if (userTypeID) {
           const userIdParams = buildQueryString({
             ids: userTypeID,
-            edge: 'hasUserType',
+            edge: COMMON_WORDS.HAS_USER_TYPE,
             isExclusive: true,
             status: true,
           });

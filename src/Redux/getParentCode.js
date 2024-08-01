@@ -3,13 +3,14 @@ import axiosInstance from '../utils/axiosInstance';
 import apiUrls from '../utils/apiUrls';
 import { buildQueryString, getFullName } from '../utils/globalizationFunction';
 import errorHandler from '../utils/errorHandler';
+import { COMMON_WORDS } from '../utils/constants';
 
 export const getParentCode = createAsyncThunk(
   'parentCode/getParentCode',
   async (roleId, { getState, rejectWithValue }) => {
     try {
       if (roleId) {
-        const params = buildQueryString({ productName: 'sales', status: true, isAll: true });
+        const params = buildQueryString({ productName: COMMON_WORDS.SALES, status: true, isAll: true });
         const url = `${apiUrls.getParentCode}/${roleId?.id}/parent?${params}`;
         const response = await axiosInstance.get(url);
         const formattedArray = response?.data?.data?.map((obj) => ({
