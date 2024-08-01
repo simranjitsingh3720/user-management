@@ -93,7 +93,7 @@ function CreateRoleForm() {
                 required={true}
                 options={groupData || []}
                 loading={groupLoading}
-                getOptionLabel={(option) => option?.groupName?.toUpperCase() || ''}
+                getOptionLabel={(option) => option?.groupName || ''}
                 isOptionEqualToValue={(option, value) => option.id === value.id}
                 control={control}
                 rules={{ required: 'Group is required' }}
@@ -101,11 +101,6 @@ function CreateRoleForm() {
                 helperText={errors.groups?.message}
                 disableClearable={true}
                 placeholder={COMMON_WORDS.SELECT}
-                renderOption={(props, option) => (
-                  <li {...props} key={option.id}>
-                    {option?.groupName?.toUpperCase()}
-                  </li>
-                )}
               />
             </Grid>
           </Grid>

@@ -101,7 +101,7 @@ function ChannelForm() {
               navigateRoute="/proposal-bitly-config"
               handleReset={handleReset}
             />
-            <Grid item xs={12} sm={6} lg={6}>
+            <Grid item xs={12} lg={8}>
               <UserTypeToggle
                 menuItem={STATUS}
                 label="Select"
@@ -121,19 +121,15 @@ function ChannelForm() {
                       required
                       options={channelType || []}
                       getOptionLabel={(option) =>
-                        `${option?.label?.toUpperCase() || ''} - ${option?.numChannelCode || ''}`
+                        `${option?.label || ''} - ${option?.numChannelCode || ''}`
                       }
+                      isOptionEqualToValue={(option, value) => option.id === value.id}
                       control={control}
                       rules={{ required: 'Channel is required' }}
                       error={Boolean(errors.channel)}
                       helperText={errors.channel?.message}
                       disableClearable
                       placeholder={COMMON_WORDS.SELECT}
-                      renderOption={(props, option) => (
-                        <li {...props} key={option.id}>
-                          {option?.label?.toUpperCase()} - {option?.numChannelCode}
-                        </li>
-                      )}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6} lg={6}>
@@ -142,18 +138,13 @@ function ChannelForm() {
                       label="Bitly Link Mandatory"
                       required
                       options={BitlyLinkMandatory || []}
-                      getOptionLabel={(option) => option?.label?.toUpperCase() || ''}
+                      getOptionLabel={(option) => option?.label || ''}
                       control={control}
                       rules={{ required: 'Bitly Link is required' }}
                       error={Boolean(errors.bitlyLinkMandatory)}
                       helperText={errors.bitlyLinkMandatory?.message}
                       disableClearable
                       placeholder={COMMON_WORDS.SELECT}
-                      renderOption={(props, option) => (
-                        <li {...props} key={option.id}>
-                          {option?.label?.toUpperCase()}
-                        </li>
-                      )}
                     />
                   </Grid>
                 </Grid>
@@ -170,7 +161,7 @@ function ChannelForm() {
                         loading={userLoading}
                         options={user.data || []}
                         getOptionLabel={(option) =>
-                          `${option?.firstName?.toUpperCase() || ''} ${option?.lastName?.toUpperCase() || ''} - ${
+                          `${option?.firstName || ''} ${option?.lastName || ''} - ${
                             option.producerCode || ''
                           }`
                         }
@@ -180,12 +171,6 @@ function ChannelForm() {
                         helperText={errors.producerCode?.message}
                         disableClearable
                         placeholder={COMMON_WORDS.SELECT}
-                        renderOption={(props, option) => (
-                          <li {...props} key={option.id}>
-                            {option?.firstName?.toUpperCase() || ''} {option?.lastName?.toUpperCase() || ''} -{' '}
-                            {option?.producerCode || ''}
-                          </li>
-                        )}
                         onChangeCallback={(newValue) => {
                           fetchData(newValue?.id);
                         }}

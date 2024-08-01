@@ -118,7 +118,7 @@ function ProductPaymentConfigForm() {
                     // value={getValues("lob")}
                     value={field.value}
                     getOptionLabel={(option) => {
-                      return option?.lob?.toUpperCase() || '';
+                      return option?.lob || '';
                     }}
                     className={styles.customizeSelect}
                     size="small"
@@ -150,7 +150,7 @@ function ProductPaymentConfigForm() {
                     id="product"
                     options={data?.data || []}
                     value={field.value}
-                    getOptionLabel={(option) => option?.product?.toUpperCase() || ''}
+                    getOptionLabel={(option) => option?.product || ''}
                     className={styles.customizeSelect}
                     size="small"
                     renderInput={(params) => <TextField {...params} placeholder="Select" />}
@@ -181,7 +181,7 @@ function ProductPaymentConfigForm() {
                     value={getValues('payment')}
                     options={[{ name: 'Select All' }, ...(paymentData?.data || [])]}
                     getOptionLabel={(option) => {
-                      return option?.name?.toUpperCase();
+                      return option?.name;
                     }}
                     disableCloseOnSelect
                     multiple

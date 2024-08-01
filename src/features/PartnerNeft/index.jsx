@@ -123,7 +123,7 @@ const PartnerNeft = () => {
   const optionLabel = (option, type) => {
     if (type === COMMON_WORDS.PRODUCER) return option['firstName'] + ' ' + option['lastName'];
 
-    return option[type]?.toUpperCase() || '';
+    return option[type] || '';
   };
   const renderOptionFunction = (props, option, type) => (
     <li {...props} key={option?.id}>
