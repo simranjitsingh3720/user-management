@@ -138,43 +138,43 @@ function CreateUserCreationForm() {
 
   useEffect(() => {
     const updatedApiDataMap = { ...apiDataMap };
-    if (lobs) {
+    if (lobs && lobs.length > 0) {
       updatedApiDataMap.lob = lobs;
     }
-    if (products) {
+    if (products && products.length > 0) {
       updatedApiDataMap.product = products;
     }
-    if (locations) {
+    if (locations && locations.length > 0) {
       updatedApiDataMap.location = locations;
     }
-    if (paymentType) {
+    if (paymentType && paymentType.length > 0) {
       updatedApiDataMap.paymentType = paymentType;
     }
-    if (producerCode) {
+    if (producerCode && producerCode.length > 0) {
       updatedApiDataMap.producerCode = producerCode;
     }
-    if (parentCode) {
+    if (parentCode && parentCode.length > 0) {
       updatedApiDataMap.parentCode = parentCode;
     }
-    if (channelType) {
+    if (channelType && channelType.length > 0) {
       updatedApiDataMap.channelType = channelType;
     }
-    if (neftDefaultBank) {
+    if (neftDefaultBank && neftDefaultBank.length > 0) {
       updatedApiDataMap.neftDefaultBank = neftDefaultBank;
     }
-    if (producerType) {
+    if (producerType && producerType.length > 0) {
       updatedApiDataMap.typeOfProducer = producerType;
     }
-    if (loginType) {
+    if (loginType && loginType.length > 0) {
       updatedApiDataMap.loginType = loginType;
     }
-    if (masterPolicy) {
+    if (masterPolicy && masterPolicy.length > 0) {
       updatedApiDataMap.masterPolicy = masterPolicy;
     }
-    if (plans) {
+    if (plans && plans.length > 0) {
       updatedApiDataMap.plan = plans;
     }
-    if (zones) {
+    if (zones && zones.length > 0) {
       updatedApiDataMap.zone = zones;
     }
     setApiDataMap(updatedApiDataMap);
@@ -509,11 +509,12 @@ function CreateUserCreationForm() {
       payload = {
         productIds,
         paymentType: paymentTypeNames,
-        houseBankId: ARR_CONTAINS.PRODUCER_ARR.includes(role) && paymentTypeNames.includes('neft')
-          ? Array.isArray(neftDefaultBank)
-            ? neftDefaultBank.join(',')
-            : neftDefaultBank
-          : '',
+        houseBankId:
+          ARR_CONTAINS.PRODUCER_ARR.includes(role) && paymentTypeNames.includes(COMMON.NEFT)
+            ? Array.isArray(neftDefaultBank)
+              ? neftDefaultBank.join(',')
+              : neftDefaultBank
+            : '',
         ocrChequeScanning: paymentTypeNames.includes(COMMON.CHEQUE)
           ? chequeOCRScanning && chequeOCRScanning === FORM_VALUE.YES
           : '',
