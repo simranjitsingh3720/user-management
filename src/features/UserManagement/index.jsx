@@ -90,6 +90,7 @@ function UserManagement() {
         canCreate={canCreate}
         onSubmit={onSubmit}
         tableHeader={header}
+        showBulkUploadButton={true}
       />
       <div className="mt-4">
         <CustomTable

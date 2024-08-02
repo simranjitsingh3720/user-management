@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { toast } from 'react-toastify';
 import errorHandler from '../../../../utils/errorHandler';
 import axiosInstance from '../../../../utils/axiosInstance';
@@ -6,22 +6,27 @@ import apiUrls from '../../../../utils/apiUrls';
 import { buildQueryString } from '../../../../utils/globalizationFunction';
 
 const useSubmit = () => {
+  const [loading, setLoading] = useState(false);
   const postBulkUpload = useCallback(async (data) => {
-    console.log(data);
     try {
+      setLoading(true);
       const { data: responseData } = await axiosInstance.post(apiUrls.postBulkUpload, data);
       toast.success(responseData?.message || 'File Uploaded successfully');
       return responseData;
     } catch (error) {
       errorHandler.handleError(error);
     }
+    finally{
+      setLoading(false);
+    }
   }, []);
 
   const getBulkTemplate = useCallback(async (data) => {
-    const { label, fileName } = data
+    const { label, fileName, role } = data
     const queryParams = buildQueryString({
       filename: fileName,
       label,
+      role
     });
 
     try {
@@ -39,7 +44,7 @@ const useSubmit = () => {
     }
   }, []);
 
-  return { postBulkUpload, getBulkTemplate };
+  return { postBulkUpload, getBulkTemplate, postBulkUploadLoading: loading };
 };
 
 export default useSubmit;

@@ -2,22 +2,22 @@ import React, { useMemo, useRef, useState, useCallback, useEffect } from 'react'
 import styles from './styles.module.scss';
 import { Box } from '@mui/material';
 import { useForm } from 'react-hook-form';
-import CustomButton from '../../../components/CustomButton';
-import DownloadLogo from '../../../assets/DownloadLogo';
-import DocumentIconGray from '../../../assets/DocumentIconGray';
-import DocumentIconGreen from '../../../assets/DocumentIconGreen';
 import { toast } from 'react-toastify';
 import SearchComponent from '../../../components/SearchComponent';
 import { getPlaceHolder } from '../../../utils/globalizationFunction';
-import { COMMON_VAR, CONTENT, SEARCH_BY, SEARCH_OPTIONS } from './utils/constants';
+import { COMMON_VAR, CONTENT, ROLE_MENUITEM, SEARCH_BY, SEARCH_OPTIONS } from './utils/constants';
 import CustomTable from '../../../components/CustomTable';
 import { Header } from './utils/header';
 import CustomFormHeader from '../../../components/CustomFormHeader';
 import useGetBulkUpload from './hooks/useGetBulkUpload';
 import useSubmit from './hooks/useSubmit';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { COMMON } from '../../UserManagement/Components/utils/constants';
+import SelectField from '../../../components/CustomSelect';
+import Loader from '../../../components/Loader';
+import { COMMON_WORDS } from '../../../utils/constants';
+import UploadTemplate from './UploadSection';
 
 function UploadForm() {
   const [searched, setSearched] = useState(SEARCH_OPTIONS[0].value);
@@ -27,7 +27,7 @@ function UploadForm() {
   const [orderBy, setOrderBy] = useState('');
   const [fileUploaded, setFileUploaded] = useState(false);
   const [fileName, setFileName] = useState('');
-  const { postBulkUpload, getBulkTemplate } = useSubmit();
+  const { postBulkUpload, getBulkTemplate, postBulkUploadLoading } = useSubmit();
   const { getBulkUpload, bulkUploadData, totalCount, setData } = useGetBulkUpload();
   const { tableName } = useSelector((state) => state.export);
   const navigate = useNavigate();
@@ -37,6 +37,11 @@ function UploadForm() {
 
   const {
     handleSubmit,
+    setValue,
+    control,
+    watch,
+    trigger,
+    formState: { errors },
   } = useForm({
     defaultValues: {},
   });
@@ -44,6 +49,9 @@ function UploadForm() {
   const downloadTemplate = () => {
     fetchTemplate();
   };
+
+  const watchRole = watch(COMMON_WORDS.ROLE);
+  const location = useLocation();
 
   const fileInputRef = useRef(null);
   const handleButtonClick = () => {
@@ -63,7 +71,7 @@ function UploadForm() {
         } else {
           setFileUploaded(true);
           setFileName(file.name);
-          setFile(event.target.files[0]);
+          setFile(file);
         }
       } else {
         toast.error(COMMON_VAR.INVALID_FILE_ERR);
@@ -84,8 +92,9 @@ function UploadForm() {
     getBulkTemplate({
       fileName: COMMON_VAR.FILE_NAME,
       label: tableName,
+      role: watchRole,
     });
-  }, [tableName]);
+  }, [tableName, watchRole]);
 
   useEffect(() => {
     loadData();
@@ -94,12 +103,16 @@ function UploadForm() {
   const handleGo = () => {
     if (query) {
       setData([]);
-      getBulkUpload({pageNo:page, pageSize, searchKey: COMMON_VAR.FILE_TYPE,
-      searchString: tableName, searched, query});
+      getBulkUpload({
+        pageNo: page,
+        pageSize,
+        searchKey: COMMON_VAR.FILE_TYPE,
+        searchString: tableName,
+        searched,
+        query,
+      });
     } else {
-      getBulkUpload({searchKey: COMMON_VAR.FILE_TYPE,
-      searchString: tableName, pageNo: page,
-      pageSize,});
+      getBulkUpload({ searchKey: COMMON_VAR.FILE_TYPE, searchString: tableName, pageNo: page, pageSize });
     }
   };
 
@@ -114,6 +127,9 @@ function UploadForm() {
       const formData = new FormData();
       formData.append(COMMON_VAR.FILE, file);
       formData.append(COMMON_VAR.FILE_TYPE, tableName);
+      if (watchRole) {
+        formData.append('role', watchRole);
+      }
       const res = await postBulkUpload(formData);
       if (res && res.success && res.statusCode === 200) {
         setFileUploaded(false);
@@ -124,73 +140,62 @@ function UploadForm() {
   };
 
   if (!tableName) {
-    navigate(-1)
+    navigate(-1);
   }
 
   return (
     <>
+      {postBulkUploadLoading && <Loader />}
       <form onSubmit={handleSubmit(onSubmit)} className={`${styles.formMainContainer}`}>
         <div className={styles.createContainer}>
-          <div className="p-5">
-            <CustomFormHeader
-              navigateRoute={-1}
-              headerText={CONTENT.TITLE}
-              subHeading={CONTENT.HEADER}
-            />
+          <div className="p-5 pb-0">
+            <CustomFormHeader navigateRoute={-1} headerText={CONTENT.TITLE} subHeading={CONTENT.HEADER} />
           </div>
-          <div className="p-7">
-            <div className="border border-blueHaze rounded-lg w-full">
-              <div className="text-sm bg-linkWater p-4 flex rounded-lg justify-center">
-                <span className="flex flex-col xl:flex-row text-fiord font-medium">
-                  {CONTENT.SUB_HEADER}
-                  <button
-                    className="flex text-denim underline flex-nowrap sm:justify-center"
-                    onClick={downloadTemplate}
-                  >
-                    <span className="mr-2 xl:mx-2">
-                      <DownloadLogo />
-                    </span>
-                    {CONTENT.BUTTON_TEXT}
-                  </button>
-                </span>
-              </div>
-              <div className="flex justify-center mt-6">
-                {!fileUploaded ? <DocumentIconGray></DocumentIconGray> : <DocumentIconGreen></DocumentIconGreen>}
-              </div>
-              <div className="flex justify-center">
-                <div className="text-center">
-                  {!fileUploaded ? (
-                    <div>
-                      <input
-                        type="file"
-                        ref={fileInputRef}
-                        accept=".xls, .xlsx"
-                        style={{ display: 'none' }}
-                        onChange={handleFileChange}
-                      />
-                      <button className="text-sm text-denim underline mt-2" onClick={handleButtonClick}>
-                        {CONTENT.FILE_BUTTON_TEXT}
-                      </button>
-                    </div>
-                  ) : (
-                    <div className="text-sm mt-2 text-fiord font-medium">
-                      {fileName} <span className="text-blueHaze mx-1">|</span>{' '}
-                      <button className="text-sm text-denim underline" onClick={deleteBtn}>
-                        Delete
-                      </button>{' '}
-                    </div>
-                  )}
-                  <div className="text-xs text-fiord my-3">{CONTENT.FILE_UPLOAD_TEXT}</div>
-                  <div className="my-5">
-                    {' '}
-                    <CustomButton type="submit" disabled={!fileUploaded}>
-                      {CONTENT.UPLOAD_BUTTON_TEXT}
-                    </CustomButton>
-                  </div>
-                </div>
-              </div>
+          {location?.pathname.includes(COMMON_VAR.USER_MANAGEMENT_ROUTE) && (
+            <div className="w-full px-7 pb-5">
+              <SelectField
+                key="role"
+                control={control}
+                name="role"
+                label="Role Name"
+                required={true}
+                disabled={false}
+                menuItem={ROLE_MENUITEM}
+                placeholder="Select"
+                errors={errors}
+                setValue={setValue}
+                classes="w-1/2"
+                trigger={trigger}
+              />
             </div>
-          </div>
+          )}
+          {location?.pathname.includes(COMMON_VAR.USER_MANAGEMENT_ROUTE) ? (
+            watchRole ? (
+              <UploadTemplate
+                fileUploaded={fileUploaded}
+                fileInputRef={fileInputRef}
+                handleFileChange={handleFileChange}
+                handleButtonClick={handleButtonClick}
+                fileName={fileName}
+                deleteBtn={deleteBtn}
+                onSubmit={onSubmit}
+                CONTENT={CONTENT}
+                downloadTemplate={downloadTemplate}
+              />
+            ) : null
+          ) : (
+            <UploadTemplate
+              fileUploaded={fileUploaded}
+              fileInputRef={fileInputRef}
+              handleFileChange={handleFileChange}
+              handleButtonClick={handleButtonClick}
+              fileName={fileName}
+              deleteBtn={deleteBtn}
+              onSubmit={onSubmit}
+              CONTENT={CONTENT}
+              downloadTemplate={downloadTemplate}
+            />
+          )}
           <div className={styles.formContainer}></div>
         </div>
       </form>

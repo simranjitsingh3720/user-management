@@ -12,10 +12,6 @@ function flattenNestedObjects(data) {
       result = { ...result, ...item.user };
     }
 
-    if (item?.role && item?.role.length > 0) {
-      result = { ...result, ...item.role[0] };
-    }
-
     if (Array.isArray(item?.product) && item.product?.length > 0 && typeof item.product[0] === 'object') {
       result.lob = item.product.map((prod) => prod?.lobId);
     }

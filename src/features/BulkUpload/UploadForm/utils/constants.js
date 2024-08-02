@@ -23,6 +23,29 @@ export const COMMON_VAR = {
   INVALID_FILE_ERR: 'Please select a valid XLS file.',
   FILE_SIZE_LIMIT_ERR: 'File size exceeds 5 MB limit.',
   XLS_TYPE: 'xls',
-  XLSX_TYPE: 'xlsx'
-
+  XLSX_TYPE: 'xlsx',
+  USER_MANAGEMENT_ROUTE: 'user-management'
 }
+
+export const ROLE_MENUITEM = [
+  {
+    id: 'csm',
+    label: 'Csm',
+    value: 'csm',
+  },
+  {
+    id: 'admin',
+    label: 'Admin',
+    value: 'admin',
+  },
+  {
+    id: 'partner',
+    label: 'Partner',
+    value: 'partner',
+  },
+  {
+    id: 'others',
+    label: 'Others',
+    value: 'others',
+  },
+];
