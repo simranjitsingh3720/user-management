@@ -99,6 +99,7 @@ function ProposalOTPException() {
           textField
           hideSearch={true}
           showBulkUploadButton={true}
+          tableHeader={header}
         />
       </div>
 

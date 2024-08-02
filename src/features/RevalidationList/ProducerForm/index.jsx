@@ -9,6 +9,7 @@ import { fetchUser } from '../../../stores/slices/userSlice';
 import ExportDropdown from '../../ExportDropdown';
 import BulkUpload from '../../../assets/BulkUpload';
 import { useNavigate } from 'react-router-dom';
+import generateTableHeaders from '../utils/generateTableHeaders';
 
 const ProducerForm = ({ onFormSubmit }) => {
   const dispatch = useDispatch();
@@ -43,6 +44,8 @@ const ProducerForm = ({ onFormSubmit }) => {
     navigate('bulk-upload');
   };
 
+  const header= generateTableHeaders();
+
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -76,7 +79,7 @@ const ProducerForm = ({ onFormSubmit }) => {
             <CustomButton type="submit" variant="contained" color="primary" className="w-full md:w-auto">
               Submit
             </CustomButton>
-            <ExportDropdown />
+            <ExportDropdown tableHeader={header} />
             {tableName && <CustomButton variant="outlined" onClick={handleBulkUpload} startIcon={<BulkUpload />} />}
           </Grid>
         </Grid>

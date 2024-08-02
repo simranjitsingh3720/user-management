@@ -17,7 +17,15 @@ function generateTableHeaders(
       value: "Mobile Number",
     },
     {
-      id: "action",
+      id: 'createdAt',
+      value: 'Created At',
+    },
+    {
+      id: 'updatedAt',
+      value: 'Updated At',
+    },
+    {
+      id: "status",
       value: "Status",
       action: [
         {
