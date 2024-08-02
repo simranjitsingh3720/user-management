@@ -79,15 +79,6 @@ function UploadForm() {
     }
   };
 
-  const loadData = useCallback(() => {
-    getBulkUpload({
-      pageNo: page,
-      pageSize,
-      searchKey: COMMON_VAR.FILE_TYPE,
-      searchString: tableName,
-    });
-  }, [page, pageSize, getBulkUpload, tableName]);
-
   const fetchTemplate = useCallback(() => {
     getBulkTemplate({
       fileName: COMMON_VAR.FILE_NAME,
@@ -95,23 +86,27 @@ function UploadForm() {
     });
   }, [tableName, watchRole]);
 
-  useEffect(() => {
-    loadData();
-  }, [loadData]);
+  const fetchBulkUpload = useCallback(() => {
+    getBulkUpload({
+      page,
+      pageSize,
+      order,
+      orderBy,
+      query,
+      searchKey: COMMON_VAR.FILE_TYPE,
+      searchString: tableName,
+      searched,
+    });
+  }, [page, pageSize, order, orderBy, query, searched]);
 
-  const handleGo = () => {
-    if (query) {
-      setData([]);
-      getBulkUpload({
-        pageNo: page,
-        pageSize,
-        searchKey: COMMON_VAR.FILE_TYPE,
-        searchString: tableName,
-        searched,
-        query,
-      });
-    } else {
-      getBulkUpload({ searchKey: COMMON_VAR.FILE_TYPE, searchString: tableName, pageNo: page, pageSize });
+  useEffect(() => {
+    fetchBulkUpload();
+  }, [fetchBulkUpload]);
+
+  const handleGo = (data) => {
+    if (data) {
+      setPage(0);
+      setQuery(data?.search || '');
     }
   };
 
@@ -127,7 +122,7 @@ function UploadForm() {
       formData.append(COMMON_VAR.FILE, file);
       formData.append(COMMON_VAR.FILE_TYPE, tableName);
       if (watchRole) {
-        formData.append('role', watchRole);
+        formData.append(COMMON_WORDS.ROLE, watchRole);
       }
       const res = await postBulkUpload(formData);
       if (res && res.success && res.statusCode === 200) {
@@ -208,7 +203,8 @@ function UploadForm() {
           setQuery={setQuery}
           textField
           textFieldPlaceholder={COMMON.SEARCH_PLACEHOLDER}
-          handleGo={handleGo}
+          onSubmit={handleGo}
+          fetchData={handleGo}
           showButton={false}
           showExportButton={false}
         />
