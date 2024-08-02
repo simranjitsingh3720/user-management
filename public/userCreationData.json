@@ -4070,7 +4070,7 @@
         "id": "producerStatus",
         "label": "Producer Status",
         "type": "input",
-        "required": false,
+        "required": true,
         "disabled": true,
         "validation": {
           "pattern": {

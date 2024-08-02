@@ -91,8 +91,7 @@ function UploadForm() {
   const fetchTemplate = useCallback(() => {
     getBulkTemplate({
       fileName: COMMON_VAR.FILE_NAME,
-      label: tableName,
-      role: watchRole,
+      label: location.pathname.includes(COMMON_VAR.USER_MANAGEMENT_ROUTE) ? watchRole : tableName,
     });
   }, [tableName, watchRole]);
 
