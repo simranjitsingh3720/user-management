@@ -44,8 +44,8 @@ export const ROLE_MENUITEM = [
     value: 'partner',
   },
   {
-    id: 'others',
-    label: 'Others',
-    value: 'others',
+    id: 'other',
+    label: 'Other',
+    value: 'other',
   },
 ];
