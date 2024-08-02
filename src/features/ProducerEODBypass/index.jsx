@@ -44,6 +44,8 @@ function ProducerEODBypass() {
   }, [page, pageSize, order, orderBy, resultProducersId, date, query]);
 
   useEffect(() => {
+    dispatch(setTableName(''));
+    dispatch(setExtraColumns([]));
     dispatch(
       fetchUser({
         userType: COMMON_WORDS.PRODUCER,
@@ -56,7 +58,8 @@ function ProducerEODBypass() {
   useEffect(() => {
     dispatch(setTableName(eodByPassList?.[0]?.label));
     dispatch(setExtraColumns(EXPORT_EXTRA_COLUMNS));
-  }, [dispatch, eodByPassList]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [eodByPassList]);
 
   useEffect(() => {
     fetchData();
@@ -119,6 +122,7 @@ function ProducerEODBypass() {
         textField={showTextField.includes(searched)}
         textFieldPlaceholder={COMMON_WORDS.SEARCH}
         fetchData={onSubmit}
+        tableHeader={HEADER_COLUMNS}
       />
       <div className="mt-4">
         <CustomTable
