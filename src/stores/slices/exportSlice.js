@@ -50,19 +50,22 @@ export const downloadData = createAsyncThunk('export/downloadData', async (paylo
     const { data } = response;
 
     if (data?.data) {
-      const { async, url = '' } = data;
+      const { async, url = '' } = data.data;
 
       if (async) {
         toastifyUtils.notifySuccess(data.message);
         return;
       }
-
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', data.fileName);
-      document.body.appendChild(link);
-      link.click();
-      toastifyUtils.notifySuccess('File downloaded successfully');
+      
+      if(url !== '') {
+        const link = document.createElement('a');
+        link.href = url;
+        document.body.appendChild(link);
+        link.click();
+        toastifyUtils.notifySuccess('File downloaded successfully');
+      } else {
+        toastifyUtils.notifyError('File download failed');
+      }
     }
     return response.data;
   } catch (error) {
