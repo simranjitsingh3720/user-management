@@ -46,8 +46,23 @@ export const downloadData = createAsyncThunk('export/downloadData', async (paylo
       },
     });
 
-    if(response) {
-      toastifyUtils.notifySuccess(response.data.message);
+    const { data } = response;
+
+    if (data?.data) {
+
+      const { async, url = '' } = data;
+
+      if (async) {
+        toastifyUtils.notifySuccess(data.message);
+        return;
+      }
+
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', data.fileName);
+      document.body.appendChild(link);
+      link.click();
+      toastifyUtils.notifySuccess("File downloaded successfully");
     }
     return response.data;
   } catch (error) {
@@ -66,7 +81,7 @@ const exportSlice = createSlice({
       const columns = action.payload.map((col) => ({
         id: col,
         name: col,
-        checked: false,
+        checked: true,
       }));
       state.extraColumns = columns;
     },
