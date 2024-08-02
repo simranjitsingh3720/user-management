@@ -33,7 +33,6 @@ function EmployeeForm() {
   useEffect(()=> {
     if(data && data?.length > 0){
       dispatch(removeExtraColumns());
-      dispatch(setTableName(data[0]?.label))
     }
   },[data]);
 
