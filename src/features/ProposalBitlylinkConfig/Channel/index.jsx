@@ -24,6 +24,10 @@ function Channel() {
 
   const { data, loading, fetchData, count } = useGetBitlyLink(page, pageSize, order, orderBy);
 
+  useEffect(() => {
+    dispatch(setTableName(''));
+  }, [])
+
   const handleStatusUpdate = (data, row) => {
     dispatch(
       showDialog({
@@ -63,6 +67,7 @@ function Channel() {
         canCreate={canCreate}
         hideSearch={true}
         showExportButton={true}
+        tableHeader={HEADER_COLUMNS}
       />
       <div className="mt-4">
         <CustomTable

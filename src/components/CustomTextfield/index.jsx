@@ -1,7 +1,7 @@
 import React from 'react';
 import { TextField } from '@mui/material';
 import { Controller } from 'react-hook-form';
-import { ACTIVE, PRODUCER_STATUS } from './utils/constants';
+import { COMMON } from './utils/constants';
 
 const InputField = ({
   id,
@@ -24,7 +24,7 @@ const InputField = ({
       <Controller
         name={id}
         control={control}
-        defaultValue={id === PRODUCER_STATUS ? ACTIVE : ''}
+        defaultValue={id === COMMON.PRODUCER_STATUS ? COMMON.ACTIVE : ''}
         rules={{
           ...validation,
           required: required ? `${label} is required` : false,
@@ -58,6 +58,15 @@ const InputField = ({
               if(typeof trigger === 'function'){
                 trigger(id);
               }
+            }}
+            InputProps={{
+              classes: {
+                input: `${id === COMMON.POSP_PAN ? 'uppercase' : ''}`,
+              },
+            }}
+            inputProps={{
+              maxLength:
+              id === COMMON.MOBILE_NUMBER ? '10' : '60'
             }}
           />
         )}

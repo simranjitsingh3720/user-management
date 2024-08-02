@@ -18,7 +18,6 @@ const useRole = (updateRoleInState) => {
   const [loading, setLoading] = useState(false);
   const [roleData, setRoleData] = useState(null);
   const [totalCount, setTotalCount] = useState(0);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   /**
@@ -57,8 +56,6 @@ const useRole = (updateRoleInState) => {
         });
 
         setRolesList(transformedData);
-        dispatch(removeExtraColumns());
-        dispatch(setTableName(rolesList[0]?.tableName));
         setTotalCount(totalCount);
       } catch (e) {
         errorHandler.handleError(e);
@@ -67,7 +64,7 @@ const useRole = (updateRoleInState) => {
         setLoading(false);
       }
     },
-    [dispatch, rolesList]
+    [rolesList]
   );
 
   /**

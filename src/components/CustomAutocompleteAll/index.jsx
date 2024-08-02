@@ -29,69 +29,69 @@ const AutocompleteFieldAll = ({
   showCheckbox = true,
 }) => {
   const [selectedValues, setSelectedValues] = useState([]);
-
-  const naOption = options.find((option) => option.label === NA);
-
-  useEffect(() => {
-    setSelectedValues([]);
-  }, [resetClicked, roleChanged]);
-
+  const [searchInputValue, setSearchInputValue] = useState('');
   const watchedValues = useWatch({ control, name });
+  
+  useEffect(() => {
+    if (!isEdit) {
+      setSelectedValues([]);
+    }
+  }, [roleChanged, name, isEdit]);
 
   useEffect(() => {
-    if (isEdit) {
-      setSelectedValues(watchedValues);
+    if (isEdit && watchedValues) {
+      setSelectedValues(Array.isArray(watchedValues) ? watchedValues : []);
     }
   }, [watchedValues, isEdit]);
 
-  useEffect(() => {
-    if (naOption) {
-      setSelectedValues([naOption]);
-      setValue(name, [naOption]);
-    }
-  }, [options, control, name, setValue, naOption]);
-
   const isCheckedAll = useCallback(() => {
-    return selectedValues?.length === apiDataMap[name]?.length;
+    return selectedValues.length === (apiDataMap[name]?.length || 0);
   }, [selectedValues, apiDataMap, name]);
 
   const toggleOption = (option) => {
     setSelectedValues((prevSelectedValues) => {
+      const isSelected = prevSelectedValues.some((val) => val.value === option.value);
+      let newSelectedValues;
       if (option?.value === All) {
-        if (isCheckedAll()) {
-          return [];
-        } else {
-          return apiDataMap[name] || [];
-        }
+        newSelectedValues = isCheckedAll() ? [] : (apiDataMap[name] || []);
       } else {
-        const isSelected =
-          prevSelectedValues &&
-          prevSelectedValues.some((val) => val.value === option.value);
-        if (isSelected) {
-          return prevSelectedValues.filter((val) => val.value !== option.value);
-        } else {
-          const safePrevSelectedValues = Array.isArray(prevSelectedValues) ? prevSelectedValues : [];
-          return [...safePrevSelectedValues, option];
-        }
+        newSelectedValues = isSelected
+          ? prevSelectedValues.filter((val) => val.value !== option.value)
+          : [...prevSelectedValues, option];
       }
+      setValue(name, newSelectedValues);
+      return newSelectedValues;
     });
   };
 
   const handleAutocompleteChangeAll = useCallback((event, newValue) => {
-    setSelectedValues(newValue);
-  }, []);
+    if (newValue.some((val) => val.value === All)) {
+      const allSelected = isCheckedAll() ? [] : (apiDataMap[name] || []);
+      setSelectedValues(allSelected);
+      setValue(name, allSelected);
+    } else {
+      const uniqueNewValue = Array.from(new Set(newValue.map((item) => item.value)))
+        .map((value) => newValue.find((item) => item.value === value));
+      setSelectedValues(uniqueNewValue);
+      setValue(name, uniqueNewValue);
+    }
+    setSearchInputValue('');
+  }, [setValue, name, apiDataMap, isCheckedAll]);
 
   const isEmptyObject = (obj) => {
-    if (obj) {
-      return Object.keys(obj).length === 0 && obj.constructor === Object;
-    }
+    return Object.keys(obj).length === 0 && obj.constructor === Object;
   };
-
   useEffect(() => {
     if (!options || options.length === 0 || (options && options.every(isEmptyObject))) {
       setSelectedValues([]);
     }
-  }, [options]);
+  }, [options, name]);
+
+  const filteredOptions = searchInputValue
+    ? options.filter((option) =>
+        option.label.toLowerCase().includes(searchInputValue.toLowerCase())
+      )
+    : options;
 
   return (
     <div className="m-0 flex flex-col">
@@ -107,31 +107,26 @@ const AutocompleteFieldAll = ({
             {...field}
             multiple
             id={name}
-            options={options.length > 0 ? [{ label: 'All', value: All }, ...(options || [])] : []}
+            options={filteredOptions.length > 0 ? [{ label: 'All', value: All }, ...filteredOptions] : []}
             disableCloseOnSelect
             disablePortal={true}
             getOptionLabel={(option) => option?.label}
-            value={selectedValues || []}
+            value={selectedValues}
             onChange={(event, newValue) => {
               handleAutocompleteChangeAll(event, newValue);
               field.onChange(newValue);
             }}
-            renderOption={(props, option, { selected }) => (
+            inputValue={searchInputValue}
+            onInputChange={(event, newInputValue) => {
+              setSearchInputValue(newInputValue);
+            }}
+            renderOption={(props, option) => (
               <li
                 {...props}
                 key={option?.value || option?.roleName}
-                onClick={() => {
+                onClick={(event) => {
+                  event.stopPropagation();
                   toggleOption(option);
-                  field.onChange(
-                    option?.value === All
-                      ? isCheckedAll()
-                        ? []
-                        : apiDataMap[name] || []
-                      : selectedValues &&
-                        selectedValues.some((val) => val.value === option.value)
-                      ? selectedValues.filter((val) => val.value !== option.value)
-                      : [...(Array.isArray(selectedValues) ? selectedValues : []), option]
-                  );
                 }}
               >
                 {showCheckbox && (
@@ -142,8 +137,7 @@ const AutocompleteFieldAll = ({
                     checked={
                       option?.value === All
                         ? isCheckedAll()
-                        : selectedValues &&
-                          selectedValues.some((val) => val.value === option.value)
+                        : selectedValues.some((val) => val.value === option.value)
                     }
                   />
                 )}
@@ -165,7 +159,7 @@ const AutocompleteFieldAll = ({
                 error={Boolean(errors[name])}
                 helperText={errors[name] ? `${label} is required` : ''}
                 onChange={(e) => {
-                  field.onChange(e);
+                  setSearchInputValue(e.target.value);
                   trigger(name);
                 }}
                 onBlur={(e) => {

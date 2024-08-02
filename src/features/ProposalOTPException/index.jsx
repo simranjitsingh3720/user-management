@@ -12,7 +12,7 @@ import { showDialog } from '../../stores/slices/dialogSlice';
 import Content from '../../components/CustomDialogContent';
 import Action from './Action';
 import { useDispatch } from 'react-redux';
-import { removeExtraColumns } from '../../stores/slices/exportSlice';
+import { removeExtraColumns, setTableName } from '../../stores/slices/exportSlice';
 
 function ProposalOTPException() {
   const [page, setPage] = useState(0);
@@ -31,7 +31,8 @@ function ProposalOTPException() {
   const { data, loading, totalPage, fetchProposalOtp, setData } = useGetProposalOTPList(page, pageSize, order, orderBy);
 
   useEffect(() => {
-    dispatch(removeExtraColumns())
+    dispatch(removeExtraColumns());
+    dispatch(setTableName(''));
     fetchProposalOtp();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -99,6 +100,7 @@ function ProposalOTPException() {
           textField
           hideSearch={true}
           showBulkUploadButton={true}
+          tableHeader={header}
         />
       </div>
 

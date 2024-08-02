@@ -927,7 +927,7 @@
         "id": "sendEmail",
         "label": "Send Email",
         "type": "dropdown",
-        "required": false,
+        "required": true,
         "menuItem": [
           {
             "value": "yes",
@@ -1310,7 +1310,7 @@
         "id": "sendEmail",
         "label": "Send Email",
         "type": "dropdown",
-        "required": false,
+        "required": true,
         "menuItem": [
           {
             "value": "yes",
@@ -1693,7 +1693,7 @@
         "id": "sendEmail",
         "label": "Send Email",
         "type": "dropdown",
-        "required": false,
+        "required": true,
         "menuItem": [
           {
             "value": "yes",
@@ -1943,7 +1943,7 @@
           },
           "pattern": {
             "value": "^[A-Za-z]+ [A-Za-z]+$",
-            "message": "Please enter a valid name"
+            "message": "Please enter a valid partner name"
           }
         },
         "canEdit": true
@@ -1996,7 +1996,7 @@
             "label": "No"
           }
         ],
-        "required": false,
+        "required": true,
         "validation": {},
         "canEdit": true
       },
@@ -3274,8 +3274,16 @@
         "validation": {
           "required": "This field is required",
           "pattern": {
-            "value": "^[a-zA-Z0-9]+$",
-            "message": "It should contain digits and letters only"
+            "value": "^[a-zA-Z]+$",
+            "message": "It should contain letters only"
+          },
+          "minLength": {
+            "value": 3,
+            "message": "It should be at least 3 digits long"
+          },
+          "maxLength": {
+            "value": 30,
+            "message": "It should not exceed 30 digits"
           }
         },
         "canEdit": true
@@ -3381,7 +3389,7 @@
         "required": false,
         "validation": {
           "pattern": {
-            "value": "^[A-Z]{5}[0-9]{4}[A-Z]$",
+            "value": "^[a-zA-Z]{5}[0-9]{4}[a-zA-Z]$",
             "message": "Please enter a valid PAN number."
           }
         },
@@ -3540,7 +3548,7 @@
         "id": "roleAssignment",
         "label": "Role Assigned",
         "type": "dropdown",
-        "required": true,
+        "required": false,
         "menuItem": [
           {
             "value": "none",
@@ -3799,7 +3807,7 @@
         "id": "roleAssignment",
         "label": "Role Assigned",
         "type": "dropdown",
-        "required": true,
+        "required": false,
         "menuItem": [
           {
             "value": "none",
@@ -3856,8 +3864,16 @@
         "validation": {
           "required": "This field is required",
           "pattern": {
-            "value": "^[a-zA-Z0-9]+$",
-            "message": "It should contain digits and letters only"
+            "value": "^[a-zA-Z]+$",
+            "message": "It should contain letters only"
+          },
+          "minLength": {
+            "value": 3,
+            "message": "It should be at least 3 digits long"
+          },
+          "maxLength": {
+            "value": 30,
+            "message": "It should not exceed 30 digits"
           }
         },
         "canEdit": true
@@ -3963,7 +3979,7 @@
         "required": false,
         "validation": {
           "pattern": {
-            "value": "^[A-Z]{5}[0-9]{4}[A-Z]$",
+            "value": "^[a-zA-Z]{5}[0-9]{4}[a-zA-Z]$",
             "message": "Please enter a valid PAN number."
           }
         },
@@ -4055,6 +4071,7 @@
         "label": "Producer Status",
         "type": "input",
         "required": false,
+        "disabled": true,
         "validation": {
           "pattern": {
             "value": "^[A-Za-z]+$",
@@ -4120,7 +4137,7 @@
         "id": "roleAssignment",
         "label": "Role Assigned",
         "type": "dropdown",
-        "required": true,
+        "required": false,
         "menuItem": [
           {
             "value": "none",

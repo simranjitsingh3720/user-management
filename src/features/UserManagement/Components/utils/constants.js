@@ -19,7 +19,6 @@ export const ARR_CONTAINS = {
     'producer',
     'subproducer',
     'dealer',
-    'partner',
     'deo - partner employee',
     'deo - external posp',
     'deo - single sign on',
@@ -67,6 +66,7 @@ export const COMMON = {
   PAYMENT_CHEQUE: 'cheque',
   ALL: 'all',
   ACTIVE: 'Active',
+  PRODUCER_STATUS: 'producerStatus'
 };
 
 export const FORM_LABEL = {

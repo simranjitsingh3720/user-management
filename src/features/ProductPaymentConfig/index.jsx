@@ -45,6 +45,8 @@ function ProductPaymentConfig() {
   };
 
   useEffect(() => {
+    dispatch(setTableName(''));
+    dispatch(setExtraColumns([]));
     dispatch(
       fetchLobData({
         isAll: true,

@@ -14,6 +14,7 @@ import Action from './Action';
 import { showDialog } from '../../stores/slices/dialogSlice';
 import { useDispatch } from 'react-redux';
 import useRole from './hooks/useRole';
+import { setTableName } from '../../stores/slices/exportSlice';
 
 function RoleModule() {
   const navigate = useNavigate();

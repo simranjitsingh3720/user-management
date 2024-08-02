@@ -58,6 +58,8 @@ const PartnerNeft = () => {
   }, [loadData]);
 
   useEffect(() => {
+    dispatch(setTableName(''));
+    dispatch(setExtraColumns([]));
     dispatch(
       fetchLobData({
         isAll: true,
@@ -72,7 +74,8 @@ const PartnerNeft = () => {
         isAll: true,
       })
     );
-  }, [dispatch]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     dispatch(setTableName(partnerNeftData?.[0]?.label));
@@ -197,6 +200,7 @@ const PartnerNeft = () => {
         showExportButton={true}
         canCreate={canCreate}
         showBulkUploadButton={true}
+        tableHeader={header}
       />
       <div className="mt-4">
         <CustomTable

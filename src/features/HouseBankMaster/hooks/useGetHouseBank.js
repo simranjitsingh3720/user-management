@@ -4,7 +4,7 @@ import axiosInstance from './../../../utils/axiosInstance';
 import { buildQueryString } from '../../../utils/globalizationFunction';
 import apiUrls from "../../../utils/apiUrls";
 import { useDispatch } from 'react-redux';
-import { removeExtraColumns, setTableName } from '../../../stores/slices/exportSlice';
+import { setTableName } from '../../../stores/slices/exportSlice';
 
 const useGetHouseBank = () => {
   const [data, setData] = useState([]);
@@ -41,7 +41,6 @@ const useGetHouseBank = () => {
         const {data} = await axiosInstance.get(`${apiUrls.houseBank}?${queryParams}`);
         setData(data?.data);
         dispatch(setTableName(data?.data[0]?.label));
-        dispatch(removeExtraColumns())
         setTotalCount(data.totalCount);
       } catch (e) {
         setData([]);

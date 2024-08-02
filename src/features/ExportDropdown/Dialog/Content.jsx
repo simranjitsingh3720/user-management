@@ -1,19 +1,23 @@
-import React, { useEffect } from "react";
-import { Checkbox, Grid, FormControlLabel } from "@mui/material";
-import DateRangePicker from "./DateRangePicker";
-import { useSelector, useDispatch } from "react-redux";
-import { fetchColumns, toggleColumn } from "../../../stores/slices/exportSlice";
-import CustomCheckbox from "../../../components/CustomCheckbox";
+import React, { useEffect } from 'react';
+import { Grid } from '@mui/material';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchColumns, toggleColumn } from '../../../stores/slices/exportSlice';
+import CustomCheckbox from '../../../components/CustomCheckbox';
 
-const Content = () => {
+const Content = ({ tableHeader }) => {
   const dispatch = useDispatch();
-  const { columns, tableName, loading, extraColumns } = useSelector(
-    (state) => state.export
-  );
+  const { columns, tableName, loading, extraColumns } = useSelector((state) => state.export);
 
   useEffect(() => {
-    dispatch(fetchColumns(tableName));
-  }, [dispatch, tableName]);
+    let headerValues = new Set();
+
+    if (tableHeader && tableHeader?.length !== 0) {
+      headerValues = new Set(tableHeader.map((header) => header.id));
+    }
+
+    dispatch(fetchColumns({ tableName, headerValues }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tableHeader, tableName]);
 
   const handleCheckUncheck = (id, isAdditional = false) => {
     dispatch(toggleColumn({ id, isAdditional }));
@@ -21,14 +25,8 @@ const Content = () => {
 
   return (
     <Grid container spacing={2} className="pt-4">
-      {/* <Grid item xs={12}>
-        <DateRangePicker />
-      </Grid> */}
-
       <Grid item xs={12}>
-        <h2 className="text-sm font-semibold">
-          Please select columns to download the data
-        </h2>
+        <h2 className="text-sm font-semibold">Please select columns to download the data</h2>
       </Grid>
       {loading && (
         <Grid item xs={12} className="flex items-center justify-center">
@@ -40,12 +38,12 @@ const Content = () => {
         columns.length > 0 &&
         columns.map((item, index) => (
           <Grid item xs={12} md={6} lg={4} key={index}>
-            <CustomCheckbox 
-                checked={item.checked}
-                onChange={() => handleCheckUncheck(item.id, false)}
-                label={item.name}
-                indeterminate={false}
-              />
+            <CustomCheckbox
+              checked={item.checked}
+              onChange={() => handleCheckUncheck(item.id, false)}
+              label={item.name}
+              indeterminate={false}
+            />
           </Grid>
         ))}
 
@@ -56,7 +54,7 @@ const Content = () => {
           </Grid>
           {extraColumns.map((item, index) => (
             <Grid item xs={12} md={6} lg={4} key={index}>
-              <CustomCheckbox 
+              <CustomCheckbox
                 checked={item.checked}
                 onChange={() => handleCheckUncheck(item.id, true)}
                 label={item.name}
