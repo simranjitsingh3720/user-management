@@ -46,6 +46,8 @@ function EmployeeFlagConfig() {
   }, [getEmployeeFlagData]);
 
   useEffect(() => {
+    dispatch(setTableName(''));
+    dispatch(setExtraColumns([]));
     dispatch(fetchUser({ userType: COMMON_WORDS.PRODUCER, searchKey: COMMON_WORDS.ROLE_NAME, isAll: true }));
   }, [dispatch]);
 
@@ -116,6 +118,7 @@ function EmployeeFlagConfig() {
           showButton
           canCreate={canCreate}
           fetchData={onSubmit}
+          tableHeader={HEADER_COLUMNS}
         />
       </div>
       <CustomTable

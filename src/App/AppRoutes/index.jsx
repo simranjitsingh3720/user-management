@@ -7,7 +7,6 @@ import PublicRoute from '../../components/PublicRoute';
 import TermCondition from '../../features/TermCondition';
 import Dashboard from '../../features/Dashboard';
 import UserManagement from '../../features/UserManagement';
-import SignInPage from '../../features/Signin/SigninPage';
 import CreateUserManagementForm from '../../features/UserManagement/Components/CreateForm';
 import PermissionModule from '../../features/PermissionModule';
 import RoleModule from '../../features/RoleModule';
@@ -49,6 +48,7 @@ import UWLevelMapping from '../../features/UWLevelMapping';
 import UWLevelMappingEmployee from '../../features/UWLevelMapping/EmployeeForm';
 import UWLevelMappingForm from '../../features/UWLevelMapping/LevelMappingForm';
 import SetOTPException from '../../features/OTPException/SetOTPException';
+import SignIn from '../../features/SignIn';
 
 const AppRoutes = () => {
   return (
@@ -102,7 +102,7 @@ const AppRoutes = () => {
           </ResponsiveDrawer>
         }
       />
-      <Route path="/sign-in" element={<PublicRoute component={SignInPage} />} />
+      <Route path="/sign-in" element={<PublicRoute component={SignIn} />} />
       <Route
         path="/user-management/form/:id?"
         element={

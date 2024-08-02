@@ -22,7 +22,7 @@ import Actions from "./Dialog/Action";
 import { EXPORT_DROPDOWN_VALUES, EXPORT_CONSTANTS } from "./utils/constants";
 import CustomDialog from "../../components/CustomDialog";
 
-const ExportDropdown = () => {
+const ExportDropdown = ({ tableHeader }) => {
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
   const dispatch = useDispatch();
@@ -39,7 +39,7 @@ const ExportDropdown = () => {
     dispatch(
       showDialog({
         title: EXPORT_CONSTANTS.dialogTitle,
-        content: <Content />,
+        content: <Content tableHeader={tableHeader} />,
         actions: <Actions />,
       })
     );

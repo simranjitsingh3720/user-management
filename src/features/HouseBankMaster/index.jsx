@@ -8,9 +8,12 @@ import { BUTTON_TEXT, PAGECOUNT } from '../../utils/globalConstants';
 import SearchComponent from '../../components/SearchComponent';
 import { SearchKey } from './utils/constants';
 import { COMMON } from '../UserManagement/Components/utils/constants';
+import { useDispatch } from 'react-redux';
+import { removeExtraColumns, setTableName } from '../../stores/slices/exportSlice';
 
 function HouseBankMaster() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(PAGECOUNT);
@@ -48,6 +51,8 @@ function HouseBankMaster() {
   };
 
   useEffect(() => {
+    dispatch(removeExtraColumns([]));
+    dispatch(setTableName(''));
     loadData();
   }, [loadData]);
 
@@ -70,6 +75,7 @@ function HouseBankMaster() {
           showExportButton={true}
           showButton
           canCreate={canCreate}
+          tableHeader={header}
         />
       </div>
 

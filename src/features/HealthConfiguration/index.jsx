@@ -40,6 +40,8 @@ function HealthConfiguration() {
   }, [page, pageSize, order, orderBy, resultProducersId]);
 
   useEffect(() => {
+    dispatch(setTableName(''));
+    dispatch(setExtraColumns([]));
     dispatch(
       fetchUser({
         userType: COMMON_WORDS.PRODUCER,
@@ -107,6 +109,7 @@ function HealthConfiguration() {
         showButton
         showExportButton={true}
         canCreate={canCreate}
+        tableHeader={HEADER_COLUMNS}
       />
       <div className="mt-4">
         <CustomTable

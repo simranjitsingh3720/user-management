@@ -35,6 +35,8 @@ function CkycConfig() {
   useEffect(() => {
     dispatch(fetchLobData({ isAll: true, status: true }));
     dispatch(fetchAllProductData({ isAll: true }));
+    dispatch(setTableName(''));
+    dispatch(setExtraColumns([]));
   }, [dispatch]);
 
   const getCkyc = useCallback(() => {
@@ -130,6 +132,7 @@ function CkycConfig() {
         showButton
         canCreate={canCreate}
         showExportButton={true}
+        tableHeader={HEADER_COLUMNS}
       />
       <div className="mt-4">
         <CustomTable

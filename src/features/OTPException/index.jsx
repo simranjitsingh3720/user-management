@@ -38,7 +38,6 @@ function OTPException() {
   useEffect(() => {
     if (otpExceptionList?.length === 0) return;
     
-    dispatch(removeExtraColumns());
     dispatch(setTableName(otpExceptionList?.[0]?.label));
 
   }, [otpExceptionList, dispatch]);
@@ -54,6 +53,8 @@ function OTPException() {
   }, [page, pageSize, order, orderBy]);
 
   useEffect(() => {
+    dispatch(setTableName);
+    dispatch(removeExtraColumns());
     getList();
   }, [getList]);
 
@@ -65,6 +66,7 @@ function OTPException() {
         showButton
         canCreate={canCreate}
         hideSearch={true}
+        tableHeader={HEADER_COLUMNS}
       />
       <div className="mt-4">
         <CustomTable
