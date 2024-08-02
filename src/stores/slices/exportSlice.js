@@ -23,7 +23,7 @@ export const fetchColumns = createAsyncThunk('export/fetchColumns', async ({ tab
     const columns = response.data.data.map((col) => ({
       id: col,
       name: col,
-      checked: headerValues.has(col),
+      checked: headerValues?.has(col) || false,
     }));
 
     return columns;
@@ -154,7 +154,7 @@ export const {
   setTableName,
   setExtraColumns,
   removeExtraColumns,
-  loading
+  loading,
 } = exportSlice.actions;
 
 export default exportSlice.reducer;
