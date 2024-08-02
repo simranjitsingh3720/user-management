@@ -55,7 +55,7 @@ function SignInOTP({ otpScreen, setOtpScreen, postData, loginLoading, verifyOTP,
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
-        {true ? (
+        {otpScreen ? (
           <>
             <div className="mt-2 text-lg font-medium font-weight-600">OTP Verification</div>
             <div className="mt-1 text-fiord">Enter the one-time password sent to you on mail</div>
