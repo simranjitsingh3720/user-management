@@ -29,6 +29,7 @@ function SearchComponent({
   onSubmit,
   fetchData,
   showBulkUploadButton = false,
+  tableHeader
 }) {
   const navigate = useNavigate();
 
@@ -212,7 +213,7 @@ function SearchComponent({
             {showBulkUploadButton && (
               <CustomButton variant="outlined" onClick={handleBulkUpload} startIcon={<BulkUpload />} />
             )}
-            {showExportButton && <ExportDropdown />}
+            {showExportButton && <ExportDropdown tableHeader={tableHeader} />}
             {showButton && canCreate && (
               <CustomButton variant="contained" onClick={handleCreateNewForm}>
                 {buttonText}

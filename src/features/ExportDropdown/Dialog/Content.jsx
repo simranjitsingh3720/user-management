@@ -1,19 +1,20 @@
 import React, { useEffect } from "react";
-import { Checkbox, Grid, FormControlLabel } from "@mui/material";
-import DateRangePicker from "./DateRangePicker";
+import { Grid } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchColumns, toggleColumn } from "../../../stores/slices/exportSlice";
 import CustomCheckbox from "../../../components/CustomCheckbox";
 
-const Content = () => {
+const Content = ({ tableHeader }) => {
   const dispatch = useDispatch();
   const { columns, tableName, loading, extraColumns } = useSelector(
     (state) => state.export
   );
 
   useEffect(() => {
-    dispatch(fetchColumns(tableName));
-  }, [dispatch, tableName]);
+    const headerValues = new Set(tableHeader.map(header => header.id));
+    dispatch(fetchColumns({tableName, headerValues}));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tableHeader, tableName]);
 
   const handleCheckUncheck = (id, isAdditional = false) => {
     dispatch(toggleColumn({ id, isAdditional }));
@@ -21,10 +22,6 @@ const Content = () => {
 
   return (
     <Grid container spacing={2} className="pt-4">
-      {/* <Grid item xs={12}>
-        <DateRangePicker />
-      </Grid> */}
-
       <Grid item xs={12}>
         <h2 className="text-sm font-semibold">
           Please select columns to download the data

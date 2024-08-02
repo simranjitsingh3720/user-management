@@ -89,6 +89,7 @@ function UserManagement() {
         fetchData={onSubmit}
         canCreate={canCreate}
         onSubmit={onSubmit}
+        tableHeader={header}
       />
       <div className="mt-4">
         <CustomTable

@@ -17,14 +17,15 @@ const initialState = {
   extraColumns: [],
 };
 
-export const fetchColumns = createAsyncThunk('export/fetchColumns', async (tableName, thunkAPI) => {
+export const fetchColumns = createAsyncThunk('export/fetchColumns', async ({ tableName, headerValues }, thunkAPI) => {
   try {
     const response = await axiosInstance.get(`${apiUrls.getColumns}${tableName}`);
     const columns = response.data.data.map((col) => ({
       id: col,
       name: col,
-      checked: false,
+      checked: headerValues.has(col),
     }));
+
     return columns;
   } catch (error) {
     return thunkAPI.rejectWithValue(error.response.data);
@@ -49,7 +50,6 @@ export const downloadData = createAsyncThunk('export/downloadData', async (paylo
     const { data } = response;
 
     if (data?.data) {
-
       const { async, url = '' } = data;
 
       if (async) {
@@ -62,7 +62,7 @@ export const downloadData = createAsyncThunk('export/downloadData', async (paylo
       link.setAttribute('download', data.fileName);
       document.body.appendChild(link);
       link.click();
-      toastifyUtils.notifySuccess("File downloaded successfully");
+      toastifyUtils.notifySuccess('File downloaded successfully');
     }
     return response.data;
   } catch (error) {
@@ -124,11 +124,7 @@ const exportSlice = createSlice({
       })
       .addCase(fetchColumns.fulfilled, (state, action) => {
         state.loading = false;
-        const columns = action.payload.map((item) => ({
-          ...item,
-          checked: false,
-        }));
-        state.columns = columns;
+        state.columns = action.payload;
       })
       .addCase(fetchColumns.rejected, (state, action) => {
         state.loading = false;
