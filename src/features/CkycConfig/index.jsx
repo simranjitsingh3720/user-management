@@ -121,7 +121,6 @@ function CkycConfig() {
         optionLabel={(option) => optionLabel(option, searched)}
         placeholder={getPlaceHolder(searched)}
         renderOptionFunction={(props, option) => renderOptionFunction(props, option, searched)}
-        buttonText={BUTTON_TEXT.CKYC_CONFIG}
         navigateRoute={'/ckyc-config/form'}
         searched={searched}
         textField={showTextField.includes(searched)}

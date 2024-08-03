@@ -112,7 +112,6 @@ function ProducerEODBypass() {
         renderOptionFunction={renderOptionUserFunction}
         onSubmit={onSubmit}
         showButton={true}
-        buttonText={BUTTON_TEXT.PRODUCER_EOD}
         navigateRoute="/producer-eod-bypass-list/form"
         showExportButton
         canCreate={canCreate}

@@ -117,7 +117,6 @@ function ProductPaymentConfig() {
           searched === COMMON_WORDS.PRODUCT ? getPlaceHolder(COMMON_WORDS.PRODUCT) : getPlaceHolder(COMMON_WORDS.LOB)
         }
         renderOptionFunction={searched === COMMON_WORDS.PRODUCT ? renderOptionProductFunction : renderOptionLobFunction}
-        buttonText={BUTTON_TEXT.PRODUCT_PAYMENT}
         navigateRoute={'/product-payment-config/form'}
         searched={searched}
         setSearched={setSearched}

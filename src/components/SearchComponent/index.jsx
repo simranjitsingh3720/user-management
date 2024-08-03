@@ -14,7 +14,6 @@ function SearchComponent({
   optionLabel,
   placeholder,
   renderOptionFunction,
-  buttonText,
   navigateRoute,
   searched,
   setSearched,
@@ -216,7 +215,7 @@ function SearchComponent({
             {showExportButton && <ExportDropdown tableHeader={tableHeader} />}
             {showButton && canCreate && (
               <CustomButton variant="contained" onClick={handleCreateNewForm}>
-                {buttonText}
+                Create
               </CustomButton>
             )}
           </Grid>

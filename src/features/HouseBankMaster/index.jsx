@@ -68,7 +68,6 @@ function HouseBankMaster() {
           textField
           textFieldPlaceholder={COMMON.SEARCH_PLACEHOLDER}
           setQuery={setQuery}
-          buttonText={BUTTON_TEXT.HOUSE_BANK}
           navigateRoute="/house-bank-master/form"
           onSubmit={handleGo}
           fetchData={handleGo}

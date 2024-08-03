@@ -61,7 +61,6 @@ function OTPException() {
   return (
     <div>
       <SearchComponent
-        buttonText={BUTTON_TEXT.SET_OTP_EXCEPTION}
         navigateRoute={'/otpexception/form'}
         showButton
         canCreate={canCreate}

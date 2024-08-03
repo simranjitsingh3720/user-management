@@ -189,7 +189,6 @@ const PartnerNeft = () => {
         renderOptionFunction={(props, option) =>
           renderOptionFunction(props, option, COMMON_WORDS[searched.toUpperCase()])
         }
-        buttonText={BUTTON_TEXT.PARTNER_NEFT}
         navigateRoute="/partner-neft/form"
         searched={searched}
         setSearched={setSearched}

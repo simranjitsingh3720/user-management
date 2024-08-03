@@ -113,7 +113,6 @@ function EmployeeFlagConfig() {
           )}
           onSubmit={onSubmit}
           showExportButton
-          buttonText={BUTTON_TEXT.EMPLOYEE_FLAG_CONFIG}
           navigateRoute="/employee-flag-config/form"
           showButton
           canCreate={canCreate}

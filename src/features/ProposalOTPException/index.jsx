@@ -88,7 +88,6 @@ function ProposalOTPException() {
           // dateField
           handleGo={handleGo}
           showButton={true}
-          buttonText={BUTTON_TEXT.PROPOSAL_EXCEPTION}
           navigateRoute="/proposalotpexception/form"
           showExportButton
           canCreate={canCreate}

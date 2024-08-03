@@ -186,7 +186,6 @@ function Product() {
           renderOptionFunction={(props, option) =>
             renderOptionFunction(props, option, COMMON_WORDS[searched.toUpperCase()])
           }
-          buttonText={BUTTON_TEXT.PRODUCT}
           navigateRoute="/product/product-form"
           searched={searched}
           setSearched={setSearched}

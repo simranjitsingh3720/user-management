@@ -60,7 +60,6 @@ function Channel() {
   return (
     <div>
       <SearchComponent
-        buttonText={BUTTON_TEXT.CREATE_CONFIG}
         navigateRoute={'/proposal-bitly-config/channel-form'}
         showButton
         showBulkUploadButton

@@ -205,7 +205,6 @@ function GroupModule() {
           renderOptionFunction={(props, option) =>
             renderOptionFunction(props, option, COMMON_WORDS[searched.toUpperCase()])
           }
-          buttonText={BUTTON_TEXT.GROUP}
           navigateRoute="/group/group-form"
           textField={showTextField.includes(searched)}
           textFieldPlaceholder={getPlaceHolder(COMMON_WORDS.GROUP)}

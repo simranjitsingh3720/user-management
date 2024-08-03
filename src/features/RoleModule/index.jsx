@@ -98,7 +98,6 @@ function RoleModule() {
           textField
           textFieldPlaceholder={COMMON.SEARCH_PLACEHOLDER}
           setQuery={setQuery}
-          buttonText={BUTTON_TEXT.ROLES}
           navigateRoute="/roles/role-form"
           onSubmit={handleGo}
           showExportButton={true}

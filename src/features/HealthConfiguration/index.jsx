@@ -103,7 +103,6 @@ function HealthConfiguration() {
         optionLabel={optionLabel}
         placeholder={getPlaceHolder(COMMON_WORDS.PRODUCER)}
         renderOptionFunction={renderOptionFunction}
-        buttonText={BUTTON_TEXT.HEALTH_CONFIG}
         navigateRoute={'/health-config/form'}
         onSubmit={onSubmit}
         showButton

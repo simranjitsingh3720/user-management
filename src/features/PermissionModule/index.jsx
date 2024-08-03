@@ -65,7 +65,6 @@ function PermissionModule() {
         setSearched={setSearched}
         textField
         textFieldPlaceholder="Search"
-        buttonText={BUTTON_TEXT.Permission}
         navigateRoute={'/permission/permission-form'}
         showButton
         canCreate={canCreate}
