@@ -4,7 +4,7 @@ import { Header } from './utils/header';
 import CustomTable from '../../components/CustomTable';
 import { clearProducts, fetchAllProductData } from '../../stores/slices/productSlice';
 import { COMMON_WORDS } from '../../utils/constants';
-import { BUTTON_TEXT, PAGECOUNT } from '../../utils/globalConstants';
+import { PAGECOUNT } from '../../utils/globalConstants';
 import { getPlaceHolder } from '../../utils/globalizationFunction';
 import { fetchLobData } from '../../stores/slices/lobSlice';
 import SearchComponent from '../../components/SearchComponent';

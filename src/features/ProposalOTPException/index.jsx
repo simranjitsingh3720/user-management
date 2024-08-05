@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { ASC, BUTTON_TEXT, CREATED_AT, PAGECOUNT } from '../../utils/globalConstants';
+import { ASC, CREATED_AT, PAGECOUNT } from '../../utils/globalConstants';
 import useGetProposalOTPList from './hooks/useGetProposalOTPList';
 import usePermissions from '../../hooks/usePermission';
 import { Header } from './utils/Header';
@@ -34,12 +34,15 @@ function ProposalOTPException() {
     dispatch(removeExtraColumns());
     dispatch(setTableName(''));
     fetchProposalOtp();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleEditClick = useCallback((row) => {
-    navigate(`/proposalotpexception/form/${row.id}`);
-  }, [navigate])
+  const handleEditClick = useCallback(
+    (row) => {
+      navigate(`/proposalotpexception/form/${row.id}`);
+    },
+    [navigate]
+  );
 
   const updateStatus = useCallback(
     (id, data) => {
@@ -53,7 +56,7 @@ function ProposalOTPException() {
         }
         return item;
       });
-      
+
       setData(updatedData);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -73,11 +76,10 @@ function ProposalOTPException() {
     [dispatch, updateStatus]
   );
 
-
   const header = useMemo(() => Header(handleEditClick, handleStatusUpdate), [handleEditClick, handleStatusUpdate]);
 
   const handleGo = () => {
-    fetchProposalOtp({query, searched, date});
+    fetchProposalOtp({ query, searched, date });
   };
 
   return (

@@ -10,7 +10,7 @@ import { getPlaceHolder } from '../../utils/globalizationFunction';
 import { fetchUser } from '../../stores/slices/userSlice';
 import { showDialog } from '../../stores/slices/dialogSlice';
 import { setExtraColumns, setTableName } from '../../stores/slices/exportSlice';
-import { BUTTON_TEXT, PAGECOUNT } from '../../utils/globalConstants';
+import { PAGECOUNT } from '../../utils/globalConstants';
 import usePermissions from '../../hooks/usePermission';
 import { EXPORT_DROPDOWN_COLUMNS } from './utils/constant';
 import Content from './Dialog/Content';
@@ -30,15 +30,15 @@ function EmployeeFlagConfig() {
 
   const { employeeFlagList, loading, getEmployeeFlagList } = useGetEmployeeFlag();
 
-  const getEmployeeFlagData = useCallback(()=> {
+  const getEmployeeFlagData = useCallback(() => {
     getEmployeeFlagList({
       page,
       pageSize,
       order,
       orderBy,
-      resultProducersId
+      resultProducersId,
     });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, pageSize, order, orderBy, resultProducersId]);
 
   useEffect(() => {
@@ -91,7 +91,7 @@ function EmployeeFlagConfig() {
 
   const HEADER_COLUMNS = useMemo(() => generateTableHeaders(handleClicked), [handleClicked]);
 
-  const onSubmit =(data) => {
+  const onSubmit = (data) => {
     setPage(0);
     let ids = data?.autocomplete?.map((item) => item.id).join(',');
     setResultProducersId(ids || '');
@@ -102,9 +102,7 @@ function EmployeeFlagConfig() {
       <div className="mb-4">
         <SearchComponent
           optionsData={user?.data || []}
-          optionLabel={(option) =>
-            option?.firstName ? `${option.firstName} ${option.lastName}` : ''
-          }
+          optionLabel={(option) => (option?.firstName ? `${option.firstName} ${option.lastName}` : '')}
           placeholder={getPlaceHolder(COMMON_WORDS.PRODUCER)}
           renderOptionFunction={(props, option) => (
             <li {...props} key={option?.id}>

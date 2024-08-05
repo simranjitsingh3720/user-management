@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import useGetPrivilege from './hooks/useGetPrivilege';
-import { BUTTON_TEXT, PAGECOUNT } from '../../utils/globalConstants';
+import { PAGECOUNT } from '../../utils/globalConstants';
 import CustomTable from '../../components/CustomTable';
 import generateTableHeaders from './utils/generateTableHeaders';
 import { COMMON_WORDS } from '../../utils/constants';
@@ -28,10 +28,10 @@ function PermissionModule() {
 
   /**
    * @description Update status of the permission
-   * @param data 
-   * @param row 
+   * @param data
+   * @param row
    */
-  const handleClicked = ({row}) => {
+  const handleClicked = ({ row }) => {
     dispatch(
       showDialog({
         title: COMMON_WORDS.CHANGE_STATUS,
@@ -42,20 +42,19 @@ function PermissionModule() {
   };
   const HEADER_COLUMNS = generateTableHeaders(handleClicked);
 
-
   const onSubmit = (data) => {
-      setPage(0);
-      setQuery(data?.search || '');
+    setPage(0);
+    setQuery(data?.search || '');
   };
 
   const getPermissionData = useCallback(() => {
     fetchPermission(page, pageSize, order, orderBy, searched, query);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, pageSize, order, orderBy, query]);
 
   useEffect(() => {
     getPermissionData();
-  }, [getPermissionData])
+  }, [getPermissionData]);
 
   return (
     <div>

@@ -6,7 +6,7 @@ import SearchComponent from '../../components/SearchComponent';
 import CustomTable from '../../components/CustomTable';
 import useGetPartnerNeft from './hooks/useGetPartnerNeft';
 import { Header } from './utils/header';
-import { BUTTON_TEXT, PAGECOUNT } from '../../utils/globalConstants';
+import { PAGECOUNT } from '../../utils/globalConstants';
 import { fetchLobData } from '../../stores/slices/lobSlice';
 import { fetchAllProductData } from '../../stores/slices/productSlice';
 import { COMMON_FIELDS, SEARCH_OPTIONS } from './utils/constant';
@@ -74,7 +74,7 @@ const PartnerNeft = () => {
         isAll: true,
       })
     );
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

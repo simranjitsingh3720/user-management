@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import useGetEODBypass from './hooks/useGetEODBypass';
-import { BUTTON_TEXT, PAGECOUNT } from '../../utils/globalConstants';
+import { PAGECOUNT } from '../../utils/globalConstants';
 import { useDispatch, useSelector } from 'react-redux';
 import { setExtraColumns, setTableName } from '../../stores/slices/exportSlice';
 import { getPlaceHolder } from '../../utils/globalizationFunction';
@@ -40,7 +40,7 @@ function ProducerEODBypass() {
       query,
       searched,
     });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, pageSize, order, orderBy, resultProducersId, date, query]);
 
   useEffect(() => {
@@ -58,7 +58,7 @@ function ProducerEODBypass() {
   useEffect(() => {
     dispatch(setTableName(eodByPassList?.[0]?.label));
     dispatch(setExtraColumns(EXPORT_EXTRA_COLUMNS));
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [eodByPassList]);
 
   useEffect(() => {
@@ -86,20 +86,22 @@ function ProducerEODBypass() {
   const HEADER_COLUMNS = generateTableHeaders(handleEditClick);
 
   const onSubmit = (data) => {
-    setPage(0)
-    if(searched === 'producerName') {
+    setPage(0);
+    if (searched === 'producerName') {
       const resultUserString = fetchIdsAndConvert(data?.autocomplete || []);
       setResultProducersId(resultUserString || '');
-    } 
+    }
 
-    if(searched === 'reason') {
+    if (searched === 'reason') {
       setQuery(data?.search || '');
     }
 
-    setDate({
-      startDate: data?.startDate || '',
-      endDate: data?.endDate || '',
-    } || {});
+    setDate(
+      {
+        startDate: data?.startDate || '',
+        endDate: data?.endDate || '',
+      } || {}
+    );
   };
 
   return (

@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ASC, BUTTON_TEXT, CREATED_AT, PAGECOUNT } from '../../utils/globalConstants';
+import { ASC,  CREATED_AT, PAGECOUNT } from '../../utils/globalConstants';
 import usePermissions from '../../hooks/usePermission';
 import SearchComponent from '../../components/SearchComponent';
 import { SEARCH_OPTIONS } from './utils/constants';

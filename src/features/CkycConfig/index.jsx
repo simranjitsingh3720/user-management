@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import SearchComponenet from '../../components/SearchComponent';
 import { Box } from '@mui/material';
 import useGetCkycData from './hooks/useGetCkycData';
-import { BUTTON_TEXT, PAGECOUNT } from '../../utils/globalConstants';
+import { PAGECOUNT } from '../../utils/globalConstants';
 import { COMMON_WORDS } from '../../utils/constants';
 import { getPlaceHolder } from '../../utils/globalizationFunction';
 import { useDispatch, useSelector } from 'react-redux';
@@ -41,7 +41,7 @@ function CkycConfig() {
 
   const getCkyc = useCallback(() => {
     fetchData({ page, pageSize, order, orderBy, searched, resultProductString, query });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, pageSize, order, orderBy, resultProductString, query]);
 
   useEffect(() => {
@@ -60,12 +60,12 @@ function CkycConfig() {
         createdAt: item?.cKYC?.createdAt,
         updatedAt: item?.cKYC?.updatedAt,
       }));
-      
+
       setTableData(refactorData);
       dispatch(setTableName(refactorData[0]?.label));
       dispatch(setExtraColumns([ExtraColumnsEnum.PRODUCT, ExtraColumnsEnum.LOB]));
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ckycList]);
 
   const navigate = useNavigate();
@@ -97,7 +97,7 @@ function CkycConfig() {
     return option[type] || '';
   };
   const renderOptionFunction = (props, option, type) => (
-    <li {...props} key={option?.id} style={{ textTransform: 'capitalize'}}>
+    <li {...props} key={option?.id} style={{ textTransform: 'capitalize' }}>
       {optionLabel(option, type)}
     </li>
   );
@@ -105,8 +105,8 @@ function CkycConfig() {
   const onSubmit = (data) => {
     setPage(0);
     setQuery(data?.search || '');
-    
-    if(data === undefined) {
+
+    if (data === undefined) {
       setResultProductString('');
     } else {
       setResultProductString(fetchIdsAndConvert(data?.autocomplete || []));
