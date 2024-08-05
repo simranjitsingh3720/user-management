@@ -16,7 +16,7 @@ export const Header = (handleEditClick, handleStatusUpdate) => {
     },
     {
       id: 'product',
-      value: 'product',
+      value: 'Product',
     },
     {
       id: 'startDate',
