@@ -78,7 +78,6 @@ const ExportDropdown = ({ tableHeader }) => {
           onClick={handleToggle}
           startIcon={<DownloadIcon />}
         >
-          <span>Export</span>
           <ArrowDropDownIcon />
         </CustomButton>
       </ButtonGroup>
