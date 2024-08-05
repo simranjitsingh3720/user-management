@@ -23,12 +23,12 @@ export const BitlyLink = [
 export const STATUS = [
   {
     id: 'byChannel',
-    label: 'By Channel',
+    label: 'Channel',
     value: 'byChannel',
   },
   {
     id: 'byProducer',
-    label: 'By Producer Code',
+    label: 'Producer Code',
     value: 'byProducer',
   },
 ];
