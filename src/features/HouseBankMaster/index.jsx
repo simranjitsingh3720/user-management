@@ -4,12 +4,13 @@ import CustomTable from '../../components/CustomTable';
 import usePermissions from '../../hooks/usePermission';
 import useGetHouseBank from './hooks/useGetHouseBank';
 import { Header } from './utils/Header';
-import { BUTTON_TEXT, PAGECOUNT } from '../../utils/globalConstants';
+import { PAGECOUNT } from '../../utils/globalConstants';
 import SearchComponent from '../../components/SearchComponent';
 import { SearchKey } from './utils/constants';
 import { COMMON } from '../UserManagement/Components/utils/constants';
 import { useDispatch } from 'react-redux';
 import { removeExtraColumns, setTableName } from '../../stores/slices/exportSlice';
+import { COMMON_WORDS } from '../../utils/constants';
 
 function HouseBankMaster() {
   const navigate = useNavigate();
@@ -17,8 +18,8 @@ function HouseBankMaster() {
 
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(PAGECOUNT);
-  const [order, setOrder] = useState('');
-  const [orderBy, setOrderBy] = useState('');
+  const [order, setOrder] = useState(COMMON_WORDS.ASC);
+  const [orderBy, setOrderBy] = useState(COMMON_WORDS.CREATED_AT);
 
   const [searched, setSearched] = useState(SearchKey[0].value);
   const [query, setQuery] = useState('');
