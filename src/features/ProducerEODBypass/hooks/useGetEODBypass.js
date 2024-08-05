@@ -12,8 +12,8 @@ const calculateUnlockedDays = (startDateString, endDateString) => {
   const startDate = dayjs(startDateString, DATE_FORMAT);
   const enddate = dayjs(endDateString, DATE_FORMAT);
 
-  if (!startDate.isValid() || !enddate.isValid()) {
-    throw new Error('Invalid date format');
+  if (!dayjs(startDateString, DATE_FORMAT).isValid() || !dayjs(endDateString, DATE_FORMAT).isValid()) {
+    return 0;
   }
 
   const differenceInDays = enddate.diff(startDate, 'day');
@@ -65,18 +65,19 @@ function useGetEODBypass() {
       let url = `${apiUrls.getEodByPass}?${params}`;
       const response = await axiosInstance.get(url);
       const producerEodByPass = response?.data?.data?.map((item) => {
-        const { producerEodByPass = {}, producer = [] } = item;
+        const { producerEodByPass: {id, label, reason, startDate, endDate, createdAt, updatedAt}, producer } = item;
+        const { firstName ='', lastName='', producerCode='' } = producer?.[0];
         return {
-          id: producerEodByPass.id,
-          label: producerEodByPass.label,
-          producerName: (producer[0].firstName || '') + ' ' + (producer[0].lastName || ''),
-          producerCode: producer[0].producerCode,
-          unlockedDays: calculateUnlockedDays(producerEodByPass.startDate, producerEodByPass.endDate),
-          reason: producerEodByPass.reason,
-          startDate: producerEodByPass.startDate,
-          endDate: producerEodByPass.endDate,
-          createdAt: producerEodByPass.createdAt,
-          updatedAt: producerEodByPass.updatedAt,
+          id: id,
+          label: label,
+          producerName: `${firstName} ${lastName}`,
+          producerCode: producerCode,
+          unlockedDays: calculateUnlockedDays(startDate, endDate),
+          reason: reason,
+          startDate: startDate,
+          endDate: endDate,
+          createdAt: createdAt,
+          updatedAt: updatedAt,
         };
       });
       setEodByPassList(producerEodByPass);
