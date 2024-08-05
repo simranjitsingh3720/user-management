@@ -24,7 +24,6 @@ const DateRangePicker = () => {
             <DatePicker
               value={fromDate ? dayjs(fromDate, DATE_FORMAT) : null}
               onChange={(newValue) => dispatch(setFromDate(newValue))}
-              slotProps={{ textField: { size: "medium" } }}
               disabled={selectedValue !== EXPORT_CONSTANTS.custom}
             />
           </FormControl>
@@ -35,7 +34,6 @@ const DateRangePicker = () => {
             <DatePicker
               value={toDate ? dayjs(toDate, DATE_FORMAT) : null}
               onChange={(newValue) => dispatch(setToDate(newValue))}
-              slotProps={{ textField: { size: "medium" } }}
               disabled={selectedValue !== EXPORT_CONSTANTS.custom}
             />
           </FormControl>
