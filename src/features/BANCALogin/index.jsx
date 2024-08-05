@@ -1,14 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useGetBancaLoginData from './hooks/useGetBancaLoginData';
-import { Box, Card, CardContent, Grid, Switch, TextField, Typography } from '@mui/material';
-import { Controller, useForm } from 'react-hook-form';
-import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { Box, Card, CardContent, Grid, Switch, Typography } from '@mui/material';
+import { useForm } from 'react-hook-form';
 import dayjs from 'dayjs';
 import useGetUserData from './hooks/useGetUserData';
 import useGetProducerData from './hooks/useGetProducerData';
 import { FieldDataList, labels } from './constants';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import useCreateBancaField from './hooks/useCreateBancaField';
 import useUpdateBancaField from './hooks/useUpdateBancaField';
 import 'dayjs/locale/en-gb';
@@ -17,21 +14,12 @@ import CustomFormHeader from '../../components/CustomFormHeader';
 import { COMMON_WORDS, FORM_HEADER_TEXT } from '../../utils/constants';
 import usePermissions from '../../hooks/usePermission';
 import CustomAutoCompleteWithoutCheckbox from '../../components/CustomAutoCompleteWithoutCheckbox';
+import DateField from '../../components/CustomDateInput';
 
 function BANCALogin() {
-  const [fileName, setFileName] = useState('');
-
   const { data: bancaData, loading: bancaLoading, fetchData: bancaFetchData } = useGetBancaLoginData();
   const [fieldData, setFieldData] = useState(Object.values(FieldDataList).flat());
   const { canUpdate, canCreate } = usePermissions();
-
-  const inputFileRef = useRef(null);
-
-  const handleButtonClick = () => {
-    if (inputFileRef.current) {
-      inputFileRef.current.click();
-    }
-  };
 
   const handleEnableChange = (value) => {
     setFieldData(() => {
@@ -58,7 +46,7 @@ function BANCALogin() {
     });
   };
 
-  const { handleSubmit, control, setValue, watch, formState, getValues, trigger } = useForm({
+  const { handleSubmit, control, setValue, watch, formState: { errors }, getValues, trigger } = useForm({
     defaultValues: {
       producerCode: null,
       product: null,
@@ -84,8 +72,6 @@ function BANCALogin() {
       setValue('endDate', dayjs(bancaData?.data?.endDate, 'DD/MM/YYYY').format('DD/MM/YYYY'));
     }
   }, [bancaData]);
-
-  const { errors } = formState;
 
   const resetFields = () => {
     setValue('product', null);
@@ -166,6 +152,7 @@ function BANCALogin() {
             handleReset={handleResetButton}
             headerText={FORM_HEADER_TEXT.BANCA_FIELDS}
             subHeading="Fill in the mandatory information to modify the Banca fields."
+            customHeader='true'
           />
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
@@ -180,9 +167,10 @@ function BANCALogin() {
                 }
                 isOptionEqualToValue={(option, value) => option.id === value.id}
                 error={Boolean(errors.producerCode)}
-                helperText={errors.lob?.message}
+                helperText={errors.producerCode?.message}
                 required={true}
                 placeholder={COMMON_WORDS.SELECT}
+                disableClearable={true}
                 onChangeCallback={() => {
                   fetchData(getValues('producerCode')?.id);
                   resetFields();
@@ -200,10 +188,11 @@ function BANCALogin() {
                 getOptionLabel={(option) => option.product}
                 isOptionEqualToValue={(option, value) => option.id === value.id}
                 error={Boolean(errors.product)}
-                helperText={errors.lob?.message}
+                helperText={errors.product?.message}
                 required={true}
                 placeholder={COMMON_WORDS.SELECT}
                 trigger={trigger}
+                disableClearable={true}
                 onChangeCallback={() => {
                   if (watch('producerCode') && watch('product')) {
                     bancaFetchData(watch('producerCode').id, watch('product').id);
@@ -213,59 +202,33 @@ function BANCALogin() {
              
             </Grid>
             <Grid item xs={12} sm={6}>
-              <Controller
-                name="startDate"
+              <DateField
+                key="startDate"
                 control={control}
-                rules={{ required: true }}
-                render={({ field }) => (
-                  <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
-                    <DatePicker
-                      label="Start Date"
-                      value={field.value ? dayjs(field.value, 'DD/MM/YYYY') : null}
-                      minDate={dayjs()}
-                      onChange={(date) => {
-                        const formattedDate = dayjs(date).format('DD/MM/YYYY');
-                        setValue('startDate', formattedDate);
-                      }}
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          variant="outlined"
-                          error={!!errors.startDate}
-                          helperText={errors.startDate ? 'This field is required' : ''}
-                        />
-                      )}
-                    />
-                  </LocalizationProvider>
-                )}
+                name="startDate"
+                labelVisible={true}
+                label="Start Date"
+                errors={errors}
+                classes="w-full text-red-600"
+                setValue={setValue}
+                watch={watch}
+                isEdit={true}
+                required={true}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <Controller
-                name="endDate"
+            <DateField
+                key="endDate"
                 control={control}
-                rules={{ required: true }}
-                render={({ field }) => (
-                  <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
-                    <DatePicker
-                      label="End Date"
-                      value={field.value ? dayjs(field.value, 'DD/MM/YYYY') : null}
-                      minDate={dayjs()}
-                      onChange={(date) => {
-                        const formattedDate = dayjs(date).format('DD/MM/YYYY');
-                        setValue('endDate', formattedDate);
-                      }}
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          variant="outlined"
-                          error={!!errors.endDate}
-                          helperText={errors.endDate ? 'This field is required' : ''}
-                        />
-                      )}
-                    />
-                  </LocalizationProvider>
-                )}
+                name="endDate"
+                labelVisible={true}
+                label="End Date"
+                errors={errors}
+                classes="w-full text-red-600"
+                setValue={setValue}
+                watch={watch}
+                isEdit={true}
+                required={true}
               />
             </Grid>
           </Grid>
@@ -303,30 +266,6 @@ function BANCALogin() {
           </Grid>
         ))}
       </Grid>
-      <div style={{ marginTop: '16px' }}>
-        <Typography variant="subtitle1">Partner Employee Code Master</Typography>
-        <input
-          type="file"
-          ref={inputFileRef}
-          style={{ display: 'none' }}
-          onChange={(event) => {
-            const file = event.target.files[0];
-            if (file) {
-              setFileName(file.name);
-            }
-          }}
-        />
-        <CustomButton
-          component="label"
-          variant="contained"
-          startIcon={<CloudUploadIcon />}
-          disabled={!fieldData.find((item) => item.value === 'partnerEmployeeCode')?.Enable}
-          onClick={handleButtonClick}
-        >
-          Upload file
-        </CustomButton>
-        {fileName && <Typography variant="body2">{fileName}</Typography>}
-      </div>
       {(canCreate || canUpdate) && (
         <div style={{ marginTop: '16px' }}>
           <CustomButton type="submit" variant="contained" disabled={updateBancaLoding || createBancaLoding}>

@@ -5,7 +5,7 @@ import LeftArrow from '../../assets/LeftArrow';
 import CustomButton from '../CustomButton';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 
-function CustomFormHeader({ id, handleReset, navigateRoute, headerText, subHeading }) {
+function CustomFormHeader({ id, handleReset, navigateRoute, headerText, subHeading, customHeader }) {
   const navigate = useNavigate();
 
   return (
@@ -25,7 +25,7 @@ function CustomFormHeader({ id, handleReset, navigateRoute, headerText, subHeadi
             )}
             <div>
               <Typography variant="h6" noWrap fontWeight={600} color="#465465">
-                {id ? `Update ${headerText}` : `Create New ${headerText}`}
+                {customHeader ? headerText : (id ? `Update ${headerText}` : `Create New ${headerText}`)}
               </Typography>
               {subHeading && (
                 <Typography variant="body2" color="textSecondary">
