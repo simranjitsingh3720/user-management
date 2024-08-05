@@ -151,7 +151,6 @@ function BANCALogin() {
           <CustomFormHeader
             handleReset={handleResetButton}
             headerText={FORM_HEADER_TEXT.BANCA_FIELDS}
-            subHeading="Fill in the mandatory information to modify the Banca fields."
             customHeader='true'
           />
           <Grid container spacing={2}>
@@ -181,7 +180,7 @@ function BANCALogin() {
             <Grid item xs={12} sm={6}>
               <CustomAutoCompleteWithoutCheckbox
                 name="product"
-                label="Product"
+                label="Products"
                 control={control}
                 rules={{ required: 'Product is required' }}
                 options={producerList?.data || []}
@@ -214,6 +213,7 @@ function BANCALogin() {
                 watch={watch}
                 isEdit={true}
                 required={true}
+                trigger={trigger}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -229,6 +229,7 @@ function BANCALogin() {
                 watch={watch}
                 isEdit={true}
                 required={true}
+                trigger={trigger}
               />
             </Grid>
           </Grid>
