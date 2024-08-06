@@ -98,8 +98,6 @@ export const FORM_LABEL = {
   PLAN: 'plan',
   ZONE: 'zone',
   REVALIDATION: 'revalidation',
-  
-
 };
 
 export const FORM_VALUE = {

@@ -728,7 +728,7 @@ function CreateUserCreationForm() {
    if(neftValue && ARR_CONTAINS.PRODUCER_ARR.some((role) => rolesWatch?.roleName?.includes(role))){
     const selectedHouseBank = neftDefaultBank.find((obj) => obj.id === neftValue);
     if (selectedHouseBank) {
-      setValue('accountNumber', selectedHouseBank?.accountNumber);
+      setValue(COMMON.ACCOUNT_NUMBER, selectedHouseBank?.accountNumber);
     }
    }
   }, [neftValue]);
