@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import useGetOTPException from './hooks/useGetOTPException';
-import { BUTTON_TEXT, PAGECOUNT } from '../../utils/globalConstants';
+import { PAGECOUNT } from '../../utils/globalConstants';
 import SearchComponent from '../../components/SearchComponent';
 import usePermissions from '../../hooks/usePermission';
 import CustomTable from '../../components/CustomTable';
@@ -117,7 +117,6 @@ function OTPException() {
           searched === COMMON_WORDS.PRODUCER ? renderOptionProducerFunction : renderOptionChannelFunction
         }
         onSubmit={onSubmit}
-        buttonText={BUTTON_TEXT.SET_OTP_EXCEPTION}
         navigateRoute={'/otpexception/form'}
         showButton
         canCreate={canCreate}

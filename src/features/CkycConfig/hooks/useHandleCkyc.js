@@ -44,7 +44,7 @@ function useHandleCkyc() {
       };
 
       if (payload.properties.isCKYCApplicable) {
-        payload.properties.forWhom = data.forWhom;
+        payload.properties.forWhom = data.forWhom?.value;
       }
       const response = await axiosInstance.put(`${apiUrls.ckyc}`, payload);
       toast.success(response?.data?.message || 'House Bank updated successfully');

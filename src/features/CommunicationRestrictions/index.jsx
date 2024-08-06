@@ -41,7 +41,7 @@ function CommunicationRestrictions() {
               Download Data
             </CustomButton>
             <CustomButton type="submit" onClick={createRestrictionsForm}>
-              Create New Restrictions
+              Create
             </CustomButton>
           </div>
         </div>

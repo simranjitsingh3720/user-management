@@ -1,0 +1,8 @@
+FROM 056032728903.dkr.ecr.ap-south-1.amazonaws.com/node20-slim:latest
+WORKDIR /app
+COPY ./package.json ./
+RUN ls
+RUN npm install
+COPY ./ ./
+EXPOSE 3000
+CMD ["npm", "run", "start:dev"]

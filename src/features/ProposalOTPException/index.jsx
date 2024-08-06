@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { ASC, BUTTON_TEXT, CREATED_AT, PAGECOUNT } from '../../utils/globalConstants';
+import { ASC, CREATED_AT, PAGECOUNT } from '../../utils/globalConstants';
 import useGetProposalOTPList from './hooks/useGetProposalOTPList';
 import usePermissions from '../../hooks/usePermission';
 import { Header } from './utils/Header';
@@ -153,7 +153,6 @@ function ProposalOTPException() {
           }
           dateField
           showButton={true}
-          buttonText={BUTTON_TEXT.PROPOSAL_EXCEPTION}
           navigateRoute="/proposalotpexception/form"
           showExportButton
           canCreate={canCreate}

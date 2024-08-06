@@ -3,6 +3,7 @@ import { Grid } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchColumns, toggleColumn } from '../../../stores/slices/exportSlice';
 import CustomCheckbox from '../../../components/CustomCheckbox';
+import DateRangePicker from './DateRangePicker';
 
 const Content = ({ tableHeader }) => {
   const dispatch = useDispatch();
@@ -25,6 +26,9 @@ const Content = ({ tableHeader }) => {
 
   return (
     <Grid container spacing={2} className="pt-4">
+      <Grid item xs={12}>
+        <DateRangePicker />
+      </Grid>
       <Grid item xs={12}>
         <h2 className="text-sm font-semibold">Please select columns to download the data</h2>
       </Grid>

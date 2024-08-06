@@ -4,7 +4,7 @@ import { Header } from './utils/Header';
 import CustomTable from './../../components/CustomTable';
 import { getGroup, getGroupById } from './../../stores/slices/groupSlice';
 import { COMMON_WORDS } from '../../utils/constants';
-import { BUTTON_TEXT, PAGECOUNT } from '../../utils/globalConstants';
+import { PAGECOUNT } from '../../utils/globalConstants';
 import { showDialog } from '../../stores/slices/dialogSlice';
 import ConfirmAction from './Dialog/ConfirmAction';
 import CustomDialog from '../../components/CustomDialog';
@@ -205,7 +205,6 @@ function GroupModule() {
           renderOptionFunction={(props, option) =>
             renderOptionFunction(props, option, COMMON_WORDS[searched.toUpperCase()])
           }
-          buttonText={BUTTON_TEXT.GROUP}
           navigateRoute="/group/group-form"
           textField={showTextField.includes(searched)}
           textFieldPlaceholder={getPlaceHolder(COMMON_WORDS.GROUP)}

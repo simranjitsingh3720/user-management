@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import useGetBitlyLink from '../hooks/useGetBitlyLink';
-import { BUTTON_TEXT, PAGECOUNT } from '../../../utils/globalConstants';
+import { PAGECOUNT } from '../../../utils/globalConstants';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeExtraColumns, setTableName } from '../../../stores/slices/exportSlice';
 import usePermissions from '../../../hooks/usePermission';
@@ -129,7 +129,6 @@ function Channel() {
         searched={searched}
         setSearched={setSearched}
         onSubmit={onSubmit}
-        buttonText={BUTTON_TEXT.CREATE_CONFIG}
         selectOptions={bitlySearch}
         navigateRoute={'/proposal-bitly-config/channel-form'}
         showButton

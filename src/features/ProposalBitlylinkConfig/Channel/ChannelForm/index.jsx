@@ -104,7 +104,7 @@ function ChannelForm() {
             <Grid item xs={12} lg={8}>
               <UserTypeToggle
                 menuItem={STATUS}
-                label="Select"
+                label="Select By"
                 required={true}
                 control={control}
                 name="select"

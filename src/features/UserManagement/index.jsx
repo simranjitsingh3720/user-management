@@ -82,7 +82,6 @@ function UserManagement() {
         setSearched={setSearched}
         textField
         textFieldPlaceholder={COMMON.SEARCH_PLACEHOLDER}
-        buttonText={COMMON.BUTTON_TEXT}
         navigateRoute={NAVIGATE.NAVIGATE_TO_FORM}
         showExportButton={true}
         showButton

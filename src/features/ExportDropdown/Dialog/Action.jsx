@@ -51,8 +51,8 @@ const Actions = () => {
       combinedData = {
         ...combinedData,
         isBulkDownload: !is30Days,
-        // startDate: fromDate,
-        // endDate: toDate,
+        startDate: fromDate,
+        endDate: toDate,
       };
     } else {
       combinedData = {

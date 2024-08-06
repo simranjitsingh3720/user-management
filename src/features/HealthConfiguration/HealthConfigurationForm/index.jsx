@@ -117,7 +117,7 @@ function HealthConfigurationForm() {
                 name="medicare"
                 label="Medicare Existing TATA AIG General Insurance Customer"
                 control={control}
-                rules={{ required: 'Medicare is required' }}
+                rules={{ required: 'Medicare Existing TATA AIG General Insurance Customer is required' }}
                 required={true}
                 options={BitlyLinkMandatory}
                 getOptionLabel={(option) => option.label}

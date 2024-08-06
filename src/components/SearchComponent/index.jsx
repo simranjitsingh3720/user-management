@@ -14,7 +14,6 @@ function SearchComponent({
   optionLabel,
   placeholder,
   renderOptionFunction,
-  buttonText,
   navigateRoute,
   searched,
   setSearched,
@@ -105,7 +104,7 @@ function SearchComponent({
         )}
         <Grid container spacing={2} justifyContent="space-between" alignItems="center">
           {!hideSearch && (
-            <Grid item lg={8} xs={12}>
+            <Grid item md={8} xs={12}>
               <Grid container spacing={2} alignItems="center">
                 {selectOptions && (
                   <Grid item xs={12} sm={4} md={3}>
@@ -211,14 +210,14 @@ function SearchComponent({
               </Grid>
             </Grid>
           )}
-          <Grid item lg={hideSearch ? 12 : 4} xs={12} className="flex justify-end">
+          <Grid item md={hideSearch ? 12 : 4} xs={12} className="flex justify-end">
             {showBulkUploadButton && (
               <CustomButton variant="outlined" onClick={handleBulkUpload} startIcon={<BulkUpload />} />
             )}
             {showExportButton && <ExportDropdown tableHeader={tableHeader} />}
             {showButton && canCreate && (
               <CustomButton variant="contained" onClick={handleCreateNewForm}>
-                {buttonText}
+                Create
               </CustomButton>
             )}
           </Grid>
