@@ -32,9 +32,7 @@ const ExportDropdown = ({ tableHeader }) => {
     setOpen(false);
     const selectedValue = EXPORT_DROPDOWN_VALUES[index];
     dispatch(setSelectedValue(selectedValue));
-    if (selectedValue === EXPORT_CONSTANTS.last30Days) {
-      dispatch(setLast30Days());
-    }
+    dispatch(setLast30Days());
 
     dispatch(
       showDialog({
@@ -78,7 +76,6 @@ const ExportDropdown = ({ tableHeader }) => {
           onClick={handleToggle}
           startIcon={<DownloadIcon />}
         >
-          <span>Export</span>
           <ArrowDropDownIcon />
         </CustomButton>
       </ButtonGroup>

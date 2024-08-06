@@ -93,7 +93,7 @@ const Lob = () => {
       <div className="flex justify-end">
         {canCreate && (
           <CustomButton variant="contained" onClick={createNewLob} sx={{ textTransform: 'none' }}>
-            Create New LOB
+            Create
           </CustomButton>
         )}
       </div>

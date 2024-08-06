@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ASC, BUTTON_TEXT, CREATED_AT, PAGECOUNT } from '../../utils/globalConstants';
+import { ASC,  CREATED_AT, PAGECOUNT } from '../../utils/globalConstants';
 import usePermissions from '../../hooks/usePermission';
 import SearchComponent from '../../components/SearchComponent';
 import { SEARCH_OPTIONS } from './utils/constants';
@@ -98,7 +98,6 @@ function RoleModule() {
           textField
           textFieldPlaceholder={COMMON.SEARCH_PLACEHOLDER}
           setQuery={setQuery}
-          buttonText={BUTTON_TEXT.ROLES}
           navigateRoute="/roles/role-form"
           onSubmit={handleGo}
           showExportButton={true}

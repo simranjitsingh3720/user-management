@@ -12,7 +12,7 @@ export const Header = (handleEditClick) => {
     },
     {
       id: 'branchName',
-      value: 'Branch Code',
+      value: 'Branch Name',
     },
     {
       id: 'accountNumber',

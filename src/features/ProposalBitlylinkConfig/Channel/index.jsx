@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import useGetBitlyLink from '../hooks/useGetBitlyLink';
-import { BUTTON_TEXT, PAGECOUNT } from '../../../utils/globalConstants';
+import { PAGECOUNT } from '../../../utils/globalConstants';
 import { useDispatch } from 'react-redux';
 import { removeExtraColumns, setTableName } from '../../../stores/slices/exportSlice';
 import usePermissions from '../../../hooks/usePermission';
@@ -26,7 +26,7 @@ function Channel() {
 
   useEffect(() => {
     dispatch(setTableName(''));
-  }, [])
+  }, []);
 
   const handleStatusUpdate = (data, row) => {
     dispatch(
@@ -60,7 +60,6 @@ function Channel() {
   return (
     <div>
       <SearchComponent
-        buttonText={BUTTON_TEXT.CREATE_CONFIG}
         navigateRoute={'/proposal-bitly-config/channel-form'}
         showButton
         showBulkUploadButton

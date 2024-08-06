@@ -5,13 +5,13 @@ import CustomTable from '../../components/CustomTable';
 import { useNavigate } from 'react-router-dom';
 import generateTableHeaders from './utils/generateTableHeaders';
 import { COMMON_WORDS } from '../../utils/constants';
-import { BUTTON_TEXT, PAGECOUNT } from '../../utils/globalConstants';
+import { PAGECOUNT } from '../../utils/globalConstants';
 import { getPlaceHolder } from '../../utils/globalizationFunction';
 import { fetchUser } from '../../stores/slices/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import usePermissions from '../../hooks/usePermission';
-import { setExtraColumns, setTableName } from "../../stores/slices/exportSlice";
-import { EXPORT_EXTRA_COLUMNS } from "./constants";
+import { setExtraColumns, setTableName } from '../../stores/slices/exportSlice';
+import { EXPORT_EXTRA_COLUMNS } from './constants';
 
 function HealthConfiguration() {
   const dispatch = useDispatch();
@@ -29,14 +29,14 @@ function HealthConfiguration() {
   const { canUpdate, canCreate } = usePermissions();
 
   const getHealthConfigData = useCallback(() => {
-    getHealthConfigList({ 
-      page, 
-      pageSize, 
-      order, 
+    getHealthConfigList({
+      page,
+      pageSize,
+      order,
       orderBy,
-      resultProducersId
+      resultProducersId,
     });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, pageSize, order, orderBy, resultProducersId]);
 
   useEffect(() => {
@@ -70,8 +70,6 @@ function HealthConfiguration() {
     return ids.join();
   };
 
-  
-
   const handleEditClick = (row) => {
     navigate(`/health-config/form/${row.id}`);
   };
@@ -87,7 +85,7 @@ function HealthConfiguration() {
 
   const onSubmit = (data) => {
     setPage(0);
-    if(data?.autocomplete?.length === 0) {
+    if (data?.autocomplete?.length === 0) {
       setResultProducersId('');
       return;
     }
@@ -103,7 +101,6 @@ function HealthConfiguration() {
         optionLabel={optionLabel}
         placeholder={getPlaceHolder(COMMON_WORDS.PRODUCER)}
         renderOptionFunction={renderOptionFunction}
-        buttonText={BUTTON_TEXT.HEALTH_CONFIG}
         navigateRoute={'/health-config/form'}
         onSubmit={onSubmit}
         showButton

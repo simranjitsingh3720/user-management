@@ -24,7 +24,8 @@ export const COMMON_VAR = {
   FILE_SIZE_LIMIT_ERR: 'File size exceeds 5 MB limit.',
   XLS_TYPE: 'xls',
   XLSX_TYPE: 'xlsx',
-  USER_MANAGEMENT_ROUTE: 'user-management'
+  USER_MANAGEMENT_ROUTE: 'user-management',
+  OPERATION: 'operation',
 }
 
 export const ROLE_MENUITEM = [
@@ -47,5 +48,18 @@ export const ROLE_MENUITEM = [
     id: 'other',
     label: 'Other',
     value: 'other',
+  },
+];
+
+export const UPLOAD_TYPE = [
+  {
+    id: 'create',
+    label: 'Create ',
+    value: 'add',
+  },
+  {
+    id: 'update',
+    label: 'Update',
+    value: 'edit',
   },
 ];

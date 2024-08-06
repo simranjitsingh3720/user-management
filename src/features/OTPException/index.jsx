@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import useGetOTPException from './hooks/useGetOTPException';
-import { BUTTON_TEXT, PAGECOUNT } from '../../utils/globalConstants';
+import { PAGECOUNT } from '../../utils/globalConstants';
 import SearchComponent from '../../components/SearchComponent';
 import usePermissions from '../../hooks/usePermission';
 import CustomTable from '../../components/CustomTable';
@@ -37,9 +37,8 @@ function OTPException() {
 
   useEffect(() => {
     if (otpExceptionList?.length === 0) return;
-    
-    dispatch(setTableName(otpExceptionList?.[0]?.label));
 
+    dispatch(setTableName(otpExceptionList?.[0]?.label));
   }, [otpExceptionList, dispatch]);
 
   const getList = useCallback(() => {
@@ -61,7 +60,6 @@ function OTPException() {
   return (
     <div>
       <SearchComponent
-        buttonText={BUTTON_TEXT.SET_OTP_EXCEPTION}
         navigateRoute={'/otpexception/form'}
         showButton
         canCreate={canCreate}

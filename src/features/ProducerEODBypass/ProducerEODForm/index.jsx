@@ -72,7 +72,7 @@ function ProducerEODFrom() {
 
   useEffect(() => {
     if (id) fetchData(id);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   useEffect(() => {
@@ -83,7 +83,7 @@ function ProducerEODFrom() {
       setValue('startDate', dayjs(startDate, DATE_FORMAT).format(DATE_FORMAT));
       setValue('endDate', dayjs(endDate, DATE_FORMAT).format(DATE_FORMAT));
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   const handleReset = () => {
@@ -102,94 +102,90 @@ function ProducerEODFrom() {
   };
 
   return (
-    <div>
-      <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-        <Card>
-          <CardContent>
-            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-              <Grid item xs={12}>
-                <CustomFormHeader
-                  id={id}
-                  headerText={FORM_HEADER_TEXT.PRODUCER_EOD}
-                  navigateRoute={`/producer-eod-bypass-list`}
-                  handleReset={handleReset}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6} lg={4}>
-                <CustomAutoCompleteWithoutCheckbox
-                  name="producerCode"
-                  label="Producer Code"
-                  required={true}
-                  options={user?.data || []}
-                  getOptionLabel={(option) => `${option?.firstName} ${option?.lastName}`}
-                  isOptionEqualToValue={(option, value) => option.id === value.id}
-                  control={control}
-                  rules={{ required: 'Producer Code is required' }}
-                  error={Boolean(errors.producerCode)}
-                  helperText={errors.producerCode?.message}
-                  disableClearable={true}
-                  disabled={id ? true : false}
-                  placeholder={COMMON_WORDS.SELECT}
-                  trigger={trigger}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6} lg={4}>
-                <DateField
-                  key="startDate"
-                  control={control}
-                  name="startDate"
-                  labelVisible={true}
-                  label="Start Date"
-                  required={true}
-                  errors={errors}
-                  classes="w-full text-red-600"
-                  setValue={setValue}
-                  watch={watch}
-                  trigger={trigger}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6} lg={4}>
-                <DateField
-                  key="endDate"
-                  control={control}
-                  name="endDate"
-                  labelVisible={true}
-                  label="End Date"
-                  required={true}
-                  errors={errors}
-                  classes="w-full text-red-600"
-                  setValue={setValue}
-                  watch={watch}
-                  trigger={trigger}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6} lg={8}>
-                <InputField
-                  key="reason"
-                  id="reason"
-                  required
-                  label="Reason"
-                  validation={textFieldValidation}
-                  control={control}
-                  errors={errors}
-                  disabled={false}
-                  classes="w-full text-left"
-                  trigger={trigger}
-                />
-              </Grid>
+    <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+      <Card>
+        <CardContent>
+          <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+            <Grid item xs={12}>
+              <CustomFormHeader
+                id={id}
+                headerText={FORM_HEADER_TEXT.PRODUCER_EOD}
+                navigateRoute={`/producer-eod-bypass-list`}
+                handleReset={handleReset}
+              />
             </Grid>
-          </CardContent>
-        </Card>
-
-        <Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }} className="mt-4">
-          <Grid item xs={12} sm={6} lg={2}>
-            <CustomButton type="submit" variant="contained" sx={{ width: '100%' }} disabled={loading}>
-              {id ? 'Update' : 'Submit'}
-            </CustomButton>
+            <Grid item xs={12} sm={6} lg={4}>
+              <CustomAutoCompleteWithoutCheckbox
+                name="producerCode"
+                label="Producer Code"
+                required={true}
+                options={user?.data || []}
+                getOptionLabel={(option) => `${option?.firstName} ${option?.lastName}`}
+                isOptionEqualToValue={(option, value) => option.id === value.id}
+                control={control}
+                rules={{ required: 'Producer Code is required' }}
+                error={Boolean(errors.producerCode)}
+                helperText={errors.producerCode?.message}
+                disableClearable={true}
+                disabled={id ? true : false}
+                placeholder={COMMON_WORDS.SELECT}
+                trigger={trigger}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6} lg={4}>
+              <DateField
+                key="startDate"
+                control={control}
+                name="startDate"
+                labelVisible={true}
+                label="Start Date"
+                required={true}
+                errors={errors}
+                classes="w-full text-red-600"
+                setValue={setValue}
+                watch={watch}
+                trigger={trigger}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6} lg={4}>
+              <DateField
+                key="endDate"
+                control={control}
+                name="endDate"
+                labelVisible={true}
+                label="End Date"
+                required={true}
+                errors={errors}
+                classes="w-full text-red-600"
+                setValue={setValue}
+                watch={watch}
+                trigger={trigger}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6} lg={8}>
+              <InputField
+                key="reason"
+                id="reason"
+                required
+                label="Reason"
+                validation={textFieldValidation}
+                control={control}
+                errors={errors}
+                disabled={false}
+                classes="w-full text-left"
+                trigger={trigger}
+              />
+            </Grid>
           </Grid>
-        </Grid>
-      </Box>
-    </div>
+        </CardContent>
+      </Card>
+
+      <div className="flex items-center mt-4">
+        <CustomButton type="submit" variant="contained" disabled={loading}>
+          {id ? 'Update' : 'Submit'}
+        </CustomButton>
+      </div>
+    </Box>
   );
 }
 
