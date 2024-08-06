@@ -12,7 +12,12 @@
           "pattern": {
             "value": "^[a-zA-Z0-9]+$",
             "message": "It should contain digits and letters only"
+          },
+          "maxLength": {
+            "value": 15,
+            "message": "It should not exceed 15 characters"
           }
+
         },
         "canEdit": true
       },
@@ -149,6 +154,10 @@
           "pattern": {
             "value": "^[a-zA-Z0-9]+$",
             "message": "It should contain digits and letters only"
+          },
+          "maxLength": {
+            "value": 15,
+            "message": "It should not exceed 15 characters"
           }
         },
         "canEdit": false
@@ -244,6 +253,10 @@
           "pattern": {
             "value": "^[a-zA-Z0-9]+$",
             "message": "It should contain digits and letters only"
+          },
+          "maxLength": {
+            "value": 15,
+            "message": "It should not exceed 15 characters"
           }
         },
         "canEdit": true
@@ -381,6 +394,10 @@
           "pattern": {
             "value": "^[a-zA-Z0-9]+$",
             "message": "It should contain digits and letters only"
+          },
+          "maxLength": {
+            "value": 15,
+            "message": "It should not exceed 15 characters"
           }
         },
         "canEdit": false
@@ -476,6 +493,10 @@
           "pattern": {
             "value": "^[a-zA-Z0-9]+$",
             "message": "It should contain digits and letters only"
+          },
+          "maxLength": {
+            "value": 15,
+            "message": "It should not exceed 15 characters"
           }
         },
         "canEdit": true
@@ -613,6 +634,10 @@
           "pattern": {
             "value": "^[a-zA-Z0-9]+$",
             "message": "It should contain digits and letters only"
+          },
+          "maxLength": {
+            "value": 15,
+            "message": "It should not exceed 15 characters"
           }
         },
         "canEdit": false
@@ -1065,7 +1090,7 @@
               "label": "Account Number",
               "type": "input",
               "required": true,
-              "disabled": false,
+              "disabled": true,
               "validation": {
                 "required": "This field is required",
                 "pattern": {
@@ -1073,7 +1098,7 @@
                   "message": "It should contain only digits"
                 }
               },
-              "canEdit": true
+              "canEdit": false
             }
           ]
         },
@@ -1448,7 +1473,7 @@
               "label": "Account Number",
               "type": "input",
               "required": true,
-              "disabled": false,
+              "disabled": true,
               "validation": {
                 "required": "This field is required",
                 "pattern": {
@@ -1456,7 +1481,7 @@
                   "message": "It should contain only digits"
                 }
               },
-              "canEdit": true
+              "canEdit": false
             }
           ]
         },
@@ -1831,7 +1856,7 @@
               "label": "Account Number",
               "type": "input",
               "required": true,
-              "disabled": false,
+              "disabled": true,
               "validation": {
                 "required": "This field is required",
                 "pattern": {
@@ -1839,7 +1864,7 @@
                   "message": "It should contain only digits"
                 }
               },
-              "canEdit": true
+              "canEdit": false
             }
           ]
         },
@@ -1946,7 +1971,7 @@
             "message": "Please enter a valid partner name"
           }
         },
-        "canEdit": true
+        "canEdit": false
       },
       {
         "id": "lob",
@@ -2268,6 +2293,10 @@
           "pattern": {
             "value": "^[a-zA-Z0-9]+$",
             "message": "It should contain digits and letters only"
+          },
+          "maxLength": {
+            "value": 15,
+            "message": "It should not exceed 15 characters"
           }
         },
         "canEdit": true
@@ -2361,6 +2390,10 @@
           "pattern": {
             "value": "^[a-zA-Z0-9]+$",
             "message": "It should contain digits and letters only"
+          },
+          "maxLength": {
+            "value": 15,
+            "message": "It should not exceed 15 characters"
           }
         },
         "canEdit": false
@@ -2456,6 +2489,10 @@
           "pattern": {
             "value": "^[a-zA-Z0-9]+$",
             "message": "It should contain digits and letters only"
+          },
+          "maxLength": {
+            "value": 15,
+            "message": "It should not exceed 15 characters"
           }
         },
         "canEdit": true
@@ -2560,6 +2597,10 @@
           "pattern": {
             "value": "^[a-zA-Z0-9]+$",
             "message": "It should contain digits and letters only"
+          },
+          "maxLength": {
+            "value": 15,
+            "message": "It should not exceed 15 characters"
           }
         },
         "canEdit": true
@@ -2655,6 +2696,10 @@
           "pattern": {
             "value": "^[a-zA-Z0-9]+$",
             "message": "It should contain digits and letters only"
+          },
+          "maxLength": {
+            "value": 15,
+            "message": "It should not exceed 15 characters"
           }
         },
         "canEdit": true
@@ -2759,6 +2804,10 @@
           "pattern": {
             "value": "^[a-zA-Z0-9]+$",
             "message": "It should contain digits and letters only"
+          },
+          "maxLength": {
+            "value": 15,
+            "message": "It should not exceed 15 characters"
           }
         },
         "canEdit": true
@@ -2854,6 +2903,10 @@
           "pattern": {
             "value": "^[a-zA-Z0-9]+$",
             "message": "It should contain digits and letters only"
+          },
+          "maxLength": {
+            "value": 15,
+            "message": "It should not exceed 15 characters"
           }
         },
         "canEdit": true
@@ -2958,6 +3011,10 @@
           "pattern": {
             "value": "^[a-zA-Z0-9]+$",
             "message": "It should contain digits and letters only"
+          },
+          "maxLength": {
+            "value": 15,
+            "message": "It should not exceed 15 characters"
           }
         },
         "canEdit": true
@@ -3053,6 +3110,10 @@
           "pattern": {
             "value": "^[a-zA-Z0-9]+$",
             "message": "It should contain digits and letters only"
+          },
+          "maxLength": {
+            "value": 15,
+            "message": "It should not exceed 15 characters"
           }
         },
         "canEdit": true
@@ -3157,6 +3218,10 @@
           "pattern": {
             "value": "^[a-zA-Z0-9]+$",
             "message": "It should contain digits and letters only"
+          },
+          "maxLength": {
+            "value": 15,
+            "message": "It should not exceed 15 characters"
           }
         },
         "canEdit": true
@@ -3251,7 +3316,7 @@
         "validation": {
           "required": "This field is required"
         },
-        "canEdit": true
+        "canEdit": false
       },
       {
         "id": "solIdDealerCode",
@@ -3299,7 +3364,7 @@
             "message": "It should contain digits and letters only"
           }
         },
-        "canEdit": true
+        "canEdit": false
       },
       {
         "id": "mobileNumber",
@@ -3334,7 +3399,7 @@
             "message": "Please enter a valid email address"
           }
         },
-        "canEdit": false
+        "canEdit": true
       },
       {
         "id": "lob",
@@ -3489,7 +3554,7 @@
             "message": "It should contain only letters"
           }
         },
-        "canEdit": true
+        "canEdit": false
       },
       {
         "id": "revalidation",
@@ -3582,7 +3647,7 @@
         "validation": {
           "required": "This field is required"
         },
-        "canEdit": true
+        "canEdit": false
       },
       {
         "id": "solIdDealerCode",
@@ -3608,7 +3673,7 @@
             "message": "It should contain digits and letters only"
           }
         },
-        "canEdit": true
+        "canEdit": false
       },
       {
         "id": "mobileNumber",
@@ -3761,7 +3826,7 @@
             "message": "It should contain only letters"
           }
         },
-        "canEdit": true
+        "canEdit": false
       },
       {
         "id": "revalidation",
@@ -3841,7 +3906,7 @@
         "validation": {
           "required": "This field is required"
         },
-        "canEdit": true
+        "canEdit": false
       },
       {
         "id": "solIdDealerCode",
@@ -3889,7 +3954,7 @@
             "message": "It should contain digits and letters only"
           }
         },
-        "canEdit": true
+        "canEdit": false
       },
       {
         "id": "mobileNumber",
@@ -4078,7 +4143,7 @@
             "message": "It should contain only letters"
           }
         },
-        "canEdit": true
+        "canEdit": false
       },
       {
         "id": "revalidation",
@@ -4173,6 +4238,10 @@
           "pattern": {
             "value": "^[a-zA-Z0-9]+$",
             "message": "It should contain digits and letters only"
+          },
+          "maxLength": {
+            "value": 15,
+            "message": "It should not exceed 15 characters"
           }
         },
         "canEdit": true
@@ -4299,6 +4368,10 @@
           "pattern": {
             "value": "^[a-zA-Z0-9]+$",
             "message": "It should contain digits and letters only"
+          },
+          "maxLength": {
+            "value": 15,
+            "message": "It should not exceed 15 characters"
           }
         },
         "canEdit": true
