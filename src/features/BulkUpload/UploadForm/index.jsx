@@ -4,14 +4,13 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import SearchComponent from '../../../components/SearchComponent';
 import { getPlaceHolder } from '../../../utils/globalizationFunction';
-import { COMMON_VAR, CONTENT, ROLE_MENUITEM, SEARCH_BY, SEARCH_OPTIONS, UPLOAD_TYPE } from './utils/constants';
+import { COMMON_VAR, CONTENT, ROLE_MENUITEM, SEARCH_BY, SEARCH_OPTIONS, UPLOAD_TYPE, getBulkUploadLabel } from './utils/constants';
 import CustomTable from '../../../components/CustomTable';
 import { Header } from './utils/header';
 import CustomFormHeader from '../../../components/CustomFormHeader';
 import useGetBulkUpload from './hooks/useGetBulkUpload';
 import useSubmit from './hooks/useSubmit';
-import { useSelector } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { COMMON } from '../../UserManagement/Components/utils/constants';
 import SelectField from '../../../components/CustomSelect';
 import Loader from '../../../components/Loader';
@@ -31,8 +30,6 @@ function UploadForm() {
   const [uploadType, setUploadType] = useState(COMMON_WORDS.ADD);
   const { postBulkUpload, getBulkTemplate, postBulkUploadLoading } = useSubmit();
   const { getBulkUpload, bulkUploadData, totalCount } = useGetBulkUpload();
-  const { tableName } = useSelector((state) => state.export);
-  const navigate = useNavigate();
   const [query, setQuery] = useState('');
   const [file, setFile] = useState();
   const header = useMemo(() => Header(), []);
@@ -84,9 +81,9 @@ function UploadForm() {
   const fetchTemplate = useCallback(() => {
     getBulkTemplate({
       fileName: COMMON_VAR.FILE_NAME,
-      label: location.pathname.includes(COMMON_VAR.USER_MANAGEMENT_ROUTE) ? watchRole : tableName,
+      label: location.pathname.includes(COMMON_VAR.USER_MANAGEMENT_ROUTE) ? watchRole : getBulkUploadLabel(location.pathname),
     });
-  }, [tableName, watchRole]);
+  }, [watchRole]);
 
   const fetchBulkUpload = useCallback(() => {
     getBulkUpload({
@@ -96,10 +93,10 @@ function UploadForm() {
       sortKey: orderBy,
       query,
       searchKey: COMMON_VAR.FILE_TYPE,
-      searchString: tableName,
+      searchString: getBulkUploadLabel(location.pathname),
       searched,
     });
-  }, [getBulkUpload, page, pageSize, orderBy, order, query, tableName, searched]);
+  }, [getBulkUpload, page, pageSize, order, orderBy, query, location.pathname, searched]);
 
   useEffect(() => {
     fetchBulkUpload();
@@ -119,10 +116,10 @@ function UploadForm() {
   };
 
   const onSubmit = async () => {
-    if (file && tableName) {
+    if (file ) {
       const formData = new FormData();
       formData.append(COMMON_VAR.FILE, file);
-      formData.append(COMMON_VAR.FILE_TYPE, tableName);
+      formData.append(COMMON_VAR.FILE_TYPE, getBulkUploadLabel(location.pathname));
       formData.append(COMMON_VAR.OPERATION, uploadType);
       if (watchRole) {
         formData.append(COMMON_WORDS.ROLE, watchRole);
@@ -136,10 +133,6 @@ function UploadForm() {
       }
     }
   };
-
-  if (!tableName) {
-    navigate(-1);
-  }
 
   return (
     <>
