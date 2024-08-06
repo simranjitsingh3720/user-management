@@ -60,7 +60,9 @@ export const COMMON_WORDS = {
   HAS_PLAN: 'hasPlan',
   HAS_ZONE: 'hasZone',
   EXTERNAL: 'external',
-  SALES: 'sales'
+  SALES: 'sales',
+  FILE_UPLOAD_TIME: 'fileUploadDateTime',
+  ADD: 'add'
 };
 
 export const HEADER = {

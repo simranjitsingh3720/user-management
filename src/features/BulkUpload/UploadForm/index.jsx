@@ -1,5 +1,4 @@
 import React, { useMemo, useRef, useState, useCallback, useEffect } from 'react';
-import styles from './styles.module.scss';
 import { Box } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -19,18 +18,19 @@ import Loader from '../../../components/Loader';
 import { COMMON_WORDS } from '../../../utils/constants';
 import UploadTemplate from './UploadSection';
 import UserTypeToggle from '../../../components/CustomRadioButtonGroup';
+import { PAGECOUNT } from '../../../utils/globalConstants';
 
 function UploadForm() {
   const [searched, setSearched] = useState(SEARCH_OPTIONS[0].value);
   const [page, setPage] = useState(0);
-  const [pageSize, setPageSize] = useState(10);
-  const [order, setOrder] = useState('');
-  const [orderBy, setOrderBy] = useState('');
+  const [pageSize, setPageSize] = useState(PAGECOUNT);
+  const [order, setOrder] = useState(COMMON_WORDS.DESC);
+  const [orderBy, setOrderBy] = useState(COMMON_WORDS.FILE_UPLOAD_TIME);
   const [fileUploaded, setFileUploaded] = useState(false);
   const [fileName, setFileName] = useState('');
-  const [uploadType, setUploadType] = useState('add');
+  const [uploadType, setUploadType] = useState(COMMON_WORDS.ADD);
   const { postBulkUpload, getBulkTemplate, postBulkUploadLoading } = useSubmit();
-  const { getBulkUpload, bulkUploadData, totalCount, setData } = useGetBulkUpload();
+  const { getBulkUpload, bulkUploadData, totalCount } = useGetBulkUpload();
   const { tableName } = useSelector((state) => state.export);
   const navigate = useNavigate();
   const [query, setQuery] = useState('');
@@ -90,16 +90,16 @@ function UploadForm() {
 
   const fetchBulkUpload = useCallback(() => {
     getBulkUpload({
-      page,
+      pageNo: page,
       pageSize,
-      order,
-      orderBy,
+      sortOrder: order,
+      sortKey: orderBy,
       query,
       searchKey: COMMON_VAR.FILE_TYPE,
       searchString: tableName,
       searched,
     });
-  }, [page, pageSize, order, orderBy, query, searched]);
+  }, [getBulkUpload, page, pageSize, orderBy, order, query, tableName, searched]);
 
   useEffect(() => {
     fetchBulkUpload();
@@ -132,6 +132,7 @@ function UploadForm() {
         setFileUploaded(false);
         setFile('');
         setFileName('');
+        fetchBulkUpload();
       }
     }
   };
@@ -143,13 +144,13 @@ function UploadForm() {
   return (
     <>
       {postBulkUploadLoading && <Loader />}
-      <form onSubmit={handleSubmit(onSubmit)} className={`${styles.formMainContainer}`}>
-        <div className={styles.createContainer}>
+      <form onSubmit={handleSubmit(onSubmit)} className='mb-3'>
+        <div className='bg-white mb-5 rounded-xl shadow-lg shadow-shadowColor'>
           <div className="p-5 pb-0">
             <CustomFormHeader navigateRoute={-1} headerText={CONTENT.TITLE} subHeading={CONTENT.HEADER} />
           </div>
           {location?.pathname.includes(COMMON_VAR.USER_MANAGEMENT_ROUTE) && (
-            <div className="w-full px-7 pb-5">
+            <div className="w-full lg:w-1/2 px-7 pb-5">
               <SelectField
                 key="role"
                 control={control}
@@ -161,7 +162,7 @@ function UploadForm() {
                 placeholder="Select"
                 errors={errors}
                 setValue={setValue}
-                classes="w-1/2"
+                classes="w-full"
                 trigger={trigger}
               />
             </div>
@@ -174,6 +175,7 @@ function UploadForm() {
               control={control}
               name="uploadType"
               defaultValue={uploadType}
+              classes="w-full"
               onChangeCallback={(val) => {
                 setUploadType(val);
               }}
@@ -206,11 +208,11 @@ function UploadForm() {
               downloadTemplate={downloadTemplate}
             />
           )}
-          <div className={styles.formContainer}></div>
+          <div className='m-5'></div>
         </div>
       </form>
       <div className="h-5"></div>
-      <Box className={`${styles.createContainer} px-7 pb-7`}>
+      <Box className='bg-white mb-5 rounded-xl shadow-lg shadow-shadowColor px-7 pb-7'>
         <SearchComponent
           selectOptions={SEARCH_OPTIONS}
           placeholder={getPlaceHolder(SEARCH_BY)}
