@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import SearchComponent from '../../../components/SearchComponent';
 import { getPlaceHolder } from '../../../utils/globalizationFunction';
-import { COMMON_VAR, CONTENT, ROLE_MENUITEM, SEARCH_BY, SEARCH_OPTIONS } from './utils/constants';
+import { COMMON_VAR, CONTENT, ROLE_MENUITEM, SEARCH_BY, SEARCH_OPTIONS, UPLOAD_TYPE } from './utils/constants';
 import CustomTable from '../../../components/CustomTable';
 import { Header } from './utils/header';
 import CustomFormHeader from '../../../components/CustomFormHeader';
@@ -18,6 +18,7 @@ import SelectField from '../../../components/CustomSelect';
 import Loader from '../../../components/Loader';
 import { COMMON_WORDS } from '../../../utils/constants';
 import UploadTemplate from './UploadSection';
+import UserTypeToggle from '../../../components/CustomRadioButtonGroup';
 
 function UploadForm() {
   const [searched, setSearched] = useState(SEARCH_OPTIONS[0].value);
@@ -27,6 +28,7 @@ function UploadForm() {
   const [orderBy, setOrderBy] = useState('');
   const [fileUploaded, setFileUploaded] = useState(false);
   const [fileName, setFileName] = useState('');
+  const [uploadType, setUploadType] = useState('add');
   const { postBulkUpload, getBulkTemplate, postBulkUploadLoading } = useSubmit();
   const { getBulkUpload, bulkUploadData, totalCount, setData } = useGetBulkUpload();
   const { tableName } = useSelector((state) => state.export);
@@ -121,6 +123,7 @@ function UploadForm() {
       const formData = new FormData();
       formData.append(COMMON_VAR.FILE, file);
       formData.append(COMMON_VAR.FILE_TYPE, tableName);
+      formData.append(COMMON_VAR.OPERATION, uploadType);
       if (watchRole) {
         formData.append(COMMON_WORDS.ROLE, watchRole);
       }
@@ -163,6 +166,19 @@ function UploadForm() {
               />
             </div>
           )}
+          <div className="w-full lg:w-1/2 px-7 pb-5">
+            <UserTypeToggle
+              menuItem={UPLOAD_TYPE}
+              label="Upload Type"
+              required={true}
+              control={control}
+              name="uploadType"
+              defaultValue={uploadType}
+              onChangeCallback={(val) => {
+                setUploadType(val);
+              }}
+            />
+          </div>
           {location?.pathname.includes(COMMON_VAR.USER_MANAGEMENT_ROUTE) ? (
             watchRole ? (
               <UploadTemplate
