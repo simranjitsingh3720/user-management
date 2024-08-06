@@ -31,6 +31,8 @@ const CustomButton = ({
   loading = false,
   ...props
 }) => {
+  const progressColor = color === 'primary' ? 'white' : 'inherit';
+
   return (
     <StyledButton
       className={className}
@@ -46,7 +48,7 @@ const CustomButton = ({
       {...props}
     >
       {loading ? (
-        <CircularProgress size={24} sx={{ position: 'absolute' }} />
+        <CircularProgress size={24} sx={{ position: 'absolute', color: progressColor }} />
       ) : (
         children
       )}
