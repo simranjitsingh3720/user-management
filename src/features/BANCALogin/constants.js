@@ -61,7 +61,7 @@ export const FieldDataList = {
   ],
   row4: [
     {
-      label: "Partner Cust Id",
+      label: "Partner Cust ID",
       value: "partnerCustID",
       Enable: false,
       Mandatory: false,
@@ -87,7 +87,7 @@ export const FieldDataList = {
       Mandatory: false,
     },
     {
-      label: "SP Certificate No",
+      label: "SP Certificate Number",
       value: "sPCertificateNumber",
       Enable: false,
       Mandatory: false,
@@ -139,11 +139,11 @@ export const labels = {
   partnerApplicationNumber: "Partner Application Number",
   loanAccountNumber: "Loan Account Number",
   customerAccountNumber: "Customer Account Number",
-  partnerCustID: "Partner Cust Id",
+  partnerCustID: "Partner Cust ID",
   branchSOLIDLinkedToRAC: "Branch SOL ID linked to RAC",
   additionalDetail1: "Additional Detail 1",
   additionalDetail2: "Additional Detail 2",
-  sPCertificateNumber: "SP Certificate No",
+  sPCertificateNumber: "SP Certificate Number",
   specifiedPersonName: "Specified Person Name",
   specifiedPersonPlace: "Specified Person Place",
   crmLink: "CRM Link",

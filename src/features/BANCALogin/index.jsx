@@ -252,7 +252,7 @@ function BANCALogin() {
                       onChange={() => handleEnableChange(obj.value)}
                       inputProps={{ 'aria-label': 'toggle button' }}
                     />
-                    <Typography variant="body2">{obj.Enable ? 'Enabled' : 'Non Enabled'}</Typography>
+                    <Typography variant="body2">{obj.Enable ? 'Enabled' : 'Non-Enabled'}</Typography>
                   </Grid>
                   <Grid item xs={12} md={6} display={'flex'} alignItems={'center'}>
                     <Switch
