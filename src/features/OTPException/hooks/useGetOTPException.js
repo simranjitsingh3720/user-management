@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import axiosInstance from '../../../utils/axiosInstance';
-import { buildQueryString } from '../../../utils/globalizationFunction';
+import { buildQueryString, formatDate } from '../../../utils/globalizationFunction';
 import { COMMON_WORDS } from '../../../utils/constants';
 import apiUrls from '../../../utils/apiUrls';
 import errorHandler from '../../../utils/errorHandler';
@@ -47,8 +47,8 @@ function useGetOTPException() {
             : channel?.[0]?.txtChannelName,
           status: status,
           producerCode: type === COMMON_WORDS.PRODUCER ? producer[0]?.producerCode : channel?.[0]?.numChannelCode,
-          createdAt: createdAt,
-          updatedAt: updatedAt,
+          createdAt: formatDate(createdAt),
+          updatedAt: formatDate(updatedAt),
           checked: status,
         };
       });

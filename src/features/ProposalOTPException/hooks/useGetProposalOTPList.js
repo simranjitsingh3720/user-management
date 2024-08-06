@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 import axiosInstance from '../../../utils/axiosInstance';
-import { buildQueryString } from '../../../utils/globalizationFunction';
+import { buildQueryString, formatDate } from '../../../utils/globalizationFunction';
 import { COMMON_WORDS } from '../../../utils/constants';
 import errorHandler from '../../../utils/errorHandler';
 import { setExtraColumns, setTableName } from '../../../stores/slices/exportSlice';
@@ -72,8 +72,8 @@ function useGetProposalOTPList(page, pageSize, order, orderBy) {
             product: productName,
             startDate: startDate,
             endDate: endDate,
-            createdAt: createdAt,
-            updatedAt: updatedAt,
+            createdAt: formatDate(createdAt),
+            updatedAt: formatDate(updatedAt),
             status: status,
             checked: status,
             label: label,

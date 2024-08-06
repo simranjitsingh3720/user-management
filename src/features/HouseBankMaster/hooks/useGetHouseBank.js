@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 import axiosInstance from './../../../utils/axiosInstance';
 
-import { buildQueryString } from '../../../utils/globalizationFunction';
+import { buildQueryString, formatDate } from '../../../utils/globalizationFunction';
 import apiUrls from "../../../utils/apiUrls";
 import { useDispatch } from 'react-redux';
 import { setTableName } from '../../../stores/slices/exportSlice';
@@ -39,7 +39,18 @@ const useGetHouseBank = () => {
         });
 
         const {data} = await axiosInstance.get(`${apiUrls.houseBank}?${queryParams}`);
-        setData(data?.data);
+
+        const transformData = data?.data.map((item) => {
+          const { createdAt, updatedAt } = item;
+
+          return {
+            ...item,
+            createdAt: formatDate(createdAt),
+            updatedAt: formatDate(updatedAt),
+          };
+        });
+
+        setData(transformData);
         dispatch(setTableName(data?.data[0]?.label));
         setTotalCount(data.totalCount);
       } catch (e) {

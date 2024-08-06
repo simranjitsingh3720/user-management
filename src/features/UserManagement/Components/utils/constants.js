@@ -157,6 +157,11 @@ export const Header = (editAction, handleInsillionStatus) => {
       sortable: true,
     },
     {
+      value: 'Updated At',
+      id: 'updatedAt',
+      sortable: true,
+    },
+    {
       value: 'Status',
       id: 'status',
       action: [

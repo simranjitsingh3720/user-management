@@ -1,3 +1,5 @@
+import dayjs from "dayjs";
+
 function capitalizeFirstLetter(str) {
   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 }
@@ -52,4 +54,15 @@ export const getFullName = (firstName, lastName) => {
 
 export const toCapitalize= (obj, key) => {
   return obj?.[key]?.charAt(0)?.toUpperCase() + obj?.[key]?.slice(1)
+}
+
+/**
+ * Formats a date into a string representation.
+ * 
+ * @param {Date} date - The date to be formatted.
+ * @returns {string} The formatted date string in the format 'DD MMM YYYY'.
+ */
+export const formatDate = (date) => {
+  if (!date) return '';
+  return dayjs(date).format('DD/MM/YYYY');
 }

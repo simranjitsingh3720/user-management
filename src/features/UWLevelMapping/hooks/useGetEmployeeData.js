@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import axiosInstance from '../../../utils/axiosInstance';
 import apiUrls from '../../../utils/apiUrls';
 import { COMMON_WORDS } from '../../../utils/constants';
-import { buildQueryString } from '../../../utils/globalizationFunction';
+import { buildQueryString, formatDate } from '../../../utils/globalizationFunction';
 
 function useGetEmployeeData(page, pageSize, order, orderBy) {
   const [data, setData] = useState(null);
@@ -39,14 +39,15 @@ function useGetEmployeeData(page, pageSize, order, orderBy) {
       const response = await axiosInstance.get(url);
 
       const userData = response.data.data.map((item) => {
+        const { id, label, firstName, lastName, employeeId, email, createdAt, updatedAt } = item;
         return {
-          id: item.id,
-          label: item.label,
-          userName: `${item?.firstName ?? ''} ${item?.lastName ?? ''}`.trim(),
-          employeeId: item.employeeId,
-          email: item.email,
-          createdAt: item.createdAt,
-          updatedAt: item.updatedAt,
+          id: id,
+          label: label,
+          userName: `${firstName ?? ''} ${lastName ?? ''}`.trim(),
+          employeeId: employeeId,
+          email: email,
+          createdAt: formatDate(createdAt),
+          updatedAt: formatDate(updatedAt),
         };
       });
       setCount(response.data.totalCount);
