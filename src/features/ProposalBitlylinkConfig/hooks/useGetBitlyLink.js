@@ -1,15 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import axiosInstance from '../../../utils/axiosInstance';
 import { buildQueryString } from '../../../utils/globalizationFunction';
 import { COMMON_WORDS } from '../../../utils/constants';
 import apiUrls from '../../../utils/apiUrls';
 
-function useGetBitlyLink(page, pageSize, order, orderBy) {
+function useGetBitlyLink() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [count, setCount] = useState(0);
 
-  const fetchData = async () => {
+  const fetchData = async ({ page, pageSize, order, orderBy, searched, resultId }) => {
     try {
       setLoading(true);
       let queryParams = buildQueryString({
@@ -20,6 +20,15 @@ function useGetBitlyLink(page, pageSize, order, orderBy) {
         childFieldsToFetch: `${COMMON_WORDS.PRODUCER},${COMMON_WORDS.CHANNEL}`,
         childFieldsEdge: `${COMMON_WORDS.HAS_PRODUCER},${COMMON_WORDS.HAS_CHANNEL}`,
       });
+
+      if (searched && resultId) {
+        let searchParams = {
+          edge: searched === COMMON_WORDS.CHANNEL ? COMMON_WORDS.HAS_CHANNEL : COMMON_WORDS.HAS_PRODUCER,
+          isExclusive: true,
+          ids: resultId,
+        };
+        queryParams += `&${buildQueryString(searchParams)}`;
+      }
 
       let url = `${apiUrls.proposalBitlyConfig}?${queryParams}`;
 
@@ -59,9 +68,6 @@ function useGetBitlyLink(page, pageSize, order, orderBy) {
       setLoading(false);
     }
   };
-  useEffect(() => {
-    fetchData();
-  }, [page, pageSize, order, orderBy]);
 
   return { data, loading, fetchData, count };
 }

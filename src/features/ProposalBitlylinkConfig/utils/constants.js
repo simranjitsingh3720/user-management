@@ -32,3 +32,14 @@ export const STATUS = [
     value: 'byProducer',
   },
 ];
+
+export const bitlySearch = [
+  {
+    label: 'Channel',
+    value: 'channel',
+  },
+  {
+    label: 'Producer',
+    value: 'producer',
+  },
+];

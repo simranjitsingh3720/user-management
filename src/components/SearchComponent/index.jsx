@@ -29,7 +29,7 @@ function SearchComponent({
   onSubmit,
   fetchData,
   showBulkUploadButton = false,
-  tableHeader
+  tableHeader,
 }) {
   const navigate = useNavigate();
 
@@ -37,7 +37,7 @@ function SearchComponent({
     navigate(navigateRoute);
   };
 
-  const { handleSubmit, control, setValue, formState, reset, watch } = useForm({
+  const { handleSubmit, control, setValue, formState, reset, watch, trigger } = useForm({
     defaultValues: {
       startDate: null,
       endDate: null,
@@ -83,6 +83,7 @@ function SearchComponent({
                 setValue={setValue}
                 watch={watch}
                 isEdit={true}
+                trigger={trigger}
               />
             </Grid>
             <Grid item>
@@ -97,6 +98,7 @@ function SearchComponent({
                 setValue={setValue}
                 watch={watch}
                 isEdit={true}
+                trigger={trigger}
               />
             </Grid>
           </Grid>

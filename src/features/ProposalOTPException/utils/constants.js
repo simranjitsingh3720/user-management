@@ -1,14 +1,13 @@
 export const ProposalOTPSearch = [
   {
-    label: "Type",
-    value: "type",
+    label: 'Channel',
+    value: 'channel',
   },
   {
-    label: "Value",
-    value: "value",
+    label: 'Producer',
+    value: 'producer',
   },
 ];
-
 
 export const PROPOSAL_CREATE_BY = [
   {

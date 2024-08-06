@@ -18,9 +18,11 @@ import DateField from '../../../components/CustomDateInput';
 import { fetchLobData } from '../../../stores/slices/lobSlice';
 import { clearProducts, fetchAllProductData } from '../../../stores/slices/productSlice';
 import useGetProposalOTPList from '../hooks/useGetProposalOTPList';
+import { fetchLobByUserId } from '../../../stores/slices/lobUserSlice';
 
 function ProposalForm() {
   const dispatch = useDispatch();
+  const { data: lobData, loading: lobLoading } = useSelector((state) => state.lobUser);
   const { id } = useParams();
   const { user } = useSelector((state) => state.user);
   const { lob } = useSelector((state) => state.lob);
@@ -54,7 +56,6 @@ function ProposalForm() {
   const [OTPValue, setOTPValue] = useState('byChannel');
 
   useEffect(() => {
-    // Get User Data
     dispatch(
       fetchUser({
         userType: COMMON_WORDS.PRODUCER,
@@ -77,19 +78,18 @@ function ProposalForm() {
       }
     }
     fetchData();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   useEffect(() => {
     if (proposalDataByID) {
       const {
         lob,
-        proposalOtpException: {startDate, endDate, isChannel },
+        proposalOtpException: { startDate, endDate, isChannel },
         channel,
         producer,
         product,
       } = proposalDataByID;
-
 
       setOTPValue(isChannel ? 'byChannel' : 'byProducerCode');
       if (isChannel) {
@@ -103,13 +103,13 @@ function ProposalForm() {
       setValue('endDate', dayjs(endDate, 'DD/MM/YYYY').format('DD/MM/YYYY'));
       setValue('groupStatus', isChannel ? 'byChannel' : 'byProducerCode');
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [proposalDataByID]);
 
   const handleChange = (val) => {
     setOTPValue(val);
   };
-  
+
   const onSubmit = (data) => {
     if (id) {
       const payload = {
@@ -148,6 +148,31 @@ function ProposalForm() {
     }
   };
 
+  const handleReset = () => {
+    if (id) {
+      setValue('startDate', null);
+      setValue('endDate', null);
+    } else {
+      setValue('channel', null);
+      setValue('lob', null);
+      setValue('product', null);
+      setValue('startDate', null);
+      setValue('endDate', null);
+      setValue('producerCode', null);
+    }
+  };
+
+  useEffect(() => {
+    if (!id) {
+      setValue('producerCode', null);
+      setValue('channel', null);
+      setValue('lob', null);
+      setValue('product', null);
+      setValue('startDate', null);
+      setValue('endDate', null);
+    }
+  }, [watch('groupStatus')]);
+
   return (
     <Box component="form" onSubmit={handleSubmit(onSubmit)}>
       <Card>
@@ -157,6 +182,7 @@ function ProposalForm() {
               id={id}
               headerText={FORM_HEADER_TEXT.PROPOSAL_OTP}
               navigateRoute="/proposalotpexception"
+              handleReset={handleReset}
             />
           </Box>
           <Grid container spacing={2}>
@@ -200,6 +226,7 @@ function ProposalForm() {
                 <CustomAutoCompleteWithoutCheckbox
                   name="producerCode"
                   label="Producer Name"
+                  required={true}
                   control={control}
                   rules={{ required: 'Producer Name is required' }}
                   options={user?.data || []}
@@ -211,6 +238,11 @@ function ProposalForm() {
                   disableClearable={true}
                   trigger={trigger}
                   disabled={id ? true : false}
+                  onChangeCallback={(newValue) => {
+                    setValue('lob', null);
+                    setValue('product', null);
+                    dispatch(fetchLobByUserId(newValue.id));
+                  }}
                 />
               </Grid>
             )}
@@ -221,7 +253,8 @@ function ProposalForm() {
                 label="LOB"
                 control={control}
                 rules={{ required: 'LOB is required' }}
-                options={lob?.data || []}
+                options={watch('groupStatus') === 'byChannel' ? lob?.data || [] : lobData}
+                loading={lobLoading}
                 getOptionLabel={(option) => `${option?.lob}`}
                 isOptionEqualToValue={(option, value) => option?.id === value?.id}
                 placeholder="Select"
@@ -269,6 +302,7 @@ function ProposalForm() {
                 classes="w-full"
                 setValue={setValue}
                 watch={watch}
+                trigger={trigger}
               />
             </Grid>
 
@@ -284,6 +318,7 @@ function ProposalForm() {
                 classes="w-full"
                 setValue={setValue}
                 watch={watch}
+                trigger={trigger}
               />
             </Grid>
           </Grid>

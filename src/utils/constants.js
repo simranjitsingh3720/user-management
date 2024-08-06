@@ -56,11 +56,11 @@ export const COMMON_WORDS = {
   PROPOSAL_OTP_EXCEPTION: 'Proposal OTP Exception',
   PLAN: 'plan',
   ZONE: 'zone',
-  BITLY_LINK: 'Bitly Link Details',
+  BITLY_LINK: 'Bitly Link',
   HAS_PLAN: 'hasPlan',
   HAS_ZONE: 'hasZone',
   EXTERNAL: 'external',
-  SALES: 'sales'
+  SALES: 'sales',
 };
 
 export const HEADER = {
@@ -86,7 +86,7 @@ export const FORM_HEADER_TEXT = {
   PRODUCER_EOD: 'Producer EOD Bypass',
   PRODUCT: 'Product',
   PAYMENT_CONFIG: 'Payment Configuration',
-  CONFIG: 'Config',
+  BITLY_CONFIG: 'Bitly Link Config',
   PROPOSAL_OTP: 'Proposal OTP Exception',
   ROLE: 'Role',
   USER: 'User',
