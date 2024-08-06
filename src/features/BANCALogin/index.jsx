@@ -46,7 +46,7 @@ function BANCALogin() {
     });
   };
 
-  const { handleSubmit, control, setValue, watch, formState: { errors }, getValues, trigger } = useForm({
+  const { handleSubmit, control, setValue, watch, formState: { errors }, clearErrors,  getValues, trigger } = useForm({
     defaultValues: {
       producerCode: null,
       product: null,
@@ -77,6 +77,7 @@ function BANCALogin() {
     setValue('product', null);
     setValue('startDate', null);
     setValue('endDate', null);
+    clearErrors();
     setFieldData((prevFieldData) =>
       prevFieldData.map((field) => ({
         ...field,
@@ -196,6 +197,7 @@ function BANCALogin() {
                   if (watch('producerCode') && watch('product')) {
                     bancaFetchData(watch('producerCode').id, watch('product').id);
                   }
+                  clearErrors();
                 }}
               />
              
