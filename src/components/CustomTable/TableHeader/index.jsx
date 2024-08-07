@@ -35,10 +35,10 @@ const TableHeader = ({
               >
                 {column.value}
               </TableSortLabel>
-            ) : column.showIButton ? (
+            ) : column?.showIButton ? (
               <div className="flex">
                 {column.value}
-                <ToolTipIcon title = 'File with error logs will be downloaded' />
+                <ToolTipIcon title = {column?.showIButtonText} />
               </div>
             ) : (
               column.value

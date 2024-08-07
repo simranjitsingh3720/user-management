@@ -70,7 +70,8 @@ export const TABLE_COLUMNS = {
   NAME: 'name',
   FIRST_NAME: 'firstName',
   LAST_NAME: 'lastName',
-  USERNAME: 'dataEntryUserName'
+  USERNAME: 'dataEntryUserName',
+  FILE_PROGRESS: 'Upload in progress'
 }
 
 export const HEADER = {

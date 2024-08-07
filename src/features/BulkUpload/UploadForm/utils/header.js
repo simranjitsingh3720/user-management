@@ -13,6 +13,7 @@ export const Header = (handleDownloadFile) => {
       id: "actionBulk",
       value: "Action",
       showIButton: true,
+      showIButtonText: 'File with error logs will be downloaded',
       action: [
         {
           showIcon: true,

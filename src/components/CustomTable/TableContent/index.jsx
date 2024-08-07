@@ -1,5 +1,5 @@
 import React from 'react';
-import { TableBody, TableRow, TableCell, IconButton, Checkbox, Switch } from '@mui/material';
+import { TableBody, TableRow, TableCell, IconButton, Checkbox, Switch, Tooltip } from '@mui/material';
 import ListLoader from '../../ListLoader';
 import EditIcon from '@mui/icons-material/Edit';
 import { TABLE_COLUMNS } from '../../../utils/constants';
@@ -69,6 +69,13 @@ const TableContent = ({ columns, data, loading, canUpdate }) => {
                           <IconButton onClick={() => action.onClick(row)} disabled={isEditIcon(action?.iconName)}>
                             {action.iconName}
                           </IconButton>
+                        ) : showIcon &&
+                          action?.showIcon &&
+                          col?.id === TABLE_COLUMNS.BULK_DOWNLOAD_FILE_ACTION &&
+                          !row?.errorFileUrl ? (
+                          <Tooltip title={TABLE_COLUMNS.FILE_PROGRESS}>
+                            <IconButton className="opacity-50">{action.iconName}</IconButton>
+                          </Tooltip>
                         ) : (
                           '-'
                         )}
