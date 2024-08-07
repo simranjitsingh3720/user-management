@@ -5,17 +5,26 @@ import CustomButton from '../../../components/CustomButton';
 import { EXPORT_CONSTANTS } from '../utils/constants';
 import { downloadData } from '../../../stores/slices/exportSlice';
 import { removeSpacesAndJoin } from '../../../utils/globalizationFunction';
+import dayjs from 'dayjs';
+import toastifyUtils from '../../../utils/toastify';
 
 const Actions = () => {
   const dispatch = useDispatch();
   const { columns, fromDate, toDate, selectedValue, tableName, extraColumns } = useSelector((state) => state.export);
 
   const confirmAction = () => {
+    const is30Days = selectedValue !== EXPORT_CONSTANTS.custom;
+
+    if (!is30Days && dayjs(fromDate).isAfter(dayjs(toDate))) {
+      toastifyUtils.notifyError('Start date cannot be after the end date.');
+      return;
+    }
+
     let combinedData = {
       tableName: tableName,
     };
-    const is30Days = selectedValue !== EXPORT_CONSTANTS.custom;
-    let additionalColumns =[]
+
+    let additionalColumns = [];
     let selectedColumns = [];
 
     if (columns.length !== 0) {
@@ -41,12 +50,6 @@ const Actions = () => {
         additionalColumns: additionalColumns,
       };
     }
-
-    combinedData = {
-      tableName: tableName,
-      columns: selectedColumns,
-      additionalColumns: additionalColumns,
-    };
 
     if (!is30Days) {
       combinedData = {
