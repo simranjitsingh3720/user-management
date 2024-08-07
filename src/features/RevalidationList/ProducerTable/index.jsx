@@ -55,7 +55,7 @@ const ProducerTable = ({
       dispatch(
         showDialog({
           title: COMMON_WORDS.CHANGE_STATUS,
-          content: <CustomDialogContent label={COMMON_WORDS.PRODUCT} />,
+          content: <CustomDialogContent label={COMMON_WORDS.USER} />,
           actions: <Action row={row} data={data} updateList={updateList} />,
         })
       );
@@ -68,7 +68,7 @@ const ProducerTable = ({
       dispatch(
         showDialog({
           title: COMMON_WORDS.CHANGE_STATUS,
-          content: <CustomDialogContent label={COMMON_WORDS.PRODUCT} />,
+          content: <CustomDialogContent label={COMMON_WORDS.USER} />,
           actions: <Action row={row} data={data} updateList={updateList} bulkUpdate={true} />,
         })
       );
