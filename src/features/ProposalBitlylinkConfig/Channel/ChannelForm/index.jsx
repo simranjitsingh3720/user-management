@@ -38,15 +38,19 @@ function ChannelForm() {
   const { handleSubmit, control, formState, watch, setValue } = useForm({
     defaultValues: {
       select: 'byChannel',
+      channel: null,
+      bitlyLinkMandatory: null,
+      producerCode: null,
     },
   });
 
   useEffect(() => {
     dispatch(
       fetchUser({
-        userType: COMMON_WORDS.PRODUCER,
-        searchKey: COMMON_WORDS.ROLE_NAME,
+        userType: COMMON_WORDS.EXTERNAL,
+        searchKey: COMMON_WORDS.USER_TYPE,
         isAll: true,
+        status: true,
       })
     );
     dispatch(getChannels());

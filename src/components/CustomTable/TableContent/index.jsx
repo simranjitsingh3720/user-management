@@ -77,7 +77,7 @@ const TableContent = ({ columns, data, loading, canUpdate }) => {
                             <IconButton className="opacity-50">{action.iconName}</IconButton>
                           </Tooltip>
                         ) : (
-                          '-'
+                          row['showData']
                         )}
                       </span>
                     </React.Fragment>

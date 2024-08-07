@@ -30,7 +30,9 @@ function Channel() {
   const channelType = useSelector((state) => state.channelType.channelType);
 
   useEffect(() => {
-    dispatch(fetchUser({ userType: COMMON_WORDS.EXTERNAL, searchKey: COMMON_WORDS.USER_TYPE, isAll: true }));
+    dispatch(
+      fetchUser({ userType: COMMON_WORDS.EXTERNAL, searchKey: COMMON_WORDS.USER_TYPE, isAll: true, status: true })
+    );
     dispatch(getChannels());
   }, [dispatch]);
 
@@ -61,7 +63,7 @@ function Channel() {
       showDialog({
         title: COMMON_WORDS.CHANGE_STATUS,
         content: <Content label={COMMON_WORDS.BITLY_LINK} />,
-        actions: <Actions row={row} fetchData={fetchData} />,
+        actions: <Actions row={row} fetchData={getList} />,
       })
     );
   };
