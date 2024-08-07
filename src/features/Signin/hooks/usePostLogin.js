@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import { DASHBOARD } from '../utils/constants';
 import apiUrls from '../../../utils/apiUrls';
 import errorHandler from '../../../utils/errorHandler';
-import { TOKEN } from '../../../utils/globalConstants';
+import { CLIENT_TYPE, TOKEN } from '../../../utils/globalConstants';
 import { COMMON_WORDS } from '../../../utils/constants';
 
 export default function usePostLogin(setOtpScreen) {
@@ -18,6 +18,7 @@ export default function usePostLogin(setOtpScreen) {
   async function postData(loginData) {
     setLoginLoading(true);
     try {
+      loginData = { ...loginData, clientType: CLIENT_TYPE };
       const response = await axiosInstance.post(apiUrls.postLogin, loginData);
       const { data } = response.data;
       if (data?.token) {
