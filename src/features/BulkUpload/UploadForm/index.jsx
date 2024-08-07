@@ -4,7 +4,15 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import SearchComponent from '../../../components/SearchComponent';
 import { getPlaceHolder } from '../../../utils/globalizationFunction';
-import { COMMON_VAR, CONTENT, ROLE_MENUITEM, SEARCH_BY, SEARCH_OPTIONS, UPLOAD_TYPE, getBulkUploadLabel } from './utils/constants';
+import {
+  COMMON_VAR,
+  CONTENT,
+  ROLE_MENUITEM,
+  SEARCH_BY,
+  SEARCH_OPTIONS,
+  UPLOAD_TYPE,
+  getBulkUploadLabel,
+} from './utils/constants';
 import CustomTable from '../../../components/CustomTable';
 import { Header } from './utils/header';
 import CustomFormHeader from '../../../components/CustomFormHeader';
@@ -32,7 +40,6 @@ function UploadForm() {
   const { getBulkUpload, bulkUploadData, totalCount } = useGetBulkUpload();
   const [query, setQuery] = useState('');
   const [file, setFile] = useState();
-  const header = useMemo(() => Header(), []);
 
   const {
     handleSubmit,
@@ -81,7 +88,9 @@ function UploadForm() {
   const fetchTemplate = useCallback(() => {
     getBulkTemplate({
       fileName: COMMON_VAR.FILE_NAME,
-      label: location.pathname.includes(COMMON_VAR.USER_MANAGEMENT_ROUTE) ? watchRole : getBulkUploadLabel(location.pathname),
+      label: location.pathname.includes(COMMON_VAR.USER_MANAGEMENT_ROUTE)
+        ? watchRole
+        : getBulkUploadLabel(location.pathname),
     });
   }, [watchRole]);
 
@@ -116,7 +125,7 @@ function UploadForm() {
   };
 
   const onSubmit = async () => {
-    if (file ) {
+    if (file) {
       const formData = new FormData();
       formData.append(COMMON_VAR.FILE, file);
       formData.append(COMMON_VAR.FILE_TYPE, getBulkUploadLabel(location.pathname));
@@ -134,11 +143,25 @@ function UploadForm() {
     }
   };
 
+  const handleDownloadFile = (row) => {
+    if (row?.errorFileUrl) {
+      const link = document.createElement('a');
+      link.href = row?.errorFileUrl;
+      link.setAttribute('download', fileName);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      toast.success('Download Successfully');
+    }
+  };
+
+  const header = Header(handleDownloadFile);
+
   return (
     <>
       {postBulkUploadLoading && <Loader />}
-      <form onSubmit={handleSubmit(onSubmit)} className='mb-3'>
-        <div className='bg-white mb-5 rounded-xl shadow-lg shadow-shadowColor'>
+      <form onSubmit={handleSubmit(onSubmit)} className="mb-3">
+        <div className="bg-white mb-5 rounded-xl shadow-lg shadow-shadowColor">
           <div className="p-5 pb-0">
             <CustomFormHeader navigateRoute={-1} headerText={CONTENT.TITLE} subHeading={CONTENT.HEADER} />
           </div>
@@ -201,11 +224,11 @@ function UploadForm() {
               downloadTemplate={downloadTemplate}
             />
           )}
-          <div className='m-5'></div>
+          <div className="m-5"></div>
         </div>
       </form>
       <div className="h-5"></div>
-      <Box className='bg-white mb-5 rounded-xl shadow-lg shadow-shadowColor px-7 pb-7'>
+      <Box className="bg-white mb-5 rounded-xl shadow-lg shadow-shadowColor px-7 pb-7">
         <SearchComponent
           selectOptions={SEARCH_OPTIONS}
           placeholder={getPlaceHolder(SEARCH_BY)}
