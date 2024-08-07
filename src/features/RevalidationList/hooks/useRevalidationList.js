@@ -9,7 +9,7 @@ import toastifyUtils from '../../../utils/toastify';
 
 const useRevalidationList = () => {
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [totalCount, setTotalCount] = useState(0);
 
   const fetchData = useCallback(async ({ userId, page, pageSize }) => {
@@ -54,31 +54,33 @@ const useRevalidationList = () => {
     }
   }, []);
 
-  const updateData = useCallback(async (updatedData) => {
-    const transformedData = updatedData.map((item) => ({
-      ...item,
-      status: item.checked,
-    }));
-
-    // Create payload with only the updated items
-    const payload = transformedData.map((item) => ({
-      id: item.id,
-      properties: {
-        status: item.checked,
-      },
-    }));
-
+  const updateData = useCallback(async ({ payload, data, row, updateList }) => {
     try {
       await axiosInstance.put(API_END_POINTS.updateRevalidationList, payload);
       toast.success('Data updated successfully');
+
+      const transformedData = data.map((item) => {
+        if (item.id === row.id) {
+          return {
+            ...item,
+            checked: row.status,
+            status: row.status,
+          };
+        }
+        return item;
+      }
+      );
+
+      if(updateList) {
+        updateList({ id: row.id, data });
+      }
       setData(transformedData);
+      
     } catch (error) {
       errorHandler.handleError(error);
     }
   }, []);
 
-  // Effect to trigger when data changes
-  useEffect(() => {}, [data]);
 
   return {
     revalidationList: data,

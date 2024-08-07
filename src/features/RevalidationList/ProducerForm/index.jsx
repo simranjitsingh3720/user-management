@@ -11,7 +11,7 @@ import BulkUpload from '../../../assets/BulkUpload';
 import { useNavigate } from 'react-router-dom';
 import generateTableHeaders from '../utils/generateTableHeaders';
 
-const ProducerForm = ({ onFormSubmit }) => {
+const ProducerForm = ({ onFormSubmit, revalidationListLoading }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { tableName } = useSelector((state) => state.export);
@@ -76,7 +76,7 @@ const ProducerForm = ({ onFormSubmit }) => {
           </Grid>
 
           <Grid item xs={12} sm={6} lg={4} alignItems="flex-end" display="flex">
-            <CustomButton type="submit" variant="contained" color="primary" className="w-full md:w-auto">
+            <CustomButton type="submit" variant="contained" color="primary" className="w-full md:w-auto" loading={revalidationListLoading}>
               Submit
             </CustomButton>
             <ExportDropdown tableHeader={header} />
