@@ -62,7 +62,7 @@ const TableContent = ({ columns, data, loading, canUpdate }) => {
                             {action.iconName}
                           </IconButton>
                         ) : (
-                          '-'
+                          row['showData']
                         )}
                       </span>
                     </React.Fragment>

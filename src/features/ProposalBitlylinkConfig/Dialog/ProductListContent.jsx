@@ -6,12 +6,14 @@ const ProductListContent = (row) => {
   const HEADER_COLUMNS = generateTableHeadersProduct();
   const [data, setData] = useState([]);
 
+  console.log('row', row);
+
   useEffect(() => {
-    if (row && row?.row?.productDetails) {
-      const arrayData = row?.row?.productDetails.map((productDetail) => ({
+    if (row && row?.row?.products) {
+      const arrayData = row?.row?.products.map((productDetail) => ({
         product: productDetail?.product,
-        product_code: productDetail?.product_code,
-        isEmployee: productDetail?.isEmployee ? 'yes' : 'no',
+        product_code: productDetail?.productCode,
+        bitlyLinkMandatory: productDetail?.isMandatory ? 'yes' : 'no',
       }));
 
       setData(arrayData);

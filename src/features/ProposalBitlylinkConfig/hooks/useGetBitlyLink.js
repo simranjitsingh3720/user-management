@@ -17,8 +17,8 @@ function useGetBitlyLink() {
         pageSize,
         sortKey: orderBy,
         sortOrder: order,
-        childFieldsToFetch: `${COMMON_WORDS.PRODUCER},${COMMON_WORDS.CHANNEL}`,
-        childFieldsEdge: `${COMMON_WORDS.HAS_PRODUCER},${COMMON_WORDS.HAS_CHANNEL}`,
+        childFieldsToFetch: `${COMMON_WORDS.PRODUCER},${COMMON_WORDS.CHANNEL},${COMMON_WORDS.PRODUCTS}`,
+        childFieldsEdge: `${COMMON_WORDS.HAS_PRODUCER},${COMMON_WORDS.HAS_CHANNEL},${COMMON_WORDS.HAS_PRODUCT}`,
       });
 
       if (searched && resultId) {
@@ -37,10 +37,13 @@ function useGetBitlyLink() {
       const transformedData =
         response?.data?.data?.map((item) => {
           const {
-            proposalBitlyConfig: { id, createdAt, updatedAt, label, status },
+            proposalBitlyConfig: { id, createdAt, updatedAt, label, status, fields = {} },
             producer = {},
             channel = {},
+            products = [],
           } = item;
+
+          const { isMandatory = true } = fields;
 
           const { firstName = '', lastName = '', producerCode = '' } = producer?.[0] || {};
 
@@ -56,6 +59,8 @@ function useGetBitlyLink() {
             status,
             label,
             showIcon: producer.length ? true : false,
+            products,
+            showData: channel.length ? (isMandatory ? 'Yes' : 'No') : null,
           };
         }) || [];
 
