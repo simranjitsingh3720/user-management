@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from 'react';
 import axiosInstance from '../../../utils/axiosInstance';
 import apiUrls from '../../../utils/apiUrls';
 import { COMMON_WORDS } from '../../../utils/constants';
-import { buildQueryString } from '../../../utils/globalizationFunction';
+import { buildQueryString, formatDate } from '../../../utils/globalizationFunction';
 import errorHandler from '../../../utils/errorHandler';
 
 function useGetProductLocationLevel(page, pageSize, order, orderBy, employeeId) {
@@ -53,8 +53,8 @@ function useGetProductLocationLevel(page, pageSize, order, orderBy, employeeId) 
           location,
           level,
           status,
-          createdAt,
-          updatedAt,
+          createdAt: formatDate(createdAt),
+          updatedAt: formatDate(updatedAt),
           checked: status,
         };
       });

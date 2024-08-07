@@ -5,7 +5,7 @@ import CustomTable from '../../components/CustomTable';
 import { clearProducts, fetchAllProductData } from '../../stores/slices/productSlice';
 import { COMMON_WORDS } from '../../utils/constants';
 import { PAGECOUNT } from '../../utils/globalConstants';
-import { getPlaceHolder } from '../../utils/globalizationFunction';
+import { formatDate, getPlaceHolder } from '../../utils/globalizationFunction';
 import { fetchLobData } from '../../stores/slices/lobSlice';
 import SearchComponent from '../../components/SearchComponent';
 import { COMMON_FIELDS } from '../PartnerNeft/utils/constant';
@@ -81,8 +81,8 @@ function Product() {
           product_value: productValue,
           lob_name: lobValue,
           product_code: productCode,
-          createdAt: createdAt,
-          updatedAt: updatedAt,
+          createdAt: formatDate(createdAt),
+          updatedAt: formatDate(updatedAt),
           checked: status,
           status: status,
         };

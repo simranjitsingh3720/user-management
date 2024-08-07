@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
 import { COMMON_WORDS } from "../../../utils/constants";
-import { buildQueryString } from "../../../utils/globalizationFunction";
+import { buildQueryString, formatDate } from "../../../utils/globalizationFunction";
 import apiUrls from "../../../utils/apiUrls";
 import errorHandler from "../../../utils/errorHandler";
 
@@ -43,8 +43,8 @@ function useGetHealthConfig() {
           producerName: `${producer?.[0].firstName} ${producer?.[0].lastName}`,
           medicare: isExistingCustomer ? "yes" : "No",
           producerCode: producer?.[0].producerCode,
-          createdAt: createdAt,
-          updatedAt: updatedAt,
+          createdAt: formatDate(createdAt),
+          updatedAt: formatDate(updatedAt),
         };
       });
       setTotalCount(response.data.totalCount);

@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { DATE_FORMAT } from '../../utils/globalConstants';
 import toastifyUtils from '../../utils/toastify';
 import apiUrls from '../../utils/apiUrls';
+import { splitCamelCase } from '../../utils/globalizationFunction';
 
 const initialState = {
   selectedValue: '',
@@ -22,7 +23,7 @@ export const fetchColumns = createAsyncThunk('export/fetchColumns', async ({ tab
     const response = await axiosInstance.get(`${apiUrls.getColumns}${tableName}`);
     const columns = response.data.data.map((col) => ({
       id: col,
-      name: col,
+      name: splitCamelCase(col),
       checked: headerValues?.has(col) || false,
     }));
 
@@ -83,7 +84,7 @@ const exportSlice = createSlice({
     setExtraColumns: (state, action) => {
       const columns = action.payload.map((col) => ({
         id: col,
-        name: col,
+        name: splitCamelCase(col),
         checked: true,
       }));
       state.extraColumns = columns;

@@ -4,6 +4,7 @@ import { hideDialog } from '../../../stores/slices/dialogSlice';
 import CustomButton from '../../../components/CustomButton';
 import { EXPORT_CONSTANTS } from '../utils/constants';
 import { downloadData } from '../../../stores/slices/exportSlice';
+import { removeSpacesAndJoin } from '../../../utils/globalizationFunction';
 
 const Actions = () => {
   const dispatch = useDispatch();
@@ -20,7 +21,7 @@ const Actions = () => {
     if (columns.length !== 0) {
       selectedColumns = columns
         .filter((col) => col.checked)
-        .map((col) => col.name)
+        .map((col) => removeSpacesAndJoin(col.name))
         .join(',');
 
       combinedData = {
@@ -32,7 +33,7 @@ const Actions = () => {
     if (extraColumns.length !== 0) {
       additionalColumns = extraColumns
         .filter((col) => col.checked)
-        .map((col) => col.name)
+        .map((col) => removeSpacesAndJoin(col.name))
         .join(',');
 
       combinedData = {

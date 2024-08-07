@@ -14,6 +14,7 @@ import { removeExtraColumns, setTableName } from '../../stores/slices/exportSlic
 import { PAGECOUNT } from '../../utils/globalConstants';
 import usePermissions from '../../hooks/usePermission';
 import { COMMON, Header, NAVIGATE, SEARCH_OPTIONS } from './Components/utils/constants';
+import { formatDate } from '../../utils/globalizationFunction';
 
 function UserManagement() {
   const navigate = useNavigate();
@@ -40,7 +41,9 @@ function UserManagement() {
           ...item?.user,
           checked: item?.user?.status,
           disabled: !canUpdate,
-          roleId: item?.role[0]?.id
+          roleId: item?.role[0]?.id,
+          createdAt: formatDate(item?.user?.createdAt),
+          updatedAt: formatDate(item?.user?.updatedAt),
         };
       }) || [];
     setUserData(transformedData);

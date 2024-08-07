@@ -3,7 +3,7 @@ import axiosInstance from '../../../utils/axiosInstance';
 import { API_END_POINTS } from '../constants';
 import { toast } from 'react-toastify';
 import { COMMON_WORDS } from '../../../utils/constants';
-import { buildQueryString } from '../../../utils/globalizationFunction';
+import { buildQueryString, formatDate } from '../../../utils/globalizationFunction';
 import errorHandler from '../../../utils/errorHandler';
 import toastifyUtils from '../../../utils/toastify';
 
@@ -38,8 +38,8 @@ const useRevalidationList = () => {
             userName: name,
             emailId: emailId,
             mobileNo: mobileNo,
-            createdAt: createdAt,
-            updatedAt: updatedAt,
+            createdAt: formatDate(createdAt),
+            updatedAt: formatDate(updatedAt),
             checked: status,
             status: status,
             label: label

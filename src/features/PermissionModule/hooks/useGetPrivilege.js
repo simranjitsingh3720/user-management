@@ -2,7 +2,7 @@ import axiosInstance from '../../../utils/axiosInstance';
 
 import { useState } from 'react';
 import apiUrls from '../../../utils/apiUrls';
-import { buildQueryString } from '../../../utils/globalizationFunction';
+import { buildQueryString, formatDate } from '../../../utils/globalizationFunction';
 import errorHandler from '../../../utils/errorHandler';
 
 function useGetPrivilege() {
@@ -35,14 +35,16 @@ function useGetPrivilege() {
       const transformedData =
         response?.data?.data.map((item) => ({
           ...item,
+          createdAt: formatDate(item.createdAt),
+          updatedAt: formatDate(item.updatedAt),
           checked: item.status,
         })) || [];
-        
-        setPermissions(transformedData);
+
+      setPermissions(transformedData);
       setTotalCount(totalCount);
     } catch (error) {
       setPermissions([]);
-      errorHandler.handleError(error)
+      errorHandler.handleError(error);
     } finally {
       setLoading(false);
     }

@@ -3,7 +3,7 @@ import styles from './styles.module.scss';
 import { IconButton, Tooltip } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import { useNavigate } from 'react-router-dom';
-import { capitalizeWords } from '../../../utils/globalizationFunction';
+import { capitalizeWords, formatDate } from '../../../utils/globalizationFunction';
 
 function Table({ ListData, fetchData, sort, setSort, paymentData, canUpdate }) {
   const resultFun = (item) => {
@@ -71,8 +71,8 @@ function Table({ ListData, fetchData, sort, setSort, paymentData, canUpdate }) {
         </div>
         {ListData.map((item) => (
           <div className={styles.listHeader}>
-            <div className={styles.createdAt}>{item?.productWisePaymentMethod?.createdAt}</div>
-            <div className={styles.createdAt}>{item?.productWisePaymentMethod?.updatedAt}</div>
+            <div className={styles.createdAt}>{formatDate(item?.productWisePaymentMethod?.createdAt)}</div>
+            <div className={styles.createdAt}>{formatDate(item?.productWisePaymentMethod?.updatedAt)}</div>
             {canUpdate && (
               <div className={styles.productStatus}>
                 <Tooltip title="Edit Payment Modes">
