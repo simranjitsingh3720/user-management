@@ -1,3 +1,5 @@
+import { CURRENT_LOCATION, TABLE_LABEL } from "../../../../utils/constants";
+
 export const SEARCH_OPTIONS = [
   {
     label: 'File Name',
@@ -65,20 +67,18 @@ export const UPLOAD_TYPE = [
 ];
 
 export const getBulkUploadLabel = (location) => {
-  if (location.includes('product-payment-config')) {
-    return 'productWisePaymentMethod';
-  } else if (location.includes('proposalotpexception')) {
-    return 'proposalOtpException';
-  } else if (location.includes('revalidation-list')) {
-    return 'revalidationList';
-  } else if (location.includes('uwlevelmappingemployee')) {
-    return 'productLocationLevelMappings';
-  } else if (location.includes('product-payment-config')) {
-    return 'productWisePaymentMethod';
-  } else if (location.includes('partner-neft')) {
-    return 'partnerNeft';
-  } else if (location.includes('user-management')) {
-    return 'user';
+  if (location.includes(CURRENT_LOCATION.PRODUCT_PAYMENT_CONFIG)) {
+    return TABLE_LABEL.PRODUCT_PAYMENT_CONFIG;
+  } else if (location.includes(CURRENT_LOCATION.PROPOSAL_OTP_EXCEPTION)) {
+    return TABLE_LABEL.PROPOSAL_OTP_EXCEPTION;
+  } else if (location.includes(CURRENT_LOCATION.REVALIDATION_LIST)) {
+    return TABLE_LABEL.REVALIDATION_LIST;
+  } else if (location.includes(CURRENT_LOCATION.UW_LEVEL_LOCATION_MAPPING)) {
+    return TABLE_LABEL.UW_LEVEL_LOCATION_MAPPING;
+  } else if (location.includes(CURRENT_LOCATION.PARTNER_NEFT)) {
+    return TABLE_LABEL.PARTNER_NEFT;
+  } else if (location.includes(CURRENT_LOCATION.USER_MANAGEMENT)) {
+    return TABLE_LABEL.USER_MANAGEMENT;
   } else {
     return;
   }

@@ -94,3 +94,21 @@ export const FORM_HEADER_TEXT = {
   USER: 'User',
   PRODUCT_LOCATION: 'Product Location Level',
 };
+
+export const CURRENT_LOCATION = {
+  PRODUCT_PAYMENT_CONFIG: 'product-payment-config',
+  PROPOSAL_OTP_EXCEPTION: 'proposalotpexception',
+  REVALIDATION_LIST: 'revalidation-list',
+  UW_LEVEL_LOCATION_MAPPING: 'uwlevelmappingemployee',
+  PARTNER_NEFT: 'partner-neft',
+  USER_MANAGEMENT: 'user-management'
+}
+
+export const TABLE_LABEL = {
+  PRODUCT_PAYMENT_CONFIG: 'productWisePaymentMethod',
+  PROPOSAL_OTP_EXCEPTION: 'proposalOtpException',
+  REVALIDATION_LIST: 'revalidationList',
+  UW_LEVEL_LOCATION_MAPPING: 'productLocationLevelMappings',
+  PARTNER_NEFT: 'partnerNeft',
+  USER_MANAGEMENT: 'user'
+}
