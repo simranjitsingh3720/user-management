@@ -49,13 +49,15 @@ const InputField = ({
             value={field.value || ''}
             onChange={(e) => {
               field.onChange(e);
-              if(typeof trigger === 'function'){
+              if (typeof trigger === 'function') {
                 trigger(id);
               }
             }}
             onBlur={(e) => {
+              const trimmedValue = e.target.value.trim();
+              field.onChange(trimmedValue);
               field.onBlur();
-              if(typeof trigger === 'function'){
+              if (typeof trigger === 'function') {
                 trigger(id);
               }
             }}
@@ -65,8 +67,7 @@ const InputField = ({
               },
             }}
             inputProps={{
-              maxLength:
-              id === COMMON.MOBILE_NUMBER ? '10' : '60'
+              maxLength: id === COMMON.MOBILE_NUMBER ? '10' : '60'
             }}
           />
         )}
