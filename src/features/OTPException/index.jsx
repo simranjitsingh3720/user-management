@@ -29,6 +29,18 @@ function OTPException() {
   const { user } = useSelector((state) => state.user);
   const channelType = useSelector((state) => state.channelType.channelType);
 
+  const getList = useCallback(() => {
+    fetchData({
+      page,
+      pageSize,
+      order,
+      orderBy,
+      searched,
+      resultId,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page, pageSize, order, orderBy, resultId]);
+
   const { otpExceptionList, loading, fetchData, totalCount } = useGetOTPException();
 
   const handleClicked = (data, row) => {
@@ -36,7 +48,7 @@ function OTPException() {
       showDialog({
         title: COMMON_WORDS.CHANGE_STATUS,
         content: <Content label={COMMON_WORDS.OTP_EXCEPTION} />,
-        actions: <Actions row={row} fetchData={fetchData} />,
+        actions: <Actions row={row} fetchData={getList} />,
       })
     );
   };
@@ -50,18 +62,6 @@ function OTPException() {
 
     dispatch(setTableName(otpExceptionList?.[0]?.label));
   }, [otpExceptionList, dispatch]);
-
-  const getList = useCallback(() => {
-    fetchData({
-      page,
-      pageSize,
-      order,
-      orderBy,
-      searched,
-      resultId,
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, pageSize, order, orderBy, resultId]);
 
   useEffect(() => {
     dispatch(setTableName);

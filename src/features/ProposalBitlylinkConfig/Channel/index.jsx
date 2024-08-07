@@ -64,7 +64,7 @@ function Channel() {
       showDialog({
         title: COMMON_WORDS.CHANGE_STATUS,
         content: <Content label={COMMON_WORDS.BITLY_LINK} />,
-        actions: <Actions row={row} fetchData={fetchData} />,
+        actions: <Actions row={row} fetchData={getList} />,
       })
     );
   };

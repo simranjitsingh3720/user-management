@@ -38,6 +38,9 @@ function ChannelForm() {
   const { handleSubmit, control, formState, watch, setValue } = useForm({
     defaultValues: {
       select: 'byChannel',
+      channel: null,
+      bitlyLinkMandatory: null,
+      producerCode: null,
     },
   });
 
