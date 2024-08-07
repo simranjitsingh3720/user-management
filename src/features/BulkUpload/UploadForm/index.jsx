@@ -32,7 +32,6 @@ function UploadForm() {
   const { getBulkUpload, bulkUploadData, totalCount } = useGetBulkUpload();
   const [query, setQuery] = useState('');
   const [file, setFile] = useState();
-  const header = useMemo(() => Header(), []);
 
   const {
     handleSubmit,
@@ -129,10 +128,26 @@ function UploadForm() {
         setFileUploaded(false);
         setFile('');
         setFileName('');
-        fetchBulkUpload();
+        setTimeout(()=> {
+          fetchBulkUpload();
+        }, 1000)
       }
     }
   };
+
+  const handleDownloadFile = (row) => {
+    if(row?.errorFileUrl){
+      const link = document.createElement('a');
+      link.href = row?.errorFileUrl;
+      link.setAttribute('download', fileName);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      toast.success('Download Successfully');
+    }
+  };
+
+  const header = Header(handleDownloadFile);
 
   return (
     <>

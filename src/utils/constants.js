@@ -62,8 +62,16 @@ export const COMMON_WORDS = {
   EXTERNAL: 'external',
   SALES: 'sales',
   FILE_UPLOAD_TIME: 'fileUploadDateTime',
-  ADD: 'add'
+  ADD: 'add',
 };
+
+export const TABLE_COLUMNS = {
+  BULK_DOWNLOAD_FILE_ACTION: 'actionBulk',
+  NAME: 'name',
+  FIRST_NAME: 'firstName',
+  LAST_NAME: 'lastName',
+  USERNAME: 'dataEntryUserName'
+}
 
 export const HEADER = {
   DRAWER_WIDTH: 240,
