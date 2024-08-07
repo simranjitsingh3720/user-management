@@ -1,5 +1,6 @@
 import React from "react";
 import { TableHead, TableRow, TableCell, TableSortLabel } from "@mui/material";
+import ToolTipIcon from "../ToolTip";
 
 const TableHeader = ({
   columns = [],
@@ -34,6 +35,11 @@ const TableHeader = ({
               >
                 {column.value}
               </TableSortLabel>
+            ) : column?.showIButton ? (
+              <div className="flex">
+                {column.value}
+                <ToolTipIcon title = {column?.showIButtonText} />
+              </div>
             ) : (
               column.value
             )}
