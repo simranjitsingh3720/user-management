@@ -1,3 +1,5 @@
+import dayjs from 'dayjs';
+
 function capitalizeFirstLetter(str) {
   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 }
@@ -36,8 +38,8 @@ export const getPlaceHolderUserCreation = (key) => {
 };
 
 export function encodeString(input) {
-  const startChars = "AA";
-  const endChars = "ZZ";
+  const startChars = 'AA';
+  const endChars = 'ZZ';
   const modifiedString = startChars + input + endChars;
   const encodedString = btoa(modifiedString);
   return encodedString;
@@ -47,9 +49,41 @@ export const getDialogContent = (label) => {
 };
 
 export const getFullName = (firstName, lastName) => {
-  return firstName?.charAt(0)?.toUpperCase() + firstName?.slice(1) + (lastName ? ' '+ lastName?.charAt(0)?.toUpperCase() + lastName?.slice(1) : '')
-}
+  return (
+    firstName?.charAt(0)?.toUpperCase() +
+    firstName?.slice(1) +
+    (lastName ? ' ' + lastName?.charAt(0)?.toUpperCase() + lastName?.slice(1) : '')
+  );
+};
 
-export const toCapitalize= (obj, key) => {
-  return obj?.[key]?.charAt(0)?.toUpperCase() + obj?.[key]?.slice(1)
-}
+export const toCapitalize = (obj, key) => {
+  return obj?.[key]?.charAt(0)?.toUpperCase() + obj?.[key]?.slice(1);
+};
+
+/**
+ * Formats a date into a string representation.
+ *
+ * @param {Date} date - The date to be formatted.
+ * @returns {string} The formatted date string in the format 'DD MMM YYYY'.
+ */
+export const formatDate = (date) => {
+  if (!date) return '';
+  return dayjs(date).format('DD/MM/YYYY');
+};
+
+/**
+ * splitCamelCase function
+ * @param {string} str - The string to be formatted.
+ * @returns {string} The formatted string.
+ */
+export const splitCamelCase = (str) => {
+  return str.replace(/([a-z])([A-Z])/g, '$1 $2').replace(/([A-Z])([A-Z][a-z])/g, '$1 $2');
+};
+
+/**
+ *  Converts a string by removing all spaces and joining the characters together.
+ *  @param {string} str - The string to be formatted.
+ */
+export const removeSpacesAndJoin = (str) => {
+  return str.replace(/\s+/g, ''); // Remove all spaces
+};

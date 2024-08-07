@@ -2,7 +2,7 @@ import { useState } from 'react';
 import axiosInstance from '../../../utils/axiosInstance';
 
 import { COMMON_WORDS } from '../../../utils/constants';
-import { buildQueryString } from '../../../utils/globalizationFunction';
+import { buildQueryString, formatDate } from '../../../utils/globalizationFunction';
 import apiUrls from '../../../utils/apiUrls';
 import errorHandler from '../../../utils/errorHandler';
 import dayjs from 'dayjs';
@@ -76,8 +76,8 @@ function useGetEODBypass() {
           reason: reason,
           startDate: startDate,
           endDate: endDate,
-          createdAt: createdAt,
-          updatedAt: updatedAt,
+          createdAt: formatDate(createdAt),
+          updatedAt: formatDate(updatedAt),
         };
       });
       setEodByPassList(producerEodByPass);

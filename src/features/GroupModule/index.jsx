@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import PermissionContent from './Dialog/PermissionContent';
 import SearchComponent from '../../components/SearchComponent';
 import { COMMON_FIELDS } from '../PartnerNeft/utils/constant';
-import { getPlaceHolder } from '../../utils/globalizationFunction';
+import { formatDate, getPlaceHolder } from '../../utils/globalizationFunction';
 import { SEARCH_OPTIONS, showTextField } from './constants';
 import useGetPermission from './hooks/useGetPermission';
 import Content from '../../components/CustomDialogContent';
@@ -94,14 +94,15 @@ function GroupModule() {
   useEffect(() => {
     const transformedData =
       group?.data?.map((item) => {
+        const { id, groupName, label, createdAt, updatedAt, status } = item;
         return {
-          id: item.id,
-          groupName: item.groupName,
-          label: item.label,
-          createdAt: item.createdAt,
-          updatedAt: item.updatedAt,
-          checked: item.status,
-          status: item.status,
+          id: id,
+          groupName: groupName,
+          label: label,
+          createdAt: formatDate(createdAt),
+          updatedAt: formatDate(updatedAt),
+          checked: status,
+          status: status,
         };
       }) || [];
 

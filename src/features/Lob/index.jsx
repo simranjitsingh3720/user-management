@@ -13,6 +13,7 @@ import { showDialog } from '../../stores/slices/dialogSlice';
 import { COMMON_WORDS } from '../../utils/constants';
 import Content from '../../components/CustomDialogContent';
 import Action from './Action';
+import { formatDate } from '../../utils/globalizationFunction';
 
 const Lob = () => {
   const dispatch = useDispatch();
@@ -82,6 +83,8 @@ const Lob = () => {
         ...item,
         checked: item.status,
         disabled: !canUpdate,
+        createdAt: formatDate(item.createdAt),
+        updatedAt: formatDate(item.updatedAt),
       })) || [];
     setLobData(transformedData);
   }, [lob, canUpdate]);

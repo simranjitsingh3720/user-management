@@ -6,7 +6,7 @@ import CustomDialog from '../../components/CustomDialog';
 import SearchComponent from '../../components/SearchComponent';
 import { generateTableHeaders } from './utils/generateTableHeaders';
 import { COMMON_WORDS } from '../../utils/constants';
-import { getPlaceHolder } from '../../utils/globalizationFunction';
+import { formatDate, getPlaceHolder } from '../../utils/globalizationFunction';
 import { fetchUser } from '../../stores/slices/userSlice';
 import { showDialog } from '../../stores/slices/dialogSlice';
 import { setExtraColumns, setTableName } from '../../stores/slices/exportSlice';
@@ -66,8 +66,8 @@ function EmployeeFlagConfig() {
           producerCode: producer?.[0]?.producerCode,
           producerName: `${producer?.[0]?.firstName} ${producer?.[0]?.lastName}`,
           productDetails: products,
-          createdAt: createdAt,
-          updatedAt: updatedAt,
+          createdAt: formatDate(createdAt),
+          updatedAt: formatDate(updatedAt),
         };
       });
       setTableData(refactorData);

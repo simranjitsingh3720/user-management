@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import axiosInstance from '../../../utils/axiosInstance';
-import { buildQueryString } from '../../../utils/globalizationFunction';
+import { buildQueryString, formatDate } from '../../../utils/globalizationFunction';
 import { COMMON_WORDS } from '../../../utils/constants';
 import apiUrls from '../../../utils/apiUrls';
 
@@ -50,8 +50,8 @@ function useGetBitlyLink() {
             id: id,
             userName: producer.length ? `${firstName || ''} ${lastName || ''}` : txtChannelName,
             producerCode: producer.length ? producerCode : numChannelCode,
-            createdAt,
-            updatedAt,
+            createdAt: formatDate(createdAt),
+            updatedAt: formatDate(updatedAt),
             checked: status,
             status,
             label,

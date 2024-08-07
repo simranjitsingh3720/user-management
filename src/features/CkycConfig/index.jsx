@@ -7,7 +7,7 @@ import { Box } from '@mui/material';
 import useGetCkycData from './hooks/useGetCkycData';
 import { PAGECOUNT } from '../../utils/globalConstants';
 import { COMMON_WORDS } from '../../utils/constants';
-import { getPlaceHolder } from '../../utils/globalizationFunction';
+import { formatDate, getPlaceHolder } from '../../utils/globalizationFunction';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchLobData } from '../../stores/slices/lobSlice';
 import { fetchAllProductData } from '../../stores/slices/productSlice';
@@ -50,16 +50,19 @@ function CkycConfig() {
 
   useEffect(() => {
     if (ckycList && ckycList?.data) {
-      const refactorData = ckycList?.data.map((item) => ({
-        id: item?.cKYC?.id,
-        label: item?.cKYC?.label,
-        lob: item?.lobs[0]?.lob,
-        product: item?.products[0]?.product,
-        CKYCApplicable: item?.cKYC?.isCKYCApplicable ? COMMON_WORDS.ENABLE : COMMON_WORDS.DISABLE,
-        forWhom: item?.cKYC?.forWhom,
-        createdAt: item?.cKYC?.createdAt,
-        updatedAt: item?.cKYC?.updatedAt,
-      }));
+      const refactorData = ckycList?.data.map((item) => {
+        const { id, label, isCKYCApplicable, forWhom, createdAt, updatedAt } = item?.cKYC;
+        return {
+          id: id,
+          label: label,
+          lob: item?.lobs[0]?.lob,
+          product: item?.products[0]?.product,
+          CKYCApplicable: isCKYCApplicable ? COMMON_WORDS.ENABLE : COMMON_WORDS.DISABLE,
+          forWhom: forWhom,
+          createdAt: formatDate(createdAt),
+          updatedAt: formatDate(updatedAt),
+        };
+      });
 
       setTableData(refactorData);
       dispatch(setTableName(refactorData[0]?.label));
