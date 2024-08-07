@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback } from 'react';
 import axiosInstance from '../../../utils/axiosInstance';
 import { API_END_POINTS } from '../constants';
 import { toast } from 'react-toastify';
@@ -60,19 +60,22 @@ const useRevalidationList = () => {
       toast.success('Data updated successfully');
 
       const transformedData = data.map((item) => {
-        if (item.id === row.id) {
+        const newItem = payload.filter((payloadItem) => item.id === payloadItem.id);
+        if (newItem.length > 0) {
           return {
             ...item,
-            checked: row.status,
-            status: row.status,
+            checked: newItem[0].properties.status,
+            status: newItem[0].properties.status
           };
         }
         return item;
-      }
-      );
+      });
 
       if(updateList) {
-        updateList({ id: row.id, data });
+        if(payload.length > 1) {
+          updateList({ data: transformedData });
+        } else
+          updateList({ id: row.id, data });
       }
       setData(transformedData);
       

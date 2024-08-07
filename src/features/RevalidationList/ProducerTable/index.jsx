@@ -25,19 +25,30 @@ const ProducerTable = ({
   const { canUpdate } = usePermissions();
   const dispatch = useDispatch();
 
-  const updateList = useCallback(({id, data}) => {
-    const updatedData = data.map((item) => {
-      if (item.id === id) {
-        return {
-          ...item,
-          checked: !item.checked,
-          status: !item.status,
-        };
-      }
-      return item;
-    });
+  const updateList = useCallback(({ id, data }) => {
+    let updatedData = [];
+    if (id) {
+     
+      updatedData = data.map((item) => {
+        if (item.id === id) {
+          return {
+            ...item,
+            checked: !item.checked,
+            status: !item.status,
+          };
+        }
+        return item;
+      });
+    } else {
+      updatedData = data;
+    }
 
     setList(updatedData);
+    const allActive = updatedData.every((row) => row.checked);
+    const allInactive = updatedData.every((row) => !row.checked);
+
+    setSelectAllActive(allActive);
+    setSelectAllInactive(allInactive);
   }, []);
 
   const handleStatusUpdate = useCallback(
@@ -46,7 +57,21 @@ const ProducerTable = ({
         showDialog({
           title: COMMON_WORDS.CHANGE_STATUS,
           content: <Content label={COMMON_WORDS.PRODUCT} />,
-          actions: <Action row={row} data={revalidationList} updateList={updateList} />,
+          actions: <Action row={row} data={data} updateList={updateList} />,
+        })
+      );
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
+
+  const handleAllStatusUpdate = useCallback(
+    (data, row) => {
+      dispatch(
+        showDialog({
+          title: COMMON_WORDS.CHANGE_STATUS,
+          content: <Content label={COMMON_WORDS.PRODUCT} />,
+          actions: <Action row={row} data={data} updateList={updateList} bulkUpdate={true} />,
         })
       );
     },
@@ -71,15 +96,33 @@ const ProducerTable = ({
 
     setSelectAllActive(allActive);
     setSelectAllInactive(allInactive);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [revalidationList]);
 
   const handleSelectAllActiveChange = (event) => {
-    // TODO: handle select all active change
+    const rowData = list.map((row) => {
+      return {
+        id: row.id,
+        properties: {
+          status: true,
+        },
+      };
+    });
+
+    handleAllStatusUpdate(list, rowData);
   };
 
   const handleSelectAllInactiveChange = (event) => {
-    // TODO: handle select all inactive change
+    const rowData = list.map((row) => {
+      return {
+        id: row.id,
+        properties: {
+          status: false,
+        },
+      };
+    });
+
+    handleAllStatusUpdate(list, rowData);
   };
 
   const customExtraHeader = (
