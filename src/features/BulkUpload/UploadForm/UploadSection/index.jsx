@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import DocumentIconGray from '../../../../assets/DocumentIconGray';
 import DocumentIconGreen from '../../../../assets/DocumentIconGreen';
 import DownloadLogo from '../../../../assets/DownloadLogo';
@@ -12,8 +13,9 @@ const UploadTemplate = ({
   deleteBtn,
   onSubmit,
   downloadTemplate,
-  CONTENT,
+  CONTENT
 }) => {
+
   return (
     <div className="p-5">
       <div className="border border-blueHaze rounded-lg w-full">

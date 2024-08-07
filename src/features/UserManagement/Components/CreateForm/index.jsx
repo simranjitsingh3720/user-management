@@ -725,6 +725,15 @@ function CreateUserCreationForm() {
   const neftValue = watch(COMMON.DEFAULT_HOUSE_BANK);
 
   useEffect(() => {
+   if(neftValue && ARR_CONTAINS.PRODUCER_ARR.some((role) => rolesWatch?.roleName?.includes(role))){
+    const selectedHouseBank = neftDefaultBank.find((obj) => obj.id === neftValue);
+    if (selectedHouseBank) {
+      setValue(COMMON.ACCOUNT_NUMBER, selectedHouseBank?.accountNumber);
+    }
+   }
+  }, [neftValue]);
+
+  useEffect(() => {
     if (products && products.length > 0 && editData && Object.keys(editData).length > 0) {
       Object.entries(editData).forEach(([key, value]) => {
         if (key === FORM_LABEL.PRODUCT) {

@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { removeExtraColumns, setTableName } from '../../../stores/slices/exportSlice';
 import { toast } from 'react-toastify';
 import errorHandler from '../../../utils/errorHandler';
-import { buildQueryString } from '../../../utils/globalizationFunction';
+import { buildQueryString, formatDate } from '../../../utils/globalizationFunction';
 import apiUrls from '../../../utils/apiUrls';
 import { COMMON_WORDS } from '../../../utils/constants';
 
@@ -47,8 +47,8 @@ const useRole = (updateRoleInState) => {
             roleName,
             groupName: group?.[0]?.groupName || '',
             groupId,
-            createdAt,
-            updatedAt,
+            createdAt: formatDate(createdAt),
+            updatedAt: formatDate(updatedAt),
             status,
             id,
             checked: status,

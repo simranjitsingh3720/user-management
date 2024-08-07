@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 import { API_END_POINTS, VERFICATION_ENUM } from '../utils/constant';
 import axiosInstance from './../../../utils/axiosInstance';
-import { buildQueryString } from '../../../utils/globalizationFunction';
+import { buildQueryString, formatDate } from '../../../utils/globalizationFunction';
 
 const useGetPartnerNeft = () => {
   const [data, setData] = useState([]);
@@ -59,8 +59,8 @@ const useGetPartnerNeft = () => {
             producerName: `${producer?.[0]?.firstName} ${producer?.[0]?.lastName}`,
             producerCode: producer?.[0]?.producerCode,
             verificationMethod: VERFICATION_ENUM[verificationMethod],
-            createdAt: createdAt,
-            updatedAt: updatedAt,
+            createdAt: formatDate(createdAt),
+            updatedAt: formatDate(updatedAt),
           };
         });
         setData(partnerNeftData);
