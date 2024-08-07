@@ -1,11 +1,11 @@
-import { configureStore } from "@reduxjs/toolkit";
-import lobSlice from "../Redux/getLob";
-import productSlice from "../Redux/getProduct";
-import locationSlice from "../Redux/getLocation";
-import roleSlice from "../Redux/getRole";
-import paymentTypeSlice from "../Redux/getPaymentType";
-import producerCodeSlice from "../Redux/getProducerCode";
-import parentCodeSlice from "../Redux/getParentCode";
+import { configureStore } from '@reduxjs/toolkit';
+import lobSlice from '../Redux/getLob';
+import productSlice from '../Redux/getProduct';
+import locationSlice from '../Redux/getLocation';
+import roleSlice from '../Redux/getRole';
+import paymentTypeSlice from '../Redux/getPaymentType';
+import producerCodeSlice from '../Redux/getProducerCode';
+import parentCodeSlice from '../Redux/getParentCode';
 import dialogReducer from './slices/dialogSlice';
 import exportReducer from './slices/exportSlice';
 import lobReducer from './slices/lobSlice';
@@ -14,11 +14,12 @@ import userReducer from './slices/userSlice';
 import channelSlice from '../Redux/getChannel';
 import houseBankSlice from '../Redux/getHouseBank';
 import loginTypeSlice from '../Redux/getLoginType';
-import groupSlice from "./slices/groupSlice";
-import producerTypeSlice from "../Redux/getProducerType";
+import groupSlice from './slices/groupSlice';
+import producerTypeSlice from '../Redux/getProducerType';
 import masterPolicySlice from '../Redux/getMasterPolicy';
 import zoneSlice from '../Redux/getZone';
 import planSlice from '../Redux/getPlan';
+import lobUserSlice from './slices/lobUserSlice';
 
 const appStore = configureStore({
   reducer: {
@@ -42,10 +43,11 @@ const appStore = configureStore({
     masterPolicy: masterPolicySlice,
     zone: zoneSlice,
     plan: planSlice,
+    lobUser: lobUserSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      serializableCheck: false
+      serializableCheck: false,
     }),
 });
 export default appStore;

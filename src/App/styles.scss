@@ -51,7 +51,7 @@ $breakpoint-xl: 1536px;
 
 .required-field:after {
   content: '*';
-  color: #ff6262;
+  color: #d32f2f;
   padding-left: 0.25rem;
 }
 
@@ -75,20 +75,19 @@ $breakpoint-xl: 1536px;
   filter: invert(88%) sepia(58%) saturate(920%) hue-rotate(180deg) brightness(100%) contrast(66%);
 }
 
-
 // Fix all input placeholder text to capitalize
 ::-webkit-input-placeholder {
   text-transform: capitalize;
 }
 
-:-moz-placeholder { 
+:-moz-placeholder {
   text-transform: capitalize;
 }
 
-::-moz-placeholder {  
+::-moz-placeholder {
   text-transform: capitalize;
 }
 
-:-ms-input-placeholder { 
+:-ms-input-placeholder {
   text-transform: capitalize;
 }

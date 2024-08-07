@@ -15,11 +15,11 @@ function SignIn() {
 
   const tabs = [
     {
-      label: 'Email with Password',
+      label: 'Email & Password',
       component: <SignInPassword postData={postData} loginLoading={loginLoading} />,
     },
     {
-      label: 'Email with OTP',
+      label: 'Email & OTP',
       component: (
         <SignInOTP
           otpScreen={otpScreen}
@@ -41,7 +41,7 @@ function SignIn() {
       >
         <SignInImg></SignInImg>
       </div>
-      <div className="bg-white w-full md:w-1/2 h-full flex flex-col items-center p-8 sm:p-28 md:p-12 xl:p-28">
+      <div className="bg-white w-full md:w-1/2 h-full flex flex-col items-center justify-center p-8 sm:p-28 md:p-12 xl:p-28">
         <div className="text-center w-full">
           <div className="flex justify-center">
             <TataNormalLogo />

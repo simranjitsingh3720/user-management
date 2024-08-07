@@ -10,7 +10,7 @@ function useGetOTPException() {
   const [loading, setLoading] = useState(true);
   const [totalCount, setTotalCount] = useState(0);
 
-  const fetchData = async ({ page, pageSize, order, orderBy, searched, query }) => {
+  const fetchData = async ({ page, pageSize, order, orderBy, searched, query, resultId }) => {
     try {
       setLoading(true);
       let params = buildQueryString({
@@ -24,11 +24,21 @@ function useGetOTPException() {
 
       let url = `${apiUrls.getOTPException}?${params}`;
 
-      if (query && searched) {
-        const params = {
-          searchKey: searched,
-          searchString: query,
-        };
+      if (searched && resultId) {
+        let params;
+        if (COMMON_WORDS.CHANNEL === searched) {
+          params = {
+            edge: COMMON_WORDS.HAS_CHANNEL,
+            isExclusive: true,
+            ids: resultId,
+          };
+        } else {
+          params = {
+            edge: COMMON_WORDS.HAS_PRODUCER,
+            isExclusive: true,
+            ids: resultId,
+          };
+        }
         url += `&${buildQueryString(params)}`;
       }
 

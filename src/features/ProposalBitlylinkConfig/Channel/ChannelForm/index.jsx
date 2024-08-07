@@ -97,7 +97,7 @@ function ChannelForm() {
         <CardContent>
           <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
             <CustomFormHeader
-              headerText={FORM_HEADER_TEXT.CONFIG}
+              headerText={FORM_HEADER_TEXT.BITLY_CONFIG}
               navigateRoute="/proposal-bitly-config"
               handleReset={handleReset}
             />
@@ -120,9 +120,7 @@ function ChannelForm() {
                       label="Channel"
                       required
                       options={channelType || []}
-                      getOptionLabel={(option) =>
-                        `${option?.label || ''} - ${option?.numChannelCode || ''}`
-                      }
+                      getOptionLabel={(option) => `${option?.label || ''} - ${option?.numChannelCode || ''}`}
                       isOptionEqualToValue={(option, value) => option.id === value.id}
                       control={control}
                       rules={{ required: 'Channel is required' }}
@@ -140,7 +138,7 @@ function ChannelForm() {
                       options={BitlyLinkMandatory || []}
                       getOptionLabel={(option) => option?.label || ''}
                       control={control}
-                      rules={{ required: 'Bitly Link is required' }}
+                      rules={{ required: 'Bitly Link Mandatory is required' }}
                       error={Boolean(errors.bitlyLinkMandatory)}
                       helperText={errors.bitlyLinkMandatory?.message}
                       disableClearable
@@ -161,9 +159,7 @@ function ChannelForm() {
                         loading={userLoading}
                         options={user.data || []}
                         getOptionLabel={(option) =>
-                          `${option?.firstName || ''} ${option?.lastName || ''} - ${
-                            option.producerCode || ''
-                          }`
+                          `${option?.firstName || ''} ${option?.lastName || ''} - ${option.producerCode || ''}`
                         }
                         control={control}
                         rules={{ required: 'Producer is required' }}

@@ -96,7 +96,7 @@ function CreateRoleForm() {
                 getOptionLabel={(option) => option?.groupName || ''}
                 isOptionEqualToValue={(option, value) => option.id === value.id}
                 control={control}
-                rules={{ required: 'Group is required' }}
+                rules={{ required: 'Group Name is required' }}
                 error={Boolean(errors.groups)}
                 helperText={errors.groups?.message}
                 disableClearable={true}
