@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { removeExtraColumns, setTableName } from '../../../stores/slices/exportSlice';
 import { showDialog } from '../../../stores/slices/dialogSlice';
 import { COMMON_WORDS } from '../../../utils/constants';
-import Content from '../../../components/CustomDialogContent';
+import CustomDialogContent from '../../../components/CustomDialogContent';
 import Action from '../Action';
 
 const ProducerTable = ({
@@ -28,7 +28,6 @@ const ProducerTable = ({
   const updateList = useCallback(({ id, data }) => {
     let updatedData = [];
     if (id) {
-     
       updatedData = data.map((item) => {
         if (item.id === id) {
           return {
@@ -56,13 +55,12 @@ const ProducerTable = ({
       dispatch(
         showDialog({
           title: COMMON_WORDS.CHANGE_STATUS,
-          content: <Content label={COMMON_WORDS.PRODUCT} />,
+          content: <CustomDialogContent label={COMMON_WORDS.PRODUCT} />,
           actions: <Action row={row} data={data} updateList={updateList} />,
         })
       );
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
+    [dispatch, updateList]
   );
 
   const handleAllStatusUpdate = useCallback(
@@ -70,19 +68,17 @@ const ProducerTable = ({
       dispatch(
         showDialog({
           title: COMMON_WORDS.CHANGE_STATUS,
-          content: <Content label={COMMON_WORDS.PRODUCT} />,
+          content: <CustomDialogContent label={COMMON_WORDS.PRODUCT} />,
           actions: <Action row={row} data={data} updateList={updateList} bulkUpdate={true} />,
         })
       );
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
+    [dispatch, updateList]
   );
 
-  const HEADER_COLUMNS = useMemo(
+  const headerColumns = useMemo(
     () => generateTableHeaders(handleStatusUpdate),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
+    [handleStatusUpdate]
   );
 
   useEffect(() => {
@@ -96,38 +92,33 @@ const ProducerTable = ({
 
     setSelectAllActive(allActive);
     setSelectAllInactive(allInactive);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [revalidationList]);
+  }, [dispatch, revalidationList]);
 
   const handleSelectAllActiveChange = (event) => {
-    const rowData = list.map((row) => {
-      return {
-        id: row.id,
-        properties: {
-          status: true,
-        },
-      };
-    });
+    const rowData = list.map((row) => ({
+      id: row.id,
+      properties: {
+        status: true,
+      },
+    }));
 
     handleAllStatusUpdate(list, rowData);
   };
 
   const handleSelectAllInactiveChange = (event) => {
-    const rowData = list.map((row) => {
-      return {
-        id: row.id,
-        properties: {
-          status: false,
-        },
-      };
-    });
+    const rowData = list.map((row) => ({
+      id: row.id,
+      properties: {
+        status: false,
+      },
+    }));
 
     handleAllStatusUpdate(list, rowData);
   };
 
   const customExtraHeader = (
     <TableRow>
-      <TableCell colSpan={HEADER_COLUMNS.length}>
+      <TableCell colSpan={headerColumns.length}>
         <div style={{ display: 'flex', justifyContent: 'end' }}>
           <FormControlLabel
             control={<Checkbox checked={selectAllActive} onChange={handleSelectAllActiveChange} color="primary" />}
@@ -145,7 +136,7 @@ const ProducerTable = ({
   return (
     <div className="mt-8">
       <CustomTable
-        columns={HEADER_COLUMNS}
+        columns={headerColumns}
         rows={list}
         loading={revalidationListLoading}
         customExtraHeader={customExtraHeader}

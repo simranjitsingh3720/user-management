@@ -4,14 +4,14 @@ import { hideDialog } from '../../../stores/slices/dialogSlice';
 import CustomButton from '../../../components/CustomButton';
 import useRevalidationList from '../hooks/useRevalidationList';
 
-const Action = ({ row, data, updateList, bulkUpdate=false  }) => {
+const Action = ({ row, data, updateList, bulkUpdate = false }) => {
   const dispatch = useDispatch();
   const { revalidationListUpdateData } = useRevalidationList();
 
   const confirmAction = () => {
     let payload = [];
 
-    if(bulkUpdate) {
+    if (bulkUpdate) {
       payload = row;
     } else {
       payload = [{
@@ -19,7 +19,7 @@ const Action = ({ row, data, updateList, bulkUpdate=false  }) => {
         properties: {
           status: !row.checked,
         },
-      }]
+      }];
     }
 
     revalidationListUpdateData({ payload, data, row, updateList, bulkUpdate });

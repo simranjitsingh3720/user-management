@@ -26,7 +26,7 @@ const useRevalidationList = () => {
     try {
       const response = await axiosInstance.get(API_END_POINTS.getRevalidationList + queryParams);
 
-      if(response?.data?.data?.length === 0) {
+      if (response?.data?.data?.length === 0) {
         toastifyUtils.notifySuccess('No data found for the selected producer');
       }
 
@@ -34,15 +34,15 @@ const useRevalidationList = () => {
         response?.data?.data?.map((item) => {
           const { revalidationList: { id, name, emailId, mobileNo, createdAt, updatedAt, status, label } } = item;
           return {
-            id: id,
+            id,
             userName: name,
-            emailId: emailId,
-            mobileNo: mobileNo,
+            emailId,
+            mobileNo,
             createdAt: formatDate(createdAt),
             updatedAt: formatDate(updatedAt),
             checked: status,
-            status: status,
-            label: label
+            status,
+            label,
           };
         }) || [];
       setData(transformedData);
@@ -60,22 +60,23 @@ const useRevalidationList = () => {
       toast.success('Data updated successfully');
 
       const transformedData = data.map((item) => {
-        const newItem = payload.filter((payloadItem) => item.id === payloadItem.id);
-        if (newItem.length > 0) {
+        const newItem = payload.find((payloadItem) => item.id === payloadItem.id);
+        if (newItem) {
           return {
             ...item,
-            checked: newItem[0].properties.status,
-            status: newItem[0].properties.status
+            checked: newItem.properties.status,
+            status: newItem.properties.status,
           };
         }
         return item;
       });
 
-      if(updateList) {
-        if(payload.length > 1) {
+      if (updateList) {
+        if (payload.length > 1) {
           updateList({ data: transformedData });
-        } else
+        } else {
           updateList({ id: row.id, data });
+        }
       }
       setData(transformedData);
       
@@ -83,7 +84,6 @@ const useRevalidationList = () => {
       errorHandler.handleError(error);
     }
   }, []);
-
 
   return {
     revalidationList: data,
