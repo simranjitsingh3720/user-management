@@ -8,7 +8,6 @@ import { CHANGE_STATUS_LABEL, COMMON_WORDS } from '../../utils/constants';
 import { useDispatch } from 'react-redux';
 import { showDialog } from '../../stores/slices/dialogSlice';
 import Actions from './Dialog/Action';
-import CustomDialog from '../../components/CustomDialog';
 import Content from '../../components/CustomDialogContent';
 import usePermissions from '../../hooks/usePermission';
 import LevelMappingForm from './LevelMappingForm';
@@ -83,7 +82,6 @@ function UWLevelMapping() {
           canUpdate={canUpdate}
         />
       </div>
-      <CustomDialog />
     </Box>
   );
 }

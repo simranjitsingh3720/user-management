@@ -8,7 +8,6 @@ import Content from './Components/Dialog/Content';
 import Actions from './Components/Dialog/Action';
 import { showDialog } from '../../stores/slices/dialogSlice';
 import { useDispatch } from 'react-redux';
-import CustomDialog from '../../components/CustomDialog';
 import SearchComponent from '../../components/SearchComponent';
 import { removeExtraColumns, setTableName } from '../../stores/slices/exportSlice';
 import { PAGECOUNT } from '../../utils/globalConstants';
@@ -111,7 +110,6 @@ function UserManagement() {
           canUpdate={canUpdate}
         />
       </div>
-      <CustomDialog />
     </Box>
   );
 }

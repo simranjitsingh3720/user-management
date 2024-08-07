@@ -5,7 +5,6 @@ import SearchComponent from '../../components/SearchComponent';
 import usePermissions from '../../hooks/usePermission';
 import CustomTable from '../../components/CustomTable';
 import generateTableHeaders from './utils/generateTableHeaders';
-import CustomDialog from '../../components/CustomDialog';
 import { COMMON_WORDS } from '../../utils/constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { showDialog } from '../../stores/slices/dialogSlice';
@@ -140,7 +139,6 @@ function OTPException() {
           canUpdate={canUpdate}
         />
       </div>
-      <CustomDialog />
     </div>
   );
 }

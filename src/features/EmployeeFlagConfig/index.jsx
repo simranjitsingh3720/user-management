@@ -2,7 +2,6 @@ import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import useGetEmployeeFlag from './hooks/useGetEmployeeFlag';
 import CustomTable from '../../components/CustomTable';
-import CustomDialog from '../../components/CustomDialog';
 import SearchComponent from '../../components/SearchComponent';
 import { generateTableHeaders } from './utils/generateTableHeaders';
 import { COMMON_WORDS } from '../../utils/constants';
@@ -132,7 +131,6 @@ function EmployeeFlagConfig() {
         orderBy={orderBy}
         setOrderBy={setOrderBy}
       />
-      <CustomDialog size="md" />
     </div>
   );
 }

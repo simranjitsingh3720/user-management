@@ -7,7 +7,6 @@ import { COMMON_WORDS } from '../../utils/constants';
 import { PAGECOUNT } from '../../utils/globalConstants';
 import { showDialog } from '../../stores/slices/dialogSlice';
 import ConfirmAction from './Dialog/ConfirmAction';
-import CustomDialog from '../../components/CustomDialog';
 import { useNavigate } from 'react-router-dom';
 import PermissionContent from './Dialog/PermissionContent';
 import SearchComponent from '../../components/SearchComponent';
@@ -234,8 +233,6 @@ function GroupModule() {
           setOrderBy={setOrderBy}
           canUpdate={canUpdate}
         />
-
-        <CustomDialog />
       </div>
     </>
   );

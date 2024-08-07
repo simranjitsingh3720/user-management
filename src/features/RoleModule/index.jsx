@@ -7,7 +7,6 @@ import { SEARCH_OPTIONS } from './utils/constants';
 import { COMMON } from '../UserManagement/Components/utils/constants';
 import CustomTable from '../../components/CustomTable';
 import { Header } from './utils/Header';
-import CustomDialog from '../../components/CustomDialog';
 import { COMMON_WORDS } from '../../utils/constants';
 import Content from '../../components/CustomDialogContent';
 import Action from './Action';
@@ -122,8 +121,6 @@ function RoleModule() {
         orderBy={orderBy}
         setOrderBy={setOrderBy}
       />
-
-      <CustomDialog />
     </>
   );
 }

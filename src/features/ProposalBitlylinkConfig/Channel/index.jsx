@@ -10,7 +10,6 @@ import { COMMON_WORDS } from '../../../utils/constants';
 import { showDialog } from '../../../stores/slices/dialogSlice';
 import Content from '../../../components/CustomDialogContent';
 import { Header } from '../utils/Header';
-import CustomDialog from '../../../components/CustomDialog';
 import Actions from '../Action';
 import ProductListContent from '../Dialog/ProductListContent';
 import ProductListAction from '../Dialog/ProductListAction';
@@ -154,7 +153,6 @@ function Channel() {
           canUpdate={canUpdate}
         />
       </div>
-      <CustomDialog />
     </div>
   );
 }

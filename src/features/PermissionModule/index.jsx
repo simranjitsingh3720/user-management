@@ -9,7 +9,6 @@ import { showDialog } from '../../stores/slices/dialogSlice';
 import SearchComponent from '../../components/SearchComponent';
 import { PrivilegeSearch } from './constants';
 import Actions from './Dialog/Action';
-import CustomDialog from '../../components/CustomDialog';
 import Content from '../../components/CustomDialogContent';
 import usePermissions from '../../hooks/usePermission';
 
@@ -87,7 +86,6 @@ function PermissionModule() {
           canUpdate={canUpdate}
         />
       </div>
-      <CustomDialog />
     </div>
   );
 }
