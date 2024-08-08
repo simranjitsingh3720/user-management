@@ -10,4 +10,5 @@ export const ERR_MSG = {
   INVALID_DATE_ERR: 'Please enter a valid date',
   MIN_DATE_ERR: 'Date cannot be before January 1, 1950',
   MAX_DATE_ERR: 'Date cannot be more than 70 years from today',
+  START_DATE_LESS_THAN_TODAY_ERR: 'cannot be less than today'
 };

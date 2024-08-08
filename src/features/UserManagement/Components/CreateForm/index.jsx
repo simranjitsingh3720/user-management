@@ -36,6 +36,7 @@ import useUpdateUser from '../hooks/useUpdateUser';
 import errorHandler from '../../../../utils/errorHandler';
 import { clearZones, getZones } from '../../../../Redux/getZone';
 import { clearPlans, getPlans, plan } from '../../../../Redux/getPlan';
+import { formatDate } from '../../../../utils/globalizationFunction';
 
 function CreateUserCreationForm() {
   const dispatch = useDispatch();
@@ -204,7 +205,7 @@ function CreateUserCreationForm() {
   useEffect(() => {
     if (roleValue && !isEdit) {
       let originalArray = roleConfig;
-      let resultObject = originalArray.reduce((resetValues, item) => {
+      let resultObject = originalArray?.reduce((resetValues, item) => {
         if (item?.type === COMMON.AUTOCOMPLETE && item?.multiple === true) {
           resetValues[item?.id] = [];
         }
@@ -216,15 +217,17 @@ function CreateUserCreationForm() {
         return resetValues;
       }, {});
       setRoleChanged(!roleChanged);
-      resultObject.roleSelect = watch(COMMON.ROLE_SELECT);
-      resultObject[FORM_LABEL.START_DATE] = today;
-      resultObject[COMMON.PRODUCER_STATUS] = COMMON.ACTIVE;
-      reset(resultObject);
+      if (resultObject) {
+        resultObject.roleSelect = watch(COMMON?.ROLE_SELECT);
+        resultObject[FORM_LABEL.START_DATE] = today;
+        resultObject[COMMON.PRODUCER_STATUS] = COMMON.ACTIVE;
+        reset(resultObject);
+      }
     }
   }, [roleValue]);
 
   useEffect(() => {
-    if (jsonData) {
+    if (jsonData && roleValue) {
       let keyFound = false;
       for (let key in jsonData) {
         if (key === roleValue) {
@@ -556,22 +559,22 @@ function CreateUserCreationForm() {
     }
   };
 
-  const formatDate = (dateString) => {
-    if (dateString.includes('/')) {
-      const [day, month, year] = dateString.split('/');
-      return `${day}/${month}/${year}`;
-    }
-    if (dateString.includes('-')) {
-      const [year, month, day] = dateString.split('-');
-      return `${day}/${month}/${year}`;
-    }
-  };
-
   const processKey = (key, value) => {
     switch (key) {
       case FORM_LABEL.START_DATE:
+        if (value.includes('/')) {
+          setValue(key, value);
+        } else {
+          setValue(key, formatDate(value));
+        }
+        break;
+
       case FORM_LABEL.END_DATE:
-        setValue(key, formatDate(value));
+        if (value.includes('/')) {
+          setValue(key, value);
+        } else {
+          setValue(key, formatDate(value));
+        }
         break;
 
       case FORM_LABEL.LOGIN_TYPE:
@@ -725,12 +728,12 @@ function CreateUserCreationForm() {
   const neftValue = watch(COMMON.DEFAULT_HOUSE_BANK);
 
   useEffect(() => {
-   if(neftValue && ARR_CONTAINS.PRODUCER_ARR.some((role) => rolesWatch?.roleName?.includes(role))){
-    const selectedHouseBank = neftDefaultBank.find((obj) => obj.id === neftValue);
-    if (selectedHouseBank) {
-      setValue(COMMON.ACCOUNT_NUMBER, selectedHouseBank?.accountNumber);
+    if (neftValue && ARR_CONTAINS.PRODUCER_ARR.some((role) => rolesWatch?.roleName?.includes(role))) {
+      const selectedHouseBank = neftDefaultBank.find((obj) => obj.id === neftValue);
+      if (selectedHouseBank) {
+        setValue(COMMON.ACCOUNT_NUMBER, selectedHouseBank?.accountNumber);
+      }
     }
-   }
   }, [neftValue]);
 
   useEffect(() => {
