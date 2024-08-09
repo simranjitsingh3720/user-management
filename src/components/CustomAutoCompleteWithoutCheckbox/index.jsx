@@ -24,6 +24,7 @@ const CustomAutoCompleteWithoutCheckbox = ({
   disabled,
   trigger,
   multiple = false,
+  limitTags
 }) => {
   return (
     <>
@@ -51,6 +52,7 @@ const CustomAutoCompleteWithoutCheckbox = ({
               }
               onChangeCallback && onChangeCallback(newValue);
             }}
+            limitTags={limitTags || 1}
             disableClearable={disableClearable}
             ListboxProps={ListboxProps}
             renderOption={(props, option, { selected }) => (
