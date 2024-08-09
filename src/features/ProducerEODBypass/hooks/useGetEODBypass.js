@@ -74,8 +74,8 @@ function useGetEODBypass() {
           producerCode: producerCode,
           unlockedDays: calculateUnlockedDays(startDate, endDate),
           reason: reason,
-          startDate: startDate,
-          endDate: endDate,
+          startDate: formatDate(startDate),
+          endDate: formatDate(endDate),
           createdAt: formatDate(createdAt),
           updatedAt: formatDate(updatedAt),
         };
