@@ -63,6 +63,8 @@ export const COMMON_WORDS = {
   SALES: 'sales',
   FILE_UPLOAD_TIME: 'fileUploadDateTime',
   ADD: 'add',
+  MASTER_POLICY: 'masterPolicy',
+  HAS_MASTER_POLICY: 'hasMasterPolicy',
 };
 
 export const TABLE_COLUMNS = {

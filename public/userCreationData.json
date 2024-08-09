@@ -899,6 +899,28 @@
         "canEdit": true
       },
       {
+        "id": "plan",
+        "label": "Plan",
+        "type": "autocomplete",
+        "all": true,
+        "required": true,
+        "validation": {
+          "required": "This field is required"
+        },
+        "canEdit": true
+      },
+      {
+        "id": "zone",
+        "label": "Zone",
+        "type": "autocomplete",
+        "all": true,
+        "required": true,
+        "validation": {
+          "required": "This field is required"
+        },
+        "canEdit": true
+      },
+      {
         "id": "channelType",
         "label": "Channel Type",
         "type": "dropdown",
@@ -1276,6 +1298,28 @@
         "type": "autocomplete",
         "required": true,
         "all": true,
+        "validation": {
+          "required": "This field is required"
+        },
+        "canEdit": true
+      },
+      {
+        "id": "plan",
+        "label": "Plan",
+        "type": "autocomplete",
+        "all": true,
+        "required": true,
+        "validation": {
+          "required": "This field is required"
+        },
+        "canEdit": true
+      },
+      {
+        "id": "zone",
+        "label": "Zone",
+        "type": "autocomplete",
+        "all": true,
+        "required": true,
         "validation": {
           "required": "This field is required"
         },
@@ -1665,6 +1709,28 @@
         "canEdit": true
       },
       {
+        "id": "plan",
+        "label": "Plan",
+        "type": "autocomplete",
+        "all": true,
+        "required": true,
+        "validation": {
+          "required": "This field is required"
+        },
+        "canEdit": true
+      },
+      {
+        "id": "zone",
+        "label": "Zone",
+        "type": "autocomplete",
+        "all": true,
+        "required": true,
+        "validation": {
+          "required": "This field is required"
+        },
+        "canEdit": true
+      },
+      {
         "id": "channelType",
         "label": "Channel Type",
         "type": "dropdown",
@@ -2033,7 +2099,7 @@
         "validation": {
           "required": "This field is required",
           "pattern": {
-            "value": "^@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
+            "value": "^[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
             "message": "Please enter a valid domain"
           }
         },
@@ -3708,7 +3774,7 @@
             "message": "Please enter a valid email address"
           }
         },
-        "canEdit": false
+        "canEdit": true
       },
       {
         "id": "lob",
@@ -3989,7 +4055,7 @@
             "message": "Please enter a valid email address"
           }
         },
-        "canEdit": false
+        "canEdit": true
       },
       {
         "id": "lob",
