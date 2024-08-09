@@ -13,9 +13,9 @@ import SearchComponent from '../../components/SearchComponent';
 import { COMMON_FIELDS } from '../PartnerNeft/utils/constant';
 import { formatDate, getPlaceHolder } from '../../utils/globalizationFunction';
 import { SEARCH_OPTIONS, showTextField } from './constants';
-import useGetPermission from './hooks/useGetPermission';
 import Content from '../../components/CustomDialogContent';
 import usePermissions from '../../hooks/usePermission';
+import { fetchPermissions } from '../../stores/slices/permissionsSlice';
 
 function GroupModule() {
   const [page, setPage] = useState(0);
@@ -28,11 +28,16 @@ function GroupModule() {
   const { group, groupLoading } = useSelector((state) => state.group);
   const [searched, setSearched] = useState(COMMON_WORDS.GROUPNAME);
   const [permissionValue, setPermissionValue] = useState([]);
-  const { permissionData } = useGetPermission();
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { canCreate, canUpdate } = usePermissions();
+
+  const { data: permissionData } = useSelector((state) => state.permissions);
+
+  useEffect(() => {
+    dispatch(fetchPermissions({ isAll: true, status: true }));
+  }, [dispatch]);
 
   const fetchGroupData = useCallback(() => {
     let searchString = '';

@@ -20,6 +20,8 @@ import masterPolicySlice from '../Redux/getMasterPolicy';
 import zoneSlice from '../Redux/getZone';
 import planSlice from '../Redux/getPlan';
 import lobUserSlice from './slices/lobUserSlice';
+import permissionsSlice from './slices/permissionsSlice';
+import modulesSlice from './slices/modulesSlice';
 
 const appStore = configureStore({
   reducer: {
@@ -44,6 +46,8 @@ const appStore = configureStore({
     zone: zoneSlice,
     plan: planSlice,
     lobUser: lobUserSlice,
+    permissions: permissionsSlice,
+    modules: modulesSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
