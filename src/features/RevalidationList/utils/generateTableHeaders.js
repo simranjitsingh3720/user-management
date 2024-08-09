@@ -17,10 +17,12 @@ function generateTableHeaders(
     {
       id: 'createdAt',
       value: 'Created At',
+      sortable: true
     },
     {
       id: 'updatedAt',
       value: 'Updated At',
+      sortable: true
     },
     {
       id: "status",

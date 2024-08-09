@@ -18,6 +18,10 @@ const ProducerTable = ({
   setPage,
   pageSize,
   setPageSize,
+  order,
+  setOrder,
+  orderBy,
+  setOrderBy,
 }) => {
   const [selectAllActive, setSelectAllActive] = useState(false);
   const [selectAllInactive, setSelectAllInactive] = useState(false);
@@ -76,10 +80,7 @@ const ProducerTable = ({
     [dispatch, updateList]
   );
 
-  const headerColumns = useMemo(
-    () => generateTableHeaders(handleStatusUpdate),
-    [handleStatusUpdate]
-  );
+  const headerColumns = useMemo(() => generateTableHeaders(handleStatusUpdate), [handleStatusUpdate]);
 
   useEffect(() => {
     if (revalidationList && revalidationList.length > 0) {
@@ -146,6 +147,10 @@ const ProducerTable = ({
         rowsPerPage={pageSize}
         setRowsPerPage={setPageSize}
         canUpdate={canUpdate}
+        order={order}
+        setOrder={setOrder}
+        orderBy={orderBy}
+        setOrderBy={setOrderBy}
       />
     </div>
   );

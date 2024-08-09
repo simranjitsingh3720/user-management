@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import DocumentIconGray from '../../../../assets/DocumentIconGray';
 import DocumentIconGreen from '../../../../assets/DocumentIconGreen';
 import DownloadLogo from '../../../../assets/DownloadLogo';
