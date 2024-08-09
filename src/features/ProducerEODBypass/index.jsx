@@ -70,7 +70,7 @@ function ProducerEODBypass() {
   };
 
   const renderOptionUserFunction = (props, option) => (
-    <li {...props} key={option?.id}>
+    <li {...props} key={option?.id} style={{ textTransform : 'capitalize'}}>
       {option?.firstName} {option?.lastName}
     </li>
   );
