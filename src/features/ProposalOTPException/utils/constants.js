@@ -17,7 +17,7 @@ export const PROPOSAL_CREATE_BY = [
   },
   {
     id: 'byProducerCode',
-    label: 'Producer',
+    label: 'Producer Code',
     value: 'byProducerCode',
   },
 ];

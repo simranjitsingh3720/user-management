@@ -20,7 +20,6 @@ import Content from "./Dialog/Content";
 import DownloadIcon from "../../assets/DownloadLogo";
 import Actions from "./Dialog/Action";
 import { EXPORT_DROPDOWN_VALUES, EXPORT_CONSTANTS } from "./utils/constants";
-import CustomDialog from "../../components/CustomDialog";
 
 const ExportDropdown = ({ tableHeader }) => {
   const [open, setOpen] = useState(false);
@@ -39,6 +38,7 @@ const ExportDropdown = ({ tableHeader }) => {
         title: EXPORT_CONSTANTS.dialogTitle,
         content: <Content tableHeader={tableHeader} />,
         actions: <Actions />,
+        size: 'lg'
       })
     );
   };
@@ -112,7 +112,6 @@ const ExportDropdown = ({ tableHeader }) => {
           </Grow>
         )}
       </Popper>
-      <CustomDialog size='md' />
     </React.Fragment>
   );
 };

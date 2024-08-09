@@ -5,7 +5,6 @@ import SearchComponent from '../../components/SearchComponent';
 import usePermissions from '../../hooks/usePermission';
 import CustomTable from '../../components/CustomTable';
 import generateTableHeaders from './utils/generateTableHeaders';
-import CustomDialog from '../../components/CustomDialog';
 import { COMMON_WORDS } from '../../utils/constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { showDialog } from '../../stores/slices/dialogSlice';
@@ -29,6 +28,18 @@ function OTPException() {
   const { user } = useSelector((state) => state.user);
   const channelType = useSelector((state) => state.channelType.channelType);
 
+  const getList = useCallback(() => {
+    fetchData({
+      page,
+      pageSize,
+      order,
+      orderBy,
+      searched,
+      resultId,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page, pageSize, order, orderBy, resultId]);
+
   const { otpExceptionList, loading, fetchData, totalCount } = useGetOTPException();
 
   const handleClicked = (data, row) => {
@@ -36,7 +47,7 @@ function OTPException() {
       showDialog({
         title: COMMON_WORDS.CHANGE_STATUS,
         content: <Content label={COMMON_WORDS.OTP_EXCEPTION} />,
-        actions: <Actions row={row} fetchData={fetchData} />,
+        actions: <Actions row={row} fetchData={getList} />,
       })
     );
   };
@@ -50,18 +61,6 @@ function OTPException() {
 
     dispatch(setTableName(otpExceptionList?.[0]?.label));
   }, [otpExceptionList, dispatch]);
-
-  const getList = useCallback(() => {
-    fetchData({
-      page,
-      pageSize,
-      order,
-      orderBy,
-      searched,
-      resultId,
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, pageSize, order, orderBy, resultId]);
 
   useEffect(() => {
     dispatch(setTableName);
@@ -79,7 +78,7 @@ function OTPException() {
   };
 
   const renderOptionProducerFunction = (props, option) => (
-    <li {...props} key={option?.id}>
+    <li {...props} key={option?.id} style={{ textTransform: 'capitalize'}}>
       {option?.firstName} {option?.lastName}
     </li>
   );
@@ -89,7 +88,7 @@ function OTPException() {
   };
 
   const renderOptionChannelFunction = (props, option) => (
-    <li {...props} key={option?.id}>
+    <li {...props} key={option?.id} style={{ textTransform: 'capitalize'}}>
       {`${option?.label || ''} - ${option?.numChannelCode || ''}`}
     </li>
   );
@@ -140,7 +139,6 @@ function OTPException() {
           canUpdate={canUpdate}
         />
       </div>
-      <CustomDialog />
     </div>
   );
 }

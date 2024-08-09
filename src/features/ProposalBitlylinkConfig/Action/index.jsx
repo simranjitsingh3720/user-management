@@ -7,7 +7,7 @@ import useUpdateBitlyLink from '../hooks/useUpdateBitlyLink';
 const Action = ({ row, fetchData }) => {
   const dispatch = useDispatch();
 
-  const { UpdateDataFun } = useUpdateBitlyLink(fetchData);
+  const { UpdateDataFun, updateLoading } = useUpdateBitlyLink(fetchData);
 
   const confirmAction = () => {
     const payload = {
@@ -18,7 +18,6 @@ const Action = ({ row, fetchData }) => {
     };
 
     UpdateDataFun(payload);
-    dispatch(hideDialog());
   };
 
   return (
@@ -26,7 +25,9 @@ const Action = ({ row, fetchData }) => {
       <CustomButton variant="outlined" onClick={() => dispatch(hideDialog())}>
         Cancel
       </CustomButton>
-      <CustomButton onClick={confirmAction}>Confirm</CustomButton>
+      <CustomButton onClick={confirmAction} disabled={updateLoading}>
+        {updateLoading ? 'Confirming...' : 'Confirm'}
+      </CustomButton>
     </div>
   );
 };

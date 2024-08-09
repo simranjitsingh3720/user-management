@@ -2,16 +2,17 @@ import React, { useCallback, useEffect, useState } from 'react';
 import ProducerForm from './ProducerForm/index';
 import ProducerTable from './ProducerTable/index';
 import useRevalidationList from './hooks/useRevalidationList';
-import { setExtraColumns, setTableName } from '../../stores/slices/exportSlice';
 import { useDispatch } from 'react-redux';
 import { PAGECOUNT } from '../../utils/globalConstants';
-import { EXPORT_EXTRA_COLUMNS } from './constants';
+import { COMMON_WORDS } from '../../utils/constants';
 
 const RevalidationList = () => {
   const [userId, setUserId] = useState('');
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(PAGECOUNT);
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
+  const [order, setOrder] = useState(COMMON_WORDS.DESC);
+  const [orderBy, setOrderBy] = useState(COMMON_WORDS.CREATED_AT);
   const dispatch = useDispatch();
 
   const { revalidationList, revalidationListLoading, revalidationListFetchData, pageTotalCount } =
@@ -23,9 +24,11 @@ const RevalidationList = () => {
         userId: userId,
         page: page,
         pageSize: pageSize,
+        order: order,
+        orderBy: orderBy,
       });
     }
-  }, [userId, page, pageSize, isFormSubmitted, revalidationListFetchData]);
+  }, [userId, page, pageSize, order, orderBy, isFormSubmitted, revalidationListFetchData]);
 
   useEffect(() => {
     if (isFormSubmitted) {
@@ -38,14 +41,10 @@ const RevalidationList = () => {
     setIsFormSubmitted(true);
   };
 
-  useEffect(() => {
-    dispatch(setTableName(revalidationList[0]?.label));
-    dispatch(setExtraColumns(EXPORT_EXTRA_COLUMNS))
-  }, [dispatch, revalidationList]);
 
   return (
     <div className="container">
-      <ProducerForm onFormSubmit={onFormSubmit} revalidationList={revalidationList} />
+      <ProducerForm onFormSubmit={onFormSubmit} revalidationList={revalidationList} revalidationListLoading={revalidationListLoading} />
       {revalidationList.length > 0 && (
         <ProducerTable
           revalidationList={revalidationList}
@@ -55,6 +54,10 @@ const RevalidationList = () => {
           setPage={setPage}
           pageSize={pageSize}
           setPageSize={setPageSize}
+          order={order}
+          setOrder={setOrder}
+          orderBy={orderBy}
+          setOrderBy={setOrderBy}
         />
       )}
     </div>

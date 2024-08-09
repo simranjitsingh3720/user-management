@@ -13,6 +13,7 @@ const initialState = {
   toDate: null,
   columns: [],
   loading: false,
+  downloadLoading: false,
   error: null,
   tableName: '',
   extraColumns: [],
@@ -135,14 +136,14 @@ const exportSlice = createSlice({
         state.error = action.payload;
       })
       .addCase(downloadData.pending, (state) => {
-        state.loading = true;
+        state.downloadLoading = true;
         state.error = null;
       })
       .addCase(downloadData.fulfilled, (state, action) => {
-        state.loading = false;
+        state.downloadLoading = false;
       })
       .addCase(downloadData.rejected, (state, action) => {
-        state.loading = false;
+        state.downloadLoading = false;
         state.error = action.payload;
         toast.error('Download Failed: ' + action.payload.details);
       });

@@ -104,7 +104,7 @@ function ProposalForm() {
       setValue('groupStatus', isChannel ? 'byChannel' : 'byProducerCode');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [proposalDataByID]);
+  }, [proposalDataByID, OTPValue]);
 
   const handleChange = (val) => {
     setOTPValue(val);

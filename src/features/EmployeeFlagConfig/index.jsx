@@ -2,7 +2,6 @@ import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import useGetEmployeeFlag from './hooks/useGetEmployeeFlag';
 import CustomTable from '../../components/CustomTable';
-import CustomDialog from '../../components/CustomDialog';
 import SearchComponent from '../../components/SearchComponent';
 import { generateTableHeaders } from './utils/generateTableHeaders';
 import { COMMON_WORDS } from '../../utils/constants';
@@ -105,7 +104,7 @@ function EmployeeFlagConfig() {
           optionLabel={(option) => (option?.firstName ? `${option.firstName} ${option.lastName}` : '')}
           placeholder={getPlaceHolder(COMMON_WORDS.PRODUCER)}
           renderOptionFunction={(props, option) => (
-            <li {...props} key={option?.id}>
+            <li {...props} key={option?.id} style={{ textTransform: 'capitalize'}}>
               {option?.firstName} {option?.lastName}
             </li>
           )}
@@ -132,7 +131,6 @@ function EmployeeFlagConfig() {
         orderBy={orderBy}
         setOrderBy={setOrderBy}
       />
-      <CustomDialog size="md" />
     </div>
   );
 }

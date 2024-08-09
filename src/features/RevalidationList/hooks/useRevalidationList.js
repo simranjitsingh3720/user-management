@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback } from 'react';
 import axiosInstance from '../../../utils/axiosInstance';
 import { API_END_POINTS } from '../constants';
 import { toast } from 'react-toastify';
@@ -9,10 +9,10 @@ import toastifyUtils from '../../../utils/toastify';
 
 const useRevalidationList = () => {
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [totalCount, setTotalCount] = useState(0);
 
-  const fetchData = useCallback(async ({ userId, page, pageSize }) => {
+  const fetchData = useCallback(async ({ userId, page, pageSize, order, orderBy }) => {
     setLoading(true);
     const queryParams = buildQueryString({
       ids: userId,
@@ -20,13 +20,15 @@ const useRevalidationList = () => {
       isExclusive: true,
       pageNo: page,
       pageSize: pageSize,
+      sortOrder: order,
+      sortKey: orderBy,
       childFieldsToFetch: COMMON_WORDS.PRODUCER,
       childFieldsEdge: COMMON_WORDS.HAS_PRODUCER,
     });
     try {
       const response = await axiosInstance.get(API_END_POINTS.getRevalidationList + queryParams);
 
-      if(response?.data?.data?.length === 0) {
+      if (response?.data?.data?.length === 0) {
         toastifyUtils.notifySuccess('No data found for the selected producer');
       }
 
@@ -34,15 +36,15 @@ const useRevalidationList = () => {
         response?.data?.data?.map((item) => {
           const { revalidationList: { id, name, emailId, mobileNo, createdAt, updatedAt, status, label } } = item;
           return {
-            id: id,
+            id,
             userName: name,
-            emailId: emailId,
-            mobileNo: mobileNo,
+            emailId,
+            mobileNo,
             createdAt: formatDate(createdAt),
             updatedAt: formatDate(updatedAt),
             checked: status,
-            status: status,
-            label: label
+            status,
+            label,
           };
         }) || [];
       setData(transformedData);
@@ -54,31 +56,36 @@ const useRevalidationList = () => {
     }
   }, []);
 
-  const updateData = useCallback(async (updatedData) => {
-    const transformedData = updatedData.map((item) => ({
-      ...item,
-      status: item.checked,
-    }));
-
-    // Create payload with only the updated items
-    const payload = transformedData.map((item) => ({
-      id: item.id,
-      properties: {
-        status: item.checked,
-      },
-    }));
-
+  const updateData = useCallback(async ({ payload, data, row, updateList }) => {
     try {
       await axiosInstance.put(API_END_POINTS.updateRevalidationList, payload);
       toast.success('Data updated successfully');
+
+      const transformedData = data.map((item) => {
+        const newItem = payload.find((payloadItem) => item.id === payloadItem.id);
+        if (newItem) {
+          return {
+            ...item,
+            checked: newItem.properties.status,
+            status: newItem.properties.status,
+          };
+        }
+        return item;
+      });
+
+      if (updateList) {
+        if (payload.length > 1) {
+          updateList({ data: transformedData });
+        } else {
+          updateList({ id: row.id, data });
+        }
+      }
       setData(transformedData);
+      
     } catch (error) {
       errorHandler.handleError(error);
     }
   }, []);
-
-  // Effect to trigger when data changes
-  useEffect(() => {}, [data]);
 
   return {
     revalidationList: data,

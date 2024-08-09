@@ -7,6 +7,7 @@ const dialogSlice = createSlice({
     title: "",
     content: null,
     actions: null,
+    size: "sm"
   },
   reducers: {
     showDialog: (state, action) => {
@@ -14,6 +15,7 @@ const dialogSlice = createSlice({
       state.title = action.payload.title || "";
       state.content = action.payload.content || null;
       state.actions = action.payload.actions || null;
+      state.size = action.payload.size || "sm";
     },
     hideDialog: (state) => {
       state.open = false;

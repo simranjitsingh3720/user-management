@@ -11,7 +11,7 @@ import BulkUpload from '../../../assets/BulkUpload';
 import { useNavigate } from 'react-router-dom';
 import generateTableHeaders from '../utils/generateTableHeaders';
 
-const ProducerForm = ({ onFormSubmit }) => {
+const ProducerForm = ({ onFormSubmit, revalidationListLoading }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { tableName } = useSelector((state) => state.export);
@@ -67,16 +67,11 @@ const ProducerForm = ({ onFormSubmit }) => {
               helperText={errors.producer?.message}
               disableClearable={true}
               placeholder={COMMON_WORDS.SELECT}
-              renderOption={(props, option) => (
-                <li {...props} key={option.id}>
-                  {option?.firstName} {option?.lastName}
-                </li>
-              )}
             />
           </Grid>
 
-          <Grid item xs={12} sm={6} lg={4} alignItems="flex-end" display="flex">
-            <CustomButton type="submit" variant="contained" color="primary" className="w-full md:w-auto">
+          <Grid item xs={12} sm={6} lg={4} alignItems={Boolean(errors.producer) ? 'center' : 'flex-end'} display="flex" >
+            <CustomButton type="submit" variant="contained" color="primary" className="w-full md:w-auto" loading={revalidationListLoading}>
               Submit
             </CustomButton>
             <ExportDropdown tableHeader={header} />

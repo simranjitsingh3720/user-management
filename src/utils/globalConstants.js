@@ -10,6 +10,7 @@ export const TOKEN_EXPIRATION_ERROR = 'Your session has expired. Please log in a
 export const DATE_FORMAT = 'DD/MM/YYYY';
 export const CREATED_AT = 'createdAt';
 export const ASC = 'asc';
+export const CLIENT_TYPE = 'web';
 
 export const REGEX = {
   alphaNumericRegex: /^[a-zA-Z0-9\s]*$/,

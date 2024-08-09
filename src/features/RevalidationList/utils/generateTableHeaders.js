@@ -1,7 +1,5 @@
 function generateTableHeaders(
-  handleDataUpdate,
-  revalidationList,
-  setSelectAll
+  handleStatusUpdate
 ) {
   return [
     {
@@ -19,10 +17,12 @@ function generateTableHeaders(
     {
       id: 'createdAt',
       value: 'Created At',
+      sortable: true
     },
     {
       id: 'updatedAt',
       value: 'Updated At',
+      sortable: true
     },
     {
       id: "status",
@@ -31,16 +31,7 @@ function generateTableHeaders(
         {
           component: "switch",
           onClick: (data, row) => {
-            data.map((item) => {
-              if (item.id === row.id) {
-                return (row.checked = !row.checked);
-              }
-
-              return row.checked;
-            });
-            handleDataUpdate(data);
-            const allActive = revalidationList.every((row) => row.checked);
-            setSelectAll(allActive);
+            handleStatusUpdate(data, row);
           },
         },
       ],

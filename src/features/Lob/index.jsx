@@ -8,7 +8,6 @@ import CustomButton from '../../components/CustomButton';
 import { useNavigate } from 'react-router-dom';
 import usePermissions from '../../hooks/usePermission';
 import { PAGECOUNT } from '../../utils/globalConstants';
-import CustomDialog from '../../components/CustomDialog';
 import { showDialog } from '../../stores/slices/dialogSlice';
 import { COMMON_WORDS } from '../../utils/constants';
 import Content from '../../components/CustomDialogContent';
@@ -117,7 +116,6 @@ const Lob = () => {
           canUpdate={canUpdate}
         />
       </div>
-      <CustomDialog />
     </Box>
   );
 };

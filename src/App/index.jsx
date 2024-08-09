@@ -7,6 +7,7 @@ import AppRoutes from "./AppRoutes/index";
 import "typeface-poppins";
 import "react-toastify/dist/ReactToastify.css";
 import "./styles.scss";
+import CustomDialog from "../components/CustomDialog";
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
       <Router>
         <AppRoutes />
         <ToastContainer />
+        <CustomDialog />
       </Router>
     </AppProvider>
   );

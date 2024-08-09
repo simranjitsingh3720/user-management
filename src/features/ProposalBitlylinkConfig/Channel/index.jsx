@@ -10,7 +10,6 @@ import { COMMON_WORDS } from '../../../utils/constants';
 import { showDialog } from '../../../stores/slices/dialogSlice';
 import Content from '../../../components/CustomDialogContent';
 import { Header } from '../utils/Header';
-import CustomDialog from '../../../components/CustomDialog';
 import Actions from '../Action';
 import ProductListContent from '../Dialog/ProductListContent';
 import ProductListAction from '../Dialog/ProductListAction';
@@ -31,7 +30,9 @@ function Channel() {
   const channelType = useSelector((state) => state.channelType.channelType);
 
   useEffect(() => {
-    dispatch(fetchUser({ userType: COMMON_WORDS.EXTERNAL, searchKey: COMMON_WORDS.USER_TYPE, isAll: true }));
+    dispatch(
+      fetchUser({ userType: COMMON_WORDS.EXTERNAL, searchKey: COMMON_WORDS.USER_TYPE, isAll: true, status: true })
+    );
     dispatch(getChannels());
   }, [dispatch]);
 
@@ -62,7 +63,7 @@ function Channel() {
       showDialog({
         title: COMMON_WORDS.CHANGE_STATUS,
         content: <Content label={COMMON_WORDS.BITLY_LINK} />,
-        actions: <Actions row={row} fetchData={fetchData} />,
+        actions: <Actions row={row} fetchData={getList} />,
       })
     );
   };
@@ -91,7 +92,7 @@ function Channel() {
   };
 
   const renderOptionProducerFunction = (props, option) => (
-    <li {...props} key={option?.id}>
+    <li {...props} key={option?.id} style={{ textTransform: 'capitalize'}}>
       {option?.firstName} {option?.lastName}
     </li>
   );
@@ -101,7 +102,7 @@ function Channel() {
   };
 
   const renderOptionChannelFunction = (props, option) => (
-    <li {...props} key={option?.id}>
+    <li {...props} key={option?.id} style={{ textTransform: 'capitalize'}}>
       {`${option?.label || ''} - ${option?.numChannelCode || ''}`}
     </li>
   );
@@ -154,7 +155,6 @@ function Channel() {
           canUpdate={canUpdate}
         />
       </div>
-      <CustomDialog />
     </div>
   );
 }

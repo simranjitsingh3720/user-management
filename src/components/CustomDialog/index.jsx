@@ -7,12 +7,12 @@ import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
 import { hideDialog } from '../../stores/slices/dialogSlice';
 
-const CustomDialog = ({size}) => {
+const CustomDialog = () => {
   const dispatch = useDispatch();
-  const { open, title, content, actions } = useSelector((state) => state.dialog);
+  const { open, title, content, actions, size } = useSelector((state) => state.dialog);
 
   return (
-    <Dialog open={open} onClose={() => dispatch(hideDialog())} size={size} fullWidth={true}>
+    <Dialog open={open} onClose={() => dispatch(hideDialog())} maxWidth={size} fullWidth={true}>
       {title && <DialogTitle>{title}</DialogTitle>}
       <DialogContent>{content}</DialogContent>
       <DialogActions>

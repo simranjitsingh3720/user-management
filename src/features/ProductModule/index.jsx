@@ -14,7 +14,6 @@ import { SEARCH_OPTIONS } from './utils/constant';
 import { showDialog } from '../../stores/slices/dialogSlice';
 import Content from '../../components/CustomDialogContent';
 import Action from './Action';
-import CustomDialog from '../../components/CustomDialog';
 
 function Product() {
   const dispatch = useDispatch();
@@ -211,7 +210,6 @@ function Product() {
         setOrderBy={setOrderBy}
         canUpdate={canUpdate}
       />
-      <CustomDialog />
     </>
   );
 }
