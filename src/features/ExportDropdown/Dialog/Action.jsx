@@ -46,7 +46,7 @@ const Actions = () => {
   
       combinedData = {
         ...combinedData,
-        columns: selectedColumns,
+        columns: selectedColumns.length ? selectedColumns : null,
       };
     }
   
@@ -58,7 +58,7 @@ const Actions = () => {
   
       combinedData = {
         ...combinedData,
-        additionalColumns: additionalColumns,
+        additionalColumns: additionalColumns.length ? additionalColumns : null,
       };
     }
   

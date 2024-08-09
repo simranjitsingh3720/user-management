@@ -67,11 +67,6 @@ const ProducerForm = ({ onFormSubmit, revalidationListLoading }) => {
               helperText={errors.producer?.message}
               disableClearable={true}
               placeholder={COMMON_WORDS.SELECT}
-              renderOption={(props, option) => (
-                <li {...props} key={option.id}>
-                  {option?.firstName} {option?.lastName}
-                </li>
-              )}
             />
           </Grid>
 

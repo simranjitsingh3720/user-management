@@ -103,7 +103,7 @@ function ProposalOTPException() {
   };
 
   const renderOptionProducerFunction = (props, option) => (
-    <li {...props} key={option?.id}>
+    <li {...props} key={option?.id} style={{ textTransform: 'capitalize'}}>
       {option?.firstName} {option?.lastName}
     </li>
   );
@@ -113,7 +113,7 @@ function ProposalOTPException() {
   };
 
   const renderOptionChannelFunction = (props, option) => (
-    <li {...props} key={option?.id}>
+    <li {...props} key={option?.id} style={{ textTransform: 'capitalize'}}>
       {`${option?.label || ''} - ${option?.numChannelCode || ''}`}
     </li>
   );

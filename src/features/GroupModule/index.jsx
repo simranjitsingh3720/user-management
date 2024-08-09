@@ -154,7 +154,7 @@ function GroupModule() {
   const optionLabel = (option, type) => option[type] || '';
 
   const renderOptionFunction = (props, option, type) => (
-    <li {...props} key={option?.id}>
+    <li {...props} key={option?.id} style={{ textTransform: 'capitalize'}}>
       {optionLabel(option, type)}
     </li>
   );

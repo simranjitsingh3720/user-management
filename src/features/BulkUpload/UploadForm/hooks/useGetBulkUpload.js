@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 import axiosInstance from './../../../../utils/axiosInstance';
-import { buildQueryString } from '../../../../utils/globalizationFunction';
+import { buildQueryString, formatDate } from '../../../../utils/globalizationFunction';
 import apiUrls from '../../../../utils/apiUrls';
 
 const useGetBulkUpload = () => {
@@ -21,8 +21,18 @@ const useGetBulkUpload = () => {
           sortKey,
         });
         const response = await axiosInstance.get(`${apiUrls.getBulkUploadHistory}?${queryParams}`);
-        setData(response.data.data);
-        setTotalCount(response.data.totalCount);
+
+        const { data } = response;
+        const transformedData = data?.data?.map((item) => {
+          return {
+            ...item,
+            fileSyncDateTime: formatDate(item.fileSyncDateTime),
+            fileUploadDateTime: formatDate(item.fileUploadDateTime),
+          };
+        });
+
+        setData(transformedData);
+        setTotalCount(data.totalCount);
       } catch (e) {
         setData([]);
       } finally {

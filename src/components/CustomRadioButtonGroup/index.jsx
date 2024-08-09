@@ -36,6 +36,7 @@ const UserTypeToggle = ({ control, menuItem, name, required, label, defaultValue
                     value === item.value ? "border-blue-600" : "border-gray-500"
                   }`}
                   onClick={() => {
+                    if(disabled) return;
                     onChange(item.value);
                     handleChange(item.value);
                   }}
