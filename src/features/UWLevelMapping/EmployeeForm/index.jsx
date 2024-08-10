@@ -9,14 +9,14 @@ import { EMPLOYEE_SEARCH } from '../utils/constants';
 import { PAGECOUNT } from '../../../utils/globalConstants';
 import usePermissions from '../../../hooks/usePermission';
 import { useDispatch } from 'react-redux';
-import { removeExtraColumns, setTableName } from '../../../stores/slices/exportSlice';
+import { removeExtraColumns } from '../../../stores/slices/exportSlice';
 
 function EmployeeForm() {
   const [searched, setSearched] = useState('employeeId');
 
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(PAGECOUNT);
-  const [order, setOrder] = useState(COMMON_WORDS.ASC);
+  const [order, setOrder] = useState(COMMON_WORDS.DESC);
   const [orderBy, setOrderBy] = useState(COMMON_WORDS.CREATED_AT);
   const navigate = useNavigate();
   const dispatch = useDispatch();

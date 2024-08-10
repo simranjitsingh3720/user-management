@@ -1,108 +1,7 @@
-.createNewUserContainer {
-  background-color: #ffffff;
-  box-shadow: 0px 6px 12px #185ec414;
-  border-radius: 12px;
-  height: 100%;
-  min-height: 80vh;
-  margin-bottom: 20px;
-}
-
-.formHeaderStyle {
-  padding: 16px 0px 0px 8px;
-  display: flex;
-  align-items: baseline;
-  border-bottom: 1px solid #c5cfde;
-  height: 80px;
-}
-
-.subHeader {
-  display: flex;
-  align-items: center;
-}
-
-.headerTextStyle {
-  margin-left: 12px;
-  font-size: 18px;
-  color: #465465;
-  font-weight: 600;
-}
-
-.fieldContainerStyle {
-  padding: 10px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-.labelText {
-  color: #566475;
-  font-size: 14px;
-}
-
-.styledRequired {
-  color: #ff6262;
-}
-
-.customizeSelect {
-  background-color: #ffffff;
-  width: 100%;
-  font-size: 14px !important;
-  height: 40px;
-}
-
-.customizePrivilegeSelect {
-  background-color: #ffffff;
-  font-size: 14px !important;
-  min-height: 40px;
-}
-
-.styledError {
-  color: #fd6262;
-  font-size: 12px;
-}
-
-.containerStyle {
-  display: flex;
-  align-items: center;
-}
-
-.permissionContainer {
-  display: flex;
-  max-height: 500px;
-}
-
-.permissionSelect {
-  overflow-y: auto;
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #c5cfde;
-  border-radius: 8px 0px 0px 8px;
-}
-.permissionInnerSelect {
-  display: flex;
-  flex-wrap: wrap;
-  height: fit-content;
-}
-
-.permissionCheckbox {
-  display: flex;
-  overflow-y: auto;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  padding: 12px;
-  width: 100%;
-  border: 1px solid #c5cfde;
-  border-radius: 0px 8px 8px 0px;
-}
 .checkboxStyle {
   display: flex;
   width: 220px;
   align-items: center;
-}
-
-.checkBoxlabel {
-  color: #2f3741;
-  font-size: 14px;
 }
 
 .permissionSelectButton {
@@ -114,11 +13,6 @@
   padding: 16px;
   margin: 4px;
   height: 30px !important;
-}
-
-.permissionNameStyle {
-  font-size: 14px;
-  color: #185ec4;
 }
 
 .crossIconStyle {

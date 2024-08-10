@@ -20,8 +20,8 @@ function Product() {
 
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(PAGECOUNT);
-  const [order, setOrder] = useState(null);
-  const [orderBy, setOrderBy] = useState(null);
+  const [order, setOrder] = useState(COMMON_WORDS.DESC);
+  const [orderBy, setOrderBy] = useState(COMMON_WORDS.CREATED_AT);
   const [productData, setProductData] = useState([]);
   const [lobValue, setLobValue] = useState([]);
   const { products, productsLoading } = useSelector((state) => state.product);
@@ -88,6 +88,7 @@ function Product() {
       }) || [];
 
     setProductData(transformedData);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [products]);
 
   const updateProductStatus = useCallback((id, data) => {

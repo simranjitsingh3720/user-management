@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ASC,  CREATED_AT, PAGECOUNT } from '../../utils/globalConstants';
+import { PAGECOUNT } from '../../utils/globalConstants';
 import usePermissions from '../../hooks/usePermission';
 import SearchComponent from '../../components/SearchComponent';
 import { SEARCH_OPTIONS } from './utils/constants';
@@ -13,15 +13,14 @@ import Action from './Action';
 import { showDialog } from '../../stores/slices/dialogSlice';
 import { useDispatch } from 'react-redux';
 import useRole from './hooks/useRole';
-import { setTableName } from '../../stores/slices/exportSlice';
 
 function RoleModule() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(PAGECOUNT);
-  const [order, setOrder] = useState(ASC);
-  const [orderBy, setOrderBy] = useState(CREATED_AT);
+  const [order, setOrder] = useState(COMMON_WORDS.DESC);
+  const [orderBy, setOrderBy] = useState(COMMON_WORDS.CREATED_AT);
   const [searched, setSearched] = useState(SEARCH_OPTIONS[0].value);
   const [query, setQuery] = useState('');
   const { canCreate, canUpdate } = usePermissions();

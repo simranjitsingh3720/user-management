@@ -18,7 +18,7 @@ function HouseBankMaster() {
 
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(PAGECOUNT);
-  const [order, setOrder] = useState(COMMON_WORDS.ASC);
+  const [order, setOrder] = useState(COMMON_WORDS.DESC);
   const [orderBy, setOrderBy] = useState(COMMON_WORDS.CREATED_AT);
 
   const [searched, setSearched] = useState(SearchKey[0].value);
@@ -55,6 +55,7 @@ function HouseBankMaster() {
     dispatch(removeExtraColumns([]));
     dispatch(setTableName(''));
     loadData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loadData]);
 
   const header = useMemo(() => Header(handleEditClick), [handleEditClick]);

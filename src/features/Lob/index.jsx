@@ -21,8 +21,8 @@ const Lob = () => {
 
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(PAGECOUNT);
-  const [order, setOrder] = useState(null);
-  const [orderBy, setOrderBy] = useState(null);
+  const [order, setOrder] = useState(COMMON_WORDS.DESC);
+  const [orderBy, setOrderBy] = useState(COMMON_WORDS.CREATED_AT);
   const [lobData, setLobData] = useState([]);
 
   // Check Permission 

@@ -19,7 +19,7 @@ function PermissionModule() {
   const [query, setQuery] = useState('');
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(PAGECOUNT);
-  const [order, setOrder] = useState(COMMON_WORDS.ASC);
+  const [order, setOrder] = useState(COMMON_WORDS.DESC);
   const [orderBy, setOrderBy] = useState(COMMON_WORDS.CREATED_AT);
 
   const { canCreate, canUpdate } = usePermissions();

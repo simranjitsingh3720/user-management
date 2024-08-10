@@ -18,6 +18,7 @@ module.exports = {
         shuttleGray: '#566475',
         bittersweet: '#d32f2f',
         shadowColor: '#185ec414',
+        'custom-red': '#fd6262',
         'custom-gray': '#2F374180',
       },
       fontSize: {

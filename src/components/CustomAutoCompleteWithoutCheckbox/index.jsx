@@ -42,6 +42,7 @@ const CustomAutoCompleteWithoutCheckbox = ({
             disabled={disabled}
             className={className + ' customize-select bg-white'}
             size={size}
+            disableCloseOnSelect={multiple ? true : false}
             isOptionEqualToValue={isOptionEqualToValue}
             renderInput={(params) => <TextField {...params} error={error} placeholder={placeholder} />}
             value={field.value ? field.value : multiple ? [] : null}
