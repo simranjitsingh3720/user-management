@@ -1,9 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { toast } from 'react-toastify';
 import axiosInstance from './../../utils/axiosInstance';
 import apiUrls from './../../utils/apiUrls';
 import { buildParams } from './../../utils/buildParams';
 import { addAsyncReducers } from './../../utils/addAsyncReducers';
+import toastifyUtils from '../../utils/toastify';
 
 export const getGroup = createAsyncThunk(
   'group/getGroup',
@@ -47,7 +47,7 @@ export const getGroupById = createAsyncThunk('group/getGroupById', async ({ id }
 export const updateGroup = createAsyncThunk('group/updateGroup', async ({ data, groupData, handleGroupStatus }, { rejectWithValue }) => {
   try {
     const response = await axiosInstance.put(apiUrls.getGroup, data);
-    toast.success(response?.data?.message || 'Group updated successfully');
+    toastifyUtils.notifySuccess(response?.data?.message || 'Group updated successfully');
     if(handleGroupStatus) {
       handleGroupStatus(data.id, groupData);
     }
@@ -60,7 +60,7 @@ export const updateGroup = createAsyncThunk('group/updateGroup', async ({ data, 
 export const createGroup = createAsyncThunk('group/createGroup', async ({ data, navigate }, { rejectWithValue }) => {
   try {
     const response = await axiosInstance.post(apiUrls.getGroup, data);
-    toast.success(response?.data?.message || 'Group created successfully');
+    toastifyUtils.notifySuccess(response?.data?.message || 'Group created successfully');
     navigate('/group');
     return response.data;
   } catch (error) {

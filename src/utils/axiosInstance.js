@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { toast } from 'react-toastify';
 import { BASE_URL, COMMON_ERROR, TOKEN } from './globalConstants';
 import errorHandler from './errorHandler';
+import toastifyUtils from './toastify';
 
 const instance = axios.create({
   baseURL: BASE_URL,
@@ -55,7 +55,7 @@ instance.interceptors.response.use(
       errorMessage = error.message;
       errorHandler.handleError(error);
     }
-    toast.error(errorMessage);
+    toastifyUtils.notifyError(errorMessage);
     return Promise.reject(error);
   }
 );

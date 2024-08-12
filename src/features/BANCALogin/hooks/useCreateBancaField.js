@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
-import { toast } from "react-toastify";
 import errorHandler from "../../../utils/errorHandler";
+import toastifyUtils from "../../../utils/toastify";
 
 
 function useCreateBancaField() {
@@ -11,7 +11,7 @@ function useCreateBancaField() {
     setLoading(true);
     try {
       const response = await axiosInstance.post("/api/banca", data);
-      toast.success(
+      toastifyUtils.notifySuccess(
         response?.data?.message || "Banca Field created successfully"
       );
     } catch (error) {
