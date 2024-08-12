@@ -33,9 +33,10 @@ const ProducerForm = ({ onFormSubmit, revalidationListLoading }) => {
   useEffect(() => {
     dispatch(
       fetchUser({
-        userType: COMMON_WORDS.PRODUCER,
-        searchKey: COMMON_WORDS.ROLE_NAME,
+        userType: COMMON_WORDS.EXTERNAL,
+        searchKey: COMMON_WORDS.USER_TYPE,
         isAll: true,
+        status: true,
       })
     );
   }, [dispatch]);
@@ -44,7 +45,7 @@ const ProducerForm = ({ onFormSubmit, revalidationListLoading }) => {
     navigate('bulk-upload');
   };
 
-  const header= generateTableHeaders();
+  const header = generateTableHeaders();
 
   return (
     <>
@@ -70,8 +71,14 @@ const ProducerForm = ({ onFormSubmit, revalidationListLoading }) => {
             />
           </Grid>
 
-          <Grid item xs={12} sm={6} lg={4} alignItems={Boolean(errors.producer) ? 'center' : 'flex-end'} display="flex" >
-            <CustomButton type="submit" variant="contained" color="primary" className="w-full md:w-auto" loading={revalidationListLoading}>
+          <Grid item xs={12} sm={6} lg={4} alignItems={Boolean(errors.producer) ? 'center' : 'flex-end'} display="flex">
+            <CustomButton
+              type="submit"
+              variant="contained"
+              color="primary"
+              className="w-full md:w-auto"
+              loading={revalidationListLoading}
+            >
               Submit
             </CustomButton>
             <ExportDropdown tableHeader={header} />

@@ -44,9 +44,10 @@ function HealthConfiguration() {
     dispatch(setExtraColumns([]));
     dispatch(
       fetchUser({
-        userType: COMMON_WORDS.PRODUCER,
-        searchKey: COMMON_WORDS.ROLE_NAME,
+        userType: COMMON_WORDS.EXTERNAL,
+        searchKey: COMMON_WORDS.USER_TYPE,
         isAll: true,
+        status: true,
       })
     );
   }, [dispatch]);
@@ -60,7 +61,7 @@ function HealthConfiguration() {
   };
 
   const renderOptionFunction = (props, option) => (
-    <li {...props} key={option?.id} style={{ textTransform: 'capitalize'}}>
+    <li {...props} key={option?.id} style={{ textTransform: 'capitalize' }}>
       {option?.firstName} {option?.lastName}
     </li>
   );

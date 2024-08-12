@@ -25,9 +25,10 @@ function ProducerEODFrom() {
   useEffect(() => {
     dispatch(
       fetchUser({
-        userType: COMMON_WORDS.PRODUCER,
-        searchKey: COMMON_WORDS.ROLE_NAME,
+        userType: COMMON_WORDS.EXTERNAL,
+        searchKey: COMMON_WORDS.USER_TYPE,
         status: true,
+        isAll: true,
       })
     );
   }, [dispatch]);

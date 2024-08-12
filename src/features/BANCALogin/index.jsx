@@ -3,7 +3,6 @@ import useGetBancaLoginData from './hooks/useGetBancaLoginData';
 import { Box, Card, CardContent, Grid, Switch, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import dayjs from 'dayjs';
-import useGetUserData from './hooks/useGetUserData';
 import useGetProducerData from './hooks/useGetProducerData';
 import { FieldDataList, labels } from './constants';
 import useCreateBancaField from './hooks/useCreateBancaField';
@@ -15,8 +14,13 @@ import { COMMON_WORDS, FORM_HEADER_TEXT } from '../../utils/constants';
 import usePermissions from '../../hooks/usePermission';
 import CustomAutoCompleteWithoutCheckbox from '../../components/CustomAutoCompleteWithoutCheckbox';
 import DateField from '../../components/CustomDateInput';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchUser } from '../../stores/slices/userSlice';
 
 function BANCALogin() {
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.user);
+
   const { data: bancaData, loading: bancaLoading, fetchData: bancaFetchData } = useGetBancaLoginData();
   const [fieldData, setFieldData] = useState(Object.values(FieldDataList).flat());
   const { canUpdate, canCreate } = usePermissions();
@@ -46,7 +50,16 @@ function BANCALogin() {
     });
   };
 
-  const { handleSubmit, control, setValue, watch, formState: { errors }, clearErrors,  getValues, trigger } = useForm({
+  const {
+    handleSubmit,
+    control,
+    setValue,
+    watch,
+    formState: { errors },
+    clearErrors,
+    getValues,
+    trigger,
+  } = useForm({
     defaultValues: {
       producerCode: null,
       product: null,
@@ -55,7 +68,11 @@ function BANCALogin() {
     },
   });
 
-  const { userData } = useGetUserData();
+  useEffect(() => {
+    dispatch(
+      fetchUser({ userType: COMMON_WORDS.EXTERNAL, searchKey: COMMON_WORDS.USER_TYPE, isAll: true, status: true })
+    );
+  }, [dispatch]);
 
   const { producerList, fetchData } = useGetProducerData();
 
@@ -152,7 +169,7 @@ function BANCALogin() {
           <CustomFormHeader
             handleReset={handleResetButton}
             headerText={FORM_HEADER_TEXT.BANCA_FIELDS}
-            customHeader='true'
+            customHeader="true"
           />
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
@@ -161,10 +178,8 @@ function BANCALogin() {
                 label="Producer Code"
                 control={control}
                 rules={{ required: 'Producer Code is required' }}
-                options={userData || []}
-                getOptionLabel={(option) =>
-                  `${option?.firstName} ${option?.lastName}`
-                }
+                options={user?.data || []}
+                getOptionLabel={(option) => `${option?.firstName} ${option?.lastName}`}
                 isOptionEqualToValue={(option, value) => option.id === value.id}
                 error={Boolean(errors.producerCode)}
                 helperText={errors.producerCode?.message}
@@ -200,7 +215,6 @@ function BANCALogin() {
                   clearErrors();
                 }}
               />
-             
             </Grid>
             <Grid item xs={12} sm={6}>
               <DateField
@@ -219,7 +233,7 @@ function BANCALogin() {
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-            <DateField
+              <DateField
                 key="endDate"
                 control={control}
                 name="endDate"
@@ -237,10 +251,10 @@ function BANCALogin() {
           </Grid>
         </CardContent>
       </Card>
-      <Grid container spacing={2} className='mt-4'>
+      <Grid container spacing={2} className="mt-4">
         {fieldData.map((obj) => (
           <Grid item xs={12} md={6} key={obj.value}>
-            <Card className='rounded-2xl'>
+            <Card className="rounded-2xl">
               <CardContent>
                 <Grid container spacing={2}>
                   <Grid item xs={12}>

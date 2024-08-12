@@ -47,7 +47,9 @@ function EmployeeFlagConfig() {
   useEffect(() => {
     dispatch(setTableName(''));
     dispatch(setExtraColumns([]));
-    dispatch(fetchUser({ userType: COMMON_WORDS.PRODUCER, searchKey: COMMON_WORDS.ROLE_NAME, isAll: true }));
+    dispatch(
+      fetchUser({ userType: COMMON_WORDS.EXTERNAL, searchKey: COMMON_WORDS.USER_TYPE, isAll: true, status: true })
+    );
   }, [dispatch]);
 
   useEffect(() => {
@@ -104,7 +106,7 @@ function EmployeeFlagConfig() {
           optionLabel={(option) => (option?.firstName ? `${option.firstName} ${option.lastName}` : '')}
           placeholder={getPlaceHolder(COMMON_WORDS.PRODUCER)}
           renderOptionFunction={(props, option) => (
-            <li {...props} key={option?.id} style={{ textTransform: 'capitalize'}}>
+            <li {...props} key={option?.id} style={{ textTransform: 'capitalize' }}>
               {option?.firstName} {option?.lastName}
             </li>
           )}
