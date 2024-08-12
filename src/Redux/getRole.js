@@ -3,15 +3,21 @@ import axiosInstance from '../utils/axiosInstance';
 import apiUrls from '../utils/apiUrls';
 import { buildQueryString, toCapitalize } from '../utils/globalizationFunction';
 import errorHandler from '../utils/errorHandler';
+import { COMMON_WORDS } from '../utils/constants';
 
 export const getRoles = createAsyncThunk('role/getRoles', async (_, { getState, rejectWithValue }) => {
   try {
+    const { role } = getState();
+    if (role?.role?.length > 0) {
+      return role.role;
+    }
+
     const params = buildQueryString({ isAll: true, status: true });
     const url = `${apiUrls.getRole}?${params}`;
     const response = await axiosInstance.get(url);
     const formattedArray = response?.data?.data?.map((obj) => ({
       ...obj,
-      label: toCapitalize(obj, 'roleName'),
+      label: toCapitalize(obj, COMMON_WORDS.ROLE_NAME),
     }));
     return formattedArray;
   } catch (error) {
