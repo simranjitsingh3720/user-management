@@ -254,6 +254,9 @@ function CreateUserCreationForm() {
         setRoleConfig(jsonData?.others);
       }
     }
+    else{
+      setRoleConfig([]);
+    }
   }, [roleValue, jsonData]);
 
   const handleReset = () => {
@@ -395,7 +398,7 @@ function CreateUserCreationForm() {
     const childIds = Array.isArray(producerCode) ? producerCode.map((code) => code.id) : [];
     const loginTypeIds = loginType.map((type) => type.id);
     const locationIds = location && location.map((loc) => loc.id);
-    const productIds = product.map((prod) => prod.id);
+    const productIds = product && product.map((prod) => prod.id);
     const planIds = plan && plan.map((plan) => plan.id);
     const zoneIds = zone && zone.map((zone) => zone.id);
     const paymentTypeNames = paymentType && paymentType.map((payment) => payment.name);
@@ -824,6 +827,15 @@ function CreateUserCreationForm() {
   }, [editData]);
 
   const neftValue = watch(COMMON.DEFAULT_HOUSE_BANK);
+
+  useEffect(() => {
+    if (neftValue && ARR_CONTAINS.PRODUCER_ARR.some((role) => rolesWatch?.roleName?.includes(role))) {
+      const selectedHouseBank = neftDefaultBank.find((obj) => obj.id === neftValue);
+      if (selectedHouseBank) {
+        setValue(COMMON.ACCOUNT_NUMBER, selectedHouseBank?.accountNumber);
+      }
+    }
+  }, [neftValue]);
 
   const useFormLabelEffect = (label, dependency, ref = null) => {
     useEffect(() => {
