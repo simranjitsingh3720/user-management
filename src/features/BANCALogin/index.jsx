@@ -85,8 +85,8 @@ function BANCALogin() {
         Mandatory: bancaData?.data?.fields[key].mandatory,
       }));
       setFieldData(result);
-      setValue('startDate', dayjs(bancaData?.data?.startDate, 'DD/MM/YYYY').format('DD/MM/YYYY'));
-      setValue('endDate', dayjs(bancaData?.data?.endDate, 'DD/MM/YYYY').format('DD/MM/YYYY'));
+      setValue('startDate', dayjs(bancaData?.data?.startDate).format('DD/MM/YYYY'));
+      setValue('endDate', dayjs(bancaData?.data?.endDate).format('DD/MM/YYYY'));
     }
   }, [bancaData]);
 
