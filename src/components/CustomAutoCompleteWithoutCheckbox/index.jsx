@@ -44,8 +44,26 @@ const CustomAutoCompleteWithoutCheckbox = ({
             size={size}
             disableCloseOnSelect={multiple ? true : false}
             isOptionEqualToValue={isOptionEqualToValue}
-            renderInput={(params) => <TextField {...params} error={error} placeholder={placeholder} />}
+            renderInput={(params) => <TextField {...params} error={error} placeholder={placeholder} sx={{
+              "& fieldset": {
+                border: "none",
+              },
+            }}/>}
             value={field.value ? field.value : multiple ? [] : null}
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                maxHeight: "40px",
+                overflow: "auto",
+                borderRadius: "4px",
+                border:"1px solid #ccc",
+                backgroundColor:"#fff",
+                '&.Mui-focused': {
+                  outline: "none",
+                  boxShadow: "none",
+                  borderColor: "#ccc",  
+                },
+              },
+            }}
             onChange={(event, newValue) => {
               field.onChange(newValue);
               if (typeof trigger === 'function') {
@@ -53,7 +71,7 @@ const CustomAutoCompleteWithoutCheckbox = ({
               }
               onChangeCallback && onChangeCallback(newValue);
             }}
-            limitTags={limitTags || 1}
+            // limitTags={limitTags || 1}
             disableClearable={disableClearable}
             ListboxProps={ListboxProps}
             renderOption={(props, option, { selected }) => (
