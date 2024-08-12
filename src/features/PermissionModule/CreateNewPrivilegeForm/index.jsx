@@ -5,11 +5,12 @@ import { Controller } from 'react-hook-form';
 import { CrudSelect } from '../constants';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
-import useGetAllModule from '../hooks/useGetAllModule';
 import capitalizeFirstLetter from '../../../utils/globalizationFunction';
 import useGetSubModule from '../hooks/useGetSubModule';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CustomButton from '../../../components/CustomButton';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchAllModules } from '../../../stores/slices/modulesSlice';
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -31,7 +32,12 @@ function CreateNewUserContainer({
     value: selectedSubmodules[key],
   })).length;
 
-  const { AllModuleData } = useGetAllModule();
+  const dispatch = useDispatch();
+  const { data: AllModuleData } = useSelector((state) => state.modules);
+
+  useEffect(() => {
+    dispatch(fetchAllModules());
+  }, [dispatch]);
 
   const [array, setArray] = useState([]);
 

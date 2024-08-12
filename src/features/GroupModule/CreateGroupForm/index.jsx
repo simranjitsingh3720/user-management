@@ -117,7 +117,7 @@ function CreateGroupForm() {
     if (id) {
       fetchData(id);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   useEffect(() => {
@@ -152,7 +152,7 @@ function CreateGroupForm() {
         });
       }
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [groupData, permissionData]);
 
   const areAllPermissionsSelected = (permissions) => {
@@ -305,9 +305,7 @@ function CreateGroupForm() {
                   options={userData || []}
                   disableCloseOnSelect
                   getOptionLabel={(option) => {
-                    return option?.lastName
-                      ? `${option?.firstName} ${option?.lastName}`
-                      : option?.firstName;
+                    return option?.lastName ? `${option?.firstName} ${option?.lastName}` : option?.firstName;
                   }}
                   limitTags={5}
                   className={styles.customizePrivilegeSelect}
