@@ -69,9 +69,10 @@ const PartnerNeft = () => {
     dispatch(fetchAllProductData({ isAll: true }));
     dispatch(
       fetchUser({
-        userType: COMMON_WORDS.PRODUCER,
-        searchKey: COMMON_WORDS.ROLE_NAME,
+        userType: COMMON_WORDS.EXTERNAL,
+        searchKey: COMMON_WORDS.USER_TYPE,
         isAll: true,
+        status: true,
       })
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -129,7 +130,7 @@ const PartnerNeft = () => {
     return option[type] || '';
   };
   const renderOptionFunction = (props, option, type) => (
-    <li {...props} key={option?.id} style={{ textTransform: 'capitalize'}}>
+    <li {...props} key={option?.id} style={{ textTransform: 'capitalize' }}>
       {optionLabel(option, type)}
     </li>
   );

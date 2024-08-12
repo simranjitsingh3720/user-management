@@ -26,9 +26,10 @@ function SetOTPException({ fetchData }) {
   useEffect(() => {
     dispatch(
       fetchUser({
-        userType: COMMON_WORDS.PRODUCER,
-        searchKey: COMMON_WORDS.ROLE_NAME,
+        userType: COMMON_WORDS.EXTERNAL,
+        searchKey: COMMON_WORDS.USER_TYPE,
         isAll: true,
+        status: true,
       })
     );
     dispatch(getChannels());
@@ -106,9 +107,7 @@ function SetOTPException({ fetchData }) {
                   loading={userLoading}
                   options={user.data || []}
                   getOptionLabel={(option) =>
-                    `${option?.firstName || ''} ${option?.lastName || ''} - ${
-                      option.producerCode || ''
-                    }`
+                    `${option?.firstName || ''} ${option?.lastName || ''} - ${option.producerCode || ''}`
                   }
                   control={control}
                   rules={{ required: 'Producer is required' }}
