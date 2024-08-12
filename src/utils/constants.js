@@ -123,3 +123,8 @@ export const TABLE_LABEL = {
   PARTNER_NEFT: 'partnerNeft',
   USER_MANAGEMENT: 'user'
 }
+
+export const EXPORT_CONSTANTS = {
+  FIRST_NAME: 'firstName',
+  LAST_NAME: 'lastName',
+}

@@ -6,6 +6,7 @@ import { DATE_FORMAT } from '../../utils/globalConstants';
 import toastifyUtils from '../../utils/toastify';
 import apiUrls from '../../utils/apiUrls';
 import { splitCamelCase } from '../../utils/globalizationFunction';
+import { EXPORT_CONSTANTS, TABLE_LABEL } from '../../utils/constants';
 
 const initialState = {
   selectedValue: '',
@@ -22,11 +23,21 @@ const initialState = {
 export const fetchColumns = createAsyncThunk('export/fetchColumns', async ({ tableName, headerValues }, thunkAPI) => {
   try {
     const response = await axiosInstance.get(`${apiUrls.getColumns}${tableName}`);
-    const columns = response.data.data.map((col) => ({
-      id: col,
-      name: splitCamelCase(col),
-      checked: headerValues?.has(col) || false,
-    }));
+    const columns = response.data.data.map((col) => {
+      
+      if (TABLE_LABEL.USER_MANAGEMENT === tableName && (col === EXPORT_CONSTANTS.FIRST_NAME || col === EXPORT_CONSTANTS.LAST_NAME)) {
+        return {
+          id: col,
+          name: splitCamelCase(col),
+          checked: true,
+        };
+      }
+      return {
+        id: col,
+        name: splitCamelCase(col),
+        checked: headerValues?.has(col) || false,
+      }
+    });
 
     return columns;
   } catch (error) {
