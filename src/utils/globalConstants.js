@@ -8,8 +8,6 @@ export const TOKEN = 'user-token';
 export const USER_DETAILS = 'user-details';
 export const TOKEN_EXPIRATION_ERROR = 'Your session has expired. Please log in again!';
 export const DATE_FORMAT = 'DD/MM/YYYY';
-export const CREATED_AT = 'createdAt';
-export const ASC = 'asc';
 export const CLIENT_TYPE = 'web';
 
 export const REGEX = {

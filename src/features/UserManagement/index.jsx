@@ -34,10 +34,12 @@ function UserManagement() {
 
   useEffect(() => {
     if (userList?.data?.length === 0) return;
+
     const transformedData =
       userList?.data?.map((item) => {
         return {
           ...item?.user,
+          label: item?.user?.label,
           checked: item?.user?.status,
           disabled: !canUpdate,
           roleId: item?.role[0]?.id,
@@ -50,6 +52,11 @@ function UserManagement() {
     dispatch(setTableName(transformedData[0]?.label));
   }, [userList, dispatch]);
 
+  const getUserList = useCallback(() => {
+    fetchUserList({page, pageSize, order, orderBy, query, searched});
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page, pageSize, order, orderBy, query]);
+
   const handleInsillionStatus = useCallback((data, row) => {
     dispatch(
       showDialog({
@@ -58,14 +65,10 @@ function UserManagement() {
         actions: <Actions row={row} fetchData={ getUserList} />,
       })
     );
-  }, [dispatch, userList]);
+  // eslint-disable-next-line no-use-before-define
+  }, [dispatch, getUserList]);
 
   const header = useMemo(() => Header(updateUserForm, handleInsillionStatus), [updateUserForm, handleInsillionStatus]);
-
-  const getUserList = useCallback(() => {
-    fetchUserList({page, pageSize, order, orderBy, query, searched});
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, pageSize, order, orderBy, query]);
 
   useEffect(() => {
     getUserList();

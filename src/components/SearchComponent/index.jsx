@@ -1,5 +1,5 @@
 import React from 'react';
-import { Autocomplete, Box, Grid, IconButton, InputAdornment, MenuItem, Select, TextField } from '@mui/material';
+import { Box, Grid, IconButton, InputAdornment, MenuItem, Select, TextField } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import CustomButton from '../CustomButton';
 import { Controller, useForm } from 'react-hook-form';
@@ -8,6 +8,7 @@ import ExportDropdown from '../../features/ExportDropdown';
 import DateField from '../CustomDateInput';
 import CloseIcon from '@mui/icons-material/Close';
 import BulkUpload from '../../assets/BulkUpload';
+import CustomAutoCompleteWithoutCheckbox from '../CustomAutoCompleteWithoutCheckbox';
 
 function SearchComponent({
   optionsData,
@@ -65,6 +66,7 @@ function SearchComponent({
     setValue('autocomplete', null);
     setValue('search', '');
   };
+
   return (
     <Box>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -165,30 +167,22 @@ function SearchComponent({
                       )}
                     />
                   ) : (
-                    <Controller
+                    <CustomAutoCompleteWithoutCheckbox
                       name="autocomplete"
                       control={control}
-                      render={({ field }) => (
-                        <Autocomplete
-                          id="autocomplete"
-                          options={optionsData || []}
-                          getOptionLabel={optionLabel}
-                          isOptionEqualToValue={(option, value) => option.id === value.id}
-                          multiple
-                          size="small"
-                          renderInput={(params) => <TextField {...params} placeholder={placeholder} />}
-                          value={field?.value || []}
-                          className="customize-select"
-                          onChange={(event, newValue) => {
-                            if (newValue?.length === 0) {
-                              fetchData();
-                            }
-                            field.onChange(newValue);
-                          }}
-                          renderOption={renderOptionFunction}
-                          fullWidth
-                        />
-                      )}
+                      options={optionsData || []}
+                      getOptionLabel={optionLabel}
+                      placeholder={placeholder}
+                      onChangeCallback={(newValue) => {
+                        if (newValue?.length === 0) {
+                          fetchData();
+                        }
+                        setValue('autocomplete', newValue);
+                      }}
+                      isOptionEqualToValue={(option, value) => option.id === value.id}
+                      renderOption={renderOptionFunction}
+                      multiple={true}
+                      fullWidth
                     />
                   )}
                 </Grid>

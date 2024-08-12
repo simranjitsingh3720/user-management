@@ -1,7 +1,17 @@
-import { IconButton, TextField, FormControlLabel, Checkbox, Tooltip, Autocomplete } from '@mui/material';
+import {
+  IconButton,
+  TextField,
+  FormControlLabel,
+  Checkbox,
+  Tooltip,
+  Box,
+  Card,
+  CardContent,
+  Grid,
+} from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import styles from './styles.module.scss';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 
 import useGetPermission from '../hooks/useGetPermission';
@@ -15,10 +25,12 @@ import useGetUser from '../hooks/useGetUser';
 import useUpdateUser from '../hooks/useUpdateUser';
 import CustomButton from '../../../components/CustomButton';
 import CustomFormHeader from '../../../components/CustomFormHeader';
-import { FORM_HEADER_TEXT } from '../../../utils/constants';
+import { COMMON_WORDS, FORM_HEADER_TEXT } from '../../../utils/constants';
 import useDebounce from '../../../hooks/useDebounce';
 import UserTypeToggle from '../../../components/CustomRadioButtonGroup';
 import { STATUS } from '../constants';
+import InputField from '../../../components/CustomTextfield';
+import CustomAutoCompleteWithoutCheckbox from '../../../components/CustomAutoCompleteWithoutCheckbox';
 
 const convertToDesiredFormat = (data, groupName, groupStatus) => {
   const permissions = data?.map((permission) => permission.id);
@@ -41,7 +53,7 @@ const convertUpdateFormat = (newData, oldData) => {
 };
 
 function CreateGroupForm() {
-  const [input, setInput] = useState('');
+  const [input] = useState('');
   const [query, setQuery] = useState('');
   const debouncedInput = useDebounce(input, 500);
   const [filteredPermission, setFilteredPermission] = useState([]);
@@ -70,7 +82,7 @@ function CreateGroupForm() {
   const { userPostData } = useUpdateUser();
 
   const { postData, loading } = useCreateGroup();
-  const { handleSubmit, control, setValue, formState, getValues } = useForm({
+  const { handleSubmit, control, setValue, formState, trigger } = useForm({
     defaultValues: { groupName: '', groupStatus: 'active', groupUser: [] },
   });
 
@@ -219,69 +231,31 @@ function CreateGroupForm() {
   };
 
   return (
-    <div>
-      {' '}
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className={styles.createNewUserContainer}>
-          <div className="p-5">
-            <CustomFormHeader
-              id={id}
-              headerText={FORM_HEADER_TEXT.GROUP}
-              navigateRoute="/group"
-              handleReset={handleReset}
-            />
-          </div>
-          <div className={styles.containerStyle}>
-            <div className={styles.fieldContainerStyle}>
-              <span className={styles.labelText}>
-                Group Name <span className={styles.styledRequired}>*</span>
-              </span>
-              <Controller
-                name="groupName"
+    <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+      <Card>
+        <CardContent>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <CustomFormHeader
+                id={id}
+                headerText={FORM_HEADER_TEXT.GROUP}
+                navigateRoute="/group"
+                handleReset={handleReset}
+              />
+            </Grid>
+            <Grid item xs={12} md={6} lg={4}>
+              <InputField
+                id="groupName"
+                required={true}
+                label="Group Name"
                 control={control}
-                defaultValue=""
+                errors={errors}
+                placeholder="Enter Name"
                 rules={{ required: 'Group Name is required' }}
-                render={({ field }) => (
-                  <TextField
-                    id="groupName"
-                    variant="outlined"
-                    placeholder="Enter Name"
-                    size="small"
-                    className={styles.customizeSelect}
-                    {...field}
-                    value={field?.value}
-                    onChange={(e) => {
-                      setValue('groupName', e.target.value);
-                    }}
-                  />
-                )}
+                trigger={trigger}
               />
-              <div className={styles.styledError}>{errors.groupName && <span>{errors.groupName.message}</span>} </div>
-            </div>
-            {/* <div className={styles.fieldContainerStyle}>
-              <span className={styles.labelText}>
-                Group Status <span className={styles.styledRequired}>*</span>
-              </span>
-              <Controller
-                name="groupStatus"
-                control={control}
-                defaultValue={id ? (groupData?.data?.status ? 'active' : 'inactive') : 'active'}
-                rules={{ required: true }}
-                render={({ field }) => (
-                  <RadioGroup
-                    row
-                    aria-labelledby="insillion-status-row-radio-buttons-group-label"
-                    name="groupStatus"
-                    {...field}
-                  >
-                    <FormControlLabel value="active" control={<Radio />} label="Active" className={styles.radioStyle} />
-                    <FormControlLabel value="inactive" control={<Radio />} label="Inactive" />
-                  </RadioGroup>
-                )}
-              />
-              <div className={styles.styledError}>{errors.groupStatus && <span>This field is required</span>} </div>
-            </div> */}
-            <div className={styles.fieldContainerStyle}>
+            </Grid>
+            <Grid item xs={12} md={6} lg={4}>
               <UserTypeToggle
                 menuItem={STATUS}
                 label="Status"
@@ -290,154 +264,133 @@ function CreateGroupForm() {
                 name="groupStatus"
                 defaultValue="active"
               />
-            </div>
-          </div>
-          <div className={styles.fieldContainerStyle}>
-            <span className={styles.labelText}>Group User</span>
-            <Controller
-              name="groupUser"
-              control={control}
-              render={({ field }) => (
-                <Autocomplete
-                  multiple
-                  id="groupUser"
-                  value={getValues('groupUser')}
-                  options={userData || []}
-                  disableCloseOnSelect
-                  getOptionLabel={(option) => {
-                    return option?.lastName ? `${option?.firstName} ${option?.lastName}` : option?.firstName;
-                  }}
-                  limitTags={5}
-                  className={styles.customizePrivilegeSelect}
-                  size="small"
-                  isOptionEqualToValue={(option, value) => option.id === value.id}
-                  renderInput={(params) => <TextField {...params} placeholder="Select" />}
-                  onChange={(event, newValue) => {
-                    field.onChange(newValue);
-                  }}
-                  ListboxProps={{
-                    style: {
-                      maxHeight: '200px',
-                    },
-                  }}
-                  onInputChange={(event, val) => {
-                    setInput(val);
-                  }}
-                />
-              )}
-            />
-          </div>
-          <div className={styles.fieldContainerStyle}>
-            <span className={styles.labelText}>
-              Permissions <span className={styles.styledRequired}>*</span>
-            </span>
-            <div className={styles.permissionContainer}>
-              <div className={styles.permissionSelect}>
-                <div className={styles.permissionInnerSelect}>
-                  {' '}
-                  {(checkedPermission || []).map((item) => {
-                    return (
-                      item.checked && (
-                        <div className={styles.permissionSelectButton}>
-                          {item.permissionName.length > 25 ? (
-                            <Tooltip title={item.permissionName}>
-                              <span className={styles.permissionNameStyle}>{`${item.permissionName.substring(
-                                0,
-                                25
-                              )}...`}</span>
-                            </Tooltip>
-                          ) : (
-                            <span className={styles.permissionNameStyle}>{item.permissionName || ''}</span>
-                          )}
-                          <div className={styles.crossIconStyle}>
-                            <IconButton
-                              aria-label="back"
-                              onClick={() => {
-                                handleChange(item);
-                              }}
-                              size="small"
-                            >
-                              <CloseIcon color="primary" fontSize="inherit" />
-                            </IconButton>
-                          </div>
-                        </div>
-                      )
-                    );
-                  })}
-                </div>
-              </div>
-              <div className={styles.permissionCheckbox}>
-                <TextField
-                  id="search"
-                  variant="outlined"
-                  placeholder="Search by permission name"
-                  size="small"
-                  className={styles.textFieldStyle}
-                  onChange={(e) => {
-                    setQuery(e.target.value);
-                  }}
-                />
-                <div className="flex content-start w-full items-center pl-7 pb-3">
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={selectAll}
-                        onChange={handleSelectAll}
-                        inputProps={{ 'aria-label': 'select all permissions' }}
-                      />
-                    }
-                    label="Select All"
-                  />
-                </div>
-                <div className={styles.permissionCheckbox}>
-                  {permissionLoading ? (
-                    <ListLoader rows={5} column={3} />
-                  ) : filteredPermission.length ? (
-                    (filteredPermission || []).map((item) => (
-                      <div className={styles.checkboxStyle} key={item.id}>
-                        <FormControlLabel
-                          control={
-                            <Checkbox
-                              checked={!!item.checked}
-                              onChange={() => handleChange(item)}
-                              inputProps={{ 'aria-label': 'controlled' }}
-                            />
-                          }
-                          label={
-                            item.permissionName.length > 20 ? (
+            </Grid>
+            <Grid item xs={12}>
+              <CustomAutoCompleteWithoutCheckbox
+                name="groupUser"
+                label="Group User"
+                control={control}
+                multiple
+                options={userData || []}
+                getOptionLabel={(option) => `${option?.firstName} ${option?.lastName}`}
+                isOptionEqualToValue={(option, value) => option.id === value.id}
+                placeholder={COMMON_WORDS.SELECT}
+                trigger={trigger}
+                limitTags={2}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <span className="required-field label-text">Permissions</span>
+              <div className="flex max-h-[30rem]">
+                <div className="overflow-y-auto w-full p-4 border border-blueHaze rounded-l-lg">
+                  <div className="flex flex-wrap h-fit">
+                    {(checkedPermission || []).map((item) => {
+                      return (
+                        item.checked && (
+                          <div className={styles.permissionSelectButton} key={item.id}>
+                            {item.permissionName.length > 25 ? (
                               <Tooltip title={item.permissionName}>
                                 <span className={styles.permissionNameStyle}>{`${item.permissionName.substring(
                                   0,
-                                  20
+                                  25
                                 )}...`}</span>
                               </Tooltip>
                             ) : (
                               <span className={styles.permissionNameStyle}>{item.permissionName || ''}</span>
-                            )
-                          }
+                            )}
+                            <div className={styles.crossIconStyle}>
+                              <IconButton
+                                aria-label="back"
+                                onClick={() => {
+                                  handleChange(item);
+                                }}
+                                size="small"
+                              >
+                                <CloseIcon color="primary" fontSize="inherit" />
+                              </IconButton>
+                            </div>
+                          </div>
+                        )
+                      );
+                    })}
+                  </div>
+                </div>
+                <div className="overflow-y-auto w-full p-4 border border-blueHaze rounded-r-lg">
+                  <TextField
+                    id="search"
+                    variant="outlined"
+                    placeholder="Search by permission name"
+                    size="small"
+                    className={styles.textFieldStyle}
+                    onChange={(e) => {
+                      setQuery(e.target.value);
+                    }}
+                  />
+                  <div className="flex content-start w-full items-center pl-8 pb-3">
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={selectAll}
+                          onChange={handleSelectAll}
+                          inputProps={{ 'aria-label': 'select all permissions' }}
                         />
-                      </div>
-                    ))
-                  ) : (
-                    <NoDataFound />
-                  )}
+                      }
+                      label="Select All"
+                    />
+                  </div>
+                  <div className="overflow-y-auto w-full py-4 px-8 border border-blueHaze rounded-lg">
+                    {permissionLoading ? (
+                      <ListLoader rows={5} column={3} />
+                    ) : filteredPermission.length ? (
+                      (filteredPermission || []).map((item) => (
+                        <div className={styles.checkboxStyle} key={item.id}>
+                          <FormControlLabel
+                            control={
+                              <Checkbox
+                                checked={!!item.checked}
+                                onChange={() => handleChange(item)}
+                                inputProps={{ 'aria-label': 'controlled' }}
+                              />
+                            }
+                            label={
+                              item.permissionName.length > 20 ? (
+                                <Tooltip title={item.permissionName}>
+                                  <span className={styles.permissionNameStyle}>{`${item.permissionName.substring(
+                                    0,
+                                    20
+                                  )}...`}</span>
+                                </Tooltip>
+                              ) : (
+                                <span className={styles.permissionNameStyle}>{item.permissionName || ''}</span>
+                              )
+                            }
+                          />
+                        </div>
+                      ))
+                    ) : (
+                      <NoDataFound />
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className={styles.styledError}>
-              {permissionError && <span>At least one permission is required</span>}
-            </div>
-          </div>
-        </div>
+              <div className="text-custom-red text-sm mt-2">
+                {permissionError && <span>At least one permission is required</span>}
+              </div>
+            </Grid>
+          </Grid>
+        </CardContent>
+      </Card>
+      <div className="mt-4">
         <CustomButton
           type="submit"
           variant="contained"
           disabled={loading || (id && GroupUpdateLoading) || updateLoading}
+          loading={loading || (id && GroupUpdateLoading) || updateLoading}
         >
           {id ? 'Update' : 'Submit'}
         </CustomButton>
-      </form>
-    </div>
+      </div>
+    </Box>
   );
 }
 

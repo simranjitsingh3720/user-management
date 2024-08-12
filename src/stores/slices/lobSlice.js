@@ -1,9 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { toast } from "react-toastify";
 import axiosInstance from "./../../utils/axiosInstance";
 import apiUrls from "./../../utils/apiUrls";
 import { addAsyncReducers } from "../../utils/addAsyncReducers";
 import errorHandler from "../../utils/errorHandler";
+import toastifyUtils from "../../utils/toastify";
 
 export const fetchLobData = createAsyncThunk(
   "lob/fetchLobData",
@@ -34,7 +34,7 @@ export const updateLobData = createAsyncThunk(
   async ({ data, lobData, updateLobStatus }, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.put(apiUrls.getLob, data);
-      toast.success(response?.data?.message || "LOB updated successfully");
+      toastifyUtils.notifySuccess(response?.data?.message || "LOB updated successfully");
       if(updateLobStatus) {
         updateLobStatus(data.id, lobData);
       }
@@ -51,7 +51,7 @@ export const createLobData = createAsyncThunk(
   async ({ data, navigate }, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.post(apiUrls.getLob, data);
-      toast.success(response?.data?.message || "LOB created successfully");
+      toastifyUtils.notifySuccess(response?.data?.message || "LOB created successfully");
       navigate("/lob");
       return response.data;
     } catch (error) {

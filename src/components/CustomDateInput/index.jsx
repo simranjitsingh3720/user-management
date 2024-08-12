@@ -19,7 +19,7 @@ const DateField = ({
   labelVisible,
   isEdit = false,
   trigger,
-  disabled
+  disabled,
 }) => {
   const validateDate = (value) => {
     if (!value) {
@@ -32,13 +32,12 @@ const DateField = ({
       return ERR_MSG.INVALID_DATE_ERR;
     }
 
-    // if (date.isBefore(minDate)) {
-    //   return ERR_MSG.MIN_DATE_ERR;
-    // }
-
-    // if (date.isAfter(seventyYearsFromNow)) {
-    //   return ERR_MSG.MAX_DATE_ERR;
-    // }
+    const today = dayjs().startOf('day');
+    if ((name === START_DATE || name === END_DATE) && !disabled) {
+      if (date.isBefore(today) && !disabled) {
+        return `${label} ${ERR_MSG.START_DATE_LESS_THAN_TODAY_ERR}`;
+      }
+    }
 
     if (name === END_DATE) {
       const startDate = watch(START_DATE);
@@ -60,6 +59,14 @@ const DateField = ({
       setValue(name, today);
     }
   }, [labelVisible, setValue, name]);
+
+  const dateVal = watch(name);
+
+  useEffect(() => {
+    if(dateVal){
+      trigger(name);
+    }
+  }, [name, dateVal, trigger]);
 
   return (
     <div className={`${labelVisible ? 'm-0 flex flex-col' : "flex flex-col"}`}>
@@ -99,7 +106,7 @@ const DateField = ({
                     },
                   },
                 }}
-                minDate={!isEdit ? dayjs() : undefined}
+                minDate={!disabled ? dayjs() : undefined}
                 onChange={(date) => {
                   const formattedDate = date ? dayjs(date).format(DATE_FORMAT) : '';
                   setValue(name, formattedDate);

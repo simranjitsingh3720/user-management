@@ -1,10 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { toast } from 'react-toastify';
 import axiosInstance from './../../utils/axiosInstance';
 import apiUrls from './../../utils/apiUrls';
 import { buildParams } from './../../utils/buildParams';
 import { addAsyncReducers } from './../../utils/addAsyncReducers';
 import errorHandler from '../../utils/errorHandler';
+import toastifyUtils from '../../utils/toastify';
 
 export const fetchAllProductData = createAsyncThunk(
   'product/fetchAllProductData',
@@ -24,7 +24,7 @@ export const updateProductData = createAsyncThunk(
   async ({ data, productData, updateProductStatus }, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.put(apiUrls.getProduct, data);
-      toast.success(response?.data?.message || 'Product updated successfully');
+      toastifyUtils.notifySuccess(response?.data?.message || 'Product updated successfully');
       if(updateProductStatus) {
         updateProductStatus(data.id, productData);
       }
@@ -41,7 +41,7 @@ export const createProductData = createAsyncThunk(
   async ({ data, navigate }, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.post(apiUrls.getProduct, data);
-      toast.success(response?.data?.message || 'Product created successfully');
+      toastifyUtils.notifySuccess(response?.data?.message || 'Product created successfully');
       navigate('/product');
       return response.data;
     } catch (error) {

@@ -23,10 +23,18 @@ export const ARR_CONTAINS = {
     'deo - external posp',
     'deo - single sign on',
   ],
+  DEO_USER_ARR: ['deo - partner employee', 'deo - external posp', 'deo - single sign on'],
   ADMIN_ARR: ['admin', 'adminView'],
   CLIENT_ARR: ['csm'],
   DATA_ENTRY_USER_ARR: ['distops'],
-  PLAN_ZONE_ARR: ['deo - partner employee', 'deo - external posp', 'deo - single sign on'],
+  PLAN_ZONE_ARR: [
+    'producer',
+    'subproducer',
+    'dealer',
+    'deo - partner employee',
+    'deo - external posp',
+    'deo - single sign on',
+  ],
   MASTER_POLICY_ARR: ['partner'],
 };
 
@@ -66,7 +74,10 @@ export const COMMON = {
   PAYMENT_CHEQUE: 'cheque',
   ALL: 'all',
   ACTIVE: 'Active',
-  PRODUCER_STATUS: 'producerStatus'
+  PRODUCER_STATUS: 'producerStatus',
+  PARTNER_EMPLOYEE: 'deo - partner employee',
+  SSO: 'deo - single sign on',
+  EXTERNAL_POSP: 'deo - external posp',
 };
 
 export const FORM_LABEL = {
@@ -98,6 +109,8 @@ export const FORM_LABEL = {
   PLAN: 'plan',
   ZONE: 'zone',
   REVALIDATION: 'revalidation',
+  PRODUCER_STATUS: 'producerStatus',
+  PRODUCER: 'producer',
 };
 
 export const FORM_VALUE = {
@@ -221,3 +234,18 @@ export const MASTER_POLICY = {
   SMALLBUSINESSTRAVELGUARD: 'smallbusinesstravelguard',
   BOTH: 'both',
 };
+
+export const excludedLabels = [
+  FORM_LABEL.LOB,
+  FORM_LABEL.LOGIN_TYPE,
+  FORM_LABEL.HOUSE_BANK,
+  FORM_LABEL.LOCATION,
+  FORM_LABEL.CHANNEL_ID,
+  FORM_LABEL.PAYMENT_TYPE,
+  FORM_LABEL.PRODUCER,
+  FORM_LABEL.PRODUCT,
+  FORM_LABEL.PLAN,
+  FORM_LABEL.ZONE,
+  FORM_LABEL.MASTER_POLICY
+];
+

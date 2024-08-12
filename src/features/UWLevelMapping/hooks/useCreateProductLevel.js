@@ -1,12 +1,12 @@
 import { useCallback, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axiosInstance from '../../../utils/axiosInstance';
-import { toast } from 'react-toastify';
 
 import apiUrls from '../../../utils/apiUrls';
 import { hideDialog } from '../../../stores/slices/dialogSlice';
 import { useDispatch } from 'react-redux';
 import errorHandler from '../../../utils/errorHandler';
+import toastifyUtils from '../../../utils/toastify';
 
 function useCreateProductLevel(fetchData, setEditData, handleReset) {
   const [loading, setLoading] = useState(false);
@@ -21,7 +21,7 @@ function useCreateProductLevel(fetchData, setEditData, handleReset) {
     setLoading(true);
     try {
       const response = await axiosInstance.post(`${apiUrls.productLocationLevelMapping}`, data);
-      toast.success(response?.data?.message || 'Product Level Mapping Created successfully');
+      toastifyUtils.notifySuccess(response?.data?.message || 'Product Level Mapping Created successfully');
       navigate(`/uwlevelmappingemployee/${employeeId}`);
       if (fetchData) {
         fetchData();
@@ -52,7 +52,7 @@ function useCreateProductLevel(fetchData, setEditData, handleReset) {
     setLoading(true);
     try {
       const response = await axiosInstance.put(`${apiUrls.productLocationLevelMapping}`, payload);
-      toast.success(response?.data?.message || 'Product Level Mapping updated successfully');
+      toastifyUtils.notifySuccess(response?.data?.message || 'Product Level Mapping updated successfully');
       dispatch(hideDialog());
       if (fetchData) {
         fetchData();

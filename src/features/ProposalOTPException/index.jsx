@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { ASC, CREATED_AT, PAGECOUNT } from '../../utils/globalConstants';
+import { PAGECOUNT } from '../../utils/globalConstants';
 import useGetProposalOTPList from './hooks/useGetProposalOTPList';
 import usePermissions from '../../hooks/usePermission';
 import { Header } from './utils/Header';
@@ -20,8 +20,8 @@ import { getChannels } from '../../Redux/getChannel';
 function ProposalOTPException() {
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(PAGECOUNT);
-  const [order, setOrder] = useState(ASC);
-  const [orderBy, setOrderBy] = useState(CREATED_AT);
+  const [order, setOrder] = useState(COMMON_WORDS.DESC);
+  const [orderBy, setOrderBy] = useState(COMMON_WORDS.CREATED_AT);
   const [searched, setSearched] = useState('channel');
   const { canCreate, canUpdate } = usePermissions();
   const [resultId, setResultId] = useState('');

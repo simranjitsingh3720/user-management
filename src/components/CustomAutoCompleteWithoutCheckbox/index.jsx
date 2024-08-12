@@ -4,7 +4,7 @@ import { Controller } from 'react-hook-form';
 
 const CustomAutoCompleteWithoutCheckbox = ({
   name,
-  label,
+  label='',
   control,
   rules,
   options,
@@ -22,7 +22,9 @@ const CustomAutoCompleteWithoutCheckbox = ({
   helperText,
   onChangeCallback,
   disabled,
-  trigger
+  trigger,
+  multiple = false,
+  limitTags
 }) => {
   return (
     <>
@@ -33,15 +35,17 @@ const CustomAutoCompleteWithoutCheckbox = ({
         rules={rules}
         render={({ field }) => (
           <Autocomplete
+            multiple={multiple}
             loading={loading}
             options={options || []}
             getOptionLabel={getOptionLabel}
             disabled={disabled}
-            className={className + 'customize-select bg-white'}
+            className={className + ' customize-select bg-white'}
             size={size}
+            disableCloseOnSelect={multiple ? true : false}
             isOptionEqualToValue={isOptionEqualToValue}
             renderInput={(params) => <TextField {...params} error={error} placeholder={placeholder} />}
-            value={field.value}
+            value={field.value ? field.value : multiple ? [] : null}
             onChange={(event, newValue) => {
               field.onChange(newValue);
               if (typeof trigger === 'function') {
@@ -49,15 +53,16 @@ const CustomAutoCompleteWithoutCheckbox = ({
               }
               onChangeCallback && onChangeCallback(newValue);
             }}
+            limitTags={limitTags || 1}
             disableClearable={disableClearable}
             ListboxProps={ListboxProps}
-            renderOption={(props, option) => (
+            renderOption={(props, option, { selected }) => (
               renderOption ? renderOption(props, option) : (
                 <li {...props} key={option.id || option.label} style={{ textTransform: 'capitalize' }}>
                   {getOptionLabel(option)}
                 </li>
               )
-            )}            
+            )}
           />
         )}
       />

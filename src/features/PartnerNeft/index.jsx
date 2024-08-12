@@ -26,8 +26,8 @@ const PartnerNeft = () => {
 
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(PAGECOUNT);
-  const [order, setOrder] = useState('');
-  const [orderBy, setOrderBy] = useState('');
+  const [order, setOrder] = useState(COMMON_WORDS.DESC);
+  const [orderBy, setOrderBy] = useState(COMMON_WORDS.CREATED_AT);
   const [searched, setSearched] = useState(COMMON_WORDS.PRODUCT);
   const [productValue, setProductValue] = useState([]);
   const [lobValue, setLobValue] = useState([]);
