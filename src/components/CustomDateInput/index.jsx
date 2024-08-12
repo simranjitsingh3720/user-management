@@ -5,7 +5,6 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
 import { END_DATE, ERR_MSG, START_DATE } from './utils/constants';
 import { DATE_FORMAT } from './../../utils/globalConstants';
-import { cleanDigitSectionValue } from '@mui/x-date-pickers/internals/hooks/useField/useField.utils';
 
 const DateField = ({
   control,
