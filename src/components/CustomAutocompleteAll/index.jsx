@@ -5,7 +5,7 @@ import Checkbox from '@mui/material/Checkbox';
 import TextField from '@mui/material/TextField';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
-import { All, NA, PLACEHOLDER } from './constants';
+import { All, PLACEHOLDER } from './constants';
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -31,7 +31,7 @@ const AutocompleteFieldAll = ({
   const [selectedValues, setSelectedValues] = useState([]);
   const [searchInputValue, setSearchInputValue] = useState('');
   const watchedValues = useWatch({ control, name });
-  
+
   useEffect(() => {
     if (!isEdit) {
       setSelectedValues([]);
@@ -53,7 +53,7 @@ const AutocompleteFieldAll = ({
       const isSelected = prevSelectedValues.some((val) => val.value === option.value);
       let newSelectedValues;
       if (option?.value === All) {
-        newSelectedValues = isCheckedAll() ? [] : (apiDataMap[name] || []);
+        newSelectedValues = isCheckedAll() ? [] : apiDataMap[name] || [];
       } else {
         newSelectedValues = isSelected
           ? prevSelectedValues.filter((val) => val.value !== option.value)
@@ -64,33 +64,39 @@ const AutocompleteFieldAll = ({
     });
   };
 
-  const handleAutocompleteChangeAll = useCallback((event, newValue) => {
-    if (newValue.some((val) => val.value === All)) {
-      const allSelected = isCheckedAll() ? [] : (apiDataMap[name] || []);
-      setSelectedValues(allSelected);
-      setValue(name, allSelected);
-    } else {
-      const uniqueNewValue = Array.from(new Set(newValue.map((item) => item.value)))
-        .map((value) => newValue.find((item) => item.value === value));
-      setSelectedValues(uniqueNewValue);
-      setValue(name, uniqueNewValue);
-    }
-    setSearchInputValue('');
-  }, [setValue, name, apiDataMap, isCheckedAll]);
+  const handleAutocompleteChangeAll = useCallback(
+    (event, newValue) => {
+      if (newValue.some((val) => val.value === All)) {
+        const allSelected = isCheckedAll() ? [] : apiDataMap[name] || [];
+        setSelectedValues(allSelected);
+        setValue(name, allSelected);
+      } else {
+        const uniqueNewValue = Array.from(new Set(newValue.map((item) => item.value))).map((value) =>
+          newValue.find((item) => item.value === value)
+        );
+        setSelectedValues(uniqueNewValue);
+        setValue(name, uniqueNewValue);
+      }
+      setSearchInputValue('');
+    },
+    [setValue, name, apiDataMap, isCheckedAll]
+  );
 
   const isEmptyObject = (obj) => {
     return Object.keys(obj).length === 0 && obj.constructor === Object;
   };
   useEffect(() => {
     if (!options || options.length === 0 || (options && options.every(isEmptyObject))) {
-      setSelectedValues([]);
+      if (!watchedValues) {
+        setSelectedValues([]);
+      } else {
+        setSelectedValues(Array.isArray(watchedValues) ? watchedValues : []);
+      }
     }
-  }, [options, name]);
+  }, [options, name, watchedValues]);
 
   const filteredOptions = searchInputValue
-    ? options.filter((option) =>
-        option.label.toLowerCase().includes(searchInputValue.toLowerCase())
-      )
+    ? options.filter((option) => option.label.toLowerCase().includes(searchInputValue.toLowerCase()))
     : options;
 
   return (
@@ -135,9 +141,7 @@ const AutocompleteFieldAll = ({
                     checkedIcon={checkedIcon}
                     style={{ marginRight: 8 }}
                     checked={
-                      option?.value === All
-                        ? isCheckedAll()
-                        : selectedValues.some((val) => val.value === option.value)
+                      option?.value === All ? isCheckedAll() : selectedValues.some((val) => val.value === option.value)
                     }
                   />
                 )}
