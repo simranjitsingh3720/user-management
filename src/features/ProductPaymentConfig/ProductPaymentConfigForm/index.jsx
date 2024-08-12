@@ -89,7 +89,6 @@ function ProductPaymentConfigForm() {
 
   const handleReset = () => {
     if (id) {
-      setValue('product', null);
       setValue('payment', []);
     } else {
       setValue('lob', null);

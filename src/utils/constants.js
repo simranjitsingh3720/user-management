@@ -98,7 +98,7 @@ export const FORM_HEADER_TEXT = {
   PERMISSION: 'Permission',
   PRODUCER_EOD: 'Producer EOD Bypass',
   PRODUCT: 'Product',
-  PAYMENT_CONFIG: 'Payment Configuration',
+  PAYMENT_CONFIG: 'Product Wise Payment Configuration',
   BITLY_CONFIG: 'Bitly Link Config',
   PROPOSAL_OTP: 'Proposal OTP Exception',
   ROLE: 'Role',
