@@ -38,6 +38,13 @@ export const fetchColumns = createAsyncThunk('export/fetchColumns', async ({ tab
       }
     });
 
+    const ALL = {
+      id: 'all',
+      name: 'All',
+      checked: false,
+    };
+    columns.unshift(ALL);
+
     return columns;
   } catch (error) {
     return thunkAPI.rejectWithValue(error.response.data);
@@ -68,8 +75,8 @@ export const downloadData = createAsyncThunk('export/downloadData', async (paylo
         toastifyUtils.notifySuccess(data.message);
         return;
       }
-      
-      if(url !== '') {
+
+      if (url !== '') {
         const link = document.createElement('a');
         link.href = url;
         document.body.appendChild(link);
@@ -124,9 +131,15 @@ const exportSlice = createSlice({
           state.extraColumns[columnIndex].checked = !state.extraColumns[columnIndex].checked;
         }
       } else {
-        const columnIndex = state.columns.findIndex((col) => col.id === id);
-        if (columnIndex !== -1) {
-          state.columns[columnIndex].checked = !state.columns[columnIndex].checked;
+        if (id === 'all') {
+          state.columns.forEach((col) => {
+            col.checked = true;
+          });
+        } else {
+          const columnIndex = state.columns.findIndex((col) => col.id === id);
+          if (columnIndex !== -1) {
+            state.columns[columnIndex].checked = !state.columns[columnIndex].checked;
+          }
         }
       }
     },
@@ -155,7 +168,6 @@ const exportSlice = createSlice({
       .addCase(downloadData.rejected, (state, action) => {
         state.downloadLoading = false;
         state.error = action.payload;
-        toastifyUtils.notifyError('Download Failed: ' + action.payload.details);
       });
   },
 });
