@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axiosInstance from './../../utils/axiosInstance';
 import dayjs from 'dayjs';
-import { toast } from 'react-toastify';
 import { DATE_FORMAT } from '../../utils/globalConstants';
 import toastifyUtils from '../../utils/toastify';
 import apiUrls from '../../utils/apiUrls';
@@ -156,7 +155,7 @@ const exportSlice = createSlice({
       .addCase(downloadData.rejected, (state, action) => {
         state.downloadLoading = false;
         state.error = action.payload;
-        toast.error('Download Failed: ' + action.payload.details);
+        toastifyUtils.notifyError('Download Failed: ' + action.payload.details);
       });
   },
 });

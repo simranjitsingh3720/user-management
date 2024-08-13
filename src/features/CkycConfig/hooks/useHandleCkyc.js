@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../../../utils/axiosInstance';
-import { toast } from 'react-toastify';
 import apiUrls from '../../../utils/apiUrls';
 import errorHandler from '../../../utils/errorHandler';
+import toastifyUtils from '../../../utils/toastify';
 
 
 function useHandleCkyc() {
@@ -24,7 +24,7 @@ function useHandleCkyc() {
         payload.forWhom = data.forWhom?.value;
       }
       const response = await axiosInstance.post(`${apiUrls.ckyc}`, payload);
-      toast.success(response?.data?.message || 'CKYC Created successfully');
+      toastifyUtils.notifySuccess(response?.data?.message || 'CKYC Created successfully');
       navigate('/ckyc-config');
     } catch (error) {
       errorHandler.handleError(error);
@@ -47,7 +47,7 @@ function useHandleCkyc() {
         payload.properties.forWhom = data.forWhom?.value;
       }
       const response = await axiosInstance.put(`${apiUrls.ckyc}`, payload);
-      toast.success(response?.data?.message || 'House Bank updated successfully');
+      toastifyUtils.notifySuccess(response?.data?.message || 'House Bank updated successfully');
       navigate('/ckyc-config');
     } catch (error) {
       errorHandler.handleError(error);

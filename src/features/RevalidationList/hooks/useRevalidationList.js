@@ -1,7 +1,6 @@
 import { useState, useCallback } from 'react';
 import axiosInstance from '../../../utils/axiosInstance';
 import { API_END_POINTS } from '../constants';
-import { toast } from 'react-toastify';
 import { COMMON_WORDS } from '../../../utils/constants';
 import { buildQueryString, formatDate } from '../../../utils/globalizationFunction';
 import errorHandler from '../../../utils/errorHandler';
@@ -59,7 +58,7 @@ const useRevalidationList = () => {
   const updateData = useCallback(async ({ payload, data, row, updateList }) => {
     try {
       await axiosInstance.put(API_END_POINTS.updateRevalidationList, payload);
-      toast.success('Data updated successfully');
+      toastifyUtils.notifySuccess('Data updated successfully');
 
       const transformedData = data.map((item) => {
         const newItem = payload.find((payloadItem) => item.id === payloadItem.id);

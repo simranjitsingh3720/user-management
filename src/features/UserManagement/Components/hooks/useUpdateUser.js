@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { toast } from 'react-toastify';
 import axiosInstance from '../../../../utils/axiosInstance';
 import apiUrls from '../../../../utils/apiUrls';
 import { COMMON, NAVIGATE } from '../utils/constants';
@@ -7,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import errorHandler from '../../../../utils/errorHandler';
 import { useDispatch } from 'react-redux';
 import { hideDialog } from '../../../../stores/slices/dialogSlice';
+import toastifyUtils from '../../../../utils/toastify';
 
 export default function useUpdateUser() {
   const [loading, setLoading] = useState(false);
@@ -23,7 +23,7 @@ export default function useUpdateUser() {
     };
     try {
       const response = await axiosInstance.put(`${apiUrls.getUser}`, payload);
-      toast.success(response?.data?.message || COMMON.USER_UPDATED_SUCCESS);
+      toastifyUtils.notifySuccess(response?.data?.message || COMMON.USER_UPDATED_SUCCESS);
       navigate(NAVIGATE.NAVIGATE_TO_USER_MANAGEMENT);
       dispatch(hideDialog());
       if (fetchData) {

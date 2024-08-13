@@ -1,13 +1,11 @@
 import { useState, useCallback } from 'react';
 import axiosInstance from '../../../utils/axiosInstance';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { removeExtraColumns, setTableName } from '../../../stores/slices/exportSlice';
-import { toast } from 'react-toastify';
 import errorHandler from '../../../utils/errorHandler';
 import { buildQueryString, formatDate } from '../../../utils/globalizationFunction';
 import apiUrls from '../../../utils/apiUrls';
 import { COMMON_WORDS } from '../../../utils/constants';
+import toastifyUtils from '../../../utils/toastify';
 
 /**
  * Custom hook to manage roles.
@@ -95,7 +93,7 @@ const useRole = (updateRoleInState) => {
     setLoading(true);
     try {
       const response = await axiosInstance.post(`${apiUrls.role}`, data);
-      toast.success(response?.data?.message || 'Role created successfully');
+      toastifyUtils.notifySuccess(response?.data?.message || 'Role created successfully');
       navigate('/roles');
     } catch (error) {
       errorHandler.handleError(error);
@@ -112,7 +110,7 @@ const useRole = (updateRoleInState) => {
     setLoading(true);
     try {
       const response = await axiosInstance.put(`${apiUrls.role}/${id}`, payload);
-      toast.success(response?.data?.message || 'Role updated successfully');
+      toastifyUtils.notifySuccess(response?.data?.message || 'Role updated successfully');
       if (data) {
         updateRoleInState(id, data);
       }

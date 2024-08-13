@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../../utils/axiosInstance";
-import { toast } from "react-toastify";
-
 import apiUrls from "../../../utils/apiUrls";
 import errorHandler from "../../../utils/errorHandler";
+import toastifyUtils from "../../../utils/toastify";
 
 function useCreatePaymentConfig() {
   const [loading, setLoading] = useState(false);
@@ -18,7 +17,7 @@ function useCreatePaymentConfig() {
         `/${apiUrls.paymentProduct}`,
         data
       );
-      toast.success(
+      toastifyUtils.notifySuccess(
         response?.data?.message ||
           "Product Wise Payment Configuration Created successfully"
       );
