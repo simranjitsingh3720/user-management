@@ -45,7 +45,7 @@ function ProductPaymentConfig() {
   };
 
   useEffect(() => {
-    dispatch(setTableName(''));
+    dispatch(setTableName(null));
     dispatch(setExtraColumns([]));
     dispatch(
       fetchLobData({
@@ -70,7 +70,7 @@ function ProductPaymentConfig() {
   };
 
   const renderOptionProductFunction = (props, option) => (
-    <li {...props} key={option?.id} style={{ textTransform: 'capitalize'}}>
+    <li {...props} key={option?.id} style={{ textTransform: 'capitalize' }}>
       {option?.product ? option?.product : ''}
     </li>
   );
@@ -80,7 +80,7 @@ function ProductPaymentConfig() {
   };
 
   const renderOptionLobFunction = (props, option) => (
-    <li {...props} key={option?.id} style={{ textTransform: 'capitalize'}}>
+    <li {...props} key={option?.id} style={{ textTransform: 'capitalize' }}>
       {option?.lob ? option?.lob : ''}
     </li>
   );
