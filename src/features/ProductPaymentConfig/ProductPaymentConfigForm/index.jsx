@@ -12,7 +12,7 @@ import { COMMON_WORDS, FORM_HEADER_TEXT } from '../../../utils/constants';
 import CustomAutoCompleteWithoutCheckbox from '../../../components/CustomAutoCompleteWithoutCheckbox';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchLobData } from '../../../stores/slices/lobSlice';
-import { fetchAllProductData } from '../../../stores/slices/productSlice';
+import { clearProducts, fetchAllProductData } from '../../../stores/slices/productSlice';
 
 function ProductPaymentConfigForm() {
   const { id } = useParams();
@@ -31,10 +31,12 @@ function ProductPaymentConfigForm() {
   const { data: paymentDataByID, fetchData: fetchPaymentDataByID } = useGetPaymentConfigByID();
 
   useEffect(() => {
+    dispatch(clearProducts());
     dispatch(fetchLobData({ isAll: true, status: true }));
+
     if (id) fetchPaymentDataByID(id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
+  }, []);
 
   const { data: paymentData } = useGetPayment();
 
@@ -63,7 +65,7 @@ function ProductPaymentConfigForm() {
 
   useEffect(() => {
     if (!id) setValue('product', null);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lobWatch]);
 
   const onSubmit = (data) => {
@@ -94,6 +96,7 @@ function ProductPaymentConfigForm() {
       setValue('lob', null);
       setValue('product', null);
       setValue('payment', []);
+      dispatch(clearProducts());
     }
   };
 

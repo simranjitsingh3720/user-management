@@ -19,6 +19,7 @@ import { clearProducts, fetchAllProductData } from '../../../stores/slices/produ
 import useGetProposalOTPList from '../hooks/useGetProposalOTPList';
 import { fetchLobByUserId } from '../../../stores/slices/lobUserSlice';
 import { getChannels } from '../../../stores/slices/getChannel';
+import { DATE_FORMAT } from '../../../utils/globalConstants';
 
 function ProposalForm() {
   const dispatch = useDispatch();
@@ -99,8 +100,8 @@ function ProposalForm() {
       }
       setValue('lob', lob?.[0]);
       setValue('product', product?.[0]);
-      setValue('startDate', dayjs(startDate, 'DD/MM/YYYY').format('DD/MM/YYYY'));
-      setValue('endDate', dayjs(endDate, 'DD/MM/YYYY').format('DD/MM/YYYY'));
+      setValue('startDate', dayjs(startDate).format(DATE_FORMAT));
+      setValue('endDate', dayjs(endDate).format(DATE_FORMAT));
       setValue('groupStatus', isChannel ? 'byChannel' : 'byProducerCode');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

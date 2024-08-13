@@ -20,7 +20,7 @@ const PartnerNeftForm = () => {
   const { lob, lobLoading } = useSelector((state) => state.lob);
   const { products, productsLoading } = useSelector((state) => state.product);
   const { user, userLoading } = useSelector((state) => state.user);
-  const { createPartnerNeft, getPartnerNeft, updatePartnerNeft } = useSubmit();
+  const { createPartnerNeft, getPartnerNeft, updatePartnerNeft, neftLoader } = useSubmit();
 
   const {
     handleSubmit,
@@ -186,8 +186,8 @@ const PartnerNeftForm = () => {
         </CardContent>
       </Card>
       <div className="flex items-center mt-4">
-        <CustomButton type="submit" variant="contained">
-          Submit
+        <CustomButton type="submit" variant="contained" loading={neftLoader}>
+          {params.id ? 'Update' : 'Submit'}
         </CustomButton>
       </div>
     </Box>

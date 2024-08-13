@@ -81,46 +81,79 @@ function CreateNewUserContainer({
   };
 
   return (
-    <div className={styles.formWrapper}>
-      <div className={styles.formContainer}>
-        <div className={styles.moduleWrapper}>
+    <div className={styles.formContainer}>
+      <div className={styles.moduleWrapper}>
+        <div className={styles.fieldContainerStyle}>
+          <span className={styles.labelText}>
+            Module <span className={styles.styledRequired}>*</span>
+          </span>
+          <Controller
+            name={`module-${index}`}
+            control={control}
+            rules={{ required: true }}
+            render={({ field }) => (
+              <Autocomplete
+                disablePortal
+                id={`module-${index}`}
+                options={(AllModuleData?.data || []).map((obj) => ({
+                  label: capitalizeFirstLetter(obj?.moduleName || ''),
+                  id: obj.id,
+                }))}
+                className={styles.customizeSelect}
+                size="small"
+                onChange={(event, newValue) => {
+                  if (array) {
+                    setArray([]);
+                  }
+
+                  setSelectedSubmodules((prev) => ({
+                    ...prev,
+                    [uniqueIdentifier]: newValue ? [newValue] : [],
+                  }));
+                  setPermissionType((prev) => ({
+                    ...prev,
+                    [uniqueIdentifier]: [],
+                  }));
+                  setValue(`permissionType-${index}`, []);
+
+                  SubModuleFetchData(newValue?.id);
+                  field.onChange(newValue);
+                }}
+                renderInput={(params) => <TextField {...params} placeholder="Select" />}
+                ListboxProps={{
+                  style: {
+                    maxHeight: '200px',
+                  },
+                }}
+              />
+            )}
+          />
+
+          <div className={styles.styledError}>{errors[`module-${index}`] && <span>Module is required</span>} </div>
+        </div>
+
+        {array.map((item, index) => (
           <div className={styles.fieldContainerStyle}>
-            <span className={styles.labelText}>
-              Module <span className={styles.styledRequired}>*</span>
-            </span>
+            <span className={styles.labelText}>Sub Module</span>
             <Controller
-              name={`module-${index}`}
+              name={`subModule-${index}`}
               control={control}
-              rules={{ required: true }}
               render={({ field }) => (
                 <Autocomplete
                   disablePortal
-                  id={`module-${index}`}
-                  options={(AllModuleData?.data || []).map((obj) => ({
+                  disableClearable={true}
+                  id={`subModule-${index}`}
+                  options={(item?.SubModuleData || []).map((obj) => ({
                     label: capitalizeFirstLetter(obj?.moduleName || ''),
                     id: obj.id,
                   }))}
                   className={styles.customizeSelect}
                   size="small"
+                  renderInput={(params) => <TextField {...params} placeholder="Select" />}
                   onChange={(event, newValue) => {
-                    if (array) {
-                      setArray([]);
-                    }
-
-                    setSelectedSubmodules((prev) => ({
-                      ...prev,
-                      [uniqueIdentifier]: newValue ? [newValue] : [],
-                    }));
-                    setPermissionType((prev) => ({
-                      ...prev,
-                      [uniqueIdentifier]: [],
-                    }));
-                    setValue(`permissionType-${index}`, []);
-
-                    SubModuleFetchData(newValue?.id);
+                    handleSubmoduleChange(newValue, index);
                     field.onChange(newValue);
                   }}
-                  renderInput={(params) => <TextField {...params} placeholder="Select" />}
                   ListboxProps={{
                     style: {
                       maxHeight: '200px',
@@ -129,101 +162,62 @@ function CreateNewUserContainer({
                 />
               )}
             />
-
-            <div className={styles.styledError}>{errors[`module-${index}`] && <span>Module is required</span>} </div>
           </div>
+        ))}
 
-          {array.map((item, index) => (
-            <div className={styles.fieldContainerStyle}>
-              <span className={styles.labelText}>Sub Module</span>
-              <Controller
-                name={`subModule-${index}`}
-                control={control}
-                render={({ field }) => (
-                  <Autocomplete
-                    disablePortal
-                    id={`subModule-${index}`}
-                    options={(item?.SubModuleData || []).map((obj) => ({
-                      label: capitalizeFirstLetter(obj?.moduleName || ''),
-                      id: obj.id,
-                    }))}
-                    className={styles.customizeSelect}
-                    size="small"
-                    renderInput={(params) => <TextField {...params} placeholder="Select" />}
-                    onChange={(event, newValue) => {
-                      handleSubmoduleChange(newValue, index);
-                      field.onChange(newValue);
-                    }}
-                    ListboxProps={{
-                      style: {
-                        maxHeight: '200px',
-                      },
-                    }}
-                  />
+        <div className={styles.fieldContainerStyle}>
+          <span className={styles.labelText}>
+            Permission Types <span className={styles.styledRequired}>*</span>
+          </span>
+          <Controller
+            name={`permissionType-${index}`}
+            control={control}
+            rules={{ required: true }}
+            render={({ field }) => (
+              <Autocomplete
+                {...field}
+                multiple
+                loading={SubModuleLoading}
+                limitTags={2}
+                id={`permissionType-${index}`}
+                options={CrudSelect}
+                disableCloseOnSelect
+                getOptionLabel={(option) => option.label}
+                value={permissionType[uniqueIdentifier] || []}
+                onChange={(event, newValue) => {
+                  setPermissionType((prev) => ({
+                    ...prev,
+                    [uniqueIdentifier]: newValue,
+                  }));
+                  field.onChange(newValue);
+                }}
+                renderOption={(props, option, { selected }) => (
+                  <li {...props}>
+                    <Checkbox icon={icon} checkedIcon={checkedIcon} style={{ marginRight: 8 }} checked={selected} />
+                    {option.label}
+                  </li>
                 )}
+                size="small"
+                className={styles.customizeCrudSelect}
+                renderInput={(params) => <TextField {...params} placeholder="Select" />}
               />
-            </div>
-          ))}
+            )}
+          />
 
-          {SubModuleLoading && (
-            <div className={styles.skeletonStyle}>
-              <Skeleton variant="rounded" width={150} height={40} />
-            </div>
-          )}
-
-          <div className={styles.fieldContainerStyle}>
-            <span className={styles.labelText}>
-              Permission Types <span className={styles.styledRequired}>*</span>
-            </span>
-            <Controller
-              name={`permissionType-${index}`}
-              control={control}
-              rules={{ required: true }}
-              render={({ field }) => (
-                <Autocomplete
-                  {...field}
-                  multiple
-                  limitTags={2}
-                  id={`permissionType-${index}`}
-                  options={CrudSelect}
-                  disableCloseOnSelect
-                  getOptionLabel={(option) => option.label}
-                  value={permissionType[uniqueIdentifier] || []}
-                  onChange={(event, newValue) => {
-                    setPermissionType((prev) => ({
-                      ...prev,
-                      [uniqueIdentifier]: newValue,
-                    }));
-                    field.onChange(newValue);
-                  }}
-                  renderOption={(props, option, { selected }) => (
-                    <li {...props}>
-                      <Checkbox icon={icon} checkedIcon={checkedIcon} style={{ marginRight: 8 }} checked={selected} />
-                      {option.label}
-                    </li>
-                  )}
-                  size="small"
-                  className={styles.customizeCrudSelect}
-                  renderInput={(params) => <TextField {...params} placeholder="Select" />}
-                />
-              )}
-            />
-
-            <div className={styles.styledError}>
-              {errors[`permissionType-${index}`] && <span>Permission Types is required</span>}{' '}
-            </div>
+          <div className={styles.styledError}>
+            {errors[`permissionType-${index}`] && <span>Permission Types is required</span>}{' '}
           </div>
         </div>
+      </div>
 
-        <div className={styles.buttonWrapper}>
-          {(index > 0 || itemLength > 1) && (
-            <Tooltip title="Remove permission">
-              <CustomButton type="button" variant="text" startIcon={<DeleteIcon />} onClick={() => remove()}>
-                Remove
-              </CustomButton>
-            </Tooltip>
-          )}
-        </div>
+      <div className={styles.buttonWrapper}>
+        {(index > 0 || itemLength > 1) && (
+          <Tooltip title="Remove permission">
+            <CustomButton type="button" variant="text" startIcon={<DeleteIcon />} onClick={() => remove()}>
+              Remove
+            </CustomButton>
+          </Tooltip>
+        )}
       </div>
     </div>
   );
