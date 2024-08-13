@@ -13,8 +13,8 @@ import Actions from './Dialog/Action';
 import { removeExtraColumns, setTableName } from '../../stores/slices/exportSlice';
 import { searchOption } from './utils/constants';
 import { fetchUser } from '../../stores/slices/userSlice';
-import { getChannels } from '../../Redux/getChannel';
 import { getPlaceHolder } from '../../utils/globalizationFunction';
+import { getChannels} from '../../stores/slices/getChannel'
 
 function OTPException() {
   const dispatch = useDispatch();

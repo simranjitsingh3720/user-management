@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { removeExtraColumns, setTableName } from '../../stores/slices/exportSlice';
 import { getPlaceHolder } from '../../utils/globalizationFunction';
 import { fetchUser } from '../../stores/slices/userSlice';
-import { getChannels } from '../../Redux/getChannel';
+import { getChannels } from '../../stores/slices/getChannel';
 
 function ProposalOTPException() {
   const [page, setPage] = useState(0);

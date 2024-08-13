@@ -5,38 +5,38 @@ import { useParams } from 'react-router-dom';
 import usePostUser from '../hooks/usePostUser';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { getLobs } from '../../../../Redux/getLob';
-import { clearProducts, getProducts } from '../../../../Redux/getProduct';
-import { getLocations } from '../../../../Redux/getLocation';
-import { getRoles } from '../../../../Redux/getRole';
 import InputField from '../../../../components/CustomTextfield';
 import DateField from '../../../../components/CustomDateInput';
 import SelectField from '../../../../components/CustomSelect';
 import AutocompleteMultipleField from '../../../../components/CustomAutocomplete';
 import AutocompleteFieldAll from '../../../../components/CustomAutocompleteAll';
-import { getPaymentTypes } from '../../../../Redux/getPaymentType';
-import { getProducerCodes } from '../../../../Redux/getProducerCode';
 import CustomButton from '../../../../components/CustomButton';
-import { getParentCode } from '../../../../Redux/getParentCode';
-import { getChannels } from '../../../../Redux/getChannel';
-import { getHouseBanks } from '../../../../Redux/getHouseBank';
 import useGetUserType from '../hooks/useGetUserType';
 import useGetRoleHierarchy from '../hooks/useRoleHierarchy';
 import Loader from './../../../../components/Loader';
 import apiUrls from '../../../../utils/apiUrls';
 import useSubmit from '../hooks/useSubmit';
-import { getLoginType } from '../../../../Redux/getLoginType';
 import CustomFormHeader from '../../../../components/CustomFormHeader';
 import { COMMON_WORDS, FORM_HEADER_TEXT } from '../../../../utils/constants';
 import dayjs from 'dayjs';
-import { getProducerTypes } from '../../../../Redux/getProducerType';
-import { clearMasterPolicy, getMasterPolicies } from '../../../../Redux/getMasterPolicy';
 import { ARR_CONTAINS, COMMON, FORM_LABEL, FORM_VALUE, REQUIRED_ERR, excludedLabels } from '../utils/constants';
 import useUpdateUser from '../hooks/useUpdateUser';
 import errorHandler from '../../../../utils/errorHandler';
-import { clearZones, getZones } from '../../../../Redux/getZone';
-import { clearPlans, getPlans } from '../../../../Redux/getPlan';
 import { formatDate } from '../../../../utils/globalizationFunction';
+import { clearProducts, getProducts } from '../../../../stores/slices/getProduct';
+import { clearMasterPolicy, getMasterPolicies } from '../../../../stores/slices/getMasterPolicy';
+import { clearZones, getZones } from '../../../../stores/slices/getZone';
+import { clearPlans, getPlans } from '../../../../stores/slices/getPlan';
+import { getProducerCodes } from '../../../../stores/slices/getProducerCode';
+import { getParentCode } from '../../../../stores/slices/getParentCode';
+import { getProducerTypes } from '../../../../stores/slices/getProducerType';
+import { getChannels } from '../../../../stores/slices/getChannel';
+import { getHouseBanks } from '../../../../stores/slices/getHouseBank';
+import { getPaymentTypes } from '../../../../stores/slices/getPaymentType';
+import { getLoginType } from '../../../../stores/slices/getLoginType';
+import { getLobs } from '../../../../stores/slices/getLob';
+import { getLocations } from '../../../../stores/slices/getLocation';
+import { getRoles } from '../../../../stores/slices/getRole';
 
 function CreateUserCreationForm() {
   const dispatch = useDispatch();
@@ -136,7 +136,7 @@ function CreateUserCreationForm() {
       productRef.current = false;
       planRef.current = false;
       zoneRef.current = false;
-      masterPolicyRef.current= false;
+      masterPolicyRef.current = false;
       setIsEdit(true);
       fetchUserById();
     }
@@ -786,7 +786,6 @@ function CreateUserCreationForm() {
         setValue(FORM_LABEL.GC_STATUS, value ? FORM_VALUE.YES : FORM_VALUE.NO);
         break;
 
-
       case FORM_LABEL.ROLE_NAME:
         setValue(
           FORM_VALUE.ROLE_SELECT,
@@ -853,7 +852,7 @@ function CreateUserCreationForm() {
   const useFormLabelEffect = (label, dependency, ref = null) => {
     useEffect(() => {
       if ((!ref || !ref.current) && dependency?.length > 0 && editData && Object.keys(editData).length > 0) {
-        if(editData[label]){
+        if (editData[label]) {
           processKey(label, editData[label]);
           if (ref) ref.current = true;
         }

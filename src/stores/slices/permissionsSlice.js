@@ -6,8 +6,12 @@ import { buildQueryString } from '../../utils/globalizationFunction';
 // Async thunk to fetch permissions with parameters
 export const fetchPermissions = createAsyncThunk(
   'permissions/fetchPermissions',
-  async ({ isAll = true, status = true }, { rejectWithValue }) => {
+  async ({ isAll = true, status = true }, { getState, rejectWithValue }) => {
     try {
+      const { permissionsSlice } = getState();
+      if (permissionsSlice?.data?.length > 0) {
+        return permissionsSlice.data;
+      }
       const params = {
         isAll,
         status,
