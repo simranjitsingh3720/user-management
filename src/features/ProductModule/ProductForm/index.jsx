@@ -14,12 +14,16 @@ import CustomFormHeader from '../../../components/CustomFormHeader';
 
 function ProductForm() {
   const dispatch = useDispatch();
-  const { handleSubmit, control, formState } = useForm({
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+    reset,
+  } = useForm({
     defaultValues: {
       lob: null,
     },
   });
-  const { errors } = formState;
 
   const { postData, loading } = useCreateProduct();
   const { lob, lobLoading } = useSelector((state) => state.lob);
@@ -70,13 +74,21 @@ function ProductForm() {
     },
   ];
 
+  const handleReset = () => {
+    reset();
+  };
+
   return (
     <Box component="form" onSubmit={handleSubmit(onSubmit)}>
       <Card>
         <CardContent>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <CustomFormHeader headerText={FORM_HEADER_TEXT.PRODUCT} navigateRoute="/product" />
+              <CustomFormHeader
+                headerText={FORM_HEADER_TEXT.PRODUCT}
+                navigateRoute="/product"
+                handleReset={handleReset()}
+              />
             </Grid>
 
             {FormFields.map((item) => (
@@ -133,7 +145,7 @@ function ProductForm() {
       </Card>
 
       <div className="mt-4">
-        <CustomButton type="submit" variant="contained" disabled={loading}>
+        <CustomButton type="submit" variant="contained" disabled={loading} loading={loading}>
           Submit
         </CustomButton>
       </div>

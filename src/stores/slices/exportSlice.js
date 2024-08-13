@@ -1,11 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axiosInstance from './../../utils/axiosInstance';
 import dayjs from 'dayjs';
-import { toast } from 'react-toastify';
 import { DATE_FORMAT } from '../../utils/globalConstants';
 import toastifyUtils from '../../utils/toastify';
 import apiUrls from '../../utils/apiUrls';
 import { splitCamelCase } from '../../utils/globalizationFunction';
+import { EXPORT_CONSTANTS, TABLE_LABEL } from '../../utils/constants';
 
 const initialState = {
   selectedValue: '',
@@ -22,11 +22,28 @@ const initialState = {
 export const fetchColumns = createAsyncThunk('export/fetchColumns', async ({ tableName, headerValues }, thunkAPI) => {
   try {
     const response = await axiosInstance.get(`${apiUrls.getColumns}${tableName}`);
-    const columns = response.data.data.map((col) => ({
-      id: col,
-      name: splitCamelCase(col),
-      checked: headerValues?.has(col) || false,
-    }));
+    const columns = response.data.data.map((col) => {
+      
+      if (TABLE_LABEL.USER_MANAGEMENT === tableName && (col === EXPORT_CONSTANTS.FIRST_NAME || col === EXPORT_CONSTANTS.LAST_NAME)) {
+        return {
+          id: col,
+          name: splitCamelCase(col),
+          checked: true,
+        };
+      }
+      return {
+        id: col,
+        name: splitCamelCase(col),
+        checked: headerValues?.has(col) || false,
+      }
+    });
+
+    const ALL = {
+      id: 'all',
+      name: 'All',
+      checked: false,
+    };
+    columns.unshift(ALL);
 
     return columns;
   } catch (error) {
@@ -58,8 +75,8 @@ export const downloadData = createAsyncThunk('export/downloadData', async (paylo
         toastifyUtils.notifySuccess(data.message);
         return;
       }
-      
-      if(url !== '') {
+
+      if (url !== '') {
         const link = document.createElement('a');
         link.href = url;
         document.body.appendChild(link);
@@ -114,9 +131,15 @@ const exportSlice = createSlice({
           state.extraColumns[columnIndex].checked = !state.extraColumns[columnIndex].checked;
         }
       } else {
-        const columnIndex = state.columns.findIndex((col) => col.id === id);
-        if (columnIndex !== -1) {
-          state.columns[columnIndex].checked = !state.columns[columnIndex].checked;
+        if (id === 'all') {
+          state.columns.forEach((col) => {
+            col.checked = true;
+          });
+        } else {
+          const columnIndex = state.columns.findIndex((col) => col.id === id);
+          if (columnIndex !== -1) {
+            state.columns[columnIndex].checked = !state.columns[columnIndex].checked;
+          }
         }
       }
     },
@@ -145,7 +168,6 @@ const exportSlice = createSlice({
       .addCase(downloadData.rejected, (state, action) => {
         state.downloadLoading = false;
         state.error = action.payload;
-        toast.error('Download Failed: ' + action.payload.details);
       });
   },
 });

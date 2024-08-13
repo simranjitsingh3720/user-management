@@ -99,7 +99,7 @@ export const FORM_HEADER_TEXT = {
   PERMISSION: 'Permission',
   PRODUCER_EOD: 'Producer EOD Bypass',
   PRODUCT: 'Product',
-  PAYMENT_CONFIG: 'Payment Configuration',
+  PAYMENT_CONFIG: 'Product Wise Payment Configuration',
   BITLY_CONFIG: 'Bitly Link Config',
   PROPOSAL_OTP: 'Proposal OTP Exception',
   ROLE: 'Role',
@@ -123,4 +123,9 @@ export const TABLE_LABEL = {
   UW_LEVEL_LOCATION_MAPPING: 'productLocationLevelMappings',
   PARTNER_NEFT: 'partnerNeft',
   USER_MANAGEMENT: 'user'
+}
+
+export const EXPORT_CONSTANTS = {
+  FIRST_NAME: 'firstName',
+  LAST_NAME: 'lastName',
 }

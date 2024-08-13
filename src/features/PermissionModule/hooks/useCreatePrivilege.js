@@ -1,10 +1,9 @@
 import { useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-
 import apiUrls from "../../../utils/apiUrls";
 import errorHandler from "../../../utils/errorHandler";
+import toastifyUtils from "../../../utils/toastify";
 
 function useCreatePrivilege() {
   const [loading, setLoading] = useState(false);
@@ -18,7 +17,7 @@ function useCreatePrivilege() {
         `${apiUrls.getPermission}`,
         data
       );
-      toast.success(
+      toastifyUtils.notifySuccess(
         response?.data?.message || "Permission created successfully"
       );
       navigate("/permission");

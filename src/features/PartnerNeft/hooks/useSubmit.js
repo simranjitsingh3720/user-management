@@ -1,9 +1,9 @@
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import { API_END_POINTS } from "../utils/constant";
 import axiosInstance from "./../../../utils/axiosInstance";
 import errorHandler from "../../../utils/errorHandler";
+import toastifyUtils from "../../../utils/toastify";
 
 
 const useSubmit = () => {
@@ -26,7 +26,7 @@ const useSubmit = () => {
           API_END_POINTS.POST_API,
           body
         );
-        toast.success(
+        toastifyUtils.notifySuccess(
           responseData?.message || "Partner NEFT created successfully"
         );
         navigate("/partner-neft");
@@ -65,7 +65,7 @@ const useSubmit = () => {
           `${API_END_POINTS.POST_API}`,
           body
         );
-        toast.success(
+        toastifyUtils.notifySuccess(
           responseData?.message || "Partner NEFT updated successfully"
         );
         navigate("/partner-neft");

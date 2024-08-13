@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../../../utils/axiosInstance';
-import { toast } from 'react-toastify';
 import errorHandler from '../../../utils/errorHandler';
 import apiUrls from '../../../utils/apiUrls';
+import toastifyUtils from '../../../utils/toastify';
 
 function useCreateProposalOTP() {
   const [loading, setLoading] = useState(false);
@@ -14,7 +14,7 @@ function useCreateProposalOTP() {
     setLoading(true);
     try {
       const response = await axiosInstance.post(apiUrls.proposalOtpException, data);
-      toast.success(response?.data?.message || 'Proposal OTP Created successfully');
+      toastifyUtils.notifySuccess(response?.data?.message || 'Proposal OTP Created successfully');
       navigate('/proposalotpexception');
     } catch (error) {
       errorHandler.handleError(error);

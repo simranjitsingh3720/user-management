@@ -1,13 +1,12 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../../../utils/axiosInstance';
-
-import { toast } from 'react-toastify';
 import { DASHBOARD } from '../utils/constants';
 import apiUrls from '../../../utils/apiUrls';
 import errorHandler from '../../../utils/errorHandler';
 import { CLIENT_TYPE, TOKEN } from '../../../utils/globalConstants';
 import { COMMON_WORDS } from '../../../utils/constants';
+import toastifyUtils from '../../../utils/toastify';
 
 export default function usePostLogin(setOtpScreen) {
   const [loginLoading, setLoginLoading] = useState(false);
@@ -28,7 +27,7 @@ export default function usePostLogin(setOtpScreen) {
         navigate(DASHBOARD);
       }
       if (setOtpScreen) setOtpScreen(true);
-      toast.success(response?.data?.message || 'OTP sent successfully');
+      toastifyUtils.notifySuccess(response?.data?.message || 'OTP sent successfully');
     } catch (error) {
       errorHandler.handleError(error);
     } finally {
@@ -47,7 +46,7 @@ export default function usePostLogin(setOtpScreen) {
         localStorage.setItem(COMMON_WORDS.USER, JSON.stringify(data.user));
         navigate(DASHBOARD);
       }
-      toast.success(response?.data?.message || 'OTP Verify successfully');
+      toastifyUtils.notifySuccess(response?.data?.message || 'OTP Verify successfully');
     } catch (error) {
       errorHandler.handleError(error);
     } finally {
