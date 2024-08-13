@@ -65,6 +65,7 @@ export const COMMON_WORDS = {
   ADD: 'add',
   MASTER_POLICY: 'masterPolicy',
   HAS_MASTER_POLICY: 'hasMasterPolicy',
+  ACTIVE: 'active',
 };
 
 export const TABLE_COLUMNS = {

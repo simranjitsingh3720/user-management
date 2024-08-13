@@ -77,9 +77,9 @@ function Product() {
         return {
           id: id,
           product: product,
-          product_value: productValue,
-          lob_name: lobValue,
-          product_code: productCode,
+          productValue: productValue,
+          lobName: lobValue,
+          productCode: productCode,
           createdAt: formatDate(createdAt),
           updatedAt: formatDate(updatedAt),
           checked: status,

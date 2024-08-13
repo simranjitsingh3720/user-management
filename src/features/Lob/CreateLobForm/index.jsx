@@ -35,9 +35,9 @@ function CreateLobForm() {
       },
     },
     {
-      id: 'lob_value',
+      id: 'lobValue',
       label: 'LOB Value',
-      value: 'lob_value',
+      value: 'lobValue',
       required: true,
       validation: {
         required: 'LOB Value is required',
