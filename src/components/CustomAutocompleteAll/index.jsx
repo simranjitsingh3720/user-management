@@ -39,7 +39,7 @@ const AutocompleteFieldAll = ({
   }, [roleChanged, name, isEdit]);
 
   useEffect(() => {
-    if (isEdit && watchedValues) {
+    if (watchedValues) {
       setSelectedValues(Array.isArray(watchedValues) ? watchedValues : []);
     }
   }, [watchedValues, isEdit]);
@@ -116,6 +116,7 @@ const AutocompleteFieldAll = ({
             options={filteredOptions.length > 0 ? [{ label: 'All', value: All }, ...filteredOptions] : []}
             disableCloseOnSelect
             disablePortal={true}
+            disabled={disabled}
             getOptionLabel={(option) => option?.label}
             value={selectedValues}
             onChange={(event, newValue) => {

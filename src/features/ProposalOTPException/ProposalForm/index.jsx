@@ -13,12 +13,12 @@ import { PROPOSAL_CREATE_BY } from '../utils/constants';
 import { fetchUser } from '../../../stores/slices/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import CustomAutoCompleteWithoutCheckbox from '../../../components/CustomAutoCompleteWithoutCheckbox';
-import { getChannels } from '../../../Redux/getChannel';
 import DateField from '../../../components/CustomDateInput';
 import { fetchLobData } from '../../../stores/slices/lobSlice';
 import { clearProducts, fetchAllProductData } from '../../../stores/slices/productSlice';
 import useGetProposalOTPList from '../hooks/useGetProposalOTPList';
 import { fetchLobByUserId } from '../../../stores/slices/lobUserSlice';
+import { getChannels } from '../../../stores/slices/getChannel';
 
 function ProposalForm() {
   const dispatch = useDispatch();

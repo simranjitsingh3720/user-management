@@ -15,8 +15,8 @@ import ProductListContent from '../Dialog/ProductListContent';
 import ProductListAction from '../Dialog/ProductListAction';
 import { getPlaceHolder } from '../../../utils/globalizationFunction';
 import { fetchUser } from '../../../stores/slices/userSlice';
-import { getChannels } from '../../../Redux/getChannel';
 import { bitlySearch } from '../utils/constants';
+import { getChannels } from '../../../stores/slices/getChannel';
 
 function Channel() {
   const dispatch = useDispatch();

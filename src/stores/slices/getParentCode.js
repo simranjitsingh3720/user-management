@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axiosInstance from '../utils/axiosInstance';
-import apiUrls from '../utils/apiUrls';
-import { buildQueryString, getFullName } from '../utils/globalizationFunction';
-import errorHandler from '../utils/errorHandler';
-import { COMMON_WORDS } from '../utils/constants';
+import axiosInstance from '../../utils/axiosInstance';
+import apiUrls from '../../utils/apiUrls';
+import { buildQueryString, getFullName } from '../../utils/globalizationFunction';
+import errorHandler from '../../utils/errorHandler';
+import { COMMON_WORDS } from '../../utils/constants';
 
 export const getParentCode = createAsyncThunk(
   'parentCode/getParentCode',
