@@ -27,7 +27,7 @@ import apiUrls from '../../../../utils/apiUrls';
 import useSubmit from '../hooks/useSubmit';
 import { getLoginType } from '../../../../Redux/getLoginType';
 import CustomFormHeader from '../../../../components/CustomFormHeader';
-import { FORM_HEADER_TEXT } from '../../../../utils/constants';
+import { COMMON_WORDS, FORM_HEADER_TEXT } from '../../../../utils/constants';
 import dayjs from 'dayjs';
 import { getProducerTypes } from '../../../../Redux/getProducerType';
 import { clearMasterPolicy, getMasterPolicies } from '../../../../Redux/getMasterPolicy';
@@ -300,9 +300,22 @@ function CreateUserCreationForm() {
     }
   }, [lobsWatch?.length]);
 
+  useEffect(()=> {
+    if(lobs && lobs.length > 0 && ARR_CONTAINS.ADMIN_ARR.includes(rolesWatch?.roleName)){
+      setValue(COMMON_WORDS.LOB, lobs);
+    }
+  }, [lobs, rolesWatch?.roleName]);
+
+  useEffect(()=> {
+    if(products && products.length> 0 && ARR_CONTAINS.ADMIN_ARR.includes(rolesWatch?.roleName)){
+      setValue(COMMON_WORDS.PRODUCT, products);
+    }
+  }, [products, rolesWatch?.roleName]);
+
   useEffect(() => {
     dispatch(clearPlans());
     dispatch(clearZones());
+    dispatch(clearMasterPolicy());
     setValue(FORM_LABEL.PLAN, null);
     setValue(FORM_LABEL.ZONE, null);
     setValue(FORM_LABEL.MASTER_POLICY, null);
@@ -858,7 +871,7 @@ function CreateUserCreationForm() {
   useFormLabelEffect(FORM_LABEL.PRODUCER, producerCode);
   useFormLabelEffect(FORM_LABEL.PLAN, plans, planRef);
   useFormLabelEffect(FORM_LABEL.ZONE, zones, zoneRef);
-  useFormLabelEffect(FORM_LABEL.MASTER_POLICY, masterPolicy);
+  useFormLabelEffect(FORM_LABEL.MASTER_POLICY, masterPolicy, masterPolicyRef);
 
   return (
     <>
