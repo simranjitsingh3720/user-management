@@ -166,7 +166,7 @@ function ChannelForm() {
                           `${option?.firstName || ''} ${option?.lastName || ''} - ${option.producerCode || ''}`
                         }
                         control={control}
-                        rules={{ required: 'Producer is required' }}
+                        rules={{ required: 'Producer Code is required' }}
                         error={Boolean(errors.producerCode)}
                         helperText={errors.producerCode?.message}
                         disableClearable
