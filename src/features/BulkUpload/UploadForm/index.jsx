@@ -1,7 +1,6 @@
-import React, { useMemo, useRef, useState, useCallback, useEffect } from 'react';
+import React, { useRef, useState, useCallback, useEffect } from 'react';
 import { Box } from '@mui/material';
 import { useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
 import SearchComponent from '../../../components/SearchComponent';
 import { getPlaceHolder } from '../../../utils/globalizationFunction';
 import {
@@ -26,6 +25,7 @@ import { COMMON_WORDS } from '../../../utils/constants';
 import UploadTemplate from './UploadSection';
 import UserTypeToggle from '../../../components/CustomRadioButtonGroup';
 import { PAGECOUNT } from '../../../utils/globalConstants';
+import toastifyUtils from '../../../utils/toastify';
 
 function UploadForm() {
   const [searched, setSearched] = useState(SEARCH_OPTIONS[0].value);
@@ -72,7 +72,7 @@ function UploadForm() {
         const fileSize = file.size;
         const maxSize = 5 * 1024 * 1024; // 5 MB in bytes
         if (fileSize > maxSize) {
-          toast.error(COMMON_VAR.FILE_SIZE_LIMIT_ERR);
+          toastifyUtils.notifyError(COMMON_VAR.FILE_SIZE_LIMIT_ERR);
           event.target.value = null;
         } else {
           setFileUploaded(true);
@@ -80,7 +80,7 @@ function UploadForm() {
           setFile(file);
         }
       } else {
-        toast.error(COMMON_VAR.INVALID_FILE_ERR);
+        toastifyUtils.notifyError(COMMON_VAR.INVALID_FILE_ERR);
       }
     }
   };
@@ -151,7 +151,7 @@ function UploadForm() {
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      toast.success('Download Successfully');
+      toastifyUtils.notifySuccess('Download Successfully');
     }
   };
 

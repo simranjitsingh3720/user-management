@@ -14,12 +14,16 @@ import CustomFormHeader from '../../../components/CustomFormHeader';
 
 function ProductForm() {
   const dispatch = useDispatch();
-  const { handleSubmit, control, formState } = useForm({
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+    reset,
+  } = useForm({
     defaultValues: {
       lob: null,
     },
   });
-  const { errors } = formState;
 
   const { postData, loading } = useCreateProduct();
   const { lob, lobLoading } = useSelector((state) => state.lob);
@@ -29,12 +33,13 @@ function ProductForm() {
   }, [dispatch]);
 
   const onSubmit = (formData) => {
+    const { product, productCode, productValue, lob, status } = formData;
     const payload = {
-      product: formData.product,
-      product_code: formData.product_code,
-      product_value: formData.product_value,
-      lob_id: formData.lob.id,
-      status: formData.status === 'active' ? true : false,
+      product: product,
+      productCode: productCode,
+      productValue: productValue,
+      lobId: lob.id,
+      status: status === COMMON_WORDS.ACTIVE ? true : false,
     };
     postData(payload);
   };
@@ -50,18 +55,18 @@ function ProductForm() {
       },
     },
     {
-      id: 'product_code',
+      id: 'productCode',
       label: 'Product Code',
-      value: 'product_code',
+      value: 'productCode',
       required: true,
       validation: {
         required: 'Product Code is required',
       },
     },
     {
-      id: 'product_value',
+      id: 'productValue',
       label: 'Product Value',
-      value: 'product_value',
+      value: 'productValue',
       required: true,
       validation: {
         required: 'Product Value is required',
@@ -69,13 +74,21 @@ function ProductForm() {
     },
   ];
 
+  const handleReset = () => {
+    reset();
+  };
+
   return (
     <Box component="form" onSubmit={handleSubmit(onSubmit)}>
       <Card>
         <CardContent>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <CustomFormHeader headerText={FORM_HEADER_TEXT.PRODUCT} navigateRoute="/product" />
+              <CustomFormHeader
+                headerText={FORM_HEADER_TEXT.PRODUCT}
+                navigateRoute="/product"
+                handleReset={handleReset()}
+              />
             </Grid>
 
             {FormFields.map((item) => (
@@ -132,7 +145,7 @@ function ProductForm() {
       </Card>
 
       <div className="mt-4">
-        <CustomButton type="submit" variant="contained" disabled={loading}>
+        <CustomButton type="submit" variant="contained" disabled={loading} loading={loading}>
           Submit
         </CustomButton>
       </div>

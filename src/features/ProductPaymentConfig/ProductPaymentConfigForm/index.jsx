@@ -1,22 +1,26 @@
-import { Autocomplete, TextField } from '@mui/material';
+import { Box, Card, CardContent, Grid } from '@mui/material';
 import React, { useEffect } from 'react';
-import styles from './styles.module.scss';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
-import useGetLobListData from '../../ProductModule/hooks/useGetLobListData';
-import useGetProductList from '../hooks/useGetProductList';
 import useGetPayment from '../hooks/useGetPayment';
 import useCreatePaymentConfig from '../hooks/useCreatePaymentConfig';
 import useGetPaymentConfigByID from '../hooks/useGetPaymentConfigByID';
 import useUpdatePaymentConfig from '../hooks/useUpdatePaymentConfig';
 import CustomButton from '../../../components/CustomButton';
 import CustomFormHeader from '../../../components/CustomFormHeader';
-import { FORM_HEADER_TEXT } from '../../../utils/constants';
+import { COMMON_WORDS, FORM_HEADER_TEXT } from '../../../utils/constants';
+import CustomAutoCompleteWithoutCheckbox from '../../../components/CustomAutoCompleteWithoutCheckbox';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchLobData } from '../../../stores/slices/lobSlice';
+import { fetchAllProductData } from '../../../stores/slices/productSlice';
 
 function ProductPaymentConfigForm() {
   const { id } = useParams();
+  const dispatch = useDispatch();
+  const { lob, lobLoading } = useSelector((state) => state.lob);
+  const { products, productsLoading } = useSelector((state) => state.product);
 
-  const { handleSubmit, control, setValue, formState, getValues, watch } = useForm({
+  const { handleSubmit, control, setValue, formState, watch, trigger } = useForm({
     defaultValues: {
       lob: null,
       product: null,
@@ -27,12 +31,10 @@ function ProductPaymentConfigForm() {
   const { data: paymentDataByID, fetchData: fetchPaymentDataByID } = useGetPaymentConfigByID();
 
   useEffect(() => {
+    dispatch(fetchLobData({ isAll: true, status: true }));
     if (id) fetchPaymentDataByID(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
-
-  const { data: lobListData } = useGetLobListData();
-
-  const { data, fetchData } = useGetProductList();
 
   const { data: paymentData } = useGetPayment();
 
@@ -44,17 +46,24 @@ function ProductPaymentConfigForm() {
 
   useEffect(() => {
     if (paymentDataByID && paymentDataByID?.data) {
-      setValue('lob', paymentDataByID?.data.lob || null);
-      setValue('product', paymentDataByID?.data.product || null);
-      setValue('payment', paymentDataByID?.data.paymentTypes || []);
-      fetchData(paymentDataByID?.data.lob?.id);
+      const { lob, product, paymentTypeIds } = paymentDataByID?.data;
+
+      const paymentTypesData = JSON.parse(paymentTypeIds);
+      const filterData = paymentData?.data?.filter((item) => paymentTypesData?.includes(item.id));
+
+      setValue('lob', lob || null);
+      setValue('product', product || null);
+      setValue('payment', filterData || []);
+      dispatch(fetchAllProductData({ lobId: lob.id }));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [paymentDataByID]);
 
   const lobWatch = watch('lob');
 
   useEffect(() => {
     if (!id) setValue('product', null);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lobWatch]);
 
   const onSubmit = (data) => {
@@ -80,7 +89,6 @@ function ProductPaymentConfigForm() {
 
   const handleReset = () => {
     if (id) {
-      setValue('product', null);
       setValue('payment', []);
     } else {
       setValue('lob', null);
@@ -90,137 +98,103 @@ function ProductPaymentConfigForm() {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className={styles.createNewUserContainer}>
-          <div className="px-4 pt-4">
-            <CustomFormHeader
-              id={id}
-              headerText={FORM_HEADER_TEXT.PAYMENT_CONFIG}
-              navigateRoute="/product-payment-config"
-              handleReset={handleReset}
-            />
-          </div>
-          <div className={styles.containerStyle}>
-            <div className={styles.fieldContainerStyle}>
-              <span className={styles.labelText}>
-                LOB <span className={styles.styledRequired}>*</span>
-              </span>
-              <Controller
+    <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+      <Card>
+        <CardContent>
+          <CustomFormHeader
+            id={id}
+            headerText={FORM_HEADER_TEXT.PAYMENT_CONFIG}
+            navigateRoute="/product-payment-config"
+            handleReset={handleReset}
+          />
+          <Grid container spacing={3}>
+            <Grid item xs={12} md={6} lg={4}>
+              <CustomAutoCompleteWithoutCheckbox
                 name="lob"
+                label="LOB"
                 control={control}
                 rules={{ required: 'LOB is required' }}
-                render={({ field }) => (
-                  <Autocomplete
-                    id="lob"
-                    options={lobListData?.data || []}
-                    disabled={id}
-                    // value={getValues("lob")}
-                    value={field.value}
-                    getOptionLabel={(option) => {
-                      return option?.lob || '';
-                    }}
-                    className={styles.customizeSelect}
-                    size="small"
-                    renderInput={(params) => <TextField {...params} placeholder="Select by LOB Name..." />}
-                    onChange={(event, newValue) => {
-                      fetchData(newValue?.id);
-                      field.onChange(newValue);
-                    }}
-                    ListboxProps={{
-                      style: {
-                        maxHeight: '200px',
-                      },
-                    }}
-                  />
-                )}
+                options={lob.data || []}
+                loading={lobLoading}
+                isOptionEqualToValue={(option, value) => option.id === value.id}
+                getOptionLabel={(option) => option?.lob || ''}
+                required
+                error={Boolean(errors.lob)}
+                helperText={errors.lob?.message}
+                onChangeCallback={(newValue) => {
+                  dispatch(fetchAllProductData({ lobId: newValue?.id }));
+                }}
+                placeholder={COMMON_WORDS.SELECT}
+                trigger={trigger}
+                disabled={id ? true : false}
+                disableClearable={true}
               />
-              <div className={styles.styledError}>{errors.lob && <span>{errors.lob.message}</span>} </div>
-            </div>
-            <div className={styles.fieldContainerStyle}>
-              <span className={styles.labelText}>
-                Product <span className={styles.styledRequired}>*</span>
-              </span>
-              <Controller
+            </Grid>
+
+            <Grid item xs={12} md={6} lg={4}>
+              <CustomAutoCompleteWithoutCheckbox
                 name="product"
+                label="Product"
                 control={control}
+                isOptionEqualToValue={(option, value) => option.id === value.id}
                 rules={{ required: 'Product is required' }}
-                render={({ field }) => (
-                  <Autocomplete
-                    id="product"
-                    options={data?.data || []}
-                    value={field.value}
-                    getOptionLabel={(option) => option?.product || ''}
-                    className={styles.customizeSelect}
-                    size="small"
-                    renderInput={(params) => <TextField {...params} placeholder="Select" />}
-                    onChange={(event, newValue) => {
-                      field.onChange(newValue);
-                    }}
-                    ListboxProps={{
-                      style: {
-                        maxHeight: '200px',
-                      },
-                    }}
-                  />
-                )}
+                options={products?.data || []}
+                loading={productsLoading}
+                getOptionLabel={(option) => option?.product || ''}
+                required
+                error={Boolean(errors.product)}
+                helperText={errors.product?.message}
+                placeholder={COMMON_WORDS.SELECT}
+                trigger={trigger}
+                disableClearable={true}
+                disabled={id ? true : false}
               />
-              <div className={styles.styledError}>{errors.product && <span>{errors.product.message}</span>} </div>
-            </div>
-            <div className={styles.fieldContainerStyle}>
-              <span className={styles.labelText}>
-                Payment Type <span className={styles.styledRequired}>*</span>
-              </span>
-              <Controller
+            </Grid>
+
+            <Grid item xs={12} md={6} lg={4}>
+              <CustomAutoCompleteWithoutCheckbox
                 name="payment"
+                label="Payment Type"
                 control={control}
-                rules={{ required: 'Payment is required' }}
-                render={({ field }) => (
-                  <Autocomplete
-                    id="payment"
-                    value={getValues('payment')}
-                    options={[{ name: 'Select All' }, ...(paymentData?.data || [])]}
-                    getOptionLabel={(option) => {
-                      return option?.name;
-                    }}
-                    disableCloseOnSelect
-                    multiple
-                    className={styles.customizeSelect}
-                    size="small"
-                    renderInput={(params) => <TextField {...params} placeholder="Select" />}
-                    // onChange={(event, newValue) => {
-                    //   field.onChange(newValue);
-                    // }}
-                    onChange={(event, newValue) => {
-                      if (newValue.some((option) => option.name === 'Select All')) {
-                        const isSelectAllSelected = newValue.find((option) => option.name === 'Select All');
-                        if (isSelectAllSelected) {
-                          const allOptionsSelected = paymentData?.data || [];
-                          field.onChange(allOptionsSelected);
-                        } else {
-                          field.onChange([]);
-                        }
-                      } else {
-                        field.onChange(newValue);
-                      }
-                    }}
-                    ListboxProps={{
-                      style: {
-                        maxHeight: '200px',
-                      },
-                    }}
-                  />
-                )}
+                rules={{ required: 'Payment Type is required' }}
+                options={[{ id: 'selectAll', name: 'Select All' }, ...(paymentData?.data || [])]}
+                getOptionLabel={(option) => option?.name || ''}
+                required
+                error={Boolean(errors.payment)}
+                helperText={errors.payment?.message}
+                placeholder={COMMON_WORDS.SELECT}
+                trigger={trigger}
+                multiple
+                isOptionEqualToValue={(option, value) => option.id === value.id}
+                onChangeCallback={(newValue) => {
+                  if (newValue.some((option) => option.name === 'Select All')) {
+                    const isSelectAllSelected = newValue.find((option) => option.name === 'Select All');
+                    if (isSelectAllSelected) {
+                      const allOptionsSelected = paymentData?.data || [];
+                      setValue('payment', allOptionsSelected);
+                    } else {
+                      setValue('payment', []);
+                    }
+                  } else {
+                    setValue('payment', newValue);
+                  }
+                }}
               />
-              <div className={styles.styledError}>{errors.payment && <span>{errors.payment.message}</span>} </div>
-            </div>
-          </div>
-        </div>
-        <CustomButton type="submit" variant="contained" disabled={updateLoading || createPaymentLoading}>
+            </Grid>
+          </Grid>
+        </CardContent>
+      </Card>
+      <div className="mt-4">
+        <CustomButton
+          type="submit"
+          variant="contained"
+          disabled={updateLoading || createPaymentLoading}
+          loading={updateLoading || createPaymentLoading}
+        >
           {id ? 'Update' : 'Submit'}
         </CustomButton>
-      </form>
-    </div>
+      </div>
+    </Box>
   );
 }
 

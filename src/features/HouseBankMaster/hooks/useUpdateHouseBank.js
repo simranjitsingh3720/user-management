@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../../utils/axiosInstance";
-import { toast } from "react-toastify";
 import errorHandler from "../../../utils/errorHandler";
 import apiUrls from "../../../utils/apiUrls";
-
+import toastifyUtils from "../../../utils/toastify";
 
 function useUpdateHouseBank(setChangeStatusOpen, fetchGroupList) {
   const [loading, setLoading] = useState(false);
@@ -15,7 +14,7 @@ function useUpdateHouseBank(setChangeStatusOpen, fetchGroupList) {
     setLoading(true);
     try {
       const response = await axiosInstance.put(apiUrls.houseBank, data);
-      toast.success(
+      toastifyUtils.notifySuccess(
         response?.data?.message || "House Bank updated successfully"
       );
       if (setChangeStatusOpen) {

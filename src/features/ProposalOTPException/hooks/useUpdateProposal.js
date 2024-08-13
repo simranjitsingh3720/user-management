@@ -1,9 +1,9 @@
 import { useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
-import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import errorHandler from "../../../utils/errorHandler";
 import apiUrls from "../../../utils/apiUrls";
+import toastifyUtils from "../../../utils/toastify";
 
 
 function useUpdateProposal() {
@@ -19,7 +19,7 @@ function useUpdateProposal() {
         payload
       );
 
-      toast.success(response?.data?.message || "Proposal updated successfully");
+      toastifyUtils.notifySuccess(response?.data?.message || "Proposal updated successfully");
       if(updateStatus) {
         updateStatus(payload.id, data);
       } else {

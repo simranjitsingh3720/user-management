@@ -1,9 +1,9 @@
 import { useCallback, useState } from 'react';
-import { toast } from 'react-toastify';
 import errorHandler from '../../../../utils/errorHandler';
 import axiosInstance from '../../../../utils/axiosInstance';
 import apiUrls from '../../../../utils/apiUrls';
 import { buildQueryString } from '../../../../utils/globalizationFunction';
+import toastifyUtils from '../../../../utils/toastify';
 
 const useSubmit = () => {
   const [loading, setLoading] = useState(false);
@@ -11,7 +11,7 @@ const useSubmit = () => {
     try {
       setLoading(true);
       const { data: responseData } = await axiosInstance.post(apiUrls.postBulkUpload, data);
-      toast.success(responseData?.message || 'File Uploaded successfully');
+      toastifyUtils.notifySuccess(responseData?.message || 'File Uploaded successfully');
       return responseData;
     } catch (error) {
       errorHandler.handleError(error);
@@ -37,7 +37,7 @@ const useSubmit = () => {
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      toast.success('Download Successfully');
+      toastifyUtils.notifySuccess('Download Successfully');
     } catch (e) {
       errorHandler.handleError(e);
       return;

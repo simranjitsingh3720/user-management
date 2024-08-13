@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import axiosInstance from '../../../utils/axiosInstance';
-import { toast } from 'react-toastify';
 import errorHandler from '../../../utils/errorHandler';
 import { hideDialog } from '../../../stores/slices/dialogSlice';
 import apiUrls from '../../../utils/apiUrls';
 import { useDispatch } from 'react-redux';
+import toastifyUtils from '../../../utils/toastify';
 
 function useUpdateOTPException(fetchData) {
   const dispatch = useDispatch();
@@ -14,7 +14,7 @@ function useUpdateOTPException(fetchData) {
     setLoading(true);
     try {
       const response = await axiosInstance.put(`${apiUrls.getOTPException}`, data);
-      toast.success(response?.data?.message || 'Proposal updated successfully');
+      toastifyUtils.notifySuccess(response?.data?.message || 'Proposal updated successfully');
       fetchData();
       dispatch(hideDialog());
     } catch (error) {
