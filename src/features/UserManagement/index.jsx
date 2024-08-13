@@ -41,7 +41,7 @@ function UserManagement() {
           ...item?.user,
           label: item?.user?.label,
           checked: item?.user?.status,
-          disabled: !canUpdate,
+          disabled: !canUpdate || item?.user?.roleName === COMMON_WORDS.PRODUCER,
           roleId: item?.role[0]?.id,
           createdAt: formatDate(item?.user?.createdAt),
           updatedAt: formatDate(item?.user?.updatedAt),

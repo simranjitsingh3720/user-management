@@ -1,9 +1,9 @@
 import { createAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axiosInstance from './../utils/axiosInstance';
-import apiUrls from '../utils/apiUrls';
-import { buildQueryString, toCapitalize } from '../utils/globalizationFunction';
-import errorHandler from '../utils/errorHandler';
-import { COMMON_WORDS } from '../utils/constants';
+import axiosInstance from '../../utils/axiosInstance';
+import apiUrls from '../../utils/apiUrls';
+import { buildQueryString, toCapitalize } from '../../utils/globalizationFunction';
+import errorHandler from '../../utils/errorHandler';
+import { COMMON_WORDS } from '../../utils/constants';
 
 export const getProducts = createAsyncThunk('productUserCreation/getProducts', async (lob, { rejectWithValue }) => {
   try {

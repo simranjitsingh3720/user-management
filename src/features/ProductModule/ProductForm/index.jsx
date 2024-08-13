@@ -87,7 +87,7 @@ function ProductForm() {
               <CustomFormHeader
                 headerText={FORM_HEADER_TEXT.PRODUCT}
                 navigateRoute="/product"
-                handleReset={handleReset()}
+                handleReset={handleReset}
               />
             </Grid>
 

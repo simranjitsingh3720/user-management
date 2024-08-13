@@ -1,12 +1,17 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axiosInstance from '../../utils/axiosInstance';
 import apiUrls from '../../utils/apiUrls';
+import { buildQueryString } from '../../utils/globalizationFunction';
 
 // Async thunk to fetch all modules
-export const fetchAllModules = createAsyncThunk('modules/fetchAllModules', async (_, { rejectWithValue }) => {
+export const fetchAllModules = createAsyncThunk('modules/fetchAllModules', async (_, { getState, rejectWithValue }) => {
   try {
-    const response = await axiosInstance.get(`${apiUrls.module}/all?status=true`);
-    console.log('response', response);
+    const { modulesSlice } = getState();
+    if (modulesSlice?.data?.length > 0) {
+      return modulesSlice.data;
+    }
+    const params = buildQueryString({ status: true });
+    const response = await axiosInstance.get(`${apiUrls.module}/all?${params}`);
     return response.data;
   } catch (error) {
     return rejectWithValue(error.response?.data || 'Failed to fetch modules');

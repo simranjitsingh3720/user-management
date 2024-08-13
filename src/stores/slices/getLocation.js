@@ -1,8 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axiosInstance from '../utils/axiosInstance';
-import apiUrls from '../utils/apiUrls';
-import { buildQueryString, toCapitalize } from '../utils/globalizationFunction';
-import errorHandler from '../utils/errorHandler';
+import axiosInstance from '../../utils/axiosInstance';
+import apiUrls from '../../utils/apiUrls';
+import { buildQueryString, toCapitalize } from '../../utils/globalizationFunction';
+import errorHandler from '../../utils/errorHandler';
+import { COMMON_WORDS } from '../../utils/constants';
 
 export const getLocations = createAsyncThunk('location/getLocations', async (_, { getState, rejectWithValue }) => {
   try {
@@ -15,7 +16,7 @@ export const getLocations = createAsyncThunk('location/getLocations', async (_, 
     const response = await axiosInstance.get(url);
     const formattedArray = response?.data?.data?.map((obj) => ({
       ...obj,
-      label: toCapitalize(obj, 'txtOffice'),
+      label: toCapitalize(obj, COMMON_WORDS.LOCATION_NAME),
       value: obj?.id,
     }));
     return formattedArray;

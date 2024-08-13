@@ -65,6 +65,9 @@ export const COMMON_WORDS = {
   ADD: 'add',
   MASTER_POLICY: 'masterPolicy',
   HAS_MASTER_POLICY: 'hasMasterPolicy',
+  CHANNEL_NAME: 'txtChannelName',
+  LOCATION_NAME: 'txtOffice',
+  PRODUCER_TYPE_NAME: 'txtCategory',
   ACTIVE: 'active',
 };
 
