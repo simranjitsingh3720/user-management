@@ -209,7 +209,7 @@
         "validation": {
           "required": "This field is required"
         },
-        "canEdit": true
+        "canEdit": false
       },
       {
         "id": "endDate",
@@ -449,7 +449,7 @@
         "validation": {
           "required": "This field is required"
         },
-        "canEdit": true
+        "canEdit": false
       },
       {
         "id": "endDate",
@@ -689,7 +689,7 @@
         "validation": {
           "required": "This field is required"
         },
-        "canEdit": true
+        "canEdit": false
       },
       {
         "id": "endDate",
@@ -2113,7 +2113,7 @@
         "validation": {
           "required": "This field is required"
         },
-        "canEdit": true
+        "canEdit": false
       },
       {
         "id": "endDate",
@@ -2511,7 +2511,7 @@
         "validation": {
           "required": "This field is required"
         },
-        "canEdit": true
+        "canEdit": false
       },
       {
         "id": "endDate",
@@ -2718,7 +2718,7 @@
         "validation": {
           "required": "This field is required"
         },
-        "canEdit": true
+        "canEdit": false
       },
       {
         "id": "endDate",
@@ -2925,7 +2925,7 @@
         "validation": {
           "required": "This field is required"
         },
-        "canEdit": true
+        "canEdit": false
       },
       {
         "id": "endDate",
@@ -3132,7 +3132,7 @@
         "validation": {
           "required": "This field is required"
         },
-        "canEdit": true
+        "canEdit": false
       },
       {
         "id": "endDate",
@@ -3339,7 +3339,7 @@
         "validation": {
           "required": "This field is required"
         },
-        "canEdit": true
+        "canEdit": false
       },
       {
         "id": "endDate",
@@ -3595,7 +3595,7 @@
         "validation": {
           "required": "This field is required"
         },
-        "canEdit": true
+        "canEdit": false
       },
       {
         "id": "endDate",
@@ -3867,7 +3867,7 @@
         "validation": {
           "required": "This field is required"
         },
-        "canEdit": true
+        "canEdit": false
       },
       {
         "id": "endDate",
@@ -4185,7 +4185,7 @@
         "validation": {
           "required": "This field is required"
         },
-        "canEdit": true
+        "canEdit": false
       },
       {
         "id": "endDate",
@@ -4489,7 +4489,7 @@
         "validation": {
           "required": "This field is required"
         },
-        "canEdit": true
+        "canEdit": false
       },
       {
         "id": "endDate",

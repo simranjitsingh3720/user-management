@@ -1,4 +1,6 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 import lobSlice from '../Redux/getLob';
 import productSlice from '../Redux/getProduct';
 import locationSlice from '../Redux/getLocation';
@@ -23,35 +25,47 @@ import lobUserSlice from './slices/lobUserSlice';
 import permissionsSlice from './slices/permissionsSlice';
 import modulesSlice from './slices/modulesSlice';
 
+const persistConfig = {
+  key: 'root',
+  storage,
+};
+
+const rootReducer = combineReducers({
+  dialog: dialogReducer,
+  export: exportReducer,
+  group: groupSlice,
+  lobUserCreation: lobSlice,
+  productUserCreation: productSlice,
+  user: userReducer,
+  lob: lobReducer,
+  product: productReducer,
+  location: locationSlice,
+  role: roleSlice,
+  paymentType: paymentTypeSlice,
+  producerCode: producerCodeSlice,
+  parentCode: parentCodeSlice,
+  channelType: channelSlice,
+  houseBank: houseBankSlice,
+  loginType: loginTypeSlice,
+  producerType: producerTypeSlice,
+  masterPolicy: masterPolicySlice,
+  zone: zoneSlice,
+  plan: planSlice,
+  lobUser: lobUserSlice,
+  permissions: permissionsSlice,
+  modules: modulesSlice,
+});
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
 const appStore = configureStore({
-  reducer: {
-    dialog: dialogReducer,
-    export: exportReducer,
-    group: groupSlice,
-    lobUserCreation: lobSlice,
-    productUserCreation: productSlice,
-    user: userReducer,
-    lob: lobReducer,
-    product: productReducer,
-    location: locationSlice,
-    role: roleSlice,
-    paymentType: paymentTypeSlice,
-    producerCode: producerCodeSlice,
-    parentCode: parentCodeSlice,
-    channelType: channelSlice,
-    houseBank: houseBankSlice,
-    loginType: loginTypeSlice,
-    producerType: producerTypeSlice,
-    masterPolicy: masterPolicySlice,
-    zone: zoneSlice,
-    plan: planSlice,
-    lobUser: lobUserSlice,
-    permissions: permissionsSlice,
-    modules: modulesSlice,
-  },
+  reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
     }),
 });
-export default appStore;
+
+const persistor = persistStore(appStore);
+
+export { appStore, persistor };

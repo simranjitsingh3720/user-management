@@ -66,7 +66,7 @@ function OTPException() {
     dispatch(setTableName);
     dispatch(removeExtraColumns());
     getList();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getList]);
 
   useEffect(() => {

@@ -81,8 +81,8 @@ function ProducerEODFrom() {
       const { producer, reason, startDate, endDate } = data?.data;
       setValue('producerCode', producer || {});
       setValue('reason', reason);
-      setValue('startDate', dayjs(startDate, DATE_FORMAT).format(DATE_FORMAT));
-      setValue('endDate', dayjs(endDate, DATE_FORMAT).format(DATE_FORMAT));
+      setValue('startDate', dayjs(startDate).format(DATE_FORMAT));
+      setValue('endDate', dayjs(endDate).format(DATE_FORMAT));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
