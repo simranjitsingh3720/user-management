@@ -89,7 +89,7 @@ function CreateLobForm() {
       </Card>
 
       <div className="flex items-center mt-4">
-        <CustomButton type="submit" variant="contained" disabled={createLoading}>
+        <CustomButton type="submit" variant="contained" disabled={createLoading} loading={createLoading}>
           Submit
         </CustomButton>
       </div>
