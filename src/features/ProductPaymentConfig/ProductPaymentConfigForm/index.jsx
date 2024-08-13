@@ -96,6 +96,7 @@ function ProductPaymentConfigForm() {
       setValue('lob', null);
       setValue('product', null);
       setValue('payment', []);
+      dispatch(clearProducts());
     }
   };
 
