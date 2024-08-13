@@ -298,7 +298,7 @@ function CreateUserCreationForm() {
     if (lobsWatch && lobsWatch.length > 0) {
       dispatch(getProducts(lobsWatch));
     }
-  }, [lobsWatch?.length]);
+  }, [lobsWatch]);
 
   useEffect(()=> {
     if(lobs && lobs.length > 0 && ARR_CONTAINS.ADMIN_ARR.includes(rolesWatch?.roleName)){
@@ -326,7 +326,7 @@ function CreateUserCreationForm() {
         dispatch(getMasterPolicies(productWatch));
       }
     }
-  }, [productWatch?.length]);
+  }, [productWatch]);
 
   useEffect(() => {
     setValue(FORM_LABEL.ZONE, null);
@@ -334,7 +334,7 @@ function CreateUserCreationForm() {
     if (productWatch && productWatch.length > 0 && planWatch && planWatch.length > 0) {
       dispatch(getZones(planWatch));
     }
-  }, [planWatch?.length]);
+  }, [planWatch]);
 
   useEffect(() => {
     if (rolesWatch && rolesWatch?.roleName) {
@@ -861,16 +861,16 @@ function CreateUserCreationForm() {
   };
 
   useFormLabelEffect(FORM_LABEL.LOB, lobs);
-  useFormLabelEffect(FORM_LABEL.PRODUCT, products, productRef);
+  useFormLabelEffect(FORM_LABEL.PRODUCT, products);
   useFormLabelEffect(FORM_LABEL.LOGIN_TYPE, loginType);
   useFormLabelEffect(FORM_LABEL.HOUSE_BANK, neftDefaultBank);
   useFormLabelEffect(FORM_LABEL.LOCATION, locations);
   useFormLabelEffect(FORM_LABEL.CHANNEL_ID, channelType);
   useFormLabelEffect(FORM_LABEL.PAYMENT_TYPE, paymentType);
   useFormLabelEffect(FORM_LABEL.PRODUCER, producerCode);
-  useFormLabelEffect(FORM_LABEL.PLAN, plans, planRef);
-  useFormLabelEffect(FORM_LABEL.ZONE, zones, zoneRef);
-  useFormLabelEffect(FORM_LABEL.MASTER_POLICY, masterPolicy, masterPolicyRef);
+  useFormLabelEffect(FORM_LABEL.PLAN, plans);
+  useFormLabelEffect(FORM_LABEL.ZONE, zones);
+  useFormLabelEffect(FORM_LABEL.MASTER_POLICY, masterPolicy);
 
   return (
     <>
