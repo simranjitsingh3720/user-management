@@ -13,13 +13,12 @@ const DateField = ({
   name,
   label,
   required,
-  rules = {},
   errors = {},
   classes,
   labelVisible,
-  isEdit = false,
   trigger,
   disabled,
+  isEdit = false,
 }) => {
   const validateDate = (value) => {
     if (!value) {
@@ -63,13 +62,21 @@ const DateField = ({
   const dateVal = watch(name);
 
   useEffect(() => {
-    if(dateVal){
+    if (dateVal) {
       trigger(name);
     }
   }, [name, dateVal, trigger]);
 
+  const getDate = () => {
+    if (disabled) {
+      return dayjs();
+    }
+
+    return undefined;
+  };
+
   return (
-    <div className={`${labelVisible ? 'm-0 flex flex-col' : "flex flex-col"}`}>
+    <div className={`${labelVisible ? 'm-0 flex flex-col' : 'flex flex-col'}`}>
       <div>
         {labelVisible && (
           <div className="text-shuttleGray text-sm">
@@ -94,35 +101,36 @@ const DateField = ({
                     size: 'small',
                     variant: labelVisible ? 'outlined' : 'standard',
                     InputProps: {
-                      // disableunderline: !labelVisible,
-                      style: !labelVisible ? {
-                        display: 'flex',
-                        flexDirection: 'row-reverse',
-                        gap: 10,
-                        fontSize: 13,
-                        marginLeft: '-22px',
-                        color: '#607083',
-                      } : {},
+                      style: !labelVisible
+                        ? {
+                            display: 'flex',
+                            flexDirection: 'row-reverse',
+                            gap: 10,
+                            fontSize: 13,
+                            marginLeft: '-22px',
+                            color: '#607083',
+                          }
+                        : {},
                     },
                   },
                 }}
-                minDate={!disabled ? dayjs() : undefined}
+                minDate={isEdit ? undefined : !disabled ? dayjs() : undefined}
                 onChange={(date) => {
                   const formattedDate = date ? dayjs(date).format(DATE_FORMAT) : '';
                   setValue(name, formattedDate);
                   field.onChange(formattedDate);
-                  if(typeof trigger === 'function'){
+                  if (typeof trigger === 'function') {
                     trigger(name);
                   }
                 }}
                 onBlur={(e) => {
                   field.onBlur(e);
-                  if(typeof trigger === 'function'){
+                  if (typeof trigger === 'function') {
                     trigger(name);
                   }
                 }}
                 onClose={() => {
-                  if(typeof trigger === 'function'){
+                  if (typeof trigger === 'function') {
                     trigger(name);
                   }
                 }}
