@@ -145,7 +145,7 @@ function ProductForm() {
       </Card>
 
       <div className="mt-4">
-        <CustomButton type="submit" variant="contained" disabled={loading}>
+        <CustomButton type="submit" variant="contained" disabled={loading} loading={loading}>
           Submit
         </CustomButton>
       </div>
