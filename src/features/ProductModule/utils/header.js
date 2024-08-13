@@ -1,9 +1,9 @@
 export const Header = (handleStatusUpdate) => {
     return [
       { value: "Product Name", id: "product" },
-      { value: "Product Value", id: "product_value" },
-      { value: "Lob Name", id: "lob_name" },
-      { value: "Product Code", id: "product_code" },
+      { value: "Product Value", id: "productValue" },
+      { value: "Lob Name", id: "lobName" },
+      { value: "Product Code", id: "productCode" },
       { value: "Created At", id: "createdAt", sortable: true},
       { value: "Updated At", id: "updatedAt", sortable: true},
       {
