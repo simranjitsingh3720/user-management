@@ -16,7 +16,7 @@ function CreateLobForm() {
   const dispatch = useDispatch();
   const createLoading = useSelector((state) => state.lob.createLoading);
 
-  const { handleSubmit, control, formState } = useForm();
+  const { handleSubmit, control, formState, reset } = useForm();
   const { errors } = formState;
 
   const onSubmit = (data) => {
@@ -45,13 +45,17 @@ function CreateLobForm() {
     },
   ];
 
+  const handleReset = () => {
+    reset();
+  };
+
   return (
     <Box component="form" onSubmit={handleSubmit(onSubmit)}>
       <Card>
         <CardContent>
           <Grid container spacing={3}>
             <Grid item xs={12}>
-              <CustomFormHeader headerText={FORM_HEADER_TEXT.LOB} navigateRoute="/lob" />
+              <CustomFormHeader headerText={FORM_HEADER_TEXT.LOB} navigateRoute="/lob" handleReset={handleReset} />
             </Grid>
 
             {formField.map((item) => (
