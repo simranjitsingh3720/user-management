@@ -143,12 +143,16 @@ export const FORM_VALUE = {
 export const Header = (editAction, handleInsillionStatus) => {
   return [
     {
-      value: 'User ID',
-      id: 'employeeId',
-    },
-    {
       value: 'Name',
       id: 'name',
+    },
+    {
+      value: 'Role',
+      id: 'roleName',
+    },
+    {
+      value: 'User ID',
+      id: 'employeeId',
     },
     {
       value: 'NT Login',
@@ -159,8 +163,8 @@ export const Header = (editAction, handleInsillionStatus) => {
       id: 'email',
     },
     {
-      value: 'Role',
-      id: 'roleName',
+      value: 'Mobile No.',
+      id: 'mobileNo'
     },
     {
       value: 'Created At',
@@ -203,16 +207,20 @@ export const Header = (editAction, handleInsillionStatus) => {
 
 export const SEARCH_OPTIONS = [
   {
-    label: 'User ID',
-    value: 'employeeId',
-  },
-  {
     label: 'First Name',
     value: 'firstName',
   },
   {
     label: 'Last Name',
     value: 'lastName',
+  },
+  {
+    label: 'User ID',
+    value: 'employeeId',
+  },
+  {
+    label: 'Role',
+    value: 'roleName',
   },
   {
     label: 'NT Login',
@@ -223,8 +231,8 @@ export const SEARCH_OPTIONS = [
     value: 'email',
   },
   {
-    label: 'Role',
-    value: 'roleName',
+    label: 'Mobile No.',
+    value: 'mobileNo'
   },
 ];
 
