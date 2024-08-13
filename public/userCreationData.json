@@ -995,7 +995,7 @@
         "required": false,
         "validation": {
           "pattern": {
-            "value": "^@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
+            "value": "^[a-zA-Z.-]+\\.[a-zA-Z]{2,}$",
             "message": "Please enter a valid domain"
           }
         },
@@ -1400,7 +1400,7 @@
         "required": false,
         "validation": {
           "pattern": {
-            "value": "^@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
+            "value": "^[a-zA-Z.-]+\\.[a-zA-Z]{2,}$",
             "message": "Please enter a valid domain"
           }
         },
@@ -1805,7 +1805,7 @@
         "required": false,
         "validation": {
           "pattern": {
-            "value": "^@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
+            "value": "^[a-zA-Z.-]+\\.[a-zA-Z]{2,}$",
             "message": "Please enter a valid domain"
           }
         },
@@ -2099,7 +2099,7 @@
         "validation": {
           "required": "This field is required",
           "pattern": {
-            "value": "^[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
+            "value": "^[a-zA-Z.-]+\\.[a-zA-Z]{2,}$",
             "message": "Please enter a valid domain"
           }
         },
@@ -2654,6 +2654,30 @@
         "canEdit": true
       },
       {
+        "id": "lob",
+        "label": "LOB",
+        "type": "autocomplete",
+        "required": true,
+        "all": true,
+        "validation": {
+          "required": "This field is required"
+        },
+        "disabled": true,
+        "canEdit": false
+      },
+      {
+        "id": "product",
+        "label": "Product",
+        "type": "autocomplete",
+        "required": true,
+        "all": true,
+        "disabled": true,
+        "validation": {
+          "required": "This field is required"
+        },
+        "canEdit": false
+      },
+      {
         "id": "ntloginId",
         "label": "NT ID",
         "type": "input",
@@ -2859,6 +2883,30 @@
           "required": "This field is required"
         },
         "canEdit": true
+      },
+      {
+        "id": "lob",
+        "label": "LOB",
+        "type": "autocomplete",
+        "required": true,
+        "all": true,
+        "validation": {
+          "required": "This field is required"
+        },
+        "disabled": true,
+        "canEdit": false
+      },
+      {
+        "id": "product",
+        "label": "Product",
+        "type": "autocomplete",
+        "required": true,
+        "all": true,
+        "disabled": true,
+        "validation": {
+          "required": "This field is required"
+        },
+        "canEdit": false
       },
       {
         "id": "ntloginId",
