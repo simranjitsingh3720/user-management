@@ -24,7 +24,7 @@ export const ARR_CONTAINS = {
     'deo - single sign on',
   ],
   DEO_USER_ARR: ['deo - partner employee', 'deo - external posp', 'deo - single sign on'],
-  ADMIN_ARR: ['admin', 'adminView'],
+  ADMIN_ARR: ['admin', 'adminView', 'administrator'],
   CLIENT_ARR: ['csm'],
   DATA_ENTRY_USER_ARR: ['distops'],
   PLAN_ZONE_ARR: [
