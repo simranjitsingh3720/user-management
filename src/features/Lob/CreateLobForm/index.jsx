@@ -16,7 +16,7 @@ function CreateLobForm() {
   const dispatch = useDispatch();
   const createLoading = useSelector((state) => state.lob.createLoading);
 
-  const { handleSubmit, control, formState, reset } = useForm();
+  const { handleSubmit, control, formState, reset, trigger } = useForm();
   const { errors } = formState;
 
   const onSubmit = (data) => {
@@ -70,6 +70,7 @@ function CreateLobForm() {
                   errors={errors}
                   disabled={item?.disabled}
                   classes="w-full"
+                  trigger={trigger}
                 />
               </Grid>
             ))}
