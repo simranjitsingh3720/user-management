@@ -157,6 +157,7 @@ function ProductPaymentConfigForm() {
                 name="payment"
                 label="Payment Type"
                 control={control}
+                loading={paymentTypeLoading}
                 rules={{ required: 'Payment Type is required' }}
                 options={[{ id: 'selectAll', name: 'Select All' }, ...(paymentTypeList?.data || [])]}
                 getOptionLabel={(option) => option?.name || ''}
