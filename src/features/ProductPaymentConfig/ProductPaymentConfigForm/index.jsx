@@ -38,7 +38,7 @@ function ProductPaymentConfigForm() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const { data: paymentData } = useGetPayment();
+  const { paymentTypeList, paymentTypeLoading } = useGetPayment();
 
   const { postData, loading: createPaymentLoading } = useCreatePaymentConfig();
 
@@ -51,7 +51,7 @@ function ProductPaymentConfigForm() {
       const { lob, product, paymentTypeIds } = paymentDataByID?.data;
 
       const paymentTypesData = JSON.parse(paymentTypeIds);
-      const filterData = paymentData?.data?.filter((item) => paymentTypesData?.includes(item.id));
+      const filterData = paymentTypeList?.data?.filter((item) => paymentTypesData?.includes(item.id));
 
       setValue('lob', lob || null);
       setValue('product', product || null);
@@ -158,7 +158,7 @@ function ProductPaymentConfigForm() {
                 label="Payment Type"
                 control={control}
                 rules={{ required: 'Payment Type is required' }}
-                options={[{ id: 'selectAll', name: 'Select All' }, ...(paymentData?.data || [])]}
+                options={[{ id: 'selectAll', name: 'Select All' }, ...(paymentTypeList?.data || [])]}
                 getOptionLabel={(option) => option?.name || ''}
                 required
                 error={Boolean(errors.payment)}
@@ -171,7 +171,7 @@ function ProductPaymentConfigForm() {
                   if (newValue.some((option) => option.name === 'Select All')) {
                     const isSelectAllSelected = newValue.find((option) => option.name === 'Select All');
                     if (isSelectAllSelected) {
-                      const allOptionsSelected = paymentData?.data || [];
+                      const allOptionsSelected = paymentTypeList?.data || [];
                       setValue('payment', allOptionsSelected);
                     } else {
                       setValue('payment', []);
