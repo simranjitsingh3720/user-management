@@ -6,9 +6,9 @@ import { buildQueryString } from '../../utils/globalizationFunction';
 // Async thunk to fetch all modules
 export const fetchAllModules = createAsyncThunk('modules/fetchAllModules', async (_, { getState, rejectWithValue }) => {
   try {
-    const { modulesSlice } = getState();
-    if (modulesSlice?.data?.length > 0) {
-      return modulesSlice.data;
+    const { modules } = getState();
+    if (modules?.data?.length > 0) {
+      return modules.data;
     }
     const params = buildQueryString({ status: true });
     const response = await axiosInstance.get(`${apiUrls.module}/all?${params}`);
