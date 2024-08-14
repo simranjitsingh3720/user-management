@@ -2,7 +2,6 @@ import { Box, Card, CardContent, Grid } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { getLocations } from '../../../Redux/getLocation';
 import { COMMON_WORDS, FORM_HEADER_TEXT } from '../../../utils/constants';
 import CustomAutoCompleteWithoutCheckbox from '../../../components/CustomAutoCompleteWithoutCheckbox';
 import { fetchAllProductData } from '../../../stores/slices/productSlice';
@@ -12,6 +11,7 @@ import UserTypeToggle from '../../../components/CustomRadioButtonGroup';
 import { useParams } from 'react-router-dom';
 import useCreateProductLevel from '../hooks/useCreateProductLevel';
 import CustomFormHeader from '../../../components/CustomFormHeader';
+import { getLocations } from '../../../stores/slices/getLocation';
 
 function LevelMappingForm({ dataById, fetchData }) {
   const dispatch = useDispatch();

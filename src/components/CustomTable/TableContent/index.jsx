@@ -56,7 +56,7 @@ const TableContent = ({ columns, data, loading, canUpdate }) => {
                           <Switch
                             checked={row.checked || false}
                             onChange={() => action.onClick(data, row)}
-                            disabled={!canUpdate}
+                            disabled={!canUpdate || row.disabled}
                           />
                         ) : showIcon && action?.showIcon && col.id !== TABLE_COLUMNS.BULK_DOWNLOAD_FILE_ACTION ? (
                           <IconButton onClick={() => action.onClick(row)} disabled={isEditIcon(action?.iconName)}>

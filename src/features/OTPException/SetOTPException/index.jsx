@@ -8,9 +8,9 @@ import { COMMON_WORDS, FORM_HEADER_TEXT } from '../../../utils/constants';
 import CustomAutoCompleteWithoutCheckbox from '../../../components/CustomAutoCompleteWithoutCheckbox';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUser } from '../../../stores/slices/userSlice';
-import { getChannels } from '../../../Redux/getChannel';
 import UserTypeToggle from '../../../components/CustomRadioButtonGroup';
 import { otpExceptionConstants } from '../utils/constants';
+import { getChannels } from '../../../stores/slices/getChannel';
 
 function SetOTPException({ fetchData }) {
   const dispatch = useDispatch();

@@ -1,8 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axiosInstance from './../utils/axiosInstance';
-import apiUrls from '../utils/apiUrls';
-import { buildQueryString, toCapitalize } from '../utils/globalizationFunction';
-import errorHandler from '../utils/errorHandler';
+import axiosInstance from '../../utils/axiosInstance';
+import apiUrls from '../../utils/apiUrls';
+import { buildQueryString, toCapitalize } from '../../utils/globalizationFunction';
+import errorHandler from '../../utils/errorHandler';
+import { COMMON_WORDS } from '../../utils/constants';
 
 export const getLobs = createAsyncThunk('lobUserCreation/getLobs', async (_, { getState, rejectWithValue }) => {
   try {
@@ -15,7 +16,7 @@ export const getLobs = createAsyncThunk('lobUserCreation/getLobs', async (_, { g
     const response = await axiosInstance.get(url);
     const formattedArray = response?.data?.data?.map((obj) => ({
       ...obj,
-      label: toCapitalize(obj, 'lob'),
+      label: toCapitalize(obj, COMMON_WORDS.LOB),
       value: obj?.lobValue,
     }));
     return formattedArray;

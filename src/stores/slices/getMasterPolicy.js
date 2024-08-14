@@ -1,9 +1,9 @@
 import { createAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { buildQueryString } from '../utils/globalizationFunction';
-import apiUrls from '../utils/apiUrls';
-import errorHandler from '../utils/errorHandler';
-import axiosInstance from '../utils/axiosInstance';
-import { COMMON_WORDS } from '../utils/constants';
+import { buildQueryString } from '../../utils/globalizationFunction';
+import apiUrls from '../../utils/apiUrls';
+import errorHandler from '../../utils/errorHandler';
+import axiosInstance from '../../utils/axiosInstance';
+import { COMMON_WORDS } from '../../utils/constants';
 
 export const getMasterPolicies = createAsyncThunk(
   'masterPolicy/getMasterPolicies',

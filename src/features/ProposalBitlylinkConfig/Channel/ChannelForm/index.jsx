@@ -8,12 +8,12 @@ import { COMMON_WORDS, FORM_HEADER_TEXT } from '../../../../utils/constants';
 import UserTypeToggle from '../../../../components/CustomRadioButtonGroup';
 import CustomAutoCompleteWithoutCheckbox from '../../../../components/CustomAutoCompleteWithoutCheckbox';
 import { useDispatch, useSelector } from 'react-redux';
-import { getChannels } from '../../../../Redux/getChannel';
 import { fetchUser } from '../../../../stores/slices/userSlice';
 import Loader from '../../ProducerCode/Loader';
 import TableList from '../../ProducerCode/TableList';
 import useCreateBitlyLink from '../../hooks/useCreateBitlyLink';
 import useGetProductByProducerId from '../../hooks/useGetProductByProducerId';
+import { getChannels } from '../../../../stores/slices/getChannel';
 
 function ChannelForm() {
   const dispatch = useDispatch();

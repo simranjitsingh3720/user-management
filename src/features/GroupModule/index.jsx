@@ -36,7 +36,7 @@ function GroupModule() {
   const { data: permissionData } = useSelector((state) => state.permissions);
 
   useEffect(() => {
-    dispatch(fetchPermissions({ isAll: true, status: true }));
+    dispatch(fetchPermissions());
   }, [dispatch]);
 
   const fetchGroupData = useCallback(() => {

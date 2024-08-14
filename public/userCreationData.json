@@ -17,7 +17,6 @@
             "value": 15,
             "message": "It should not exceed 15 characters"
           }
-
         },
         "canEdit": true
       },
@@ -995,7 +994,7 @@
         "required": false,
         "validation": {
           "pattern": {
-            "value": "^@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
+            "value": "^[a-zA-Z.-]+\\.[a-zA-Z]{2,}$",
             "message": "Please enter a valid domain"
           }
         },
@@ -1400,7 +1399,7 @@
         "required": false,
         "validation": {
           "pattern": {
-            "value": "^@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
+            "value": "^[a-zA-Z.-]+\\.[a-zA-Z]{2,}$",
             "message": "Please enter a valid domain"
           }
         },
@@ -1805,7 +1804,7 @@
         "required": false,
         "validation": {
           "pattern": {
-            "value": "^@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
+            "value": "^[a-zA-Z.-]+\\.[a-zA-Z]{2,}$",
             "message": "Please enter a valid domain"
           }
         },
@@ -2099,7 +2098,7 @@
         "validation": {
           "required": "This field is required",
           "pattern": {
-            "value": "^[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
+            "value": "^[a-zA-Z.-]+\\.[a-zA-Z]{2,}$",
             "message": "Please enter a valid domain"
           }
         },
@@ -2654,6 +2653,30 @@
         "canEdit": true
       },
       {
+        "id": "lob",
+        "label": "LOB",
+        "type": "autocomplete",
+        "required": true,
+        "all": true,
+        "validation": {
+          "required": "This field is required"
+        },
+        "disabled": true,
+        "canEdit": false
+      },
+      {
+        "id": "product",
+        "label": "Product",
+        "type": "autocomplete",
+        "required": true,
+        "all": true,
+        "disabled": true,
+        "validation": {
+          "required": "This field is required"
+        },
+        "canEdit": false
+      },
+      {
         "id": "ntloginId",
         "label": "NT ID",
         "type": "input",
@@ -2859,6 +2882,261 @@
           "required": "This field is required"
         },
         "canEdit": true
+      },
+      {
+        "id": "lob",
+        "label": "LOB",
+        "type": "autocomplete",
+        "required": true,
+        "all": true,
+        "validation": {
+          "required": "This field is required"
+        },
+        "disabled": true,
+        "canEdit": false
+      },
+      {
+        "id": "product",
+        "label": "Product",
+        "type": "autocomplete",
+        "required": true,
+        "all": true,
+        "disabled": true,
+        "validation": {
+          "required": "This field is required"
+        },
+        "canEdit": false
+      },
+      {
+        "id": "ntloginId",
+        "label": "NT ID",
+        "type": "input",
+        "required": true,
+        "validation": {
+          "required": "This field is required",
+          "pattern": {
+            "value": "^[a-zA-Z0-9]+$",
+            "message": "It should contain digits and letters only"
+          },
+          "maxLength": {
+            "value": 15,
+            "message": "It should not exceed 15 characters"
+          }
+        },
+        "canEdit": true
+      },
+      {
+        "id": "vertical",
+        "label": "Vertical",
+        "type": "input",
+        "required": false,
+        "validation": {
+          "pattern": {
+            "value": "^(?! )(?=.*[^ ]$)[a-zA-Z0-9 ]+$",
+            "message": "Please enter a valid vertical name"
+          }
+        },
+        "canEdit": true
+      },
+      {
+        "id": "subVertical",
+        "label": "Sub Vertical",
+        "type": "input",
+        "required": false,
+        "validation": {
+          "pattern": {
+            "value": "^(?! )(?=.*[^ ]$)[a-zA-Z0-9 ]+$",
+            "message": "Please enter a valid sub vertical name"
+          }
+        },
+        "canEdit": true
+      },
+      {
+        "id": "solId",
+        "label": "Sol ID",
+        "type": "input",
+        "required": false,
+        "validation": {
+          "pattern": {
+            "value": "^[a-zA-Z0-9]+$",
+            "message": "It should contain digits and letters only"
+          }
+        },
+        "canEdit": true
+      },
+      {
+        "id": "startDate",
+        "label": "Start Date",
+        "type": "date",
+        "required": true,
+        "validation": {
+          "required": "This field is required"
+        },
+        "canEdit": false
+      },
+      {
+        "id": "endDate",
+        "label": "End Date",
+        "type": "date",
+        "required": true,
+        "validation": {
+          "required": "This field is required"
+        },
+        "canEdit": true
+      },
+      {
+        "id": "active",
+        "label": "Active",
+        "type": "dropdown",
+        "required": true,
+        "menuItem": [
+          {
+            "value": "yes",
+            "label": "Yes"
+          },
+          {
+            "value": "no",
+            "label": "No"
+          }
+        ],
+        "validation": {
+          "required": "This field is required"
+        },
+        "canEdit": true
+      }
+    ],
+    "administrator": [
+      {
+        "id": "employeeId",
+        "label": "Employee ID",
+        "type": "input",
+        "required": true,
+        "validation": {
+          "required": "This field is required",
+          "pattern": {
+            "value": "^[a-zA-Z0-9]+$",
+            "message": "It should contain digits and letters only"
+          },
+          "maxLength": {
+            "value": 15,
+            "message": "It should not exceed 15 characters"
+          }
+        },
+        "canEdit": true
+      },
+      {
+        "id": "firstName",
+        "label": "First Name",
+        "type": "input",
+        "required": true,
+        "validation": {
+          "required": "This field is required",
+          "minLength": {
+            "value": 3,
+            "message": "It should be at least 3 characters long"
+          },
+          "maxLength": {
+            "value": 30,
+            "message": "It should not exceed 30 characters"
+          },
+          "pattern": {
+            "value": "^[A-Za-z]+$",
+            "message": "It should contain only letters"
+          }
+        },
+        "canEdit": true
+      },
+      {
+        "id": "lastName",
+        "label": "Last Name",
+        "type": "input",
+        "required": false,
+        "validation": {
+          "minLength": {
+            "value": 3,
+            "message": "It should be at least 3 characters long"
+          },
+          "maxLength": {
+            "value": 30,
+            "message": "It should not exceed 30 characters"
+          },
+          "pattern": {
+            "value": "^[A-Za-z]+$",
+            "message": "It should contain only letters"
+          }
+        },
+        "canEdit": true
+      },
+      {
+        "id": "mobileNumber",
+        "label": "Mobile Number",
+        "type": "input",
+        "required": true,
+        "validation": {
+          "required": "This field is required",
+          "minLength": {
+            "value": 10,
+            "message": "It should be at least 10 digits long"
+          },
+          "maxLength": {
+            "value": 10,
+            "message": "It should not exceed 10 digits"
+          },
+          "pattern": {
+            "value": "^[6-9][0-9]{9}$",
+            "message": "It should contains digits starting with [6-9]"
+          }
+        },
+        "canEdit": true
+      },
+      {
+        "id": "email",
+        "label": "Email",
+        "type": "input",
+        "required": true,
+        "validation": {
+          "required": "This field is required",
+          "pattern": {
+            "value": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$",
+            "message": "Please enter a valid email address"
+          }
+        },
+        "canEdit": false
+      },
+      {
+        "id": "location",
+        "label": "Location",
+        "type": "autocomplete",
+        "all": true,
+        "required": true,
+        "validation": {
+          "required": "This field is required"
+        },
+        "canEdit": true
+      },
+      {
+        "id": "lob",
+        "label": "LOB",
+        "type": "autocomplete",
+        "required": true,
+        "all": true,
+        "validation": {
+          "required": "This field is required"
+        },
+        "disabled": true,
+        "canEdit": false
+      },
+      {
+        "id": "product",
+        "label": "Product",
+        "type": "autocomplete",
+        "required": true,
+        "all": true,
+        "disabled": true,
+        "validation": {
+          "required": "This field is required"
+        },
+        "canEdit": false
       },
       {
         "id": "ntloginId",
@@ -3682,10 +3960,6 @@
         "required": false,
         "menuItem": [
           {
-            "value": "none",
-            "label": "None"
-          },
-          {
             "value": "maker",
             "label": "Maker"
           },
@@ -3941,10 +4215,6 @@
         "required": false,
         "menuItem": [
           {
-            "value": "none",
-            "label": "None"
-          },
-          {
             "value": "maker",
             "label": "Maker"
           },
@@ -4170,7 +4440,7 @@
         "id": "paymentType",
         "label": "Payment Mode",
         "type": "autocomplete",
-        "all" : true,
+        "all": true,
         "required": true,
         "validation": {
           "required": "This field is required"
@@ -4270,10 +4540,6 @@
         "type": "dropdown",
         "required": false,
         "menuItem": [
-          {
-            "value": "none",
-            "label": "None"
-          },
           {
             "value": "maker",
             "label": "Maker"
