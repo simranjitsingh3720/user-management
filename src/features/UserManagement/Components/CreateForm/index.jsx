@@ -577,6 +577,7 @@ function CreateUserCreationForm() {
       };
     } else if (ARR_CONTAINS.PRODUCER_ARR?.includes(role)) {
       payload = {
+        loginTypeIds,
         locationIds,
         productIds,
         paymentType: paymentTypeNames,
@@ -856,6 +857,7 @@ function CreateUserCreationForm() {
   useFormLabelEffect(FORM_LABEL.PRODUCT, products);
   useFormLabelEffect(FORM_LABEL.LOGIN_TYPE, loginType);
   useFormLabelEffect(FORM_LABEL.HOUSE_BANK, neftDefaultBank);
+  useFormLabelEffect(FORM_LABEL.PRODUCER_TYPE, producerType);
   useFormLabelEffect(FORM_LABEL.LOCATION, locations);
   useFormLabelEffect(FORM_LABEL.CHANNEL_ID, channelType);
   useFormLabelEffect(FORM_LABEL.PAYMENT_TYPE, paymentType);
