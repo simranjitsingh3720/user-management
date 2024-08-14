@@ -65,7 +65,6 @@ function Header({ handleDrawerToggle, selectedNavbar, selectedParentIndex }) {
       sx={{
         width: { md: `calc(100% - ${HEADER.DRAWER_WIDTH}px)` },
         ml: { md: `${HEADER.DRAWER_WIDTH}px` },
-        zIndex: 9999,
       }}
       className="bg-white text-slate-600"
     >

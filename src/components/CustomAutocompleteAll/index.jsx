@@ -119,6 +119,13 @@ const AutocompleteFieldAll = ({
             disabled={disabled}
             getOptionLabel={(option) => option?.label}
             value={selectedValues}
+            slotProps={{
+              popper: {
+                sx: {
+                  zIndex: 1000,
+                },
+              },
+            }}
             onChange={(event, newValue) => {
               handleAutocompleteChangeAll(event, newValue);
               field.onChange(newValue);
@@ -153,15 +160,15 @@ const AutocompleteFieldAll = ({
             className={`bg-white text-sm ${classes}`}
             sx={{
               '& .MuiOutlinedInput-root': {
-                maxHeight: "40px",
-                overflow: "auto",
-                borderRadius: "4px",
-                border:"1px solid #ccc",
-                backgroundColor:"#fff",
+                maxHeight: '40px',
+                overflow: 'auto',
+                borderRadius: '4px',
+                border: '1px solid #ccc',
+                backgroundColor: '#fff',
                 '&.Mui-focused': {
-                  outline: "none",
-                  boxShadow: "none",
-                  borderColor: "#ccc",  
+                  outline: 'none',
+                  boxShadow: 'none',
+                  borderColor: '#ccc',
                 },
               },
             }}
@@ -173,8 +180,8 @@ const AutocompleteFieldAll = ({
                   '& .MuiFormHelperText-root': {
                     margin: 0,
                   },
-                  "& fieldset": {
-                    border: "none",
+                  '& fieldset': {
+                    border: 'none',
                   },
                 }}
                 error={Boolean(errors[name])}

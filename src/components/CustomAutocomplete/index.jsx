@@ -63,7 +63,9 @@ const AutocompleteField = ({
           : [...(prevSelectedValues || []), option];
       });
     } else {
-      setSelectedValues((prevSelectedValues) => (prevSelectedValues && prevSelectedValues.value === option.value ? null : option));
+      setSelectedValues((prevSelectedValues) =>
+        prevSelectedValues && prevSelectedValues.value === option.value ? null : option
+      );
     }
   };
 
@@ -143,17 +145,24 @@ const AutocompleteField = ({
             )}
             size="small"
             className={`bg-white text-sm ${classes}`}
+            slotProps={{
+              popper: {
+                sx: {
+                  zIndex: 1000,
+                },
+              },
+            }}
             sx={{
               '& .MuiOutlinedInput-root': {
-                maxHeight: "40px",
-                overflow: "auto",
-                borderRadius: "4px",
-                border:"1px solid #ccc",
-                backgroundColor:"#fff",
+                maxHeight: '40px',
+                overflow: 'auto',
+                borderRadius: '4px',
+                border: '1px solid #ccc',
+                backgroundColor: '#fff',
                 '&.Mui-focused': {
-                  outline: "none",
-                  boxShadow: "none",
-                  borderColor: "#ccc",  
+                  outline: 'none',
+                  boxShadow: 'none',
+                  borderColor: '#ccc',
                 },
               },
             }}
@@ -165,8 +174,8 @@ const AutocompleteField = ({
                   '& .MuiFormHelperText-root': {
                     margin: 0,
                   },
-                  "& fieldset": {
-                    border: "none",
+                  '& fieldset': {
+                    border: 'none',
                   },
                 }}
                 error={Boolean(errors[name])}

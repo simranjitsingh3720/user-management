@@ -42,6 +42,13 @@ const CustomAutoCompleteWithoutCheckbox = ({
             disabled={disabled}
             className={className + ' customize-select bg-white'}
             size={size}
+            slotProps={{
+              popper: {
+                sx: {
+                  zIndex: 1000,
+                },
+              },
+            }}
             disableCloseOnSelect={multiple ? true : false}
             isOptionEqualToValue={isOptionEqualToValue}
             renderInput={(params) => (
