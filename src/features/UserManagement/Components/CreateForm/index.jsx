@@ -945,7 +945,7 @@ function CreateUserCreationForm() {
                   required={item?.required}
                   errors={errors}
                   classes="w-full"
-                  isEdit={isEdit}
+                  isEdit={false}
                   trigger={trigger}
                   disabled={!isEdit ? item?.disabled : !item?.canEdit}
                 />
