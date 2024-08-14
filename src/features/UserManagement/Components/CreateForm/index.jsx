@@ -36,6 +36,7 @@ import { getLoginType } from '../../../../stores/slices/getLoginType';
 import { getLobs } from '../../../../stores/slices/getLob';
 import { getLocations } from '../../../../stores/slices/getLocation';
 import { getRoles } from '../../../../stores/slices/getRole';
+import { DATE_FORMAT } from '../../../../utils/globalConstants';
 
 function CreateUserCreationForm() {
   const dispatch = useDispatch();
@@ -660,7 +661,7 @@ function CreateUserCreationForm() {
 
   const formatDate = (date) => {
     if (!date) return '';
-    return dayjs(date).format('DD/MM/YYYY');
+    return dayjs(date).format(DATE_FORMAT);
   };
 
   const processKey = (key, value) => {
