@@ -230,7 +230,7 @@ function ProposalForm() {
                   control={control}
                   rules={{ required: 'Producer Name is required' }}
                   options={user?.data || []}
-                  getOptionLabel={(option) => `${option?.firstName} ${option?.lastName}`}
+                  getOptionLabel={(option) => `${option?.firstName} ${option?.lastName} - ${option?.producerCode}`}
                   isOptionEqualToValue={(option, value) => option?.id === value?.id}
                   placeholder="Select"
                   error={Boolean(errors.producerCode)}

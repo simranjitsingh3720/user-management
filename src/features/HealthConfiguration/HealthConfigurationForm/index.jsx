@@ -102,7 +102,7 @@ function HealthConfigurationForm() {
                 required={true}
                 options={user.data || []}
                 getOptionLabel={(option) => {
-                  return `${option?.firstName} ${option?.lastName}`;
+                  return `${option?.firstName} ${option?.lastName} - ${option?.producerCode}`;
                 }}
                 isOptionEqualToValue={(option, value) => option.id === value.id}
                 error={Boolean(errors.producer)}

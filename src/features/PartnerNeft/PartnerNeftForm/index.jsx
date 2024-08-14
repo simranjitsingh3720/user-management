@@ -152,7 +152,7 @@ const PartnerNeftForm = () => {
                 loading={userLoading}
                 options={user.data || []}
                 getOptionLabel={(option) => {
-                  return `${option?.firstName} ${option?.lastName}`;
+                  return `${option?.firstName} ${option?.lastName} - ${option?.producerCode}`;
                 }}
                 isOptionEqualToValue={(option, value) => option.id === value.id}
                 control={control}

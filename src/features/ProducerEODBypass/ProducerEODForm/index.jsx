@@ -121,7 +121,7 @@ function ProducerEODFrom() {
                 label="Producer Code"
                 required={true}
                 options={user?.data || []}
-                getOptionLabel={(option) => `${option?.firstName} ${option?.lastName}`}
+                getOptionLabel={(option) => `${option?.firstName} ${option?.lastName} - ${option?.producerCode}`}
                 isOptionEqualToValue={(option, value) => option.id === value.id}
                 control={control}
                 rules={{ required: 'Producer Code is required' }}
