@@ -1,19 +1,9 @@
-import {
-  AppBar,
-  Avatar,
-  IconButton,
-  Toolbar,
-  Typography,
-  Box,
-  Tooltip,
-  MenuItem,
-  Menu,
-} from "@mui/material";
-import React, { useState } from "react";
-import MenuIcon from "@mui/icons-material/Menu";
-import { useNavigate } from "react-router-dom";
-import { HEADER } from "../../utils/constants";
-import { COMMON_WORDS } from "../../utils/constants";
+import { AppBar, Avatar, IconButton, Toolbar, Typography, Box, Tooltip, MenuItem, Menu } from '@mui/material';
+import React, { useState } from 'react';
+import MenuIcon from '@mui/icons-material/Menu';
+import { useNavigate } from 'react-router-dom';
+import { HEADER } from '../../utils/constants';
+import { COMMON_WORDS } from '../../utils/constants';
 
 function stringToColor(string) {
   let hash = 0;
@@ -47,11 +37,11 @@ function Header({ handleDrawerToggle, selectedNavbar, selectedParentIndex }) {
   const [anchorElUser, setAnchorElUser] = useState(null);
   const settings = ['Logout'];
   const user = JSON.parse(localStorage.getItem(COMMON_WORDS.USER));
-  const name = (`${user?.firstName} ${user?.lastName}`).toUpperCase();
+  const name = `${user?.firstName} ${user?.lastName}`.toUpperCase();
 
   const handleLogout = () => {
     localStorage.clear();
-    navigate("/");
+    navigate('/');
   };
 
   const handleOpenUserMenu = (event) => {
@@ -74,7 +64,8 @@ function Header({ handleDrawerToggle, selectedNavbar, selectedParentIndex }) {
       position="fixed"
       sx={{
         width: { md: `calc(100% - ${HEADER.DRAWER_WIDTH}px)` },
-        ml: { md: `${HEADER.DRAWER_WIDTH}px` },  
+        ml: { md: `${HEADER.DRAWER_WIDTH}px` },
+        zIndex: 9999,
       }}
       className="bg-white text-slate-600"
     >
@@ -85,7 +76,7 @@ function Header({ handleDrawerToggle, selectedNavbar, selectedParentIndex }) {
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { md: "none" } }}
+            sx={{ mr: 2, display: { md: 'none' } }}
           >
             <MenuIcon />
           </IconButton>
@@ -95,7 +86,7 @@ function Header({ handleDrawerToggle, selectedNavbar, selectedParentIndex }) {
             fontWeight={HEADER.HEADING_FONT_WEIGHT}
             textOverflow="ellipsis"
             sx={{
-              maxWidth: { sm: '100%', xs: "200px" }
+              maxWidth: { sm: '100%', xs: '200px' },
             }}
             textTransform="capitalize"
           >
@@ -110,17 +101,17 @@ function Header({ handleDrawerToggle, selectedNavbar, selectedParentIndex }) {
             </IconButton>
           </Tooltip>
           <Menu
-            sx={{ mt: "45px" }}
+            sx={{ mt: '45px' }}
             id="menu-appbar"
             anchorEl={anchorElUser}
             anchorOrigin={{
-              vertical: "top",
-              horizontal: "right",
+              vertical: 'top',
+              horizontal: 'right',
             }}
             keepMounted
             transformOrigin={{
-              vertical: "top",
-              horizontal: "right",
+              vertical: 'top',
+              horizontal: 'right',
             }}
             open={Boolean(anchorElUser)}
             onClose={handleCloseUserMenu}
