@@ -19,6 +19,7 @@ function ProductForm() {
     control,
     formState: { errors },
     reset,
+    trigger,
   } = useForm({
     defaultValues: {
       lob: null,
@@ -103,6 +104,7 @@ function ProductForm() {
                   errors={errors}
                   disabled={item?.disabled}
                   classes="w-full"
+                  trigger={trigger}
                 />
               </Grid>
             ))}
@@ -126,6 +128,7 @@ function ProductForm() {
                     {option?.lob}
                   </li>
                 )}
+                trigger={trigger}
               />
             </Grid>
 

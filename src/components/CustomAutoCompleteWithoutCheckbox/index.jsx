@@ -78,6 +78,11 @@ const CustomAutoCompleteWithoutCheckbox = ({
               }
               onChangeCallback && onChangeCallback(newValue);
             }}
+            onBlur={() => {
+              if (typeof trigger === 'function') {
+                trigger(name);
+              }
+            }}
             disableClearable={disableClearable}
             ListboxProps={ListboxProps}
             renderOption={(props, option, { selected }) =>
