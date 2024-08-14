@@ -12,7 +12,7 @@ export const Header = (handleClicked, handleStatusUpdate) => {
     },
     {
       id: 'producerCode',
-      value: 'Producer Code',
+      value: 'Producer/Channel Code',
     },
     {
       id: 'action',
