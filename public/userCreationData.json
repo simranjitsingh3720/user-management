@@ -3663,7 +3663,7 @@
         "canEdit": false
       },
       {
-        "id": "solIdDealerCode",
+        "id": "solId",
         "label": "Sol ID/ Dealer Code",
         "type": "input",
         "required": false,
@@ -3698,7 +3698,7 @@
         "canEdit": true
       },
       {
-        "id": "employeeCodeUserLoginId",
+        "id": "employeeCode",
         "label": "Employee Code/ User Login ID",
         "type": "input",
         "required": false,
@@ -3990,7 +3990,7 @@
         "canEdit": false
       },
       {
-        "id": "solIdDealerCode",
+        "id": "solId",
         "label": "Sol ID/ Dealer Code",
         "type": "input",
         "required": false,
@@ -4003,7 +4003,7 @@
         "canEdit": true
       },
       {
-        "id": "employeeCodeUserLoginId",
+        "id": "employeeCode",
         "label": "Employee Code/ User Login ID",
         "type": "input",
         "required": false,
@@ -4245,7 +4245,7 @@
         "canEdit": false
       },
       {
-        "id": "solIdDealerCode",
+        "id": "solId",
         "label": "Sol ID/ Dealer Code",
         "type": "input",
         "required": false,
@@ -4280,7 +4280,7 @@
         "canEdit": true
       },
       {
-        "id": "employeeCodeUserLoginId",
+        "id": "employeeCode",
         "label": "Employee Code/ User Login ID",
         "type": "input",
         "required": false,

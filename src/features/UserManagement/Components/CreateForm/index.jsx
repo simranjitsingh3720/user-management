@@ -22,7 +22,6 @@ import dayjs from 'dayjs';
 import { ARR_CONTAINS, COMMON, FORM_LABEL, FORM_VALUE, REQUIRED_ERR, excludedLabels } from '../utils/constants';
 import useUpdateUser from '../hooks/useUpdateUser';
 import errorHandler from '../../../../utils/errorHandler';
-import { formatDate } from '../../../../utils/globalizationFunction';
 import { clearProducts, getProducts } from '../../../../stores/slices/getProduct';
 import { clearMasterPolicy, getMasterPolicies } from '../../../../stores/slices/getMasterPolicy';
 import { clearZones, getZones } from '../../../../stores/slices/getZone';
@@ -392,7 +391,7 @@ function CreateUserCreationForm() {
       brokerRoleName,
       branchCode,
       dataEntryUserName,
-      employeeCodeUserLoginId,
+      employeeCode,
       pospAadhar,
       pospPAN,
       transactionType,
@@ -469,7 +468,7 @@ function CreateUserCreationForm() {
       brokerRoleName,
       branchCode,
       dataEntryUserName,
-      employeeCode: employeeCodeUserLoginId,
+      employeeCode,
       pospAadhar,
       pospPAN,
       transactionType,
@@ -518,7 +517,6 @@ function CreateUserCreationForm() {
       externalPosp,
       roleAssignment,
       transactionType,
-      solIdDealerCode,
       status,
       loginType,
       sendEmail,
@@ -554,7 +552,7 @@ function CreateUserCreationForm() {
 
     let deoPayload = {
       mobileNo: editData && editData.mobileNo !== mobileNumber ? mobileNumber : '',
-      solIdDealerCode,
+      solId,
       locationIds,
       productIds,
       planIds,
@@ -658,22 +656,19 @@ function CreateUserCreationForm() {
     }
   };
 
+  const formatDate = (date) => {
+    if (!date) return '';
+    return dayjs(date).format('DD/MM/YYYY');
+  };
+
   const processKey = (key, value) => {
     switch (key) {
       case FORM_LABEL.START_DATE:
-        if (value?.includes('/')) {
-          setValue(key, value);
-        } else {
           setValue(key, formatDate(value));
-        }
         break;
 
       case FORM_LABEL.END_DATE:
-        if (value?.includes('/')) {
-          setValue(key, value);
-        } else {
           setValue(key, formatDate(value));
-        }
         break;
 
       case FORM_LABEL.LOGIN_TYPE:
