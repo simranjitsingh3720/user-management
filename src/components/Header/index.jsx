@@ -11,9 +11,10 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
-import { useNavigate } from "react-router-dom";
 import { HEADER } from "../../utils/constants";
 import { COMMON_WORDS } from "../../utils/constants";
+import persistStore from "redux-persist/es/persistStore";
+import { appStore } from '../../stores/appStore';
 
 function stringToColor(string) {
   let hash = 0;
@@ -43,15 +44,16 @@ function stringAvatar(name) {
 }
 
 function Header({ handleDrawerToggle, selectedNavbar, selectedParentIndex }) {
-  const navigate = useNavigate();
   const [anchorElUser, setAnchorElUser] = useState(null);
   const settings = ['Logout'];
   const user = JSON.parse(localStorage.getItem(COMMON_WORDS.USER));
   const name = (`${user?.firstName} ${user?.lastName}`).toUpperCase();
+  const persistor = persistStore(appStore);
 
   const handleLogout = () => {
     localStorage.clear();
-    navigate("/");
+    persistor.purge();
+    window.location.href = '/';
   };
 
   const handleOpenUserMenu = (event) => {

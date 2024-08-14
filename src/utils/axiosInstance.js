@@ -2,6 +2,8 @@ import axios from 'axios';
 import { BASE_URL, COMMON_ERROR, TOKEN } from './globalConstants';
 import errorHandler from './errorHandler';
 import toastifyUtils from './toastify';
+import persistStore from 'redux-persist/es/persistStore';
+import { appStore } from '../stores/appStore';
 
 const instance = axios.create({
   baseURL: BASE_URL,
@@ -30,6 +32,8 @@ instance.interceptors.response.use(
   (error) => {
     let errorMessage = '';
     const { response } = error;
+    const persistor = persistStore(appStore);
+
     if (response) {
       const { status, data } = response;
       switch (status) {
@@ -43,6 +47,7 @@ instance.interceptors.response.use(
           errorMessage = data?.error?.message;
           setTimeout(() => {
             localStorage.clear();
+            persistor.purge();
             window.location.href = '/';
           }, 2000);
           break;
