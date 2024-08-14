@@ -126,7 +126,7 @@ function EmployeeConfigurationForm({ fetchData: listFetchFun }) {
                 required={true}
                 options={user.data || []}
                 getOptionLabel={(option) => {
-                  return `${option?.firstName} ${option?.lastName}`;
+                  return `${option?.firstName} ${option?.lastName} - ${option?.producerCode}`;
                 }}
                 isOptionEqualToValue={(option, value) => option.id === value.id}
                 control={control}
@@ -134,11 +134,6 @@ function EmployeeConfigurationForm({ fetchData: listFetchFun }) {
                 error={Boolean(errors.producer)}
                 helperText={errors.producer?.message}
                 placeholder={COMMON_WORDS.SELECT}
-                renderOption={(props, option) => (
-                  <li {...props} key={option.id} style={{ textTransform: 'capitalize' }}>
-                    {option?.firstName} {option?.lastName}
-                  </li>
-                )}
                 trigger={trigger}
                 onChangeCallback={(newValue) => {
                   fetchDataByProducer(newValue?.id);
@@ -152,8 +147,8 @@ function EmployeeConfigurationForm({ fetchData: listFetchFun }) {
               ) : (
                 producerList?.data?.length && (
                   <Grid container spacing={2}>
-                    {dataList.map((item) => (
-                      <Grid item xs={12} md={6} lg={4}>
+                    {dataList.map((item, index) => (
+                      <Grid item xs={12} md={6} lg={4} key={index}>
                         <FormLabel component="legend" sx={{ textTransform: 'capitalize' }}>
                           {item.name}
                         </FormLabel>
