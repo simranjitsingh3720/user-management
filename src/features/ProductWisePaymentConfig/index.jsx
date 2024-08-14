@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { PAGECOUNT } from '../../utils/globalConstants';
 import { COMMON_WORDS } from '../../utils/constants';
@@ -10,9 +10,13 @@ import { fetchLobData } from '../../stores/slices/lobSlice';
 import { fetchAllProductData } from '../../stores/slices/productSlice';
 import { getPlaceHolder } from '../../utils/globalizationFunction';
 import CustomTable from '../../components/CustomTable';
+import generateHeader from './utils/Header';
+import { useNavigate } from 'react-router-dom';
+import useGetPaymentConfigList from './hooks/useGetPaymentConfig';
 
 const ProductWisePaymentConfig = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(PAGECOUNT);
   const [order, setOrder] = useState(COMMON_WORDS.DESC);
@@ -23,6 +27,7 @@ const ProductWisePaymentConfig = () => {
   const { lob } = useSelector((state) => state.lob);
 
   const { canCreate, canUpdate } = usePermissions();
+  const { paymentConfigList, paymentConfigLoading, getPaymentConfigList, totalCount } = useGetPaymentConfigList();
 
   useEffect(() => {
     dispatch(setTableName(''));
@@ -31,6 +36,20 @@ const ProductWisePaymentConfig = () => {
     dispatch(fetchAllProductData({ isAll: true }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const fetchPaymentConfigList = useCallback(() => {
+    getPaymentConfigList({
+      page,
+      pageSize,
+      order,
+      orderBy,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page, pageSize, order, orderBy]);
+
+  useEffect(() => {
+    fetchPaymentConfigList();
+  }, [fetchPaymentConfigList]);
 
   const handleSubmit = (data) => {
     console.log(data);
@@ -44,7 +63,12 @@ const ProductWisePaymentConfig = () => {
     return option?.lob ? option?.lob : '';
   };
 
-  const HEADER = [];
+  const handleEditClick = (row) => {
+    navigate(`/product-payment-config/form/${row.id}`);
+  };
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const HEADER = useMemo(() => generateHeader(handleEditClick), []);
 
   return (
     <>
@@ -69,10 +93,10 @@ const ProductWisePaymentConfig = () => {
 
       <div className="mt-4">
         <CustomTable
-          rows={[]}
+          rows={paymentConfigList}
           columns={HEADER}
-          loading={false}
-          totalCount={0}
+          loading={paymentConfigLoading}
+          totalCount={totalCount}
           page={page}
           setPage={setPage}
           rowsPerPage={pageSize}
