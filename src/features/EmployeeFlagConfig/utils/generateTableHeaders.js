@@ -16,6 +16,7 @@ export function generateTableHeaders(handleClicked) {
       action: [
         {
           showIcon: true,
+          iconTitle: 'View',
           iconName: <VisibilityIcon />,
           onClick: (row) => {
             handleClicked(row);

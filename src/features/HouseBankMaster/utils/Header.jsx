@@ -34,6 +34,7 @@ export const Header = (handleEditClick) => {
       action: [
         {
           showIcon: true,
+          iconTitle: 'Edit',
           iconName: <EditIcon />,
           onClick: (row) => {
             handleEditClick(row);
@@ -42,4 +43,4 @@ export const Header = (handleEditClick) => {
       ],
     },
   ];
-}
+};

@@ -164,7 +164,7 @@ export const Header = (editAction, handleInsillionStatus) => {
     },
     {
       value: 'Mobile No.',
-      id: 'mobileNo'
+      id: 'mobileNo',
     },
     {
       value: 'Created At',
@@ -195,6 +195,7 @@ export const Header = (editAction, handleInsillionStatus) => {
       action: [
         {
           showIcon: true,
+          iconTitle: 'Edit',
           iconName: <EditIcon />,
           onClick: (row) => {
             editAction(row);
@@ -232,7 +233,7 @@ export const SEARCH_OPTIONS = [
   },
   {
     label: 'Mobile No.',
-    value: 'mobileNo'
+    value: 'mobileNo',
   },
 ];
 
@@ -254,6 +255,5 @@ export const excludedLabels = [
   FORM_LABEL.PRODUCT,
   FORM_LABEL.PLAN,
   FORM_LABEL.ZONE,
-  FORM_LABEL.MASTER_POLICY
+  FORM_LABEL.MASTER_POLICY,
 ];
-

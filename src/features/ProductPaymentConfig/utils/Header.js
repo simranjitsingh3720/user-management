@@ -18,6 +18,7 @@ const generateHeader = ({ handleEditClick, paymentTypeList }) => {
       action: [
         {
           showIcon: true,
+          iconTitle: 'Edit',
           iconName: <EditIcon />,
           onClick: (row) => {
             handleEditClick(row);

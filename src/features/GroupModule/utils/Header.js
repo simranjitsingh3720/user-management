@@ -14,7 +14,7 @@ export const Header = (updateGroupStatus, showGroupPermission, handleGroupEdit) 
         {
           component: 'switch',
           onClick: (data, row) => {
-            updateGroupStatus(data, row)
+            updateGroupStatus(data, row);
           },
         },
       ],
@@ -26,16 +26,18 @@ export const Header = (updateGroupStatus, showGroupPermission, handleGroupEdit) 
       action: [
         {
           showIcon: true,
+          iconTitle: 'View',
           iconName: <VisibilityIcon />,
           onClick: (row) => {
-            showGroupPermission(row)
+            showGroupPermission(row);
           },
         },
         {
           showIcon: true,
+          iconTitle: 'Edit',
           iconName: <EditIcon />,
           onClick: (row) => {
-            handleGroupEdit(row)
+            handleGroupEdit(row);
           },
         },
       ],

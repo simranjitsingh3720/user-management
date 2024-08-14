@@ -20,6 +20,7 @@ export const Header = (handleClicked, handleStatusUpdate) => {
       action: [
         {
           showIcon: true,
+          iconTitle: 'View',
           iconName: <VisibilityIcon />,
           onClick: (row) => {
             handleClicked(row);

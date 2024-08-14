@@ -34,6 +34,7 @@ export function tableHeaders(handleEditClick, handleStatusClicked) {
       action: [
         {
           showIcon: true,
+          iconTitle: 'Edit',
           iconName: <EditIcon />,
           onClick: (row) => {
             handleEditClick(row);
@@ -80,6 +81,7 @@ export function employeeTableHeaders(handleEditClick) {
       action: [
         {
           showIcon: true,
+          iconTitle: 'Edit',
           iconName: <EditIcon />,
           onClick: (row) => {
             handleEditClick(row);
