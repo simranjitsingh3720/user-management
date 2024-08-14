@@ -53,19 +53,23 @@ function useGetPaymentConfigList() {
       const { data } = response;
 
       const transformedData = data.data.map((item) => {
-        const { lobs, payments, productWisePaymentMethod, products } = item;
+        const { lobs, productWisePaymentMethod, products } = item;
         const { lob } = lobs?.[0];
-        const paymentType = payments?.[0];
         const { product } = products?.[0];
-        const { createdAt, updatedAt, label, id } = productWisePaymentMethod;
+        const { createdAt, updatedAt, label, id, paymentTypeIds } = productWisePaymentMethod;
+        const paymentTypeIdsParsed = JSON.parse(paymentTypeIds);
+        const updatedList = paymentTypeList.reduce((acc, item) => {
+          acc[item.id] = paymentTypeIdsParsed.includes(item.id) ? 'Yes' : 'No';
+          return acc;
+        }, {});
         return {
-          id: id,
+          id,
           productName: product,
-          lob: lob,
-          paymentType: paymentType?.label,
+          lob,
+          label,
           createdAt: formatDate(createdAt),
           updatedAt: formatDate(updatedAt),
-          label,
+          ...updatedList,
         };
       });
 

@@ -1,29 +1,32 @@
-import { useEffect, useState } from "react";
-import axiosInstance from "../../../utils/axiosInstance";
-import apiUrls from "../../../utils/apiUrls";
+import { useEffect, useState } from 'react';
+import axiosInstance from '../../../utils/axiosInstance';
+import apiUrls from '../../../utils/apiUrls';
 
-function useGetPayment() {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
+function useGetPaymentType() {
+  const [paymentTypeList, setPaymentTypeList] = useState([]);
+  const [paymentTypeLoading, setPaymentTypeLoading] = useState(true);
 
-  const fetchData = async (lobId) => {
+  const fetchPaymentType = async () => {
     try {
-      setLoading(true);
-      let url = `${apiUrls.getPaymentType}?isAll=${true}`;
-      const response = await axiosInstance.get(url);
-      setData(response.data);
+      setPaymentTypeLoading(true);
+      const response = await axiosInstance.get(`${apiUrls.getPaymentType}`, {
+        params: {
+          isAll: true,
+        },
+      });
+      setPaymentTypeList(response.data);
     } catch (error) {
-      setData([]);
+      setPaymentTypeList([]);
     } finally {
-      setLoading(false);
+      setPaymentTypeLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchData();
+    fetchPaymentType();
   }, []);
 
-  return { data, loading, fetchData };
+  return { paymentTypeList, paymentTypeLoading };
 }
 
-export default useGetPayment;
+export default useGetPaymentType;

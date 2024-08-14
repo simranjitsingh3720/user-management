@@ -1,184 +1,140 @@
-import React, { useEffect, useState } from 'react';
-import SearchComponenet from '../../components/SearchComponent';
-import styles from './styles.module.scss';
-import TableHeader from './Table/TableHeader';
-import ListLoader from '../../components/ListLoader';
-import Table from './Table';
-import NoDataFound from '../../components/NoDataCard';
-import { MenuItem, Pagination, Select } from '@mui/material';
-import { PAGECOUNT, selectRowsData } from '../../utils/globalConstants';
-import useGetPaymentConfig from './hooks/useGetPaymentConfig';
-import useGetPayment from './hooks/useGetPayment';
-import { EXPORT_DROPDOWN_COLUMNS, ProductPayment } from './constants';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { PAGECOUNT } from '../../utils/globalConstants';
+import { COMMON_WORDS } from '../../utils/constants';
+import { setExtraColumns, setTableName } from '../../stores/slices/exportSlice';
+import SearchComponent from '../../components/SearchComponent';
+import usePermissions from '../../hooks/usePermission';
+import { EXPORT_DROPDOWN_COLUMNS, PRODUCT_PAYMENT_SEARCH } from './utils/constants';
 import { fetchLobData } from '../../stores/slices/lobSlice';
 import { fetchAllProductData } from '../../stores/slices/productSlice';
-import { COMMON_WORDS } from '../../utils/constants';
 import { getPlaceHolder } from '../../utils/globalizationFunction';
-import { setExtraColumns, setTableName } from '../../stores/slices/exportSlice';
-import usePermissions from '../../hooks/usePermission';
+import CustomTable from '../../components/CustomTable';
+import generateHeader from './utils/Header';
+import { useNavigate } from 'react-router-dom';
+import useGetPaymentType from './hooks/useGetPayment';
+import useGetPaymentConfigList from './hooks/useGetPaymentConfigList';
 
-function getSelectedRowData(count) {
-  let selectedRowData = [];
-
-  for (let i = 0; i < selectRowsData.length; i++) {
-    if (selectRowsData[i] <= count) {
-      selectedRowData.push(selectRowsData[i]);
-    }
-  }
-
-  return selectedRowData;
-}
-
-function ProductPaymentConfig() {
+const ProductPaymentConfig = () => {
   const dispatch = useDispatch();
-  const { lob } = useSelector((state) => state.lob);
-  const { products } = useSelector((state) => state.product);
+  const navigate = useNavigate();
+  const [page, setPage] = useState(0);
+  const [pageSize, setPageSize] = useState(PAGECOUNT);
+  const [order, setOrder] = useState(COMMON_WORDS.DESC);
+  const [orderBy, setOrderBy] = useState(COMMON_WORDS.CREATED_AT);
   const [searched, setSearched] = useState(COMMON_WORDS.PRODUCT);
+  const [resultProductString, setResultProductString] = useState('');
 
-  const [rowsPage, setRowsPage] = useState(PAGECOUNT);
-  const [pageChange, setPageChange] = useState(1);
+  const { products } = useSelector((state) => state.product);
+  const { lob } = useSelector((state) => state.lob);
+
   const { canCreate, canUpdate } = usePermissions();
-
-  const handlePaginationChange = (event, page) => {
-    setPageChange(page);
-  };
+  const { paymentConfigList, paymentConfigLoading, getPaymentConfigList, totalCount } = useGetPaymentConfigList();
+  const { paymentTypeList, paymentTypeLoading } = useGetPaymentType();
 
   useEffect(() => {
-    dispatch(setTableName(null));
-    dispatch(setExtraColumns([]));
-    dispatch(
-      fetchLobData({
-        isAll: true,
-        status: true,
-      })
-    );
+    dispatch(setTableName(''));
+    dispatch(setExtraColumns(EXPORT_DROPDOWN_COLUMNS));
+    dispatch(fetchLobData({ isAll: true }));
     dispatch(fetchAllProductData({ isAll: true }));
-  }, [dispatch]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  const { data, loading, sort, setSort, fetchData } = useGetPaymentConfig(pageChange, rowsPage);
+  const fetchPaymentConfigList = useCallback(
+    (paymentTypeList) => {
+      getPaymentConfigList({
+        page,
+        pageSize,
+        order,
+        orderBy,
+        paymentTypeList: paymentTypeList,
+        resultProductString,
+        searched,
+      });
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [page, pageSize, order, orderBy, resultProductString]
+  );
 
-  const { data: paymentData } = useGetPayment();
+  useEffect(() => {
+    if (paymentTypeList && paymentTypeList.data?.length > 0) {
+      fetchPaymentConfigList(paymentTypeList.data);
+    }
+  }, [fetchPaymentConfigList, paymentTypeList]);
 
-  const handleRowsChange = (event) => {
-    setPageChange(1);
-    setRowsPage(event.target.value);
+  const handleSubmit = (data) => {
+    setPage(0);
+    if (searched === COMMON_WORDS.PRODUCT) {
+      setResultProductString(data?.autocomplete?.map((item) => item.id).join(','));
+    } else if (searched === COMMON_WORDS.LOB) {
+      setResultProductString(data?.autocomplete?.map((item) => item.id).join(','));
+    } else {
+      setResultProductString('');
+    }
   };
 
   const optionLabelProduct = (option) => {
     return option?.product ? option.product : '';
   };
 
-  const renderOptionProductFunction = (props, option) => (
-    <li {...props} key={option?.id} style={{ textTransform: 'capitalize' }}>
-      {option?.product ? option?.product : ''}
-    </li>
-  );
-
   const optionLabelLob = (option) => {
     return option?.lob ? option?.lob : '';
   };
 
-  const renderOptionLobFunction = (props, option) => (
-    <li {...props} key={option?.id} style={{ textTransform: 'capitalize' }}>
-      {option?.lob ? option?.lob : ''}
-    </li>
-  );
-
-  const fetchIdsAndConvert = (inputData) => {
-    const ids = inputData.map((permission) => permission.id);
-    return ids.join();
+  const handleEditClick = (row) => {
+    navigate(`/product-payment-config/form/${row.id}`);
   };
 
-  useEffect(() => {
-    if (data && data?.data && data?.data[0]) {
-      dispatch(setTableName(data?.data[0]?.productWisePaymentMethod.label));
-      dispatch(setExtraColumns(EXPORT_DROPDOWN_COLUMNS));
+  const HEADER = useMemo(() => {
+    if (paymentTypeList && paymentTypeList.data?.length > 0) {
+      return generateHeader({ handleEditClick, paymentTypeList: paymentTypeList.data });
     }
-  }, [data, dispatch]);
+    return [];
 
-  const onSubmit = (data) => {
-    if (searched === COMMON_WORDS.PRODUCT) {
-      const resultProductString = fetchIdsAndConvert(data.autocomplete);
-      fetchData(searched, resultProductString);
-    } else {
-      const resultLobString = fetchIdsAndConvert(data.autocomplete);
-      fetchData(searched, resultLobString);
-    }
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [paymentTypeList]);
 
+  console.log('HEADER', HEADER);
   return (
-    <div>
-      <SearchComponenet
+    <>
+      <SearchComponent
         optionsData={searched === COMMON_WORDS.PRODUCT ? products?.data ?? [] : lob?.data ?? []}
-        fetchData={fetchData}
+        fetchData={handleSubmit}
         optionLabel={searched === COMMON_WORDS.PRODUCT ? optionLabelProduct : optionLabelLob}
         placeholder={
           searched === COMMON_WORDS.PRODUCT ? getPlaceHolder(COMMON_WORDS.PRODUCT) : getPlaceHolder(COMMON_WORDS.LOB)
         }
-        renderOptionFunction={searched === COMMON_WORDS.PRODUCT ? renderOptionProductFunction : renderOptionLobFunction}
         navigateRoute={'/product-payment-config/form'}
         searched={searched}
         setSearched={setSearched}
-        selectOptions={ProductPayment}
+        selectOptions={PRODUCT_PAYMENT_SEARCH}
         showButton
         showExportButton={true}
         canCreate={canCreate}
-        onSubmit={onSubmit}
+        onSubmit={handleSubmit}
         showBulkUploadButton={true}
+        tableHeader={HEADER}
       />
-      <div className={styles.tableContainerStyle}>
-        <div className={styles.tableStyled}>
-          {loading ? (
-            <>
-              <TableHeader />
-              <ListLoader />
-            </>
-          ) : data?.data && data?.data.length ? (
-            <Table
-              ListData={data?.data}
-              loading={loading}
-              fetchData={fetchData}
-              sort={sort}
-              setSort={setSort}
-              paymentData={paymentData}
-              canUpdate={canUpdate}
-            />
-          ) : (
-            <NoDataFound />
-          )}
-        </div>
-        <div className={styles.pageFooter}>
-          <div className={styles.rowsPerPage}>
-            <p className={styles.totalRecordStyle}>Showing Results:</p>
-            <Select
-              labelId="rows-per-page"
-              id="rows-per-page"
-              value={rowsPage}
-              onChange={handleRowsChange}
-              size="small"
-              className={styles.customizeRowsSelect}
-            >
-              {getSelectedRowData(data?.totalCount).map((item) => (
-                <MenuItem value={item} className={styles.styledOptionText}>
-                  {item}
-                </MenuItem>
-              ))}
-            </Select>
-            <p className={styles.totalRecordStyle}>of {data?.totalCount}</p>
-          </div>
-          <Pagination
-            count={data?.totalPageSize}
-            color="primary"
-            size="small"
-            onChange={handlePaginationChange}
-            page={pageChange}
-            className={styles.marginFotter}
-          />
-        </div>
+
+      <div className="mt-4">
+        <CustomTable
+          rows={paymentConfigList}
+          columns={HEADER}
+          loading={paymentConfigLoading || paymentTypeLoading}
+          totalCount={totalCount}
+          page={page}
+          setPage={setPage}
+          rowsPerPage={pageSize}
+          setRowsPerPage={setPageSize}
+          order={order}
+          setOrder={setOrder}
+          orderBy={orderBy}
+          setOrderBy={setOrderBy}
+          canUpdate={canUpdate}
+        />
       </div>
-    </div>
+    </>
   );
-}
+};
 
 export default ProductPaymentConfig;

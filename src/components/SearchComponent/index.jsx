@@ -173,6 +173,7 @@ function SearchComponent({
                       options={optionsData || []}
                       getOptionLabel={optionLabel}
                       placeholder={placeholder}
+                      disableClearable={false}
                       onChangeCallback={(newValue) => {
                         if (newValue?.length === 0) {
                           fetchData();
