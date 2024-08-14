@@ -19,7 +19,7 @@ import useSubmit from '../hooks/useSubmit';
 import CustomFormHeader from '../../../../components/CustomFormHeader';
 import { COMMON_WORDS, FORM_HEADER_TEXT } from '../../../../utils/constants';
 import dayjs from 'dayjs';
-import { ARR_CONTAINS, COMMON, FORM_LABEL, FORM_VALUE, REQUIRED_ERR, excludedLabels } from '../utils/constants';
+import { ARR_CONTAINS, COMMON, FORM_LABEL, FORM_VALUE, PAYMENT_OPTIONS, REQUIRED_ERR, excludedLabels } from '../utils/constants';
 import useUpdateUser from '../hooks/useUpdateUser';
 import errorHandler from '../../../../utils/errorHandler';
 import { clearProducts, getProducts } from '../../../../stores/slices/getProduct';
@@ -252,8 +252,7 @@ function CreateUserCreationForm() {
       if (!keyFound) {
         setRoleConfig(jsonData?.others);
       }
-    }
-    else{
+    } else {
       setRoleConfig([]);
     }
   }, [roleValue, jsonData]);
@@ -299,14 +298,20 @@ function CreateUserCreationForm() {
     }
   }, [lobsWatch]);
 
-  useEffect(()=> {
-    if(lobs && lobs.length > 0 && ARR_CONTAINS.ADMIN_ARR.includes(rolesWatch?.roleName)){
+  useEffect(() => {
+    if (lobs && lobs.length > 0 && ARR_CONTAINS.ADMIN_ARR.includes(rolesWatch?.roleName)) {
       setValue(COMMON_WORDS.LOB, lobs);
     }
   }, [lobs, rolesWatch?.roleName]);
 
-  useEffect(()=> {
-    if(lobs && lobs.length && products && products.length> 0 && ARR_CONTAINS.ADMIN_ARR.includes(rolesWatch?.roleName)){
+  useEffect(() => {
+    if (
+      lobs &&
+      lobs.length &&
+      products &&
+      products.length > 0 &&
+      ARR_CONTAINS.ADMIN_ARR.includes(rolesWatch?.roleName)
+    ) {
       setValue(COMMON_WORDS.PRODUCT, products);
     }
   }, [products, rolesWatch?.roleName]);
@@ -661,11 +666,11 @@ function CreateUserCreationForm() {
   const processKey = (key, value) => {
     switch (key) {
       case FORM_LABEL.START_DATE:
-          setValue(key, formatDate(value));
+        setValue(key, formatDate(value));
         break;
 
       case FORM_LABEL.END_DATE:
-          setValue(key, formatDate(value));
+        setValue(key, formatDate(value));
         break;
 
       case FORM_LABEL.LOGIN_TYPE:
@@ -831,6 +836,7 @@ function CreateUserCreationForm() {
   }, [editData]);
 
   const neftValue = watch(COMMON.DEFAULT_HOUSE_BANK);
+  const paymentsWatch = watch(COMMON_WORDS.PAYMENT_TYPE);
 
   useEffect(() => {
     if (neftValue && ARR_CONTAINS.PRODUCER_ARR.some((role) => rolesWatch?.roleName?.includes(role))) {
@@ -840,6 +846,16 @@ function CreateUserCreationForm() {
       }
     }
   }, [neftValue]);
+
+  useEffect(() => {
+    if (paymentsWatch && paymentsWatch.length > 0) {
+      const paymentNameArr = paymentsWatch.map((item) => item.value);
+      if (paymentNameArr.includes(PAYMENT_OPTIONS.SELF_PAYMENT_LINK) && !paymentNameArr.includes(PAYMENT_OPTIONS.ONLINE_PAYMENT)) {
+        const onlinePaymentObj = paymentType.find((item) => item.value === PAYMENT_OPTIONS.ONLINE_PAYMENT);
+        setValue(COMMON_WORDS.PAYMENT_TYPE, [...paymentsWatch, onlinePaymentObj]);
+      }
+    }
+  }, [paymentsWatch]);
 
   const useFormLabelEffect = (label, dependency, ref = null) => {
     useEffect(() => {
