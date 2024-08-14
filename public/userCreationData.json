@@ -873,7 +873,7 @@
         "validation": {
           "required": "This field is required"
         },
-        "canEdit": false
+        "canEdit": true
       },
       {
         "id": "lob",
@@ -1278,7 +1278,7 @@
         "validation": {
           "required": "This field is required"
         },
-        "canEdit": false
+        "canEdit": true
       },
       {
         "id": "lob",
@@ -1683,7 +1683,7 @@
         "validation": {
           "required": "This field is required"
         },
-        "canEdit": false
+        "canEdit": true
       },
       {
         "id": "lob",
@@ -3663,7 +3663,7 @@
         "canEdit": false
       },
       {
-        "id": "solIdDealerCode",
+        "id": "solId",
         "label": "Sol ID/ Dealer Code",
         "type": "input",
         "required": false,
@@ -3698,7 +3698,7 @@
         "canEdit": true
       },
       {
-        "id": "employeeCodeUserLoginId",
+        "id": "employeeCode",
         "label": "Employee Code/ User Login ID",
         "type": "input",
         "required": false,
@@ -3960,10 +3960,6 @@
         "required": false,
         "menuItem": [
           {
-            "value": "none",
-            "label": "None"
-          },
-          {
             "value": "maker",
             "label": "Maker"
           },
@@ -3994,7 +3990,7 @@
         "canEdit": false
       },
       {
-        "id": "solIdDealerCode",
+        "id": "solId",
         "label": "Sol ID/ Dealer Code",
         "type": "input",
         "required": false,
@@ -4007,7 +4003,7 @@
         "canEdit": true
       },
       {
-        "id": "employeeCodeUserLoginId",
+        "id": "employeeCode",
         "label": "Employee Code/ User Login ID",
         "type": "input",
         "required": false,
@@ -4219,10 +4215,6 @@
         "required": false,
         "menuItem": [
           {
-            "value": "none",
-            "label": "None"
-          },
-          {
             "value": "maker",
             "label": "Maker"
           },
@@ -4253,7 +4245,7 @@
         "canEdit": false
       },
       {
-        "id": "solIdDealerCode",
+        "id": "solId",
         "label": "Sol ID/ Dealer Code",
         "type": "input",
         "required": false,
@@ -4288,7 +4280,7 @@
         "canEdit": true
       },
       {
-        "id": "employeeCodeUserLoginId",
+        "id": "employeeCode",
         "label": "Employee Code/ User Login ID",
         "type": "input",
         "required": false,
@@ -4548,10 +4540,6 @@
         "type": "dropdown",
         "required": false,
         "menuItem": [
-          {
-            "value": "none",
-            "label": "None"
-          },
           {
             "value": "maker",
             "label": "Maker"

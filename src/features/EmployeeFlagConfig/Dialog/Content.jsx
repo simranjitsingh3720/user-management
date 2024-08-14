@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import CustomTable from "../../../components/CustomTable";
-import { generateTableHeadersProduct } from "../utils/generateTableHeaders";
+import React, { useEffect, useState } from 'react';
+import CustomTable from '../../../components/CustomTable';
+import { generateTableHeadersProduct } from '../utils/generateTableHeaders';
 
 const Content = (row) => {
   const HEADER_COLUMNS = generateTableHeadersProduct();
@@ -10,8 +10,8 @@ const Content = (row) => {
     if (row && row?.row?.productDetails) {
       const arrayData = row?.row?.productDetails.map((productDetail) => ({
         product: productDetail?.product,
-        product_code: productDetail?.product_code,
-        isEmployee: productDetail?.isEmployee ? "yes" : "no",
+        productCode: productDetail?.productCode,
+        isEmployee: productDetail?.isEmployee ? 'yes' : 'no',
       }));
 
       setData(arrayData);

@@ -151,7 +151,20 @@ const AutocompleteFieldAll = ({
             )}
             size="small"
             className={`bg-white text-sm ${classes}`}
-            limitTags={1}
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                maxHeight: "40px",
+                overflow: "auto",
+                borderRadius: "4px",
+                border:"1px solid #ccc",
+                backgroundColor:"#fff",
+                '&.Mui-focused': {
+                  outline: "none",
+                  boxShadow: "none",
+                  borderColor: "#ccc",  
+                },
+              },
+            }}
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -159,6 +172,9 @@ const AutocompleteFieldAll = ({
                 sx={{
                   '& .MuiFormHelperText-root': {
                     margin: 0,
+                  },
+                  "& fieldset": {
+                    border: "none",
                   },
                 }}
                 error={Boolean(errors[name])}

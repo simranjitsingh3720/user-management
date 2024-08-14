@@ -10,11 +10,10 @@ export const fetchUser = createAsyncThunk(
         ? `${apiUrls.getUser}?searchString=${userType}&searchKey=${searchKey}`
         : `${apiUrls.getUser}`;
 
-      if(isAll) {
+      if (isAll) {
         url = `${url}&isAll=${isAll}`;
       }
-
-      if(status) {
+      if (status) {
         url = `${url}&status=${status}`;
       }
       const response = await axiosInstance.get(url);

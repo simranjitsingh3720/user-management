@@ -22,7 +22,6 @@ import dayjs from 'dayjs';
 import { ARR_CONTAINS, COMMON, FORM_LABEL, FORM_VALUE, REQUIRED_ERR, excludedLabels } from '../utils/constants';
 import useUpdateUser from '../hooks/useUpdateUser';
 import errorHandler from '../../../../utils/errorHandler';
-import { formatDate } from '../../../../utils/globalizationFunction';
 import { clearProducts, getProducts } from '../../../../stores/slices/getProduct';
 import { clearMasterPolicy, getMasterPolicies } from '../../../../stores/slices/getMasterPolicy';
 import { clearZones, getZones } from '../../../../stores/slices/getZone';
@@ -304,13 +303,13 @@ function CreateUserCreationForm() {
     if(lobs && lobs.length > 0 && ARR_CONTAINS.ADMIN_ARR.includes(rolesWatch?.roleName)){
       setValue(COMMON_WORDS.LOB, lobs);
     }
-  }, [lobs]);
+  }, [lobs, rolesWatch?.roleName]);
 
   useEffect(()=> {
-    if(products && products.length> 0 && ARR_CONTAINS.ADMIN_ARR.includes(rolesWatch?.roleName)){
+    if(lobs && lobs.length && products && products.length> 0 && ARR_CONTAINS.ADMIN_ARR.includes(rolesWatch?.roleName)){
       setValue(COMMON_WORDS.PRODUCT, products);
     }
-  }, [products]);
+  }, [products, rolesWatch?.roleName]);
 
   useEffect(() => {
     dispatch(clearPlans());
@@ -392,7 +391,7 @@ function CreateUserCreationForm() {
       brokerRoleName,
       branchCode,
       dataEntryUserName,
-      employeeCodeUserLoginId,
+      employeeCode,
       pospAadhar,
       pospPAN,
       transactionType,
@@ -469,7 +468,7 @@ function CreateUserCreationForm() {
       brokerRoleName,
       branchCode,
       dataEntryUserName,
-      employeeCode: employeeCodeUserLoginId,
+      employeeCode,
       pospAadhar,
       pospPAN,
       transactionType,
@@ -503,7 +502,6 @@ function CreateUserCreationForm() {
       vertical,
       subVertical,
       solId,
-      startDate,
       endDate,
       active,
       ntloginId,
@@ -518,7 +516,6 @@ function CreateUserCreationForm() {
       externalPosp,
       roleAssignment,
       transactionType,
-      solIdDealerCode,
       status,
       loginType,
       sendEmail,
@@ -546,7 +543,6 @@ function CreateUserCreationForm() {
       vertical,
       subVertical,
       solId,
-      startDate,
       endDate,
       status: active === FORM_VALUE.YES,
       loginTypeIds,
@@ -554,7 +550,7 @@ function CreateUserCreationForm() {
 
     let deoPayload = {
       mobileNo: editData && editData.mobileNo !== mobileNumber ? mobileNumber : '',
-      solIdDealerCode,
+      solId,
       locationIds,
       productIds,
       planIds,
@@ -563,7 +559,6 @@ function CreateUserCreationForm() {
       pospPAN,
       transactionType,
       paymentType: paymentTypeNames,
-      startDate,
       endDate,
       revalidation: revalidation === FORM_VALUE.ACTIVE,
       externalPosp,
@@ -582,6 +577,8 @@ function CreateUserCreationForm() {
       };
     } else if (ARR_CONTAINS.PRODUCER_ARR?.includes(role)) {
       payload = {
+        loginTypeIds,
+        locationIds,
         productIds,
         paymentType: paymentTypeNames,
         houseBankId:
@@ -625,7 +622,6 @@ function CreateUserCreationForm() {
         productIds,
         sendEmail: sendEmail === FORM_VALUE.YES,
         domain,
-        startDate,
         endDate,
         status: active === FORM_VALUE.YES,
         paymentType: paymentTypeNames,
@@ -658,22 +654,19 @@ function CreateUserCreationForm() {
     }
   };
 
+  const formatDate = (date) => {
+    if (!date) return '';
+    return dayjs(date).format('DD/MM/YYYY');
+  };
+
   const processKey = (key, value) => {
     switch (key) {
       case FORM_LABEL.START_DATE:
-        if (value?.includes('/')) {
-          setValue(key, value);
-        } else {
           setValue(key, formatDate(value));
-        }
         break;
 
       case FORM_LABEL.END_DATE:
-        if (value?.includes('/')) {
-          setValue(key, value);
-        } else {
           setValue(key, formatDate(value));
-        }
         break;
 
       case FORM_LABEL.LOGIN_TYPE:
@@ -864,6 +857,7 @@ function CreateUserCreationForm() {
   useFormLabelEffect(FORM_LABEL.PRODUCT, products);
   useFormLabelEffect(FORM_LABEL.LOGIN_TYPE, loginType);
   useFormLabelEffect(FORM_LABEL.HOUSE_BANK, neftDefaultBank);
+  useFormLabelEffect(FORM_LABEL.PRODUCER_TYPE, producerType);
   useFormLabelEffect(FORM_LABEL.LOCATION, locations);
   useFormLabelEffect(FORM_LABEL.CHANNEL_ID, channelType);
   useFormLabelEffect(FORM_LABEL.PAYMENT_TYPE, paymentType);
@@ -921,7 +915,7 @@ function CreateUserCreationForm() {
               isEdit={isEdit}
               trigger={trigger}
               setValue={setValue}
-              disabled={!isEdit ? false : true}
+              disabled={false}
             />
 
             {roleConfig?.map((item) =>
@@ -950,7 +944,7 @@ function CreateUserCreationForm() {
                   required={item?.required}
                   errors={errors}
                   classes="w-full"
-                  isEdit={isEdit}
+                  isEdit={false}
                   trigger={trigger}
                   disabled={!isEdit ? item?.disabled : !item?.canEdit}
                 />

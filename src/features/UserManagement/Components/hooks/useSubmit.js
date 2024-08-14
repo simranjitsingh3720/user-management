@@ -21,7 +21,8 @@ function flattenNestedObjects(data) {
     }
 
     if (item?.houseBank && item?.houseBank.length > 0) {
-      result = { ...result, ...item.houseBank[0] };
+      const { status, ...rest } = item.houseBank[0];
+      result = { ...result, ...rest };
     }
 
     for (const key in item) {
