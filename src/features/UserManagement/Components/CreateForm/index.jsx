@@ -304,13 +304,13 @@ function CreateUserCreationForm() {
     if(lobs && lobs.length > 0 && ARR_CONTAINS.ADMIN_ARR.includes(rolesWatch?.roleName)){
       setValue(COMMON_WORDS.LOB, lobs);
     }
-  }, [lobs, rolesWatch?.roleName]);
+  }, [lobs]);
 
   useEffect(()=> {
     if(products && products.length> 0 && ARR_CONTAINS.ADMIN_ARR.includes(rolesWatch?.roleName)){
       setValue(COMMON_WORDS.PRODUCT, products);
     }
-  }, [products, rolesWatch?.roleName]);
+  }, [products]);
 
   useEffect(() => {
     dispatch(clearPlans());
