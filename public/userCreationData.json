@@ -873,7 +873,7 @@
         "validation": {
           "required": "This field is required"
         },
-        "canEdit": false
+        "canEdit": true
       },
       {
         "id": "lob",
@@ -1278,7 +1278,7 @@
         "validation": {
           "required": "This field is required"
         },
-        "canEdit": false
+        "canEdit": true
       },
       {
         "id": "lob",
@@ -1683,7 +1683,7 @@
         "validation": {
           "required": "This field is required"
         },
-        "canEdit": false
+        "canEdit": true
       },
       {
         "id": "lob",

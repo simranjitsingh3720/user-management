@@ -577,6 +577,7 @@ function CreateUserCreationForm() {
       };
     } else if (ARR_CONTAINS.PRODUCER_ARR?.includes(role)) {
       payload = {
+        locationIds,
         productIds,
         paymentType: paymentTypeNames,
         houseBankId:
@@ -912,7 +913,7 @@ function CreateUserCreationForm() {
               isEdit={isEdit}
               trigger={trigger}
               setValue={setValue}
-              disabled={!isEdit ? false : true}
+              disabled={false}
             />
 
             {roleConfig?.map((item) =>
