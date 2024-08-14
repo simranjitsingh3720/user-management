@@ -10,7 +10,15 @@ function useGetPaymentConfigList() {
   const [paymentConfigLoading, setPaymentConfigLoading] = useState(true);
   const [totalCount, setTotalCount] = useState(0);
 
-  const getPaymentConfigList = async ({ page, pageSize, order, orderBy, searched, resultProductString }) => {
+  const getPaymentConfigList = async ({
+    page,
+    pageSize,
+    order,
+    orderBy,
+    searched,
+    resultProductString,
+    paymentTypeList,
+  }) => {
     try {
       setPaymentConfigLoading(true);
       let params = {

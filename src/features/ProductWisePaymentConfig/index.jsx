@@ -13,6 +13,7 @@ import CustomTable from '../../components/CustomTable';
 import generateHeader from './utils/Header';
 import { useNavigate } from 'react-router-dom';
 import useGetPaymentConfigList from './hooks/useGetPaymentConfig';
+import useGetPaymentType from './hooks/useGetPayment';
 
 const ProductWisePaymentConfig = () => {
   const dispatch = useDispatch();
@@ -28,6 +29,7 @@ const ProductWisePaymentConfig = () => {
 
   const { canCreate, canUpdate } = usePermissions();
   const { paymentConfigList, paymentConfigLoading, getPaymentConfigList, totalCount } = useGetPaymentConfigList();
+  const { paymentTypeList, paymentTypeLoading } = useGetPaymentType();
 
   useEffect(() => {
     dispatch(setTableName(''));
@@ -43,6 +45,7 @@ const ProductWisePaymentConfig = () => {
       pageSize,
       order,
       orderBy,
+      paymentTypeList: paymentTypeList.data,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, pageSize, order, orderBy]);
@@ -67,8 +70,14 @@ const ProductWisePaymentConfig = () => {
     navigate(`/product-payment-config/form/${row.id}`);
   };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const HEADER = useMemo(() => generateHeader(handleEditClick), []);
+  const HEADER = useMemo(() => {
+    if (paymentTypeList && paymentTypeList.data?.length > 0) {
+      return generateHeader({ handleEditClick, paymentTypeList: paymentTypeList.data });
+    }
+    return [];
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [paymentTypeList]);
 
   return (
     <>
@@ -95,7 +104,7 @@ const ProductWisePaymentConfig = () => {
         <CustomTable
           rows={paymentConfigList}
           columns={HEADER}
-          loading={paymentConfigLoading}
+          loading={paymentConfigLoading || paymentTypeLoading}
           totalCount={totalCount}
           page={page}
           setPage={setPage}
