@@ -10,7 +10,7 @@ function generateTableHeaders(handleClicked) {
     },
     {
       id: 'producerCode',
-      value: 'Producer Code',
+      value: 'Producer/Channel Code',
     },
     {
       id: 'createdAt',

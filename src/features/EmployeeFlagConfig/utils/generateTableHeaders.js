@@ -1,20 +1,18 @@
-import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 export function generateTableHeaders(handleClicked) {
   return [
     {
-      id: "producerCode",
-      value: "Producer Code",
-      sortable: false,
+      id: 'producerCode',
+      value: 'Producer Code',
     },
     {
-      id: "producerName",
-      value: "Producer Name",
-      sortable: false,
+      id: 'producerName',
+      value: 'Producer Name',
     },
     {
-      id: "action",
-      value: "Product Details",
+      id: 'action',
+      value: 'Product Details',
       action: [
         {
           showIcon: true,
@@ -26,13 +24,13 @@ export function generateTableHeaders(handleClicked) {
       ],
     },
     {
-      id: "createdAt",
-      value: "Created At",
+      id: 'createdAt',
+      value: 'Created At',
       sortable: true,
     },
     {
-      id: "updatedAt",
-      value: "Updated At",
+      id: 'updatedAt',
+      value: 'Updated At',
       sortable: true,
     },
   ];
@@ -41,19 +39,16 @@ export function generateTableHeaders(handleClicked) {
 export function generateTableHeadersProduct() {
   return [
     {
-      id: "product",
-      value: "Product",
-      sortable: false,
+      id: 'product',
+      value: 'Product',
     },
     {
-      id: "product_code",
-      value: "Product Code",
-      sortable: false,
+      id: 'productCode',
+      value: 'Product Code',
     },
     {
-      id: "isEmployee",
-      value: "Member Is Employee",
-      sortable: false,
+      id: 'isEmployee',
+      value: 'Member Is Employee',
     },
   ];
 }
