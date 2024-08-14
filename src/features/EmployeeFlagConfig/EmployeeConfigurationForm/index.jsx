@@ -52,7 +52,7 @@ function EmployeeConfigurationForm({ fetchData: listFetchFun }) {
       );
   }, [producerList, EmployeeProducerData]);
 
-  const { handleSubmit, control, setValue, formState } = useForm({
+  const { handleSubmit, control, setValue, formState, trigger } = useForm({
     defaultValues: {
       producer: null,
     },
@@ -139,6 +139,7 @@ function EmployeeConfigurationForm({ fetchData: listFetchFun }) {
                     {option?.firstName} {option?.lastName}
                   </li>
                 )}
+                trigger={trigger}
                 onChangeCallback={(newValue) => {
                   fetchDataByProducer(newValue?.id);
                   fetchData(newValue?.id);
