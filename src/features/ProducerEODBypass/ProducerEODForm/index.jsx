@@ -127,7 +127,6 @@ function ProducerEODFrom() {
                 rules={{ required: 'Producer Code is required' }}
                 error={Boolean(errors.producerCode)}
                 helperText={errors.producerCode?.message}
-                disableClearable={true}
                 disabled={id ? true : false}
                 placeholder={COMMON_WORDS.SELECT}
                 trigger={trigger}

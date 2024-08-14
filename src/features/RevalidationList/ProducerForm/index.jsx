@@ -66,7 +66,6 @@ const ProducerForm = ({ onFormSubmit, revalidationListLoading }) => {
               rules={{ required: 'Producer is required' }}
               error={Boolean(errors.producer)}
               helperText={errors.producer?.message}
-              disableClearable={true}
               placeholder={COMMON_WORDS.SELECT}
             />
           </Grid>

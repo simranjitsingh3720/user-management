@@ -133,7 +133,6 @@ function EmployeeConfigurationForm({ fetchData: listFetchFun }) {
                 rules={{ required: 'Producer is required' }}
                 error={Boolean(errors.producer)}
                 helperText={errors.producer?.message}
-                disableClearable={true}
                 placeholder={COMMON_WORDS.SELECT}
                 renderOption={(props, option) => (
                   <li {...props} key={option.id} style={{ textTransform: 'capitalize' }}>

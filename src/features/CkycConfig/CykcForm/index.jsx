@@ -37,7 +37,7 @@ const CkycForm = () => {
 
   useEffect(() => {
     setValue('forWhom', null);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [watch('cykc')]);
 
   const { UpdateData, postData, loading } = useHandleCkyc();
@@ -110,7 +110,6 @@ const CkycForm = () => {
                 loading={lobLoading}
                 isOptionEqualToValue={(option, value) => option.id === value.id}
                 placeholder={COMMON_WORDS.SELECT}
-                disableClearable={false}
                 required={true}
                 error={Boolean(errors.lob)}
                 helperText={errors.lob?.message}
@@ -133,7 +132,6 @@ const CkycForm = () => {
                 loading={productsLoading}
                 isOptionEqualToValue={(option, value) => option.id === value.id}
                 placeholder={COMMON_WORDS.SELECT}
-                disableClearable={false}
                 required={true}
                 error={Boolean(errors.product)}
                 helperText={errors.product?.message}
@@ -165,7 +163,6 @@ const CkycForm = () => {
                     return option.value === value.value;
                   }}
                   placeholder={COMMON_WORDS.SELECT}
-                  disableClearable={false}
                   required={true}
                   error={Boolean(errors.forWhom)}
                   helperText={errors.forWhom?.message}

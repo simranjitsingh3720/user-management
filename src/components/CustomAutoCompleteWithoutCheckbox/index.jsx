@@ -4,7 +4,7 @@ import { Controller } from 'react-hook-form';
 
 const CustomAutoCompleteWithoutCheckbox = ({
   name,
-  label='',
+  label = '',
   control,
   rules,
   options,
@@ -14,7 +14,7 @@ const CustomAutoCompleteWithoutCheckbox = ({
   size = 'small',
   isOptionEqualToValue,
   placeholder,
-  disableClearable,
+  disableClearable = true,
   ListboxProps,
   renderOption,
   required,
@@ -24,7 +24,7 @@ const CustomAutoCompleteWithoutCheckbox = ({
   disabled,
   trigger,
   multiple = false,
-  limitTags
+  limitTags,
 }) => {
   return (
     <>
@@ -44,23 +44,30 @@ const CustomAutoCompleteWithoutCheckbox = ({
             size={size}
             disableCloseOnSelect={multiple ? true : false}
             isOptionEqualToValue={isOptionEqualToValue}
-            renderInput={(params) => <TextField {...params} error={error} placeholder={placeholder} sx={{
-              "& fieldset": {
-                border: "none",
-              },
-            }}/>}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                error={error}
+                placeholder={placeholder}
+                sx={{
+                  '& fieldset': {
+                    border: 'none',
+                  },
+                }}
+              />
+            )}
             value={field.value ? field.value : multiple ? [] : null}
             sx={{
               '& .MuiOutlinedInput-root': {
-                maxHeight: "40px",
-                overflow: "auto",
-                borderRadius: "4px",
-                border:"1px solid #ccc",
-                backgroundColor:"#fff",
+                maxHeight: '40px',
+                overflow: 'auto',
+                borderRadius: '4px',
+                border: '1px solid #ccc',
+                backgroundColor: '#fff',
                 '&.Mui-focused': {
-                  outline: "none",
-                  boxShadow: "none",
-                  borderColor: "#ccc",  
+                  outline: 'none',
+                  boxShadow: 'none',
+                  borderColor: '#ccc',
                 },
               },
             }}
@@ -71,16 +78,17 @@ const CustomAutoCompleteWithoutCheckbox = ({
               }
               onChangeCallback && onChangeCallback(newValue);
             }}
-            // limitTags={limitTags || 1}
             disableClearable={disableClearable}
             ListboxProps={ListboxProps}
-            renderOption={(props, option, { selected }) => (
-              renderOption ? renderOption(props, option) : (
+            renderOption={(props, option, { selected }) =>
+              renderOption ? (
+                renderOption(props, option)
+              ) : (
                 <li {...props} key={option.id || option.label} style={{ textTransform: 'capitalize' }}>
                   {getOptionLabel(option)}
                 </li>
               )
-            )}
+            }
           />
         )}
       />

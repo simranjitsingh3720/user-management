@@ -141,7 +141,6 @@ function CreateNewUserContainer({
               render={({ field }) => (
                 <Autocomplete
                   disablePortal
-                  disableClearable={true}
                   id={`subModule-${index}`}
                   options={(item?.SubModuleData || []).map((obj) => ({
                     label: capitalizeFirstLetter(obj?.moduleName || ''),

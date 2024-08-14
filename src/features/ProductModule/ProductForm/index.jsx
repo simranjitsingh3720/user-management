@@ -120,7 +120,6 @@ function ProductForm() {
                 rules={{ required: 'LOB is required' }}
                 error={Boolean(errors.lob)}
                 helperText={errors.lob?.message}
-                disableClearable={true}
                 placeholder={COMMON_WORDS.SELECT}
                 renderOption={(props, option) => (
                   <li {...props} key={option.id} style={{ textTransform: 'capitalize' }}>

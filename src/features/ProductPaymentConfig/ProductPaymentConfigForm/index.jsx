@@ -130,7 +130,6 @@ function ProductPaymentConfigForm() {
                 placeholder={COMMON_WORDS.SELECT}
                 trigger={trigger}
                 disabled={id ? true : false}
-                disableClearable={true}
               />
             </Grid>
 
@@ -149,7 +148,6 @@ function ProductPaymentConfigForm() {
                 helperText={errors.product?.message}
                 placeholder={COMMON_WORDS.SELECT}
                 trigger={trigger}
-                disableClearable={true}
                 disabled={id ? true : false}
               />
             </Grid>

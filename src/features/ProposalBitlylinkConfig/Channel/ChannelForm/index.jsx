@@ -130,7 +130,6 @@ function ChannelForm() {
                       rules={{ required: 'Channel is required' }}
                       error={Boolean(errors.channel)}
                       helperText={errors.channel?.message}
-                      disableClearable
                       placeholder={COMMON_WORDS.SELECT}
                     />
                   </Grid>
@@ -145,7 +144,6 @@ function ChannelForm() {
                       rules={{ required: 'Bitly Link Mandatory is required' }}
                       error={Boolean(errors.bitlyLinkMandatory)}
                       helperText={errors.bitlyLinkMandatory?.message}
-                      disableClearable
                       placeholder={COMMON_WORDS.SELECT}
                     />
                   </Grid>
@@ -169,7 +167,6 @@ function ChannelForm() {
                         rules={{ required: 'Producer Code is required' }}
                         error={Boolean(errors.producerCode)}
                         helperText={errors.producerCode?.message}
-                        disableClearable
                         placeholder={COMMON_WORDS.SELECT}
                         onChangeCallback={(newValue) => {
                           fetchData(newValue?.id);

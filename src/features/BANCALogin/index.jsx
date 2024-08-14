@@ -185,7 +185,6 @@ function BANCALogin() {
                 helperText={errors.producerCode?.message}
                 required={true}
                 placeholder={COMMON_WORDS.SELECT}
-                disableClearable={true}
                 onChangeCallback={() => {
                   fetchData(getValues('producerCode')?.id);
                   resetFields();
@@ -207,7 +206,6 @@ function BANCALogin() {
                 required={true}
                 placeholder={COMMON_WORDS.SELECT}
                 trigger={trigger}
-                disableClearable={true}
                 onChangeCallback={() => {
                   if (watch('producerCode') && watch('product')) {
                     bancaFetchData(watch('producerCode').id, watch('product').id);

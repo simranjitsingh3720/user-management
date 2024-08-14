@@ -216,7 +216,6 @@ function ProposalForm() {
                   rules={{ required: 'Channel is required' }}
                   error={Boolean(errors.channel)}
                   helperText={errors.channel?.message}
-                  disableClearable={true}
                   placeholder={COMMON_WORDS.SELECT}
                   trigger={trigger}
                   disabled={id ? true : false}
@@ -236,7 +235,6 @@ function ProposalForm() {
                   placeholder="Select"
                   error={Boolean(errors.producerCode)}
                   helperText={errors.producerCode?.message}
-                  disableClearable={true}
                   trigger={trigger}
                   disabled={id ? true : false}
                   onChangeCallback={(newValue) => {
@@ -262,7 +260,6 @@ function ProposalForm() {
                 required
                 error={Boolean(errors.lob)}
                 helperText={errors.lob?.message}
-                disableClearable={true}
                 trigger={trigger}
                 onChangeCallback={(newValue) => {
                   setValue('product', null);
@@ -285,7 +282,6 @@ function ProposalForm() {
                 required
                 error={Boolean(errors.product)}
                 helperText={errors.product?.message}
-                disableClearable={true}
                 trigger={trigger}
                 disabled={id ? true : false}
               />

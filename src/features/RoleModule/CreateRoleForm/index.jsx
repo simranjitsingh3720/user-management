@@ -99,7 +99,6 @@ function CreateRoleForm() {
                 rules={{ required: 'Group Name is required' }}
                 error={Boolean(errors.groups)}
                 helperText={errors.groups?.message}
-                disableClearable={true}
                 placeholder={COMMON_WORDS.SELECT}
               />
             </Grid>

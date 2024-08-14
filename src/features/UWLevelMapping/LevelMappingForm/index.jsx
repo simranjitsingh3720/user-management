@@ -137,7 +137,6 @@ function LevelMappingForm({ dataById, fetchData }) {
                 rules={{ required: 'LOB is required' }}
                 error={Boolean(errors.lob)}
                 helperText={errors.lob?.message}
-                disableClearable={true}
                 placeholder={COMMON_WORDS.SELECT}
                 disabled={editData?.data?.id ? true : false}
                 onChangeCallback={(newValue) => {
@@ -161,7 +160,6 @@ function LevelMappingForm({ dataById, fetchData }) {
                 rules={{ required: 'Product is required' }}
                 error={Boolean(errors.product)}
                 helperText={errors.product?.message}
-                disableClearable={true}
                 placeholder={COMMON_WORDS.SELECT}
                 disabled={editData?.data?.id ? true : false}
               />
@@ -178,7 +176,6 @@ function LevelMappingForm({ dataById, fetchData }) {
                 rules={{ required: 'Location is required' }}
                 error={Boolean(errors.location)}
                 helperText={errors.location?.message}
-                disableClearable={true}
                 placeholder={COMMON_WORDS.SELECT}
               />
             </Grid>
@@ -194,7 +191,6 @@ function LevelMappingForm({ dataById, fetchData }) {
                 rules={{ required: 'Level is required' }}
                 error={Boolean(errors.level)}
                 helperText={errors.level?.message}
-                disableClearable={true}
                 placeholder={COMMON_WORDS.SELECT}
                 renderOption={(props, option) => (
                   <li {...props} key={option.value}>

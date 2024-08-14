@@ -115,7 +115,6 @@ const PartnerNeftForm = () => {
                 rules={{ required: 'LOB is required' }}
                 error={Boolean(errors.lob)}
                 helperText={errors.lob?.message}
-                disableClearable={true}
                 placeholder={COMMON_WORDS.SELECT}
                 disabled={params.id ? true : false}
                 onChangeCallback={(newValue) => {
@@ -140,7 +139,6 @@ const PartnerNeftForm = () => {
                 rules={{ required: 'Product is required' }}
                 error={Boolean(errors.product)}
                 helperText={errors.product?.message}
-                disableClearable={true}
                 disabled={params.id ? true : false}
                 placeholder={COMMON_WORDS.SELECT}
               />
@@ -161,7 +159,6 @@ const PartnerNeftForm = () => {
                 rules={{ required: 'Producer is required' }}
                 error={Boolean(errors.producer)}
                 helperText={errors.producer?.message}
-                disableClearable={true}
                 placeholder={COMMON_WORDS.SELECT}
               />
             </Grid>
@@ -178,7 +175,6 @@ const PartnerNeftForm = () => {
                 rules={{ required: 'Verification Method is required' }}
                 error={Boolean(errors.verificationMethod)}
                 helperText={errors.verificationMethod?.message}
-                disableClearable={true}
                 placeholder={COMMON_WORDS.SELECT}
               />
             </Grid>

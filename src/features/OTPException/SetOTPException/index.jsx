@@ -95,7 +95,6 @@ function SetOTPException({ fetchData }) {
                   rules={{ required: 'Channel is required' }}
                   error={Boolean(errors.channel)}
                   helperText={errors.channel?.message}
-                  disableClearable
                   placeholder={COMMON_WORDS.SELECT}
                   trigger={trigger}
                 />
@@ -113,7 +112,6 @@ function SetOTPException({ fetchData }) {
                   rules={{ required: 'Producer is required' }}
                   error={Boolean(errors.producerCode)}
                   helperText={errors.producerCode?.message}
-                  disableClearable
                   placeholder={COMMON_WORDS.SELECT}
                   trigger={trigger}
                 />

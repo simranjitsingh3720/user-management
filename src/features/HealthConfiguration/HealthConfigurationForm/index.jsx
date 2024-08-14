@@ -107,7 +107,6 @@ function HealthConfigurationForm() {
                 isOptionEqualToValue={(option, value) => option.id === value.id}
                 error={Boolean(errors.producer)}
                 helperText={errors.producer?.message}
-                disableClearable={true}
                 placeholder={COMMON_WORDS.SELECT}
                 trigger={trigger}
                 disabled={id ? true : false}
@@ -125,7 +124,6 @@ function HealthConfigurationForm() {
                 isOptionEqualToValue={(option, value) => option.value === value.value}
                 error={Boolean(errors.medicare)}
                 helperText={errors.medicare?.message}
-                disableClearable={true}
                 placeholder={COMMON_WORDS.SELECT}
                 trigger={trigger}
               />
