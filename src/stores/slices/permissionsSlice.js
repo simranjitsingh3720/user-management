@@ -8,9 +8,9 @@ export const fetchPermissions = createAsyncThunk(
   'permissions/fetchPermissions',
   async ({ isAll = true, status = true }, { getState, rejectWithValue }) => {
     try {
-      const { permissionsSlice } = getState();
-      if (permissionsSlice?.data?.length > 0) {
-        return permissionsSlice.data;
+      const { permissions } = getState();
+      if (permissions?.data?.length > 0) {
+        return permissions.data;
       }
       const params = {
         isAll,

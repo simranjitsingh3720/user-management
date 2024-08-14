@@ -3960,10 +3960,6 @@
         "required": false,
         "menuItem": [
           {
-            "value": "none",
-            "label": "None"
-          },
-          {
             "value": "maker",
             "label": "Maker"
           },
@@ -4218,10 +4214,6 @@
         "type": "dropdown",
         "required": false,
         "menuItem": [
-          {
-            "value": "none",
-            "label": "None"
-          },
           {
             "value": "maker",
             "label": "Maker"
@@ -4548,10 +4540,6 @@
         "type": "dropdown",
         "required": false,
         "menuItem": [
-          {
-            "value": "none",
-            "label": "None"
-          },
           {
             "value": "maker",
             "label": "Maker"
