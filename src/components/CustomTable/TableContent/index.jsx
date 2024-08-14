@@ -61,9 +61,11 @@ const TableContent = ({ columns, data, loading, canUpdate }) => {
                         ) : showIcon && action?.showIcon && col.id !== TABLE_COLUMNS.BULK_DOWNLOAD_FILE_ACTION ? (
                           <>
                             <Tooltip title={action.iconTitle ? action.iconTitle : ''}>
-                              <IconButton onClick={() => action.onClick(row)} disabled={isEditIcon(action?.iconName)}>
-                                {action.iconName}
-                              </IconButton>
+                              <span>
+                                <IconButton onClick={() => action.onClick(row)} disabled={isEditIcon(action?.iconName)}>
+                                  {action.iconName}
+                                </IconButton>
+                              </span>
                             </Tooltip>
                           </>
                         ) : showIcon &&
@@ -71,9 +73,11 @@ const TableContent = ({ columns, data, loading, canUpdate }) => {
                           col.id === TABLE_COLUMNS.BULK_DOWNLOAD_FILE_ACTION &&
                           row?.errorFileUrl ? (
                           <Tooltip title={action.iconTitle ? action.iconTitle : ''}>
-                            <IconButton onClick={() => action.onClick(row)} disabled={isEditIcon(action?.iconName)}>
-                              {action.iconName}
-                            </IconButton>
+                            <span>
+                              <IconButton onClick={() => action.onClick(row)} disabled={isEditIcon(action?.iconName)}>
+                                {action.iconName}
+                              </IconButton>
+                            </span>
                           </Tooltip>
                         ) : showIcon &&
                           action?.showIcon &&
