@@ -35,20 +35,20 @@ export function generateTableHeaders(handleClicked, handleEdit) {
       value: 'Updated At',
       sortable: true,
     },
-    {
-      id: 'action',
-      value: 'Action',
-      action: [
-        {
-          showIcon: true,
-          iconTitle: 'Edit',
-          iconName: <EditIcon />,
-          onClick: (row) => {
-            handleEdit(row);
-          },
-        },
-      ],
-    },
+    // {
+    //   id: 'action',
+    //   value: 'Action',
+    //   action: [
+    //     {
+    //       showIcon: true,
+    //       iconTitle: 'Edit',
+    //       iconName: <EditIcon />,
+    //       onClick: (row) => {
+    //         handleEdit(row);
+    //       },
+    //     },
+    //   ],
+    // },
   ];
 }
 

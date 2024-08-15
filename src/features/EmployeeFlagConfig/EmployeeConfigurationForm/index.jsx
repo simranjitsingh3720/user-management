@@ -27,9 +27,9 @@ function EmployeeConfigurationForm({ fetchData: listFetchFun }) {
     dispatch(
       fetchUser({ userType: COMMON_WORDS.EXTERNAL, searchKey: COMMON_WORDS.USER_TYPE, isAll: true, status: true })
     );
-    if (id) {
-      fetchDataByProducer(id);
-    }
+    // if (id) {
+    //   fetchDataByProducer(id);
+    // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
 
@@ -43,8 +43,8 @@ function EmployeeConfigurationForm({ fetchData: listFetchFun }) {
         }))
       );
 
-      setValue('producer', EmployeeProducerData?.data?.[0]?.producer?.[0]);
-      fetchData(EmployeeProducerData?.data?.[0]?.producer?.[0]?.id);
+      // setValue('producer', EmployeeProducerData?.data?.[0]?.producer?.[0]);
+      // fetchData(EmployeeProducerData?.data?.[0]?.producer?.[0]?.id);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [EmployeeProducerData]);
