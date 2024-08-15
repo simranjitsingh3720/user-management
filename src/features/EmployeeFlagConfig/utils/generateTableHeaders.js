@@ -1,6 +1,7 @@
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import EditIcon from '@mui/icons-material/Edit';
 
-export function generateTableHeaders(handleClicked) {
+export function generateTableHeaders(handleClicked, handleEdit) {
   return [
     {
       id: 'producerCode',
@@ -11,7 +12,7 @@ export function generateTableHeaders(handleClicked) {
       value: 'Producer Name',
     },
     {
-      id: 'action',
+      id: 'productDetails',
       value: 'Product Details',
       action: [
         {
@@ -33,6 +34,20 @@ export function generateTableHeaders(handleClicked) {
       id: 'updatedAt',
       value: 'Updated At',
       sortable: true,
+    },
+    {
+      id: 'action',
+      value: 'Action',
+      action: [
+        {
+          showIcon: true,
+          iconTitle: 'Edit',
+          iconName: <EditIcon />,
+          onClick: (row) => {
+            handleEdit(row);
+          },
+        },
+      ],
     },
   ];
 }

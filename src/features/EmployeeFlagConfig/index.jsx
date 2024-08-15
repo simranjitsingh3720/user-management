@@ -14,11 +14,13 @@ import usePermissions from '../../hooks/usePermission';
 import { EXPORT_DROPDOWN_COLUMNS } from './utils/constant';
 import Content from './Dialog/Content';
 import Actions from './Dialog/Action';
+import { useNavigate } from 'react-router-dom';
 
 function EmployeeFlagConfig() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { user } = useSelector((state) => state.user);
-  const { canCreate } = usePermissions();
+  const { canCreate, canUpdate } = usePermissions();
 
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(PAGECOUNT);
@@ -90,7 +92,12 @@ function EmployeeFlagConfig() {
     [dispatch, getEmployeeFlagList]
   );
 
-  const HEADER_COLUMNS = useMemo(() => generateTableHeaders(handleClicked), [handleClicked]);
+  const handleEdit = (row) => {
+    navigate(`/employee-flag-config/form/${row.id}`);
+  };
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const HEADER_COLUMNS = useMemo(() => generateTableHeaders(handleClicked, handleEdit), [handleClicked]);
 
   const onSubmit = (data) => {
     setPage(0);
@@ -132,6 +139,7 @@ function EmployeeFlagConfig() {
         setOrder={setOrder}
         orderBy={orderBy}
         setOrderBy={setOrderBy}
+        canUpdate={canUpdate}
       />
     </div>
   );

@@ -1,8 +1,8 @@
-import { useState } from "react";
-import axiosInstance from "../../../utils/axiosInstance";
-import { COMMON_WORDS } from "../../../utils/constants";
-import { buildQueryString } from "../../../utils/globalizationFunction";
-import apiUrls from "../../../utils/apiUrls";
+import { useState } from 'react';
+import axiosInstance from '../../../utils/axiosInstance';
+import { COMMON_WORDS } from '../../../utils/constants';
+import { buildQueryString } from '../../../utils/globalizationFunction';
+import apiUrls from '../../../utils/apiUrls';
 
 function useGetEmployeeByProducer() {
   const [data, setData] = useState(null);
@@ -11,11 +11,11 @@ function useGetEmployeeByProducer() {
   const fetchData = async (producerId) => {
     try {
       let params = {
-        ids: producerId,
-        edge: COMMON_WORDS.HAS_PRODUCER,
-        isExclusive: true,
-        childFieldsToFetch: COMMON_WORDS.PRODUCTS,
-        childFieldsEdge: COMMON_WORDS.HAS_PRODUCT,
+        id: producerId,
+        // edge: COMMON_WORDS.HAS_PRODUCER,
+        // isExclusive: true,
+        childFieldsToFetch: `${COMMON_WORDS.PRODUCTS},${COMMON_WORDS.PRODUCER}`,
+        childFieldsEdge: `${COMMON_WORDS.HAS_PRODUCT},${COMMON_WORDS.HAS_PRODUCER}`,
       };
       let url = `/${apiUrls.employeeFlag}?${buildQueryString(params)}`;
 

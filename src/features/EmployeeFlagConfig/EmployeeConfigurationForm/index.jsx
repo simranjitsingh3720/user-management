@@ -27,6 +27,10 @@ function EmployeeConfigurationForm({ fetchData: listFetchFun }) {
     dispatch(
       fetchUser({ userType: COMMON_WORDS.EXTERNAL, searchKey: COMMON_WORDS.USER_TYPE, isAll: true, status: true })
     );
+    if (id) {
+      fetchDataByProducer(id);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
 
   useEffect(() => {
@@ -38,27 +42,25 @@ function EmployeeConfigurationForm({ fetchData: listFetchFun }) {
           isEmployee: item?.isEmployee || false,
         }))
       );
+
+      setValue('producer', EmployeeProducerData?.data?.[0]?.producer?.[0]);
+      fetchData(EmployeeProducerData?.data?.[0]?.producer?.[0]?.id);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [EmployeeProducerData]);
 
-  useEffect(() => {
-    if (producerList && producerList?.data && !EmployeeProducerData?.data?.length)
-      setDataList(
-        (producerList?.data || []).map((item) => ({
-          name: item.product,
-          productId: item.id,
-          isEmployee: false,
-        }))
-      );
-  }, [producerList, EmployeeProducerData]);
-
-  const { handleSubmit, control, setValue, formState, trigger } = useForm({
+  const {
+    handleSubmit,
+    control,
+    setValue,
+    formState: { errors },
+    trigger,
+  } = useForm({
     defaultValues: {
       producer: null,
     },
   });
 
-  const { errors } = formState;
   const { postData, loading } = useCreateEmployeeConfig(listFetchFun);
   const { UpdateDataFun, loading: updateLoading } = useUpdateEmployeeConfig(listFetchFun);
 
@@ -139,6 +141,7 @@ function EmployeeConfigurationForm({ fetchData: listFetchFun }) {
                   fetchDataByProducer(newValue?.id);
                   fetchData(newValue?.id);
                 }}
+                disabled={id ? true : false}
               />
             </Grid>
             <Grid item xs={12}>

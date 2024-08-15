@@ -352,6 +352,14 @@ const AppRoutes = () => {
         }
       />
       <Route
+        path="/employee-flag-config/form/:id"
+        element={
+          <ResponsiveDrawer showSidebarAndHeader={true}>
+            <PrivateRoute component={EmployeeConfigurationForm} />
+          </ResponsiveDrawer>
+        }
+      />
+      <Route
         path="/gc-sync-updation"
         element={
           <ResponsiveDrawer showSidebarAndHeader={true}>
