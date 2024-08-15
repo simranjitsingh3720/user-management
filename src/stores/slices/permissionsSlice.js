@@ -6,15 +6,15 @@ import { buildQueryString } from '../../utils/globalizationFunction';
 // Async thunk to fetch permissions with parameters
 export const fetchPermissions = createAsyncThunk(
   'permissions/fetchPermissions',
-  async ({ isAll = true, status = true }, { getState, rejectWithValue }) => {
+  async (_, { getState, rejectWithValue }) => {
     try {
       const { permissions } = getState();
-      if (permissions?.data?.length > 0) {
+      if (permissions?.data?.data?.length > 0) {
         return permissions.data;
       }
       const params = {
-        isAll,
-        status,
+        isAll: true,
+        status: true,
       };
       let url = `${apiUrls.getPermission}?${buildQueryString(params)}`;
       const response = await axiosInstance.get(url);
@@ -28,7 +28,7 @@ export const fetchPermissions = createAsyncThunk(
 const permissionsSlice = createSlice({
   name: 'permissions',
   initialState: {
-    data: null,
+    data: [],
     loading: false,
     error: null,
   },

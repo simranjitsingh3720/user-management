@@ -80,6 +80,11 @@ export const COMMON = {
   EXTERNAL_POSP: 'deo - external posp',
 };
 
+export const PAYMENT_OPTIONS = {
+  ONLINE_PAYMENT: 'online payment',
+  SELF_PAYMENT_LINK: 'self-payment link to customer'
+}
+
 export const FORM_LABEL = {
   START_DATE: 'startDate',
   END_DATE: 'endDate',

@@ -12,7 +12,7 @@ import SearchComponent from '../../components/SearchComponent';
 import { removeExtraColumns, setTableName } from '../../stores/slices/exportSlice';
 import { PAGECOUNT } from '../../utils/globalConstants';
 import usePermissions from '../../hooks/usePermission';
-import { COMMON, Header, NAVIGATE, SEARCH_OPTIONS } from './Components/utils/constants';
+import { ARR_CONTAINS, COMMON, Header, NAVIGATE, SEARCH_OPTIONS } from './Components/utils/constants';
 import { formatDate } from '../../utils/globalizationFunction';
 
 function UserManagement() {
@@ -41,7 +41,7 @@ function UserManagement() {
           ...item?.user,
           label: item?.user?.label,
           checked: item?.user?.status,
-          disabled: !canUpdate || item?.user?.roleName === COMMON_WORDS.PRODUCER,
+          disabled: !canUpdate ||  ARR_CONTAINS.PRODUCER_ARR.includes(item?.user?.roleName),
           roleId: item?.role[0]?.id,
           createdAt: formatDate(item?.user?.createdAt),
           updatedAt: formatDate(item?.user?.updatedAt),
