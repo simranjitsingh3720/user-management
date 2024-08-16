@@ -5,7 +5,7 @@ import { emailValidation } from '../utils/constants';
 import { encodeString } from '../../../utils/globalizationFunction';
 import CustomButton from '../../../components/CustomButton';
 import toastifyUtils from '../../../utils/toastify';
-import { TOKEN_REDIRECTION_DETAILS } from '../../../utils/globalConstants';
+import { INVALID_CREDENTIALS, TOKEN_REDIRECTION_DETAILS } from '../../../utils/globalConstants';
 
 function SignInPassword({ postData, loginLoading }) {
   const onSubmit = (data) => {
@@ -22,10 +22,9 @@ function SignInPassword({ postData, loginLoading }) {
   } = useForm({});
   useEffect(() => {
     let tokenRedirectionDetails = JSON.parse(localStorage.getItem(TOKEN_REDIRECTION_DETAILS));
-    console.log(tokenRedirectionDetails);
     if (
-      tokenRedirectionDetails?.isTokenExpired &&
-      tokenRedirectionDetails?.tokenRedirectionMsg !== 'Invalid credentials'
+      tokenRedirectionDetails?.isTokenExpired && tokenRedirectionDetails?.tokenRedirectionMsg &&
+      tokenRedirectionDetails.tokenRedirectionMsg.toLowerCase() !== INVALID_CREDENTIALS
     ) {
       toastifyUtils.notifyError(tokenRedirectionDetails.tokenRedirectionMsg);
       localStorage.removeItem(TOKEN_REDIRECTION_DETAILS);

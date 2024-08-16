@@ -46,6 +46,7 @@ instance.interceptors.response.use(
         case 401:
           errorMessage = data?.error?.message;
           localStorage.clear();
+          persistor.purge();
           localStorage.setItem(
             TOKEN_REDIRECTION_DETAILS,
             JSON.stringify({ isTokenExpired: true, tokenRedirectionMsg: errorMessage })
