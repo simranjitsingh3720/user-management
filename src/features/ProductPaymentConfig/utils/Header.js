@@ -10,8 +10,8 @@ const generateHeader = ({ handleEditClick, paymentTypeList }) => {
         id: paymentType.id,
       };
     }),
-    { value: 'Created At', id: 'createdAt' },
-    { value: 'Updated At', id: 'updatedAt' },
+    { value: 'Created At', id: 'createdAt', sortable: true },
+    { value: 'Updated At', id: 'updatedAt', sortable: true },
     {
       id: 'action',
       value: 'Action',
