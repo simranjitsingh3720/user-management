@@ -7,7 +7,7 @@ import toastifyUtils from '../../../utils/toastify';
 
 const useSubmit = () => {
   const navigate = useNavigate();
-  const { neftLoader, setNeftLoader } = useState(false);
+  const [neftLoader, setNeftLoader] = useState(false);
 
   const createPartnerNeft = useCallback(
     async (data) => {
