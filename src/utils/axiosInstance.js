@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { BASE_URL, COMMON_ERROR, TOKEN, TOKEN_REDIRECTION_DETAILS } from './globalConstants';
+import { BASE_URL, COMMON_ERROR, INVALID_CREDENTIALS, TOKEN, TOKEN_REDIRECTION_DETAILS } from './globalConstants';
 import errorHandler from './errorHandler';
 import toastifyUtils from './toastify';
 import persistStore from 'redux-persist/es/persistStore';
@@ -52,7 +52,7 @@ instance.interceptors.response.use(
             JSON.stringify({ isTokenExpired: true, tokenRedirectionMsg: errorMessage })
           );
           if (
-            JSON.parse(localStorage.getItem(TOKEN_REDIRECTION_DETAILS))?.tokenRedirectionMsg !== 'Invalid credentials'
+            (JSON.parse(localStorage.getItem(TOKEN_REDIRECTION_DETAILS))?.tokenRedirectionMsg)?.toLowerCase() !== INVALID_CREDENTIALS
           ) {
             window.location.href = '/';
           }
