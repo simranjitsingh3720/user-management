@@ -1,9 +1,11 @@
 import { useForm } from 'react-hook-form';
-import React from 'react';
+import React, { useEffect } from 'react';
 import InputField from '../../../components/CustomTextfield';
 import { emailValidation } from '../utils/constants';
 import { encodeString } from '../../../utils/globalizationFunction';
 import CustomButton from '../../../components/CustomButton';
+import toastifyUtils from '../../../utils/toastify';
+import { TOKEN_REDIRECTION_DETAILS } from '../../../utils/globalConstants';
 
 function SignInPassword({ postData, loginLoading }) {
   const onSubmit = (data) => {
@@ -18,7 +20,21 @@ function SignInPassword({ postData, loginLoading }) {
     trigger,
     formState: { errors },
   } = useForm({});
+  useEffect(() => {
+    let tokenRedirectionDetails = JSON.parse(localStorage.getItem(TOKEN_REDIRECTION_DETAILS));
+    console.log(tokenRedirectionDetails);
+    if (
+      tokenRedirectionDetails?.isTokenExpired &&
+      tokenRedirectionDetails?.tokenRedirectionMsg !== 'Invalid credentials'
+    ) {
+      toastifyUtils.notifyError(tokenRedirectionDetails.tokenRedirectionMsg);
+      localStorage.removeItem(TOKEN_REDIRECTION_DETAILS);
+    }
 
+    return () => {
+      localStorage.removeItem(TOKEN_REDIRECTION_DETAILS);
+    };
+  }, []);
   return (
     <>
       <div className="mt-1 text-fiord">Please sign in to your account with your username.</div>
