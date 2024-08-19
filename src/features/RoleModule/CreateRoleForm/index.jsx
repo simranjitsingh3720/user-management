@@ -19,6 +19,7 @@ function CreateRoleForm() {
     control,
     setValue,
     formState: { errors },
+    trigger,
   } = useForm({
     defaultValues: {
       roleName: '',
@@ -84,6 +85,7 @@ function CreateRoleForm() {
                 errors={errors}
                 classes="w-full"
                 disabled={id ? true : false}
+                trigger={trigger}
               />
             </Grid>
             <Grid item xs={12} md={6}>
@@ -100,6 +102,7 @@ function CreateRoleForm() {
                 error={Boolean(errors.groups)}
                 helperText={errors.groups?.message}
                 placeholder={COMMON_WORDS.SELECT}
+                trigger={trigger}
               />
             </Grid>
           </Grid>
