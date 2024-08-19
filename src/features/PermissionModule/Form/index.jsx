@@ -17,6 +17,7 @@ function Form() {
     control,
     setValue,
     formState: { errors },
+    trigger,
   } = useForm({
     defaultValues: {
       items: [{}],
@@ -79,6 +80,7 @@ function Form() {
                   errors={errors}
                   permissionType={permissionType}
                   setPermissionType={setPermissionType}
+                  trigger={trigger}
                 />
               ))}
             </Grid>

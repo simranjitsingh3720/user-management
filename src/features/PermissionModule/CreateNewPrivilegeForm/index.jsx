@@ -26,6 +26,7 @@ function CreateNewUserContainer({
   errors,
   permissionType,
   setPermissionType,
+  trigger,
 }) {
   const itemLength = Object.keys(selectedSubmodules).map((key) => ({
     key,
@@ -102,6 +103,10 @@ function CreateNewUserContainer({
                 className={styles.customizeSelect}
                 size="small"
                 onChange={(event, newValue) => {
+                  if (typeof trigger === 'function') {
+                    trigger(`module-${index}`);
+                  }
+
                   if (array) {
                     setArray([]);
                   }
@@ -124,6 +129,11 @@ function CreateNewUserContainer({
                   style: {
                     maxHeight: '200px',
                   },
+                }}
+                onBlur={() => {
+                  if (typeof trigger === 'function') {
+                    trigger(`module-${index}`);
+                  }
                 }}
               />
             )}
@@ -150,6 +160,9 @@ function CreateNewUserContainer({
                   size="small"
                   renderInput={(params) => <TextField {...params} placeholder="Select" />}
                   onChange={(event, newValue) => {
+                    if (typeof trigger === 'function') {
+                      trigger(`module-${index}`);
+                    }
                     handleSubmoduleChange(newValue, index);
                     field.onChange(newValue);
                   }}
@@ -157,6 +170,11 @@ function CreateNewUserContainer({
                     style: {
                       maxHeight: '200px',
                     },
+                  }}
+                  onBlur={() => {
+                    if (typeof trigger === 'function') {
+                      trigger(`subModule-${index}`);
+                    }
                   }}
                 />
               )}
@@ -184,6 +202,9 @@ function CreateNewUserContainer({
                 getOptionLabel={(option) => option.label}
                 value={permissionType[uniqueIdentifier] || []}
                 onChange={(event, newValue) => {
+                  if (typeof trigger === 'function') {
+                    trigger(`module-${index}`);
+                  }
                   setPermissionType((prev) => ({
                     ...prev,
                     [uniqueIdentifier]: newValue,
@@ -191,7 +212,7 @@ function CreateNewUserContainer({
                   field.onChange(newValue);
                 }}
                 renderOption={(props, option, { selected }) => (
-                  <li {...props}>
+                  <li {...props} key={option.label}>
                     <Checkbox icon={icon} checkedIcon={checkedIcon} style={{ marginRight: 8 }} checked={selected} />
                     {option.label}
                   </li>
@@ -199,6 +220,11 @@ function CreateNewUserContainer({
                 size="small"
                 className={styles.customizeCrudSelect}
                 renderInput={(params) => <TextField {...params} placeholder="Select" />}
+                onBlur={() => {
+                  if (typeof trigger === 'function') {
+                    trigger(`permissionType-${index}`);
+                  }
+                }}
               />
             )}
           />
@@ -211,11 +237,9 @@ function CreateNewUserContainer({
 
       <div className={styles.buttonWrapper}>
         {(index > 0 || itemLength > 1) && (
-          <Tooltip title="Remove permission">
-            <CustomButton type="button" variant="text" startIcon={<DeleteIcon />} onClick={() => remove()}>
-              Remove
-            </CustomButton>
-          </Tooltip>
+          <CustomButton type="button" variant="text" startIcon={<DeleteIcon />} onClick={() => remove()}>
+            Remove
+          </CustomButton>
         )}
       </div>
     </div>
