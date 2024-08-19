@@ -19,6 +19,7 @@ const ProducerForm = ({ onFormSubmit, revalidationListLoading }) => {
     handleSubmit,
     control,
     formState: { errors },
+    trigger,
   } = useForm({
     defaultValues: {
       producer: null,
@@ -67,6 +68,7 @@ const ProducerForm = ({ onFormSubmit, revalidationListLoading }) => {
               error={Boolean(errors.producer)}
               helperText={errors.producer?.message}
               placeholder={COMMON_WORDS.SELECT}
+              trigger={trigger}
             />
           </Grid>
 
