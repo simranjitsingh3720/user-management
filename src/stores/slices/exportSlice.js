@@ -23,8 +23,10 @@ export const fetchColumns = createAsyncThunk('export/fetchColumns', async ({ tab
   try {
     const response = await axiosInstance.get(`${apiUrls.getColumns}${tableName}`);
     const columns = response.data.data.map((col) => {
-      
-      if (TABLE_LABEL.USER_MANAGEMENT === tableName && (col === EXPORT_CONSTANTS.FIRST_NAME || col === EXPORT_CONSTANTS.LAST_NAME)) {
+      if (
+        TABLE_LABEL.USER_MANAGEMENT === tableName &&
+        (col === EXPORT_CONSTANTS.FIRST_NAME || col === EXPORT_CONSTANTS.LAST_NAME)
+      ) {
         return {
           id: col,
           name: splitCamelCase(col),
@@ -35,7 +37,7 @@ export const fetchColumns = createAsyncThunk('export/fetchColumns', async ({ tab
         id: col,
         name: splitCamelCase(col),
         checked: headerValues?.has(col) || false,
-      }
+      };
     });
 
     const ALL = {
@@ -124,7 +126,7 @@ const exportSlice = createSlice({
       state.toDate = dayjs().format(DATE_FORMAT);
     },
     toggleColumn: (state, action) => {
-      const { id, isAdditional } = action.payload;
+      const { id, isAdditional, checkedValue } = action.payload;
       if (isAdditional) {
         const columnIndex = state.extraColumns.findIndex((col) => col.id === id);
         if (columnIndex !== -1) {
@@ -133,7 +135,7 @@ const exportSlice = createSlice({
       } else {
         if (id === 'all') {
           state.columns.forEach((col) => {
-            col.checked = true;
+            col.checked = checkedValue;
           });
         } else {
           const columnIndex = state.columns.findIndex((col) => col.id === id);

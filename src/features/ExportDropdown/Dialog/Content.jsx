@@ -20,8 +20,10 @@ const Content = ({ tableHeader }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tableHeader, tableName]);
 
-  const handleCheckUncheck = (id, isAdditional = false) => {
-    dispatch(toggleColumn({ id, isAdditional }));
+  const handleCheckUncheck = (event, id, isAdditional = false) => {
+    event.stopPropagation();
+    const checkedValue = event.target.checked;
+    dispatch(toggleColumn({ id, isAdditional, checkedValue }));
   };
 
   return (
@@ -44,7 +46,7 @@ const Content = ({ tableHeader }) => {
           <Grid item xs={12} md={6} lg={4} key={index}>
             <CustomCheckbox
               checked={item.checked}
-              onChange={() => handleCheckUncheck(item.id, false)}
+              onChange={(event) => handleCheckUncheck(event, item.id, false)}
               label={item.name}
               indeterminate={false}
             />
