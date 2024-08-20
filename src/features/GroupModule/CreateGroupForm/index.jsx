@@ -217,7 +217,9 @@ function CreateGroupForm() {
   };
 
   const handleReset = () => {
-    setValue('groupName', '');
+    if (!id) {
+      setValue('groupName', '');
+    }
     setValue('groupUser', []);
     setValue('groupStatus', 'active');
     const resetPermissions = checkedPermission.map((permission) => ({
@@ -253,6 +255,7 @@ function CreateGroupForm() {
                 placeholder="Enter Name"
                 rules={{ required: 'Group Name is required' }}
                 trigger={trigger}
+                disabled={id ? true : false}
               />
             </Grid>
             <Grid item xs={12} md={6} lg={4}>
