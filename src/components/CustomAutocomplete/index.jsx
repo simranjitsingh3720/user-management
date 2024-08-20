@@ -46,6 +46,7 @@ const AutocompleteField = ({
     if (resetClicked) {
       setSelectedValues(isMultiple);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resetClicked, multiple]);
 
   useEffect(() => {
@@ -73,6 +74,7 @@ const AutocompleteField = ({
     if (!options || options.length === 0 || (options && options.every(isEmptyObject))) {
       setSelectedValues(isMultiple);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [options, multiple]);
 
   const isEmptyObject = (obj) => {
@@ -152,32 +154,40 @@ const AutocompleteField = ({
                 },
               },
             }}
-            sx={{
-              '& .MuiOutlinedInput-root': {
-                maxHeight: '40px',
-                overflow: 'auto',
-                borderRadius: '4px',
-                border: '1px solid #ccc',
-                backgroundColor: '#fff',
-                '&.Mui-focused': {
-                  outline: 'none',
-                  boxShadow: 'none',
-                  borderColor: '#ccc',
-                },
-              },
-            }}
+            sx={
+              multiple
+                ? {
+                    '& .MuiOutlinedInput-root': {
+                      maxHeight: '40px',
+                      overflow: 'auto',
+                      borderRadius: '4px',
+                      border: '1px solid #ccc',
+                      backgroundColor: '#fff',
+                      '&.Mui-focused': {
+                        outline: 'none',
+                        boxShadow: 'none',
+                        borderColor: '#ccc',
+                      },
+                    },
+                  }
+                : null
+            }
             renderInput={(params) => (
               <TextField
                 {...params}
                 placeholder={PLACEHOLDER}
-                sx={{
-                  '& .MuiFormHelperText-root': {
-                    margin: 0,
-                  },
-                  '& fieldset': {
-                    border: 'none',
-                  },
-                }}
+                sx={
+                  multiple
+                    ? {
+                        '& .MuiFormHelperText-root': {
+                          margin: 0,
+                        },
+                        '& fieldset': {
+                          border: 'none',
+                        },
+                      }
+                    : null
+                }
                 error={Boolean(errors[name])}
                 helperText={errors[name] ? `${label} is required` : ''}
                 onChange={() => {

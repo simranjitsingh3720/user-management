@@ -56,28 +56,36 @@ const CustomAutoCompleteWithoutCheckbox = ({
                 {...params}
                 error={error}
                 placeholder={placeholder}
-                sx={{
-                  '& fieldset': {
-                    border: 'none',
-                  },
-                }}
+                sx={
+                  multiple
+                    ? {
+                        '& fieldset': {
+                          border: 'none',
+                        },
+                      }
+                    : null
+                }
               />
             )}
             value={field.value ? field.value : multiple ? [] : null}
-            sx={{
-              '& .MuiOutlinedInput-root': {
-                maxHeight: '40px',
-                overflow: 'auto',
-                borderRadius: '4px',
-                border: '1px solid #ccc',
-                backgroundColor: '#fff',
-                '&.Mui-focused': {
-                  outline: 'none',
-                  boxShadow: 'none',
-                  borderColor: '#ccc',
-                },
-              },
-            }}
+            sx={
+              multiple
+                ? {
+                    '& .MuiOutlinedInput-root': {
+                      maxHeight: '40px',
+                      overflow: 'auto',
+                      borderRadius: '4px',
+                      border: '1px solid #ccc',
+                      backgroundColor: '#fff',
+                      '&.Mui-focused': {
+                        outline: 'none',
+                        boxShadow: 'none',
+                        borderColor: '#ccc',
+                      },
+                    },
+                  }
+                : null
+            }
             onChange={(event, newValue) => {
               field.onChange(newValue);
               if (typeof trigger === 'function') {
