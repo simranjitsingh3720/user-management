@@ -57,19 +57,22 @@ function HealthConfigurationForm() {
   }, [healthConfigData]);
 
   const onSubmit = (data) => {
+    const {
+      medicare: { value },
+      producer,
+    } = data;
     if (id) {
       const payload = {
         id: id,
         properties: {
-          status: true,
-          isExistingCustomer: data?.medicare === 'yes' ? true : false,
+          isExistingCustomer: value === 'yes' ? true : false,
         },
       };
       UpdateDataFun(payload);
     } else {
       const payload = {
-        producerId: data?.producer?.id,
-        isExistingCustomer: data?.medicare === 'yes' ? true : false,
+        producerId: producer?.id,
+        isExistingCustomer: value === 'yes' ? true : false,
       };
       postData(payload);
     }
