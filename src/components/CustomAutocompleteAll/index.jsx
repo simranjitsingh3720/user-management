@@ -118,6 +118,7 @@ const AutocompleteFieldAll = ({
             disablePortal={true}
             disabled={disabled}
             getOptionLabel={(option) => option?.label}
+            isOptionEqualToValue={(option, value) => option.value === value.value}
             value={selectedValues}
             slotProps={{
               popper: {

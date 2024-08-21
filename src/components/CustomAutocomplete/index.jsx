@@ -103,6 +103,7 @@ const AutocompleteField = ({
             options={options.length > 0 ? options : []}
             value={selectedValues || isMultiple}
             getOptionLabel={(option) => option?.label || ''}
+            isOptionEqualToValue={(option, value) => option.value === value.value}
             disablePortal={true}
             onChange={(event, newValue) => {
               setSelectedValues(newValue);
