@@ -308,19 +308,13 @@ function CreateUserCreationForm() {
   }, [lobsWatch]);
 
   useEffect(() => {
-    if (lobs && lobs.length > 0 && ARR_CONTAINS.ADMIN_ARR.includes(rolesWatch?.roleName)) {
+    if (lobs && lobs.length > 0 && ARR_CONTAINS.ADMIN_ARR.includes(rolesWatch?.roleName) && !isEdit) {
       setValue(COMMON_WORDS.LOB, lobs);
     }
   }, [lobs, rolesWatch?.roleName]);
 
   useEffect(() => {
-    if (
-      lobs &&
-      lobs.length &&
-      products &&
-      products.length > 0 &&
-      ARR_CONTAINS.ADMIN_ARR.includes(rolesWatch?.roleName)
-    ) {
+    if (products && products.length > 0 && ARR_CONTAINS.ADMIN_ARR.includes(rolesWatch?.roleName) && !isEdit) {
       setValue(COMMON_WORDS.PRODUCT, products);
     }
   }, [products, rolesWatch?.roleName]);
