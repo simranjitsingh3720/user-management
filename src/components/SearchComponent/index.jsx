@@ -85,6 +85,7 @@ function SearchComponent({
                 watch={watch}
                 isEdit={true}
                 trigger={trigger}
+                isLessThenCurrent={false}
               />
             </Grid>
             <Grid item>
@@ -100,6 +101,7 @@ function SearchComponent({
                 watch={watch}
                 isEdit={true}
                 trigger={trigger}
+                isLessThenCurrent={false}
               />
             </Grid>
           </Grid>
