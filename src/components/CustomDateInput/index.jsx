@@ -19,6 +19,7 @@ const DateField = ({
   trigger,
   disabled,
   isEdit = false,
+  isLessThenCurrent = true,
 }) => {
   const validateDate = (value) => {
     if (!value) {
@@ -32,7 +33,7 @@ const DateField = ({
     }
 
     const today = dayjs().startOf('day');
-    if ((name === START_DATE || name === END_DATE) && !disabled) {
+    if ((name === START_DATE || name === END_DATE) && !disabled && isLessThenCurrent) {
       if (date.isBefore(today) && !disabled) {
         return `${label} ${ERR_MSG.START_DATE_LESS_THAN_TODAY_ERR}`;
       }
