@@ -19,7 +19,15 @@ import useSubmit from '../hooks/useSubmit';
 import CustomFormHeader from '../../../../components/CustomFormHeader';
 import { COMMON_WORDS, FORM_HEADER_TEXT } from '../../../../utils/constants';
 import dayjs from 'dayjs';
-import { ARR_CONTAINS, COMMON, FORM_LABEL, FORM_VALUE, PAYMENT_OPTIONS, REQUIRED_ERR, excludedLabels } from '../utils/constants';
+import {
+  ARR_CONTAINS,
+  COMMON,
+  FORM_LABEL,
+  FORM_VALUE,
+  PAYMENT_OPTIONS,
+  REQUIRED_ERR,
+  excludedLabels,
+} from '../utils/constants';
 import useUpdateUser from '../hooks/useUpdateUser';
 import errorHandler from '../../../../utils/errorHandler';
 import { clearProducts, getProducts } from '../../../../stores/slices/getProduct';
@@ -300,19 +308,13 @@ function CreateUserCreationForm() {
   }, [lobsWatch]);
 
   useEffect(() => {
-    if (lobs && lobs.length > 0 && ARR_CONTAINS.ADMIN_ARR.includes(rolesWatch?.roleName)) {
+    if (lobs && lobs.length > 0 && ARR_CONTAINS.ADMIN_ARR.includes(rolesWatch?.roleName) && !isEdit) {
       setValue(COMMON_WORDS.LOB, lobs);
     }
   }, [lobs, rolesWatch?.roleName]);
 
   useEffect(() => {
-    if (
-      lobs &&
-      lobs.length &&
-      products &&
-      products.length > 0 &&
-      ARR_CONTAINS.ADMIN_ARR.includes(rolesWatch?.roleName)
-    ) {
+    if (products && products.length > 0 && ARR_CONTAINS.ADMIN_ARR.includes(rolesWatch?.roleName) && !isEdit) {
       setValue(COMMON_WORDS.PRODUCT, products);
     }
   }, [products, rolesWatch?.roleName]);
@@ -440,7 +442,7 @@ function CreateUserCreationForm() {
       userType: userTypeStr || '',
       userTypeId: userTypeId || '',
       loginTypeIds,
-      roleHierarchyId,
+      roleHierarchyId: ARR_CONTAINS.PRODUCER_ARR?.includes(roleName) && !parentCode ? null : roleHierarchyId,
       employeeId,
       locationIds,
       ntId: ntloginId,
@@ -852,7 +854,10 @@ function CreateUserCreationForm() {
   useEffect(() => {
     if (paymentsWatch && paymentsWatch.length > 0) {
       const paymentNameArr = paymentsWatch.map((item) => item.value);
-      if (paymentNameArr.includes(PAYMENT_OPTIONS.SELF_PAYMENT_LINK) && !paymentNameArr.includes(PAYMENT_OPTIONS.ONLINE_PAYMENT)) {
+      if (
+        paymentNameArr.includes(PAYMENT_OPTIONS.SELF_PAYMENT_LINK) &&
+        !paymentNameArr.includes(PAYMENT_OPTIONS.ONLINE_PAYMENT)
+      ) {
         const onlinePaymentObj = paymentType.find((item) => item.value === PAYMENT_OPTIONS.ONLINE_PAYMENT);
         setValue(COMMON_WORDS.PAYMENT_TYPE, [...paymentsWatch, onlinePaymentObj]);
       }

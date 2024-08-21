@@ -17,13 +17,6 @@ function useGetEmployeeByProducer() {
         childFieldsToFetch: COMMON_WORDS.PRODUCTS,
         childFieldsEdge: COMMON_WORDS.HAS_PRODUCT,
       };
-      // let params = {
-      //   id: producerId,
-      //   // edge: COMMON_WORDS.HAS_PRODUCER,
-      //   // isExclusive: true,
-      //   childFieldsToFetch: `${COMMON_WORDS.PRODUCTS},${COMMON_WORDS.PRODUCER}`,
-      //   childFieldsEdge: `${COMMON_WORDS.HAS_PRODUCT},${COMMON_WORDS.HAS_PRODUCER}`,
-      // };
       let url = `/${apiUrls.employeeFlag}?${buildQueryString(params)}`;
 
       const response = await axiosInstance.get(url);
