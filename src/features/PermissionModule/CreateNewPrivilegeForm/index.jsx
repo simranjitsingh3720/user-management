@@ -1,19 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import styles from './styles.module.scss';
-import { Autocomplete, Checkbox, TextField, Tooltip, Skeleton } from '@mui/material';
-import { Controller } from 'react-hook-form';
+import { Grid } from '@mui/material';
 import { CrudSelect } from '../constants';
-import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
-import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import capitalizeFirstLetter from '../../../utils/globalizationFunction';
 import useGetSubModule from '../hooks/useGetSubModule';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CustomButton from '../../../components/CustomButton';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllModules } from '../../../stores/slices/modulesSlice';
-
-const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
-const checkedIcon = <CheckBoxIcon fontSize="small" />;
+import CustomAutoCompleteWithoutCheckbox from '../../../components/CustomAutoCompleteWithoutCheckbox';
 
 function CreateNewUserContainer({
   uniqueIdentifier,
@@ -82,167 +76,107 @@ function CreateNewUserContainer({
   };
 
   return (
-    <div className={styles.formContainer}>
-      <div className={styles.moduleWrapper}>
-        <div className={styles.fieldContainerStyle}>
-          <span className={styles.labelText}>
-            Module <span className={styles.styledRequired}>*</span>
-          </span>
-          <Controller
-            name={`module-${index}`}
+    <Grid container spacing={2}>
+      <Grid item xs={12} sm={6} lg={4}>
+        <CustomAutoCompleteWithoutCheckbox
+          label="Module"
+          name={`module-${index}`}
+          control={control}
+          required={true}
+          options={(AllModuleData?.data || []).map((obj) => ({
+            label: obj?.moduleName || '',
+            id: obj.id,
+          }))}
+          getOptionLabel={(option) => option.label}
+          placeholder="Select"
+          trigger={trigger}
+          onChangeCallback={(event, newValue) => {
+            if (array) {
+              setArray([]);
+            }
+
+            setSelectedSubmodules((prev) => ({
+              ...prev,
+              [uniqueIdentifier]: newValue ? [newValue] : [],
+            }));
+            setPermissionType((prev) => ({
+              ...prev,
+              [uniqueIdentifier]: [],
+            }));
+            setValue(`permissionType-${index}`, []);
+
+            SubModuleFetchData(newValue?.id);
+          }}
+          rules={{ required: 'Module is required' }}
+          error={Boolean(errors[`module-${index}`])}
+          helperText={errors?.[`module-${index}`]?.message}
+        />
+      </Grid>
+
+      {array.map((item, idx) => (
+        <Grid item xs={12} sm={6} lg={4} key={idx}>
+          <CustomAutoCompleteWithoutCheckbox
+            label="Sub Module"
+            name={`subModule-${idx}`}
             control={control}
-            rules={{ required: true }}
-            render={({ field }) => (
-              <Autocomplete
-                disablePortal
-                id={`module-${index}`}
-                options={(AllModuleData?.data || []).map((obj) => ({
-                  label: capitalizeFirstLetter(obj?.moduleName || ''),
-                  id: obj.id,
-                }))}
-                className={styles.customizeSelect}
-                size="small"
-                onChange={(event, newValue) => {
-                  if (typeof trigger === 'function') {
-                    trigger(`module-${index}`);
-                  }
-
-                  if (array) {
-                    setArray([]);
-                  }
-
-                  setSelectedSubmodules((prev) => ({
-                    ...prev,
-                    [uniqueIdentifier]: newValue ? [newValue] : [],
-                  }));
-                  setPermissionType((prev) => ({
-                    ...prev,
-                    [uniqueIdentifier]: [],
-                  }));
-                  setValue(`permissionType-${index}`, []);
-
-                  SubModuleFetchData(newValue?.id);
-                  field.onChange(newValue);
-                }}
-                renderInput={(params) => <TextField {...params} placeholder="Select" />}
-                ListboxProps={{
-                  style: {
-                    maxHeight: '200px',
-                  },
-                }}
-                onBlur={() => {
-                  if (typeof trigger === 'function') {
-                    trigger(`module-${index}`);
-                  }
-                }}
-              />
-            )}
+            required={true}
+            options={(item?.SubModuleData || []).map((obj) => ({
+              label: capitalizeFirstLetter(obj?.moduleName || ''),
+              id: obj.id,
+            }))}
+            getOptionLabel={(option) => option.label}
+            placeholder="Select"
+            trigger={trigger}
+            onChangeCallback={(event, newValue) => {
+              handleSubmoduleChange(newValue, idx);
+            }}
+            rules={{ required: 'Sub Module is required' }}
+            error={Boolean(errors[`subModule-${idx}`])}
+            helperText={errors?.[`subModule-${idx}`]?.message}
           />
+        </Grid>
+      ))}
 
-          <div className={styles.styledError}>{errors[`module-${index}`] && <span>Module is required</span>} </div>
+      <Grid item xs={12} sm={6} lg={4}>
+        <CustomAutoCompleteWithoutCheckbox
+          label="Permission Types"
+          name={`permissionType-${index}`}
+          control={control}
+          required={true}
+          options={CrudSelect}
+          getOptionLabel={(option) => option.label}
+          placeholder="Select"
+          trigger={trigger}
+          multiple
+          limitTags={2}
+          rules={{ required: 'Permission Types are required' }}
+          error={Boolean(errors[`permissionType-${index}`])}
+          helperText={errors?.[`permissionType-${index}`]?.message}
+          onChangeCallback={(newValue) => {
+            setPermissionType((prev) => ({
+              ...prev,
+              [uniqueIdentifier]: newValue,
+            }));
+          }}
+        />
+      </Grid>
+
+      <Grid item xs={12} lg={4}>
+        <div className="mt-6">
+          {(index > 0 || itemLength > 1) && (
+            <CustomButton
+              type="button"
+              variant="text"
+              startIcon={<DeleteIcon />}
+              onClick={() => remove()}
+              color="secondary"
+            >
+              Remove
+            </CustomButton>
+          )}
         </div>
-
-        {array.map((item, index) => (
-          <div className={styles.fieldContainerStyle}>
-            <span className={styles.labelText}>Sub Module</span>
-            <Controller
-              name={`subModule-${index}`}
-              control={control}
-              render={({ field }) => (
-                <Autocomplete
-                  disablePortal
-                  id={`subModule-${index}`}
-                  options={(item?.SubModuleData || []).map((obj) => ({
-                    label: capitalizeFirstLetter(obj?.moduleName || ''),
-                    id: obj.id,
-                  }))}
-                  className={styles.customizeSelect}
-                  size="small"
-                  renderInput={(params) => <TextField {...params} placeholder="Select" />}
-                  onChange={(event, newValue) => {
-                    if (typeof trigger === 'function') {
-                      trigger(`module-${index}`);
-                    }
-                    handleSubmoduleChange(newValue, index);
-                    field.onChange(newValue);
-                  }}
-                  ListboxProps={{
-                    style: {
-                      maxHeight: '200px',
-                    },
-                  }}
-                  onBlur={() => {
-                    if (typeof trigger === 'function') {
-                      trigger(`subModule-${index}`);
-                    }
-                  }}
-                />
-              )}
-            />
-          </div>
-        ))}
-
-        <div className={styles.fieldContainerStyle}>
-          <span className={styles.labelText}>
-            Permission Types <span className={styles.styledRequired}>*</span>
-          </span>
-          <Controller
-            name={`permissionType-${index}`}
-            control={control}
-            rules={{ required: true }}
-            render={({ field }) => (
-              <Autocomplete
-                {...field}
-                multiple
-                loading={SubModuleLoading}
-                limitTags={2}
-                id={`permissionType-${index}`}
-                options={CrudSelect}
-                disableCloseOnSelect
-                getOptionLabel={(option) => option.label}
-                value={permissionType[uniqueIdentifier] || []}
-                onChange={(event, newValue) => {
-                  if (typeof trigger === 'function') {
-                    trigger(`module-${index}`);
-                  }
-                  setPermissionType((prev) => ({
-                    ...prev,
-                    [uniqueIdentifier]: newValue,
-                  }));
-                  field.onChange(newValue);
-                }}
-                renderOption={(props, option, { selected }) => (
-                  <li {...props} key={option.label}>
-                    <Checkbox icon={icon} checkedIcon={checkedIcon} style={{ marginRight: 8 }} checked={selected} />
-                    {option.label}
-                  </li>
-                )}
-                size="small"
-                className={styles.customizeCrudSelect}
-                renderInput={(params) => <TextField {...params} placeholder="Select" />}
-                onBlur={() => {
-                  if (typeof trigger === 'function') {
-                    trigger(`permissionType-${index}`);
-                  }
-                }}
-              />
-            )}
-          />
-
-          <div className={styles.styledError}>
-            {errors[`permissionType-${index}`] && <span>Permission Types is required</span>}{' '}
-          </div>
-        </div>
-      </div>
-
-      <div className={styles.buttonWrapper}>
-        {(index > 0 || itemLength > 1) && (
-          <CustomButton type="button" variant="text" startIcon={<DeleteIcon />} onClick={() => remove()}>
-            Remove
-          </CustomButton>
-        )}
-      </div>
-    </div>
+      </Grid>
+    </Grid>
   );
 }
 
