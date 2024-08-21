@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import axiosInstance from '../../../utils/axiosInstance';
 
-function useGetProducerData() {
+function useGetProducerProduct() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -19,7 +19,7 @@ function useGetProducerData() {
     }
   };
 
-  return { producerList: data, fetchData, loading };
+  return { productList: data, fetchData, loading };
 }
 
-export default useGetProducerData;
+export default useGetProducerProduct;

@@ -3,7 +3,6 @@ import useGetBancaLoginData from './hooks/useGetBancaLoginData';
 import { Box, Card, CardContent, Grid, Switch, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import dayjs from 'dayjs';
-import useGetProducerData from './hooks/useGetProducerData';
 import { FieldDataList, labels } from './constants';
 import useCreateBancaField from './hooks/useCreateBancaField';
 import useUpdateBancaField from './hooks/useUpdateBancaField';
@@ -16,6 +15,7 @@ import CustomAutoCompleteWithoutCheckbox from '../../components/CustomAutoComple
 import DateField from '../../components/CustomDateInput';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUser } from '../../stores/slices/userSlice';
+import useGetProducerProduct from './hooks/useGetProducerProduct';
 
 function BANCALogin() {
   const dispatch = useDispatch();
@@ -74,7 +74,7 @@ function BANCALogin() {
     );
   }, [dispatch]);
 
-  const { producerList, fetchData } = useGetProducerData();
+  const { productList, fetchData } = useGetProducerProduct();
 
   useEffect(() => {
     if (bancaData && bancaData?.data && bancaData?.data?.fields) {
@@ -198,7 +198,7 @@ function BANCALogin() {
                 label="Products"
                 control={control}
                 rules={{ required: 'Product is required' }}
-                options={producerList?.data || []}
+                options={productList?.data || []}
                 getOptionLabel={(option) => option.product}
                 isOptionEqualToValue={(option, value) => option.id === value.id}
                 error={Boolean(errors.product)}

@@ -2,7 +2,7 @@ import { Card, CardContent, Box, Grid, Switch, FormLabel, FormControlLabel } fro
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import useGetProducerData from '../../BANCALogin/hooks/useGetProducerData';
+import useGetProducerProduct from '../../BANCALogin/hooks/useGetProducerProduct';
 import useCreateEmployeeConfig from '../hooks/useCreateEmployeeConfig';
 import useGetEmployeeByProducer from '../hooks/useGetEmployeeById';
 import useUpdateEmployeeConfig from '../hooks/useUpdateEmployeeConfig';
@@ -18,7 +18,7 @@ function EmployeeConfigurationForm({ fetchData: listFetchFun }) {
   const params = useParams();
   const { id } = params;
   const dispatch = useDispatch();
-  const { producerList, fetchData, loading: producerLoading } = useGetProducerData();
+  const { productList, fetchData, loading: productListLoading } = useGetProducerProduct();
   const [dataList, setDataList] = useState([]);
   const { data: EmployeeProducerData, fetchData: fetchDataByProducer } = useGetEmployeeByProducer();
   const { user } = useSelector((state) => state.user);
@@ -27,27 +27,33 @@ function EmployeeConfigurationForm({ fetchData: listFetchFun }) {
     dispatch(
       fetchUser({ userType: COMMON_WORDS.EXTERNAL, searchKey: COMMON_WORDS.USER_TYPE, isAll: true, status: true })
     );
-    // if (id) {
-    //   fetchDataByProducer(id);
-    // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
 
   useEffect(() => {
-    if (EmployeeProducerData && EmployeeProducerData?.data) {
-      setDataList(
-        (EmployeeProducerData?.data[0]?.products || []).map((item) => ({
-          name: item.product,
-          productId: item.id,
-          isEmployee: item?.isEmployee || false,
-        }))
-      );
-
-      // setValue('producer', EmployeeProducerData?.data?.[0]?.producer?.[0]);
-      // fetchData(EmployeeProducerData?.data?.[0]?.producer?.[0]?.id);
+    if (productList && productList.data) {
+      if (!EmployeeProducerData?.data?.length) {
+        setDataList(
+          (productList?.data || []).map((item) => ({
+            name: item.product,
+            productId: item.id,
+            isEmployee: false,
+          }))
+        );
+      } else {
+        const updatedDataList = productList?.data.map((item) => {
+          const isEmployee =
+            EmployeeProducerData?.data[0]?.products?.find((product) => product.id === item.id)?.isEmployee || false;
+          return {
+            name: item.product,
+            productId: item.id,
+            isEmployee: isEmployee,
+          };
+        });
+        setDataList(updatedDataList);
+      }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [EmployeeProducerData]);
+  }, [productList, EmployeeProducerData]);
 
   const {
     handleSubmit,
@@ -145,10 +151,10 @@ function EmployeeConfigurationForm({ fetchData: listFetchFun }) {
               />
             </Grid>
             <Grid item xs={12}>
-              {producerLoading ? (
+              {productListLoading ? (
                 <ListLoader rows={3} column={3} />
               ) : (
-                producerList?.data?.length && (
+                productList?.data?.length && (
                   <Grid container spacing={2}>
                     {dataList.map((item, index) => (
                       <Grid item xs={12} md={6} lg={4} key={index}>
