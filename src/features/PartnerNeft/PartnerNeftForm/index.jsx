@@ -29,6 +29,7 @@ const PartnerNeftForm = () => {
     setValue,
     reset,
     resetField,
+    trigger,
   } = useForm({
     defaultValues: {
       lob: null,
@@ -123,6 +124,7 @@ const PartnerNeftForm = () => {
                     dispatch(fetchAllProductData({ lobId: newValue.id, status: true }));
                   }
                 }}
+                trigger={trigger}
               />
             </Grid>
 
@@ -141,6 +143,7 @@ const PartnerNeftForm = () => {
                 helperText={errors.product?.message}
                 disabled={params.id ? true : false}
                 placeholder={COMMON_WORDS.SELECT}
+                trigger={trigger}
               />
             </Grid>
 
@@ -160,6 +163,7 @@ const PartnerNeftForm = () => {
                 error={Boolean(errors.producer)}
                 helperText={errors.producer?.message}
                 placeholder={COMMON_WORDS.SELECT}
+                trigger={trigger}
               />
             </Grid>
 
@@ -176,6 +180,7 @@ const PartnerNeftForm = () => {
                 error={Boolean(errors.verificationMethod)}
                 helperText={errors.verificationMethod?.message}
                 placeholder={COMMON_WORDS.SELECT}
+                trigger={trigger}
               />
             </Grid>
           </Grid>
