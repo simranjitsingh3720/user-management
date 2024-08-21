@@ -35,7 +35,7 @@ function ChannelForm() {
       );
   }, [producerList]);
 
-  const { handleSubmit, control, formState, watch, setValue } = useForm({
+  const { handleSubmit, control, formState, watch, setValue, trigger } = useForm({
     defaultValues: {
       select: 'byChannel',
       channel: null,
@@ -131,6 +131,7 @@ function ChannelForm() {
                       error={Boolean(errors.channel)}
                       helperText={errors.channel?.message}
                       placeholder={COMMON_WORDS.SELECT}
+                      trigger={trigger}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6} lg={6}>
@@ -145,6 +146,7 @@ function ChannelForm() {
                       error={Boolean(errors.bitlyLinkMandatory)}
                       helperText={errors.bitlyLinkMandatory?.message}
                       placeholder={COMMON_WORDS.SELECT}
+                      trigger={trigger}
                     />
                   </Grid>
                 </Grid>
@@ -171,6 +173,7 @@ function ChannelForm() {
                         onChangeCallback={(newValue) => {
                           fetchData(newValue?.id);
                         }}
+                        trigger={trigger}
                       />
                     </Grid>
                   </Grid>
