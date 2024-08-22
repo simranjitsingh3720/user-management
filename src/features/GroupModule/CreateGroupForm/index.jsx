@@ -346,7 +346,7 @@ function CreateGroupForm() {
                       <ListLoader rows={5} column={3} />
                     ) : filteredPermission.length ? (
                       (filteredPermission || []).map((item) => (
-                        <div className={styles.checkboxStyle} key={item.id}>
+                        <div className="flex items-center" key={item.id}>
                           <FormControlLabel
                             control={
                               <Checkbox
@@ -355,18 +355,7 @@ function CreateGroupForm() {
                                 inputProps={{ 'aria-label': 'controlled' }}
                               />
                             }
-                            label={
-                              item.permissionName.length > 20 ? (
-                                <Tooltip title={item.permissionName}>
-                                  <span className={styles.permissionNameStyle}>{`${item.permissionName.substring(
-                                    0,
-                                    20
-                                  )}...`}</span>
-                                </Tooltip>
-                              ) : (
-                                <span className={styles.permissionNameStyle}>{item.permissionName || ''}</span>
-                              )
-                            }
+                            label={<span>{item.permissionName || ''}</span>}
                           />
                         </div>
                       ))

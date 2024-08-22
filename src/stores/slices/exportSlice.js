@@ -137,6 +137,9 @@ const exportSlice = createSlice({
           state.columns.forEach((col) => {
             col.checked = checkedValue;
           });
+          state.extraColumns.forEach((col) => {
+            col.checked = checkedValue;
+          });
         } else {
           const columnIndex = state.columns.findIndex((col) => col.id === id);
           if (columnIndex !== -1) {

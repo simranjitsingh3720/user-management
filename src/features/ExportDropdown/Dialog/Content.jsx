@@ -62,7 +62,7 @@ const Content = ({ tableHeader }) => {
             <Grid item xs={12} md={6} lg={4} key={index}>
               <CustomCheckbox
                 checked={item.checked}
-                onChange={() => handleCheckUncheck(item.id, true)}
+                onChange={(event) => handleCheckUncheck(event, item.id, true)}
                 label={item.name}
                 indeterminate={false}
               />
