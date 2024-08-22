@@ -73,7 +73,6 @@ function LevelMappingForm({ dataById, fetchData }) {
   useEffect(() => {
     if (dataById && dataById?.data) {
       dispatch(fetchAllProductData({ lobId: dataById?.data?.lob?.id }));
-      fetchLocation();
 
       const refactorLocation = { ...dataById?.data?.location };
       refactorLocation.label = refactorLocation.txtOffice;
