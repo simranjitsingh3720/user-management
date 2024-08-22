@@ -1,7 +1,7 @@
 import { Box, Card, CardContent, Grid } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { COMMON_WORDS, FORM_HEADER_TEXT } from '../../../utils/constants';
 import CustomAutoCompleteWithoutCheckbox from '../../../components/CustomAutoCompleteWithoutCheckbox';
 import { fetchAllProductData } from '../../../stores/slices/productSlice';
@@ -11,24 +11,28 @@ import UserTypeToggle from '../../../components/CustomRadioButtonGroup';
 import { useParams } from 'react-router-dom';
 import useCreateProductLevel from '../hooks/useCreateProductLevel';
 import CustomFormHeader from '../../../components/CustomFormHeader';
-import { getLocations } from '../../../stores/slices/getLocation';
+import useGetProducts from '../hooks/useGetProducts';
+import useGetLocation from '../hooks/useGetLocation';
 
 function LevelMappingForm({ dataById, fetchData }) {
   const dispatch = useDispatch();
   const params = useParams();
   const [editData, setEditData] = useState(dataById);
 
+  const { data: productData, loading: productLoading, fetchProduct } = useGetProducts();
+
   useEffect(() => {
     if (dataById?.data?.id) setEditData(dataById);
   }, [dataById]);
 
   const { employeeId } = params;
-  const { products, productLoading } = useSelector((state) => state.product);
-  const locations = useSelector((state) => state.location.location);
+
+  const { data: locationData, fetchLocation } = useGetLocation();
 
   useEffect(() => {
-    dispatch(getLocations());
-  }, [dispatch]);
+    if (employeeId) fetchLocation(employeeId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [employeeId]);
 
   const {
     handleSubmit,
@@ -69,7 +73,7 @@ function LevelMappingForm({ dataById, fetchData }) {
   useEffect(() => {
     if (dataById && dataById?.data) {
       dispatch(fetchAllProductData({ lobId: dataById?.data?.lob?.id }));
-      dispatch(getLocations());
+      fetchLocation();
 
       const refactorLocation = { ...dataById?.data?.location };
       refactorLocation.label = refactorLocation.txtOffice;
@@ -142,7 +146,7 @@ function LevelMappingForm({ dataById, fetchData }) {
                 onChangeCallback={(newValue) => {
                   setValue('product', null);
                   if (newValue && newValue.id) {
-                    dispatch(fetchAllProductData({ lobId: newValue.id, status: true }));
+                    fetchProduct(employeeId, newValue.id);
                   }
                 }}
               />
@@ -153,7 +157,7 @@ function LevelMappingForm({ dataById, fetchData }) {
                 label="Product"
                 required={true}
                 loading={productLoading}
-                options={products.data || []}
+                options={productData?.data || []}
                 getOptionLabel={(option) => option?.product}
                 isOptionEqualToValue={(option, value) => option.id === value.id}
                 control={control}
@@ -169,7 +173,7 @@ function LevelMappingForm({ dataById, fetchData }) {
                 name="location"
                 label="Location"
                 required={true}
-                options={locations || []}
+                options={locationData?.data || []}
                 getOptionLabel={(option) => option?.label}
                 isOptionEqualToValue={(option, value) => option.value === value.value}
                 control={control}
