@@ -57,7 +57,7 @@ function CkycConfig() {
           label: label,
           lob: item?.lobs[0]?.lob,
           product: item?.products[0]?.product,
-          CKYCApplicable: isCKYCApplicable ? COMMON_WORDS.ENABLE : COMMON_WORDS.DISABLE,
+          isCKYCApplicable: isCKYCApplicable ? COMMON_WORDS.ENABLE : COMMON_WORDS.DISABLE,
           forWhom: forWhom,
           createdAt: formatDate(createdAt),
           updatedAt: formatDate(updatedAt),

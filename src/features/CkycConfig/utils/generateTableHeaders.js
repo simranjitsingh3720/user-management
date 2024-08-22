@@ -13,8 +13,8 @@ function generateTableHeaders(handleEditClick) {
       sortable: false,
     },
     {
-      id: 'CKYCApplicable',
-      value: 'Status',
+      id: 'isCKYCApplicable',
+      value: 'Is cKYC Applicable',
       sortable: false,
     },
     {
