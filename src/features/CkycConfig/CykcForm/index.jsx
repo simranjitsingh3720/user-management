@@ -116,7 +116,7 @@ const CkycForm = () => {
                 disabled={id ? true : false}
                 onChangeCallback={() => {
                   setValue('product', null);
-                  dispatch(fetchAllProductData({ lobId: watch('lob')?.id }));
+                  dispatch(fetchAllProductData({ lobId: watch('lob')?.id, status: true }));
                 }}
                 trigger={trigger}
               />
