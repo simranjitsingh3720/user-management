@@ -1,5 +1,5 @@
 export const drawerWidth = 240;
-export const BASE_URL = 'https://dev-usermgmt.tataaig.com';
+export const BASE_URL = 'https://uat-usermgmt.tataaig.com';
 export const MODULE_TYPE = 'um';
 export const selectRowsData = [5, 10, 15, 20];
 export const PAGECOUNT = 10;
@@ -9,8 +9,8 @@ export const USER_DETAILS = 'user-details';
 export const TOKEN_EXPIRATION_ERROR = 'Your session has expired. Please log in again!';
 export const DATE_FORMAT = 'DD/MM/YYYY';
 export const CLIENT_TYPE = 'web';
-export const TOKEN_REDIRECTION_DETAILS = 'TokenRedirectionDetails'
-export const INVALID_CREDENTIALS = 'invalid credentials'
+export const TOKEN_REDIRECTION_DETAILS = 'TokenRedirectionDetails';
+export const INVALID_CREDENTIALS = 'invalid credentials';
 
 export const REGEX = {
   alphaNumericRegex: /^[a-zA-Z0-9\s]*$/,

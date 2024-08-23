@@ -67,6 +67,28 @@ function LevelMappingForm({ dataById, fetchData }) {
   );
 
   useEffect(() => {
+    if (data?.length === 1) {
+      setValue('lob', data[0]);
+      fetchProduct(employeeId, data[0].id);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
+
+  useEffect(() => {
+    if (productData?.data?.length === 1) {
+      setValue('product', productData?.data[0]);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [productData]);
+
+  useEffect(() => {
+    if (locationData?.data?.length === 1) {
+      setValue('location', locationData?.data[0]);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [locationData]);
+
+  useEffect(() => {
     if (employeeId) getLobByUserId(employeeId);
   }, [employeeId, getLobByUserId]);
 
@@ -114,6 +136,8 @@ function LevelMappingForm({ dataById, fetchData }) {
       postData(payload);
     }
   };
+
+  console.log('locationData', locationData);
 
   return (
     <Box component="form" onSubmit={handleSubmit(onSubmit)}>
@@ -173,8 +197,8 @@ function LevelMappingForm({ dataById, fetchData }) {
                 label="Location"
                 required={true}
                 options={locationData?.data || []}
-                getOptionLabel={(option) => option?.label}
-                isOptionEqualToValue={(option, value) => option.value === value.value}
+                getOptionLabel={(option) => option?.txtOffice}
+                isOptionEqualToValue={(option, value) => option.txtOffice === value.txtOffice}
                 control={control}
                 rules={{ required: 'Location is required' }}
                 error={Boolean(errors.location)}
@@ -218,8 +242,8 @@ function LevelMappingForm({ dataById, fetchData }) {
 
       <Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }} className="mt-4">
         <Grid item xs={12} sm={6} lg={2}>
-          <CustomButton type="submit" variant="contained" sx={{ width: '100%' }} disabled={loading}>
-            Save
+          <CustomButton type="submit" variant="contained" disabled={loading}>
+            Submit
           </CustomButton>
         </Grid>
       </Grid>
