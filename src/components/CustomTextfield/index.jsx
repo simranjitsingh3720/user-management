@@ -67,8 +67,9 @@ const InputField = ({
               },
             }}
             inputProps={{
-              maxLength: id === COMMON.MOBILE_NUMBER ? '10' : '60'
+              maxLength: id === COMMON.MOBILE_NUMBER ? '10' : '60',
             }}
+            autoComplete="off"
           />
         )}
       />
