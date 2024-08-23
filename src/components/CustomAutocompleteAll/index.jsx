@@ -177,6 +177,12 @@ const AutocompleteFieldAll = ({
               <TextField
                 {...params}
                 placeholder={PLACEHOLDER}
+                inputProps={{
+                  ...params.inputProps,
+                  style: {
+                    textTransform: 'capitalize',
+                  },
+                }}
                 sx={{
                   '& .MuiFormHelperText-root': {
                     margin: 0,

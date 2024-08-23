@@ -65,6 +65,12 @@ const CustomAutoCompleteWithoutCheckbox = ({
                       }
                     : null
                 }
+                inputProps={{
+                  ...params.inputProps,
+                  style: {
+                    textTransform: 'capitalize',
+                  },
+                }}
               />
             )}
             value={field.value ? field.value : multiple ? [] : null}

@@ -177,6 +177,12 @@ const AutocompleteField = ({
               <TextField
                 {...params}
                 placeholder={PLACEHOLDER}
+                inputProps={{
+                  ...params.inputProps,
+                  style: {
+                    textTransform: 'capitalize',
+                  },
+                }}
                 sx={
                   multiple
                     ? {
