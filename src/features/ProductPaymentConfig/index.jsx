@@ -62,6 +62,12 @@ const ProductPaymentConfig = () => {
     }
   }, [fetchPaymentConfigList, paymentTypeList]);
 
+  useEffect(() => {
+    if (paymentConfigList.length > 0) {
+      dispatch(setTableName(paymentConfigList[0].label));
+    }
+  }, [paymentConfigList]);
+
   const handleSubmit = (data) => {
     setPage(0);
     if (searched === COMMON_WORDS.PRODUCT) {
