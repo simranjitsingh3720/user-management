@@ -6,6 +6,7 @@ import toastifyUtils from '../../utils/toastify';
 import apiUrls from '../../utils/apiUrls';
 import { splitCamelCase } from '../../utils/globalizationFunction';
 import { EXPORT_CONSTANTS, TABLE_LABEL } from '../../utils/constants';
+import { userMapping } from '../../utils/ExtraColumnsEnum';
 
 const initialState = {
   selectedValue: '',
@@ -55,7 +56,17 @@ export const fetchColumns = createAsyncThunk('export/fetchColumns', async ({ tab
 
 export const downloadData = createAsyncThunk('export/downloadData', async (payload, thunkAPI) => {
   try {
+    let newAdditionalColumn = '';
     const { tableName, past30Days, isBulkDownload, columns, startDate, endDate, additionalColumns } = payload;
+    newAdditionalColumn = additionalColumns;
+
+    if (tableName === TABLE_LABEL.USER_MANAGEMENT) {
+      const columnsArray = additionalColumns.split(',');
+
+      const mappedValues = columnsArray.map((column) => userMapping[column]);
+
+      newAdditionalColumn = mappedValues.join(',');
+    }
     const response = await axiosInstance.get(`${apiUrls.downloadFile}`, {
       params: {
         tableName: tableName,
@@ -64,7 +75,7 @@ export const downloadData = createAsyncThunk('export/downloadData', async (paylo
         columns: columns,
         startDate: startDate,
         endDate: endDate,
-        additionalColumns: additionalColumns,
+        additionalColumns: newAdditionalColumn,
       },
     });
 
