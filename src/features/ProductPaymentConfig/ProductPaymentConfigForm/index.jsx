@@ -125,7 +125,7 @@ function ProductPaymentConfigForm() {
                 error={Boolean(errors.lob)}
                 helperText={errors.lob?.message}
                 onChangeCallback={(newValue) => {
-                  dispatch(fetchAllProductData({ lobId: newValue?.id }));
+                  dispatch(fetchAllProductData({ lobId: newValue?.id, status: true }));
                 }}
                 placeholder={COMMON_WORDS.SELECT}
                 trigger={trigger}

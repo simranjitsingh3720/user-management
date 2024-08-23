@@ -5,7 +5,7 @@ import { COMMON_WORDS } from '../../../utils/constants';
 
 function useGetProducts() {
   const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const fetchProduct = useCallback(async (userID, lobId) => {
     try {
