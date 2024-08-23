@@ -3,6 +3,7 @@ import { Navigate, useLocation } from 'react-router-dom';
 import { TOKEN, TOKEN_EXPIRATION_ERROR } from '../../utils/globalConstants';
 import toastifyUtils from '../../utils/toastify';
 import { COMMON_WORDS } from '../../utils/constants';
+import errorHandler from '../../utils/errorHandler';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const location = useLocation();
@@ -14,7 +15,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
       const storedScopes = localStorage.getItem(COMMON_WORDS.SCOPES);
       return storedScopes ? JSON.parse(storedScopes) : null;
     } catch (error) {
-      console.error('Error parsing scopes:', error);
+      errorHandler.handleError(error);
       return null;
     }
   }, []);
