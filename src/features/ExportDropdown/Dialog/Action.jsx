@@ -8,6 +8,8 @@ import { removeSpacesAndJoin } from '../../../utils/globalizationFunction';
 import dayjs from 'dayjs';
 import toastifyUtils from '../../../utils/toastify';
 import { DATE_FORMAT } from '../../../utils/globalConstants';
+import { TABLE_LABEL } from '../../../utils/constants';
+import { userMapping } from '../../../utils/ExtraColumnsEnum';
 
 const Actions = () => {
   const dispatch = useDispatch();
@@ -52,14 +54,25 @@ const Actions = () => {
     }
 
     if (extraColumns.length !== 0) {
+      let newAdditionalColumn = '';
       additionalColumns = extraColumns
         .filter((col) => col.checked)
         .map((col) => removeSpacesAndJoin(col.name))
         .join(',');
 
+      if (tableName === TABLE_LABEL.USER_MANAGEMENT) {
+        const columnsArray = additionalColumns.split(',');
+        const mappedValues = columnsArray.map((column) => userMapping[column]);
+        newAdditionalColumn = mappedValues.join(',');
+      }
+
       combinedData = {
         ...combinedData,
-        additionalColumns: additionalColumns.length ? additionalColumns : null,
+        additionalColumns: newAdditionalColumn.length
+          ? newAdditionalColumn
+          : additionalColumns.length
+          ? additionalColumns
+          : null,
       };
     }
 
