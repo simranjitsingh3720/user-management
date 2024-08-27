@@ -10,9 +10,9 @@ export const LEVEL_ENUM = [
 ];
 
 export const LEVEl_LABEL_ENUM = Object.freeze({
-  one: 'Level One',
-  two: 'Level Two',
-  three: 'Level Three',
+  one: 'One',
+  two: 'Two',
+  three: 'Three',
   'underwriter level 4': 'Underwriter Level 4',
   co_insurance_referra: 'Co Insurance Referral',
   'reinsurance fac': 'Reinsurance FAC',
