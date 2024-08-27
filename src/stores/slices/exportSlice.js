@@ -6,7 +6,6 @@ import toastifyUtils from '../../utils/toastify';
 import apiUrls from '../../utils/apiUrls';
 import { splitCamelCase } from '../../utils/globalizationFunction';
 import { EXPORT_CONSTANTS, TABLE_LABEL } from '../../utils/constants';
-import { userMapping } from '../../utils/ExtraColumnsEnum';
 
 const initialState = {
   selectedValue: '',
