@@ -77,6 +77,7 @@ const PartnerNeftForm = () => {
     if (params.id) {
       getPartnerNeftDetails(params.id);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params.id]);
 
   useEffect(() => {

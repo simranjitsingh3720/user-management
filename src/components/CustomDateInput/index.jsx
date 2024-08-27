@@ -68,14 +68,6 @@ const DateField = ({
     }
   }, [name, dateVal, trigger]);
 
-  const getDate = () => {
-    if (disabled) {
-      return dayjs();
-    }
-
-    return undefined;
-  };
-
   return (
     <div className={`${labelVisible ? 'm-0 flex flex-col' : 'flex flex-col'}`}>
       <div>

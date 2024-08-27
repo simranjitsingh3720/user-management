@@ -66,6 +66,7 @@ const ProductPaymentConfig = () => {
     if (paymentConfigList.length > 0) {
       dispatch(setTableName(paymentConfigList[0].label));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [paymentConfigList]);
 
   const handleSubmit = (data) => {

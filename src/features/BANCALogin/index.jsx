@@ -21,7 +21,7 @@ function BANCALogin() {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
 
-  const { data: bancaData, loading: bancaLoading, fetchData: bancaFetchData } = useGetBancaLoginData();
+  const { data: bancaData, fetchData: bancaFetchData } = useGetBancaLoginData();
   const [fieldData, setFieldData] = useState(Object.values(FieldDataList).flat());
   const { canUpdate, canCreate } = usePermissions();
 
@@ -88,6 +88,7 @@ function BANCALogin() {
       setValue('startDate', dayjs(bancaData?.data?.startDate).format('DD/MM/YYYY'));
       setValue('endDate', dayjs(bancaData?.data?.endDate).format('DD/MM/YYYY'));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bancaData]);
 
   const resetFields = () => {

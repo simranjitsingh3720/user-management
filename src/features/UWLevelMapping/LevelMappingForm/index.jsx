@@ -111,6 +111,7 @@ function LevelMappingForm({ dataById, fetchData }) {
       setValue('location', refactorLocation);
       setValue('leader', dataById?.data?.isLeader ? 'yes' : 'no');
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataById]);
 
   const onSubmit = (data) => {
