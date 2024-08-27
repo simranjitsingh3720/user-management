@@ -60,6 +60,7 @@ function useGetEmployeeData(page, pageSize, order, orderBy) {
   };
   useEffect(() => {
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, order, orderBy, pageSize]);
 
   return { data, loading, fetchData, count };

@@ -92,6 +92,7 @@ function UploadForm() {
         ? watchRole
         : getBulkUploadLabel(location.pathname),
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [watchRole]);
 
   const fetchBulkUpload = useCallback(() => {

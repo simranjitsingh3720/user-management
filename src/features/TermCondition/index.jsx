@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
-import SearchComponent from "../../components/SearchComponent";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchUser } from "../../stores/slices/userSlice";
-import { COMMON_WORDS } from "../../utils/constants";
-import CustomTable from "../../components/CustomTable";
-import generateTableHeaders from "./utils/generateTableHeaders";
-import { getPlaceHolder } from "../../utils/globalizationFunction";
-import { PAGECOUNT } from "../../utils/globalConstants";
+import React, { useEffect, useState } from 'react';
+import SearchComponent from '../../components/SearchComponent';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchUser } from '../../stores/slices/userSlice';
+import { COMMON_WORDS } from '../../utils/constants';
+import CustomTable from '../../components/CustomTable';
+import generateTableHeaders from './utils/generateTableHeaders';
+import { getPlaceHolder } from '../../utils/globalizationFunction';
+import { PAGECOUNT } from '../../utils/globalConstants';
 
 function TermCondition() {
-  const [date, setDate] = useState({ startDate: "", endDate: "" });
+  const [setDate] = useState({ startDate: '', endDate: '' });
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
   const [userData, setUserData] = useState();
@@ -31,20 +31,17 @@ function TermCondition() {
   const HEADER_COLUMNS = generateTableHeaders();
 
   const optionLabelUser = (option) => {
-    return option?.firstName
-      ? `${option?.firstName} ${option?.lastName}`
-      : "";
+    return option?.firstName ? `${option?.firstName} ${option?.lastName}` : '';
   };
 
   const renderOptionUserFunction = (props, option) => (
     <li {...props} key={option?.id}>
-      {option?.firstName} {""}
+      {option?.firstName} {''}
       {option?.lastName}
     </li>
   );
 
-  const handleGo = () => {
-  };
+  const handleGo = () => {};
 
   return (
     <div>

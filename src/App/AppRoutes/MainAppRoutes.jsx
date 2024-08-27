@@ -1,9 +1,10 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import ResponsiveDrawer from '../../components/LayoutDesign';
-import PartnerNeftForm from '../../features/PartnerNeft/PartnerNeftForm';
 import PrivateRoute from '../../components/PrivateRoute';
-import TermCondition from '../../features/TermCondition';
+import NotFoundPage from '../../components/NotFoundPage';
+
+// Feature Components
 import Dashboard from '../../features/Dashboard';
 import UserManagement from '../../features/UserManagement';
 import CreateUserManagementForm from '../../features/UserManagement/Components/CreateForm';
@@ -24,7 +25,7 @@ import ProposalOTPException from '../../features/ProposalOTPException';
 import BANCALogin from '../../features/BANCALogin';
 import ProposalForm from '../../features/ProposalOTPException/ProposalForm';
 import ProducerEODBypass from '../../features/ProducerEODBypass';
-import ProducerEODFrom from '../../features/ProducerEODBypass/ProducerEODForm';
+import ProducerEODForm from '../../features/ProducerEODBypass/ProducerEODForm';
 import ProductPaymentConfig from '../../features/ProductPaymentConfig';
 import ProductPaymentConfigForm from '../../features/ProductPaymentConfig/ProductPaymentConfigForm';
 import HouseBankMaster from '../../features/HouseBankMaster';
@@ -34,10 +35,10 @@ import HealthConfigurationForm from '../../features/HealthConfiguration/HealthCo
 import EmployeeFlagConfig from '../../features/EmployeeFlagConfig';
 import SyncedProducers from '../../features/SyncedProducer';
 import AliasUser from '../../features/AliasUser';
-import NotFoundPage from '../../components/NotFoundPage';
 import EmployeeConfigurationForm from '../../features/EmployeeFlagConfig/EmployeeConfigurationForm';
 import RevalidationList from '../../features/RevalidationList';
 import PartnerNeft from '../../features/PartnerNeft';
+import PartnerNeftForm from '../../features/PartnerNeft/PartnerNeftForm';
 import CkycConfig from '../../features/CkycConfig';
 import CkycForm from '../../features/CkycConfig/CykcForm';
 import CommunicationRestrictions from '../../features/CommunicationRestrictions';
@@ -47,376 +48,71 @@ import UWLevelMapping from '../../features/UWLevelMapping';
 import UWLevelMappingEmployee from '../../features/UWLevelMapping/EmployeeForm';
 import UWLevelMappingForm from '../../features/UWLevelMapping/LevelMappingForm';
 import SetOTPException from '../../features/OTPException/SetOTPException';
+import TermCondition from '../../features/TermCondition';
+
+const routes = [
+  { path: '/dashboard', component: Dashboard },
+  { path: '/user-management', component: UserManagement },
+  { path: '/communication-restrictions', component: CommunicationRestrictions },
+  { path: '/:id/bulk-upload', component: BulkUpload },
+  { path: '/:product/:id/bulk-upload', component: BulkUpload },
+  { path: '/communication-restrictions/communication-restrictions-form', component: CommunicationRestrictionsForm },
+  { path: '/user-management/form/:id?', component: CreateUserManagementForm },
+  { path: '/permission', component: PermissionModule },
+  { path: '/permission/permission-form', component: Form },
+  { path: '/roles', component: RoleModule },
+  { path: '/roles/role-form/:id?', component: CreateRoleForm },
+  { path: '/group', component: GroupModule },
+  { path: '/group/group-form/:id?', component: CreateGroupForm },
+  { path: '/lob', component: Lob },
+  { path: '/lob/lob-form', component: LobForm },
+  { path: '/product', component: Product },
+  { path: '/product/product-form', component: ProductForm },
+  { path: '/banca', component: BANCALogin },
+  { path: '/proposal-bitly-config', component: Channel },
+  { path: '/proposal-bitly-config/channel-form', component: ChannelForm },
+  { path: '/otpexception', component: OTPException },
+  { path: '/otpexception/form', component: SetOTPException },
+  { path: '/proposalotpexception', component: ProposalOTPException },
+  { path: '/proposalotpexception/form/:id?', component: ProposalForm },
+  { path: '/producer-eod-bypass-list', component: ProducerEODBypass },
+  { path: '/producer-eod-bypass-list/form/:id?', component: ProducerEODForm },
+  { path: '/product-payment-config', component: ProductPaymentConfig },
+  { path: '/product-payment-config/form/:id?', component: ProductPaymentConfigForm },
+  { path: '/house-bank-master', component: HouseBankMaster },
+  { path: '/house-bank-master/form/:id?', component: HouseBankMasterForm },
+  { path: '/health-config', component: HealthConfiguration },
+  { path: '/health-config/form/:id?', component: HealthConfigurationForm },
+  { path: '/revalidation-list', component: RevalidationList },
+  { path: '/partner-neft', component: PartnerNeft },
+  { path: '/partner-neft/form/:id?', component: PartnerNeftForm },
+  { path: '/employee-flag-config', component: EmployeeFlagConfig },
+  { path: '/employee-flag-config/form', component: EmployeeConfigurationForm },
+  { path: '/employee-flag-config/form/:id', component: EmployeeConfigurationForm },
+  { path: '/gc-sync-updation', component: SyncedProducers },
+  { path: '/alias-users', component: AliasUser },
+  { path: '/ckyc-config', component: CkycConfig },
+  { path: '/ckyc-config/form/:id?', component: CkycForm },
+  { path: '/tc-report', component: TermCondition },
+  { path: '/uwlevelmappingemployee/:employeeId', component: UWLevelMapping },
+  { path: '/uwlevelmappingemployee/:employeeId/form/:id?', component: UWLevelMappingForm },
+  { path: '/uwlevelmappingemployee', component: UWLevelMappingEmployee },
+];
 
 const MainAppRoutes = () => {
   return (
     <Routes>
-      <Route
-        path="/dashboard"
-        element={
-          <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PrivateRoute component={Dashboard} />
-          </ResponsiveDrawer>
-        }
-      />
-      <Route
-        path="/user-management"
-        element={
-          <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PrivateRoute component={UserManagement} />
-          </ResponsiveDrawer>
-        }
-      />
-      <Route
-        path="/communication-restrictions"
-        element={
-          <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PrivateRoute component={CommunicationRestrictions} />
-          </ResponsiveDrawer>
-        }
-      />
-      <Route
-        path="/:id/bulk-upload"
-        element={
-          <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PrivateRoute component={BulkUpload} />
-          </ResponsiveDrawer>
-        }
-      />
-      <Route
-        path="/:product/:id/bulk-upload"
-        element={
-          <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PrivateRoute component={BulkUpload} />
-          </ResponsiveDrawer>
-        }
-      />
-      <Route
-        path="/communication-restrictions/communication-restrictions-form"
-        element={
-          <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PrivateRoute component={CommunicationRestrictionsForm} />
-          </ResponsiveDrawer>
-        }
-      />
-      <Route
-        path="/user-management/form/:id?"
-        element={
-          <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PrivateRoute component={CreateUserManagementForm} />
-          </ResponsiveDrawer>
-        }
-      />
-      <Route
-        path="/permission"
-        element={
-          <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PrivateRoute component={PermissionModule} />
-          </ResponsiveDrawer>
-        }
-      />
-      <Route
-        path="/permission/permission-form"
-        element={
-          <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PrivateRoute component={Form} />
-          </ResponsiveDrawer>
-        }
-      />
-      <Route
-        path="/roles"
-        element={
-          <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PrivateRoute component={RoleModule} />
-          </ResponsiveDrawer>
-        }
-      />
-      <Route
-        path="/roles/role-form/:id?"
-        element={
-          <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PrivateRoute component={CreateRoleForm} />
-          </ResponsiveDrawer>
-        }
-      />
-      <Route
-        path="/group"
-        element={
-          <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PrivateRoute component={GroupModule} />
-          </ResponsiveDrawer>
-        }
-      />
-      <Route
-        path="/group/group-form/:id?"
-        element={
-          <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PrivateRoute component={CreateGroupForm} />
-          </ResponsiveDrawer>
-        }
-      />
-      <Route
-        path="/lob"
-        element={
-          <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PrivateRoute component={Lob} />
-          </ResponsiveDrawer>
-        }
-      />
-      <Route
-        path="/lob/lob-form"
-        element={
-          <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PrivateRoute component={LobForm} />
-          </ResponsiveDrawer>
-        }
-      />
-      <Route
-        path="/product"
-        element={
-          <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PrivateRoute component={Product} />
-          </ResponsiveDrawer>
-        }
-      />
-      <Route
-        path="/product/product-form"
-        element={
-          <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PrivateRoute component={ProductForm} />
-          </ResponsiveDrawer>
-        }
-      />
-      <Route
-        path="/banca"
-        element={
-          <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PrivateRoute component={BANCALogin} />
-          </ResponsiveDrawer>
-        }
-      />
-      <Route
-        path="/proposal-bitly-config"
-        element={
-          <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PrivateRoute component={Channel} />
-          </ResponsiveDrawer>
-        }
-      />
-      <Route
-        path="/proposal-bitly-config/channel-form"
-        element={
-          <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PrivateRoute component={ChannelForm} />
-          </ResponsiveDrawer>
-        }
-      />
-      <Route
-        path="/otpexception"
-        element={
-          <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PrivateRoute component={OTPException} />
-          </ResponsiveDrawer>
-        }
-      />
-      <Route
-        path="/otpexception/form"
-        element={
-          <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PrivateRoute component={SetOTPException} />
-          </ResponsiveDrawer>
-        }
-      />
-      <Route
-        path="/proposalotpexception"
-        element={
-          <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PrivateRoute component={ProposalOTPException} />
-          </ResponsiveDrawer>
-        }
-      />
-      <Route
-        path="/proposalotpexception/form/:id?"
-        element={
-          <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PrivateRoute component={ProposalForm} />
-          </ResponsiveDrawer>
-        }
-      />
-      <Route
-        path="/producer-eod-bypass-list"
-        element={
-          <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PrivateRoute component={ProducerEODBypass} />
-          </ResponsiveDrawer>
-        }
-      />
-      <Route
-        path="/producer-eod-bypass-list/form/:id?"
-        element={
-          <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PrivateRoute component={ProducerEODFrom} />
-          </ResponsiveDrawer>
-        }
-      />
-      <Route
-        path="/product-payment-config"
-        element={
-          <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PrivateRoute component={ProductPaymentConfig} />
-          </ResponsiveDrawer>
-        }
-      />
-      <Route
-        path="/product-payment-config/form/:id?"
-        element={
-          <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PrivateRoute component={ProductPaymentConfigForm} />
-          </ResponsiveDrawer>
-        }
-      />
-      <Route
-        path="/house-bank-master"
-        element={
-          <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PrivateRoute component={HouseBankMaster} />
-          </ResponsiveDrawer>
-        }
-      />
-      <Route
-        path="/house-bank-master/form/:id?"
-        element={
-          <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PrivateRoute component={HouseBankMasterForm} />
-          </ResponsiveDrawer>
-        }
-      />
-      <Route
-        path="/health-config"
-        element={
-          <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PrivateRoute component={HealthConfiguration} />
-          </ResponsiveDrawer>
-        }
-      />
-      <Route
-        path="/health-config/form/:id?"
-        element={
-          <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PrivateRoute component={HealthConfigurationForm} />
-          </ResponsiveDrawer>
-        }
-      />
-      <Route
-        path="/revalidation-list"
-        element={
-          <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PrivateRoute component={RevalidationList} />
-          </ResponsiveDrawer>
-        }
-      />
-      <Route
-        path="/partner-neft"
-        element={
-          <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PrivateRoute component={PartnerNeft} />
-          </ResponsiveDrawer>
-        }
-      />
-      <Route
-        path="partner-neft/form/:id?"
-        element={
-          <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PrivateRoute component={PartnerNeftForm} />
-          </ResponsiveDrawer>
-        }
-      />
-      <Route
-        path="/employee-flag-config"
-        element={
-          <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PrivateRoute component={EmployeeFlagConfig} />
-          </ResponsiveDrawer>
-        }
-      />
-      <Route
-        path="/employee-flag-config/form"
-        element={
-          <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PrivateRoute component={EmployeeConfigurationForm} />
-          </ResponsiveDrawer>
-        }
-      />
-      <Route
-        path="/employee-flag-config/form/:id"
-        element={
-          <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PrivateRoute component={EmployeeConfigurationForm} />
-          </ResponsiveDrawer>
-        }
-      />
-      <Route
-        path="/gc-sync-updation"
-        element={
-          <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PrivateRoute component={SyncedProducers} />
-          </ResponsiveDrawer>
-        }
-      />
-      <Route
-        path="/alias-users"
-        element={
-          <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PrivateRoute component={AliasUser} />
-          </ResponsiveDrawer>
-        }
-      />
-      <Route
-        path="/ckyc-config"
-        element={
-          <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PrivateRoute component={CkycConfig} />
-          </ResponsiveDrawer>
-        }
-      />
-      <Route
-        path="/ckyc-config/form/:id?"
-        element={
-          <ResponsiveDrawer showSidebarAndHeader={true}>
-            <PrivateRoute component={CkycForm} />
-          </ResponsiveDrawer>
-        }
-      />
-      <Route
-        path="/tc-report"
-        element={
-          <ResponsiveDrawer showSidebarAndHeader={true}>
-            <TermCondition />
-          </ResponsiveDrawer>
-        }
-      />
-      <Route
-        path="uwlevelmappingemployee/:employeeId"
-        element={
-          <ResponsiveDrawer showSidebarAndHeader={true}>{<PrivateRoute component={UWLevelMapping} />}</ResponsiveDrawer>
-        }
-      />
-      <Route
-        path="uwlevelmappingemployee/:employeeId/form/:id?"
-        element={
-          <ResponsiveDrawer showSidebarAndHeader={true}>
-            {<PrivateRoute component={UWLevelMappingForm} />}
-          </ResponsiveDrawer>
-        }
-      />
-      <Route
-        path="/uwlevelmappingemployee"
-        element={
-          <ResponsiveDrawer showSidebarAndHeader={true}>
-            {<PrivateRoute component={UWLevelMappingEmployee} />}
-          </ResponsiveDrawer>
-        }
-      />
+      {routes.map(({ path, component: Component }) => (
+        <Route
+          key={path}
+          path={path}
+          element={
+            <ResponsiveDrawer showSidebarAndHeader={true}>
+              <PrivateRoute component={Component} />
+            </ResponsiveDrawer>
+          }
+        />
+      ))}
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );

@@ -77,15 +77,15 @@ export const TABLE_COLUMNS = {
   FIRST_NAME: 'firstName',
   LAST_NAME: 'lastName',
   USERNAME: 'dataEntryUserName',
-  FILE_PROGRESS: 'Upload in progress'
-}
+  FILE_PROGRESS: 'Upload in progress',
+};
 
 export const HEADER = {
   DRAWER_WIDTH: 240,
 };
 
 export const CHANGE_STATUS_LABEL = {
-  UNDERWRITER_LEVEL: 'Underwriter Level Mapping',
+  UNDERWRITER_LEVEL: 'Underwriter Location Level Mapping',
 };
 
 export const FORM_HEADER_TEXT = {
@@ -116,8 +116,8 @@ export const CURRENT_LOCATION = {
   REVALIDATION_LIST: 'revalidation-list',
   UW_LEVEL_LOCATION_MAPPING: 'uwlevelmappingemployee',
   PARTNER_NEFT: 'partner-neft',
-  USER_MANAGEMENT: 'user-management'
-}
+  USER_MANAGEMENT: 'user-management',
+};
 
 export const TABLE_LABEL = {
   PRODUCT_PAYMENT_CONFIG: 'productWisePaymentMethod',
@@ -125,10 +125,10 @@ export const TABLE_LABEL = {
   REVALIDATION_LIST: 'revalidationList',
   UW_LEVEL_LOCATION_MAPPING: 'productLocationLevelMappings',
   PARTNER_NEFT: 'partnerNeft',
-  USER_MANAGEMENT: 'user'
-}
+  USER_MANAGEMENT: 'user',
+};
 
 export const EXPORT_CONSTANTS = {
   FIRST_NAME: 'firstName',
   LAST_NAME: 'lastName',
-}
+};

@@ -29,6 +29,18 @@ export function tableHeaders(handleEditClick, handleStatusClicked) {
       sortable: true,
     },
     {
+      id: 'status',
+      value: 'Status',
+      action: [
+        {
+          component: 'switch',
+          onClick: (data, row) => {
+            handleStatusClicked(data, row);
+          },
+        },
+      ],
+    },
+    {
       id: 'action',
       value: 'Action',
       action: [
@@ -38,12 +50,6 @@ export function tableHeaders(handleEditClick, handleStatusClicked) {
           iconName: <EditIcon />,
           onClick: (row) => {
             handleEditClick(row);
-          },
-        },
-        {
-          component: 'switch',
-          onClick: (data, row) => {
-            handleStatusClicked(data, row);
           },
         },
       ],

@@ -30,11 +30,12 @@ function EmployeeForm() {
 
   const { data, loading, fetchData, count } = useGetEmployeeData(page, pageSize, order, orderBy);
 
-  useEffect(()=> {
-    if(data && data?.length > 0){
+  useEffect(() => {
+    if (data && data?.length > 0) {
       dispatch(removeExtraColumns());
     }
-  },[data]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
 
   const onSubmit = () => {
     fetchData(searched, data.search);

@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './styles.module.scss';
 import { useForm } from 'react-hook-form';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import CustomButton from '../../../components/CustomButton';
 import UserTypeToggle from '../../../components/CustomRadioButtonGroup';
 import InputField from '../../../components/CustomTextfield';
@@ -12,7 +12,6 @@ import CustomFormHeader from '../../../components/CustomFormHeader';
 import { FORM_HEADER_TEXT } from '../../../utils/constants';
 
 function CreateCommunicationRestrictionForm() {
-  const navigate = useNavigate();
   const params = useParams();
   const { id } = params;
 
@@ -30,12 +29,7 @@ function CreateCommunicationRestrictionForm() {
 
   const user = watch('typeOfUser');
 
-  const onSubmit = (data) => {
-  };
-
-  const back = () => {
-    navigate('/communication-restrictions');
-  };
+  const onSubmit = (data) => {};
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles.formMainContainer}>

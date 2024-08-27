@@ -29,7 +29,8 @@ function UserManagement() {
   const { canCreate, canUpdate } = usePermissions();
 
   const updateUserForm = useCallback((row) => {
-    navigate(NAVIGATE.NAVIGATE_TO_FORM + '/'+ row.id);
+    navigate(NAVIGATE.NAVIGATE_TO_FORM + '/' + row.id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -41,7 +42,7 @@ function UserManagement() {
           ...item?.user,
           label: item?.user?.label,
           checked: item?.user?.status,
-          disabled: !canUpdate ||  ARR_CONTAINS.PRODUCER_ARR.includes(item?.user?.roleName),
+          disabled: !canUpdate || ARR_CONTAINS.PRODUCER_ARR.includes(item?.user?.roleName),
           roleId: item?.role[0]?.id,
           createdAt: formatDate(item?.user?.createdAt),
           updatedAt: formatDate(item?.user?.updatedAt),
@@ -50,29 +51,33 @@ function UserManagement() {
     setUserData(transformedData);
     dispatch(removeExtraColumns());
     dispatch(setTableName(transformedData[0]?.label));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userList, dispatch]);
 
   const getUserList = useCallback(() => {
-    fetchUserList({page, pageSize, order, orderBy, query, searched});
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    fetchUserList({ page, pageSize, order, orderBy, query, searched });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, pageSize, order, orderBy, query]);
 
-  const handleInsillionStatus = useCallback((data, row) => {
-    dispatch(
-      showDialog({
-        title: COMMON_WORDS.CHANGE_STATUS,
-        content: <Content />,
-        actions: <Actions row={row} fetchData={ getUserList} />,
-      })
-    );
-  // eslint-disable-next-line no-use-before-define
-  }, [dispatch, getUserList]);
+  const handleInsillionStatus = useCallback(
+    (data, row) => {
+      dispatch(
+        showDialog({
+          title: COMMON_WORDS.CHANGE_STATUS,
+          content: <Content />,
+          actions: <Actions row={row} fetchData={getUserList} />,
+        })
+      );
+      // eslint-disable-next-line no-use-before-define
+    },
+    [dispatch, getUserList]
+  );
 
   const header = useMemo(() => Header(updateUserForm, handleInsillionStatus), [updateUserForm, handleInsillionStatus]);
 
   useEffect(() => {
     getUserList();
-  }, [getUserList])
+  }, [getUserList]);
 
   const onSubmit = (data) => {
     setPage(0);
