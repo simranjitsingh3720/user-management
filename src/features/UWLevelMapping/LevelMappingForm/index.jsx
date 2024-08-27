@@ -38,6 +38,7 @@ function LevelMappingForm({ dataById, fetchData }) {
     handleSubmit,
     control,
     setValue,
+    setValues,
     formState: { errors },
     reset,
   } = useForm({
@@ -51,15 +52,21 @@ function LevelMappingForm({ dataById, fetchData }) {
   });
 
   const handleReset = () => {
-    setEditData([]);
-    reset({
-      lob: null,
-      product: null,
-      level: null,
-      location: null,
-      isLeader: null,
-    });
+    if (!employeeId) {
+      setEditData([]);
+      reset({
+        lob: null,
+        product: null,
+        level: null,
+        location: null,
+        isLeader: null,
+      });
+    } else {
+      setValue('location', null);
+      setValue('level', null);
+    }
   };
+
   const { data, postData, loading, updateData, getLobByUserId } = useCreateProductLevel(
     fetchData,
     setEditData,
@@ -137,8 +144,6 @@ function LevelMappingForm({ dataById, fetchData }) {
       postData(payload);
     }
   };
-
-  console.log('locationData', locationData);
 
   return (
     <Box component="form" onSubmit={handleSubmit(onSubmit)}>

@@ -101,7 +101,6 @@ const ProductPaymentConfig = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [paymentTypeList]);
 
-  console.log('HEADER', HEADER);
   return (
     <>
       <SearchComponent

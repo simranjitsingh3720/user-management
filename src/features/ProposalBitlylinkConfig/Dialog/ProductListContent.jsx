@@ -6,8 +6,6 @@ const ProductListContent = (row) => {
   const HEADER_COLUMNS = generateTableHeadersProduct();
   const [data, setData] = useState([]);
 
-  console.log('row', row);
-
   useEffect(() => {
     if (row && row?.row?.products) {
       const arrayData = row?.row?.products.map((productDetail) => ({
