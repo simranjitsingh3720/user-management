@@ -38,7 +38,6 @@ function LevelMappingForm({ dataById, fetchData }) {
     handleSubmit,
     control,
     setValue,
-    setValues,
     formState: { errors },
     reset,
   } = useForm({

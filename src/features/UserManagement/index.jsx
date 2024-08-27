@@ -9,11 +9,12 @@ import Actions from './Components/Dialog/Action';
 import { showDialog } from '../../stores/slices/dialogSlice';
 import { useDispatch } from 'react-redux';
 import SearchComponent from '../../components/SearchComponent';
-import { removeExtraColumns, setTableName } from '../../stores/slices/exportSlice';
+import { removeExtraColumns, setExtraColumns, setTableName } from '../../stores/slices/exportSlice';
 import { PAGECOUNT } from '../../utils/globalConstants';
 import usePermissions from '../../hooks/usePermission';
 import { ARR_CONTAINS, COMMON, Header, NAVIGATE, SEARCH_OPTIONS } from './Components/utils/constants';
 import { formatDate } from '../../utils/globalizationFunction';
+import { ExtraColumnsEnum } from '../../utils/ExtraColumnsEnum';
 
 function UserManagement() {
   const navigate = useNavigate();
@@ -51,6 +52,7 @@ function UserManagement() {
     setUserData(transformedData);
     dispatch(removeExtraColumns());
     dispatch(setTableName(transformedData[0]?.label));
+    dispatch(setExtraColumns([ExtraColumnsEnum.PRODUCT, ExtraColumnsEnum.LOB, ExtraColumnsEnum.LOCATION]));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userList, dispatch]);
 
