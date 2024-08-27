@@ -5,17 +5,14 @@ function generateTableHeaders(handleEditClick) {
     {
       id: 'producerName',
       value: 'Producer Name',
-      sortable: false,
     },
     {
       id: 'producerCode',
       value: 'Producer Code',
-      sortable: false,
     },
     {
-      id: 'medicare',
+      id: 'isExistingCustomer',
       value: 'Medicare Existing',
-      sortable: false,
     },
     {
       id: 'createdAt',

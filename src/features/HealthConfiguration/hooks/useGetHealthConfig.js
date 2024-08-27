@@ -1,16 +1,16 @@
-import { useState } from "react";
-import axiosInstance from "../../../utils/axiosInstance";
-import { COMMON_WORDS } from "../../../utils/constants";
-import { buildQueryString, formatDate } from "../../../utils/globalizationFunction";
-import apiUrls from "../../../utils/apiUrls";
-import errorHandler from "../../../utils/errorHandler";
+import { useState } from 'react';
+import axiosInstance from '../../../utils/axiosInstance';
+import { COMMON_WORDS } from '../../../utils/constants';
+import { buildQueryString, formatDate } from '../../../utils/globalizationFunction';
+import apiUrls from '../../../utils/apiUrls';
+import errorHandler from '../../../utils/errorHandler';
 
 function useGetHealthConfig() {
   const [healthConfigList, setHealthConfigList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [totalCount, setTotalCount] = useState(0);
 
-  const getHealthConfigList = async ({page, pageSize, order, orderBy, resultProducersId}) => {
+  const getHealthConfigList = async ({ page, pageSize, order, orderBy, resultProducersId }) => {
     try {
       setLoading(true);
       let params = {
@@ -35,13 +35,16 @@ function useGetHealthConfig() {
       const response = await axiosInstance.get(url);
 
       const healthConfigData = response.data.data.map((item) => {
-        const { healthConfiguration: {id, label, createdAt, updatedAt, isExistingCustomer}, producer } = item;
+        const {
+          healthConfiguration: { id, label, createdAt, updatedAt, isExistingCustomer },
+          producer,
+        } = item;
 
         return {
           id: id,
           label: label,
           producerName: `${producer?.[0].firstName} ${producer?.[0].lastName}`,
-          medicare: isExistingCustomer ? "yes" : "No",
+          isExistingCustomer: isExistingCustomer ? 'yes' : 'No',
           producerCode: producer?.[0].producerCode,
           createdAt: formatDate(createdAt),
           updatedAt: formatDate(updatedAt),
@@ -56,7 +59,6 @@ function useGetHealthConfig() {
       setLoading(false);
     }
   };
-  
 
   return { healthConfigList, loading, getHealthConfigList, totalCount };
 }
