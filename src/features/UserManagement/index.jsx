@@ -31,6 +31,7 @@ function UserManagement() {
 
   const updateUserForm = useCallback((row) => {
     navigate(NAVIGATE.NAVIGATE_TO_FORM + '/' + row.id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -52,6 +53,7 @@ function UserManagement() {
     dispatch(removeExtraColumns());
     dispatch(setTableName(transformedData[0]?.label));
     dispatch(setExtraColumns([ExtraColumnsEnum.PRODUCT, ExtraColumnsEnum.LOB, ExtraColumnsEnum.LOCATION]));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userList, dispatch]);
 
   const getUserList = useCallback(() => {

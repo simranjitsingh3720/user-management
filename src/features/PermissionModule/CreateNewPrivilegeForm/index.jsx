@@ -36,13 +36,14 @@ function CreateNewUserContainer({
 
   const [array, setArray] = useState([]);
 
-  const { SubModuleData, SubModuleLoading, SubModuleFetchData } = useGetSubModule();
+  const { SubModuleData, SubModuleFetchData } = useGetSubModule();
 
   useEffect(() => {
     if (SubModuleData && SubModuleData.data) {
       const newArray = [...array, { SubModuleData: SubModuleData.data }];
       setArray(newArray);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [SubModuleData]);
 
   const clearModulesFromIndex = (index) => {

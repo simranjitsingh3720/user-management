@@ -52,11 +52,12 @@ function UWLevelMapping() {
     navigate('bulk-upload');
   };
 
-  useEffect(()=> {
-    if(data && data.length > 0){
+  useEffect(() => {
+    if (data && data.length > 0) {
       dispatch(removeExtraColumns());
-     dispatch(setTableName(data[0]?.label));
+      dispatch(setTableName(data[0]?.label));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   return (

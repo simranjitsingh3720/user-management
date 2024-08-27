@@ -38,6 +38,7 @@ function SignInOTP({ otpScreen, setOtpScreen, postData, loginLoading, verifyOTP,
   useEffect(() => {
     setValue('otp', null);
     setTimer(60);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [otpScreen]);
 
   useEffect(() => {

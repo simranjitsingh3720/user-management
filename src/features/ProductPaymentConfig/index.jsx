@@ -62,6 +62,13 @@ const ProductPaymentConfig = () => {
     }
   }, [fetchPaymentConfigList, paymentTypeList]);
 
+  useEffect(() => {
+    if (paymentConfigList.length > 0) {
+      dispatch(setTableName(paymentConfigList[0].label));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [paymentConfigList]);
+
   const handleSubmit = (data) => {
     setPage(0);
     if (searched === COMMON_WORDS.PRODUCT) {
@@ -94,7 +101,6 @@ const ProductPaymentConfig = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [paymentTypeList]);
 
-  console.log('HEADER', HEADER);
   return (
     <>
       <SearchComponent

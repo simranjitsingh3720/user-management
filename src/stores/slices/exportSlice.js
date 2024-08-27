@@ -18,6 +18,7 @@ const initialState = {
   error: null,
   tableName: '',
   extraColumns: [],
+  extraColumnsArr: [],
 };
 
 export const fetchColumns = createAsyncThunk('export/fetchColumns', async ({ tableName, headerValues }, thunkAPI) => {
@@ -113,6 +114,7 @@ const exportSlice = createSlice({
       state.selectedValue = action.payload;
     },
     setExtraColumns: (state, action) => {
+      state.extraColumnsArr = action.payload;
       const columns = action.payload.map((col) => ({
         id: col,
         name: splitCamelCase(col),
@@ -121,6 +123,7 @@ const exportSlice = createSlice({
       state.extraColumns = columns;
     },
     removeExtraColumns: (state) => {
+      state.extraColumnsArr = [];
       state.extraColumns = [];
     },
     setTableName: (state, action) => {

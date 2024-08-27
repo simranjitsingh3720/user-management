@@ -93,6 +93,7 @@ function ChannelForm() {
     setValue('bitlyLinkMandatory', null);
     setValue('producerCode', null);
     setDataList([]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [watch('select')]);
 
   return (

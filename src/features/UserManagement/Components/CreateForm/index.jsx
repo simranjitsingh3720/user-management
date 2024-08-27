@@ -383,7 +383,6 @@ function CreateUserCreationForm() {
       vertical,
       subVertical,
       solId,
-      gcStatus,
       typeOfProducer,
       channelType,
       bankingLimit,
