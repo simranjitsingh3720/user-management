@@ -113,10 +113,8 @@ function UploadForm() {
   }, [fetchBulkUpload]);
 
   const handleGo = (data) => {
-    if (data) {
-      setPage(0);
-      setQuery(data?.search || '');
-    }
+    setPage(0);
+    setQuery(data?.search || '');
   };
 
   const deleteBtn = () => {
