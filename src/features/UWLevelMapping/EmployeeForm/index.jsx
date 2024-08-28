@@ -37,7 +37,7 @@ function EmployeeForm() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
-  const onSubmit = () => {
+  const onSubmit = (data) => {
     fetchData(searched, data.search);
   };
 
