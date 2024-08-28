@@ -91,7 +91,7 @@ function CreateNewUserContainer({
           getOptionLabel={(option) => option.label}
           placeholder="Select"
           trigger={trigger}
-          onChangeCallback={(event, newValue) => {
+          onChangeCallback={(newValue) => {
             if (array) {
               setArray([]);
             }
@@ -128,7 +128,7 @@ function CreateNewUserContainer({
             getOptionLabel={(option) => option.label}
             placeholder="Select"
             trigger={trigger}
-            onChangeCallback={(event, newValue) => {
+            onChangeCallback={(newValue) => {
               handleSubmoduleChange(newValue, idx);
             }}
             rules={{ required: 'Sub Module is required' }}
