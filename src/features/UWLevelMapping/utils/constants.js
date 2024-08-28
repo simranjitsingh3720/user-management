@@ -1,7 +1,7 @@
 export const LEVEL_ENUM = [
-  { value: 'one', label: 'Level One' },
-  { value: 'two', label: 'Level Two' },
-  { value: 'three', label: 'Level Three' },
+  { value: 'one', label: 'One' },
+  { value: 'two', label: 'Two' },
+  { value: 'three', label: 'Three' },
   { value: 'underwriter level 4', label: 'Underwriter Level 4' },
   { value: 'co_insurance_referra', label: 'Co Insurance Referral' },
   { value: 'reinsurance fac', label: 'Reinsurance FAC' },

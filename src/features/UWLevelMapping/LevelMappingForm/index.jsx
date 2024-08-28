@@ -63,6 +63,7 @@ function LevelMappingForm({ dataById, fetchData }) {
     } else {
       setValue('location', null);
       setValue('level', null);
+      setValue('leader', 'yes');
     }
   };
 
