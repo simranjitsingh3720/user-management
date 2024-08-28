@@ -1,6 +1,7 @@
 import React, { lazy, Suspense } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import PublicRoute from '../../components/PublicRoute';
+import FullPageLoader from '../../components/FullPageLoader';
 
 const SignIn = lazy(() => import('../../features/Signin'));
 const MainAppRoutes = lazy(() => import('./MainAppRoutes'));
@@ -12,7 +13,7 @@ const AppRoutes = () => {
       <Route
         path="/sign-in"
         element={
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<FullPageLoader />}>
             <PublicRoute component={SignIn} />
           </Suspense>
         }
@@ -20,7 +21,7 @@ const AppRoutes = () => {
       <Route
         path="/*"
         element={
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<FullPageLoader />}>
             <MainAppRoutes />
           </Suspense>
         }
