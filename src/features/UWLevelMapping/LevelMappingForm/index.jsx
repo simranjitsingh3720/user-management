@@ -40,6 +40,7 @@ function LevelMappingForm({ dataById, fetchData }) {
     setValue,
     formState: { errors },
     reset,
+    trigger,
   } = useForm({
     defaultValues: {
       lob: null,
@@ -178,6 +179,7 @@ function LevelMappingForm({ dataById, fetchData }) {
                     fetchProduct(employeeId, newValue.id);
                   }
                 }}
+                trigger={trigger}
               />
             </Grid>
             <Grid item xs={12} sm={6} lg={4}>
@@ -195,6 +197,7 @@ function LevelMappingForm({ dataById, fetchData }) {
                 helperText={errors.product?.message}
                 placeholder={COMMON_WORDS.SELECT}
                 disabled={editData?.data?.id ? true : false}
+                trigger={trigger}
               />
             </Grid>
             <Grid item xs={12} sm={6} lg={4}>
@@ -210,6 +213,7 @@ function LevelMappingForm({ dataById, fetchData }) {
                 error={Boolean(errors.location)}
                 helperText={errors.location?.message}
                 placeholder={COMMON_WORDS.SELECT}
+                trigger={trigger}
               />
             </Grid>
             <Grid item xs={12} sm={6} lg={4}>
@@ -230,6 +234,7 @@ function LevelMappingForm({ dataById, fetchData }) {
                     {option?.label}
                   </li>
                 )}
+                trigger={trigger}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
