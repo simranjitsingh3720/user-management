@@ -1,4 +1,4 @@
-import { CURRENT_LOCATION, TABLE_LABEL } from "../../../../utils/constants";
+import { CURRENT_LOCATION, TABLE_LABEL } from '../../../../utils/constants';
 
 export const SEARCH_OPTIONS = [
   {
@@ -45,6 +45,26 @@ export const ROLE_MENUITEM = [
     id: 'partner',
     label: 'Partner',
     value: 'partner',
+  },
+  {
+    id: 'producer',
+    label: 'Producer',
+    value: 'producer',
+  },
+  {
+    id: 'partnerEmployee',
+    label: 'Partner Employee',
+    value: 'partnerEmployee',
+  },
+  {
+    id: 'externalPosp',
+    label: 'External Posp',
+    value: 'externalPosp',
+  },
+  {
+    id: 'sso',
+    label: 'Single Sign On',
+    value: 'sso',
   },
   {
     id: 'other',
