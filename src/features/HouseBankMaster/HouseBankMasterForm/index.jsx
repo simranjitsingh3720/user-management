@@ -77,6 +77,7 @@ function HouseBankMasterForm() {
 
   useEffect(() => {
     if (id) fetchHouseBankByID(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   const { postData, loading: createPaymentLoading } = useCreateHouseBank();
@@ -93,6 +94,7 @@ function HouseBankMasterForm() {
       setValue('branchName', branchName || '');
       setValue('accountNumber', accountNumber || '');
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [houseBankByID]);
 
   const onSubmit = (data) => {

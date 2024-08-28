@@ -172,6 +172,7 @@ function ProposalForm() {
       setValue('startDate', null);
       setValue('endDate', null);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [watch('groupStatus')]);
 
   return (

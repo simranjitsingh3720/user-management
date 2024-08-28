@@ -58,6 +58,7 @@ function SetOTPException({ fetchData }) {
   useEffect(() => {
     setValue('channel', null);
     setValue('producerCode', null);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [OTPValue]);
 
   return (

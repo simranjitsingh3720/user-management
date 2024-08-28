@@ -1,5 +1,4 @@
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import EditIcon from '@mui/icons-material/Edit';
 
 export function generateTableHeaders(handleClicked, handleEdit) {
   return [
