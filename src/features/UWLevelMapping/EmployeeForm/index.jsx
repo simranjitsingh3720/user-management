@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import SearchComponent from '../../../components/SearchComponent';
 import CustomTable from '../../../components/CustomTable';
 import { employeeTableHeaders } from '../utils/tableHeaders';
@@ -13,7 +13,7 @@ import { removeExtraColumns } from '../../../stores/slices/exportSlice';
 
 function EmployeeForm() {
   const [searched, setSearched] = useState('employeeId');
-
+  const [searchData, setSearchData] = useState();
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(PAGECOUNT);
   const [order, setOrder] = useState(COMMON_WORDS.DESC);
@@ -28,7 +28,23 @@ function EmployeeForm() {
   };
   const HEADER_COLUMNS = employeeTableHeaders(handleEditClick);
 
-  const { data, loading, fetchData, count } = useGetEmployeeData(page, pageSize, order, orderBy);
+  const { data, loading, fetchData, count } = useGetEmployeeData();
+
+  const getList = useCallback(() => {
+    fetchData({
+      page,
+      pageSize,
+      order,
+      orderBy,
+      searched,
+      searchData,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page, pageSize, order, orderBy, searchData]);
+
+  useEffect(() => {
+    getList();
+  }, [getList]);
 
   useEffect(() => {
     if (data && data?.length > 0) {
@@ -38,7 +54,8 @@ function EmployeeForm() {
   }, [data]);
 
   const onSubmit = (data) => {
-    fetchData(searched, data.search);
+    setPage(0);
+    setSearchData(data?.search);
   };
 
   return (
@@ -50,7 +67,7 @@ function EmployeeForm() {
         textField
         textFieldPlaceholder="Search"
         onSubmit={onSubmit}
-        fetchData={fetchData}
+        fetchData={onSubmit}
       />
       <div className="mt-4">
         <CustomTable
