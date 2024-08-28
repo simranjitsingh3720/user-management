@@ -90,6 +90,11 @@ const Actions = () => {
       };
     }
 
+    if (selectedColumns.length === 0) {
+      toastifyUtils.notifyError('Please select at least one column');
+      return;
+    }
+
     dispatch(downloadData(combinedData));
     dispatch(hideDialog());
   };
