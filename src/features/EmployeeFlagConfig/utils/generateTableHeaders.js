@@ -11,7 +11,7 @@ export function generateTableHeaders(handleClicked, handleEdit) {
       value: 'Producer Name',
     },
     {
-      id: 'productDetails',
+      id: 'fields',
       value: 'Product Details',
       action: [
         {
