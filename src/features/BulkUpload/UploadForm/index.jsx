@@ -57,8 +57,6 @@ function UploadForm() {
     fetchTemplate();
   };
 
-  console.log('hello', watch('role'));
-
   const watchRole = watch(COMMON_WORDS.ROLE);
   const location = useLocation();
 
@@ -204,7 +202,7 @@ function UploadForm() {
               />
             </div>
           )}
-          <Typography variant="body2" color="textSecondary" className="w-full lg:w-1/2 px-7 ">
+          <Typography variant="body2" color="textSecondary" className="w-full px-7 ">
             {infoLabel[watch('role')]}
           </Typography>
 

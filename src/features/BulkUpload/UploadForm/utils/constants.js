@@ -67,6 +67,11 @@ export const ROLE_MENUITEM = [
     value: 'sso',
   },
   {
+    id: 'underwriter',
+    label: 'Underwriter',
+    value: 'other',
+  },
+  {
     id: 'other',
     label: 'Other',
     value: 'other',
@@ -112,5 +117,6 @@ export const infoLabel = {
   partnerEmployee: 'Only DEO users with Partner Employee role will be created',
   externalPosp: 'Only DEO users with External POSP role will be created',
   sso: 'Only DEO users with Single Sign On role will be created',
+  underwriter: 'Only users with underwriter role will be created',
   other: 'All types of users not in the dropdown will be created using other selection',
 };
