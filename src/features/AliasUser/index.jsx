@@ -1,120 +1,62 @@
-import React, { useState } from "react";
-import SearchComponenet from "./SearchComponenet";
-import useGetSyncedProducer from "./hooks/useGetSyncedProducer";
-import styles from "./styles.module.scss";
-import TableHeader from "./Table/TableHeader";
-import ListLoader from "../../components/ListLoader";
-import Table from "./Table";
-import NoDataFound from "../../components/NoDataCard";
-import { MenuItem, Pagination, Select } from "@mui/material";
-import { PAGECOUNT, selectRowsData } from "../../utils/globalConstants";
+import React, { useState, useMemo, useCallback } from 'react';
+import { Box } from '@mui/material';
+import { useDispatch } from 'react-redux';
+import CustomTable from '../../components/CustomTable';
+import { Header } from './utils/header';
+import CustomButton from '../../components/CustomButton';
+import usePermissions from '../../hooks/usePermission';
+import { PAGECOUNT } from '../../utils/globalConstants';
+import { showDialog } from '../../stores/slices/dialogSlice';
+import { COMMON_WORDS } from '../../utils/constants';
+import Content from '../../components/CustomDialogContent';
+import Action from './Action';
 
-function getSelectedRowData(count) {
-  
-  let selectedRowData = [];
+const Lob = () => {
+  const dispatch = useDispatch();
+  const [page, setPage] = useState(0);
+  const [pageSize, setPageSize] = useState(PAGECOUNT);
+  const [order, setOrder] = useState(COMMON_WORDS.DESC);
+  const [orderBy, setOrderBy] = useState(COMMON_WORDS.CREATED_AT);
 
-  
-  for (let i = 0; i < selectRowsData.length; i++) {
-    if (selectRowsData[i] <= count) {
-      selectedRowData.push(selectRowsData[i]);
-    }
-  }
+  // Check Permission
+  const { canCreate, canUpdate } = usePermissions();
 
-  return selectedRowData;
-}
-
-function AliasUser() {
-  const [query, setQuery] = useState("");
-  const [searched, setSearched] = useState("producers");
-  const [date, setDate] = useState({ startDate: "", endDate: "" });
-
-  const [producers, setProducers] = useState("");
-
-  const [rowsPage, setRowsPage] = useState(PAGECOUNT);
-
-  const [pageChange, setPageChange] = useState(1);
-
-  const { data, loading, fetchData, setSort, sort } = useGetSyncedProducer(
-    pageChange,
-    rowsPage,
-    query,
-    searched,
-    date
+  const handleStatusUpdate = useCallback(
+    (data, row) => {
+      dispatch(
+        showDialog({
+          title: COMMON_WORDS.CHANGE_STATUS,
+          content: <Content label={COMMON_WORDS.ALIAS_USER} />,
+          actions: <Action />,
+        })
+      );
+    },
+    [dispatch]
   );
-
-  const handlePaginationChange = (event, page) => {
-    setPageChange(page);
-  };
-
-  const handleRowsChange = (event) => {
-    setPageChange(1);
-    setRowsPage(event.target.value);
-  };
+  const header = useMemo(() => Header(handleStatusUpdate), [handleStatusUpdate]);
 
   return (
-    <div>
-      <SearchComponenet
-        fetchData={fetchData}
-        setPageChange={setPageChange}
-        setQuery={setQuery}
-        searched={searched}
-        setSearched={setSearched}
-        producers={producers}
-        setProducers={setProducers}
-        date={date}
-        setDate={setDate}
-      />
-
-      <div className={styles.tableContainerStyle}>
-        <div className={styles.tableStyled}>
-          {loading ? (
-            <>
-              <TableHeader />
-              <ListLoader />
-            </>
-          ) : data?.data && data?.data.length ? (
-            <Table
-              ListData={data?.data}
-              loading={loading}
-              fetchData={fetchData}
-              sort={sort}
-              setSort={setSort}
-            />
-          ) : (
-            <NoDataFound />
-          )}
-        </div>
-        <div className={styles.pageFooter}>
-          <div className={styles.rowsPerPage}>
-            <p className={styles.totalRecordStyle}>Showing Results:</p>
-            <Select
-              labelId="rows-per-page"
-              id="rows-per-page"
-              value={rowsPage}
-              onChange={handleRowsChange}
-              size="small"
-              className={styles.customizeRowsSelect}
-            >
-              {getSelectedRowData(data?.totalCount).map((item) => (
-                <MenuItem value={item} className={styles.styledOptionText}>
-                  {item}
-                </MenuItem>
-              ))}
-            </Select>
-            <p className={styles.totalRecordStyle}>of {data?.totalCount}</p>
-          </div>
-          <Pagination
-            count={data?.totalPageSize}
-            color="primary"
-            size="small"
-            onChange={handlePaginationChange}
-            page={pageChange}
-            className={styles.marginFotter}
-          />
-        </div>
+    <Box>
+      <div className="flex justify-end">{canCreate && <CustomButton variant="contained">Create</CustomButton>}</div>
+      <div className="mt-4">
+        <CustomTable
+          rows={[]}
+          columns={header}
+          loading={false}
+          totalCount={0}
+          page={page}
+          setPage={setPage}
+          rowsPerPage={pageSize}
+          setRowsPerPage={setPageSize}
+          order={order}
+          setOrder={setOrder}
+          orderBy={orderBy}
+          setOrderBy={setOrderBy}
+          canUpdate={canUpdate}
+        />
       </div>
-    </div>
+    </Box>
   );
-}
+};
 
-export default AliasUser;
+export default Lob;

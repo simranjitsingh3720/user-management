@@ -69,6 +69,7 @@ export const COMMON_WORDS = {
   LOCATION_NAME: 'txtOffice',
   PRODUCER_TYPE_NAME: 'txtCategory',
   ACTIVE: 'active',
+  ALIAS_USER: 'alias',
 };
 
 export const TABLE_COLUMNS = {
