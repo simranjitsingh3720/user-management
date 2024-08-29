@@ -2,7 +2,8 @@ import DownloadLogo from '../../../../assets/DownloadLogo';
 
 export const Header = (handleDownloadFile) => {
   return [
-    { value: 'File Name', id: 'fileName' },
+    { value: 'Batch ID', id: 'uploadId' },
+    // { value: 'File Name', id: 'fileName' },
     { value: 'Uploaded By', id: 'updatedBy' },
     { value: 'Upload Date And Time', id: 'fileUploadDateTime', sortable: true },
     { value: 'Sync Date And Time', id: 'fileSyncDateTime', sortable: true },
