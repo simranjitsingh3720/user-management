@@ -82,8 +82,8 @@ export const COMMON = {
 
 export const PAYMENT_OPTIONS = {
   ONLINE_PAYMENT: 'online payment',
-  SELF_PAYMENT_LINK: 'self-payment link to customer'
-}
+  SELF_PAYMENT_LINK: 'self-payment link to customer',
+};
 
 export const FORM_LABEL = {
   START_DATE: 'startDate',
@@ -239,6 +239,10 @@ export const SEARCH_OPTIONS = [
   {
     label: 'Mobile No.',
     value: 'mobileNo',
+  },
+  {
+    label: 'Producer Code',
+    value: 'producerCode',
   },
 ];
 
