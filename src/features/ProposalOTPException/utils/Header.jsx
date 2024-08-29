@@ -37,7 +37,7 @@ export const Header = (handleEditClick, handleStatusUpdate) => {
       sortable: true,
     },
     {
-      id: 'roleStatus',
+      id: 'status',
       value: 'Status',
       sortable: false,
       action: [

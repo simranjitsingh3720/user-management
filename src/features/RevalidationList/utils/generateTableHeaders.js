@@ -1,35 +1,33 @@
-function generateTableHeaders(
-  handleStatusUpdate
-) {
+function generateTableHeaders(handleStatusUpdate) {
   return [
     {
-      id: "userName",
-      value: "Name",
+      id: 'name',
+      value: 'Name',
     },
     {
-      id: "emailId",
-      value: "Email ID",
+      id: 'emailId',
+      value: 'Email ID',
     },
     {
-      id: "mobileNo",
-      value: "Mobile Number",
+      id: 'mobileNo',
+      value: 'Mobile Number',
     },
     {
       id: 'createdAt',
       value: 'Created At',
-      sortable: true
+      sortable: true,
     },
     {
       id: 'updatedAt',
       value: 'Updated At',
-      sortable: true
+      sortable: true,
     },
     {
-      id: "status",
-      value: "Status",
+      id: 'status',
+      value: 'Status',
       action: [
         {
-          component: "switch",
+          component: 'switch',
           onClick: (data, row) => {
             handleStatusUpdate(data, row);
           },

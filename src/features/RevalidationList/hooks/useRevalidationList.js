@@ -33,10 +33,12 @@ const useRevalidationList = () => {
 
       const transformedData =
         response?.data?.data?.map((item) => {
-          const { revalidationList: { id, name, emailId, mobileNo, createdAt, updatedAt, status, label } } = item;
+          const {
+            revalidationList: { id, name, emailId, mobileNo, createdAt, updatedAt, status, label },
+          } = item;
           return {
             id,
-            userName: name,
+            name,
             emailId,
             mobileNo,
             createdAt: formatDate(createdAt),
@@ -80,7 +82,6 @@ const useRevalidationList = () => {
         }
       }
       setData(transformedData);
-      
     } catch (error) {
       errorHandler.handleError(error);
     }
