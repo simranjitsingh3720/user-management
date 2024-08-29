@@ -15,7 +15,6 @@ import usePermissions from '../../hooks/usePermission';
 import { ARR_CONTAINS, COMMON, Header, NAVIGATE, SEARCH_OPTIONS } from './Components/utils/constants';
 import { formatDate } from '../../utils/globalizationFunction';
 import { ExtraColumnsEnum } from '../../utils/ExtraColumnsEnum';
-import { set } from 'react-hook-form';
 
 function UserManagement() {
   const navigate = useNavigate();

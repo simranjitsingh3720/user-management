@@ -13,7 +13,6 @@ import useCreateProductLevel from '../hooks/useCreateProductLevel';
 import CustomFormHeader from '../../../components/CustomFormHeader';
 import useGetProducts from '../hooks/useGetProducts';
 import useGetLocation from '../hooks/useGetLocation';
-import { clearProducts } from '../../../stores/slices/getProduct';
 
 function LevelMappingForm({ dataById, fetchData }) {
   const dispatch = useDispatch();
