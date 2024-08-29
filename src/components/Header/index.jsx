@@ -25,11 +25,20 @@ function stringToColor(string) {
 }
 
 function stringAvatar(name) {
+  const parts = name.split(' ');
+  let childName;
+
+  if (parts.length < 2) {
+    childName = `${name.split(' ')[0][0]}`;
+  } else {
+    childName = `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`;
+  }
+
   return {
     sx: {
       bgcolor: stringToColor(name),
     },
-    children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
+    children: childName,
   };
 }
 
@@ -37,7 +46,9 @@ function Header({ handleDrawerToggle, selectedNavbar, selectedParentIndex }) {
   const [anchorElUser, setAnchorElUser] = useState(null);
   const settings = ['Logout'];
   const user = JSON.parse(localStorage.getItem(COMMON_WORDS.USER));
-  const name = `${user?.firstName} ${user?.lastName}`.toUpperCase();
+  const name = user?.dataEntryUserName
+    ? user?.dataEntryUserName?.toUpperCase()
+    : `${user?.firstName} ${user?.lastName}`.toUpperCase();
   const persistor = persistStore(appStore);
 
   const handleLogout = () => {

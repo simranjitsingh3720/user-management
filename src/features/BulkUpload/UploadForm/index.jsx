@@ -1,5 +1,5 @@
 import React, { useRef, useState, useCallback, useEffect } from 'react';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import SearchComponent from '../../../components/SearchComponent';
 import { getPlaceHolder } from '../../../utils/globalizationFunction';
@@ -11,6 +11,7 @@ import {
   SEARCH_OPTIONS,
   UPLOAD_TYPE,
   getBulkUploadLabel,
+  infoLabel,
 } from './utils/constants';
 import CustomTable from '../../../components/CustomTable';
 import { Header } from './utils/header';
@@ -55,6 +56,8 @@ function UploadForm() {
   const downloadTemplate = () => {
     fetchTemplate();
   };
+
+  console.log('hello', watch('role'));
 
   const watchRole = watch(COMMON_WORDS.ROLE);
   const location = useLocation();
@@ -164,24 +167,6 @@ function UploadForm() {
           <div className="p-5 pb-0">
             <CustomFormHeader navigateRoute={-1} headerText={CONTENT.TITLE} subHeading={CONTENT.HEADER} />
           </div>
-          {location?.pathname.includes(COMMON_VAR.USER_MANAGEMENT_ROUTE) && (
-            <div className="w-full lg:w-1/2 px-7 pb-5">
-              <SelectField
-                key="role"
-                control={control}
-                name="role"
-                label="Role Name"
-                required={true}
-                disabled={false}
-                menuItem={ROLE_MENUITEM}
-                placeholder="Select"
-                errors={errors}
-                setValue={setValue}
-                classes="w-full"
-                trigger={trigger}
-              />
-            </div>
-          )}
           <div className="w-full lg:w-1/2 px-7 pb-5">
             <UserTypeToggle
               menuItem={UPLOAD_TYPE}
@@ -196,6 +181,33 @@ function UploadForm() {
               }}
             />
           </div>
+
+          {location?.pathname.includes(COMMON_VAR.USER_MANAGEMENT_ROUTE) && (
+            <div className="w-full lg:w-1/2 px-7 pb-5">
+              <SelectField
+                key="role"
+                control={control}
+                name="role"
+                label="Role Name"
+                required={true}
+                disabled={false}
+                menuItem={
+                  uploadType === COMMON_WORDS.ADD
+                    ? ROLE_MENUITEM.filter((item) => item.id !== COMMON_WORDS.PRODUCER)
+                    : ROLE_MENUITEM
+                }
+                placeholder="Select"
+                errors={errors}
+                setValue={setValue}
+                classes="w-full"
+                trigger={trigger}
+              />
+            </div>
+          )}
+          <Typography variant="body2" color="textSecondary" className="w-full lg:w-1/2 px-7 ">
+            {infoLabel[watch('role')]}
+          </Typography>
+
           {location?.pathname.includes(COMMON_VAR.USER_MANAGEMENT_ROUTE) ? (
             watchRole ? (
               <UploadTemplate
