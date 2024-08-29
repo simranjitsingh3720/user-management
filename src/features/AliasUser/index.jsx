@@ -11,7 +11,7 @@ import { COMMON_WORDS } from '../../utils/constants';
 import Content from '../../components/CustomDialogContent';
 import Action from './Action';
 
-const Lob = () => {
+const AliasUser = () => {
   const dispatch = useDispatch();
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(PAGECOUNT);
@@ -59,4 +59,4 @@ const Lob = () => {
   );
 };
 
-export default Lob;
+export default AliasUser;
