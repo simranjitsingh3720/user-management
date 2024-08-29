@@ -181,7 +181,7 @@ function UploadForm() {
           </div>
 
           {location?.pathname.includes(COMMON_VAR.USER_MANAGEMENT_ROUTE) && (
-            <div className="w-full lg:w-1/2 px-7 pb-5">
+            <div className="w-full lg:w-1/2 px-7 pb-2.5">
               <SelectField
                 key="role"
                 control={control}
@@ -202,9 +202,11 @@ function UploadForm() {
               />
             </div>
           )}
-          <Typography variant="body2" color="textSecondary" className="w-full px-7 ">
-            {infoLabel[watch('role')]}
-          </Typography>
+          {watch('role') && (
+            <Typography variant="body2" className="w-full px-7 text-black">
+              Note: {infoLabel[watch('role')]}
+            </Typography>
+          )}
 
           {location?.pathname.includes(COMMON_VAR.USER_MANAGEMENT_ROUTE) ? (
             watchRole ? (
