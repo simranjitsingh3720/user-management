@@ -725,7 +725,7 @@
       {
         "id": "parentCode",
         "label": "Parent Code",
-        "type": "dropdown",
+        "type": "autocomplete",
         "required": false,
         "validation": {
           "required": "This field is required"
@@ -1130,7 +1130,7 @@
       {
         "id": "parentCode",
         "label": "Parent Code",
-        "type": "dropdown",
+        "type": "autocomplete",
         "required": false,
         "validation": {
           "required": "This field is required"
@@ -1535,7 +1535,7 @@
       {
         "id": "parentCode",
         "label": "Parent Code",
-        "type": "dropdown",
+        "type": "autocomplete",
         "required": false,
         "validation": {
           "required": "This field is required"
@@ -2263,7 +2263,7 @@
       {
         "id": "producerCode",
         "label": "Producer Code",
-        "type": "dropdown",
+        "type": "autocomplete",
         "required": true,
         "validation": {
           "required": "This field is required"
@@ -3654,7 +3654,7 @@
       {
         "id": "producerCode",
         "label": "Producer Code",
-        "type": "dropdown",
+        "type": "autocomplete",
         "required": true,
         "multiple": false,
         "validation": {
@@ -3982,7 +3982,7 @@
       {
         "id": "producerCode",
         "label": "Producer Code",
-        "type": "dropdown",
+        "type": "autocomplete",
         "required": true,
         "validation": {
           "required": "This field is required"
@@ -4237,7 +4237,7 @@
       {
         "id": "producerCode",
         "label": "Producer Code",
-        "type": "dropdown",
+        "type": "autocomplete",
         "required": true,
         "validation": {
           "required": "This field is required"

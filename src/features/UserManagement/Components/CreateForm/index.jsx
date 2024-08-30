@@ -426,6 +426,7 @@ function CreateUserCreationForm() {
       roleHierarchy && (parentCode || childIds.length > 0 || ARR_CONTAINS.PLAN_ZONE_ARR?.includes(roleName))
         ? roleHierarchy.id
         : '';
+    const parentId = parentCode && Object.keys(parentCode).length > 0 ? parentCode.id : '';
     const payload = {
       mobileNo: mobileNumber,
       email,
@@ -453,7 +454,7 @@ function CreateUserCreationForm() {
       producerCode:
         typeof producerCode === 'string' && !ARR_CONTAINS.DEO_USER_ARR?.includes(roleName) ? producerCode : '',
       parentId:
-        typeof producerCode === 'string' && ARR_CONTAINS.DEO_USER_ARR?.includes(roleName) ? producerCode : parentCode,
+        ARR_CONTAINS.DEO_USER_ARR?.includes(roleName) ? producerCode?.id : parentId,
       producerType: typeOfProducer,
       channelId: channelType,
       bankingLimit,
@@ -722,9 +723,17 @@ function CreateUserCreationForm() {
 
       case FORM_LABEL.PRODUCER:
         if (ARR_CONTAINS.DEO_USER_ARR?.includes(rolesWatch?.roleName)) {
-          setValue(FORM_VALUE.PRODUCER_CODE, value[0]);
+          setValue(
+            FORM_VALUE.PRODUCER_CODE,
+            ...producerCode
+              .filter((item) => value?.includes(item.id))
+          );
         } else {
-          setValue(FORM_VALUE.PARENT_CODE, value[0]);
+          setValue(
+            FORM_VALUE.PARENT_CODE,
+            ...parentCode
+              .filter((item) => value?.includes(item.id))
+          );
         }
         break;
 
