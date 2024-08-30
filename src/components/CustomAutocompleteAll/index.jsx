@@ -142,6 +142,7 @@ const AutocompleteFieldAll = ({
                 onClick={(event) => {
                   event.stopPropagation();
                   toggleOption(option);
+                  trigger(name);
                 }}
               >
                 {showCheckbox && (

@@ -128,6 +128,7 @@ const AutocompleteField = ({
                     setSelectedValues(option);
                     field.onChange(option);
                   }
+                  trigger(name);
 
                   // Close the dropdown if single value is selected
                   if (!multiple) {
