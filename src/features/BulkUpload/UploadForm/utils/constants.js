@@ -2,8 +2,8 @@ import { CURRENT_LOCATION, TABLE_LABEL } from '../../../../utils/constants';
 
 export const SEARCH_OPTIONS = [
   {
-    label: 'File Name',
-    value: 'fileName',
+    label: 'Batch Id',
+    value: 'uploadId',
   },
 ];
 
