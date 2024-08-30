@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 import errorHandler from '../../../utils/errorHandler';
 import toastifyUtils from '../../../utils/toastify';
 
-function useCreateProductLevel(fetchData, setEditData, handleReset) {
+function useCreateProductLevel(fetchData, handleReset, handleClearUpdate) {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   const params = useParams();
@@ -57,12 +57,7 @@ function useCreateProductLevel(fetchData, setEditData, handleReset) {
       if (fetchData) {
         fetchData();
       }
-      if (setEditData) {
-        setEditData([]);
-      }
-      if (handleReset) {
-        handleReset();
-      }
+      if (handleClearUpdate) handleClearUpdate();
     } catch (error) {
       errorHandler.handleError(error);
     } finally {

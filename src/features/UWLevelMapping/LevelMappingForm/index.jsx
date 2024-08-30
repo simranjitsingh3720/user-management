@@ -52,7 +52,7 @@ function LevelMappingForm({ dataById, fetchData }) {
   });
 
   const handleReset = () => {
-    if (!dataById?.data?.id) {
+    if (!editData?.data?.id) {
       setEditData([]);
       reset({
         lob: null,
@@ -68,10 +68,21 @@ function LevelMappingForm({ dataById, fetchData }) {
     }
   };
 
+  const handleClearUpdate = () => {
+    setEditData([]);
+    reset({
+      lob: null,
+      product: null,
+      level: null,
+      location: null,
+      isLeader: null,
+    });
+  };
+
   const { data, postData, loading, updateData, getLobByUserId } = useCreateProductLevel(
     fetchData,
-    setEditData,
-    handleReset
+    handleReset,
+    handleClearUpdate
   );
 
   useEffect(() => {

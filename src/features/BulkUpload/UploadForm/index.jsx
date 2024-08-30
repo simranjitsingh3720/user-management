@@ -12,6 +12,7 @@ import {
   UPLOAD_TYPE,
   getBulkUploadLabel,
   infoLabel,
+  infoLabelUpdate,
 } from './utils/constants';
 import CustomTable from '../../../components/CustomTable';
 import { Header } from './utils/header';
@@ -157,6 +158,11 @@ function UploadForm() {
 
   const header = Header(handleDownloadFile);
 
+  useEffect(() => {
+    setValue(COMMON_WORDS.ROLE, '');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [watch('uploadType')]);
+
   return (
     <>
       {postBulkUploadLoading && <Loader />}
@@ -202,9 +208,12 @@ function UploadForm() {
               />
             </div>
           )}
-          {watch('role') && (
+          {watch(COMMON_WORDS.ROLE) && (
             <Typography variant="body2" className="w-full px-7 text-black">
-              Note: {infoLabel[watch('role')]}
+              Note:{' '}
+              {uploadType === COMMON_WORDS.ADD
+                ? infoLabel[watch(COMMON_WORDS.ROLE)]
+                : infoLabelUpdate[watch(COMMON_WORDS.ROLE)]}
             </Typography>
           )}
 

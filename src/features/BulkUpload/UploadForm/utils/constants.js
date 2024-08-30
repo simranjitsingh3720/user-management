@@ -120,3 +120,15 @@ export const infoLabel = {
   underwriter: 'Only users with underwriter role will be created',
   other: 'All types of users not in the dropdown will be created using other selection',
 };
+
+export const infoLabelUpdate = {
+  csm: 'Only users with the role CSM will be updated',
+  admin: 'Only users with the roles Admin, AdminView, and Administrator will be updated',
+  partner: 'Only users with Partner role will be updated',
+  producer: 'Only users with role Producer, Sub Producer, and Dealer will be updated',
+  partnerEmployee: 'Only DEO users with Partner Employee role will be updated',
+  externalPosp: 'Only DEO users with External POSP role will be updated',
+  sso: 'Only DEO users with Single Sign On role will be updated',
+  underwriter: 'Only users with underwriter role will be updated',
+  other: 'All types of users not in the dropdown will be updated using other selection',
+};
