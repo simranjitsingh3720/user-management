@@ -2,8 +2,8 @@ import { CURRENT_LOCATION, TABLE_LABEL } from '../../../../utils/constants';
 
 export const SEARCH_OPTIONS = [
   {
-    label: 'File Name',
-    value: 'fileName',
+    label: 'Batch Id',
+    value: 'uploadId',
   },
 ];
 
@@ -65,11 +65,6 @@ export const ROLE_MENUITEM = [
     id: 'sso',
     label: 'Single Sign On',
     value: 'sso',
-  },
-  {
-    id: 'underwriter',
-    label: 'Underwriter',
-    value: 'other',
   },
   {
     id: 'other',
