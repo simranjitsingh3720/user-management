@@ -67,11 +67,6 @@ export const ROLE_MENUITEM = [
     value: 'sso',
   },
   {
-    id: 'underwriter',
-    label: 'Underwriter',
-    value: 'other',
-  },
-  {
     id: 'other',
     label: 'Other',
     value: 'other',
