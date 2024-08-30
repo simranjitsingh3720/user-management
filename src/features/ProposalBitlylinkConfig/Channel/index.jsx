@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import useGetBitlyLink from '../hooks/useGetBitlyLink';
 import { PAGECOUNT } from '../../../utils/globalConstants';
 import { useDispatch, useSelector } from 'react-redux';
-import { removeExtraColumns, setTableName } from '../../../stores/slices/exportSlice';
+import { removeExtraColumns, setExtraColumns, setTableName } from '../../../stores/slices/exportSlice';
 import usePermissions from '../../../hooks/usePermission';
 import SearchComponent from '../../../components/SearchComponent';
 import CustomTable from '../../../components/CustomTable';
@@ -15,7 +15,7 @@ import ProductListContent from '../Dialog/ProductListContent';
 import ProductListAction from '../Dialog/ProductListAction';
 import { getPlaceHolder } from '../../../utils/globalizationFunction';
 import { fetchUser } from '../../../stores/slices/userSlice';
-import { bitlySearch } from '../utils/constants';
+import { bitlySearch, EXPORT_DROPDOWN_COLUMNS } from '../utils/constants';
 import { getChannels } from '../../../stores/slices/getChannel';
 
 function Channel() {
@@ -56,7 +56,7 @@ function Channel() {
 
   useEffect(() => {
     dispatch(setTableName(''));
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleStatusUpdate = (data, row) => {
@@ -84,8 +84,9 @@ function Channel() {
   const { canCreate, canUpdate } = usePermissions();
 
   useEffect(() => {
-    dispatch(setTableName(data?.[0]?.label));
     dispatch(removeExtraColumns());
+    dispatch(setTableName(data?.[0]?.label));
+    dispatch(setExtraColumns(EXPORT_DROPDOWN_COLUMNS));
   }, [dispatch, data]);
 
   const optionLabelProducer = (option) => {
@@ -93,7 +94,7 @@ function Channel() {
   };
 
   const renderOptionProducerFunction = (props, option) => (
-    <li {...props} key={option?.id} style={{ textTransform: 'capitalize'}}>
+    <li {...props} key={option?.id} style={{ textTransform: 'capitalize' }}>
       {option?.firstName} {option?.lastName}
     </li>
   );
@@ -103,7 +104,7 @@ function Channel() {
   };
 
   const renderOptionChannelFunction = (props, option) => (
-    <li {...props} key={option?.id} style={{ textTransform: 'capitalize'}}>
+    <li {...props} key={option?.id} style={{ textTransform: 'capitalize' }}>
       {`${option?.label || ''} - ${option?.numChannelCode || ''}`}
     </li>
   );

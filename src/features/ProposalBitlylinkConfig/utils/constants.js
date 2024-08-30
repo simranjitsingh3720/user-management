@@ -43,3 +43,13 @@ export const bitlySearch = [
     value: 'producer',
   },
 ];
+
+export const EXPORT_DROPDOWN_COLUMNS = [
+  'firstName',
+  'lastName',
+  'producerCode',
+  'txtChannelName',
+  'numChannelCode',
+  'product',
+  'productCode',
+];
