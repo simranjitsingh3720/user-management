@@ -455,8 +455,8 @@ function CreateUserCreationForm() {
         typeof producerCode === 'string' && !ARR_CONTAINS.DEO_USER_ARR?.includes(roleName) ? producerCode : '',
       parentId:
         ARR_CONTAINS.DEO_USER_ARR?.includes(roleName) ? producerCode?.id : parentId,
-      producerType: typeOfProducer,
-      channelId: channelType,
+      producerType: typeOfProducer && Object.keys(typeOfProducer).length> 0 ? typeOfProducer?.id : '',
+      channelId: channelType && Object.keys(channelType).length> 0 ? channelType?.id : '',
       bankingLimit,
       sendEmail: ARR_CONTAINS.PRODUCER_PARTNER_ARR?.includes(roleName) ? sendEmail === FORM_VALUE.YES : '',
       domain,
@@ -687,14 +687,14 @@ function CreateUserCreationForm() {
       case FORM_LABEL.CHANNEL_ID:
         setValue(
           FORM_VALUE.CHANNEL_TYPE,
-          channelType.filter((item) => value?.includes(item.id)).map((item) => item.id)
+          ...channelType.filter((item) => value?.includes(item.id))
         );
         break;
 
       case FORM_LABEL.PRODUCER_TYPE:
         setValue(
           FORM_VALUE.TYPE_OF_PRODUCER,
-          producerType.filter((item) => value?.includes(item.id)).map((item) => item.id)
+          ...producerType.filter((item) => value?.includes(item.id))
         );
         break;
 

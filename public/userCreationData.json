@@ -857,7 +857,7 @@
       {
         "id": "typeOfProducer",
         "label": "Type Of Producer",
-        "type": "dropdown",
+        "type": "autocomplete",
         "required": true,
         "validation": {
           "required": "This field is required"
@@ -922,7 +922,7 @@
       {
         "id": "channelType",
         "label": "Channel Type",
-        "type": "dropdown",
+        "type": "autocomplete",
         "required": true,
         "validation": {
           "required": "This field is required"
@@ -1262,7 +1262,7 @@
       {
         "id": "typeOfProducer",
         "label": "Type Of Producer",
-        "type": "dropdown",
+        "type": "autocomplete",
         "required": true,
         "validation": {
           "required": "This field is required"
@@ -1327,7 +1327,7 @@
       {
         "id": "channelType",
         "label": "Channel Type",
-        "type": "dropdown",
+        "type": "autocomplete",
         "required": true,
         "validation": {
           "required": "This field is required"
@@ -1667,7 +1667,7 @@
       {
         "id": "typeOfProducer",
         "label": "Type Of Producer",
-        "type": "dropdown",
+        "type": "autocomplete",
         "required": true,
         "validation": {
           "required": "This field is required"
@@ -1732,7 +1732,7 @@
       {
         "id": "channelType",
         "label": "Channel Type",
-        "type": "dropdown",
+        "type": "autocomplete",
         "required": true,
         "validation": {
           "required": "This field is required"
