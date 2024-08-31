@@ -5,7 +5,7 @@ import { DATE_FORMAT } from '../../utils/globalConstants';
 import toastifyUtils from '../../utils/toastify';
 import apiUrls from '../../utils/apiUrls';
 import { splitCamelCase } from '../../utils/globalizationFunction';
-import { EXPORT_CONSTANTS, TABLE_LABEL } from '../../utils/constants';
+import { GLOBAL_EXPORT_CONSTANTS, TABLE_LABEL } from '../../utils/constants';
 
 const initialState = {
   selectedValue: '',
@@ -26,7 +26,7 @@ export const fetchColumns = createAsyncThunk('export/fetchColumns', async ({ tab
     const columns = response.data.data.map((col) => {
       if (
         TABLE_LABEL.USER_MANAGEMENT === tableName &&
-        (col === EXPORT_CONSTANTS.FIRST_NAME || col === EXPORT_CONSTANTS.LAST_NAME)
+        (col === GLOBAL_EXPORT_CONSTANTS.FIRST_NAME || col === GLOBAL_EXPORT_CONSTANTS.LAST_NAME)
       ) {
         return {
           id: col,
@@ -34,6 +34,23 @@ export const fetchColumns = createAsyncThunk('export/fetchColumns', async ({ tab
           checked: true,
         };
       }
+      if (col === GLOBAL_EXPORT_CONSTANTS.TXT_CHANNEL_NAME) {
+        return {
+          id: col,
+          name: 'Channel Name',
+          checked: true,
+        };
+      }
+
+      if (TABLE_LABEL.PROPOSAL_BITLY_CONFIG && col === GLOBAL_EXPORT_CONSTANTS.FIELDS) {
+        return {
+          id: col,
+          name: splitCamelCase(col),
+          checked: false,
+          hide: true,
+        };
+      }
+
       return {
         id: col,
         name: splitCamelCase(col),
@@ -104,11 +121,20 @@ const exportSlice = createSlice({
     },
     setExtraColumns: (state, action) => {
       state.extraColumnsArr = action.payload;
-      const columns = action.payload.map((col) => ({
-        id: col,
-        name: splitCamelCase(col),
-        checked: true,
-      }));
+      const columns = action.payload.map((col) => {
+        if (col === GLOBAL_EXPORT_CONSTANTS.TXT_CHANNEL_NAME) {
+          return {
+            id: col,
+            name: 'Channel Name',
+            checked: true,
+          };
+        }
+        return {
+          id: col,
+          name: splitCamelCase(col),
+          checked: true,
+        };
+      });
       state.extraColumns = columns;
     },
     removeExtraColumns: (state) => {

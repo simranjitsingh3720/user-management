@@ -43,14 +43,18 @@ const Content = ({ tableHeader }) => {
       {!loading &&
         columns.length > 0 &&
         columns.map((item, index) => (
-          <Grid item xs={12} md={6} lg={4} key={index}>
-            <CustomCheckbox
-              checked={item.checked}
-              onChange={(event) => handleCheckUncheck(event, item.id, false)}
-              label={item.name}
-              indeterminate={false}
-            />
-          </Grid>
+          <>
+            {!item.hide && (
+              <Grid item xs={12} md={6} lg={4} key={index}>
+                <CustomCheckbox
+                  checked={item.checked}
+                  onChange={(event) => handleCheckUncheck(event, item.id, false)}
+                  label={item.name}
+                  indeterminate={false}
+                />
+              </Grid>
+            )}
+          </>
         ))}
 
       {!loading && extraColumns && extraColumns.length > 0 && (

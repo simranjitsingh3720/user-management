@@ -44,8 +44,22 @@ const Actions = () => {
     if (columns.length !== 0) {
       selectedColumns = columns
         .filter((col) => col.checked)
-        .map((col) => removeSpacesAndJoin(col.name))
+        .map((col) => {
+          if (col.name === 'Channel Name') {
+            return 'txtChannelName';
+          }
+          return removeSpacesAndJoin(col.name);
+        })
         .join(',');
+
+      if (TABLE_LABEL.PROPOSAL_BITLY_CONFIG === tableName) {
+        if (extraColumns.length > 0) {
+          const ifAnyChecked = extraColumns.filter((col) => col.checked);
+          if (ifAnyChecked.length > 0) {
+            selectedColumns += ',fields';
+          }
+        }
+      }
 
       combinedData = {
         ...combinedData,
@@ -57,7 +71,12 @@ const Actions = () => {
       let newAdditionalColumn = '';
       additionalColumns = extraColumns
         .filter((col) => col.checked)
-        .map((col) => removeSpacesAndJoin(col.name))
+        .map((col) => {
+          if (col.name === 'Channel Name') {
+            return 'txtChannelName';
+          }
+          return removeSpacesAndJoin(col.name);
+        })
         .join(',');
 
       if (tableName === TABLE_LABEL.USER_MANAGEMENT) {

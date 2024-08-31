@@ -129,9 +129,12 @@ export const TABLE_LABEL = {
   UW_LEVEL_LOCATION_MAPPING: 'productLocationLevelMappings',
   PARTNER_NEFT: 'partnerNeft',
   USER_MANAGEMENT: 'user',
+  PROPOSAL_BITLY_CONFIG: 'proposalBitlyConfig',
 };
 
-export const EXPORT_CONSTANTS = {
+export const GLOBAL_EXPORT_CONSTANTS = {
   FIRST_NAME: 'firstName',
   LAST_NAME: 'lastName',
+  TXT_CHANNEL_NAME: 'txtChannelName',
+  FIELDS: 'fields',
 };
