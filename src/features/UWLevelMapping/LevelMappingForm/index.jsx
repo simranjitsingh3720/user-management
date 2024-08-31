@@ -11,7 +11,7 @@ import UserTypeToggle from '../../../components/CustomRadioButtonGroup';
 import { useParams } from 'react-router-dom';
 import useCreateProductLevel from '../hooks/useCreateProductLevel';
 import CustomFormHeader from '../../../components/CustomFormHeader';
-import useGetProducts from '../hooks/useGetProducts';
+import useGetProducts from '../../../hooks/useGetProducts';
 import useGetLocation from '../hooks/useGetLocation';
 
 function LevelMappingForm({ dataById, fetchData }) {

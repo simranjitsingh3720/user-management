@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
-import apiUrls from '../../../utils/apiUrls';
-import axiosInstance from '../../../utils/axiosInstance';
-import { COMMON_WORDS } from '../../../utils/constants';
+import apiUrls from '../utils/apiUrls';
+import axiosInstance from '../utils/axiosInstance';
+import { COMMON_WORDS } from '../utils/constants';
 
 function useGetProducts() {
   const [data, setData] = useState(null);

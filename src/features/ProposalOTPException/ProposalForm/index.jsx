@@ -20,9 +20,11 @@ import useGetProposalOTPList from '../hooks/useGetProposalOTPList';
 import { fetchLobByUserId } from '../../../stores/slices/lobUserSlice';
 import { getChannels } from '../../../stores/slices/getChannel';
 import { DATE_FORMAT } from '../../../utils/globalConstants';
+import useGetProducts from '../../../hooks/useGetProducts';
 
 function ProposalForm() {
   const dispatch = useDispatch();
+  const [employeeId, setEmployeeId] = useState(null);
   const { data: lobData, loading: lobLoading } = useSelector((state) => state.lobUser);
   const { id } = useParams();
   const { user } = useSelector((state) => state.user);
@@ -34,6 +36,7 @@ function ProposalForm() {
   const [proposalDataByID, setProposalDataByID] = useState(null);
   const { postData, loading: proposalOTPLoading } = useCreateProposalOTP();
   const { updateProposalData } = useUpdateProposal();
+  const { data: productData, loading: productLoading, fetchProduct } = useGetProducts();
 
   const {
     handleSubmit,
@@ -241,6 +244,7 @@ function ProposalForm() {
                   onChangeCallback={(newValue) => {
                     setValue('lob', null);
                     setValue('product', null);
+                    setEmployeeId(newValue.id);
                     dispatch(fetchLobByUserId(newValue.id));
                   }}
                 />
@@ -264,7 +268,11 @@ function ProposalForm() {
                 trigger={trigger}
                 onChangeCallback={(newValue) => {
                   setValue('product', null);
-                  dispatch(fetchAllProductData({ ids: newValue.id, status: true, edge: COMMON_WORDS.HAS_LOB }));
+                  if (OTPValue === 'byChannel') {
+                    dispatch(fetchAllProductData({ ids: newValue.id, status: true, edge: COMMON_WORDS.HAS_LOB }));
+                  } else {
+                    fetchProduct(employeeId, newValue.id);
+                  }
                 }}
                 disabled={id ? true : false}
               />
@@ -276,7 +284,8 @@ function ProposalForm() {
                 label="Product"
                 control={control}
                 rules={{ required: 'Product is required' }}
-                options={products?.data || []}
+                options={OTPValue === 'byChannel' ? products?.data || [] : productData?.data || []}
+                loading={productLoading}
                 getOptionLabel={(option) => `${option?.product}`}
                 isOptionEqualToValue={(option, value) => option?.id === value?.id}
                 placeholder="Select"
