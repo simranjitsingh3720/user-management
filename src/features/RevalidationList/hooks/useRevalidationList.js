@@ -2,9 +2,10 @@ import { useState, useCallback } from 'react';
 import axiosInstance from '../../../utils/axiosInstance';
 import { API_END_POINTS } from '../constants';
 import { COMMON_WORDS } from '../../../utils/constants';
-import { buildQueryString, formatDate } from '../../../utils/globalizationFunction';
+import { formatDate } from '../../../utils/globalizationFunction';
 import errorHandler from '../../../utils/errorHandler';
 import toastifyUtils from '../../../utils/toastify';
+import apiUrls from '../../../utils/apiUrls';
 
 const useRevalidationList = () => {
   const [data, setData] = useState([]);
@@ -13,38 +14,34 @@ const useRevalidationList = () => {
 
   const fetchData = useCallback(async ({ userId, page, pageSize, order, orderBy }) => {
     setLoading(true);
-    const queryParams = buildQueryString({
-      ids: userId,
-      edge: COMMON_WORDS.HAS_PRODUCER,
-      isExclusive: true,
-      pageNo: page,
-      pageSize: pageSize,
-      sortOrder: order,
-      sortKey: orderBy,
-      childFieldsToFetch: COMMON_WORDS.PRODUCER,
-      childFieldsEdge: COMMON_WORDS.HAS_PRODUCER,
-    });
     try {
-      const response = await axiosInstance.get(API_END_POINTS.getRevalidationList + queryParams);
+      const params = {
+        id: userId,
+        pageNo: page,
+        pageSize: pageSize,
+        sortOrder: order,
+        sortKey: orderBy,
+        childFieldsToFetch: `${COMMON_WORDS.REVALIDATION_LIST}`,
+        childFieldsEdge: `${COMMON_WORDS.MANAGES}`,
+      };
+      const response = await axiosInstance.get(apiUrls.getUser, { params });
 
-      if (response?.data?.data?.length === 0) {
+      if (response?.data?.data?.[0]?.revalidationList.length === undefined) {
         toastifyUtils.notifySuccess('No data found for the selected producer');
       }
 
       const transformedData =
-        response?.data?.data?.map((item) => {
-          const {
-            revalidationList: { id, name, emailId, mobileNo, createdAt, updatedAt, status, label },
-          } = item;
+        response?.data?.data?.[0]?.revalidationList.map((item) => {
+          const { id, dataEntryUserName, email, mobileNo, createdAt, updatedAt, producerStatus, label } = item;
           return {
             id,
-            name,
-            emailId,
+            dataEntryUserName,
+            email,
             mobileNo,
             createdAt: formatDate(createdAt),
             updatedAt: formatDate(updatedAt),
-            checked: status,
-            status,
+            checked: producerStatus,
+            producerStatus,
             label,
           };
         }) || [];

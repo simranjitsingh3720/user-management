@@ -1,11 +1,11 @@
 function generateTableHeaders(handleStatusUpdate) {
   return [
     {
-      id: 'name',
+      id: 'dataEntryUserName',
       value: 'Name',
     },
     {
-      id: 'emailId',
+      id: 'email',
       value: 'Email ID',
     },
     {

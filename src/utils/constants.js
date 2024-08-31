@@ -16,6 +16,8 @@ export const COMMON_WORDS = {
   HAS_LOB: 'hasLob',
   SELECT: 'Select',
   USER: 'user',
+  REVALIDATION_LIST: 'revalidationList',
+  MANAGES: 'manages',
   PRODUCTS: 'products',
   LOBS: 'lobs',
   HAS_PAYMENT_TYPE: 'hasPaymentType',
