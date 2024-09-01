@@ -5,7 +5,7 @@ import './index.css'
 import "@fontsource/poppins";
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
+  // <StrictMode>
     <App />
-  </StrictMode>,
+  // </StrictMode>,
 )

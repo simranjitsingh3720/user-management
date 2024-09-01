@@ -52,8 +52,9 @@ const Actions = () => {
         })
         .join(',');
 
-      if (TABLE_LABEL.PROPOSAL_BITLY_CONFIG === tableName) {
+      if (TABLE_LABEL.PROPOSAL_BITLY_CONFIG === tableName || TABLE_LABEL.EMPLOYEE_FLAG_CONFIG === tableName) {
         if (extraColumns.length > 0) {
+          debugger
           const ifAnyChecked = extraColumns.filter((col) => col.checked);
           if (ifAnyChecked.length > 0) {
             selectedColumns += ',fields';

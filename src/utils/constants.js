@@ -130,6 +130,7 @@ export const TABLE_LABEL = {
   PARTNER_NEFT: 'partnerNeft',
   USER_MANAGEMENT: 'user',
   PROPOSAL_BITLY_CONFIG: 'proposalBitlyConfig',
+  EMPLOYEE_FLAG_CONFIG: 'employeeFlagConfig',
 };
 
 export const GLOBAL_EXPORT_CONSTANTS = {

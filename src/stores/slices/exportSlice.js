@@ -42,7 +42,7 @@ export const fetchColumns = createAsyncThunk('export/fetchColumns', async ({ tab
         };
       }
 
-      if (TABLE_LABEL.PROPOSAL_BITLY_CONFIG && col === GLOBAL_EXPORT_CONSTANTS.FIELDS) {
+      if ((TABLE_LABEL.PROPOSAL_BITLY_CONFIG || TABLE_LABEL.EMPLOYEE_FLAG_CONFIG) && col === GLOBAL_EXPORT_CONSTANTS.FIELDS) {
         return {
           id: col,
           name: splitCamelCase(col),
