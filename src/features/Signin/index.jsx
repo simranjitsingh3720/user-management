@@ -46,7 +46,7 @@ function SignIn() {
           <div className="flex justify-center">
             <TataNormalLogo />
           </div>
-          <div className="text-cornFlower text-2xl font-semibold mt-3">User Management Portal</div>
+          <div className="text-cornFlower text-2xl font-semibold mt-3">UCON</div>
           <div className="text-fiord mt-2 mb-4 text-lg font-medium">Welcome back!</div>
 
           <Box sx={{ width: '100%', typography: 'body1' }}>

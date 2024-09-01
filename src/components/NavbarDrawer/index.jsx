@@ -61,7 +61,7 @@ function NavbarDrawer({
         <div className="my-4">
           <TataNormalLogo />
         </div>
-        <div className="text-[#18478b] text-lg font-semibold mb-4">User Management Portal</div>
+        <div className="text-[#18478b] text-lg font-semibold mb-4">UCON</div>
         <SearchInput onSearch={(query) => setSearchQuery(query)} />
       </div>
       <List className="mr-3">
