@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import Drawer from '@mui/material/Drawer';
-import TataNormalLogo from '../../assets/TataNormalLogo';
-import SearchInput from '../SearchInput';
-import { Collapse, List, ListItem, ListItemButton } from '@mui/material';
-import { ExpandLess, ExpandMore } from '@mui/icons-material';
-import { useNavigate } from 'react-router-dom';
-import { drawerWidth } from '../../utils/globalConstants';
+import React, { useEffect, useState } from "react";
+import Drawer from "@mui/material/Drawer";
+import TataNormalLogo from "../../assets/TataNormalLogo";
+import SearchInput from "../SearchInput";
+import { Collapse, List, ListItem, ListItemButton } from "@mui/material";
+import { ExpandLess, ExpandMore } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
+import { drawerWidth } from "../../utils/globalConstants";
 
 function NavbarDrawer({
   setIsClosing,
@@ -19,7 +19,7 @@ function NavbarDrawer({
 }) {
   const [open, setOpen] = useState(false);
   const [filteredNavData, setFilteredNavData] = useState([]);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
 
   const handleClick = () => {
     setOpen(!open);
@@ -72,14 +72,19 @@ function NavbarDrawer({
                 selected={selectedNavbar === obj.moduleName}
                 onClick={(event) => handleListItemClick(obj)}
                 className={`${
-                  selectedNavbar === obj.moduleName ? 'text-[#185ec4] bg-[#f2f7ff] border-l-4 border-[#185ec4]' : ''
+                  selectedNavbar === obj.moduleName
+                    ? "text-[#185ec4] bg-[#f2f7ff] border-l-4 border-[#185ec4]"
+                    : ""
                 }`}
               >
                 <img
-                  src={'/icons/' + obj.icon || '/icons/dashboard.svg'}
+                  src={"/icons/" + obj.icon || "/icons/dashboard.svg"}
                   alt={obj.moduleName}
                   lazy="true"
-                  className={(selectedNavbar === obj.moduleName ? 'selected' : '') + ' w-5 h-5 mr-6'}
+                  className={
+                    (selectedNavbar === obj.moduleName ? "selected" : "") +
+                    " w-5 h-5 mr-6"
+                  }
                 />
                 <div className="text-xs capitalize">{obj?.moduleName}</div>
               </ListItemButton>
@@ -89,40 +94,57 @@ function NavbarDrawer({
               <ListItemButton
                 onClick={handleClick}
                 className={`${
-                  selectedParentIndex !== null ? 'text-[#185ec4] bg-[#f2f7ff] border-l-4 border-[#185ec4]' : ''
+                  selectedParentIndex !== null
+                    ? "text-[#185ec4] bg-[#f2f7ff] border-l-4 border-[#185ec4]"
+                    : ""
                 }`}
               >
                 <img
-                  src={'/icons/' + obj.icon || '/icons/dashboard.svg'}
+                  src={"/icons/" + obj.icon || "/icons/dashboard.svg"}
                   alt={obj.moduleName}
                   lazy="true"
                   className="w-6 h-6 mr-2"
                 />
                 <div className="text-sm">{obj.moduleName}</div>
-                {open ? <ExpandLess className="ml-3" /> : <ExpandMore className="ml-3" />}
+                {open ? (
+                  <ExpandLess className="ml-3" />
+                ) : (
+                  <ExpandMore className="ml-3" />
+                )}
               </ListItemButton>
               <Collapse in={open} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
                   {obj.child.map((childObj, index) => (
                     <ListItem key={index} disablePadding>
                       <ListItemButton
-                        selected={selectedParentIndex === `${obj.moduleName}/${childObj.moduleName}`}
+                        selected={
+                          selectedParentIndex ===
+                          `${obj.moduleName}/${childObj.moduleName}`
+                        }
                         onClick={(event) =>
-                          handleCollpaseListItemClick(event, index, obj.moduleName, childObj.moduleName)
+                          handleCollpaseListItemClick(
+                            event,
+                            index,
+                            obj.moduleName,
+                            childObj.moduleName
+                          )
                         }
                         className={`${
-                          selectedParentIndex === `${obj.moduleName}/${childObj.moduleName}`
-                            ? 'text-[#185ec4] bg-[#f2f7ff] border-l-4 border-[#185ec4]'
-                            : ''
+                          selectedParentIndex ===
+                          `${obj.moduleName}/${childObj.moduleName}`
+                            ? "text-[#185ec4] bg-[#f2f7ff] border-l-4 border-[#185ec4]"
+                            : ""
                         }`}
                       >
                         <img
-                          src={'/icons/' + obj.icon || '/icons/dashboard.svg'}
+                          src={"/icons/" + obj.icon || "/icons/dashboard.svg"}
                           alt={obj.moduleName}
                           className="w-6 h-6 mr-2"
                           lazy="true"
                         />
-                        <div className="teListItemIconxt-sm">{childObj?.moduleName}</div>
+                        <div className="teListItemIconxt-sm">
+                          {childObj?.moduleName}
+                        </div>
                       </ListItemButton>
                     </ListItem>
                   ))}
@@ -146,8 +168,12 @@ function NavbarDrawer({
           keepMounted: true, // Better open performance on mobile.
         }}
         sx={{
-          display: { xs: 'block', md: 'none' },
-          '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth, overflowX: 'hidden' },
+          display: { xs: "block", md: "none" },
+          "& .MuiDrawer-paper": {
+            boxSizing: "border-box",
+            width: drawerWidth,
+            overflowX: "hidden",
+          },
         }}
       >
         {drawer}
@@ -155,12 +181,12 @@ function NavbarDrawer({
       <Drawer
         variant="permanent"
         sx={{
-          display: { xs: 'none', md: 'block' },
-          '& .MuiDrawer-paper': {
-            boxSizing: 'border-box',
+          display: { xs: "none", md: "block" },
+          "& .MuiDrawer-paper": {
+            boxSizing: "border-box",
             width: drawerWidth,
-            boxShadow: '3px 0px 6px #00000014',
-            overflowX: 'hidden',
+            boxShadow: "3px 0px 6px #00000014",
+            overflowX: "hidden",
           },
         }}
         open

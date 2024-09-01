@@ -22,7 +22,7 @@ To get started with the User Management Portal, follow these steps:
 
 1. Clone the repository
 2. Install the dependencies: `npm install`
-3. Start the server: `npm start`
+3. Start the server: `npm run dev`
 4. Open the portal in your browser: `http://localhost:3000`
 
 ## Contributing

@@ -1,7 +1,10 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   important: true,
-  content: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
   theme: {
     extend: {
       width: {
@@ -27,4 +30,4 @@ module.exports = {
     },
   },
   plugins: [],
-};
+}
