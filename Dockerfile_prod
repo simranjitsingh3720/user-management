@@ -1,6 +1,9 @@
 FROM 056032728903.dkr.ecr.ap-south-1.amazonaws.com/node20-slim:latest
 WORKDIR /app
 COPY ./package.json ./
+RUN apt-get update -y 
+RUN apt install net-tools -y
+RUN apt install curl -y
 RUN ls
 RUN npm install
 COPY ./ ./
