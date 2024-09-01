@@ -1,5 +1,5 @@
-import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import '@mui/material/styles/styled';
 import App from './App'
 import './index.css'
 import "@fontsource/poppins";
