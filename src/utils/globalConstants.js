@@ -1,5 +1,5 @@
 export const drawerWidth = 240;
-export const BASE_URL = 'https://uat-usermgmt.tataaig.com/uat-user-management';
+export const BASE_URL = 'https://dev-usermgmt.tataaig.com/dev-user-management';
 export const MODULE_TYPE = 'um';
 export const selectRowsData = [5, 10, 15, 20];
 export const PAGECOUNT = 10;
