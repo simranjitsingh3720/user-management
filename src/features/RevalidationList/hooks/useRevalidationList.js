@@ -68,11 +68,7 @@ const useRevalidationList = () => {
       });
 
       if (updateList) {
-        if (payload.length > 1) {
-          updateList({ data: transformedData });
-        } else {
-          updateList({ id: row.id, data });
-        }
+        updateList({ id: row.id, data });
       }
       setData(transformedData);
     } catch (error) {
