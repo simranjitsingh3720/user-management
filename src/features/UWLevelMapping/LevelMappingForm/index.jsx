@@ -34,8 +34,6 @@ function LevelMappingForm({ dataById, fetchData }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [employeeId]);
 
-  console.log('editData', editData);
-
   const {
     handleSubmit,
     control,
