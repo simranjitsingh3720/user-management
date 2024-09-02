@@ -34,6 +34,8 @@ function LevelMappingForm({ dataById, fetchData }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [employeeId]);
 
+  console.log('editData', editData);
+
   const {
     handleSubmit,
     control,
@@ -135,13 +137,19 @@ function LevelMappingForm({ dataById, fetchData }) {
 
   const onSubmit = (data) => {
     if (editData?.data?.id) {
+      const { id, locationId } = editData?.data || {};
+
+      const isLeader = data.leader === 'yes';
+      const properties = {
+        level: data.level.value,
+        isLeader,
+      };
+      if (locationId !== data?.location?.id) {
+        properties.locationId = data.location.id;
+      }
       const payload = {
-        id: editData?.data?.id,
-        properties: {
-          locationId: data.location.id,
-          level: data.level.value,
-          isLeader: data.leader === 'yes' ? true : false,
-        },
+        id,
+        properties,
       };
       updateData(payload);
     } else {
