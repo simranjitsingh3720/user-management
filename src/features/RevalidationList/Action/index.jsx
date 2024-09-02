@@ -1,4 +1,3 @@
-import React from 'react';
 import { useDispatch } from 'react-redux';
 import { hideDialog } from '../../../stores/slices/dialogSlice';
 import CustomButton from '../../../components/CustomButton';
@@ -14,12 +13,12 @@ const Action = ({ row, data, updateList, bulkUpdate = false }) => {
     if (bulkUpdate) {
       payload = row;
     } else {
-      payload = [{
-        id: row.id,
-        properties: {
+      payload = {
+        fields: {
+          roleName: row.roleName,
           status: !row.checked,
         },
-      }];
+      };
     }
 
     revalidationListUpdateData({ payload, data, row, updateList, bulkUpdate });
@@ -31,9 +30,7 @@ const Action = ({ row, data, updateList, bulkUpdate = false }) => {
       <CustomButton variant="outlined" onClick={() => dispatch(hideDialog())}>
         Cancel
       </CustomButton>
-      <CustomButton onClick={confirmAction}>
-        Confirm
-      </CustomButton>
+      <CustomButton onClick={confirmAction}>Confirm</CustomButton>
     </div>
   );
 };

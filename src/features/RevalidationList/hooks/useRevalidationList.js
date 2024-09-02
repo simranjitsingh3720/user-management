@@ -1,6 +1,5 @@
 import { useState, useCallback } from 'react';
 import axiosInstance from '../../../utils/axiosInstance';
-import { API_END_POINTS } from '../constants';
 import { COMMON_WORDS } from '../../../utils/constants';
 import { formatDate } from '../../../utils/globalizationFunction';
 import errorHandler from '../../../utils/errorHandler';
@@ -32,40 +31,37 @@ const useRevalidationList = () => {
 
       const transformedData =
         response?.data?.data?.[0]?.revalidationList.map((item) => {
-          const { id, dataEntryUserName, email, mobileNo, createdAt, updatedAt, producerStatus, label } = item;
+          const { createdAt, updatedAt, status } = item;
           return {
-            id,
-            dataEntryUserName,
-            email,
-            mobileNo,
+            ...item,
             createdAt: formatDate(createdAt),
             updatedAt: formatDate(updatedAt),
-            checked: producerStatus,
-            producerStatus,
-            label,
+            checked: status,
           };
         }) || [];
       setData(transformedData);
       setTotalCount(response?.data?.totalCount || 0);
     } catch (error) {
       setData([]);
+      errorHandler.handleError(error);
     } finally {
       setLoading(false);
     }
   }, []);
 
+  // Update Single Record
   const updateData = useCallback(async ({ payload, data, row, updateList }) => {
     try {
-      await axiosInstance.put(API_END_POINTS.updateRevalidationList, payload);
-      toastifyUtils.notifySuccess('Data updated successfully');
+      const url = `${apiUrls.getUser}/${row.id}/deo-user`;
+      const response = await axiosInstance.put(url, payload);
+      toastifyUtils.notifySuccess(response?.data?.message);
 
       const transformedData = data.map((item) => {
-        const newItem = payload.find((payloadItem) => item.id === payloadItem.id);
-        if (newItem) {
+        if (item.id === row.id) {
           return {
             ...item,
-            checked: newItem.properties.status,
-            status: newItem.properties.status,
+            checked: payload.fields.status,
+            status: payload.fields.status,
           };
         }
         return item;

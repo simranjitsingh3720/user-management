@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import ProducerForm from './ProducerForm/index';
 import ProducerTable from './ProducerTable/index';
 import useRevalidationList from './hooks/useRevalidationList';

@@ -22,18 +22,18 @@ function generateTableHeaders(handleStatusUpdate) {
       value: 'Updated At',
       sortable: true,
     },
-    // {
-    //   id: 'status',
-    //   value: 'Status',
-    //   action: [
-    //     {
-    //       component: 'switch',
-    //       onClick: (data, row) => {
-    //         handleStatusUpdate(data, row);
-    //       },
-    //     },
-    //   ],
-    // },
+    {
+      id: 'status',
+      value: 'Status',
+      action: [
+        {
+          component: 'switch',
+          onClick: (data, row) => {
+            handleStatusUpdate(data, row);
+          },
+        },
+      ],
+    },
   ];
 }
 
