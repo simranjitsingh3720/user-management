@@ -49,15 +49,20 @@ const useRevalidationList = () => {
     }
   }, []);
 
-  // Update Single Record
-  const updateData = useCallback(async ({ payload, data, row, updateList }) => {
+  const updateData = useCallback(async ({ payload, data, row, updateList, bulkUpdate, userId }) => {
     try {
-      const url = `${apiUrls.getUser}/${row.id}/deo-user`;
+      setLoading(true);
+      let url = '';
+      if (bulkUpdate) {
+        url = `${apiUrls.getUser}/${userId}/update-deo-users`;
+      } else {
+        url = `${apiUrls.getUser}/${row.id}/deo-user`;
+      }
       const response = await axiosInstance.put(url, payload);
       toastifyUtils.notifySuccess(response?.data?.message);
 
       const transformedData = data.map((item) => {
-        if (item.id === row.id) {
+        if (bulkUpdate || item.id === row.id) {
           return {
             ...item,
             checked: payload.fields.status,
@@ -68,11 +73,17 @@ const useRevalidationList = () => {
       });
 
       if (updateList) {
-        updateList({ id: row.id, data });
+        if (bulkUpdate) {
+          updateList({ data: transformedData });
+        } else {
+          updateList({ id: row.id, data });
+        }
       }
       setData(transformedData);
     } catch (error) {
       errorHandler.handleError(error);
+    } finally {
+      setLoading(false);
     }
   }, []);
 

@@ -3,15 +3,19 @@ import { hideDialog } from '../../../stores/slices/dialogSlice';
 import CustomButton from '../../../components/CustomButton';
 import useRevalidationList from '../hooks/useRevalidationList';
 
-const Action = ({ row, data, updateList, bulkUpdate = false }) => {
+const Action = ({ row, data, updateList, bulkUpdate = false, userId }) => {
   const dispatch = useDispatch();
-  const { revalidationListUpdateData } = useRevalidationList();
+  const { revalidationListUpdateData, revalidationListLoading } = useRevalidationList();
 
   const confirmAction = () => {
     let payload = [];
 
     if (bulkUpdate) {
-      payload = row;
+      payload = {
+        fields: {
+          status: row,
+        }
+      };
     } else {
       payload = {
         fields: {
@@ -21,7 +25,7 @@ const Action = ({ row, data, updateList, bulkUpdate = false }) => {
       };
     }
 
-    revalidationListUpdateData({ payload, data, row, updateList, bulkUpdate });
+    revalidationListUpdateData({ payload, data, row, updateList, bulkUpdate, userId });
     dispatch(hideDialog());
   };
 
@@ -30,7 +34,7 @@ const Action = ({ row, data, updateList, bulkUpdate = false }) => {
       <CustomButton variant="outlined" onClick={() => dispatch(hideDialog())}>
         Cancel
       </CustomButton>
-      <CustomButton onClick={confirmAction}>Confirm</CustomButton>
+      <CustomButton onClick={confirmAction} loading={revalidationListLoading}>Confirm</CustomButton>
     </div>
   );
 };

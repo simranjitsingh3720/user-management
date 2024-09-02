@@ -47,6 +47,7 @@ const RevalidationList = () => {
       <ProducerForm onFormSubmit={onFormSubmit} revalidationList={revalidationList} revalidationListLoading={revalidationListLoading} />
       {revalidationList.length > 0 && (
         <ProducerTable
+          userId={userId}
           revalidationList={revalidationList}
           revalidationListLoading={revalidationListLoading}
           totalCount={pageTotalCount}

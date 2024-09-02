@@ -22,6 +22,7 @@ const ProducerTable = ({
   setOrder,
   orderBy,
   setOrderBy,
+  userId
 }) => {
   const [selectAllActive, setSelectAllActive] = useState(false);
   const [selectAllInactive, setSelectAllInactive] = useState(false);
@@ -68,12 +69,12 @@ const ProducerTable = ({
   );
 
   const handleAllStatusUpdate = useCallback(
-    (data, row) => {
+    (data, value) => {
       dispatch(
         showDialog({
           title: COMMON_WORDS.CHANGE_STATUS,
           content: <CustomDialogContent label={COMMON_WORDS.USER} />,
-          actions: <Action row={row} data={data} updateList={updateList} bulkUpdate={true} />,
+          actions: <Action data={data} row={value} updateList={updateList} bulkUpdate={true} userId={userId}/>,
         })
       );
     },
@@ -95,26 +96,12 @@ const ProducerTable = ({
     setSelectAllInactive(allInactive);
   }, [dispatch, revalidationList]);
 
-  const handleSelectAllActiveChange = (event) => {
-    const rowData = list.map((row) => ({
-      id: row.id,
-      properties: {
-        status: true,
-      },
-    }));
-
-    handleAllStatusUpdate(list, rowData);
+  const handleSelectAllActiveChange = () => {
+    handleAllStatusUpdate(list, true);
   };
 
-  const handleSelectAllInactiveChange = (event) => {
-    const rowData = list.map((row) => ({
-      id: row.id,
-      properties: {
-        status: false,
-      },
-    }));
-
-    handleAllStatusUpdate(list, rowData);
+  const handleSelectAllInactiveChange = () => {
+    handleAllStatusUpdate(list, false);
   };
 
   const customExtraHeader = (
@@ -140,7 +127,7 @@ const ProducerTable = ({
         columns={headerColumns}
         rows={list}
         loading={revalidationListLoading}
-        // customExtraHeader={customExtraHeader}
+        customExtraHeader={customExtraHeader}
         totalCount={totalCount}
         page={page}
         setPage={setPage}
