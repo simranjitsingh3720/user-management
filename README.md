@@ -34,6 +34,3 @@ To commit make sure, you follow these steps:
 2. npm run commit
 3. git push
 
-## License
-
-This project is licensed under the TATA AIG Group.
